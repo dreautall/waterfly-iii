@@ -107,12 +107,12 @@ class _HomeMainState extends State<HomeMain>
             'en_US',
           ).format(now.copyWith(day: now.day - 6)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-          period: V1ChartBalanceBalanceGetPeriod.value_1d,
+          period: .value_1d,
         );
     apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
 
     for (ChartDataSet e in respBalanceData.body!) {
-      final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
+      final Map<String, dynamic> entries = e.pcEntries as Map<String, dynamic>;
       entries.forEach((String dateStr, dynamic valueStr) {
         final DateTime date = tzHandler
             .sTime(DateTime.parse(dateStr))
@@ -148,7 +148,7 @@ class _HomeMainState extends State<HomeMain>
             'en_US',
           ).format(now.copyWith(month: now.month - 3)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-          period: V1ChartAccountOverviewGetPeriod.value_1d,
+          period: .value_1d,
         );
     apiThrowErrorIfEmpty(respChartData, mounted ? context : null);
 
@@ -185,26 +185,24 @@ class _HomeMainState extends State<HomeMain>
         Response<InsightTotal> respInsightExpense,
         Response<InsightTotal> respInsightIncome,
       ) = await (
-            api.v1InsightExpenseTotalGet(
-              start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
-              end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
-            ),
-            api.v1InsightIncomeTotalGet(
-              start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
-              end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
-            ),
-          ).wait;
+        api.v1InsightExpenseTotalGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
+        ),
+        api.v1InsightIncomeTotalGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
+        ),
+      ).wait;
       apiThrowErrorIfEmpty(respInsightExpense, mounted ? context : null);
       apiThrowErrorIfEmpty(respInsightIncome, mounted ? context : null);
 
-      lastMonthsExpense[e] =
-          respInsightExpense.body!.isNotEmpty
-              ? respInsightExpense.body!.first
-              : const InsightTotalEntry(differenceFloat: 0);
-      lastMonthsIncome[e] =
-          respInsightIncome.body!.isNotEmpty
-              ? respInsightIncome.body!.first
-              : const InsightTotalEntry(differenceFloat: 0);
+      lastMonthsExpense[e] = respInsightExpense.body!.isNotEmpty
+          ? respInsightExpense.body!.first
+          : const InsightTotalEntry(differenceFloat: 0);
+      lastMonthsIncome[e] = respInsightIncome.body!.isNotEmpty
+          ? respInsightIncome.body!.first
+          : const InsightTotalEntry(differenceFloat: 0);
     }
 
     // If too big digits are present (>=100000), only show two columns to avoid
@@ -236,49 +234,36 @@ class _HomeMainState extends State<HomeMain>
 
     final FireflyIii api = context.read<FireflyService>().api;
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
-    final CurrencyRead defaultCurrency =
-        context.read<FireflyService>().defaultCurrency;
+    final CurrencyRead defaultCurrency = context
+        .read<FireflyService>()
+        .defaultCurrency;
 
     final DateTime now = tzHandler.sNow().clearTime();
 
     late final Response<InsightGroup> respIncomeData;
     late final Response<InsightGroup> respExpenseData;
     if (!tags) {
-      (respIncomeData, respExpenseData) =
-          await (
-            api.v1InsightIncomeCategoryGet(
-              start: DateFormat(
-                'yyyy-MM-dd',
-                'en_US',
-              ).format(now.copyWith(day: 1)),
-              end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-            ),
-            api.v1InsightExpenseCategoryGet(
-              start: DateFormat(
-                'yyyy-MM-dd',
-                'en_US',
-              ).format(now.copyWith(day: 1)),
-              end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-            ),
-          ).wait;
+      (respIncomeData, respExpenseData) = await (
+        api.v1InsightIncomeCategoryGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
+        api.v1InsightExpenseCategoryGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
+      ).wait;
     } else {
-      (respIncomeData, respExpenseData) =
-          await (
-            api.v1InsightIncomeTagGet(
-              start: DateFormat(
-                'yyyy-MM-dd',
-                'en_US',
-              ).format(now.copyWith(day: 1)),
-              end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-            ),
-            api.v1InsightExpenseTagGet(
-              start: DateFormat(
-                'yyyy-MM-dd',
-                'en_US',
-              ).format(now.copyWith(day: 1)),
-              end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-            ),
-          ).wait;
+      (respIncomeData, respExpenseData) = await (
+        api.v1InsightIncomeTagGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
+        api.v1InsightExpenseTagGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
+      ).wait;
     }
     apiThrowErrorIfEmpty(respIncomeData, mounted ? context : null);
     apiThrowErrorIfEmpty(respExpenseData, mounted ? context : null);
@@ -323,20 +308,24 @@ class _HomeMainState extends State<HomeMain>
     final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
 
     final DateTime now = tzHandler.sNow().clearTime();
+    final String start = DateFormat(
+      'yyyy-MM-dd',
+      'en_US',
+    ).format(now.copyWith(day: 1));
+    late final String end;
+    if (now.day == 1) {
+      end = DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 2));
+    } else {
+      end = DateFormat('yyyy-MM-dd', 'en_US').format(now);
+    }
 
     final (
       Response<BudgetArray> respBudgetInfos,
       Response<BudgetLimitArray> respBudgets,
     ) = await (
-          api.v1BudgetsGet(),
-          api.v1BudgetLimitsGet(
-            start: DateFormat(
-              'yyyy-MM-dd',
-              'en_US',
-            ).format(now.copyWith(day: 1)),
-            end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
-          ),
-        ).wait;
+      api.v1BudgetsGet(),
+      api.v1BudgetLimitsGet(start: start, end: end),
+    ).wait;
     apiThrowErrorIfEmpty(respBudgetInfos, mounted ? context : null);
     apiThrowErrorIfEmpty(respBudgets, mounted ? context : null);
 
@@ -382,12 +371,14 @@ class _HomeMainState extends State<HomeMain>
 
     return respBills.body!.data
         .where(
-          (BillRead e) => (e.attributes.nextExpectedMatch != null
-                  ? tzHandler.sTime(e.attributes.nextExpectedMatch!)
-                  : end.copyWith(day: end.day + 2))
-              .toLocal()
-              .clearTime()
-              .isBefore(end.copyWith(day: end.day + 1)),
+          (BillRead e) =>
+              ((e.attributes.active ?? false) &&
+                          e.attributes.nextExpectedMatch != null
+                      ? tzHandler.sTime(e.attributes.nextExpectedMatch!)
+                      : end.copyWith(day: end.day + 2))
+                  .toLocal()
+                  .clearTime()
+                  .isBefore(end.copyWith(day: end.day + 1)),
         )
         .toList(growable: false);
   }
@@ -421,15 +412,15 @@ class _HomeMainState extends State<HomeMain>
       Response<AccountArray> respLiabilityAccounts,
       Response<List<ChartDataSet>> respBalanceData,
     ) = await (
-          api.v1AccountsGet(type: AccountTypeFilter.asset),
-          api.v1AccountsGet(type: AccountTypeFilter.liabilities),
-          api.v1ChartAccountOverviewGet(
-            start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
-            end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
-            preselected: V1ChartAccountOverviewGetPreselected.all,
-            period: V1ChartAccountOverviewGetPeriod.value_1d,
-          ),
-        ).wait;
+      api.v1AccountsGet(type: .asset),
+      api.v1AccountsGet(type: .liabilities),
+      api.v1ChartAccountOverviewGet(
+        start: DateFormat('yyyy-MM-dd', 'en_US').format(start),
+        end: DateFormat('yyyy-MM-dd', 'en_US').format(end),
+        preselected: .all,
+        period: .value_1d,
+      ),
+    ).wait;
     apiThrowErrorIfEmpty(respAssetAccounts, mounted ? context : null);
     apiThrowErrorIfEmpty(respLiabilityAccounts, mounted ? context : null);
     apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
@@ -548,28 +539,30 @@ class _HomeMainState extends State<HomeMain>
     super.build(context);
     log.finest(() => "build()");
 
-    final CurrencyRead defaultCurrency =
-        context.read<FireflyService>().defaultCurrency;
+    final CurrencyRead defaultCurrency = context
+        .read<FireflyService>()
+        .defaultCurrency;
 
     final List<DashboardCards> cards = List<DashboardCards>.from(
       context.watch<SettingsProvider>().dashboardOrder,
     );
 
-    final List<DashboardCards> hidden =
-        context.watch<SettingsProvider>().dashboardHidden;
+    final List<DashboardCards> hidden = context
+        .watch<SettingsProvider>()
+        .dashboardHidden;
     for (DashboardCards e in hidden) {
       cards.remove(e);
     }
 
-    return RefreshIndicator(
+    return RefreshIndicator.adaptive(
       onRefresh: _refreshStats,
       child: ListView(
         cacheExtent: 1000,
-        padding: const EdgeInsets.all(8),
+        padding: const .all(8),
         children: <Widget>[
           for (int i = 0; i < cards.length; i++)
             switch (cards[i]) {
-              DashboardCards.dailyavg => ChartCard(
+              .dailyavg => ChartCard(
                 title: S.of(context).homeMainChartDailyTitle,
                 future: _fetchLastDays(),
                 summary: () {
@@ -581,532 +574,505 @@ class _HomeMainState extends State<HomeMain>
                     (DateTime _, double e) => sevenDayTotal += e.abs(),
                   );
                   return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: <Widget>[
                       Text(S.of(context).homeMainChartDailyAvg),
                       Text(
                         defaultCurrency.fmt(sevenDayTotal / 7),
                         style: TextStyle(
                           color: sevenDayTotal < 0 ? Colors.red : Colors.green,
-                          fontWeight: FontWeight.bold,
-                          fontFeatures: const <FontFeature>[
-                            FontFeature.tabularFigures(),
-                          ],
+                          fontWeight: .bold,
+                          fontFeatures: const <FontFeature>[.tabularFigures()],
                         ),
                       ),
                     ],
                   );
                 },
                 height: 125,
-                child:
-                    () => LastDaysChart(
-                      expenses: lastDaysExpense,
-                      incomes: lastDaysIncome,
-                    ),
+                child: () => LastDaysChart(
+                  expenses: lastDaysExpense,
+                  incomes: lastDaysIncome,
+                ),
               ),
-              DashboardCards.categories => ChartCard(
+              .categories => ChartCard(
                 title: S.of(context).homeMainChartCategoriesTitle,
                 future: _fetchCategories(),
                 height: 175,
                 child: () => CategoryChart(data: catChartData),
               ),
-              DashboardCards.tags => ChartCard(
+              .tags => ChartCard(
                 title: S.of(context).homeMainChartTagsTitle,
                 future: _fetchCategories(tags: true),
                 height: 175,
-                child: () => CategoryChart(data: tagChartData),
+                child: () => CategoryChart(data: tagChartData, isTag: true),
               ),
-              DashboardCards.accounts => ChartCard(
+              .accounts => ChartCard(
                 title: S.of(context).homeMainChartAccountsTitle,
                 future: _fetchOverviewChart(),
-                summary:
-                    () => Table(
-                      //border: TableBorder.all(), // :DEBUG:
-                      columnWidths: const <int, TableColumnWidth>{
-                        0: FixedColumnWidth(24),
-                        1: FlexColumnWidth(),
-                        2: IntrinsicColumnWidth(),
-                      },
-                      children: <TableRow>[
-                        TableRow(
-                          children: <Widget>[
-                            const SizedBox.shrink(),
-                            Text(
-                              S.of(context).generalAccount,
+                summary: () => Table(
+                  //border: TableBorder.all(), // :DEBUG:
+                  columnWidths: const <int, TableColumnWidth>{
+                    0: FixedColumnWidth(24),
+                    1: FlexColumnWidth(),
+                    2: IntrinsicColumnWidth(),
+                  },
+                  children: <TableRow>[
+                    TableRow(
+                      children: <Widget>[
+                        const SizedBox.shrink(),
+                        Text(
+                          S.of(context).generalAccount,
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
+                        Align(
+                          alignment: .centerRight,
+                          child: Text(
+                            S.of(context).generalBalance,
+                            style: Theme.of(context).textTheme.labelLarge,
+                          ),
+                        ),
+                      ],
+                    ),
+                    ...overviewChartData.mapIndexed((int i, ChartDataSet e) {
+                      final Map<String, dynamic> entries =
+                          e.entries as Map<String, dynamic>;
+                      final double balance =
+                          double.tryParse(entries.entries.last.value) ?? 0;
+                      final CurrencyRead currency = CurrencyRead(
+                        id: e.currencyId ?? "0",
+                        type: "currencies",
+                        attributes: CurrencyProperties(
+                          code: e.currencyCode ?? "",
+                          name: "",
+                          symbol: e.currencySymbol ?? "",
+                          decimalPlaces: e.currencyDecimalPlaces,
+                        ),
+                      );
+                      return TableRow(
+                        children: <Widget>[
+                          Align(
+                            alignment: .center,
+                            child: Text(
+                              "⬤",
+                              style: TextStyle(
+                                color: charts.ColorUtil.toDartColor(
+                                  possibleChartColors[i %
+                                      possibleChartColors.length],
+                                ),
+                                textBaseline: .ideographic,
+                                height: 1.3,
+                              ),
+                            ),
+                          ),
+                          Text(e.label!),
+                          Align(
+                            alignment: .centerRight,
+                            child: Text(
+                              currency.fmt(balance),
+                              style: TextStyle(
+                                color: (balance < 0)
+                                    ? Colors.red
+                                    : Colors.green,
+                                fontWeight: .bold,
+                                fontFeatures: const <FontFeature>[
+                                  .tabularFigures(),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }),
+                  ],
+                ),
+                height: 175,
+                onTap: () => showDialog<void>(
+                  context: context,
+                  builder: (BuildContext context) => const SummaryChartPopup(),
+                ),
+                child: () => SummaryChart(data: overviewChartData),
+              ),
+              .netearnings => ChartCard(
+                title: S.of(context).homeMainChartNetEarningsTitle,
+                future: _fetchLastMonths(),
+                summary: () => Table(
+                  // border: TableBorder.all(), // :DEBUG:
+                  columnWidths: const <int, TableColumnWidth>{
+                    0: FixedColumnWidth(24),
+                    1: IntrinsicColumnWidth(),
+                    2: FlexColumnWidth(),
+                    3: FlexColumnWidth(),
+                    4: FlexColumnWidth(),
+                  },
+                  children: <TableRow>[
+                    TableRow(
+                      children: <Widget>[
+                        const SizedBox.shrink(),
+                        const SizedBox.shrink(),
+                        ...lastMonthsIncome.keys.toList().reversed.map(
+                          (DateTime e) => Align(
+                            alignment: .centerRight,
+                            child: Text(
+                              DateFormat(DateFormat.MONTH).format(e),
                               style: Theme.of(context).textTheme.labelLarge,
                             ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                S.of(context).generalBalance,
-                                style: Theme.of(context).textTheme.labelLarge,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                        ...overviewChartData.mapIndexed((
-                          int i,
-                          ChartDataSet e,
-                        ) {
-                          final Map<String, dynamic> entries =
-                              e.entries as Map<String, dynamic>;
-                          final double balance =
-                              double.tryParse(entries.entries.last.value) ?? 0;
-                          final CurrencyRead currency = CurrencyRead(
-                            id: e.currencyId ?? "0",
-                            type: "currencies",
-                            attributes: CurrencyProperties(
-                              code: e.currencyCode ?? "",
-                              name: "",
-                              symbol: e.currencySymbol ?? "",
-                              decimalPlaces: e.currencyDecimalPlaces,
+                      ],
+                    ),
+                    TableRow(
+                      children: <Widget>[
+                        const Align(
+                          alignment: .center,
+                          child: Text(
+                            "⬤",
+                            style: TextStyle(
+                              color: Colors.green,
+                              textBaseline: .ideographic,
+                              height: 1.3,
                             ),
-                          );
-                          return TableRow(
-                            children: <Widget>[
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "⬤",
-                                  style: TextStyle(
-                                    color: charts.ColorUtil.toDartColor(
-                                      possibleChartColors[i %
-                                          possibleChartColors.length],
-                                    ),
-                                    textBaseline: TextBaseline.ideographic,
-                                    height: 1.3,
-                                  ),
-                                ),
+                          ),
+                        ),
+                        Text(S.of(context).generalIncome),
+                        ...lastMonthsIncome.entries.toList().reversed.map(
+                          (MapEntry<DateTime, InsightTotalEntry> e) => Align(
+                            alignment: .centerRight,
+                            child: Text(
+                              defaultCurrency.fmt(e.value.differenceFloat ?? 0),
+                              style: const TextStyle(
+                                fontFeatures: <FontFeature>[.tabularFigures()],
                               ),
-                              Text(e.label!),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  currency.fmt(balance),
-                                  style: TextStyle(
-                                    color:
-                                        (balance < 0)
-                                            ? Colors.red
-                                            : Colors.green,
-                                    fontWeight: FontWeight.bold,
-                                    fontFeatures: const <FontFeature>[
-                                      FontFeature.tabularFigures(),
-                                    ],
-                                  ),
-                                ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TableRow(
+                      children: <Widget>[
+                        const Align(
+                          alignment: .center,
+                          child: Text(
+                            "⬤",
+                            style: TextStyle(
+                              color: Colors.red,
+                              textBaseline: .ideographic,
+                              height: 1.3,
+                            ),
+                          ),
+                        ),
+                        Text(S.of(context).generalExpenses),
+                        ...lastMonthsExpense.entries.toList().reversed.map(
+                          (MapEntry<DateTime, InsightTotalEntry> e) => Align(
+                            alignment: .centerRight,
+                            child: Text(
+                              defaultCurrency.fmt(e.value.differenceFloat ?? 0),
+                              style: const TextStyle(
+                                fontFeatures: <FontFeature>[.tabularFigures()],
                               ),
-                            ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TableRow(
+                      children: <Widget>[
+                        const SizedBox.shrink(),
+                        Text(
+                          S.of(context).generalSum,
+                          style: const TextStyle(fontWeight: .bold),
+                        ),
+                        ...lastMonthsIncome.entries.toList().reversed.map((
+                          MapEntry<DateTime, InsightTotalEntry> e,
+                        ) {
+                          final double income = e.value.differenceFloat ?? 0;
+                          double expense = 0;
+                          if (lastMonthsExpense.containsKey(e.key)) {
+                            expense =
+                                lastMonthsExpense[e.key]!.differenceFloat ?? 0;
+                          }
+                          final double sum = income + expense;
+                          return Align(
+                            alignment: .centerRight,
+                            child: Text(
+                              defaultCurrency.fmt(sum),
+                              style: TextStyle(
+                                color: (sum < 0) ? Colors.red : Colors.green,
+                                fontWeight: .bold,
+                                fontFeatures: const <FontFeature>[
+                                  .tabularFigures(),
+                                ],
+                              ),
+                            ),
                           );
                         }),
                       ],
                     ),
-                height: 175,
-                onTap:
-                    () => showDialog<void>(
-                      context: context,
-                      builder:
-                          (BuildContext context) => const SummaryChartPopup(),
-                    ),
-                child: () => SummaryChart(data: overviewChartData),
+                  ],
+                ),
+                onTap: () => showDialog<void>(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      const NetEarningsChartPopup(),
+                ),
+                child: () => NetEarningsChart(
+                  expenses: lastMonthsExpense,
+                  income: lastMonthsIncome,
+                ),
               ),
-              DashboardCards.netearnings => ChartCard(
-                title: S.of(context).homeMainChartNetEarningsTitle,
-                future: _fetchLastMonths(),
-                summary:
-                    () => Table(
-                      // border: TableBorder.all(), // :DEBUG:
-                      columnWidths: const <int, TableColumnWidth>{
-                        0: FixedColumnWidth(24),
-                        1: IntrinsicColumnWidth(),
-                        2: FlexColumnWidth(),
-                        3: FlexColumnWidth(),
-                        4: FlexColumnWidth(),
-                      },
-                      children: <TableRow>[
-                        TableRow(
-                          children: <Widget>[
-                            const SizedBox.shrink(),
-                            const SizedBox.shrink(),
-                            ...lastMonthsIncome.keys.toList().reversed.map(
+              .networth => ChartCard(
+                title: S.of(context).homeMainChartNetWorthTitle,
+                future: _fetchBalance(),
+                summary: () => Table(
+                  //border: TableBorder.all(), // :DEBUG:
+                  columnWidths: const <int, TableColumnWidth>{
+                    0: FixedColumnWidth(24),
+                    1: IntrinsicColumnWidth(),
+                    2: FlexColumnWidth(),
+                    3: FlexColumnWidth(),
+                    4: FlexColumnWidth(),
+                  },
+                  children: <TableRow>[
+                    TableRow(
+                      children: <Widget>[
+                        const SizedBox.shrink(),
+                        const SizedBox.shrink(),
+                        ...lastMonthsAssets.keys
+                            .toList()
+                            .reversed
+                            .take(3)
+                            .toList()
+                            .reversed
+                            .map(
                               (DateTime e) => Align(
-                                alignment: Alignment.centerRight,
+                                alignment: .centerRight,
                                 child: Text(
                                   DateFormat(DateFormat.MONTH).format(e),
                                   style: Theme.of(context).textTheme.labelLarge,
                                 ),
                               ),
                             ),
-                          ],
+                      ],
+                    ),
+                    TableRow(
+                      children: <Widget>[
+                        const Align(
+                          alignment: .center,
+                          child: Text(
+                            "⬤",
+                            style: TextStyle(
+                              color: Colors.green,
+                              textBaseline: .ideographic,
+                              height: 1.3,
+                            ),
+                          ),
                         ),
-                        TableRow(
-                          children: <Widget>[
-                            const Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "⬤",
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  textBaseline: TextBaseline.ideographic,
-                                  height: 1.3,
+                        Text(S.of(context).generalAssets),
+                        ...lastMonthsAssets.entries
+                            .toList()
+                            .reversed
+                            .take(3)
+                            .toList()
+                            .reversed
+                            .map(
+                              (MapEntry<DateTime, double> e) => Align(
+                                alignment: .centerRight,
+                                child: Text(
+                                  defaultCurrency.fmt(e.value),
+                                  style: const TextStyle(
+                                    fontFeatures: <FontFeature>[
+                                      .tabularFigures(),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                            Text(S.of(context).generalIncome),
-                            ...lastMonthsIncome.entries.toList().reversed.map(
-                              (MapEntry<DateTime, InsightTotalEntry> e) =>
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      defaultCurrency.fmt(
-                                        e.value.differenceFloat ?? 0,
-                                      ),
-                                      style: const TextStyle(
-                                        fontFeatures: <FontFeature>[
-                                          FontFeature.tabularFigures(),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                      ],
+                    ),
+                    TableRow(
+                      children: <Widget>[
+                        const Align(
+                          alignment: .center,
+                          child: Text(
+                            "⬤",
+                            style: TextStyle(
+                              color: Colors.red,
+                              textBaseline: .ideographic,
+                              height: 1.3,
                             ),
-                          ],
+                          ),
                         ),
-                        TableRow(
-                          children: <Widget>[
-                            const Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "⬤",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  textBaseline: TextBaseline.ideographic,
-                                  height: 1.3,
+                        Text(S.of(context).generalLiabilities),
+                        ...lastMonthsLiabilities.entries
+                            .toList()
+                            .reversed
+                            .take(3)
+                            .toList()
+                            .reversed
+                            .map(
+                              (MapEntry<DateTime, double> e) => Align(
+                                alignment: .centerRight,
+                                child: Text(
+                                  defaultCurrency.fmt(e.value),
+                                  style: const TextStyle(
+                                    fontFeatures: <FontFeature>[
+                                      .tabularFigures(),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                            Text(S.of(context).generalExpenses),
-                            ...lastMonthsExpense.entries.toList().reversed.map(
-                              (MapEntry<DateTime, InsightTotalEntry> e) =>
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      defaultCurrency.fmt(
-                                        e.value.differenceFloat ?? 0,
-                                      ),
-                                      style: const TextStyle(
-                                        fontFeatures: <FontFeature>[
-                                          FontFeature.tabularFigures(),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                            ),
-                          ],
+                      ],
+                    ),
+                    TableRow(
+                      children: <Widget>[
+                        const SizedBox.shrink(),
+                        Text(
+                          S.of(context).generalSum,
+                          style: const TextStyle(fontWeight: .bold),
                         ),
-                        TableRow(
-                          children: <Widget>[
-                            const SizedBox.shrink(),
-                            Text(
-                              S.of(context).generalSum,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            ...lastMonthsIncome.entries.toList().reversed.map((
-                              MapEntry<DateTime, InsightTotalEntry> e,
-                            ) {
-                              final double income =
-                                  e.value.differenceFloat ?? 0;
-                              double expense = 0;
-                              if (lastMonthsExpense.containsKey(e.key)) {
-                                expense =
-                                    lastMonthsExpense[e.key]!.differenceFloat ??
-                                    0;
-                              }
-                              final double sum = income + expense;
+                        ...lastMonthsAssets.entries
+                            .toList()
+                            .reversed
+                            .take(3)
+                            .toList()
+                            .reversed
+                            .map((MapEntry<DateTime, double> e) {
+                              final double assets = e.value;
+                              final double liabilities =
+                                  lastMonthsLiabilities[e.key] ?? 0;
+                              final double sum = assets + liabilities;
                               return Align(
-                                alignment: Alignment.centerRight,
+                                alignment: .centerRight,
                                 child: Text(
                                   defaultCurrency.fmt(sum),
                                   style: TextStyle(
-                                    color:
-                                        (sum < 0) ? Colors.red : Colors.green,
-                                    fontWeight: FontWeight.bold,
+                                    color: (sum < 0)
+                                        ? Colors.red
+                                        : Colors.green,
+                                    fontWeight: .bold,
                                     fontFeatures: const <FontFeature>[
-                                      FontFeature.tabularFigures(),
+                                      .tabularFigures(),
                                     ],
                                   ),
                                 ),
                               );
                             }),
-                          ],
-                        ),
                       ],
                     ),
-                onTap:
-                    () => showDialog<void>(
-                      context: context,
-                      builder:
-                          (BuildContext context) =>
-                              const NetEarningsChartPopup(),
-                    ),
-                child:
-                    () => NetEarningsChart(
-                      expenses: lastMonthsExpense,
-                      income: lastMonthsIncome,
-                    ),
-              ),
-              DashboardCards.networth => ChartCard(
-                title: S.of(context).homeMainChartNetWorthTitle,
-                future: _fetchBalance(),
-                summary:
-                    () => Table(
-                      //border: TableBorder.all(), // :DEBUG:
-                      columnWidths: const <int, TableColumnWidth>{
-                        0: FixedColumnWidth(24),
-                        1: IntrinsicColumnWidth(),
-                        2: FlexColumnWidth(),
-                        3: FlexColumnWidth(),
-                        4: FlexColumnWidth(),
-                      },
-                      children: <TableRow>[
-                        TableRow(
-                          children: <Widget>[
-                            const SizedBox.shrink(),
-                            const SizedBox.shrink(),
-                            ...lastMonthsAssets.keys
-                                .toList()
-                                .reversed
-                                .take(3)
-                                .toList()
-                                .reversed
-                                .map(
-                                  (DateTime e) => Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      DateFormat(DateFormat.MONTH).format(e),
-                                      style:
-                                          Theme.of(
-                                            context,
-                                          ).textTheme.labelLarge,
-                                    ),
-                                  ),
-                                ),
-                          ],
-                        ),
-                        TableRow(
-                          children: <Widget>[
-                            const Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "⬤",
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  textBaseline: TextBaseline.ideographic,
-                                  height: 1.3,
-                                ),
-                              ),
-                            ),
-                            Text(S.of(context).generalAssets),
-                            ...lastMonthsAssets.entries
-                                .toList()
-                                .reversed
-                                .take(3)
-                                .toList()
-                                .reversed
-                                .map(
-                                  (MapEntry<DateTime, double> e) => Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      defaultCurrency.fmt(e.value),
-                                      style: const TextStyle(
-                                        fontFeatures: <FontFeature>[
-                                          FontFeature.tabularFigures(),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                          ],
-                        ),
-                        TableRow(
-                          children: <Widget>[
-                            const Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "⬤",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  textBaseline: TextBaseline.ideographic,
-                                  height: 1.3,
-                                ),
-                              ),
-                            ),
-                            Text(S.of(context).generalLiabilities),
-                            ...lastMonthsLiabilities.entries
-                                .toList()
-                                .reversed
-                                .take(3)
-                                .toList()
-                                .reversed
-                                .map(
-                                  (MapEntry<DateTime, double> e) => Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      defaultCurrency.fmt(e.value),
-                                      style: const TextStyle(
-                                        fontFeatures: <FontFeature>[
-                                          FontFeature.tabularFigures(),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                          ],
-                        ),
-                        TableRow(
-                          children: <Widget>[
-                            const SizedBox.shrink(),
-                            Text(
-                              S.of(context).generalSum,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            ...lastMonthsAssets.entries
-                                .toList()
-                                .reversed
-                                .take(3)
-                                .toList()
-                                .reversed
-                                .map((MapEntry<DateTime, double> e) {
-                                  final double assets = e.value;
-                                  final double liabilities =
-                                      lastMonthsLiabilities[e.key] ?? 0;
-                                  final double sum = assets + liabilities;
-                                  return Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      defaultCurrency.fmt(sum),
-                                      style: TextStyle(
-                                        color:
-                                            (sum < 0)
-                                                ? Colors.red
-                                                : Colors.green,
-                                        fontWeight: FontWeight.bold,
-                                        fontFeatures: const <FontFeature>[
-                                          FontFeature.tabularFigures(),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                }),
-                          ],
-                        ),
-                      ],
-                    ),
-                child:
-                    () => NetWorthChart(
-                      assets: lastMonthsAssets,
-                      liabilities: lastMonthsLiabilities,
-                    ),
-              ),
-              DashboardCards.budgets => AnimatedHeight(
-                child: FutureBuilder<List<BudgetLimitRead>>(
-                  future: _fetchBudgets(),
-                  builder: (
-                    BuildContext context,
-                    AsyncSnapshot<List<BudgetLimitRead>> snapshot,
-                  ) {
-                    if (snapshot.connectionState == ConnectionState.done &&
-                        snapshot.hasData) {
-                      if (snapshot.data!.isEmpty) {
-                        return const SizedBox.shrink();
-                      }
-                      return Card(
-                        clipBehavior: Clip.hardEdge,
-                        margin: const EdgeInsets.fromLTRB(4, 4, 4, 12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Text(
-                                S.of(context).homeMainBudgetTitle,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            ),
-                            BudgetList(
-                              budgetInfos: budgetInfos,
-                              snapshot: snapshot,
-                            ),
-                          ],
-                        ),
-                      );
-                    } else if (snapshot.hasError) {
-                      log.severe(
-                        "error fetching budgets",
-                        snapshot.error,
-                        snapshot.stackTrace,
-                      );
-                      return Text(snapshot.error!.toString());
-                    } else {
-                      return const Card(
-                        clipBehavior: Clip.hardEdge,
-                        margin: EdgeInsets.only(bottom: 8),
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(4, 4, 4, 12),
-                          child: Center(child: CircularProgressIndicator()),
-                        ),
-                      );
-                    }
-                  },
+                  ],
+                ),
+                child: () => NetWorthChart(
+                  assets: lastMonthsAssets,
+                  liabilities: lastMonthsLiabilities,
                 ),
               ),
-              DashboardCards.bills => AnimatedHeight(
-                child: FutureBuilder<List<BillRead>>(
-                  future: _fetchBills(),
-                  builder: (
-                    BuildContext context,
-                    AsyncSnapshot<List<BillRead>> snapshot,
-                  ) {
-                    if (snapshot.connectionState == ConnectionState.done &&
-                        snapshot.hasData) {
-                      if (snapshot.data!.isEmpty) {
-                        return const SizedBox.shrink();
-                      }
-                      return Card(
-                        clipBehavior: Clip.hardEdge,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Text(
-                                S.of(context).homeMainBillsTitle,
-                                style: Theme.of(context).textTheme.titleMedium,
+              .budgets => AnimatedHeight(
+                child: FutureBuilder<List<BudgetLimitRead>>(
+                  future: _fetchBudgets(),
+                  builder:
+                      (
+                        BuildContext context,
+                        AsyncSnapshot<List<BudgetLimitRead>> snapshot,
+                      ) {
+                        if (snapshot.connectionState == .done &&
+                            snapshot.hasData) {
+                          if (snapshot.data!.isEmpty) {
+                            return const SizedBox.shrink();
+                          }
+                          return Card(
+                            clipBehavior: .hardEdge,
+                            margin: const .fromLTRB(4, 4, 4, 12),
+                            child: Column(
+                              crossAxisAlignment: .start,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const .all(12),
+                                  child: Text(
+                                    S.of(context).homeMainBudgetTitle,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.titleMedium,
+                                  ),
+                                ),
+                                BudgetList(
+                                  budgetInfos: budgetInfos,
+                                  snapshot: snapshot,
+                                ),
+                              ],
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          log.severe(
+                            "error fetching budgets",
+                            snapshot.error,
+                            snapshot.stackTrace,
+                          );
+                          return Text(snapshot.error!.toString());
+                        } else {
+                          return const Card(
+                            clipBehavior: .hardEdge,
+                            margin: .only(bottom: 8),
+                            child: Padding(
+                              padding: .fromLTRB(4, 4, 4, 12),
+                              child: Center(
+                                child: CircularProgressIndicator.adaptive(),
                               ),
                             ),
-                            BillList(snapshot: snapshot),
-                          ],
-                        ),
-                      );
-                    } else if (snapshot.hasError) {
-                      log.severe(
-                        "error fetching bills",
-                        snapshot.error,
-                        snapshot.stackTrace,
-                      );
-                      return Text(snapshot.error!.toString());
-                    } else {
-                      return const Card(
-                        clipBehavior: Clip.hardEdge,
-                        child: Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Center(child: CircularProgressIndicator()),
-                        ),
-                      );
-                    }
-                  },
+                          );
+                        }
+                      },
+                ),
+              ),
+              .bills => AnimatedHeight(
+                child: FutureBuilder<List<BillRead>>(
+                  future: _fetchBills(),
+                  builder:
+                      (
+                        BuildContext context,
+                        AsyncSnapshot<List<BillRead>> snapshot,
+                      ) {
+                        if (snapshot.connectionState == .done &&
+                            snapshot.hasData) {
+                          if (snapshot.data!.isEmpty) {
+                            return const SizedBox.shrink();
+                          }
+                          return Card(
+                            clipBehavior: .hardEdge,
+                            child: Column(
+                              crossAxisAlignment: .start,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const .all(12),
+                                  child: Text(
+                                    S.of(context).homeMainBillsTitle,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.titleMedium,
+                                  ),
+                                ),
+                                BillList(snapshot: snapshot),
+                              ],
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          log.severe(
+                            "error fetching bills",
+                            snapshot.error,
+                            snapshot.stackTrace,
+                          );
+                          return Text(snapshot.error!.toString());
+                        } else {
+                          return const Card(
+                            clipBehavior: .hardEdge,
+                            child: Padding(
+                              padding: .all(8),
+                              child: Center(
+                                child: CircularProgressIndicator.adaptive(),
+                              ),
+                            ),
+                          );
+                        }
+                      },
                 ),
               ),
             },
@@ -1133,7 +1099,7 @@ class BudgetList extends StatelessWidget {
 
     return SizedBox(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+        padding: const .fromLTRB(12, 0, 12, 12),
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             final List<Widget> widgets = <Widget>[];
@@ -1155,14 +1121,12 @@ class BudgetList extends StatelessWidget {
               final double available =
                   double.tryParse(budget.attributes.amount ?? "") ?? 0;
 
-              final int tsStart =
-                  tzHandler
-                      .sTime(budget.attributes.start!)
-                      .millisecondsSinceEpoch;
-              final int tsEnd =
-                  tzHandler
-                      .sTime(budget.attributes.end!)
-                      .millisecondsSinceEpoch;
+              final int tsStart = tzHandler
+                  .sTime(budget.attributes.start!)
+                  .millisecondsSinceEpoch;
+              final int tsEnd = tzHandler
+                  .sTime(budget.attributes.end!)
+                  .millisecondsSinceEpoch;
               late double passedDays;
               if (tsEnd == tsStart) {
                 passedDays = 2; // Hides the bar
@@ -1209,29 +1173,28 @@ class BudgetList extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       TextSpan(
-                        text:
-                            budget.attributes.period?.isNotEmpty ?? false
-                                ? S
-                                    .of(context)
-                                    .homeMainBudgetInterval(
-                                      tzHandler
-                                          .sTime(budget.attributes.start!)
-                                          .toLocal(),
-                                      tzHandler
-                                          .sTime(budget.attributes.end!)
-                                          .toLocal(),
-                                      budget.attributes.period!,
-                                    )
-                                : S
-                                    .of(context)
-                                    .homeMainBudgetIntervalSingle(
-                                      tzHandler
-                                          .sTime(budget.attributes.start!)
-                                          .toLocal(),
-                                      tzHandler
-                                          .sTime(budget.attributes.end!)
-                                          .toLocal(),
-                                    ),
+                        text: budget.attributes.period?.isNotEmpty ?? false
+                            ? S
+                                  .of(context)
+                                  .homeMainBudgetInterval(
+                                    tzHandler
+                                        .sTime(budget.attributes.start!)
+                                        .toLocal(),
+                                    tzHandler
+                                        .sTime(budget.attributes.end!)
+                                        .toLocal(),
+                                    budget.attributes.period!,
+                                  )
+                            : S
+                                  .of(context)
+                                  .homeMainBudgetIntervalSingle(
+                                    tzHandler
+                                        .sTime(budget.attributes.start!)
+                                        .toLocal(),
+                                    tzHandler
+                                        .sTime(budget.attributes.end!)
+                                        .toLocal(),
+                                  ),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
@@ -1240,7 +1203,7 @@ class BudgetList extends StatelessWidget {
               );
               stackWidgets.add(
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: .spaceBetween,
                   children: <Widget>[
                     Text(
                       S.of(context).numPercent(spent / available),
@@ -1279,34 +1242,29 @@ class BudgetList extends StatelessWidget {
               );
               widgets.add(
                 LayoutBuilder(
-                  builder:
-                      (BuildContext context, BoxConstraints constraints) =>
-                          Stack(
-                            children: <Widget>[
-                              // Row + ProgressIndicator + Bottom Padding
-                              const SizedBox(height: 20 + 4 + 4),
-                              ...stackWidgets,
-                              Positioned(
-                                left: constraints.biggest.width * passedDays,
-                                top: 16,
-                                bottom: 0,
-                                width: 3,
-                                child: Container(
-                                  color:
-                                      (spent / available > passedDays)
-                                          ? Colors.redAccent
-                                          : Colors.blueAccent,
-                                ),
-                              ),
-                            ],
+                  builder: (BuildContext context, BoxConstraints constraints) =>
+                      Stack(
+                        children: <Widget>[
+                          // Row + ProgressIndicator + Bottom Padding
+                          const SizedBox(height: 20 + 4 + 4),
+                          ...stackWidgets,
+                          Positioned(
+                            left: constraints.biggest.width * passedDays,
+                            top: 16,
+                            bottom: 0,
+                            width: 3,
+                            child: Container(
+                              color: (spent / available > passedDays)
+                                  ? Colors.redAccent
+                                  : Colors.blueAccent,
+                            ),
                           ),
+                        ],
+                      ),
                 ),
               );
             }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: widgets,
-            );
+            return Column(crossAxisAlignment: .start, children: widgets);
           },
         ),
       ),
@@ -1325,16 +1283,16 @@ class BillList extends StatelessWidget {
 
     return SizedBox(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+        padding: const .fromLTRB(12, 0, 12, 12),
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             final List<Widget> widgets = <Widget>[];
             snapshot.data!.sort((BillRead a, BillRead b) {
-              final int dateCompare = (a.attributes.nextExpectedMatch ??
-                      tzHandler.sNow())
-                  .compareTo(
-                    b.attributes.nextExpectedMatch ?? tzHandler.sNow(),
-                  );
+              final int dateCompare =
+                  (a.attributes.nextExpectedMatch ?? tzHandler.sNow())
+                      .compareTo(
+                        b.attributes.nextExpectedMatch ?? tzHandler.sNow(),
+                      );
               if (dateCompare != 0) {
                 return dateCompare;
               }
@@ -1349,24 +1307,17 @@ class BillList extends StatelessWidget {
               );
             });
 
-            DateTime lastDate = (snapshot
-                        .data!
-                        .first
-                        .attributes
-                        .nextExpectedMatch ??
-                    tzHandler.sNow())
-                .subtract(const Duration(days: 1));
+            DateTime lastDate =
+                (snapshot.data!.first.attributes.nextExpectedMatch ??
+                        tzHandler.sNow())
+                    .subtract(const Duration(days: 1));
             for (BillRead bill in snapshot.data!) {
-              if (!(bill.attributes.active ?? false)) {
-                continue;
-              }
-
               final DateTime nextMatch =
                   bill.attributes.nextExpectedMatch != null
-                      ? tzHandler
-                          .sTime(bill.attributes.nextExpectedMatch!)
-                          .toLocal()
-                      : tzHandler.sNow();
+                  ? tzHandler
+                        .sTime(bill.attributes.nextExpectedMatch!)
+                        .toLocal()
+                  : tzHandler.sNow();
               final CurrencyRead currency = CurrencyRead(
                 id: bill.attributes.currencyId ?? "0",
                 type: "currencies",
@@ -1392,22 +1343,21 @@ class BillList extends StatelessWidget {
               }
               widgets.add(
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: .spaceBetween,
                   children: <Widget>[
                     RichText(
                       maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      overflow: .ellipsis,
                       text: TextSpan(
                         children: <InlineSpan>[
                           TextSpan(
-                            text:
-                                bill.attributes.name!.length > 30
-                                    ? bill.attributes.name!.replaceRange(
-                                      30,
-                                      bill.attributes.name!.length,
-                                      "…",
-                                    )
-                                    : bill.attributes.name,
+                            text: bill.attributes.name!.length > 30
+                                ? bill.attributes.name!.replaceRange(
+                                    30,
+                                    bill.attributes.name!.length,
+                                    "…",
+                                  )
+                                : bill.attributes.name,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                           TextSpan(
@@ -1425,20 +1375,15 @@ class BillList extends StatelessWidget {
                       currency.fmt(bill.attributes.avgAmount()),
                       style: const TextStyle(
                         color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                        fontFeatures: <FontFeature>[
-                          FontFeature.tabularFigures(),
-                        ],
+                        fontWeight: .bold,
+                        fontFeatures: <FontFeature>[.tabularFigures()],
                       ),
                     ),
                   ],
                 ),
               );
             }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: widgets,
-            );
+            return Column(crossAxisAlignment: .start, children: widgets);
           },
         ),
       ),
@@ -1471,19 +1416,18 @@ class ChartCard extends StatelessWidget {
 
     return AnimatedHeight(
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 8),
+        padding: const .only(bottom: 8),
         child: Card(
-          clipBehavior: Clip.hardEdge,
+          clipBehavior: .hardEdge,
           child: FutureBuilder<bool>(
             future: future,
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.hasData) {
+              if (snapshot.connectionState == .done && snapshot.hasData) {
                 if (summary != null) {
                   summaryWidgets.add(const Divider(indent: 16, endIndent: 16));
                   summaryWidgets.add(
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                      padding: const .fromLTRB(12, 0, 12, 12),
                       child: summary!(),
                     ),
                   );
@@ -1491,12 +1435,12 @@ class ChartCard extends StatelessWidget {
                 return InkWell(
                   onTap: onTap,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: .start,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.all(12),
+                        padding: const .all(12),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: .spaceBetween,
                           children: <Widget>[
                             Text(
                               title,
@@ -1504,30 +1448,27 @@ class ChartCard extends StatelessWidget {
                             ),
                             onTap != null
                                 ? Icon(
-                                  Icons.touch_app_outlined,
-                                  color:
-                                      Theme.of(
-                                        context,
-                                      ).colorScheme.outlineVariant,
-                                )
+                                    Icons.touch_app_outlined,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.outlineVariant,
+                                  )
                                 : const SizedBox.shrink(),
                           ],
                         ),
                       ),
                       Ink(
                         decoration: BoxDecoration(
-                          color:
-                              Theme.of(
-                                context,
-                              ).colorScheme.surfaceContainerHighest,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.surfaceContainerHighest,
                         ),
                         child: SizedBox(
                           height: height,
-                          child:
-                              onTap != null
-                                  // AbsorbPointer fixes SfChart invalidating the onTap feedback
-                                  ? AbsorbPointer(child: child())
-                                  : child(),
+                          child: onTap != null
+                              // AbsorbPointer fixes SfChart invalidating the onTap feedback
+                              ? AbsorbPointer(child: child())
+                              : child(),
                         ),
                       ),
                       ...summaryWidgets,
@@ -1543,8 +1484,8 @@ class ChartCard extends StatelessWidget {
                 return Text(snapshot.error!.toString());
               } else {
                 return const Padding(
-                  padding: EdgeInsets.all(8),
-                  child: Center(child: CircularProgressIndicator()),
+                  padding: .all(8),
+                  child: Center(child: CircularProgressIndicator.adaptive()),
                 );
               }
             },

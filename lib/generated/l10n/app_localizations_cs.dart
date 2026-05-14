@@ -511,6 +511,11 @@ class SCs extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Dosud ušetřeno:';
 
   @override
@@ -532,6 +537,11 @@ class SCs extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'V prasátkách: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -621,7 +631,20 @@ class SCs extends S {
       'Pro používání Waterfly III potřebujete vlastní server s instancí Firefly III nebo doplněk Firefly III v rámci služby Home Assistant.\n\nZadejte celou adresu URL spolu s vaším osobním přístupovým tokenem (Možnosti -> Profil -> OAuth -> Osobní přístupový token) níže.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Skrýt hlavičky';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Vlastní hlavičky';
+
+  @override
   String get loginFormLabelAPIKey => 'Platný klíč API';
+
+  @override
+  String get loginFormLabelHeaders => 'Vlastní hlavičky (volitelné)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'Jedna na řádek, formát: NázevHlavičky: hodnota';
 
   @override
   String get loginFormLabelHost => 'URL serveru';
@@ -642,7 +665,7 @@ class SCs extends S {
   String get navigationCategories => 'Kategorie';
 
   @override
-  String get navigationMain => 'Přehled';
+  String get navigationMain => 'Nástěnka';
 
   @override
   String get generalSettings => 'Nastavení';
@@ -652,11 +675,11 @@ class SCs extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -664,11 +687,11 @@ class SCs extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString z $of';
@@ -746,6 +769,39 @@ class SCs extends S {
   String get settingsNLEmptyNote => 'Ponechat pole poznámky prázdné';
 
   @override
+  String get settingsNLHistory => 'Historie oznámení';
+
+  @override
+  String get settingsNLHistoryEmpty =>
+      'Zatím nebyla zaznamenána žádná oznámení.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other: '# oznámení',
+      few: '# oznámení',
+      one: '# oznámení',
+    );
+    return 'Toto je historie posledních $_temp0 přijatých aplikací. Dále můžete vytvářet transakce z (platných) oznámení nebo zjistit důvod, proč nebylo oznámení zpracováno.';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'Nebyla nalezena peněžní hodnota',
+      'noCurrency': 'Nebyla nalezena měna',
+      'appNotUsed': 'Aplikace není sledována',
+      'other': 'Neznámý důvod',
+    });
+    return 'Oznámení přeskočeno: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription => 'Seznam předchozích oznámení';
+
+  @override
   String get settingsNLPermissionGrant => 'Klepnutím udělte oprávnění.';
 
   @override
@@ -761,6 +817,12 @@ class SCs extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Doplnit název transakce pomocí nadpisu nofikace';
+
+  @override
+  String get settingsNLRegularExpression => 'Regulární výraz (volitelné)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Neplatný regulární výraz';
 
   @override
   String get settingsNLServiceChecking => 'Kontroluji stav…';
@@ -781,6 +843,13 @@ class SCs extends S {
 
   @override
   String get settingsNotificationListener => 'Služba pro čtení oznámení';
+
+  @override
+  String get settingsServerConnection => 'Připojení k serveru';
+
+  @override
+  String get settingsServerConnectionUpdated =>
+      'Nastavení připojení byla aktualizována.';
 
   @override
   String get settingsTheme => 'Motiv aplikace';
@@ -852,10 +921,10 @@ class SCs extends S {
   String get transactionDialogCurrencyTitle => 'Vybrat měnu';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => 'Žádné prasátko';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => 'Propojit s prasátkem';
 
   @override
   String get transactionDialogTagsAdd => 'Přidat štítek';

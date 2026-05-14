@@ -1,3 +1,4 @@
+import 'package:expressions/expressions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -5,7 +6,7 @@ class NumberInput extends StatelessWidget {
   const NumberInput({
     super.key,
     this.label,
-    this.controller,
+    required this.controller,
     this.value,
     this.onChanged,
     this.error,
@@ -17,10 +18,10 @@ class NumberInput extends StatelessWidget {
     this.style,
   });
 
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final String? value;
   final String? label;
-  final Function? onChanged;
+  final ValueChanged<String>? onChanged;
   final String? error;
   final Widget? icon;
   final String? hintText;
@@ -31,38 +32,124 @@ class NumberInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      initialValue: value,
-      onChanged: onChanged as void Function(String)?,
-      readOnly: disabled,
-      enabled: !disabled,
-      keyboardType: TextInputType.numberWithOptions(decimal: (decimals > 0)),
-      inputFormatters: <TextInputFormatter>[
-        FilteringTextInputFormatter.allow(RegExp(_getRegexString())),
-        TextInputFormatter.withFunction(
-          (TextEditingValue oldValue, TextEditingValue newValue) =>
-              newValue.copyWith(text: newValue.text.replaceAll(',', '.')),
+    return Focus(
+      onFocusChange: (bool hasFocus) {
+        debugPrint("focuschange: $hasFocus");
+        if (hasFocus) {
+          return;
+        }
+        final double result = evaluateExpression(controller.text);
+        final String formattedResult = result.toStringAsFixed(decimals);
+        if (controller.text != formattedResult) {
+          controller.text = formattedResult;
+          onChanged?.call(formattedResult);
+        }
+      },
+      child: TextFormField(
+        controller: controller,
+        initialValue: value,
+        onChanged: onChanged,
+        readOnly: disabled,
+        enabled: !disabled,
+        keyboardType: .numberWithOptions(
+          decimal: (decimals > 0),
+          signed: false,
         ),
-      ],
-      decoration: InputDecoration(
-        label: (label != null) ? Text(label!) : null,
-        hintText: hintText,
-        errorText: error,
-        icon: icon,
-        border: const OutlineInputBorder(),
-        prefixText: prefixText,
-        filled: disabled,
+        inputFormatters: <TextInputFormatter>[
+          .withFunction(
+            (TextEditingValue oldValue, TextEditingValue newValue) =>
+                newValue.copyWith(text: newValue.text.replaceAll(',', '.')),
+          ),
+          .withFunction((TextEditingValue oldValue, TextEditingValue newValue) {
+            if (newValue.composing != TextRange.empty) {
+              return newValue;
+            }
+
+            // Check for operators in newValue
+            final int opCount = RegExp(
+              r'[+\-*/]',
+            ).allMatches(newValue.text).length;
+
+            // no operators --> normal number validation
+            if (opCount == 0) {
+              if (newValue.text.isNotEmpty &&
+                  !_getRegex().hasMatch(newValue.text)) {
+                return oldValue;
+              }
+
+              return newValue;
+            }
+
+            if (opCount > 1) {
+              // Only when last operator was inserted at end
+              if (newValue.text.startsWith(oldValue.text)) {
+                final double result = evaluateExpression(oldValue.text);
+
+                final String newText =
+                    result.toStringAsFixed(decimals) +
+                    newValue.text.substring(oldValue.text.length);
+                return newValue.copyWith(
+                  text: newText,
+                  selection: .collapsed(offset: newText.length),
+                );
+              }
+            }
+
+            // Split number by operators, validate each number separately
+            final List<String> numbers = newValue.text.split(
+              RegExp(r'[+\-*/]'),
+            );
+            for (int i = 0; i < numbers.length; i++) {
+              // As calculations like "0.005 * 1234" should be allowed, just check
+              // if it's a valid number, regardless of decimals
+              if (numbers[i].isNotEmpty &&
+                  !RegExp(r'^[0-9]+[,.]?[0-9]*$').hasMatch(numbers[i])) {
+                return oldValue;
+              }
+            }
+
+            return newValue;
+          }),
+        ],
+        decoration: InputDecoration(
+          label: (label != null) ? Text(label!) : null,
+          hintText: hintText,
+          errorText: error,
+          icon: icon,
+          border: const OutlineInputBorder(),
+          prefixText: prefixText,
+          filled: disabled,
+        ),
+        style: disabled
+            ? style?.copyWith(color: Theme.of(context).disabledColor)
+            : style,
       ),
-      style:
-          disabled
-              ? style?.copyWith(color: Theme.of(context).disabledColor)
-              : style,
     );
   }
 
-  String _getRegexString() =>
-      (decimals > 0)
-          ? r'^[0-9]+[,.]{0,1}[0-9]{0,' + decimals.toString() + r'}'
-          : r'[0-9]';
+  RegExp _getRegex() => (decimals > 0)
+      ? RegExp(r'^[0-9]+[,.]{0,1}[0-9]{0,' + decimals.toString() + r'}$')
+      : RegExp(r'^[0-9]+$');
+
+  static double evaluateExpression(String expression) {
+    final Expression? exp = Expression.tryParse(expression);
+    if (exp == null) {
+      return 0;
+    }
+    final dynamic result = const ExpressionEvaluator().eval(
+      exp,
+      <String, dynamic>{},
+    );
+    final double resultDouble = result?.toDouble() ?? 0;
+    return resultDouble < 0 ? 0 : resultDouble;
+  }
+
+  static double evaluateAndUpdate(
+    TextEditingController controller, {
+    int decimals = 0,
+  }) {
+    final double result = evaluateExpression(controller.text);
+    controller.text = result.toStringAsFixed(decimals);
+    return result;
+  }
 }

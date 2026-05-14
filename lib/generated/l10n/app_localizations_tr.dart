@@ -21,7 +21,7 @@ class STr extends S {
   String get accountRoleAssetSavings => 'Birikim Hesabı';
 
   @override
-  String get accountRoleAssetShared => 'Shared asset account';
+  String get accountRoleAssetShared => 'Paylaşılan varlık hesabı';
 
   @override
   String get accountsLabelAsset => 'Varlık Hesapları';
@@ -30,7 +30,7 @@ class STr extends S {
   String get accountsLabelExpense => 'Harcama Hesabı';
 
   @override
-  String get accountsLabelLiabilities => '';
+  String get accountsLabelLiabilities => 'Yükümlülükler';
 
   @override
   String get accountsLabelRevenue => 'Gelir Hesabı';
@@ -38,14 +38,14 @@ class STr extends S {
   @override
   String accountsLiabilitiesInterest(double interest, String period) {
     String _temp0 = intl.Intl.selectLogic(period, {
-      'weekly': 'week',
-      'monthly': 'month',
-      'quarterly': 'quarter',
-      'halfyear': 'half-year',
-      'yearly': 'year',
-      'other': 'unknown',
+      'weekly': 'haftada',
+      'monthly': 'ayda',
+      'quarterly': 'çeyrekte',
+      'halfyear': 'yarım yılda',
+      'yearly': 'yılda',
+      'other': 'bilinmeyen periyotta',
     });
-    return '$interest% interest per $_temp0';
+    return '$interest% faiz (her $_temp0)';
   }
 
   @override
@@ -56,30 +56,30 @@ class STr extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'Haftalık',
+      'monthly': 'Aylık',
+      'quarterly': 'Üç aylık',
+      'halfyear': 'Altı aylık',
+      'yearly': 'Yıllık',
+      'other': 'Bilinmeyen',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', $skip defa atlar',
       zero: '',
     );
-    return 'Subscription matches transactions between $minValue and $maxvalue. Repeats $_temp0$_temp1.';
+    return 'Abonelik, $minValue ve $maxvalue arasındaki işlemleri eşleştirir. $_temp0 tekrarlanır$_temp1.';
   }
 
   @override
-  String get billsChangeLayoutTooltip => 'Change layout';
+  String get billsChangeLayoutTooltip => 'Düzeni değiştir';
 
   @override
-  String get billsChangeSortOrderTooltip => 'Change sort order';
+  String get billsChangeSortOrderTooltip => 'Sıralama düzenini değiştir';
 
   @override
-  String get billsErrorLoading => 'Error loading subscriptions.';
+  String get billsErrorLoading => 'Abonelikler yüklenirken hata oluştu.';
 
   @override
   String billsExactAmountAndFrequency(
@@ -88,20 +88,20 @@ class STr extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'Haftalık',
+      'monthly': 'Aylık',
+      'quarterly': 'Üç aylık',
+      'halfyear': 'Altı aylık',
+      'yearly': 'Yıllık',
+      'other': 'Bilinmeyen',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', $skip defa atlar',
       zero: '',
     );
-    return 'Subscription matches transactions of $value. Repeats $_temp0$_temp1.';
+    return 'Abonelik, $value tutarındaki işlemleri eşleştirir. $_temp0 tekrarlanır$_temp1.';
   }
 
   @override
@@ -109,18 +109,18 @@ class STr extends S {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Expected $dateString';
+    return '$dateString tarihinde bekleniyor';
   }
 
   @override
   String billsFrequency(String frequency) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Haftalık',
+      'monthly': 'Aylık',
+      'quarterly': 'Üç aylık',
+      'halfyear': 'Altı aylık',
+      'yearly': 'Yıllık',
+      'other': 'Bilinmeyen',
     });
     return '$_temp0';
   }
@@ -128,289 +128,289 @@ class STr extends S {
   @override
   String billsFrequencySkip(String frequency, num skip) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Haftalık',
+      'monthly': 'Aylık',
+      'quarterly': 'Üç aylık',
+      'halfyear': 'Altı aylık',
+      'yearly': 'Yıllık',
+      'other': 'Bilinmeyen',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', $skip defa atlar',
       zero: '',
     );
     return '$_temp0$_temp1';
   }
 
   @override
-  String get billsInactive => 'Inactive';
+  String get billsInactive => 'Pasif';
 
   @override
-  String get billsIsActive => 'Subscription is active';
+  String get billsIsActive => 'Abonelik aktif';
 
   @override
   String get billsLayoutGroupSubtitle =>
-      'Subscriptions displayed in their assigned groups.';
+      'Abonelikler atanan gruplarına göre görüntülenir.';
 
   @override
-  String get billsLayoutGroupTitle => 'Group';
+  String get billsLayoutGroupTitle => 'Grup';
 
   @override
   String get billsLayoutListSubtitle =>
-      'Subscriptions displayed in a list sorted by certain criteria.';
+      'Abonelikler belirli kriterlere göre sıralanmış bir liste halinde görüntülenir.';
 
   @override
-  String get billsLayoutListTitle => 'List';
+  String get billsLayoutListTitle => 'Liste';
 
   @override
-  String get billsListEmpty => 'The list is currently empty.';
+  String get billsListEmpty => 'Liste şu anda boş.';
 
   @override
-  String get billsNextExpectedMatch => 'Next expected match';
+  String get billsNextExpectedMatch => 'Bir sonraki beklenen eşleşme';
 
   @override
-  String get billsNotActive => 'Subscription is inactive';
+  String get billsNotActive => 'Abonelik etkin değil';
 
   @override
-  String get billsNotExpected => 'Not expected this period';
+  String get billsNotExpected => 'Bu dönem için beklenmiyor';
 
   @override
-  String get billsNoTransactions => 'No transactions found.';
+  String get billsNoTransactions => 'İşlem bulunamadı.';
 
   @override
   String billsPaidOn(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Paid $dateString';
+    return 'Ödenme tarihi: $dateString';
   }
 
   @override
-  String get billsSortAlphabetical => 'Alphabetical';
+  String get billsSortAlphabetical => 'Alfabetik';
 
   @override
-  String get billsSortByTimePeriod => 'By time period';
+  String get billsSortByTimePeriod => 'Zaman dönemine göre';
 
   @override
-  String get billsSortFrequency => 'Frequency';
+  String get billsSortFrequency => 'Sıklık';
 
   @override
-  String get billsSortName => 'Name';
+  String get billsSortName => 'İsim';
 
   @override
-  String get billsUngrouped => 'Ungrouped';
+  String get billsUngrouped => 'Gruplandırılmamış';
 
   @override
-  String get billsSettingsShowOnlyActive => 'Show only active';
+  String get billsSettingsShowOnlyActive => 'Sadece aktif olanları göster';
 
   @override
   String get billsSettingsShowOnlyActiveDesc =>
-      'Shows only active subscriptions.';
+      'Sadece aktif abonelikleri gösterir.';
 
   @override
-  String get billsSettingsShowOnlyExpected => 'Show only expected';
+  String get billsSettingsShowOnlyExpected => 'Sadece beklenenleri göster';
 
   @override
   String get billsSettingsShowOnlyExpectedDesc =>
-      'Shows only those subscriptions that are expected (or paid) this month.';
+      'Sadece bu ay beklenen (veya ödenmiş) abonelikleri gösterir.';
 
   @override
   String get categoryDeleteConfirm =>
-      'Are you sure you want to delete this category? The transactions will not be deleted, but will not have a category anymore.';
+      'Bu kategoriyi silmek istediğinize emin misiniz? İşlemler silinmeyecek, ancak artık bir kategorileri olmayacak.';
 
   @override
-  String get categoryErrorLoading => 'Error loading categories.';
+  String get categoryErrorLoading => 'Kategoriler yüklenirken hata oluştu.';
 
   @override
-  String get categoryFormLabelIncludeInSum => 'Include in monthly sum';
+  String get categoryFormLabelIncludeInSum => 'Aylık toplama dahil et';
 
   @override
-  String get categoryFormLabelName => 'Category Name';
+  String get categoryFormLabelName => 'Kategori Adı';
 
   @override
-  String get categoryMonthNext => 'Next Month';
+  String get categoryMonthNext => 'Gelecek Ay';
 
   @override
-  String get categoryMonthPrev => 'Previous Month';
+  String get categoryMonthPrev => 'Önceki Ay';
 
   @override
-  String get categorySumExcluded => 'excluded';
+  String get categorySumExcluded => 'hariç';
 
   @override
-  String get categoryTitleAdd => 'Add Category';
+  String get categoryTitleAdd => 'Kategori Ekle';
 
   @override
-  String get categoryTitleDelete => 'Delete Category';
+  String get categoryTitleDelete => 'Kategoriyi Sil';
 
   @override
-  String get categoryTitleEdit => 'Edit Category';
+  String get categoryTitleEdit => 'Kategoriyi Düzenle';
 
   @override
-  String get catNone => '<no category>';
+  String get catNone => '<kategori yok>';
 
   @override
-  String get catOther => 'Other';
+  String get catOther => 'Diğer';
 
   @override
   String errorAPIInvalidResponse(String message) {
-    return 'Invalid Response from API: $message';
+    return 'API\'den geçersiz yanıt: $message';
   }
 
   @override
-  String get errorAPIUnavailable => 'API unavailable';
+  String get errorAPIUnavailable => 'API kullanılamıyor';
 
   @override
-  String get errorFieldRequired => 'This field is required.';
+  String get errorFieldRequired => 'Bu alan zorunludur.';
 
   @override
-  String get errorInvalidURL => 'Invalid URL';
+  String get errorInvalidURL => 'Geçersiz URL';
 
   @override
   String errorMinAPIVersion(String requiredVersion) {
-    return 'Minimum Firefly API Version v$requiredVersion required. Please upgrade.';
+    return 'Minimum Firefly API Sürümü v$requiredVersion gereklidir. Lütfen güncelleyin.';
   }
 
   @override
   String errorStatusCode(int code) {
-    return 'Status Code: $code';
+    return 'Durum Kodu: $code';
   }
 
   @override
-  String get errorUnknown => 'Unknown error.';
+  String get errorUnknown => 'Bilinmeyen hata.';
 
   @override
-  String get formButtonHelp => 'Help';
+  String get formButtonHelp => 'Yardım';
 
   @override
-  String get formButtonLogin => 'Login';
+  String get formButtonLogin => 'Giriş yap';
 
   @override
-  String get formButtonLogout => 'Logout';
+  String get formButtonLogout => 'Çıkış yap';
 
   @override
-  String get formButtonRemove => 'Remove';
+  String get formButtonRemove => 'Kaldır';
 
   @override
-  String get formButtonResetLogin => 'Reset login';
+  String get formButtonResetLogin => 'Girişi sıfırla';
 
   @override
-  String get formButtonTransactionAdd => 'Add Transaction';
+  String get formButtonTransactionAdd => 'İşlem Ekle';
 
   @override
-  String get formButtonTryAgain => 'Try again';
+  String get formButtonTryAgain => 'Tekrar dene';
 
   @override
-  String get generalAccount => 'Account';
+  String get generalAccount => 'Hesap';
 
   @override
-  String get generalAssets => 'Assets';
+  String get generalAssets => 'Varlıklar';
 
   @override
-  String get generalBalance => 'Balance';
+  String get generalBalance => 'Bakiye';
 
   @override
   String generalBalanceOn(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Balance on $dateString';
+    return '$dateString tarihindeki bakiye';
   }
 
   @override
-  String get generalBill => 'Subscription';
+  String get generalBill => 'Abonelik';
 
   @override
-  String get generalBudget => 'Budget';
+  String get generalBudget => 'Bütçe';
 
   @override
-  String get generalCategory => 'Category';
+  String get generalCategory => 'Kategori';
 
   @override
-  String get generalCurrency => 'Currency';
+  String get generalCurrency => 'Para Birimi';
 
   @override
-  String get generalDateRangeCurrentMonth => 'Current Month';
+  String get generalDateRangeCurrentMonth => 'Bu Ay';
 
   @override
-  String get generalDateRangeLast30Days => 'Last 30 days';
+  String get generalDateRangeLast30Days => 'Son 30 gün';
 
   @override
-  String get generalDateRangeCurrentYear => 'Current Year';
+  String get generalDateRangeCurrentYear => 'Bu Yıl';
 
   @override
-  String get generalDateRangeLastYear => 'Last year';
+  String get generalDateRangeLastYear => 'Geçen Yıl';
 
   @override
-  String get generalDateRangeAll => 'All';
+  String get generalDateRangeAll => 'Tümü';
 
   @override
-  String get generalDefault => 'default';
+  String get generalDefault => 'varsayılan';
 
   @override
-  String get generalDestinationAccount => 'Destination Account';
+  String get generalDestinationAccount => 'Hedef Hesap';
 
   @override
-  String get generalDismiss => 'Dismiss';
+  String get generalDismiss => 'Kapat';
 
   @override
-  String get generalEarned => 'Earned';
+  String get generalEarned => 'Kazanılan';
 
   @override
-  String get generalError => 'Error';
+  String get generalError => 'Hata';
 
   @override
-  String get generalExpenses => 'Expenses';
+  String get generalExpenses => 'Giderler';
 
   @override
-  String get generalIncome => 'Income';
+  String get generalIncome => 'Gelir';
 
   @override
-  String get generalLiabilities => '';
+  String get generalLiabilities => 'Yükümlülükler';
 
   @override
-  String get generalMultiple => 'multiple';
+  String get generalMultiple => 'birden fazla';
 
   @override
-  String get generalNever => 'never';
+  String get generalNever => 'asla';
 
   @override
-  String get generalReconcile => 'Reconciled';
+  String get generalReconcile => 'Mutabık kalındı';
 
   @override
-  String get generalReset => 'Reset';
+  String get generalReset => 'Sıfırla';
 
   @override
-  String get generalSourceAccount => 'Source Account';
+  String get generalSourceAccount => 'Kaynak Hesap';
 
   @override
-  String get generalSpent => 'Spent';
+  String get generalSpent => 'Harcanan';
 
   @override
-  String get generalSum => 'Sum';
+  String get generalSum => 'Toplam';
 
   @override
-  String get generalTarget => 'Target';
+  String get generalTarget => 'Hedef';
 
   @override
-  String get generalUnknown => 'Unknown';
+  String get generalUnknown => 'Bilinmiyor';
 
   @override
   String homeMainBillsInterval(String period) {
     String _temp0 = intl.Intl.selectLogic(period, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-year',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'haftalık',
+      'monthly': 'aylık',
+      'quarterly': 'üç aylık',
+      'halfyear': 'altı aylık',
+      'yearly': 'yıllık',
+      'other': 'bilinmiyor',
     });
     return ' ($_temp0)';
   }
 
   @override
-  String get homeMainBillsTitle => 'Subscriptions for the next week';
+  String get homeMainBillsTitle => 'Önümüzdeki hafta için abonelikler';
 
   @override
   String homeMainBudgetInterval(DateTime from, DateTime to, String period) {
@@ -419,7 +419,7 @@ class STr extends S {
     final intl.DateFormat toDateFormat = intl.DateFormat.MMMd(localeName);
     final String toString = toDateFormat.format(to);
 
-    return ' ($fromString to $toString, $period)';
+    return ' ($fromString - $toString, $period)';
   }
 
   @override
@@ -429,52 +429,51 @@ class STr extends S {
     final intl.DateFormat toDateFormat = intl.DateFormat.MMMd(localeName);
     final String toString = toDateFormat.format(to);
 
-    return ' ($fromString to $toString)';
+    return ' ($fromString - $toString)';
   }
 
   @override
   String homeMainBudgetSum(String current, String status, String available) {
     String _temp0 = intl.Intl.selectLogic(status, {
-      'over': 'over',
-      'other': 'left from',
+      'over': 'aşıldı, toplam bütçe:',
+      'other': 'kalan bütçe:',
     });
     return '$current $_temp0 $available';
   }
 
   @override
-  String get homeMainBudgetTitle => 'Budgets for current month';
+  String get homeMainBudgetTitle => 'Cari ay için bütçeler';
 
   @override
-  String get homeMainChartAccountsTitle => 'Account Summary';
+  String get homeMainChartAccountsTitle => 'Hesap Özeti';
 
   @override
-  String get homeMainChartCategoriesTitle =>
-      'Category Summary for current month';
+  String get homeMainChartCategoriesTitle => 'Cari ay için kategori özeti';
 
   @override
-  String get homeMainChartDailyAvg => '7 days average';
+  String get homeMainChartDailyAvg => '7 günlük ortalama';
 
   @override
-  String get homeMainChartDailyTitle => 'Daily Summary';
+  String get homeMainChartDailyTitle => 'Günlük Özet';
 
   @override
-  String get homeMainChartNetEarningsTitle => 'Net Earnings';
+  String get homeMainChartNetEarningsTitle => 'Net Kazanç';
 
   @override
-  String get homeMainChartNetWorthTitle => 'Net Worth';
+  String get homeMainChartNetWorthTitle => 'Net Değer';
 
   @override
-  String get homeMainChartTagsTitle => 'Tag Summary for current month';
+  String get homeMainChartTagsTitle => 'Cari ay için etiket özeti';
 
   @override
-  String get homePiggyAdjustDialogTitle => 'Save/Spend Money';
+  String get homePiggyAdjustDialogTitle => 'Para Ekle/Çıkar';
 
   @override
   String homePiggyDateStart(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Start date: $dateString';
+    return 'Başlangıç tarihi: $dateString';
   }
 
   @override
@@ -482,177 +481,209 @@ class STr extends S {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMd(localeName);
     final String dateString = dateDateFormat.format(date);
 
-    return 'Target date: $dateString';
+    return 'Hedef tarih: $dateString';
   }
 
   @override
-  String get homeMainDialogSettingsTitle => 'Customize Dashboard';
+  String get homeMainDialogSettingsTitle => 'Paneli Özelleştir';
 
   @override
   String homePiggyLinked(String account) {
-    return 'Linked to $account';
+    return '$account hesabına bağlı';
   }
 
   @override
-  String get homePiggyNoAccounts => 'No piggy banks set up.';
+  String get homePiggyNoAccounts => 'Hiç kumbara oluşturulmamış.';
 
   @override
-  String get homePiggyNoAccountsSubtitle => 'Create some in the webinterface!';
+  String get homePiggyNoAccountsSubtitle =>
+      'Web arayüzünden birkaç tane oluşturun!';
 
   @override
   String homePiggyRemaining(String amount) {
-    return 'Left to save: $amount';
+    return 'Biriktirilmesi gereken: $amount';
   }
 
   @override
   String homePiggySaved(String amount) {
-    return 'Saved so far: $amount';
+    return 'Şu ana kadar biriken: $amount';
   }
 
   @override
-  String get homePiggySavedMultiple => 'Saved so far:';
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
+  String get homePiggySavedMultiple => 'Şu ana kadar biriken:';
 
   @override
   String homePiggyTarget(String amount) {
-    return 'Target amount: $amount';
+    return 'Hedef tutar: $amount';
   }
 
   @override
-  String get homePiggyAccountStatus => 'Account Status';
+  String get homePiggyAccountStatus => 'Hesap Durumu';
 
   @override
-  String get homePiggyAvailableAmounts => 'Available Amounts';
+  String get homePiggyAvailableAmounts => 'Kullanılabilir Miktarlar';
 
   @override
   String homePiggyAvailable(String amount) {
-    return 'Available: $amount';
+    return 'Kullanılabilir: $amount';
   }
 
   @override
   String homePiggyInPiggyBanks(String amount) {
-    return 'In piggy banks: $amount';
+    return 'Kumbaralarda: $amount';
   }
 
   @override
-  String get homeTabLabelBalance => 'Balance Sheet';
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
+  }
 
   @override
-  String get homeTabLabelMain => 'Main';
+  String get homeTabLabelBalance => 'Bilanço';
 
   @override
-  String get homeTabLabelPiggybanks => 'Piggy Banks';
+  String get homeTabLabelMain => 'Ana Sayfa';
 
   @override
-  String get homeTabLabelTransactions => 'Transactions';
+  String get homeTabLabelPiggybanks => 'Kumbaralar';
 
   @override
-  String get homeTransactionsActionFilter => 'Filter List';
+  String get homeTabLabelTransactions => 'İşlemler';
 
   @override
-  String get homeTransactionsDialogFilterAccountsAll => '<All Accounts>';
+  String get homeTransactionsActionFilter => 'Listeyi Filtrele';
 
   @override
-  String get homeTransactionsDialogFilterBillsAll => '<All Subscriptions>';
+  String get homeTransactionsDialogFilterAccountsAll => '<Tüm Hesaplar>';
 
   @override
-  String get homeTransactionsDialogFilterBillUnset => '<No Subscription set>';
+  String get homeTransactionsDialogFilterBillsAll => '<Tüm Abonelikler>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetsAll => '<All Budgets>';
+  String get homeTransactionsDialogFilterBillUnset => '<Abonelik atanmamış>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetUnset => '<No Budget set>';
+  String get homeTransactionsDialogFilterBudgetsAll => '<Tüm Bütçeler>';
 
   @override
-  String get homeTransactionsDialogFilterCategoriesAll => '<All Categories>';
+  String get homeTransactionsDialogFilterBudgetUnset => '<Bütçe atanmamış>';
 
   @override
-  String get homeTransactionsDialogFilterCategoryUnset => '<No Category set>';
+  String get homeTransactionsDialogFilterCategoriesAll => '<Tüm Kategoriler>';
 
   @override
-  String get homeTransactionsDialogFilterCurrenciesAll => '<All Currencies>';
+  String get homeTransactionsDialogFilterCategoryUnset =>
+      '<Kategori atanmamış>';
 
   @override
-  String get homeTransactionsDialogFilterDateRange => 'Date Range';
+  String get homeTransactionsDialogFilterCurrenciesAll =>
+      '<Tüm Para Birimleri>';
+
+  @override
+  String get homeTransactionsDialogFilterDateRange => 'Tarih Aralığı';
 
   @override
   String get homeTransactionsDialogFilterFutureTransactions =>
-      'Show future transactions';
+      'Gelecek işlemleri göster';
 
   @override
-  String get homeTransactionsDialogFilterSearch => 'Search Term';
+  String get homeTransactionsDialogFilterSearch => 'Arama Terimi';
 
   @override
-  String get homeTransactionsDialogFilterTitle => 'Select filters';
+  String get homeTransactionsDialogFilterTitle => 'Filtreleri seç';
 
   @override
-  String get homeTransactionsEmpty => 'No transactions found.';
+  String get homeTransactionsEmpty => 'İşlem bulunamadı.';
 
   @override
   String homeTransactionsMultipleCategories(int num) {
-    return '$num categories';
+    String _temp0 = intl.Intl.pluralLogic(
+      num,
+      locale: localeName,
+      other: '$num kategori',
+      one: '$num kategori',
+    );
+    return '$_temp0';
   }
 
   @override
   String get homeTransactionsSettingsShowTags =>
-      'Show tags in transaction list';
+      'İşlem listesinde etiketleri göster';
 
   @override
-  String get liabilityDirectionCredit => 'I am owed this debt';
+  String get liabilityDirectionCredit => 'Bu borç bana ödenmeli';
 
   @override
-  String get liabilityDirectionDebit => 'I owe this debt';
+  String get liabilityDirectionDebit => 'Bu borcu ben ödemeliyim';
 
   @override
-  String get liabilityTypeDebt => 'Debt';
+  String get liabilityTypeDebt => 'Borç';
 
   @override
-  String get liabilityTypeLoan => 'Loan';
+  String get liabilityTypeLoan => 'Kredi';
 
   @override
-  String get liabilityTypeMortgage => 'Mortgage';
+  String get liabilityTypeMortgage => 'İpotek';
 
   @override
   String get loginAbout =>
-      'To use Waterfly III productively you need your own server with a Firefly III instance or the Firefly III add-on for Home Assistant.\n\nPlease enter the full URL as well as a personal access token (Settings -> Profile -> OAuth -> Personal Access Token) below.';
+      'Waterfly III\'ü verimli kullanabilmek için kendi Firefly III sunucunuza veya Home Assistant için Firefly III eklentisine ihtiyacınız var.\n\nLütfen aşağıya tam URL adresini ve kişisel erişim jetonunu (Ayarlar -> Profil -> OAuth -> Personal Access Token) girin.';
 
   @override
-  String get loginFormLabelAPIKey => 'Valid API Key';
+  String get loginFormButtonHideHeaders => 'Başlıkları Gizle';
 
   @override
-  String get loginFormLabelHost => 'Host URL';
+  String get loginFormButtonShowHeaders => 'Özel Başlıklar';
 
   @override
-  String get loginWelcome => 'Welcome to Waterfly III';
+  String get loginFormLabelAPIKey => 'Geçerli API Anahtarı';
 
   @override
-  String get logoutConfirmation => 'Are you sure you want to log out?';
+  String get loginFormLabelHeaders => 'Özel Başlıklar (isteğe bağlı)';
 
   @override
-  String get navigationAccounts => 'Accounts';
+  String get loginFormLabelHeadersHelp =>
+      'Her satıra bir tane, biçim: HeaderName: değer';
 
   @override
-  String get navigationBills => 'Subscriptions';
+  String get loginFormLabelHost => 'Sunucu URL\'si';
 
   @override
-  String get navigationCategories => 'Categories';
+  String get loginWelcome => 'Waterfly III\'e Hoş Geldiniz';
 
   @override
-  String get navigationMain => 'Main Dashboard';
+  String get logoutConfirmation => 'Çıkış yapmak istediğinizden emin misiniz?';
 
   @override
-  String get generalSettings => 'Settings';
+  String get navigationAccounts => 'Hesaplar';
 
   @override
-  String get no => 'No';
+  String get navigationBills => 'Abonelikler';
+
+  @override
+  String get navigationCategories => 'Kategoriler';
+
+  @override
+  String get navigationMain => 'Kontrol Paneli';
+
+  @override
+  String get generalSettings => 'Ayarlar';
+
+  @override
+  String get no => 'Hayır';
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -660,281 +691,322 @@ class STr extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
-    return '$percString of $of';
+    return '$percString / $of';
   }
 
   @override
   String get settingsDialogDebugInfo =>
-      'You can enable & send debug logs here. These have a bad impact on performance, so please don\'t enable them unless you\'re advised to do so. Disabling logging will delete the stored log.';
+      'Hata ayıklama günlüklerini buradan etkinleştirebilir ve gönderebilirsiniz. Bunların performans üzerinde olumsuz bir etkisi vardır, bu nedenle tavsiye edilmedikçe etkinleştirmeyin. Günlüğe kaydı devre dışı bırakmak, kayıtlı günlükleri silecektir.';
 
   @override
-  String get settingsDialogDebugMailCreate => 'Create Mail';
+  String get settingsDialogDebugMailCreate => 'E-posta Oluştur';
 
   @override
   String get settingsDialogDebugMailDisclaimer =>
-      'WARNING: A mail draft will open with the log file attached (in text format). The logs might contain sensitive information, such as the host name of your Firefly instance (though I try to avoid logging of any secrets, such as the api key). Please read through the log carefully and censor out any information you don\'t want to share and/or is not relevant to the problem you want to report.\n\nPlease do not send in logs without prior agreement via mail/GitHub to do so. I will delete any logs sent without context for privacy reasons. Never upload the log uncensored to GitHub or elsewhere.';
+      'UYARI: Günlük dosyası eklenmiş (metin formatında) bir e-posta taslağı açılacaktır. Günlükler, Firefly örneğinizin ana bilgisayar adı gibi hassas bilgiler içerebilir (api anahtarı gibi sırların kaydedilmemesine özen gösterilse de). Lütfen günlüğü dikkatlice okuyun ve paylaşmak istemediğiniz ve/veya bildirmek istediğiniz sorunla ilgili olmayan bilgileri karartın.\n\nLütfen önceden e-posta/GitHub yoluyla mutabakat sağlamadan günlük göndermeyin. Bağlamı olmayan günlükleri gizlilik nedenleriyle sileceğim. Günlüğü asla sansürsüz olarak GitHub\'a veya başka bir yere yüklemeyin.';
 
   @override
-  String get settingsDialogDebugSendButton => 'Send Logs via Mail';
+  String get settingsDialogDebugSendButton => 'Günlükleri E-posta ile Gönder';
 
   @override
-  String get settingsDialogDebugTitle => 'Debug Logs';
+  String get settingsDialogDebugTitle => 'Hata Ayıklama Günlükleri';
 
   @override
-  String get settingsDialogLanguageTitle => 'Select Language';
+  String get settingsDialogLanguageTitle => 'Dil Seçin';
 
   @override
-  String get settingsDialogThemeTitle => 'Select Theme';
+  String get settingsDialogThemeTitle => 'Tema Seçin';
 
   @override
-  String get settingsFAQ => 'FAQ';
+  String get settingsFAQ => 'SSS';
 
   @override
-  String get settingsFAQHelp => 'Opens in Browser. Only available in English.';
+  String get settingsFAQHelp =>
+      'Tarayıcıda açılır. Sadece İngilizce mevcuttur.';
 
   @override
-  String get settingsLanguage => 'Language';
+  String get settingsLanguage => 'Dil';
 
   @override
-  String get settingsLockscreen => 'Lockscreen';
+  String get settingsLockscreen => 'Kilit Ekranı';
 
   @override
-  String get settingsLockscreenHelp => 'Require authenticiation on app startup';
+  String get settingsLockscreenHelp =>
+      'Uygulama başlatılırken kimlik doğrulaması iste';
 
   @override
   String get settingsLockscreenInitial =>
-      'Please authenticate to enable the lock screen.';
+      'Kilit ekranını etkinleştirmek için lütfen kimlik doğrulaması yapın.';
 
   @override
-  String get settingsNLAppAccount => 'Default Account';
+  String get settingsNLAppAccount => 'Varsayılan Hesap';
 
   @override
-  String get settingsNLAppAccountDynamic => '<Dynamic>';
+  String get settingsNLAppAccountDynamic => '<Dinamik>';
 
   @override
-  String get settingsNLAppAdd => 'Add App';
+  String get settingsNLAppAdd => 'Uygulama Ekle';
 
   @override
   String get settingsNLAppAddHelp =>
-      'Click to add an app to listen to. Only eligible apps will show up in the list.';
+      'Dinlenecek bir uygulama eklemek için tıklayın. Sadece uygun uygulamalar listede görünecektir.';
 
   @override
   String get settingsNLAppAddInfo =>
-      'Make some transactions where you receive phone notifications to add apps to this list. If the app still doesn\'t show up, please report it to app@vogt.pw.';
+      'Listeye uygulama eklemek için telefonunuza bildirim gelen bazı işlemler yapın. Uygulama hala görünmüyorsa, lütfen app@vogt.pw adresine bildirin.';
 
   @override
-  String get settingsNLAutoAdd => 'Create transaction without interaction';
+  String get settingsNLAutoAdd => 'İşlemi etkileşim olmadan oluştur';
 
   @override
   String get settingsNLDescription =>
-      'This service allows you to fetch transaction details from incoming push notifications. Additionally, you can select a default account which the transaction should be assigned to - if no value is set, it tries to extract an account from the notification.';
+      'Bu servis, gelen bildirimlerden işlem detaylarını almanızı sağlar. Ek olarak, işleme atanacak varsayılan bir hesap seçebilirsiniz - eğer hiçbir değer ayarlanmazsa, bildirimden bir hesap çıkarmaya çalışır.';
 
   @override
-  String get settingsNLEmptyNote => 'Keep note field empty';
+  String get settingsNLEmptyNote => 'Not alanını boş bırak';
 
   @override
-  String get settingsNLPermissionGrant => 'Tap to grant permission.';
+  String get settingsNLHistory => 'Bildirim Geçmişi';
 
   @override
-  String get settingsNLPermissionNotGranted => 'Permission not granted.';
+  String get settingsNLHistoryEmpty => 'Henüz hiçbir bildirim kaydedilmedi.';
 
   @override
-  String get settingsNLPermissionRemove => 'Remove permission?';
-
-  @override
-  String get settingsNLPermissionRemoveHelp =>
-      'To disable this service, click on the app and remove the permissions in the next screen.';
-
-  @override
-  String get settingsNLPrefillTXTitle =>
-      'Prefill transaction title with notification title';
-
-  @override
-  String get settingsNLServiceChecking => 'Checking status…';
-
-  @override
-  String settingsNLServiceCheckingError(String error) {
-    return 'Error checking status: $error';
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    return 'Bu, uygulama tarafından alınan son $notificationHistorySize bildirimin geçmişidir. Ayrıca (geçerli) bildirimlerden işlemler oluşturabilir veya bir bildirimin neden işlenemediğini görebilirsiniz.';
   }
 
   @override
-  String get settingsNLServiceRunning => 'Service is running.';
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'Parasal değer bulunamadı',
+      'noCurrency': 'Para birimi bulunamadı',
+      'appNotUsed': 'Uygulama dinlenmiyor',
+      'other': 'Bilinmeyen neden',
+    });
+    return 'Bildirim atlandı: $_temp0.';
+  }
 
   @override
-  String get settingsNLServiceStatus => 'Service Status';
+  String get settingsNLHistoryShortDescription => 'Önceki bildirimleri listele';
 
   @override
-  String get settingsNLServiceStopped => 'Service is stopped.';
+  String get settingsNLPermissionGrant => 'İzin vermek için dokunun.';
 
   @override
-  String get settingsNotificationListener => 'Notification Listener Service';
+  String get settingsNLPermissionNotGranted => 'İzin verilmedi.';
 
   @override
-  String get settingsTheme => 'App Theme';
+  String get settingsNLPermissionRemove => 'İzin kaldırılsın mı?';
 
   @override
-  String get settingsThemeDynamicColors => 'Dynamic Colors';
+  String get settingsNLPermissionRemoveHelp =>
+      'Bu hizmeti devre dışı bırakmak için uygulamaya tıklayın ve bir sonraki ekranda izinleri kaldırın.';
+
+  @override
+  String get settingsNLPrefillTXTitle =>
+      'İşlem başlığını bildirim başlığı ile önceden doldur';
+
+  @override
+  String get settingsNLRegularExpression => 'Düzenli İfade (isteğe bağlı)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Geçersiz Düzenli İfade';
+
+  @override
+  String get settingsNLServiceChecking => 'Durum kontrol ediliyor…';
+
+  @override
+  String settingsNLServiceCheckingError(String error) {
+    return 'Durum kontrol edilirken hata oluştu: $error';
+  }
+
+  @override
+  String get settingsNLServiceRunning => 'Hizmet çalışıyor.';
+
+  @override
+  String get settingsNLServiceStatus => 'Hizmet Durumu';
+
+  @override
+  String get settingsNLServiceStopped => 'Hizmet durduruldu.';
+
+  @override
+  String get settingsNotificationListener => 'Bildirim Dinleyici Hizmeti';
+
+  @override
+  String get settingsServerConnection => 'Sunucu Bağlantısı';
+
+  @override
+  String get settingsServerConnectionUpdated =>
+      'Bağlantı ayarları güncellendi.';
+
+  @override
+  String get settingsTheme => 'Uygulama Teması';
+
+  @override
+  String get settingsThemeDynamicColors => 'Dinamik Renkler';
 
   @override
   String settingsThemeValue(String theme) {
     String _temp0 = intl.Intl.selectLogic(theme, {
-      'dark': 'Dark Mode',
-      'light': 'Light Mode',
-      'other': 'System Default',
+      'dark': 'Koyu Mod',
+      'light': 'Açık Mod',
+      'other': 'Sistem Varsayılanı',
     });
     return '$_temp0';
   }
 
   @override
-  String get settingsUseServerTimezone => 'Use server timezone';
+  String get settingsUseServerTimezone => 'Sunucu saat dilimini kullan';
 
   @override
   String get settingsUseServerTimezoneHelp =>
-      'Show all times in the server timezone. This mimics the behavior of the webinterface.';
+      'Tüm zamanları sunucu saat diliminde göster. Bu, web arayüzünün davranışını taklit eder.';
 
   @override
-  String get settingsVersion => 'App Version';
+  String get settingsVersion => 'Uygulama Sürümü';
 
   @override
-  String get settingsVersionChecking => 'checking…';
+  String get settingsVersionChecking => 'kontrol ediliyor…';
 
   @override
-  String get transactionAttachments => 'Attachments';
+  String get transactionAttachments => 'Ekler';
 
   @override
   String get transactionDeleteConfirm =>
-      'Are you sure you want to delete this transaction?';
+      'Bu işlemi silmek istediğinizden emin misiniz?';
 
   @override
-  String get transactionDialogAttachmentsDelete => 'Delete Attachment';
+  String get transactionDialogAttachmentsDelete => 'Eki Sil';
 
   @override
   String get transactionDialogAttachmentsDeleteConfirm =>
-      'Are you sure you want to delete this attachment?';
+      'Bu eki silmek istediğinizden emin misiniz?';
 
   @override
-  String get transactionDialogAttachmentsErrorDownload =>
-      'Could not download file.';
+  String get transactionDialogAttachmentsErrorDownload => 'Dosya indirilemedi.';
 
   @override
   String transactionDialogAttachmentsErrorOpen(String error) {
-    return 'Could not open file: $error';
+    return 'Dosya açılamadı: $error';
   }
 
   @override
   String transactionDialogAttachmentsErrorUpload(String error) {
-    return 'Could not upload file: $error';
+    return 'Dosya yüklenemedi: $error';
   }
 
   @override
-  String get transactionDialogAttachmentsTitle => 'Attachments';
+  String get transactionDialogAttachmentsTitle => 'Ekler';
 
   @override
-  String get transactionDialogBillNoBill => 'No subscription';
+  String get transactionDialogBillNoBill => 'Abonelik yok';
 
   @override
-  String get transactionDialogBillTitle => 'Link to Subscription';
+  String get transactionDialogBillTitle => 'Aboneliğe Bağla';
 
   @override
-  String get transactionDialogCurrencyTitle => 'Select currency';
+  String get transactionDialogCurrencyTitle => 'Para birimi seç';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => 'Kumbarası yok';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => 'Kumbaraya Bağla';
 
   @override
-  String get transactionDialogTagsAdd => 'Add Tag';
+  String get transactionDialogTagsAdd => 'Etiket Ekle';
 
   @override
-  String get transactionDialogTagsHint => 'Search/Add Tag';
+  String get transactionDialogTagsHint => 'Etiket Ara/Ekle';
 
   @override
-  String get transactionDialogTagsTitle => 'Select tags';
+  String get transactionDialogTagsTitle => 'Etiketleri seç';
 
   @override
-  String get transactionDuplicate => 'Duplicate';
+  String get transactionDuplicate => 'Çoğalt';
 
   @override
-  String get transactionErrorInvalidAccount => 'Invalid Account';
+  String get transactionErrorInvalidAccount => 'Geçersiz Hesap';
 
   @override
-  String get transactionErrorInvalidBudget => 'Invalid Budget';
+  String get transactionErrorInvalidBudget => 'Geçersiz Bütçe';
 
   @override
-  String get transactionErrorNoAccounts => 'Please fill in the accounts first.';
+  String get transactionErrorNoAccounts => 'Lütfen önce hesapları doldurun.';
 
   @override
   String get transactionErrorNoAssetAccount =>
-      'Please select an asset account.';
+      'Lütfen bir varlık hesabı seçin.';
 
   @override
-  String get transactionErrorTitle => 'Please provide a title.';
+  String get transactionErrorTitle => 'Lütfen bir başlık girin.';
 
   @override
-  String get transactionFormLabelAccountDestination => 'Destination account';
+  String get transactionFormLabelAccountDestination => 'Hedef hesap';
 
   @override
-  String get transactionFormLabelAccountForeign => 'Foreign account';
+  String get transactionFormLabelAccountForeign => 'Yabancı hesap';
 
   @override
-  String get transactionFormLabelAccountOwn => 'Own account';
+  String get transactionFormLabelAccountOwn => 'Kendi hesabım';
 
   @override
-  String get transactionFormLabelAccountSource => 'Source account';
+  String get transactionFormLabelAccountSource => 'Kaynak hesap';
 
   @override
-  String get transactionFormLabelNotes => 'Notes';
+  String get transactionFormLabelNotes => 'Notlar';
 
   @override
-  String get transactionFormLabelTags => 'Tags';
+  String get transactionFormLabelTags => 'Etiketler';
 
   @override
-  String get transactionFormLabelTitle => 'Transaction Title';
+  String get transactionFormLabelTitle => 'İşlem Başlığı';
 
   @override
-  String get transactionSplitAdd => 'Add split transaction';
+  String get transactionSplitAdd => 'Bölünmüş işlem ekle';
 
   @override
-  String get transactionSplitChangeCurrency => 'Change Split Currency';
+  String get transactionSplitChangeCurrency =>
+      'Bölünmüş İşlem Para Birimini Değiştir';
 
   @override
   String get transactionSplitChangeDestinationAccount =>
-      'Change Split Destination Account';
+      'Bölünmüş İşlem Hedef Hesabını Değiştir';
 
   @override
   String get transactionSplitChangeSourceAccount =>
-      'Change Split Source Account';
+      'Bölünmüş İşlem Kaynak Hesabını Değiştir';
 
   @override
-  String get transactionSplitChangeTarget => 'Change Split Target Account';
+  String get transactionSplitChangeTarget =>
+      'Bölünmüş İşlem Hedef Hesabını Değiştir';
 
   @override
-  String get transactionSplitDelete => 'Delete split';
+  String get transactionSplitDelete => 'Bölünmüş işlemi sil';
 
   @override
-  String get transactionTitleAdd => 'Add Transaction';
+  String get transactionTitleAdd => 'İşlem Ekle';
 
   @override
-  String get transactionTitleDelete => 'Delete Transaction';
+  String get transactionTitleDelete => 'İşlemi Sil';
 
   @override
-  String get transactionTitleEdit => 'Edit Transaction';
+  String get transactionTitleEdit => 'İşlemi Düzenle';
 
   @override
-  String get transactionTypeDeposit => 'Deposit';
+  String get transactionTypeDeposit => 'Para Yatırma';
 
   @override
   String get transactionTypeTransfer => 'Transfer';
 
   @override
-  String get transactionTypeWithdrawal => 'Withdrawal';
+  String get transactionTypeWithdrawal => 'Para Çekme';
 }

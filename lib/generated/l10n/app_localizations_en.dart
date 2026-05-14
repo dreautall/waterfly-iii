@@ -510,6 +510,11 @@ class SEn extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Saved so far:';
 
   @override
@@ -531,6 +536,11 @@ class SEn extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'In piggy banks: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -617,7 +627,20 @@ class SEn extends S {
       'To use Waterfly III productively you need your own server with a Firefly III instance or the Firefly III add-on for Home Assistant.\n\nPlease enter the full URL as well as a personal access token (Settings -> Profile -> OAuth -> Personal Access Token) below.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Hide Headers';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Custom Headers';
+
+  @override
   String get loginFormLabelAPIKey => 'Valid API Key';
+
+  @override
+  String get loginFormLabelHeaders => 'Custom Headers (optional)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'One per line, format: HeaderName: value';
 
   @override
   String get loginFormLabelHost => 'Host URL';
@@ -638,7 +661,7 @@ class SEn extends S {
   String get navigationCategories => 'Categories';
 
   @override
-  String get navigationMain => 'Main Dashboard';
+  String get navigationMain => 'Dashboard';
 
   @override
   String get generalSettings => 'Settings';
@@ -648,11 +671,11 @@ class SEn extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -660,11 +683,11 @@ class SEn extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString of $of';
@@ -740,6 +763,31 @@ class SEn extends S {
   String get settingsNLEmptyNote => 'Keep note field empty';
 
   @override
+  String get settingsNLHistory => 'Notification History';
+
+  @override
+  String get settingsNLHistoryEmpty => 'No notifications recorded so far.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    return 'This is a history of the last $notificationHistorySize notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'No monetary value found',
+      'noCurrency': 'No currency found',
+      'appNotUsed': 'App not listened to',
+      'other': 'Unknown reason',
+    });
+    return 'Notification skipped: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription => 'List previous notifications';
+
+  @override
   String get settingsNLPermissionGrant => 'Tap to grant permission.';
 
   @override
@@ -755,6 +803,12 @@ class SEn extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Prefill transaction title with notification title';
+
+  @override
+  String get settingsNLRegularExpression => 'Regular Expression (optional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Invalid Regular Expression';
 
   @override
   String get settingsNLServiceChecking => 'Checking status…';
@@ -775,6 +829,12 @@ class SEn extends S {
 
   @override
   String get settingsNotificationListener => 'Notification Listener Service';
+
+  @override
+  String get settingsServerConnection => 'Server Connection';
+
+  @override
+  String get settingsServerConnectionUpdated => 'Connection settings updated.';
 
   @override
   String get settingsTheme => 'App Theme';

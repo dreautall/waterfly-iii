@@ -37,8 +37,9 @@ class LastDaysChart extends StatelessWidget {
       );
     }
     bool showCurrency = true;
-    final CurrencyRead defaultCurrency =
-        context.read<FireflyService>().defaultCurrency;
+    final CurrencyRead defaultCurrency = context
+        .read<FireflyService>()
+        .defaultCurrency;
 
     final List<LabelAmountChart> chartData = <LabelAmountChart>[];
 
@@ -68,28 +69,20 @@ class LastDaysChart extends StatelessWidget {
           domainFn: (LabelAmountChart entry, _) => entry.label,
           measureFn: (LabelAmountChart entry, _) => entry.amount.abs(),
           data: chartData,
-          colorFn:
-              (LabelAmountChart entry, _) =>
-                  (entry.amount > 0)
-                      ? charts.MaterialPalette.green.shadeDefault
-                      : charts.MaterialPalette.red.shadeDefault,
-          labelAccessorFn:
-              (LabelAmountChart entry, _) =>
-                  showCurrency
-                      ? defaultCurrency.fmt(
-                        entry.amount.abs(),
-                        decimalDigits: 0,
-                      )
-                      // Use compact number formatting for numbers over 10.000
-                      : entry.amount.abs() >= 100000
-                      ? NumberFormat.compact().format(entry.amount.abs())
-                      : entry.amount.abs().toStringAsFixed(0),
-          outsideLabelStyleAccessorFn:
-              (_, _) => charts.TextStyleSpec(
-                color: charts.ColorUtil.fromDartColor(
-                  Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-              ),
+          colorFn: (LabelAmountChart entry, _) => (entry.amount > 0)
+              ? charts.MaterialPalette.green.shadeDefault
+              : charts.MaterialPalette.red.shadeDefault,
+          labelAccessorFn: (LabelAmountChart entry, _) => showCurrency
+              ? defaultCurrency.fmt(entry.amount.abs(), decimalDigits: 0)
+              // Use compact number formatting for numbers over 10.000
+              : entry.amount.abs() >= 100000
+              ? NumberFormat.compact().format(entry.amount.abs())
+              : entry.amount.abs().toStringAsFixed(0),
+          outsideLabelStyleAccessorFn: (_, _) => charts.TextStyleSpec(
+            color: charts.ColorUtil.fromDartColor(
+              Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+          ),
         ),
       ],
       animate: true,

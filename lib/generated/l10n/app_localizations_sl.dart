@@ -511,6 +511,11 @@ class SSl extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Privarčevano do sedaj:';
 
   @override
@@ -532,6 +537,11 @@ class SSl extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'V hranilnikih: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -620,7 +630,20 @@ class SSl extends S {
       'Za funkcijsko uporabo Waterfly III potrebujete lasten strežnik z namestitvijo Firefly III ali dodatek Firefly III za Home Assistant.\n\nSpodaj vnesite poln URL in osebni žeton dostopa (Možnosti-> Profil -> OAuth -> Osebni dostopni žetoni).';
 
   @override
+  String get loginFormButtonHideHeaders => 'Skrij glave';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Glave po meri';
+
+  @override
   String get loginFormLabelAPIKey => 'Veljaven API ključ';
+
+  @override
+  String get loginFormLabelHeaders => 'Glave po meri (izbirno)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'Ena na vrstico, format: ImeGlave: vrednost';
 
   @override
   String get loginFormLabelHost => 'URL gostitelja';
@@ -641,7 +664,7 @@ class SSl extends S {
   String get navigationCategories => 'Kategorije';
 
   @override
-  String get navigationMain => 'Glavna nadzorna plošča';
+  String get navigationMain => 'Nadzorna plošča';
 
   @override
   String get generalSettings => 'Nastavitve';
@@ -651,11 +674,11 @@ class SSl extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -663,11 +686,11 @@ class SSl extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString od $of';
@@ -745,6 +768,38 @@ class SSl extends S {
   String get settingsNLEmptyNote => 'Polje za opombo naj bo prazno';
 
   @override
+  String get settingsNLHistory => 'Zgodovina obvestil';
+
+  @override
+  String get settingsNLHistoryEmpty => 'Do sedaj ni zabeleženih obvestil.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other: 'obvestil, ki jih je',
+      few: 'obvestil, ki jih je',
+      one: 'obvestila, ki ga je',
+    );
+    return 'To je zgodovina zadnjih $_temp0 prejela aplikacija. Poleg tega lahko ustvarite transakcije iz (veljavnih) obvestil ali si ogledate razlog, zakaj obvestilo ni bilo obdelano.';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'Ni najdene nobene denarne vrednosti',
+      'noCurrency': 'Ni najdene nobene valute',
+      'appNotUsed': 'Aplikacija ni na seznamu',
+      'other': 'Neznan razlog',
+    });
+    return 'Obvestilo preskočeno: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription => 'Seznam prejšnjih obvestil';
+
+  @override
   String get settingsNLPermissionGrant => 'Pritisnite za odobritev dovoljenja.';
 
   @override
@@ -760,6 +815,12 @@ class SSl extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Vnaprej izpolnite naslov transakcije z naslovom obvestila';
+
+  @override
+  String get settingsNLRegularExpression => 'Logični izraz (izbirno)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Neveljaven logični izraz';
 
   @override
   String get settingsNLServiceChecking => 'Preverjanje stanja…';
@@ -780,6 +841,13 @@ class SSl extends S {
 
   @override
   String get settingsNotificationListener => 'Storitev poslušanja obvestil';
+
+  @override
+  String get settingsServerConnection => 'Povezava s strežnikom';
+
+  @override
+  String get settingsServerConnectionUpdated =>
+      'Nastavitve povezave posodobljene.';
 
   @override
   String get settingsTheme => 'Tema aplikacije';

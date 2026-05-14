@@ -797,9 +797,25 @@
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
+    "loginFormButtonHideHeaders": "Skjul headere",
+    "@loginFormButtonHideHeaders": {
+        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
+    },
+    "loginFormButtonShowHeaders": "Brugerdefinerede headere",
+    "@loginFormButtonShowHeaders": {
+        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
+    },
     "loginFormLabelAPIKey": "Gyldig API-nøgle",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHeaders": "Brugerdefinerede headere (valgfri)",
+    "@loginFormLabelHeaders": {
+        "description": "Login Form: Label for Custom Headers field"
+    },
+    "loginFormLabelHeadersHelp": "Én pr. linje, format: HeaderNavn: værdi",
+    "@loginFormLabelHeadersHelp": {
+        "description": "Login Form: Helper text for Custom Headers field"
     },
     "loginFormLabelHost": "Værts-URL",
     "@loginFormLabelHost": {
@@ -825,9 +841,9 @@
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
-    "navigationMain": "Hoveddashboard",
+    "navigationMain": "Oversigt",
     "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
+        "description": "Navigation Label: Dashboard"
     },
     "generalSettings": "Indstillinger",
     "@generalSettings": {
@@ -950,6 +966,38 @@
     "@settingsNLEmptyNote": {
         "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
+    "settingsNLHistory": "Notifikationshistorik",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "Ingen notifikationer registreret endnu.",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "Dette er en historik over de seneste {notificationHistorySize, plural, one {1 notifikation} other {{notificationHistorySize} notifikationer}} modtaget af appen. Derudover kan du oprette transaktioner fra (gyldige) notifikationer eller se årsagen til, at en notifikation ikke kunne behandles.",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "Notifikation sprunget over: {reason, select, noMoney{Ingen pengebeløb fundet} noCurrency{Ingen valuta fundet} appNotUsed{App ikke lyttet til} other{Ukendt årsag}}.",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "Vis tidligere notifikationer",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
+    },
     "settingsNLPermissionGrant": "Tryk for at give tilladelse.",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
@@ -969,6 +1017,14 @@
     "settingsNLPrefillTXTitle": "Forudfyld transaktionstitel med nofikationstitel",
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLRegularExpression": "Regulært udtryk (valgfri)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "Ugyldigt regulært udtryk",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Tjekker status…",
     "@settingsNLServiceChecking": {
@@ -1000,6 +1056,14 @@
     "settingsNotificationListener": "Notifikationslytter-service",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
+    },
+    "settingsServerConnection": "Serverforbindelse",
+    "@settingsServerConnection": {
+        "description": "Settings for the server connection"
+    },
+    "settingsServerConnectionUpdated": "Forbindelsesindstillinger opdateret.",
+    "@settingsServerConnectionUpdated": {
+        "description": "Server connection settings have been updated"
     },
     "settingsTheme": "App tema",
     "@settingsTheme": {

@@ -515,6 +515,11 @@ class SFr extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Économisé jusqu\'à présent :';
 
   @override
@@ -536,6 +541,11 @@ class SFr extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'Dans les tirelires : $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -625,7 +635,20 @@ class SFr extends S {
       'Pour utiliser Waterfly III, vous avez besoin de votre propre serveur avec une instance Firefly III ou le module complémentaire Firefly III pour Home Assistant.\n\nVeuillez renseigner l\'URL complète ainsi qu\'un jeton d\'accès personnel (Options -> Profil -> OAuth -> Jetons d\'accès personnel) ci-dessous.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Masquer les en-têtes';
+
+  @override
+  String get loginFormButtonShowHeaders => 'En-têtes personnalisés';
+
+  @override
   String get loginFormLabelAPIKey => 'Clé API valide';
+
+  @override
+  String get loginFormLabelHeaders => 'En-têtes personnalisés (optionnel)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'Un par ligne, format : NomEnTête : valeur';
 
   @override
   String get loginFormLabelHost => 'URL du serveur';
@@ -657,11 +680,11 @@ class SFr extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -669,11 +692,11 @@ class SFr extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString sur $of';
@@ -751,6 +774,39 @@ class SFr extends S {
   String get settingsNLEmptyNote => 'Conserver le champ de note vide';
 
   @override
+  String get settingsNLHistory => 'Historique des notifications';
+
+  @override
+  String get settingsNLHistoryEmpty =>
+      'Aucune notification enregistrée pour le moment.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other: 'dernières $notificationHistorySize notifications reçues',
+      one: 'dernière notification reçue',
+    );
+    return 'Ceci est un historique des $_temp0 par l\'application. De plus, vous pouvez créer des transactions à partir de notifications (valides) ou voir la raison pour laquelle une notification n\'a pas pu être traitée.';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'Aucune valeur monétaire trouvée',
+      'noCurrency': 'Aucune devise trouvée',
+      'appNotUsed': 'Application non écoutée',
+      'other': 'Raison inconnue',
+    });
+    return 'Notification ignorée : $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription =>
+      'Lister les notifications précédentes';
+
+  @override
   String get settingsNLPermissionGrant =>
       'Appuyez pour accorder la permission.';
 
@@ -767,6 +823,13 @@ class SFr extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Pré-remplir le titre de la transaction avec le titre de la notification';
+
+  @override
+  String get settingsNLRegularExpression => 'Expression régulière (optionnel)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid =>
+      'Expression régulière invalide';
 
   @override
   String get settingsNLServiceChecking => 'Vérification de l\'état…';
@@ -788,6 +851,13 @@ class SFr extends S {
   @override
   String get settingsNotificationListener =>
       'Service d\'écoute des notifications';
+
+  @override
+  String get settingsServerConnection => 'Connexion au serveur';
+
+  @override
+  String get settingsServerConnectionUpdated =>
+      'Paramètres de connexion mis à jour.';
 
   @override
   String get settingsTheme => 'Thème de l\'appli';

@@ -63,7 +63,7 @@ class HomePageState extends State<HomePage>
           Tab(text: S.of(context).homeTabLabelBalance),
           Tab(text: S.of(context).homeTabLabelPiggybanks),
         ],
-        tabAlignment: TabAlignment.start,
+        tabAlignment: .start,
       );
       // Call once to set fab/page actions
       _handleTabChange();
@@ -83,8 +83,9 @@ class HomePageState extends State<HomePage>
   void _handleTabChange() {
     if (!_tabController.indexIsChanging) {
       log.finer(() => "_handleTabChange(${_tabController.index})");
-      context.read<NavPageElements>().fab =
-          (_tabController.index < 2) ? _newTransactionFab : null;
+      context.read<NavPageElements>().fab = (_tabController.index < 2)
+          ? _newTransactionFab
+          : null;
       context.read<NavPageElements>().appBarActions = _actions.get(
         tabPages[_tabController.index].key ?? const Key(''),
       );

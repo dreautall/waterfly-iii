@@ -47,6 +47,8 @@ class AutoCompleteText<T extends Object> extends StatefulWidget {
 
 class _AutoCompleteTextState<T extends Object>
     extends State<AutoCompleteText<T>> {
+  bool _justSelected = false;
+
   @override
   void initState() {
     super.initState();
@@ -55,6 +57,7 @@ class _AutoCompleteTextState<T extends Object>
   }
 
   void _handleTextChanges() {
+    log.finest(() => "_handleTextChanges: ${widget.textController.text}");
     setState(() {
       if (widget.textController.text.isEmpty && widget.onChanged != null) {
         widget.onChanged!("");
@@ -64,136 +67,144 @@ class _AutoCompleteTextState<T extends Object>
 
   @override
   Widget build(BuildContext context) {
-    log.finest(() => "build(labelText: $widget.labelText)");
+    log.finest(() => "build(labelText: ${widget.labelText})");
     return LayoutBuilder(
-      builder:
-          (BuildContext context, BoxConstraints constraints) =>
-              RawAutocomplete<T>(
-                textEditingController: widget.textController,
-                focusNode: widget.focusNode,
-                onSelected: widget.onSelected,
-                displayStringForOption: widget.displayStringForOption,
-                fieldViewBuilder:
-                    (
-                      BuildContext context,
-                      TextEditingController textEditingController,
-                      FocusNode focusNode,
-                      void onFieldSubmitted,
-                    ) => TextFormField(
-                      controller: textEditingController,
-                      focusNode: focusNode,
-                      onChanged: widget.onChanged,
-                      readOnly: widget.disabled,
-                      enabled: !widget.disabled,
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        labelText: widget.labelText,
-                        icon:
-                            (widget.labelIcon != null)
-                                ? Icon(widget.labelIcon)
-                                : null,
-                        filled: widget.disabled,
-                        suffixIcon:
-                            widget.errorText != null && widget.errorIconOnly
-                                ? const ErrorIcon(true)
-                                : textEditingController.text.isNotEmpty
-                                ? IconButton(
-                                  onPressed:
-                                      () => setState(() {
-                                        textEditingController.clear();
-                                        focusNode.requestFocus();
-                                      }),
-                                  icon: const Icon(Icons.clear),
-                                )
-                                : null,
-                        errorText: widget.errorText,
-                        errorStyle:
-                            widget.errorIconOnly
-                                ? const TextStyle(fontSize: 0)
-                                : null,
-                      ),
-                      enableSuggestions: true,
-                      style:
-                          widget.disabled
-                              ? widget.style?.copyWith(
-                                color: Theme.of(context).disabledColor,
-                              )
-                              : widget.style,
-                      onTapOutside: (_) {
-                        final BuildContext? ctx =
-                            FocusManager.instance.primaryFocus?.context;
-                        if (!focusNode.hasFocus || ctx == null) {
-                          return;
-                        }
-                        Actions.invoke(ctx, const DismissIntent());
-                      },
-                      textCapitalization: TextCapitalization.sentences,
-                    ),
-                optionsViewBuilder:
-                    (
-                      BuildContext context,
-                      void Function(T) onOptionSelected,
-                      Iterable<T> options,
-                    ) => Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          left: widget.labelIcon == null ? 0 : 40,
+      builder: (BuildContext context, BoxConstraints constraints) =>
+          RawAutocomplete<T>(
+            textEditingController: widget.textController,
+            focusNode: widget.focusNode,
+            onSelected: (T option) {
+              log.finest(() => "onSelected: $option");
+              _justSelected = true;
+              widget.onSelected?.call(option);
+            },
+            displayStringForOption: widget.displayStringForOption,
+            fieldViewBuilder:
+                (
+                  BuildContext context,
+                  TextEditingController textEditingController,
+                  FocusNode focusNode,
+                  void onFieldSubmitted,
+                ) => TextFormField(
+                  controller: textEditingController,
+                  focusNode: focusNode,
+                  onChanged: (String value) {
+                    log.finest(() => "onChanged: $value");
+                    widget.onChanged?.call(value);
+                  },
+                  readOnly: widget.disabled,
+                  enabled: !widget.disabled,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: widget.labelText,
+                    icon: (widget.labelIcon != null)
+                        ? Icon(widget.labelIcon)
+                        : null,
+                    filled: widget.disabled,
+                    suffixIcon: widget.errorText != null && widget.errorIconOnly
+                        ? const ErrorIcon(true)
+                        : textEditingController.text.isNotEmpty
+                        ? IconButton(
+                            onPressed: () => setState(() {
+                              textEditingController.clear();
+                              focusNode.requestFocus();
+                            }),
+                            icon: const Icon(Icons.clear),
+                          )
+                        : null,
+                    errorText: widget.errorText,
+                    errorStyle: widget.errorIconOnly
+                        ? const TextStyle(fontSize: 0)
+                        : null,
+                  ),
+                  enableSuggestions: true,
+                  style: widget.disabled
+                      ? widget.style?.copyWith(
+                          color: Theme.of(context).disabledColor,
+                        )
+                      : widget.style,
+                  onTapOutside: (_) {
+                    final BuildContext? ctx =
+                        FocusManager.instance.primaryFocus?.context;
+                    if (!focusNode.hasFocus || ctx == null) {
+                      return;
+                    }
+                    Actions.invoke(ctx, const DismissIntent());
+                  },
+                  textCapitalization: .sentences,
+                ),
+            optionsViewBuilder:
+                (
+                  BuildContext context,
+                  void Function(T) onOptionSelected,
+                  Iterable<T> options,
+                ) => Align(
+                  alignment: .topLeft,
+                  child: Padding(
+                    padding: .only(left: widget.labelIcon == null ? 0 : 40),
+                    child: Material(
+                      elevation: 4.0,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxHeight: 200,
+                          maxWidth:
+                              constraints.biggest.width -
+                              (widget.labelIcon == null ? 0 : 40),
                         ),
-                        child: Material(
-                          elevation: 4.0,
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxHeight: 200,
-                              maxWidth:
-                                  constraints.biggest.width -
-                                  (widget.labelIcon == null ? 0 : 40),
-                            ),
-                            child: ListView.builder(
-                              padding: EdgeInsets.zero,
-                              itemCount: options.length,
-                              shrinkWrap: true,
-                              itemBuilder: (BuildContext context, int index) {
-                                final T option = options.elementAt(index);
-                                return InkWell(
-                                  onTap: () => onOptionSelected(option),
-                                  child: Builder(
-                                    builder: (BuildContext context) {
-                                      final bool highlight =
-                                          AutocompleteHighlightedOption.of(
+                        child: ListView.builder(
+                          padding: .zero,
+                          itemCount: options.length,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            final T option = options.elementAt(index);
+                            return InkWell(
+                              onTap: () => onOptionSelected(option),
+                              child: Builder(
+                                builder: (BuildContext context) {
+                                  final bool highlight =
+                                      AutocompleteHighlightedOption.of(
+                                        context,
+                                      ) ==
+                                      index;
+                                  if (highlight) {
+                                    SchedulerBinding.instance
+                                        .addPostFrameCallback((_) {
+                                          Scrollable.ensureVisible(
                                             context,
-                                          ) ==
-                                          index;
-                                      if (highlight) {
-                                        SchedulerBinding.instance
-                                            .addPostFrameCallback((_) {
-                                              Scrollable.ensureVisible(
-                                                context,
-                                                alignment: 0.5,
-                                              );
-                                            });
-                                      }
-                                      return Container(
-                                        color:
-                                            highlight
-                                                ? Theme.of(context).focusColor
-                                                : null,
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Text(
-                                          widget.displayStringForOption(option),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
+                                            alignment: 0.5,
+                                          );
+                                        });
+                                  }
+                                  return Container(
+                                    color: highlight
+                                        ? Theme.of(context).focusColor
+                                        : null,
+                                    padding: const .all(16.0),
+                                    child: Text(
+                                      widget.displayStringForOption(option),
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),
-                optionsBuilder: widget.optionsBuilder,
-              ),
+                  ),
+                ),
+            optionsBuilder: (TextEditingValue textEditingValue) async {
+              log.finest(() => "optionsBuilder: ${textEditingValue.text}");
+              if (_justSelected) {
+                log.finest(
+                  () => "optionsBuilder suppressed because justSelected",
+                );
+                _justSelected = false;
+                return <T>[];
+              }
+              return await widget.optionsBuilder(textEditingValue);
+            },
+          ),
     );
   }
 }

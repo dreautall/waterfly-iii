@@ -38,7 +38,7 @@ class SummaryChart extends StatelessWidget {
       primaryXAxis: DateTimeAxis(
         labelStyle: Theme.of(
           context,
-        ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+        ).textTheme.labelMedium?.copyWith(fontWeight: .normal),
         dateFormat: DateFormat(DateFormat.ABBR_MONTH_DAY),
         axisLine: AxisLine(
           color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -48,15 +48,14 @@ class SummaryChart extends StatelessWidget {
       primaryYAxis: NumericAxis(
         labelStyle: Theme.of(
           context,
-        ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+        ).textTheme.labelMedium?.copyWith(fontWeight: .normal),
         axisLine: AxisLine(
           color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
-        axisLabelFormatter:
-            (AxisLabelRenderDetails args) => ChartAxisLabel(
-              NumberFormat().format(double.parse(args.text)),
-              args.textStyle,
-            ),
+        axisLabelFormatter: (AxisLabelRenderDetails args) => ChartAxisLabel(
+          NumberFormat().format(double.parse(args.text)),
+          args.textStyle,
+        ),
       ),
       series: chartData,
       palette: possibleChartColorsDart,
@@ -88,7 +87,7 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
             'yyyy-MM-dd',
           ).format(now.copyWith(month: now.month - 36)),
           end: DateFormat('yyyy-MM-dd').format(now),
-          period: V1ChartAccountOverviewGetPeriod.value_1d,
+          period: .value_1d,
         );
     apiThrowErrorIfEmpty(respChartData, mounted ? context : null);
 
@@ -147,131 +146,140 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
   Widget build(BuildContext context) {
     return SimpleDialog(
       title: Text(S.of(context).homeMainChartAccountsTitle),
-      clipBehavior: Clip.hardEdge,
-      insetPadding: const EdgeInsets.all(12),
+      clipBehavior: .hardEdge,
+      insetPadding: const .all(12),
       children: <Widget>[
         FutureBuilder<List<ChartDataSet>>(
           future: _fetchData(context),
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<List<ChartDataSet>> snapshot,
-          ) {
-            if (snapshot.connectionState == ConnectionState.done &&
-                snapshot.hasData) {
-              final List<CartesianSeries<TimeSeriesChart, DateTime>> chartData =
-                  <CartesianSeries<TimeSeriesChart, DateTime>>[];
+          builder:
+              (
+                BuildContext context,
+                AsyncSnapshot<List<ChartDataSet>> snapshot,
+              ) {
+                if (snapshot.connectionState == .done && snapshot.hasData) {
+                  final List<CartesianSeries<TimeSeriesChart, DateTime>>
+                  chartData = <CartesianSeries<TimeSeriesChart, DateTime>>[];
 
-              for (ChartDataSet e in snapshot.data!) {
-                if (e.label == null || e.label!.isEmpty) {
-                  continue;
-                }
-                chartData.add(
-                  FastLineSeries<TimeSeriesChart, DateTime>(
-                    dataSource: e.toChart(),
-                    xValueMapper: (TimeSeriesChart data, _) => data.time,
-                    yValueMapper: (TimeSeriesChart data, _) => data.value,
-                    legendItemText: e.label,
-                    animationDuration:
-                        animDurationEmphasized.inMilliseconds.toDouble() * 2,
-                  ),
-                );
-              }
+                  for (ChartDataSet e in snapshot.data!) {
+                    if (e.label == null || e.label!.isEmpty) {
+                      continue;
+                    }
+                    chartData.add(
+                      FastLineSeries<TimeSeriesChart, DateTime>(
+                        dataSource: e.toChart(),
+                        xValueMapper: (TimeSeriesChart data, _) => data.time,
+                        yValueMapper: (TimeSeriesChart data, _) => data.value,
+                        legendItemText: e.label,
+                        animationDuration:
+                            animDurationEmphasized.inMilliseconds.toDouble() *
+                            2,
+                      ),
+                    );
+                  }
 
-              return Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12),
-                    child: SizedBox(
-                      height: 300,
-                      width: MediaQuery.of(context).size.width,
-                      child: SfCartesianChart(
-                        primaryXAxis: DateTimeAxis(
-                          enableAutoIntervalOnZooming: true,
-                          labelStyle: Theme.of(context).textTheme.labelMedium
-                              ?.copyWith(fontWeight: FontWeight.normal),
-                          dateFormat: DateFormat(DateFormat.ABBR_MONTH_DAY),
-                          axisLine: AxisLine(
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant,
+                  return Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const .only(left: 12),
+                        child: SizedBox(
+                          height: 300,
+                          width: MediaQuery.of(context).size.width,
+                          child: SfCartesianChart(
+                            primaryXAxis: DateTimeAxis(
+                              enableAutoIntervalOnZooming: true,
+                              labelStyle: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium
+                                  ?.copyWith(fontWeight: .normal),
+                              dateFormat: DateFormat(DateFormat.ABBR_MONTH_DAY),
+                              axisLine: AxisLine(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant,
+                              ),
+                              minorTicksPerInterval: 3,
+                              initialZoomFactor: 0.09,
+                              initialZoomPosition: 1,
+                            ),
+                            primaryYAxis: NumericAxis(
+                              labelStyle: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium
+                                  ?.copyWith(fontWeight: .normal),
+                              axisLine: AxisLine(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant,
+                              ),
+                              axisLabelFormatter:
+                                  (AxisLabelRenderDetails args) =>
+                                      ChartAxisLabel(
+                                        NumberFormat().format(
+                                          double.parse(args.text),
+                                        ),
+                                        args.textStyle,
+                                      ),
+                            ),
+                            series: chartData,
+                            enableAxisAnimation: true,
+                            palette: possibleChartColorsDart,
+                            tooltipBehavior: TooltipBehavior(enable: false),
+                            crosshairBehavior: CrosshairBehavior(enable: false),
+                            zoomPanBehavior: ZoomPanBehavior(
+                              enablePanning: true,
+                              enablePinching: true,
+                              zoomMode: .x,
+                              enableDoubleTapZooming: true,
+                            ),
+                            trackballBehavior: TrackballBehavior(
+                              enable: true,
+                              activationMode: .longPress,
+                              lineType: .vertical,
+                              tooltipDisplayMode: .none,
+                              markerSettings: const TrackballMarkerSettings(
+                                markerVisibility: .visible,
+                              ),
+                              shouldAlwaysShow: true,
+                            ),
+                            onTrackballPositionChanging: (TrackballArgs args) =>
+                                trackballPositionChange(args, chartData),
                           ),
-                          minorTicksPerInterval: 3,
-                          initialZoomFactor: 0.09,
-                          initialZoomPosition: 1,
                         ),
-                        primaryYAxis: NumericAxis(
-                          labelStyle: Theme.of(context).textTheme.labelMedium
-                              ?.copyWith(fontWeight: FontWeight.normal),
-                          axisLine: AxisLine(
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant,
-                          ),
-                          axisLabelFormatter:
-                              (AxisLabelRenderDetails args) => ChartAxisLabel(
-                                NumberFormat().format(double.parse(args.text)),
-                                args.textStyle,
+                      ),
+                      Padding(
+                        padding: const .fromLTRB(12, 12, 12, 0),
+                        child: ValueListenableBuilder<DateTime?>(
+                          valueListenable: date,
+                          builder:
+                              (
+                                BuildContext context,
+                                DateTime? value,
+                                Widget? child,
+                              ) => SummaryTable(
+                                accounts: accounts,
+                                balances: balances,
+                                currencies: currencies,
+                                date: value!,
                               ),
                         ),
-                        series: chartData,
-                        enableAxisAnimation: true,
-                        palette: possibleChartColorsDart,
-                        tooltipBehavior: TooltipBehavior(enable: false),
-                        crosshairBehavior: CrosshairBehavior(enable: false),
-                        zoomPanBehavior: ZoomPanBehavior(
-                          enablePanning: true,
-                          enablePinching: true,
-                          zoomMode: ZoomMode.x,
-                          enableDoubleTapZooming: true,
-                        ),
-                        trackballBehavior: TrackballBehavior(
-                          enable: true,
-                          activationMode: ActivationMode.longPress,
-                          lineType: TrackballLineType.vertical,
-                          tooltipDisplayMode: TrackballDisplayMode.none,
-                          markerSettings: const TrackballMarkerSettings(
-                            markerVisibility: TrackballVisibilityMode.visible,
-                          ),
-                          shouldAlwaysShow: true,
-                        ),
-                        onTrackballPositionChanging:
-                            (TrackballArgs args) =>
-                                trackballPositionChange(args, chartData),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
-                    child: ValueListenableBuilder<DateTime?>(
-                      valueListenable: date,
-                      builder:
-                          (
-                            BuildContext context,
-                            DateTime? value,
-                            Widget? child,
-                          ) => SummaryTable(
-                            accounts: accounts,
-                            balances: balances,
-                            currencies: currencies,
-                            date: value!,
-                          ),
-                    ),
-                  ),
-                ],
-              );
-            } else if (snapshot.hasError) {
-              log.severe(
-                "error getting chart card data",
-                snapshot.error,
-                snapshot.stackTrace,
-              );
-              Navigator.of(context).pop();
-              return const SizedBox.shrink();
-            } else {
-              return const Padding(
-                padding: EdgeInsets.all(8),
-                child: Center(child: CircularProgressIndicator()),
-              );
-            }
-          },
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  log.severe(
+                    "error getting chart card data",
+                    snapshot.error,
+                    snapshot.stackTrace,
+                  );
+                  Navigator.of(context).pop();
+                  return const SizedBox.shrink();
+                } else {
+                  return const Padding(
+                    padding: .all(8),
+                    child: Center(child: CircularProgressIndicator.adaptive()),
+                  );
+                }
+              },
         ),
       ],
     );
@@ -316,29 +324,27 @@ class SummaryTable extends StatelessWidget {
               return TableRow(
                 children: <Widget>[
                   Align(
-                    alignment: Alignment.center,
+                    alignment: .center,
                     child: Text(
                       "⬤",
                       style: TextStyle(
                         color:
                             possibleChartColorsDart[i %
                                 possibleChartColorsDart.length],
-                        textBaseline: TextBaseline.ideographic,
+                        textBaseline: .ideographic,
                         height: 1.3,
                       ),
                     ),
                   ),
                   Text(account),
                   Align(
-                    alignment: Alignment.centerRight,
+                    alignment: .centerRight,
                     child: Text(
                       currency.fmt(balance, locale: S.of(context).localeName),
                       style: TextStyle(
                         color: (balance < 0) ? Colors.red : Colors.green,
-                        fontWeight: FontWeight.bold,
-                        fontFeatures: const <FontFeature>[
-                          FontFeature.tabularFigures(),
-                        ],
+                        fontWeight: .bold,
+                        fontFeatures: const <FontFeature>[.tabularFigures()],
                       ),
                     ),
                   ),

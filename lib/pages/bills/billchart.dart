@@ -33,15 +33,15 @@ class BillChartState extends State<BillChart> {
     // Loaded and more than two entries.
     if (loaded && _values.length > 2) {
       return Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const .all(8),
         child: SizedBox(
           height: 125,
           child: SfCartesianChart(
             primaryXAxis: DateTimeCategoryAxis(
-              dateFormat: DateFormat.yMMM(),
+              dateFormat: .yMMM(),
               labelStyle: Theme.of(
                 context,
-              ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+              ).textTheme.labelMedium?.copyWith(fontWeight: .normal),
               axisLine: AxisLine(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
@@ -49,12 +49,12 @@ class BillChartState extends State<BillChart> {
             primaryYAxis: NumericAxis(
               labelStyle: Theme.of(
                 context,
-              ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+              ).textTheme.labelMedium?.copyWith(fontWeight: .normal),
               axisLine: AxisLine(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
-              axisLabelFormatter:
-                  (AxisLabelRenderDetails args) => ChartAxisLabel(
+              axisLabelFormatter: (AxisLabelRenderDetails args) =>
+                  ChartAxisLabel(
                     NumberFormat().format(double.parse(args.text)),
                     args.textStyle,
                   ),
@@ -75,7 +75,7 @@ class BillChartState extends State<BillChart> {
     // Still loading
     return const SizedBox(
       height: 141, // Measured final chart height
-      child: Center(child: CircularProgressIndicator()),
+      child: Center(child: CircularProgressIndicator.adaptive()),
     );
   }
 

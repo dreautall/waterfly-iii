@@ -1,5 +1,5 @@
 {
-  "@@locale": "pt_BR",
+    "@@locale": "pt_BR",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "Carteira de Dinheiro",
     "@accountRoleAssetCashWallet": {
@@ -797,9 +797,25 @@
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
+    "loginFormButtonHideHeaders": "Ocultar cabeçalhos",
+    "@loginFormButtonHideHeaders": {
+        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
+    },
+    "loginFormButtonShowHeaders": "Cabeçalhos personalizados",
+    "@loginFormButtonShowHeaders": {
+        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
+    },
     "loginFormLabelAPIKey": "Chave de API válida",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHeaders": "Cabeçalhos personalizados (opcional)",
+    "@loginFormLabelHeaders": {
+        "description": "Login Form: Label for Custom Headers field"
+    },
+    "loginFormLabelHeadersHelp": "Um por linha, formato: NomeDoCabeçalho: valor",
+    "@loginFormLabelHeadersHelp": {
+        "description": "Login Form: Helper text for Custom Headers field"
     },
     "loginFormLabelHost": "URL do servidor",
     "@loginFormLabelHost": {
@@ -825,9 +841,9 @@
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
-    "navigationMain": "Painel Principal",
+    "navigationMain": "Painel",
     "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
+        "description": "Navigation Label: Dashboard"
     },
     "generalSettings": "Configurações",
     "@generalSettings": {
@@ -950,6 +966,38 @@
     "@settingsNLEmptyNote": {
         "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
+    "settingsNLHistory": "Histórico de notificações",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "Nenhuma notificação registrada até o momento.",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "{notificationHistorySize, plural, =1 {Este é o histórico da última notificação recebida pelo aplicativo.} other {Este é o histórico das últimas {notificationHistorySize} notificações recebidas pelo aplicativo.}} Adicionalmente, você pode criar transações a partir de notificações (válidas) ou ver o motivo pelo qual uma notificação não pôde ser processada.",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "Notificação ignorada: {reason, select, noMoney{Nenhum valor monetário encontrado} noCurrency{Nenhuma moeda encontrada} appNotUsed{Aplicativo não monitorado} other{Motivo desconhecido}}.",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "Listar notificações anteriores",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
+    },
     "settingsNLPermissionGrant": "Toque para permitir.",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
@@ -969,6 +1017,14 @@
     "settingsNLPrefillTXTitle": "Preencher título da transação com o título da notificação",
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLRegularExpression": "Expressão regular (opcional)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "Expressão regular inválida",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Verificando status…",
     "@settingsNLServiceChecking": {
@@ -1000,6 +1056,14 @@
     "settingsNotificationListener": "Monitorar Notificações",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
+    },
+    "settingsServerConnection": "Conexão com o servidor",
+    "@settingsServerConnection": {
+        "description": "Settings for the server connection"
+    },
+    "settingsServerConnectionUpdated": "Configurações de conexão atualizadas.",
+    "@settingsServerConnectionUpdated": {
+        "description": "Server connection settings have been updated"
     },
     "settingsTheme": "Tema do aplicativo",
     "@settingsTheme": {

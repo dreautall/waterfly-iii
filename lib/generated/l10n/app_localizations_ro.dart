@@ -510,6 +510,11 @@ class SRo extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Economisit până acum:';
 
   @override
@@ -531,6 +536,11 @@ class SRo extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'În pușculițe: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -619,7 +629,20 @@ class SRo extends S {
       'Pentru a folosi Waterfly III în mod productiv ai nevoie de propriul server cu o instanță Firefly III sau cu suplimentul Firefly III pentru asistentul la domiciliu.\n\nVă rugăm să introduceți adresa URL completă, precum și un token personal de acces (Setări -> Profile -> OAuth -> Personal Access Token) de mai jos.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Ascunde antetele';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Antete personalizate';
+
+  @override
   String get loginFormLabelAPIKey => 'Cheie API validă';
+
+  @override
+  String get loginFormLabelHeaders => 'Antete personalizate (opțional)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'Unul pe linie, format: NumeAntet: valoare';
 
   @override
   String get loginFormLabelHost => 'URL Host';
@@ -640,7 +663,7 @@ class SRo extends S {
   String get navigationCategories => 'Categorii';
 
   @override
-  String get navigationMain => 'Panou principal';
+  String get navigationMain => 'Tablou de bord';
 
   @override
   String get generalSettings => 'Setări';
@@ -650,11 +673,11 @@ class SRo extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -662,11 +685,11 @@ class SRo extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString din $of';
@@ -744,6 +767,40 @@ class SRo extends S {
   String get settingsNLEmptyNote => 'Păstrează câmpul notei gol';
 
   @override
+  String get settingsNLHistory => 'Istoric notificări';
+
+  @override
+  String get settingsNLHistoryEmpty =>
+      'Nicio notificare înregistrată până acum.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other: 'de notificări primite',
+      few: 'notificări primite',
+      one: 'notificare primită',
+    );
+    return 'Acesta este un istoric al ultimelor $_temp0 de către aplicație. În plus, poți crea tranzacții din notificările valide sau poți vedea motivul pentru care o notificare nu a putut fi procesată.';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'Nu a fost găsită nicio valoare monetară',
+      'noCurrency': 'Nu a fost găsită nicio monedă validă',
+      'appNotUsed': 'Aplicația nu este monitorizată',
+      'other': 'Motiv necunoscut',
+    });
+    return 'Notificare ignorată: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription =>
+      'Listează notificările anterioare';
+
+  @override
   String get settingsNLPermissionGrant =>
       'Atingeţi pentru a acorda permisiunea.';
 
@@ -761,6 +818,12 @@ class SRo extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Completează automat titlul tranzacției cu titlul notificării';
+
+  @override
+  String get settingsNLRegularExpression => 'Expresie regulată (opțional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Expresie regulată invalidă';
 
   @override
   String get settingsNLServiceChecking => 'Verificare stare…';
@@ -782,6 +845,13 @@ class SRo extends S {
   @override
   String get settingsNotificationListener =>
       'Serviciul de clasificare a notificărilor';
+
+  @override
+  String get settingsServerConnection => 'Conexiune server';
+
+  @override
+  String get settingsServerConnectionUpdated =>
+      'Setările conexiunii au fost actualizate.';
 
   @override
   String get settingsTheme => 'Tema aplicației';

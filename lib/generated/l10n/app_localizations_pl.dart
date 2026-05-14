@@ -511,6 +511,11 @@ class SPl extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Zaoszczędzono do tej pory:';
 
   @override
@@ -532,6 +537,11 @@ class SPl extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'W skarbonkach: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -622,7 +632,20 @@ class SPl extends S {
       'Aby wydajnie korzystać z Waterfly III, potrzebujesz własnego serwera z instancją Firefly III lub dodatkiem Firefly III dla asystenta domowego.\n\nWprowadź pełny adres URL oraz osobisty token dostępu (Ustawienia -> Profil -> OAuth -> Osobisty token dostępu) poniżej.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Ukryj nagłówki';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Własne nagłówki';
+
+  @override
   String get loginFormLabelAPIKey => 'Prawidłowy klucz API';
+
+  @override
+  String get loginFormLabelHeaders => 'Własne nagłówki (opcjonalnie)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'Jeden na linię, format: NazwaNagłówka: wartość';
 
   @override
   String get loginFormLabelHost => 'Adres URL hosta';
@@ -644,7 +667,7 @@ class SPl extends S {
   String get navigationCategories => 'Kategorie';
 
   @override
-  String get navigationMain => 'Panel główny';
+  String get navigationMain => 'Pulpit';
 
   @override
   String get generalSettings => 'Ustawienia';
@@ -654,11 +677,11 @@ class SPl extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -666,11 +689,11 @@ class SPl extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString z $of';
@@ -748,6 +771,42 @@ class SPl extends S {
   String get settingsNLEmptyNote => 'Pozostaw pole notatki puste';
 
   @override
+  String get settingsNLHistory => 'Historia powiadomień';
+
+  @override
+  String get settingsNLHistoryEmpty => 'Brak zarejestrowanych powiadomień.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other:
+          'To jest historia $notificationHistorySize ostatnich powiadomień odebranych przez aplikację. Dodatkowo możesz tworzyć transakcje z (prawidłowych) powiadomień lub sprawdzić powód, dla którego powiadomienie nie mogło zostać przetworzone.',
+      few:
+          'To jest historia $notificationHistorySize ostatnich powiadomień odebranych przez aplikację. Dodatkowo możesz tworzyć transakcje z (prawidłowych) powiadomień lub sprawdzić powód, dla którego powiadomienie nie mogło zostać przetworzone.',
+      one:
+          'To jest historia 1 ostatniego powiadomienia odebranego przez aplikację. Dodatkowo możesz tworzyć transakcje z (prawidłowych) powiadomień lub sprawdzić powód, dla którego powiadomienie nie mogło zostać przetworzone.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'Nie znaleziono wartości pieniężnej',
+      'noCurrency': 'Nie znaleziono waluty',
+      'appNotUsed': 'Aplikacja nie jest monitorowana',
+      'other': 'Nieznany powód',
+    });
+    return 'Powiadomienie pominięte: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription =>
+      'Lista poprzednich powiadomień';
+
+  @override
   String get settingsNLPermissionGrant => 'Dotknij, aby udzielić uprawnień.';
 
   @override
@@ -763,6 +822,13 @@ class SPl extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Uzupełnij tytuł transakcji tytułem powiadomienia';
+
+  @override
+  String get settingsNLRegularExpression => 'Wyrażenie regularne (opcjonalnie)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid =>
+      'Nieprawidłowe wyrażenie regularne';
 
   @override
   String get settingsNLServiceChecking => 'Sprawdzam stan…';
@@ -783,6 +849,13 @@ class SPl extends S {
 
   @override
   String get settingsNotificationListener => 'Usługa nasłuchiwania powiadomień';
+
+  @override
+  String get settingsServerConnection => 'Połączenie z serwerem';
+
+  @override
+  String get settingsServerConnectionUpdated =>
+      'Ustawienia połączenia zostały zaktualizowane.';
 
   @override
   String get settingsTheme => 'Motyw aplikacji';

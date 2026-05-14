@@ -797,9 +797,25 @@
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
+    "loginFormButtonHideHeaders": "隱藏標頭",
+    "@loginFormButtonHideHeaders": {
+        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
+    },
+    "loginFormButtonShowHeaders": "自訂標頭",
+    "@loginFormButtonShowHeaders": {
+        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
+    },
     "loginFormLabelAPIKey": "有效的 API 密鑰",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHeaders": "自訂標頭 (選填)",
+    "@loginFormLabelHeaders": {
+        "description": "Login Form: Label for Custom Headers field"
+    },
+    "loginFormLabelHeadersHelp": "每行一個，格式：HeaderName: value",
+    "@loginFormLabelHeadersHelp": {
+        "description": "Login Form: Helper text for Custom Headers field"
     },
     "loginFormLabelHost": "伺服器的網址",
     "@loginFormLabelHost": {
@@ -825,9 +841,9 @@
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
-    "navigationMain": "主頁",
+    "navigationMain": "儀表板",
     "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
+        "description": "Navigation Label: Dashboard"
     },
     "generalSettings": "設定",
     "@generalSettings": {
@@ -950,6 +966,38 @@
     "@settingsNLEmptyNote": {
         "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
+    "settingsNLHistory": "通知歷史記錄",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "目前沒有記錄任何通知。",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "{notificationHistorySize, plural, other {這是應用程式收到的最後 {notificationHistorySize} 則通知的歷史記錄。此外，您可以從（有效的）通知中建立交易，或查看通知無法處理的原因。}}",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "通知已略過：{reason, select, noMoney{找不到金額} noCurrency{找不到貨幣} appNotUsed{應用程式未被監聽} other{未知原因}}。",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "列出先前的通知",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
+    },
     "settingsNLPermissionGrant": "點選來授予權限。",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
@@ -969,6 +1017,14 @@
     "settingsNLPrefillTXTitle": "用通知標題作為交易標題",
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLRegularExpression": "正規表達式 (選填)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "無效的正規表達式",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "正在檢查狀態…",
     "@settingsNLServiceChecking": {
@@ -1000,6 +1056,14 @@
     "settingsNotificationListener": "通知監聽服務",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
+    },
+    "settingsServerConnection": "伺服器連線",
+    "@settingsServerConnection": {
+        "description": "Settings for the server connection"
+    },
+    "settingsServerConnectionUpdated": "連線設定已更新。",
+    "@settingsServerConnectionUpdated": {
+        "description": "Server connection settings have been updated"
     },
     "settingsTheme": "App 樣式",
     "@settingsTheme": {

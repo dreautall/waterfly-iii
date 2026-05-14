@@ -468,23 +468,18 @@ Map<String, dynamic> _$AutocompleteAccountToJson(
   'id': instance.id,
   'name': instance.name,
   'name_with_balance': instance.nameWithBalance,
-  if (instance.active case final value?) 'active': value,
+  'active': ?instance.active,
   'type': instance.type,
   'currency_id': instance.currencyId,
   'currency_name': instance.currencyName,
   'currency_code': instance.currencyCode,
   'currency_symbol': instance.currencySymbol,
   'currency_decimal_places': instance.currencyDecimalPlaces,
-  if (instance.accountCurrencyId case final value?)
-    'account_currency_id': value,
-  if (instance.accountCurrencyName case final value?)
-    'account_currency_name': value,
-  if (instance.accountCurrencyCode case final value?)
-    'account_currency_code': value,
-  if (instance.accountCurrencySymbol case final value?)
-    'account_currency_symbol': value,
-  if (instance.accountCurrencyDecimalPlaces case final value?)
-    'account_currency_decimal_places': value,
+  'account_currency_id': ?instance.accountCurrencyId,
+  'account_currency_name': ?instance.accountCurrencyName,
+  'account_currency_code': ?instance.accountCurrencyCode,
+  'account_currency_symbol': ?instance.accountCurrencySymbol,
+  'account_currency_decimal_places': ?instance.accountCurrencyDecimalPlaces,
 };
 
 AutocompleteBill _$AutocompleteBillFromJson(Map<String, dynamic> json) =>
@@ -498,7 +493,7 @@ Map<String, dynamic> _$AutocompleteBillToJson(AutocompleteBill instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      if (instance.active case final value?) 'active': value,
+      'active': ?instance.active,
     };
 
 AutocompleteBudget _$AutocompleteBudgetFromJson(Map<String, dynamic> json) =>
@@ -512,7 +507,7 @@ Map<String, dynamic> _$AutocompleteBudgetToJson(AutocompleteBudget instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      if (instance.active case final value?) 'active': value,
+      'active': ?instance.active,
     };
 
 AutocompleteCategory _$AutocompleteCategoryFromJson(
@@ -595,20 +590,18 @@ AutocompletePiggy _$AutocompletePiggyFromJson(Map<String, dynamic> json) =>
       objectGroupTitle: json['object_group_title'] as String?,
     );
 
-Map<String, dynamic> _$AutocompletePiggyToJson(
-  AutocompletePiggy instance,
-) => <String, dynamic>{
-  'id': instance.id,
-  'name': instance.name,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.currencySymbol case final value?) 'currency_symbol': value,
-  if (instance.currencyName case final value?) 'currency_name': value,
-  if (instance.currencyDecimalPlaces case final value?)
-    'currency_decimal_places': value,
-  if (instance.objectGroupId case final value?) 'object_group_id': value,
-  if (instance.objectGroupTitle case final value?) 'object_group_title': value,
-};
+Map<String, dynamic> _$AutocompletePiggyToJson(AutocompletePiggy instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'currency_id': ?instance.currencyId,
+      'currency_code': ?instance.currencyCode,
+      'currency_symbol': ?instance.currencySymbol,
+      'currency_name': ?instance.currencyName,
+      'currency_decimal_places': ?instance.currencyDecimalPlaces,
+      'object_group_id': ?instance.objectGroupId,
+      'object_group_title': ?instance.objectGroupTitle,
+    };
 
 AutocompletePiggyBalance _$AutocompletePiggyBalanceFromJson(
   Map<String, dynamic> json,
@@ -629,14 +622,13 @@ Map<String, dynamic> _$AutocompletePiggyBalanceToJson(
 ) => <String, dynamic>{
   'id': instance.id,
   'name': instance.name,
-  if (instance.nameWithBalance case final value?) 'name_with_balance': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.currencySymbol case final value?) 'currency_symbol': value,
-  if (instance.currencyDecimalPlaces case final value?)
-    'currency_decimal_places': value,
-  if (instance.objectGroupId case final value?) 'object_group_id': value,
-  if (instance.objectGroupTitle case final value?) 'object_group_title': value,
+  'name_with_balance': ?instance.nameWithBalance,
+  'currency_id': ?instance.currencyId,
+  'currency_code': ?instance.currencyCode,
+  'currency_symbol': ?instance.currencySymbol,
+  'currency_decimal_places': ?instance.currencyDecimalPlaces,
+  'object_group_id': ?instance.objectGroupId,
+  'object_group_title': ?instance.objectGroupTitle,
 };
 
 AutocompleteRecurrence _$AutocompleteRecurrenceFromJson(
@@ -653,8 +645,8 @@ Map<String, dynamic> _$AutocompleteRecurrenceToJson(
 ) => <String, dynamic>{
   'id': instance.id,
   'name': instance.name,
-  if (instance.description case final value?) 'description': value,
-  if (instance.active case final value?) 'active': value,
+  'description': ?instance.description,
+  'active': ?instance.active,
 };
 
 AutocompleteRule _$AutocompleteRuleFromJson(Map<String, dynamic> json) =>
@@ -669,8 +661,8 @@ Map<String, dynamic> _$AutocompleteRuleToJson(AutocompleteRule instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      if (instance.description case final value?) 'description': value,
-      if (instance.active case final value?) 'active': value,
+      'description': ?instance.description,
+      'active': ?instance.active,
     };
 
 AutocompleteRuleGroup _$AutocompleteRuleGroupFromJson(
@@ -687,8 +679,8 @@ Map<String, dynamic> _$AutocompleteRuleGroupToJson(
 ) => <String, dynamic>{
   'id': instance.id,
   'name': instance.name,
-  if (instance.description case final value?) 'description': value,
-  if (instance.active case final value?) 'active': value,
+  'description': ?instance.description,
+  'active': ?instance.active,
 };
 
 AutocompleteTag _$AutocompleteTagFromJson(Map<String, dynamic> json) =>
@@ -718,8 +710,7 @@ Map<String, dynamic> _$AutocompleteTransactionToJson(
   AutocompleteTransaction instance,
 ) => <String, dynamic>{
   'id': instance.id,
-  if (instance.transactionGroupId case final value?)
-    'transaction_group_id': value,
+  'transaction_group_id': ?instance.transactionGroupId,
   'name': instance.name,
   'description': instance.description,
 };
@@ -737,8 +728,7 @@ Map<String, dynamic> _$AutocompleteTransactionIDToJson(
   AutocompleteTransactionID instance,
 ) => <String, dynamic>{
   'id': instance.id,
-  if (instance.transactionGroupId case final value?)
-    'transaction_group_id': value,
+  'transaction_group_id': ?instance.transactionGroupId,
   'name': instance.name,
   'description': instance.description,
 };
@@ -763,7 +753,7 @@ ChartDataPoint _$ChartDataPointFromJson(Map<String, dynamic> json) =>
     ChartDataPoint(key: json['key'] as String?);
 
 Map<String, dynamic> _$ChartDataPointToJson(ChartDataPoint instance) =>
-    <String, dynamic>{if (instance.key case final value?) 'key': value};
+    <String, dynamic>{'key': ?instance.key};
 
 ChartDataSet _$ChartDataSetFromJson(Map<String, dynamic> json) => ChartDataSet(
   label: json['label'] as String?,
@@ -779,14 +769,12 @@ ChartDataSet _$ChartDataSetFromJson(Map<String, dynamic> json) => ChartDataSet(
   primaryCurrencyDecimalPlaces:
       (json['primary_currency_decimal_places'] as num?)?.toInt(),
   date: json['date'] == null ? null : DateTime.parse(json['date'] as String),
-  startDate:
-      json['start_date'] == null
-          ? null
-          : DateTime.parse(json['start_date'] as String),
-  endDate:
-      json['end_date'] == null
-          ? null
-          : DateTime.parse(json['end_date'] as String),
+  startDate: json['start_date'] == null
+      ? null
+      : DateTime.parse(json['start_date'] as String),
+  endDate: json['end_date'] == null
+      ? null
+      : DateTime.parse(json['end_date'] as String),
   type: json['type'] as String?,
   period: chartDatasetPeriodPropertyNullableFromJson(json['period']),
   yAxisID: (json['yAxisID'] as num?)?.toInt(),
@@ -794,38 +782,28 @@ ChartDataSet _$ChartDataSetFromJson(Map<String, dynamic> json) => ChartDataSet(
   pcEntries: json['pc_entries'],
 );
 
-Map<String, dynamic> _$ChartDataSetToJson(
-  ChartDataSet instance,
-) => <String, dynamic>{
-  if (instance.label case final value?) 'label': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyName case final value?) 'currency_name': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.currencySymbol case final value?) 'currency_symbol': value,
-  if (instance.currencyDecimalPlaces case final value?)
-    'currency_decimal_places': value,
-  if (instance.primaryCurrencyId case final value?)
-    'primary_currency_id': value,
-  if (instance.primaryCurrencyName case final value?)
-    'primary_currency_name': value,
-  if (instance.primaryCurrencyCode case final value?)
-    'primary_currency_code': value,
-  if (instance.primaryCurrencySymbol case final value?)
-    'primary_currency_symbol': value,
-  if (instance.primaryCurrencyDecimalPlaces case final value?)
-    'primary_currency_decimal_places': value,
-  if (instance.date?.toIso8601String() case final value?) 'date': value,
-  if (instance.startDate?.toIso8601String() case final value?)
-    'start_date': value,
-  if (instance.endDate?.toIso8601String() case final value?) 'end_date': value,
-  if (instance.type case final value?) 'type': value,
-  if (chartDatasetPeriodPropertyNullableToJson(instance.period)
-      case final value?)
-    'period': value,
-  if (instance.yAxisID case final value?) 'yAxisID': value,
-  if (instance.entries case final value?) 'entries': value,
-  if (instance.pcEntries case final value?) 'pc_entries': value,
-};
+Map<String, dynamic> _$ChartDataSetToJson(ChartDataSet instance) =>
+    <String, dynamic>{
+      'label': ?instance.label,
+      'currency_id': ?instance.currencyId,
+      'currency_name': ?instance.currencyName,
+      'currency_code': ?instance.currencyCode,
+      'currency_symbol': ?instance.currencySymbol,
+      'currency_decimal_places': ?instance.currencyDecimalPlaces,
+      'primary_currency_id': ?instance.primaryCurrencyId,
+      'primary_currency_name': ?instance.primaryCurrencyName,
+      'primary_currency_code': ?instance.primaryCurrencyCode,
+      'primary_currency_symbol': ?instance.primaryCurrencySymbol,
+      'primary_currency_decimal_places': ?instance.primaryCurrencyDecimalPlaces,
+      'date': ?instance.date?.toIso8601String(),
+      'start_date': ?instance.startDate?.toIso8601String(),
+      'end_date': ?instance.endDate?.toIso8601String(),
+      'type': ?instance.type,
+      'period': ?chartDatasetPeriodPropertyNullableToJson(instance.period),
+      'yAxisID': ?instance.yAxisID,
+      'entries': ?instance.entries,
+      'pc_entries': ?instance.pcEntries,
+    };
 
 InsightGroupEntry _$InsightGroupEntryFromJson(Map<String, dynamic> json) =>
     InsightGroupEntry(
@@ -839,12 +817,12 @@ InsightGroupEntry _$InsightGroupEntryFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$InsightGroupEntryToJson(InsightGroupEntry instance) =>
     <String, dynamic>{
-      if (instance.id case final value?) 'id': value,
-      if (instance.name case final value?) 'name': value,
-      if (instance.difference case final value?) 'difference': value,
-      if (instance.differenceFloat case final value?) 'difference_float': value,
-      if (instance.currencyId case final value?) 'currency_id': value,
-      if (instance.currencyCode case final value?) 'currency_code': value,
+      'id': ?instance.id,
+      'name': ?instance.name,
+      'difference': ?instance.difference,
+      'difference_float': ?instance.differenceFloat,
+      'currency_id': ?instance.currencyId,
+      'currency_code': ?instance.currencyCode,
     };
 
 InsightTotalEntry _$InsightTotalEntryFromJson(Map<String, dynamic> json) =>
@@ -857,10 +835,10 @@ InsightTotalEntry _$InsightTotalEntryFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$InsightTotalEntryToJson(InsightTotalEntry instance) =>
     <String, dynamic>{
-      if (instance.difference case final value?) 'difference': value,
-      if (instance.differenceFloat case final value?) 'difference_float': value,
-      if (instance.currencyId case final value?) 'currency_id': value,
-      if (instance.currencyCode case final value?) 'currency_code': value,
+      'difference': ?instance.difference,
+      'difference_float': ?instance.differenceFloat,
+      'currency_id': ?instance.currencyId,
+      'currency_code': ?instance.currencyCode,
     };
 
 InsightTransferEntry _$InsightTransferEntryFromJson(
@@ -881,16 +859,16 @@ InsightTransferEntry _$InsightTransferEntryFromJson(
 Map<String, dynamic> _$InsightTransferEntryToJson(
   InsightTransferEntry instance,
 ) => <String, dynamic>{
-  if (instance.id case final value?) 'id': value,
-  if (instance.name case final value?) 'name': value,
-  if (instance.difference case final value?) 'difference': value,
-  if (instance.differenceFloat case final value?) 'difference_float': value,
-  if (instance.$in case final value?) 'in': value,
-  if (instance.inFloat case final value?) 'in_float': value,
-  if (instance.out case final value?) 'out': value,
-  if (instance.outFloat case final value?) 'out_float': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
+  'id': ?instance.id,
+  'name': ?instance.name,
+  'difference': ?instance.difference,
+  'difference_float': ?instance.differenceFloat,
+  'in': ?instance.$in,
+  'in_float': ?instance.inFloat,
+  'out': ?instance.out,
+  'out_float': ?instance.outFloat,
+  'currency_id': ?instance.currencyId,
+  'currency_code': ?instance.currencyCode,
 };
 
 CategoryRead _$CategoryReadFromJson(Map<String, dynamic> json) => CategoryRead(
@@ -1304,14 +1282,12 @@ Map<String, dynamic> _$WebhookSingleToJson(WebhookSingle instance) =>
 
 AccountProperties _$AccountPropertiesFromJson(Map<String, dynamic> json) =>
     AccountProperties(
-      createdAt:
-          json['created_at'] == null
-              ? null
-              : DateTime.parse(json['created_at'] as String),
-      updatedAt:
-          json['updated_at'] == null
-              ? null
-              : DateTime.parse(json['updated_at'] as String),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
       active: json['active'] as bool? ?? true,
       order: (json['order'] as num?)?.toInt(),
       name: json['name'] as String,
@@ -1342,25 +1318,22 @@ AccountProperties _$AccountPropertiesFromJson(Map<String, dynamic> json) =>
       pcVirtualBalance: json['pc_virtual_balance'] as String?,
       debtAmount: json['debt_amount'] as String?,
       pcDebtAmount: json['pc_debt_amount'] as String?,
-      currentBalanceDate:
-          json['current_balance_date'] == null
-              ? null
-              : DateTime.parse(json['current_balance_date'] as String),
+      currentBalanceDate: json['current_balance_date'] == null
+          ? null
+          : DateTime.parse(json['current_balance_date'] as String),
       notes: json['notes'] as String?,
-      monthlyPaymentDate:
-          json['monthly_payment_date'] == null
-              ? null
-              : DateTime.parse(json['monthly_payment_date'] as String),
+      monthlyPaymentDate: json['monthly_payment_date'] == null
+          ? null
+          : DateTime.parse(json['monthly_payment_date'] as String),
       creditCardType: creditCardTypePropertyNullableFromJson(
         json['credit_card_type'],
       ),
       accountNumber: json['account_number'] as String?,
       iban: json['iban'] as String?,
       bic: json['bic'] as String?,
-      openingBalanceDate:
-          json['opening_balance_date'] == null
-              ? null
-              : DateTime.parse(json['opening_balance_date'] as String),
+      openingBalanceDate: json['opening_balance_date'] == null
+          ? null
+          : DateTime.parse(json['opening_balance_date'] as String),
       liabilityType: liabilityTypePropertyNullableFromJson(
         json['liability_type'],
       ),
@@ -1375,88 +1348,70 @@ AccountProperties _$AccountPropertiesFromJson(Map<String, dynamic> json) =>
       longitude: (json['longitude'] as num?)?.toDouble(),
       latitude: (json['latitude'] as num?)?.toDouble(),
       zoomLevel: (json['zoom_level'] as num?)?.toInt(),
-      lastActivity:
-          json['last_activity'] == null
-              ? null
-              : DateTime.parse(json['last_activity'] as String),
+      lastActivity: json['last_activity'] == null
+          ? null
+          : DateTime.parse(json['last_activity'] as String),
     );
 
-Map<String, dynamic> _$AccountPropertiesToJson(
-  AccountProperties instance,
-) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.order case final value?) 'order': value,
-  'name': instance.name,
-  if (shortAccountTypePropertyToJson(instance.type) case final value?)
-    'type': value,
-  if (accountRolePropertyNullableToJson(instance.accountRole) case final value?)
-    'account_role': value,
-  if (instance.objectGroupId case final value?) 'object_group_id': value,
-  if (instance.objectGroupOrder case final value?) 'object_group_order': value,
-  if (instance.objectGroupTitle case final value?) 'object_group_title': value,
-  if (instance.objectHasCurrencySetting case final value?)
-    'object_has_currency_setting': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyName case final value?) 'currency_name': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.currencySymbol case final value?) 'currency_symbol': value,
-  if (instance.currencyDecimalPlaces case final value?)
-    'currency_decimal_places': value,
-  if (instance.primaryCurrencyId case final value?)
-    'primary_currency_id': value,
-  if (instance.primaryCurrencyName case final value?)
-    'primary_currency_name': value,
-  if (instance.primaryCurrencyCode case final value?)
-    'primary_currency_code': value,
-  if (instance.primaryCurrencySymbol case final value?)
-    'primary_currency_symbol': value,
-  if (instance.primaryCurrencyDecimalPlaces case final value?)
-    'primary_currency_decimal_places': value,
-  if (instance.currentBalance case final value?) 'current_balance': value,
-  if (instance.pcCurrentBalance case final value?) 'pc_current_balance': value,
-  if (instance.balanceDifference case final value?) 'balance_difference': value,
-  if (instance.pcBalanceDifference case final value?)
-    'pc_balance_difference': value,
-  if (instance.openingBalance case final value?) 'opening_balance': value,
-  if (instance.pcOpeningBalance case final value?) 'pc_opening_balance': value,
-  if (instance.virtualBalance case final value?) 'virtual_balance': value,
-  if (instance.pcVirtualBalance case final value?) 'pc_virtual_balance': value,
-  if (instance.debtAmount case final value?) 'debt_amount': value,
-  if (instance.pcDebtAmount case final value?) 'pc_debt_amount': value,
-  if (instance.currentBalanceDate?.toIso8601String() case final value?)
-    'current_balance_date': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.monthlyPaymentDate?.toIso8601String() case final value?)
-    'monthly_payment_date': value,
-  if (creditCardTypePropertyNullableToJson(instance.creditCardType)
-      case final value?)
-    'credit_card_type': value,
-  if (instance.accountNumber case final value?) 'account_number': value,
-  if (instance.iban case final value?) 'iban': value,
-  if (instance.bic case final value?) 'bic': value,
-  if (instance.openingBalanceDate?.toIso8601String() case final value?)
-    'opening_balance_date': value,
-  if (liabilityTypePropertyNullableToJson(instance.liabilityType)
-      case final value?)
-    'liability_type': value,
-  if (liabilityDirectionPropertyNullableToJson(instance.liabilityDirection)
-      case final value?)
-    'liability_direction': value,
-  if (instance.interest case final value?) 'interest': value,
-  if (interestPeriodPropertyNullableToJson(instance.interestPeriod)
-      case final value?)
-    'interest_period': value,
-  if (instance.includeNetWorth case final value?) 'include_net_worth': value,
-  if (instance.longitude case final value?) 'longitude': value,
-  if (instance.latitude case final value?) 'latitude': value,
-  if (instance.zoomLevel case final value?) 'zoom_level': value,
-  if (instance.lastActivity?.toIso8601String() case final value?)
-    'last_activity': value,
-};
+Map<String, dynamic> _$AccountPropertiesToJson(AccountProperties instance) =>
+    <String, dynamic>{
+      'created_at': ?instance.createdAt?.toIso8601String(),
+      'updated_at': ?instance.updatedAt?.toIso8601String(),
+      'active': ?instance.active,
+      'order': ?instance.order,
+      'name': instance.name,
+      'type': ?shortAccountTypePropertyToJson(instance.type),
+      'account_role': ?accountRolePropertyNullableToJson(instance.accountRole),
+      'object_group_id': ?instance.objectGroupId,
+      'object_group_order': ?instance.objectGroupOrder,
+      'object_group_title': ?instance.objectGroupTitle,
+      'object_has_currency_setting': ?instance.objectHasCurrencySetting,
+      'currency_id': ?instance.currencyId,
+      'currency_name': ?instance.currencyName,
+      'currency_code': ?instance.currencyCode,
+      'currency_symbol': ?instance.currencySymbol,
+      'currency_decimal_places': ?instance.currencyDecimalPlaces,
+      'primary_currency_id': ?instance.primaryCurrencyId,
+      'primary_currency_name': ?instance.primaryCurrencyName,
+      'primary_currency_code': ?instance.primaryCurrencyCode,
+      'primary_currency_symbol': ?instance.primaryCurrencySymbol,
+      'primary_currency_decimal_places': ?instance.primaryCurrencyDecimalPlaces,
+      'current_balance': ?instance.currentBalance,
+      'pc_current_balance': ?instance.pcCurrentBalance,
+      'balance_difference': ?instance.balanceDifference,
+      'pc_balance_difference': ?instance.pcBalanceDifference,
+      'opening_balance': ?instance.openingBalance,
+      'pc_opening_balance': ?instance.pcOpeningBalance,
+      'virtual_balance': ?instance.virtualBalance,
+      'pc_virtual_balance': ?instance.pcVirtualBalance,
+      'debt_amount': ?instance.debtAmount,
+      'pc_debt_amount': ?instance.pcDebtAmount,
+      'current_balance_date': ?instance.currentBalanceDate?.toIso8601String(),
+      'notes': ?instance.notes,
+      'monthly_payment_date': ?instance.monthlyPaymentDate?.toIso8601String(),
+      'credit_card_type': ?creditCardTypePropertyNullableToJson(
+        instance.creditCardType,
+      ),
+      'account_number': ?instance.accountNumber,
+      'iban': ?instance.iban,
+      'bic': ?instance.bic,
+      'opening_balance_date': ?instance.openingBalanceDate?.toIso8601String(),
+      'liability_type': ?liabilityTypePropertyNullableToJson(
+        instance.liabilityType,
+      ),
+      'liability_direction': ?liabilityDirectionPropertyNullableToJson(
+        instance.liabilityDirection,
+      ),
+      'interest': ?instance.interest,
+      'interest_period': ?interestPeriodPropertyNullableToJson(
+        instance.interestPeriod,
+      ),
+      'include_net_worth': ?instance.includeNetWorth,
+      'longitude': ?instance.longitude,
+      'latitude': ?instance.latitude,
+      'zoom_level': ?instance.zoomLevel,
+      'last_activity': ?instance.lastActivity?.toIso8601String(),
+    };
 
 AccountRead _$AccountReadFromJson(Map<String, dynamic> json) => AccountRead(
   type: json['type'] as String,
@@ -1488,10 +1443,9 @@ AccountStore _$AccountStoreFromJson(Map<String, dynamic> json) => AccountStore(
   bic: json['bic'] as String?,
   accountNumber: json['account_number'] as String?,
   openingBalance: json['opening_balance'] as String?,
-  openingBalanceDate:
-      json['opening_balance_date'] == null
-          ? null
-          : DateTime.parse(json['opening_balance_date'] as String),
+  openingBalanceDate: json['opening_balance_date'] == null
+      ? null
+      : DateTime.parse(json['opening_balance_date'] as String),
   virtualBalance: json['virtual_balance'] as String?,
   currencyId: json['currency_id'] as String?,
   currencyCode: json['currency_code'] as String?,
@@ -1502,10 +1456,9 @@ AccountStore _$AccountStoreFromJson(Map<String, dynamic> json) => AccountStore(
   creditCardType: creditCardTypePropertyNullableFromJson(
     json['credit_card_type'],
   ),
-  monthlyPaymentDate:
-      json['monthly_payment_date'] == null
-          ? null
-          : DateTime.parse(json['monthly_payment_date'] as String),
+  monthlyPaymentDate: json['monthly_payment_date'] == null
+      ? null
+      : DateTime.parse(json['monthly_payment_date'] as String),
   liabilityType: liabilityTypePropertyNullableFromJson(json['liability_type']),
   liabilityDirection: liabilityDirectionPropertyNullableFromJson(
     json['liability_direction'],
@@ -1520,46 +1473,41 @@ AccountStore _$AccountStoreFromJson(Map<String, dynamic> json) => AccountStore(
   zoomLevel: (json['zoom_level'] as num?)?.toInt(),
 );
 
-Map<String, dynamic> _$AccountStoreToJson(
-  AccountStore instance,
-) => <String, dynamic>{
-  'name': instance.name,
-  if (shortAccountTypePropertyToJson(instance.type) case final value?)
-    'type': value,
-  if (instance.iban case final value?) 'iban': value,
-  if (instance.bic case final value?) 'bic': value,
-  if (instance.accountNumber case final value?) 'account_number': value,
-  if (instance.openingBalance case final value?) 'opening_balance': value,
-  if (instance.openingBalanceDate?.toIso8601String() case final value?)
-    'opening_balance_date': value,
-  if (instance.virtualBalance case final value?) 'virtual_balance': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.order case final value?) 'order': value,
-  if (instance.includeNetWorth case final value?) 'include_net_worth': value,
-  if (accountRolePropertyNullableToJson(instance.accountRole) case final value?)
-    'account_role': value,
-  if (creditCardTypePropertyNullableToJson(instance.creditCardType)
-      case final value?)
-    'credit_card_type': value,
-  if (instance.monthlyPaymentDate?.toIso8601String() case final value?)
-    'monthly_payment_date': value,
-  if (liabilityTypePropertyNullableToJson(instance.liabilityType)
-      case final value?)
-    'liability_type': value,
-  if (liabilityDirectionPropertyNullableToJson(instance.liabilityDirection)
-      case final value?)
-    'liability_direction': value,
-  if (instance.interest case final value?) 'interest': value,
-  if (interestPeriodPropertyNullableToJson(instance.interestPeriod)
-      case final value?)
-    'interest_period': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.latitude case final value?) 'latitude': value,
-  if (instance.longitude case final value?) 'longitude': value,
-  if (instance.zoomLevel case final value?) 'zoom_level': value,
-};
+Map<String, dynamic> _$AccountStoreToJson(AccountStore instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'type': ?shortAccountTypePropertyToJson(instance.type),
+      'iban': ?instance.iban,
+      'bic': ?instance.bic,
+      'account_number': ?instance.accountNumber,
+      'opening_balance': ?instance.openingBalance,
+      'opening_balance_date': ?instance.openingBalanceDate?.toIso8601String(),
+      'virtual_balance': ?instance.virtualBalance,
+      'currency_id': ?instance.currencyId,
+      'currency_code': ?instance.currencyCode,
+      'active': ?instance.active,
+      'order': ?instance.order,
+      'include_net_worth': ?instance.includeNetWorth,
+      'account_role': ?accountRolePropertyNullableToJson(instance.accountRole),
+      'credit_card_type': ?creditCardTypePropertyNullableToJson(
+        instance.creditCardType,
+      ),
+      'monthly_payment_date': ?instance.monthlyPaymentDate?.toIso8601String(),
+      'liability_type': ?liabilityTypePropertyNullableToJson(
+        instance.liabilityType,
+      ),
+      'liability_direction': ?liabilityDirectionPropertyNullableToJson(
+        instance.liabilityDirection,
+      ),
+      'interest': ?instance.interest,
+      'interest_period': ?interestPeriodPropertyNullableToJson(
+        instance.interestPeriod,
+      ),
+      'notes': ?instance.notes,
+      'latitude': ?instance.latitude,
+      'longitude': ?instance.longitude,
+      'zoom_level': ?instance.zoomLevel,
+    };
 
 AccountUpdate _$AccountUpdateFromJson(Map<String, dynamic> json) =>
     AccountUpdate(
@@ -1568,10 +1516,9 @@ AccountUpdate _$AccountUpdateFromJson(Map<String, dynamic> json) =>
       bic: json['bic'] as String?,
       accountNumber: json['account_number'] as String?,
       openingBalance: json['opening_balance'] as String?,
-      openingBalanceDate:
-          json['opening_balance_date'] == null
-              ? null
-              : DateTime.parse(json['opening_balance_date'] as String),
+      openingBalanceDate: json['opening_balance_date'] == null
+          ? null
+          : DateTime.parse(json['opening_balance_date'] as String),
       virtualBalance: json['virtual_balance'] as String?,
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
@@ -1582,10 +1529,9 @@ AccountUpdate _$AccountUpdateFromJson(Map<String, dynamic> json) =>
       creditCardType: creditCardTypePropertyNullableFromJson(
         json['credit_card_type'],
       ),
-      monthlyPaymentDate:
-          json['monthly_payment_date'] == null
-              ? null
-              : DateTime.parse(json['monthly_payment_date'] as String),
+      monthlyPaymentDate: json['monthly_payment_date'] == null
+          ? null
+          : DateTime.parse(json['monthly_payment_date'] as String),
       liabilityType: liabilityTypePropertyNullableFromJson(
         json['liability_type'],
       ),
@@ -1599,41 +1545,37 @@ AccountUpdate _$AccountUpdateFromJson(Map<String, dynamic> json) =>
       zoomLevel: (json['zoom_level'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$AccountUpdateToJson(
-  AccountUpdate instance,
-) => <String, dynamic>{
-  'name': instance.name,
-  if (instance.iban case final value?) 'iban': value,
-  if (instance.bic case final value?) 'bic': value,
-  if (instance.accountNumber case final value?) 'account_number': value,
-  if (instance.openingBalance case final value?) 'opening_balance': value,
-  if (instance.openingBalanceDate?.toIso8601String() case final value?)
-    'opening_balance_date': value,
-  if (instance.virtualBalance case final value?) 'virtual_balance': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.order case final value?) 'order': value,
-  if (instance.includeNetWorth case final value?) 'include_net_worth': value,
-  if (accountRolePropertyNullableToJson(instance.accountRole) case final value?)
-    'account_role': value,
-  if (creditCardTypePropertyNullableToJson(instance.creditCardType)
-      case final value?)
-    'credit_card_type': value,
-  if (instance.monthlyPaymentDate?.toIso8601String() case final value?)
-    'monthly_payment_date': value,
-  if (liabilityTypePropertyNullableToJson(instance.liabilityType)
-      case final value?)
-    'liability_type': value,
-  if (instance.interest case final value?) 'interest': value,
-  if (interestPeriodPropertyNullableToJson(instance.interestPeriod)
-      case final value?)
-    'interest_period': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.latitude case final value?) 'latitude': value,
-  if (instance.longitude case final value?) 'longitude': value,
-  if (instance.zoomLevel case final value?) 'zoom_level': value,
-};
+Map<String, dynamic> _$AccountUpdateToJson(AccountUpdate instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'iban': ?instance.iban,
+      'bic': ?instance.bic,
+      'account_number': ?instance.accountNumber,
+      'opening_balance': ?instance.openingBalance,
+      'opening_balance_date': ?instance.openingBalanceDate?.toIso8601String(),
+      'virtual_balance': ?instance.virtualBalance,
+      'currency_id': ?instance.currencyId,
+      'currency_code': ?instance.currencyCode,
+      'active': ?instance.active,
+      'order': ?instance.order,
+      'include_net_worth': ?instance.includeNetWorth,
+      'account_role': ?accountRolePropertyNullableToJson(instance.accountRole),
+      'credit_card_type': ?creditCardTypePropertyNullableToJson(
+        instance.creditCardType,
+      ),
+      'monthly_payment_date': ?instance.monthlyPaymentDate?.toIso8601String(),
+      'liability_type': ?liabilityTypePropertyNullableToJson(
+        instance.liabilityType,
+      ),
+      'interest': ?instance.interest,
+      'interest_period': ?interestPeriodPropertyNullableToJson(
+        instance.interestPeriod,
+      ),
+      'notes': ?instance.notes,
+      'latitude': ?instance.latitude,
+      'longitude': ?instance.longitude,
+      'zoom_level': ?instance.zoomLevel,
+    };
 
 ArrayEntryWithCurrencyAndSum _$ArrayEntryWithCurrencyAndSumFromJson(
   Map<String, dynamic> json,
@@ -1648,25 +1590,22 @@ ArrayEntryWithCurrencyAndSum _$ArrayEntryWithCurrencyAndSumFromJson(
 Map<String, dynamic> _$ArrayEntryWithCurrencyAndSumToJson(
   ArrayEntryWithCurrencyAndSum instance,
 ) => <String, dynamic>{
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.currencySymbol case final value?) 'currency_symbol': value,
-  if (instance.currencyDecimalPlaces case final value?)
-    'currency_decimal_places': value,
-  if (instance.sum case final value?) 'sum': value,
+  'currency_id': ?instance.currencyId,
+  'currency_code': ?instance.currencyCode,
+  'currency_symbol': ?instance.currencySymbol,
+  'currency_decimal_places': ?instance.currencyDecimalPlaces,
+  'sum': ?instance.sum,
 };
 
 AttachmentProperties _$AttachmentPropertiesFromJson(
   Map<String, dynamic> json,
 ) => AttachmentProperties(
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   attachableType: attachableTypeNullableFromJson(json['attachable_type']),
   attachableId: json['attachable_id'] as String?,
   hash: json['hash'] as String?,
@@ -1682,21 +1621,18 @@ AttachmentProperties _$AttachmentPropertiesFromJson(
 Map<String, dynamic> _$AttachmentPropertiesToJson(
   AttachmentProperties instance,
 ) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
-  if (attachableTypeNullableToJson(instance.attachableType) case final value?)
-    'attachable_type': value,
-  if (instance.attachableId case final value?) 'attachable_id': value,
-  if (instance.hash case final value?) 'hash': value,
-  if (instance.filename case final value?) 'filename': value,
-  if (instance.downloadUrl case final value?) 'download_url': value,
-  if (instance.uploadUrl case final value?) 'upload_url': value,
-  if (instance.title case final value?) 'title': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.mime case final value?) 'mime': value,
-  if (instance.size case final value?) 'size': value,
+  'created_at': ?instance.createdAt?.toIso8601String(),
+  'updated_at': ?instance.updatedAt?.toIso8601String(),
+  'attachable_type': ?attachableTypeNullableToJson(instance.attachableType),
+  'attachable_id': ?instance.attachableId,
+  'hash': ?instance.hash,
+  'filename': ?instance.filename,
+  'download_url': ?instance.downloadUrl,
+  'upload_url': ?instance.uploadUrl,
+  'title': ?instance.title,
+  'notes': ?instance.notes,
+  'mime': ?instance.mime,
+  'size': ?instance.size,
 };
 
 AttachmentRead _$AttachmentReadFromJson(Map<String, dynamic> json) =>
@@ -1737,11 +1673,10 @@ AttachmentStore _$AttachmentStoreFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$AttachmentStoreToJson(AttachmentStore instance) =>
     <String, dynamic>{
       'filename': instance.filename,
-      if (attachableTypeToJson(instance.attachableType) case final value?)
-        'attachable_type': value,
+      'attachable_type': ?attachableTypeToJson(instance.attachableType),
       'attachable_id': instance.attachableId,
-      if (instance.title case final value?) 'title': value,
-      if (instance.notes case final value?) 'notes': value,
+      'title': ?instance.title,
+      'notes': ?instance.notes,
     };
 
 AttachmentUpdate _$AttachmentUpdateFromJson(Map<String, dynamic> json) =>
@@ -1753,22 +1688,20 @@ AttachmentUpdate _$AttachmentUpdateFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$AttachmentUpdateToJson(AttachmentUpdate instance) =>
     <String, dynamic>{
-      if (instance.filename case final value?) 'filename': value,
-      if (instance.title case final value?) 'title': value,
-      if (instance.notes case final value?) 'notes': value,
+      'filename': ?instance.filename,
+      'title': ?instance.title,
+      'notes': ?instance.notes,
     };
 
 AvailableBudgetProperties _$AvailableBudgetPropertiesFromJson(
   Map<String, dynamic> json,
 ) => AvailableBudgetProperties(
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   objectHasCurrencySetting: json['object_has_currency_setting'] as bool?,
   currencyId: json['currency_id'] as String?,
   currencyName: json['currency_name'] as String?,
@@ -1826,44 +1759,33 @@ AvailableBudgetProperties _$AvailableBudgetPropertiesFromJson(
 Map<String, dynamic> _$AvailableBudgetPropertiesToJson(
   AvailableBudgetProperties instance,
 ) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
-  if (instance.objectHasCurrencySetting case final value?)
-    'object_has_currency_setting': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyName case final value?) 'currency_name': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.currencySymbol case final value?) 'currency_symbol': value,
-  if (instance.currencyDecimalPlaces case final value?)
-    'currency_decimal_places': value,
-  if (instance.primaryCurrencyId case final value?)
-    'primary_currency_id': value,
-  if (instance.primaryCurrencyName case final value?)
-    'primary_currency_name': value,
-  if (instance.primaryCurrencyCode case final value?)
-    'primary_currency_code': value,
-  if (instance.primaryCurrencySymbol case final value?)
-    'primary_currency_symbol': value,
-  if (instance.primaryCurrencyDecimalPlaces case final value?)
-    'primary_currency_decimal_places': value,
-  if (instance.amount case final value?) 'amount': value,
-  if (instance.pcAmount case final value?) 'pc_amount': value,
-  if (instance.start?.toIso8601String() case final value?) 'start': value,
-  if (instance.end?.toIso8601String() case final value?) 'end': value,
-  if (instance.spentInBudgets?.map((e) => e.toJson()).toList()
-      case final value?)
-    'spent_in_budgets': value,
-  if (instance.pcSpentInBudgets?.map((e) => e.toJson()).toList()
-      case final value?)
-    'pc_spent_in_budgets': value,
-  if (instance.spentOutsideBudgets?.map((e) => e.toJson()).toList()
-      case final value?)
-    'spent_outside_budgets': value,
-  if (instance.pcSpentOutsideBudgets?.map((e) => e.toJson()).toList()
-      case final value?)
-    'pc_spent_outside_budgets': value,
+  'created_at': ?instance.createdAt?.toIso8601String(),
+  'updated_at': ?instance.updatedAt?.toIso8601String(),
+  'object_has_currency_setting': ?instance.objectHasCurrencySetting,
+  'currency_id': ?instance.currencyId,
+  'currency_name': ?instance.currencyName,
+  'currency_code': ?instance.currencyCode,
+  'currency_symbol': ?instance.currencySymbol,
+  'currency_decimal_places': ?instance.currencyDecimalPlaces,
+  'primary_currency_id': ?instance.primaryCurrencyId,
+  'primary_currency_name': ?instance.primaryCurrencyName,
+  'primary_currency_code': ?instance.primaryCurrencyCode,
+  'primary_currency_symbol': ?instance.primaryCurrencySymbol,
+  'primary_currency_decimal_places': ?instance.primaryCurrencyDecimalPlaces,
+  'amount': ?instance.amount,
+  'pc_amount': ?instance.pcAmount,
+  'start': ?instance.start?.toIso8601String(),
+  'end': ?instance.end?.toIso8601String(),
+  'spent_in_budgets': ?instance.spentInBudgets?.map((e) => e.toJson()).toList(),
+  'pc_spent_in_budgets': ?instance.pcSpentInBudgets
+      ?.map((e) => e.toJson())
+      .toList(),
+  'spent_outside_budgets': ?instance.spentOutsideBudgets
+      ?.map((e) => e.toJson())
+      .toList(),
+  'pc_spent_outside_budgets': ?instance.pcSpentOutsideBudgets
+      ?.map((e) => e.toJson())
+      .toList(),
 };
 
 AvailableBudgetRead _$AvailableBudgetReadFromJson(Map<String, dynamic> json) =>
@@ -1893,128 +1815,104 @@ Map<String, dynamic> _$AvailableBudgetSingleToJson(
   AvailableBudgetSingle instance,
 ) => <String, dynamic>{'data': instance.data.toJson()};
 
-BillProperties _$BillPropertiesFromJson(Map<String, dynamic> json) =>
-    BillProperties(
-      createdAt:
-          json['created_at'] == null
-              ? null
-              : DateTime.parse(json['created_at'] as String),
-      updatedAt:
-          json['updated_at'] == null
-              ? null
-              : DateTime.parse(json['updated_at'] as String),
-      name: json['name'] as String?,
-      objectHasCurrencySetting: json['object_has_currency_setting'] as bool?,
-      currencyId: json['currency_id'] as String?,
-      currencyName: json['currency_name'] as String?,
-      currencyCode: json['currency_code'] as String?,
-      currencySymbol: json['currency_symbol'] as String?,
-      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
-      primaryCurrencyId: json['primary_currency_id'] as String?,
-      primaryCurrencyName: json['primary_currency_name'] as String?,
-      primaryCurrencyCode: json['primary_currency_code'] as String?,
-      primaryCurrencySymbol: json['primary_currency_symbol'] as String?,
-      primaryCurrencyDecimalPlaces:
-          (json['primary_currency_decimal_places'] as num?)?.toInt(),
-      amountMin: json['amount_min'] as String?,
-      pcAmountMin: json['pc_amount_min'] as String?,
-      amountMax: json['amount_max'] as String?,
-      pcAmountMax: json['pc_amount_max'] as String?,
-      amountAvg: json['amount_avg'] as String?,
-      pcAmountAvg: json['pc_amount_avg'] as String?,
-      date:
-          json['date'] == null ? null : DateTime.parse(json['date'] as String),
-      endDate:
-          json['end_date'] == null
-              ? null
-              : DateTime.parse(json['end_date'] as String),
-      extensionDate:
-          json['extension_date'] == null
-              ? null
-              : DateTime.parse(json['extension_date'] as String),
-      repeatFreq: billRepeatFrequencyNullableFromJson(json['repeat_freq']),
-      skip: (json['skip'] as num?)?.toInt(),
-      active: json['active'] as bool?,
-      order: (json['order'] as num?)?.toInt(),
-      notes: json['notes'] as String?,
-      objectGroupId: json['object_group_id']?.toString(),
-      objectGroupOrder: (json['object_group_order'] as num?)?.toInt(),
-      objectGroupTitle: json['object_group_title'] as String?,
-      paidDates:
-          (json['paid_dates'] as List<dynamic>?)
-              ?.map(
-                (e) => BillProperties$PaidDates$Item.fromJson(
-                  e as Map<String, dynamic>,
-                ),
-              )
-              .toList(),
-      payDates:
-          (json['pay_dates'] as List<dynamic>?)
-              ?.map((e) => DateTime.parse(e as String))
-              .toList() ??
-          [],
-      nextExpectedMatch:
-          json['next_expected_match'] == null
-              ? null
-              : DateTime.parse(json['next_expected_match'] as String),
-      nextExpectedMatchDiff: json['next_expected_match_diff'] as String?,
-    );
+BillProperties _$BillPropertiesFromJson(
+  Map<String, dynamic> json,
+) => BillProperties(
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
+  name: json['name'] as String?,
+  objectHasCurrencySetting: json['object_has_currency_setting'] as bool?,
+  currencyId: json['currency_id'] as String?,
+  currencyName: json['currency_name'] as String?,
+  currencyCode: json['currency_code'] as String?,
+  currencySymbol: json['currency_symbol'] as String?,
+  currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
+  primaryCurrencyId: json['primary_currency_id'] as String?,
+  primaryCurrencyName: json['primary_currency_name'] as String?,
+  primaryCurrencyCode: json['primary_currency_code'] as String?,
+  primaryCurrencySymbol: json['primary_currency_symbol'] as String?,
+  primaryCurrencyDecimalPlaces:
+      (json['primary_currency_decimal_places'] as num?)?.toInt(),
+  amountMin: json['amount_min'] as String?,
+  pcAmountMin: json['pc_amount_min'] as String?,
+  amountMax: json['amount_max'] as String?,
+  pcAmountMax: json['pc_amount_max'] as String?,
+  amountAvg: json['amount_avg'] as String?,
+  pcAmountAvg: json['pc_amount_avg'] as String?,
+  date: json['date'] == null ? null : DateTime.parse(json['date'] as String),
+  endDate: json['end_date'] == null
+      ? null
+      : DateTime.parse(json['end_date'] as String),
+  extensionDate: json['extension_date'] == null
+      ? null
+      : DateTime.parse(json['extension_date'] as String),
+  repeatFreq: billRepeatFrequencyNullableFromJson(json['repeat_freq']),
+  skip: (json['skip'] as num?)?.toInt(),
+  active: json['active'] as bool?,
+  order: (json['order'] as num?)?.toInt(),
+  notes: json['notes'] as String?,
+  objectGroupId: json['object_group_id'] as String?,
+  objectGroupOrder: (json['object_group_order'] as num?)?.toInt(),
+  objectGroupTitle: json['object_group_title'] as String?,
+  paidDates: (json['paid_dates'] as List<dynamic>?)
+      ?.map(
+        (e) =>
+            BillProperties$PaidDates$Item.fromJson(e as Map<String, dynamic>),
+      )
+      .toList(),
+  payDates:
+      (json['pay_dates'] as List<dynamic>?)
+          ?.map((e) => DateTime.parse(e as String))
+          .toList() ??
+      [],
+  nextExpectedMatch: json['next_expected_match'] == null
+      ? null
+      : DateTime.parse(json['next_expected_match'] as String),
+  nextExpectedMatchDiff: json['next_expected_match_diff'] as String?,
+);
 
-Map<String, dynamic> _$BillPropertiesToJson(
-  BillProperties instance,
-) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
-  if (instance.name case final value?) 'name': value,
-  if (instance.objectHasCurrencySetting case final value?)
-    'object_has_currency_setting': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyName case final value?) 'currency_name': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.currencySymbol case final value?) 'currency_symbol': value,
-  if (instance.currencyDecimalPlaces case final value?)
-    'currency_decimal_places': value,
-  if (instance.primaryCurrencyId case final value?)
-    'primary_currency_id': value,
-  if (instance.primaryCurrencyName case final value?)
-    'primary_currency_name': value,
-  if (instance.primaryCurrencyCode case final value?)
-    'primary_currency_code': value,
-  if (instance.primaryCurrencySymbol case final value?)
-    'primary_currency_symbol': value,
-  if (instance.primaryCurrencyDecimalPlaces case final value?)
-    'primary_currency_decimal_places': value,
-  if (instance.amountMin case final value?) 'amount_min': value,
-  if (instance.pcAmountMin case final value?) 'pc_amount_min': value,
-  if (instance.amountMax case final value?) 'amount_max': value,
-  if (instance.pcAmountMax case final value?) 'pc_amount_max': value,
-  if (instance.amountAvg case final value?) 'amount_avg': value,
-  if (instance.pcAmountAvg case final value?) 'pc_amount_avg': value,
-  if (instance.date?.toIso8601String() case final value?) 'date': value,
-  if (instance.endDate?.toIso8601String() case final value?) 'end_date': value,
-  if (instance.extensionDate?.toIso8601String() case final value?)
-    'extension_date': value,
-  if (billRepeatFrequencyNullableToJson(instance.repeatFreq) case final value?)
-    'repeat_freq': value,
-  if (instance.skip case final value?) 'skip': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.order case final value?) 'order': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.objectGroupId case final value?) 'object_group_id': value,
-  if (instance.objectGroupOrder case final value?) 'object_group_order': value,
-  if (instance.objectGroupTitle case final value?) 'object_group_title': value,
-  if (instance.paidDates?.map((e) => e.toJson()).toList() case final value?)
-    'paid_dates': value,
-  if (instance.payDates?.map((e) => e.toIso8601String()).toList()
-      case final value?)
-    'pay_dates': value,
-  if (instance.nextExpectedMatch?.toIso8601String() case final value?)
-    'next_expected_match': value,
-  if (instance.nextExpectedMatchDiff case final value?)
-    'next_expected_match_diff': value,
-};
+Map<String, dynamic> _$BillPropertiesToJson(BillProperties instance) =>
+    <String, dynamic>{
+      'created_at': ?instance.createdAt?.toIso8601String(),
+      'updated_at': ?instance.updatedAt?.toIso8601String(),
+      'name': ?instance.name,
+      'object_has_currency_setting': ?instance.objectHasCurrencySetting,
+      'currency_id': ?instance.currencyId,
+      'currency_name': ?instance.currencyName,
+      'currency_code': ?instance.currencyCode,
+      'currency_symbol': ?instance.currencySymbol,
+      'currency_decimal_places': ?instance.currencyDecimalPlaces,
+      'primary_currency_id': ?instance.primaryCurrencyId,
+      'primary_currency_name': ?instance.primaryCurrencyName,
+      'primary_currency_code': ?instance.primaryCurrencyCode,
+      'primary_currency_symbol': ?instance.primaryCurrencySymbol,
+      'primary_currency_decimal_places': ?instance.primaryCurrencyDecimalPlaces,
+      'amount_min': ?instance.amountMin,
+      'pc_amount_min': ?instance.pcAmountMin,
+      'amount_max': ?instance.amountMax,
+      'pc_amount_max': ?instance.pcAmountMax,
+      'amount_avg': ?instance.amountAvg,
+      'pc_amount_avg': ?instance.pcAmountAvg,
+      'date': ?instance.date?.toIso8601String(),
+      'end_date': ?instance.endDate?.toIso8601String(),
+      'extension_date': ?instance.extensionDate?.toIso8601String(),
+      'repeat_freq': ?billRepeatFrequencyNullableToJson(instance.repeatFreq),
+      'skip': ?instance.skip,
+      'active': ?instance.active,
+      'order': ?instance.order,
+      'notes': ?instance.notes,
+      'object_group_id': ?instance.objectGroupId,
+      'object_group_order': ?instance.objectGroupOrder,
+      'object_group_title': ?instance.objectGroupTitle,
+      'paid_dates': ?instance.paidDates?.map((e) => e.toJson()).toList(),
+      'pay_dates': ?instance.payDates?.map((e) => e.toIso8601String()).toList(),
+      'next_expected_match': ?instance.nextExpectedMatch?.toIso8601String(),
+      'next_expected_match_diff': ?instance.nextExpectedMatchDiff,
+    };
 
 BillRead _$BillReadFromJson(Map<String, dynamic> json) => BillRead(
   type: json['type'] as String,
@@ -2043,14 +1941,12 @@ BillStore _$BillStoreFromJson(Map<String, dynamic> json) => BillStore(
   amountMin: json['amount_min'] as String,
   amountMax: json['amount_max'] as String,
   date: DateTime.parse(json['date'] as String),
-  endDate:
-      json['end_date'] == null
-          ? null
-          : DateTime.parse(json['end_date'] as String),
-  extensionDate:
-      json['extension_date'] == null
-          ? null
-          : DateTime.parse(json['extension_date'] as String),
+  endDate: json['end_date'] == null
+      ? null
+      : DateTime.parse(json['end_date'] as String),
+  extensionDate: json['extension_date'] == null
+      ? null
+      : DateTime.parse(json['extension_date'] as String),
   repeatFreq: billRepeatFrequencyFromJson(json['repeat_freq']),
   skip: (json['skip'] as num?)?.toInt(),
   active: json['active'] as bool?,
@@ -2060,22 +1956,20 @@ BillStore _$BillStoreFromJson(Map<String, dynamic> json) => BillStore(
 );
 
 Map<String, dynamic> _$BillStoreToJson(BillStore instance) => <String, dynamic>{
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
+  'currency_id': ?instance.currencyId,
+  'currency_code': ?instance.currencyCode,
   'name': instance.name,
   'amount_min': instance.amountMin,
   'amount_max': instance.amountMax,
   'date': instance.date.toIso8601String(),
-  if (instance.endDate?.toIso8601String() case final value?) 'end_date': value,
-  if (instance.extensionDate?.toIso8601String() case final value?)
-    'extension_date': value,
-  if (billRepeatFrequencyToJson(instance.repeatFreq) case final value?)
-    'repeat_freq': value,
-  if (instance.skip case final value?) 'skip': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.objectGroupId case final value?) 'object_group_id': value,
-  if (instance.objectGroupTitle case final value?) 'object_group_title': value,
+  'end_date': ?instance.endDate?.toIso8601String(),
+  'extension_date': ?instance.extensionDate?.toIso8601String(),
+  'repeat_freq': ?billRepeatFrequencyToJson(instance.repeatFreq),
+  'skip': ?instance.skip,
+  'active': ?instance.active,
+  'notes': ?instance.notes,
+  'object_group_id': ?instance.objectGroupId,
+  'object_group_title': ?instance.objectGroupTitle,
 };
 
 BillUpdate _$BillUpdateFromJson(Map<String, dynamic> json) => BillUpdate(
@@ -2085,14 +1979,12 @@ BillUpdate _$BillUpdateFromJson(Map<String, dynamic> json) => BillUpdate(
   amountMin: json['amount_min'] as String?,
   amountMax: json['amount_max'] as String?,
   date: json['date'] == null ? null : DateTime.parse(json['date'] as String),
-  endDate:
-      json['end_date'] == null
-          ? null
-          : DateTime.parse(json['end_date'] as String),
-  extensionDate:
-      json['extension_date'] == null
-          ? null
-          : DateTime.parse(json['extension_date'] as String),
+  endDate: json['end_date'] == null
+      ? null
+      : DateTime.parse(json['end_date'] as String),
+  extensionDate: json['extension_date'] == null
+      ? null
+      : DateTime.parse(json['extension_date'] as String),
   repeatFreq: billRepeatFrequencyNullableFromJson(json['repeat_freq']),
   skip: (json['skip'] as num?)?.toInt(),
   active: json['active'] as bool?,
@@ -2101,37 +1993,32 @@ BillUpdate _$BillUpdateFromJson(Map<String, dynamic> json) => BillUpdate(
   objectGroupTitle: json['object_group_title'] as String?,
 );
 
-Map<String, dynamic> _$BillUpdateToJson(
-  BillUpdate instance,
-) => <String, dynamic>{
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  'name': instance.name,
-  if (instance.amountMin case final value?) 'amount_min': value,
-  if (instance.amountMax case final value?) 'amount_max': value,
-  if (instance.date?.toIso8601String() case final value?) 'date': value,
-  if (instance.endDate?.toIso8601String() case final value?) 'end_date': value,
-  if (instance.extensionDate?.toIso8601String() case final value?)
-    'extension_date': value,
-  if (billRepeatFrequencyNullableToJson(instance.repeatFreq) case final value?)
-    'repeat_freq': value,
-  if (instance.skip case final value?) 'skip': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.objectGroupId case final value?) 'object_group_id': value,
-  if (instance.objectGroupTitle case final value?) 'object_group_title': value,
-};
+Map<String, dynamic> _$BillUpdateToJson(BillUpdate instance) =>
+    <String, dynamic>{
+      'currency_id': ?instance.currencyId,
+      'currency_code': ?instance.currencyCode,
+      'name': instance.name,
+      'amount_min': ?instance.amountMin,
+      'amount_max': ?instance.amountMax,
+      'date': ?instance.date?.toIso8601String(),
+      'end_date': ?instance.endDate?.toIso8601String(),
+      'extension_date': ?instance.extensionDate?.toIso8601String(),
+      'repeat_freq': ?billRepeatFrequencyNullableToJson(instance.repeatFreq),
+      'skip': ?instance.skip,
+      'active': ?instance.active,
+      'notes': ?instance.notes,
+      'object_group_id': ?instance.objectGroupId,
+      'object_group_title': ?instance.objectGroupTitle,
+    };
 
 BudgetProperties _$BudgetPropertiesFromJson(Map<String, dynamic> json) =>
     BudgetProperties(
-      createdAt:
-          json['created_at'] == null
-              ? null
-              : DateTime.parse(json['created_at'] as String),
-      updatedAt:
-          json['updated_at'] == null
-              ? null
-              : DateTime.parse(json['updated_at'] as String),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
       active: json['active'] as bool?,
       name: json['name'] as String,
       order: (json['order'] as num?)?.toInt(),
@@ -2180,47 +2067,34 @@ BudgetProperties _$BudgetPropertiesFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$BudgetPropertiesToJson(
   BudgetProperties instance,
 ) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
-  if (instance.active case final value?) 'active': value,
+  'created_at': ?instance.createdAt?.toIso8601String(),
+  'updated_at': ?instance.updatedAt?.toIso8601String(),
+  'active': ?instance.active,
   'name': instance.name,
-  if (instance.order case final value?) 'order': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (autoBudgetTypeNullableToJson(instance.autoBudgetType) case final value?)
-    'auto_budget_type': value,
-  if (autoBudgetPeriodNullableToJson(instance.autoBudgetPeriod)
-      case final value?)
-    'auto_budget_period': value,
-  if (instance.objectGroupId case final value?) 'object_group_id': value,
-  if (instance.objectGroupOrder case final value?) 'object_group_order': value,
-  if (instance.objectGroupTitle case final value?) 'object_group_title': value,
-  if (instance.objectHasCurrencySetting case final value?)
-    'object_has_currency_setting': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyName case final value?) 'currency_name': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.currencySymbol case final value?) 'currency_symbol': value,
-  if (instance.currencyDecimalPlaces case final value?)
-    'currency_decimal_places': value,
-  if (instance.primaryCurrencyId case final value?)
-    'primary_currency_id': value,
-  if (instance.primaryCurrencyName case final value?)
-    'primary_currency_name': value,
-  if (instance.primaryCurrencyCode case final value?)
-    'primary_currency_code': value,
-  if (instance.primaryCurrencySymbol case final value?)
-    'primary_currency_symbol': value,
-  if (instance.primaryCurrencyDecimalPlaces case final value?)
-    'primary_currency_decimal_places': value,
-  if (instance.autoBudgetAmount case final value?) 'auto_budget_amount': value,
-  if (instance.pcAutoBudgetAmount case final value?)
-    'pc_auto_budget_amount': value,
-  if (instance.spent?.map((e) => e.toJson()).toList() case final value?)
-    'spent': value,
-  if (instance.pcSpent?.map((e) => e.toJson()).toList() case final value?)
-    'pc_spent': value,
+  'order': ?instance.order,
+  'notes': ?instance.notes,
+  'auto_budget_type': ?autoBudgetTypeNullableToJson(instance.autoBudgetType),
+  'auto_budget_period': ?autoBudgetPeriodNullableToJson(
+    instance.autoBudgetPeriod,
+  ),
+  'object_group_id': ?instance.objectGroupId,
+  'object_group_order': ?instance.objectGroupOrder,
+  'object_group_title': ?instance.objectGroupTitle,
+  'object_has_currency_setting': ?instance.objectHasCurrencySetting,
+  'currency_id': ?instance.currencyId,
+  'currency_name': ?instance.currencyName,
+  'currency_code': ?instance.currencyCode,
+  'currency_symbol': ?instance.currencySymbol,
+  'currency_decimal_places': ?instance.currencyDecimalPlaces,
+  'primary_currency_id': ?instance.primaryCurrencyId,
+  'primary_currency_name': ?instance.primaryCurrencyName,
+  'primary_currency_code': ?instance.primaryCurrencyCode,
+  'primary_currency_symbol': ?instance.primaryCurrencySymbol,
+  'primary_currency_decimal_places': ?instance.primaryCurrencyDecimalPlaces,
+  'auto_budget_amount': ?instance.autoBudgetAmount,
+  'pc_auto_budget_amount': ?instance.pcAutoBudgetAmount,
+  'spent': ?instance.spent?.map((e) => e.toJson()).toList(),
+  'pc_spent': ?instance.pcSpent?.map((e) => e.toJson()).toList(),
 };
 
 BudgetRead _$BudgetReadFromJson(Map<String, dynamic> json) => BudgetRead(
@@ -2250,6 +2124,7 @@ BudgetStore _$BudgetStoreFromJson(Map<String, dynamic> json) => BudgetStore(
   active: json['active'] as bool?,
   order: (json['order'] as num?)?.toInt(),
   notes: json['notes'] as String?,
+  fireWebhooks: json['fire_webhooks'] as bool? ?? true,
   autoBudgetType: autoBudgetTypeNullableFromJson(json['auto_budget_type']),
   autoBudgetCurrencyId: json['auto_budget_currency_id'] as String?,
   autoBudgetCurrencyCode: json['auto_budget_currency_code'] as String?,
@@ -2263,19 +2138,17 @@ Map<String, dynamic> _$BudgetStoreToJson(
   BudgetStore instance,
 ) => <String, dynamic>{
   'name': instance.name,
-  if (instance.active case final value?) 'active': value,
-  if (instance.order case final value?) 'order': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (autoBudgetTypeNullableToJson(instance.autoBudgetType) case final value?)
-    'auto_budget_type': value,
-  if (instance.autoBudgetCurrencyId case final value?)
-    'auto_budget_currency_id': value,
-  if (instance.autoBudgetCurrencyCode case final value?)
-    'auto_budget_currency_code': value,
-  if (instance.autoBudgetAmount case final value?) 'auto_budget_amount': value,
-  if (autoBudgetPeriodNullableToJson(instance.autoBudgetPeriod)
-      case final value?)
-    'auto_budget_period': value,
+  'active': ?instance.active,
+  'order': ?instance.order,
+  'notes': ?instance.notes,
+  'fire_webhooks': ?instance.fireWebhooks,
+  'auto_budget_type': ?autoBudgetTypeNullableToJson(instance.autoBudgetType),
+  'auto_budget_currency_id': ?instance.autoBudgetCurrencyId,
+  'auto_budget_currency_code': ?instance.autoBudgetCurrencyCode,
+  'auto_budget_amount': ?instance.autoBudgetAmount,
+  'auto_budget_period': ?autoBudgetPeriodNullableToJson(
+    instance.autoBudgetPeriod,
+  ),
 };
 
 BudgetUpdate _$BudgetUpdateFromJson(Map<String, dynamic> json) => BudgetUpdate(
@@ -2283,6 +2156,7 @@ BudgetUpdate _$BudgetUpdateFromJson(Map<String, dynamic> json) => BudgetUpdate(
   active: json['active'] as bool?,
   order: (json['order'] as num?)?.toInt(),
   notes: json['notes'] as String?,
+  fireWebhooks: json['fire_webhooks'] as bool? ?? true,
   autoBudgetType: autoBudgetTypeNullableFromJson(json['auto_budget_type']),
   autoBudgetCurrencyId: json['auto_budget_currency_id'] as String?,
   autoBudgetCurrencyCode: json['auto_budget_currency_code'] as String?,
@@ -2296,32 +2170,28 @@ Map<String, dynamic> _$BudgetUpdateToJson(
   BudgetUpdate instance,
 ) => <String, dynamic>{
   'name': instance.name,
-  if (instance.active case final value?) 'active': value,
-  if (instance.order case final value?) 'order': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (autoBudgetTypeNullableToJson(instance.autoBudgetType) case final value?)
-    'auto_budget_type': value,
-  if (instance.autoBudgetCurrencyId case final value?)
-    'auto_budget_currency_id': value,
-  if (instance.autoBudgetCurrencyCode case final value?)
-    'auto_budget_currency_code': value,
-  if (instance.autoBudgetAmount case final value?) 'auto_budget_amount': value,
-  if (autoBudgetPeriodNullableToJson(instance.autoBudgetPeriod)
-      case final value?)
-    'auto_budget_period': value,
+  'active': ?instance.active,
+  'order': ?instance.order,
+  'notes': ?instance.notes,
+  'fire_webhooks': ?instance.fireWebhooks,
+  'auto_budget_type': ?autoBudgetTypeNullableToJson(instance.autoBudgetType),
+  'auto_budget_currency_id': ?instance.autoBudgetCurrencyId,
+  'auto_budget_currency_code': ?instance.autoBudgetCurrencyCode,
+  'auto_budget_amount': ?instance.autoBudgetAmount,
+  'auto_budget_period': ?autoBudgetPeriodNullableToJson(
+    instance.autoBudgetPeriod,
+  ),
 };
 
 BudgetLimitProperties _$BudgetLimitPropertiesFromJson(
   Map<String, dynamic> json,
 ) => BudgetLimitProperties(
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   start: json['start'] == null ? null : DateTime.parse(json['start'] as String),
   end: json['end'] == null ? null : DateTime.parse(json['end'] as String),
   budgetId: json['budget_id'] as String?,
@@ -2364,39 +2234,28 @@ BudgetLimitProperties _$BudgetLimitPropertiesFromJson(
 Map<String, dynamic> _$BudgetLimitPropertiesToJson(
   BudgetLimitProperties instance,
 ) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
-  if (instance.start?.toIso8601String() case final value?) 'start': value,
-  if (instance.end?.toIso8601String() case final value?) 'end': value,
-  if (instance.budgetId case final value?) 'budget_id': value,
-  if (instance.objectHasCurrencySetting case final value?)
-    'object_has_currency_setting': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyName case final value?) 'currency_name': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.currencySymbol case final value?) 'currency_symbol': value,
-  if (instance.currencyDecimalPlaces case final value?)
-    'currency_decimal_places': value,
-  if (instance.primaryCurrencyId case final value?)
-    'primary_currency_id': value,
-  if (instance.primaryCurrencyName case final value?)
-    'primary_currency_name': value,
-  if (instance.primaryCurrencyCode case final value?)
-    'primary_currency_code': value,
-  if (instance.primaryCurrencySymbol case final value?)
-    'primary_currency_symbol': value,
-  if (instance.primaryCurrencyDecimalPlaces case final value?)
-    'primary_currency_decimal_places': value,
-  if (instance.amount case final value?) 'amount': value,
-  if (instance.pcAmount case final value?) 'pc_amount': value,
-  if (instance.period case final value?) 'period': value,
-  if (instance.spent?.map((e) => e.toJson()).toList() case final value?)
-    'spent': value,
-  if (instance.pcSpent?.map((e) => e.toJson()).toList() case final value?)
-    'pc_spent': value,
-  if (instance.notes case final value?) 'notes': value,
+  'created_at': ?instance.createdAt?.toIso8601String(),
+  'updated_at': ?instance.updatedAt?.toIso8601String(),
+  'start': ?instance.start?.toIso8601String(),
+  'end': ?instance.end?.toIso8601String(),
+  'budget_id': ?instance.budgetId,
+  'object_has_currency_setting': ?instance.objectHasCurrencySetting,
+  'currency_id': ?instance.currencyId,
+  'currency_name': ?instance.currencyName,
+  'currency_code': ?instance.currencyCode,
+  'currency_symbol': ?instance.currencySymbol,
+  'currency_decimal_places': ?instance.currencyDecimalPlaces,
+  'primary_currency_id': ?instance.primaryCurrencyId,
+  'primary_currency_name': ?instance.primaryCurrencyName,
+  'primary_currency_code': ?instance.primaryCurrencyCode,
+  'primary_currency_symbol': ?instance.primaryCurrencySymbol,
+  'primary_currency_decimal_places': ?instance.primaryCurrencyDecimalPlaces,
+  'amount': ?instance.amount,
+  'pc_amount': ?instance.pcAmount,
+  'period': ?instance.period,
+  'spent': ?instance.spent?.map((e) => e.toJson()).toList(),
+  'pc_spent': ?instance.pcSpent?.map((e) => e.toJson()).toList(),
+  'notes': ?instance.notes,
 };
 
 BudgetLimitRead _$BudgetLimitReadFromJson(Map<String, dynamic> json) =>
@@ -2433,97 +2292,89 @@ BudgetLimitStore _$BudgetLimitStoreFromJson(Map<String, dynamic> json) =>
       end: DateTime.parse(json['end'] as String),
       amount: json['amount'] as String,
       notes: json['notes'] as String?,
+      fireWebhooks: json['fire_webhooks'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$BudgetLimitStoreToJson(BudgetLimitStore instance) =>
     <String, dynamic>{
-      if (instance.currencyId case final value?) 'currency_id': value,
-      if (instance.currencyCode case final value?) 'currency_code': value,
-      if (instance.budgetId case final value?) 'budget_id': value,
-      if (_dateToJson(instance.start) case final value?) 'start': value,
-      if (instance.period case final value?) 'period': value,
-      if (_dateToJson(instance.end) case final value?) 'end': value,
+      'currency_id': ?instance.currencyId,
+      'currency_code': ?instance.currencyCode,
+      'budget_id': ?instance.budgetId,
+      'start': ?_dateToJson(instance.start),
+      'period': ?instance.period,
+      'end': ?_dateToJson(instance.end),
       'amount': instance.amount,
-      if (instance.notes case final value?) 'notes': value,
+      'notes': ?instance.notes,
+      'fire_webhooks': ?instance.fireWebhooks,
     };
 
-BudgetLimitUpdate _$BudgetLimitUpdateFromJson(
-  Map<String, dynamic> json,
-) => BudgetLimitUpdate(
-  createdAt:
-      json['created_at'] == null
+BudgetLimitUpdate _$BudgetLimitUpdateFromJson(Map<String, dynamic> json) =>
+    BudgetLimitUpdate(
+      createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
+      updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
-  start: json['start'] == null ? null : DateTime.parse(json['start'] as String),
-  end: json['end'] == null ? null : DateTime.parse(json['end'] as String),
-  budgetId: json['budget_id'] as String?,
-  objectHasCurrencySetting: json['object_has_currency_setting'] as bool?,
-  currencyId: json['currency_id'] as String?,
-  currencyName: json['currency_name'] as String?,
-  currencyCode: json['currency_code'] as String?,
-  currencySymbol: json['currency_symbol'] as String?,
-  currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
-  primaryCurrencyId: json['primary_currency_id'] as String?,
-  primaryCurrencyName: json['primary_currency_name'] as String?,
-  primaryCurrencyCode: json['primary_currency_code'] as String?,
-  primaryCurrencySymbol: json['primary_currency_symbol'] as String?,
-  primaryCurrencyDecimalPlaces:
-      (json['primary_currency_decimal_places'] as num?)?.toInt(),
-  period: json['period'] as String?,
-  amount: json['amount'] as String?,
-  pcAmount: json['pc_amount'] as String?,
-  spent: json['spent'] as String?,
-  notes: json['notes'] as String?,
-);
+      start: json['start'] == null
+          ? null
+          : DateTime.parse(json['start'] as String),
+      end: json['end'] == null ? null : DateTime.parse(json['end'] as String),
+      budgetId: json['budget_id'] as String?,
+      objectHasCurrencySetting: json['object_has_currency_setting'] as bool?,
+      currencyId: json['currency_id'] as String?,
+      currencyName: json['currency_name'] as String?,
+      currencyCode: json['currency_code'] as String?,
+      currencySymbol: json['currency_symbol'] as String?,
+      currencyDecimalPlaces: (json['currency_decimal_places'] as num?)?.toInt(),
+      primaryCurrencyId: json['primary_currency_id'] as String?,
+      primaryCurrencyName: json['primary_currency_name'] as String?,
+      primaryCurrencyCode: json['primary_currency_code'] as String?,
+      primaryCurrencySymbol: json['primary_currency_symbol'] as String?,
+      primaryCurrencyDecimalPlaces:
+          (json['primary_currency_decimal_places'] as num?)?.toInt(),
+      period: json['period'] as String?,
+      amount: json['amount'] as String?,
+      pcAmount: json['pc_amount'] as String?,
+      spent: json['spent'] as String?,
+      notes: json['notes'] as String?,
+      fireWebhooks: json['fire_webhooks'] as bool? ?? true,
+    );
 
 Map<String, dynamic> _$BudgetLimitUpdateToJson(BudgetLimitUpdate instance) =>
     <String, dynamic>{
-      if (instance.createdAt?.toIso8601String() case final value?)
-        'created_at': value,
-      if (instance.updatedAt?.toIso8601String() case final value?)
-        'updated_at': value,
-      if (instance.start?.toIso8601String() case final value?) 'start': value,
-      if (instance.end?.toIso8601String() case final value?) 'end': value,
-      if (instance.budgetId case final value?) 'budget_id': value,
-      if (instance.objectHasCurrencySetting case final value?)
-        'object_has_currency_setting': value,
-      if (instance.currencyId case final value?) 'currency_id': value,
-      if (instance.currencyName case final value?) 'currency_name': value,
-      if (instance.currencyCode case final value?) 'currency_code': value,
-      if (instance.currencySymbol case final value?) 'currency_symbol': value,
-      if (instance.currencyDecimalPlaces case final value?)
-        'currency_decimal_places': value,
-      if (instance.primaryCurrencyId case final value?)
-        'primary_currency_id': value,
-      if (instance.primaryCurrencyName case final value?)
-        'primary_currency_name': value,
-      if (instance.primaryCurrencyCode case final value?)
-        'primary_currency_code': value,
-      if (instance.primaryCurrencySymbol case final value?)
-        'primary_currency_symbol': value,
-      if (instance.primaryCurrencyDecimalPlaces case final value?)
-        'primary_currency_decimal_places': value,
-      if (instance.period case final value?) 'period': value,
-      if (instance.amount case final value?) 'amount': value,
-      if (instance.pcAmount case final value?) 'pc_amount': value,
-      if (instance.spent case final value?) 'spent': value,
-      if (instance.notes case final value?) 'notes': value,
+      'created_at': ?instance.createdAt?.toIso8601String(),
+      'updated_at': ?instance.updatedAt?.toIso8601String(),
+      'start': ?instance.start?.toIso8601String(),
+      'end': ?instance.end?.toIso8601String(),
+      'budget_id': ?instance.budgetId,
+      'object_has_currency_setting': ?instance.objectHasCurrencySetting,
+      'currency_id': ?instance.currencyId,
+      'currency_name': ?instance.currencyName,
+      'currency_code': ?instance.currencyCode,
+      'currency_symbol': ?instance.currencySymbol,
+      'currency_decimal_places': ?instance.currencyDecimalPlaces,
+      'primary_currency_id': ?instance.primaryCurrencyId,
+      'primary_currency_name': ?instance.primaryCurrencyName,
+      'primary_currency_code': ?instance.primaryCurrencyCode,
+      'primary_currency_symbol': ?instance.primaryCurrencySymbol,
+      'primary_currency_decimal_places': ?instance.primaryCurrencyDecimalPlaces,
+      'period': ?instance.period,
+      'amount': ?instance.amount,
+      'pc_amount': ?instance.pcAmount,
+      'spent': ?instance.spent,
+      'notes': ?instance.notes,
+      'fire_webhooks': ?instance.fireWebhooks,
     };
 
 CategoryProperties _$CategoryPropertiesFromJson(Map<String, dynamic> json) =>
     CategoryProperties(
-      createdAt:
-          json['created_at'] == null
-              ? null
-              : DateTime.parse(json['created_at'] as String),
-      updatedAt:
-          json['updated_at'] == null
-              ? null
-              : DateTime.parse(json['updated_at'] as String),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
       name: json['name'] as String,
       notes: json['notes'] as String?,
       objectHasCurrencySetting: json['object_has_currency_setting'] as bool?,
@@ -2592,36 +2443,22 @@ CategoryProperties _$CategoryPropertiesFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$CategoryPropertiesToJson(
   CategoryProperties instance,
 ) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
+  'created_at': ?instance.createdAt?.toIso8601String(),
+  'updated_at': ?instance.updatedAt?.toIso8601String(),
   'name': instance.name,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.objectHasCurrencySetting case final value?)
-    'object_has_currency_setting': value,
-  if (instance.primaryCurrencyId case final value?)
-    'primary_currency_id': value,
-  if (instance.primaryCurrencyName case final value?)
-    'primary_currency_name': value,
-  if (instance.primaryCurrencyCode case final value?)
-    'primary_currency_code': value,
-  if (instance.primaryCurrencySymbol case final value?)
-    'primary_currency_symbol': value,
-  if (instance.primaryCurrencyDecimalPlaces case final value?)
-    'primary_currency_decimal_places': value,
-  if (instance.spent?.map((e) => e.toJson()).toList() case final value?)
-    'spent': value,
-  if (instance.pcSpent?.map((e) => e.toJson()).toList() case final value?)
-    'pc_spent': value,
-  if (instance.earned?.map((e) => e.toJson()).toList() case final value?)
-    'earned': value,
-  if (instance.pcEarned?.map((e) => e.toJson()).toList() case final value?)
-    'pc_earned': value,
-  if (instance.transferred?.map((e) => e.toJson()).toList() case final value?)
-    'transferred': value,
-  if (instance.pcTransferred?.map((e) => e.toJson()).toList() case final value?)
-    'pc_transferred': value,
+  'notes': ?instance.notes,
+  'object_has_currency_setting': ?instance.objectHasCurrencySetting,
+  'primary_currency_id': ?instance.primaryCurrencyId,
+  'primary_currency_name': ?instance.primaryCurrencyName,
+  'primary_currency_code': ?instance.primaryCurrencyCode,
+  'primary_currency_symbol': ?instance.primaryCurrencySymbol,
+  'primary_currency_decimal_places': ?instance.primaryCurrencyDecimalPlaces,
+  'spent': ?instance.spent?.map((e) => e.toJson()).toList(),
+  'pc_spent': ?instance.pcSpent?.map((e) => e.toJson()).toList(),
+  'earned': ?instance.earned?.map((e) => e.toJson()).toList(),
+  'pc_earned': ?instance.pcEarned?.map((e) => e.toJson()).toList(),
+  'transferred': ?instance.transferred?.map((e) => e.toJson()).toList(),
+  'pc_transferred': ?instance.pcTransferred?.map((e) => e.toJson()).toList(),
 };
 
 CategoryStore _$CategoryStoreFromJson(Map<String, dynamic> json) =>
@@ -2631,10 +2468,7 @@ CategoryStore _$CategoryStoreFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$CategoryStoreToJson(CategoryStore instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      if (instance.notes case final value?) 'notes': value,
-    };
+    <String, dynamic>{'name': instance.name, 'notes': ?instance.notes};
 
 CategoryUpdate _$CategoryUpdateFromJson(Map<String, dynamic> json) =>
     CategoryUpdate(
@@ -2643,34 +2477,29 @@ CategoryUpdate _$CategoryUpdateFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$CategoryUpdateToJson(CategoryUpdate instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      if (instance.notes case final value?) 'notes': value,
-    };
+    <String, dynamic>{'name': instance.name, 'notes': ?instance.notes};
 
 CurrencyExchangeProperties _$CurrencyExchangePropertiesFromJson(
   Map<String, dynamic> json,
 ) => CurrencyExchangeProperties(
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   fromCurrencyId: json['from_currency_id'] as String?,
   fromCurrencyName: json['from_currency_name'] as String?,
   fromCurrencyCode: json['from_currency_code'] as String?,
   fromCurrencySymbol: json['from_currency_symbol'] as String?,
-  fromCurrencyDecimalPlaces:
-      (json['from_currency_decimal_places'] as num?)?.toInt(),
+  fromCurrencyDecimalPlaces: (json['from_currency_decimal_places'] as num?)
+      ?.toInt(),
   toCurrencyId: json['to_currency_id'] as String?,
   toCurrencyName: json['to_currency_name'] as String?,
   toCurrencyCode: json['to_currency_code'] as String?,
   toCurrencySymbol: json['to_currency_symbol'] as String?,
-  toCurrencyDecimalPlaces:
-      (json['to_currency_decimal_places'] as num?)?.toInt(),
+  toCurrencyDecimalPlaces: (json['to_currency_decimal_places'] as num?)
+      ?.toInt(),
   rate: json['rate'] as String?,
   date: json['date'] == null ? null : DateTime.parse(json['date'] as String),
 );
@@ -2678,25 +2507,20 @@ CurrencyExchangeProperties _$CurrencyExchangePropertiesFromJson(
 Map<String, dynamic> _$CurrencyExchangePropertiesToJson(
   CurrencyExchangeProperties instance,
 ) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
-  if (instance.fromCurrencyId case final value?) 'from_currency_id': value,
-  if (instance.fromCurrencyName case final value?) 'from_currency_name': value,
-  if (instance.fromCurrencyCode case final value?) 'from_currency_code': value,
-  if (instance.fromCurrencySymbol case final value?)
-    'from_currency_symbol': value,
-  if (instance.fromCurrencyDecimalPlaces case final value?)
-    'from_currency_decimal_places': value,
-  if (instance.toCurrencyId case final value?) 'to_currency_id': value,
-  if (instance.toCurrencyName case final value?) 'to_currency_name': value,
-  if (instance.toCurrencyCode case final value?) 'to_currency_code': value,
-  if (instance.toCurrencySymbol case final value?) 'to_currency_symbol': value,
-  if (instance.toCurrencyDecimalPlaces case final value?)
-    'to_currency_decimal_places': value,
-  if (instance.rate case final value?) 'rate': value,
-  if (instance.date?.toIso8601String() case final value?) 'date': value,
+  'created_at': ?instance.createdAt?.toIso8601String(),
+  'updated_at': ?instance.updatedAt?.toIso8601String(),
+  'from_currency_id': ?instance.fromCurrencyId,
+  'from_currency_name': ?instance.fromCurrencyName,
+  'from_currency_code': ?instance.fromCurrencyCode,
+  'from_currency_symbol': ?instance.fromCurrencySymbol,
+  'from_currency_decimal_places': ?instance.fromCurrencyDecimalPlaces,
+  'to_currency_id': ?instance.toCurrencyId,
+  'to_currency_name': ?instance.toCurrencyName,
+  'to_currency_code': ?instance.toCurrencyCode,
+  'to_currency_symbol': ?instance.toCurrencySymbol,
+  'to_currency_decimal_places': ?instance.toCurrencyDecimalPlaces,
+  'rate': ?instance.rate,
+  'date': ?instance.date?.toIso8601String(),
 };
 
 CurrencyExchangeRateRead _$CurrencyExchangeRateReadFromJson(
@@ -2704,25 +2528,23 @@ CurrencyExchangeRateRead _$CurrencyExchangeRateReadFromJson(
 ) => CurrencyExchangeRateRead(
   type: json['type'] as String?,
   id: json['id'] as String?,
-  attributes:
-      json['attributes'] == null
-          ? null
-          : CurrencyExchangeProperties.fromJson(
-            json['attributes'] as Map<String, dynamic>,
-          ),
-  links:
-      json['links'] == null
-          ? null
-          : ObjectLink.fromJson(json['links'] as Map<String, dynamic>),
+  attributes: json['attributes'] == null
+      ? null
+      : CurrencyExchangeProperties.fromJson(
+          json['attributes'] as Map<String, dynamic>,
+        ),
+  links: json['links'] == null
+      ? null
+      : ObjectLink.fromJson(json['links'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$CurrencyExchangeRateReadToJson(
   CurrencyExchangeRateRead instance,
 ) => <String, dynamic>{
-  if (instance.type case final value?) 'type': value,
-  if (instance.id case final value?) 'id': value,
-  if (instance.attributes?.toJson() case final value?) 'attributes': value,
-  if (instance.links?.toJson() case final value?) 'links': value,
+  'type': ?instance.type,
+  'id': ?instance.id,
+  'attributes': ?instance.attributes?.toJson(),
+  'links': ?instance.links?.toJson(),
 };
 
 CurrencyExchangeRateSingle _$CurrencyExchangeRateSingleFromJson(
@@ -2738,6 +2560,7 @@ Map<String, dynamic> _$CurrencyExchangeRateSingleToJson(
 CurrencyExchangeRateStore _$CurrencyExchangeRateStoreFromJson(
   Map<String, dynamic> json,
 ) => CurrencyExchangeRateStore(
+  date: DateTime.parse(json['date'] as String),
   from: json['from'] as String,
   to: json['to'] as String,
   rate: json['rate'] as String?,
@@ -2746,9 +2569,10 @@ CurrencyExchangeRateStore _$CurrencyExchangeRateStoreFromJson(
 Map<String, dynamic> _$CurrencyExchangeRateStoreToJson(
   CurrencyExchangeRateStore instance,
 ) => <String, dynamic>{
+  'date': ?_dateToJson(instance.date),
   'from': instance.from,
   'to': instance.to,
-  if (instance.rate case final value?) 'rate': value,
+  'rate': ?instance.rate,
 };
 
 CurrencyExchangeRateStoreByDate _$CurrencyExchangeRateStoreByDateFromJson(
@@ -2782,10 +2606,10 @@ CurrencyExchangeRateUpdate _$CurrencyExchangeRateUpdateFromJson(
 Map<String, dynamic> _$CurrencyExchangeRateUpdateToJson(
   CurrencyExchangeRateUpdate instance,
 ) => <String, dynamic>{
-  if (_dateToJson(instance.date) case final value?) 'date': value,
+  'date': ?_dateToJson(instance.date),
   'rate': instance.rate,
-  if (instance.from case final value?) 'from': value,
-  if (instance.to case final value?) 'to': value,
+  'from': ?instance.from,
+  'to': ?instance.to,
 };
 
 CurrencyExchangeRateUpdateNoDate _$CurrencyExchangeRateUpdateNoDateFromJson(
@@ -2797,24 +2621,20 @@ Map<String, dynamic> _$CurrencyExchangeRateUpdateNoDateToJson(
 ) => <String, dynamic>{'rate': instance.rate};
 
 ObjectGroup _$ObjectGroupFromJson(Map<String, dynamic> json) => ObjectGroup(
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   title: json['title'] as String,
   order: (json['order'] as num).toInt(),
 );
 
 Map<String, dynamic> _$ObjectGroupToJson(ObjectGroup instance) =>
     <String, dynamic>{
-      if (instance.createdAt?.toIso8601String() case final value?)
-        'created_at': value,
-      if (instance.updatedAt?.toIso8601String() case final value?)
-        'updated_at': value,
+      'created_at': ?instance.createdAt?.toIso8601String(),
+      'updated_at': ?instance.updatedAt?.toIso8601String(),
       'title': instance.title,
       'order': instance.order,
     };
@@ -2826,16 +2646,13 @@ ObjectGroupUpdate _$ObjectGroupUpdateFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$ObjectGroupUpdateToJson(ObjectGroupUpdate instance) =>
-    <String, dynamic>{
-      'title': instance.title,
-      if (instance.order case final value?) 'order': value,
-    };
+    <String, dynamic>{'title': instance.title, 'order': ?instance.order};
 
 ObjectLink _$ObjectLinkFromJson(Map<String, dynamic> json) =>
     ObjectLink(self: json['self'] as String?);
 
 Map<String, dynamic> _$ObjectLinkToJson(ObjectLink instance) =>
-    <String, dynamic>{if (instance.self case final value?) 'self': value};
+    <String, dynamic>{'self': ?instance.self};
 
 PageLink _$PageLinkFromJson(Map<String, dynamic> json) => PageLink(
   self: json['self'] as String?,
@@ -2846,11 +2663,11 @@ PageLink _$PageLinkFromJson(Map<String, dynamic> json) => PageLink(
 );
 
 Map<String, dynamic> _$PageLinkToJson(PageLink instance) => <String, dynamic>{
-  if (instance.self case final value?) 'self': value,
-  if (instance.first case final value?) 'first': value,
-  if (instance.next case final value?) 'next': value,
-  if (instance.prev case final value?) 'prev': value,
-  if (instance.last case final value?) 'last': value,
+  'self': ?instance.self,
+  'first': ?instance.first,
+  'next': ?instance.next,
+  'prev': ?instance.prev,
+  'last': ?instance.last,
 };
 
 PiggyBankAccountRead _$PiggyBankAccountReadFromJson(
@@ -2865,10 +2682,10 @@ PiggyBankAccountRead _$PiggyBankAccountReadFromJson(
 Map<String, dynamic> _$PiggyBankAccountReadToJson(
   PiggyBankAccountRead instance,
 ) => <String, dynamic>{
-  if (instance.accountId case final value?) 'account_id': value,
-  if (instance.name case final value?) 'name': value,
-  if (instance.currentAmount case final value?) 'current_amount': value,
-  if (instance.pcCurrentAmount case final value?) 'pc_current_amount': value,
+  'account_id': ?instance.accountId,
+  'name': ?instance.name,
+  'current_amount': ?instance.currentAmount,
+  'pc_current_amount': ?instance.pcCurrentAmount,
 };
 
 PiggyBankAccountStore _$PiggyBankAccountStoreFromJson(
@@ -2882,9 +2699,9 @@ PiggyBankAccountStore _$PiggyBankAccountStoreFromJson(
 Map<String, dynamic> _$PiggyBankAccountStoreToJson(
   PiggyBankAccountStore instance,
 ) => <String, dynamic>{
-  if (instance.id case final value?) 'id': value,
-  if (instance.name case final value?) 'name': value,
-  if (instance.currentAmount case final value?) 'current_amount': value,
+  'id': ?instance.id,
+  'name': ?instance.name,
+  'current_amount': ?instance.currentAmount,
 };
 
 PiggyBankAccountUpdate _$PiggyBankAccountUpdateFromJson(
@@ -2898,31 +2715,27 @@ PiggyBankAccountUpdate _$PiggyBankAccountUpdateFromJson(
 Map<String, dynamic> _$PiggyBankAccountUpdateToJson(
   PiggyBankAccountUpdate instance,
 ) => <String, dynamic>{
-  if (instance.accountId case final value?) 'account_id': value,
-  if (instance.name case final value?) 'name': value,
-  if (instance.currentAmount case final value?) 'current_amount': value,
+  'account_id': ?instance.accountId,
+  'name': ?instance.name,
+  'current_amount': ?instance.currentAmount,
 };
 
 PiggyBankProperties _$PiggyBankPropertiesFromJson(Map<String, dynamic> json) =>
     PiggyBankProperties(
-      createdAt:
-          json['created_at'] == null
-              ? null
-              : DateTime.parse(json['created_at'] as String),
-      updatedAt:
-          json['updated_at'] == null
-              ? null
-              : DateTime.parse(json['updated_at'] as String),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
       name: json['name'] as String,
-      percentage: (json['percentage'] as num?)?.toDouble(),
-      startDate:
-          json['start_date'] == null
-              ? null
-              : DateTime.parse(json['start_date'] as String),
-      targetDate:
-          json['target_date'] == null
-              ? null
-              : DateTime.parse(json['target_date'] as String),
+      percentage: (json['percentage'] as num?)?.toInt(),
+      startDate: json['start_date'] == null
+          ? null
+          : DateTime.parse(json['start_date'] as String),
+      targetDate: json['target_date'] == null
+          ? null
+          : DateTime.parse(json['target_date'] as String),
       order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool?,
       notes: json['notes'] as String?,
@@ -2961,50 +2774,38 @@ PiggyBankProperties _$PiggyBankPropertiesFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$PiggyBankPropertiesToJson(
   PiggyBankProperties instance,
 ) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
+  'created_at': ?instance.createdAt?.toIso8601String(),
+  'updated_at': ?instance.updatedAt?.toIso8601String(),
   'name': instance.name,
-  if (instance.percentage case final value?) 'percentage': value,
-  if (instance.startDate?.toIso8601String() case final value?)
-    'start_date': value,
-  if (instance.targetDate?.toIso8601String() case final value?)
-    'target_date': value,
-  if (instance.order case final value?) 'order': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.objectGroupId case final value?) 'object_group_id': value,
-  if (instance.objectGroupOrder case final value?) 'object_group_order': value,
-  if (instance.objectGroupTitle case final value?) 'object_group_title': value,
-  if (instance.accounts?.map((e) => e.toJson()).toList() case final value?)
-    'accounts': value,
-  if (instance.objectHasCurrencySetting case final value?)
-    'object_has_currency_setting': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyName case final value?) 'currency_name': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.currencySymbol case final value?) 'currency_symbol': value,
-  if (instance.currencyDecimalPlaces case final value?)
-    'currency_decimal_places': value,
-  if (instance.primaryCurrencyId case final value?)
-    'primary_currency_id': value,
-  if (instance.primaryCurrencyName case final value?)
-    'primary_currency_name': value,
-  if (instance.primaryCurrencyCode case final value?)
-    'primary_currency_code': value,
-  if (instance.primaryCurrencySymbol case final value?)
-    'primary_currency_symbol': value,
-  if (instance.primaryCurrencyDecimalPlaces case final value?)
-    'primary_currency_decimal_places': value,
-  if (instance.targetAmount case final value?) 'target_amount': value,
-  if (instance.pcTargetAmount case final value?) 'pc_target_amount': value,
-  if (instance.currentAmount case final value?) 'current_amount': value,
-  if (instance.pcCurrentAmount case final value?) 'pc_current_amount': value,
-  if (instance.leftToSave case final value?) 'left_to_save': value,
-  if (instance.pcLeftToSave case final value?) 'pc_left_to_save': value,
-  if (instance.savePerMonth case final value?) 'save_per_month': value,
-  if (instance.pcSavePerMonth case final value?) 'pc_save_per_month': value,
+  'percentage': ?instance.percentage,
+  'start_date': ?instance.startDate?.toIso8601String(),
+  'target_date': ?instance.targetDate?.toIso8601String(),
+  'order': ?instance.order,
+  'active': ?instance.active,
+  'notes': ?instance.notes,
+  'object_group_id': ?instance.objectGroupId,
+  'object_group_order': ?instance.objectGroupOrder,
+  'object_group_title': ?instance.objectGroupTitle,
+  'accounts': ?instance.accounts?.map((e) => e.toJson()).toList(),
+  'object_has_currency_setting': ?instance.objectHasCurrencySetting,
+  'currency_id': ?instance.currencyId,
+  'currency_name': ?instance.currencyName,
+  'currency_code': ?instance.currencyCode,
+  'currency_symbol': ?instance.currencySymbol,
+  'currency_decimal_places': ?instance.currencyDecimalPlaces,
+  'primary_currency_id': ?instance.primaryCurrencyId,
+  'primary_currency_name': ?instance.primaryCurrencyName,
+  'primary_currency_code': ?instance.primaryCurrencyCode,
+  'primary_currency_symbol': ?instance.primaryCurrencySymbol,
+  'primary_currency_decimal_places': ?instance.primaryCurrencyDecimalPlaces,
+  'target_amount': ?instance.targetAmount,
+  'pc_target_amount': ?instance.pcTargetAmount,
+  'current_amount': ?instance.currentAmount,
+  'pc_current_amount': ?instance.pcCurrentAmount,
+  'left_to_save': ?instance.leftToSave,
+  'pc_left_to_save': ?instance.pcLeftToSave,
+  'save_per_month': ?instance.savePerMonth,
+  'pc_save_per_month': ?instance.pcSavePerMonth,
 };
 
 PiggyBankStore _$PiggyBankStoreFromJson(Map<String, dynamic> json) =>
@@ -3021,10 +2822,9 @@ PiggyBankStore _$PiggyBankStoreFromJson(Map<String, dynamic> json) =>
       targetAmount: json['target_amount'] as String?,
       currentAmount: json['current_amount'] as String?,
       startDate: DateTime.parse(json['start_date'] as String),
-      targetDate:
-          json['target_date'] == null
-              ? null
-              : DateTime.parse(json['target_date'] as String),
+      targetDate: json['target_date'] == null
+          ? null
+          : DateTime.parse(json['target_date'] as String),
       order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool?,
       notes: json['notes'] as String?,
@@ -3032,22 +2832,20 @@ PiggyBankStore _$PiggyBankStoreFromJson(Map<String, dynamic> json) =>
       objectGroupTitle: json['object_group_title'] as String?,
     );
 
-Map<String, dynamic> _$PiggyBankStoreToJson(
-  PiggyBankStore instance,
-) => <String, dynamic>{
-  'name': instance.name,
-  if (instance.accounts?.map((e) => e.toJson()).toList() case final value?)
-    'accounts': value,
-  if (instance.targetAmount case final value?) 'target_amount': value,
-  if (instance.currentAmount case final value?) 'current_amount': value,
-  if (_dateToJson(instance.startDate) case final value?) 'start_date': value,
-  if (_dateToJson(instance.targetDate) case final value?) 'target_date': value,
-  if (instance.order case final value?) 'order': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.objectGroupId case final value?) 'object_group_id': value,
-  if (instance.objectGroupTitle case final value?) 'object_group_title': value,
-};
+Map<String, dynamic> _$PiggyBankStoreToJson(PiggyBankStore instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'accounts': ?instance.accounts?.map((e) => e.toJson()).toList(),
+      'target_amount': ?instance.targetAmount,
+      'current_amount': ?instance.currentAmount,
+      'start_date': ?_dateToJson(instance.startDate),
+      'target_date': ?_dateToJson(instance.targetDate),
+      'order': ?instance.order,
+      'active': ?instance.active,
+      'notes': ?instance.notes,
+      'object_group_id': ?instance.objectGroupId,
+      'object_group_title': ?instance.objectGroupTitle,
+    };
 
 PiggyBankUpdate _$PiggyBankUpdateFromJson(Map<String, dynamic> json) =>
     PiggyBankUpdate(
@@ -3063,14 +2861,12 @@ PiggyBankUpdate _$PiggyBankUpdateFromJson(Map<String, dynamic> json) =>
       currencyId: json['currency_id'] as String?,
       currencyCode: json['currency_code'] as String?,
       targetAmount: json['target_amount'] as String?,
-      startDate:
-          json['start_date'] == null
-              ? null
-              : DateTime.parse(json['start_date'] as String),
-      targetDate:
-          json['target_date'] == null
-              ? null
-              : DateTime.parse(json['target_date'] as String),
+      startDate: json['start_date'] == null
+          ? null
+          : DateTime.parse(json['start_date'] as String),
+      targetDate: json['target_date'] == null
+          ? null
+          : DateTime.parse(json['target_date'] as String),
       order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool?,
       notes: json['notes'] as String?,
@@ -3078,35 +2874,31 @@ PiggyBankUpdate _$PiggyBankUpdateFromJson(Map<String, dynamic> json) =>
       objectGroupTitle: json['object_group_title'] as String?,
     );
 
-Map<String, dynamic> _$PiggyBankUpdateToJson(
-  PiggyBankUpdate instance,
-) => <String, dynamic>{
-  if (instance.name case final value?) 'name': value,
-  if (instance.accounts?.map((e) => e.toJson()).toList() case final value?)
-    'accounts': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.targetAmount case final value?) 'target_amount': value,
-  if (_dateToJson(instance.startDate) case final value?) 'start_date': value,
-  if (_dateToJson(instance.targetDate) case final value?) 'target_date': value,
-  if (instance.order case final value?) 'order': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.objectGroupId case final value?) 'object_group_id': value,
-  if (instance.objectGroupTitle case final value?) 'object_group_title': value,
-};
+Map<String, dynamic> _$PiggyBankUpdateToJson(PiggyBankUpdate instance) =>
+    <String, dynamic>{
+      'name': ?instance.name,
+      'accounts': ?instance.accounts?.map((e) => e.toJson()).toList(),
+      'currency_id': ?instance.currencyId,
+      'currency_code': ?instance.currencyCode,
+      'target_amount': ?instance.targetAmount,
+      'start_date': ?_dateToJson(instance.startDate),
+      'target_date': ?_dateToJson(instance.targetDate),
+      'order': ?instance.order,
+      'active': ?instance.active,
+      'notes': ?instance.notes,
+      'object_group_id': ?instance.objectGroupId,
+      'object_group_title': ?instance.objectGroupTitle,
+    };
 
 PiggyBankEventProperties _$PiggyBankEventPropertiesFromJson(
   Map<String, dynamic> json,
 ) => PiggyBankEventProperties(
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   amount: json['amount'] as String?,
   pcAmount: json['pc_amount'] as String?,
   objectHasCurrencySetting: json['object_has_currency_setting'] as bool?,
@@ -3128,55 +2920,40 @@ PiggyBankEventProperties _$PiggyBankEventPropertiesFromJson(
 Map<String, dynamic> _$PiggyBankEventPropertiesToJson(
   PiggyBankEventProperties instance,
 ) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
-  if (instance.amount case final value?) 'amount': value,
-  if (instance.pcAmount case final value?) 'pc_amount': value,
-  if (instance.objectHasCurrencySetting case final value?)
-    'object_has_currency_setting': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyName case final value?) 'currency_name': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.currencySymbol case final value?) 'currency_symbol': value,
-  if (instance.currencyDecimalPlaces case final value?)
-    'currency_decimal_places': value,
-  if (instance.primaryCurrencyId case final value?)
-    'primary_currency_id': value,
-  if (instance.primaryCurrencyName case final value?)
-    'primary_currency_name': value,
-  if (instance.primaryCurrencyCode case final value?)
-    'primary_currency_code': value,
-  if (instance.primaryCurrencySymbol case final value?)
-    'primary_currency_symbol': value,
-  if (instance.primaryCurrencyDecimalPlaces case final value?)
-    'primary_currency_decimal_places': value,
-  if (instance.transactionJournalId case final value?)
-    'transaction_journal_id': value,
-  if (instance.transactionGroupId case final value?)
-    'transaction_group_id': value,
+  'created_at': ?instance.createdAt?.toIso8601String(),
+  'updated_at': ?instance.updatedAt?.toIso8601String(),
+  'amount': ?instance.amount,
+  'pc_amount': ?instance.pcAmount,
+  'object_has_currency_setting': ?instance.objectHasCurrencySetting,
+  'currency_id': ?instance.currencyId,
+  'currency_name': ?instance.currencyName,
+  'currency_code': ?instance.currencyCode,
+  'currency_symbol': ?instance.currencySymbol,
+  'currency_decimal_places': ?instance.currencyDecimalPlaces,
+  'primary_currency_id': ?instance.primaryCurrencyId,
+  'primary_currency_name': ?instance.primaryCurrencyName,
+  'primary_currency_code': ?instance.primaryCurrencyCode,
+  'primary_currency_symbol': ?instance.primaryCurrencySymbol,
+  'primary_currency_decimal_places': ?instance.primaryCurrencyDecimalPlaces,
+  'transaction_journal_id': ?instance.transactionJournalId,
+  'transaction_group_id': ?instance.transactionGroupId,
 };
 
 Preference _$PreferenceFromJson(Map<String, dynamic> json) => Preference(
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   name: json['name'] as String,
   data: PolymorphicProperty.fromJson(json['data'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$PreferenceToJson(Preference instance) =>
     <String, dynamic>{
-      if (instance.createdAt?.toIso8601String() case final value?)
-        'created_at': value,
-      if (instance.updatedAt?.toIso8601String() case final value?)
-        'updated_at': value,
+      'created_at': ?instance.createdAt?.toIso8601String(),
+      'updated_at': ?instance.updatedAt?.toIso8601String(),
       'name': instance.name,
       'data': instance.data.toJson(),
     };
@@ -3192,29 +2969,24 @@ Map<String, dynamic> _$PreferenceUpdateToJson(PreferenceUpdate instance) =>
 RecurrenceProperties _$RecurrencePropertiesFromJson(
   Map<String, dynamic> json,
 ) => RecurrenceProperties(
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   type: recurrenceTransactionTypeNullableFromJson(json['type']),
   title: json['title'] as String?,
   description: json['description'] as String?,
-  firstDate:
-      json['first_date'] == null
-          ? null
-          : DateTime.parse(json['first_date'] as String),
-  latestDate:
-      json['latest_date'] == null
-          ? null
-          : DateTime.parse(json['latest_date'] as String),
-  repeatUntil:
-      json['repeat_until'] == null
-          ? null
-          : DateTime.parse(json['repeat_until'] as String),
+  firstDate: json['first_date'] == null
+      ? null
+      : DateTime.parse(json['first_date'] as String),
+  latestDate: json['latest_date'] == null
+      ? null
+      : DateTime.parse(json['latest_date'] as String),
+  repeatUntil: json['repeat_until'] == null
+      ? null
+      : DateTime.parse(json['repeat_until'] as String),
   applyRules: json['apply_rules'] as bool?,
   active: json['active'] as bool?,
   nrOfRepetitions: (json['nr_of_repetitions'] as num?)?.toInt(),
@@ -3236,26 +3008,20 @@ RecurrenceProperties _$RecurrencePropertiesFromJson(
 Map<String, dynamic> _$RecurrencePropertiesToJson(
   RecurrenceProperties instance,
 ) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
-  if (recurrenceTransactionTypeNullableToJson(instance.type) case final value?)
-    'type': value,
-  if (instance.title case final value?) 'title': value,
-  if (instance.description case final value?) 'description': value,
-  if (_dateToJson(instance.firstDate) case final value?) 'first_date': value,
-  if (_dateToJson(instance.latestDate) case final value?) 'latest_date': value,
-  if (_dateToJson(instance.repeatUntil) case final value?)
-    'repeat_until': value,
-  if (instance.applyRules case final value?) 'apply_rules': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.nrOfRepetitions case final value?) 'nr_of_repetitions': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.repetitions?.map((e) => e.toJson()).toList() case final value?)
-    'repetitions': value,
-  if (instance.transactions?.map((e) => e.toJson()).toList() case final value?)
-    'transactions': value,
+  'created_at': ?instance.createdAt?.toIso8601String(),
+  'updated_at': ?instance.updatedAt?.toIso8601String(),
+  'type': ?recurrenceTransactionTypeNullableToJson(instance.type),
+  'title': ?instance.title,
+  'description': ?instance.description,
+  'first_date': ?_dateToJson(instance.firstDate),
+  'latest_date': ?_dateToJson(instance.latestDate),
+  'repeat_until': ?_dateToJson(instance.repeatUntil),
+  'apply_rules': ?instance.applyRules,
+  'active': ?instance.active,
+  'nr_of_repetitions': ?instance.nrOfRepetitions,
+  'notes': ?instance.notes,
+  'repetitions': ?instance.repetitions?.map((e) => e.toJson()).toList(),
+  'transactions': ?instance.transactions?.map((e) => e.toJson()).toList(),
 };
 
 RecurrenceStore _$RecurrenceStoreFromJson(
@@ -3265,10 +3031,9 @@ RecurrenceStore _$RecurrenceStoreFromJson(
   title: json['title'] as String,
   description: json['description'] as String?,
   firstDate: DateTime.parse(json['first_date'] as String),
-  repeatUntil:
-      json['repeat_until'] == null
-          ? null
-          : DateTime.parse(json['repeat_until'] as String),
+  repeatUntil: json['repeat_until'] == null
+      ? null
+      : DateTime.parse(json['repeat_until'] as String),
   nrOfRepetitions: (json['nr_of_repetitions'] as num?)?.toInt(),
   applyRules: json['apply_rules'] as bool?,
   active: json['active'] as bool?,
@@ -3291,37 +3056,32 @@ RecurrenceStore _$RecurrenceStoreFromJson(
       [],
 );
 
-Map<String, dynamic> _$RecurrenceStoreToJson(
-  RecurrenceStore instance,
-) => <String, dynamic>{
-  if (recurrenceTransactionTypeToJson(instance.type) case final value?)
-    'type': value,
-  'title': instance.title,
-  if (instance.description case final value?) 'description': value,
-  if (_dateToJson(instance.firstDate) case final value?) 'first_date': value,
-  if (_dateToJson(instance.repeatUntil) case final value?)
-    'repeat_until': value,
-  if (instance.nrOfRepetitions case final value?) 'nr_of_repetitions': value,
-  if (instance.applyRules case final value?) 'apply_rules': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.notes case final value?) 'notes': value,
-  'repetitions': instance.repetitions.map((e) => e.toJson()).toList(),
-  'transactions': instance.transactions.map((e) => e.toJson()).toList(),
-};
+Map<String, dynamic> _$RecurrenceStoreToJson(RecurrenceStore instance) =>
+    <String, dynamic>{
+      'type': ?recurrenceTransactionTypeToJson(instance.type),
+      'title': instance.title,
+      'description': ?instance.description,
+      'first_date': ?_dateToJson(instance.firstDate),
+      'repeat_until': ?_dateToJson(instance.repeatUntil),
+      'nr_of_repetitions': ?instance.nrOfRepetitions,
+      'apply_rules': ?instance.applyRules,
+      'active': ?instance.active,
+      'notes': ?instance.notes,
+      'repetitions': instance.repetitions.map((e) => e.toJson()).toList(),
+      'transactions': instance.transactions.map((e) => e.toJson()).toList(),
+    };
 
 RecurrenceUpdate _$RecurrenceUpdateFromJson(
   Map<String, dynamic> json,
 ) => RecurrenceUpdate(
   title: json['title'] as String?,
   description: json['description'] as String?,
-  firstDate:
-      json['first_date'] == null
-          ? null
-          : DateTime.parse(json['first_date'] as String),
-  repeatUntil:
-      json['repeat_until'] == null
-          ? null
-          : DateTime.parse(json['repeat_until'] as String),
+  firstDate: json['first_date'] == null
+      ? null
+      : DateTime.parse(json['first_date'] as String),
+  repeatUntil: json['repeat_until'] == null
+      ? null
+      : DateTime.parse(json['repeat_until'] as String),
   nrOfRepetitions: (json['nr_of_repetitions'] as num?)?.toInt(),
   applyRules: json['apply_rules'] as bool?,
   active: json['active'] as bool?,
@@ -3344,36 +3104,30 @@ RecurrenceUpdate _$RecurrenceUpdateFromJson(
       [],
 );
 
-Map<String, dynamic> _$RecurrenceUpdateToJson(
-  RecurrenceUpdate instance,
-) => <String, dynamic>{
-  if (instance.title case final value?) 'title': value,
-  if (instance.description case final value?) 'description': value,
-  if (_dateToJson(instance.firstDate) case final value?) 'first_date': value,
-  if (_dateToJson(instance.repeatUntil) case final value?)
-    'repeat_until': value,
-  if (instance.nrOfRepetitions case final value?) 'nr_of_repetitions': value,
-  if (instance.applyRules case final value?) 'apply_rules': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.repetitions?.map((e) => e.toJson()).toList() case final value?)
-    'repetitions': value,
-  if (instance.transactions?.map((e) => e.toJson()).toList() case final value?)
-    'transactions': value,
-};
+Map<String, dynamic> _$RecurrenceUpdateToJson(RecurrenceUpdate instance) =>
+    <String, dynamic>{
+      'title': ?instance.title,
+      'description': ?instance.description,
+      'first_date': ?_dateToJson(instance.firstDate),
+      'repeat_until': ?_dateToJson(instance.repeatUntil),
+      'nr_of_repetitions': ?instance.nrOfRepetitions,
+      'apply_rules': ?instance.applyRules,
+      'active': ?instance.active,
+      'notes': ?instance.notes,
+      'repetitions': ?instance.repetitions?.map((e) => e.toJson()).toList(),
+      'transactions': ?instance.transactions?.map((e) => e.toJson()).toList(),
+    };
 
 RecurrenceRepetition _$RecurrenceRepetitionFromJson(
   Map<String, dynamic> json,
 ) => RecurrenceRepetition(
   id: json['id'] as String?,
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   type: recurrenceRepetitionTypeFromJson(json['type']),
   moment: json['moment'] as String,
   skip: (json['skip'] as num?)?.toInt(),
@@ -3389,20 +3143,17 @@ RecurrenceRepetition _$RecurrenceRepetitionFromJson(
 Map<String, dynamic> _$RecurrenceRepetitionToJson(
   RecurrenceRepetition instance,
 ) => <String, dynamic>{
-  if (instance.id case final value?) 'id': value,
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
-  if (recurrenceRepetitionTypeToJson(instance.type) case final value?)
-    'type': value,
+  'id': ?instance.id,
+  'created_at': ?instance.createdAt?.toIso8601String(),
+  'updated_at': ?instance.updatedAt?.toIso8601String(),
+  'type': ?recurrenceRepetitionTypeToJson(instance.type),
   'moment': instance.moment,
-  if (instance.skip case final value?) 'skip': value,
-  if (instance.weekend case final value?) 'weekend': value,
-  if (instance.description case final value?) 'description': value,
-  if (instance.occurrences?.map((e) => e.toIso8601String()).toList()
-      case final value?)
-    'occurrences': value,
+  'skip': ?instance.skip,
+  'weekend': ?instance.weekend,
+  'description': ?instance.description,
+  'occurrences': ?instance.occurrences
+      ?.map((e) => e.toIso8601String())
+      .toList(),
 };
 
 RecurrenceRepetitionStore _$RecurrenceRepetitionStoreFromJson(
@@ -3417,11 +3168,10 @@ RecurrenceRepetitionStore _$RecurrenceRepetitionStoreFromJson(
 Map<String, dynamic> _$RecurrenceRepetitionStoreToJson(
   RecurrenceRepetitionStore instance,
 ) => <String, dynamic>{
-  if (recurrenceRepetitionTypeToJson(instance.type) case final value?)
-    'type': value,
+  'type': ?recurrenceRepetitionTypeToJson(instance.type),
   'moment': instance.moment,
-  if (instance.skip case final value?) 'skip': value,
-  if (instance.weekend case final value?) 'weekend': value,
+  'skip': ?instance.skip,
+  'weekend': ?instance.weekend,
 };
 
 RecurrenceRepetitionUpdate _$RecurrenceRepetitionUpdateFromJson(
@@ -3436,11 +3186,10 @@ RecurrenceRepetitionUpdate _$RecurrenceRepetitionUpdateFromJson(
 Map<String, dynamic> _$RecurrenceRepetitionUpdateToJson(
   RecurrenceRepetitionUpdate instance,
 ) => <String, dynamic>{
-  if (recurrenceRepetitionTypeNullableToJson(instance.type) case final value?)
-    'type': value,
-  if (instance.moment case final value?) 'moment': value,
-  if (instance.skip case final value?) 'skip': value,
-  if (instance.weekend case final value?) 'weekend': value,
+  'type': ?recurrenceRepetitionTypeNullableToJson(instance.type),
+  'moment': ?instance.moment,
+  'skip': ?instance.skip,
+  'weekend': ?instance.weekend,
 };
 
 RecurrenceTransaction _$RecurrenceTransactionFromJson(
@@ -3495,60 +3244,47 @@ RecurrenceTransaction _$RecurrenceTransactionFromJson(
 Map<String, dynamic> _$RecurrenceTransactionToJson(
   RecurrenceTransaction instance,
 ) => <String, dynamic>{
-  if (instance.id case final value?) 'id': value,
+  'id': ?instance.id,
   'description': instance.description,
-  if (instance.objectHasCurrencySetting case final value?)
-    'object_has_currency_setting': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyName case final value?) 'currency_name': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.currencySymbol case final value?) 'currency_symbol': value,
-  if (instance.currencyDecimalPlaces case final value?)
-    'currency_decimal_places': value,
-  if (instance.primaryCurrencyId case final value?)
-    'primary_currency_id': value,
-  if (instance.primaryCurrencyName case final value?)
-    'primary_currency_name': value,
-  if (instance.primaryCurrencyCode case final value?)
-    'primary_currency_code': value,
-  if (instance.primaryCurrencySymbol case final value?)
-    'primary_currency_symbol': value,
-  if (instance.primaryCurrencyDecimalPlaces case final value?)
-    'primary_currency_decimal_places': value,
+  'object_has_currency_setting': ?instance.objectHasCurrencySetting,
+  'currency_id': ?instance.currencyId,
+  'currency_name': ?instance.currencyName,
+  'currency_code': ?instance.currencyCode,
+  'currency_symbol': ?instance.currencySymbol,
+  'currency_decimal_places': ?instance.currencyDecimalPlaces,
+  'primary_currency_id': ?instance.primaryCurrencyId,
+  'primary_currency_name': ?instance.primaryCurrencyName,
+  'primary_currency_code': ?instance.primaryCurrencyCode,
+  'primary_currency_symbol': ?instance.primaryCurrencySymbol,
+  'primary_currency_decimal_places': ?instance.primaryCurrencyDecimalPlaces,
   'amount': instance.amount,
-  if (instance.pcAmount case final value?) 'pc_amount': value,
-  if (instance.foreignAmount case final value?) 'foreign_amount': value,
-  if (instance.pcForeignAmount case final value?) 'pc_foreign_amount': value,
-  if (instance.foreignCurrencyId case final value?)
-    'foreign_currency_id': value,
-  if (instance.foreignCurrencyName case final value?)
-    'foreign_currency_name': value,
-  if (instance.foreignCurrencyCode case final value?)
-    'foreign_currency_code': value,
-  if (instance.foreignCurrencySymbol case final value?)
-    'foreign_currency_symbol': value,
-  if (instance.foreignCurrencyDecimalPlaces case final value?)
-    'foreign_currency_decimal_places': value,
-  if (instance.budgetId case final value?) 'budget_id': value,
-  if (instance.budgetName case final value?) 'budget_name': value,
-  if (instance.categoryId case final value?) 'category_id': value,
-  if (instance.categoryName case final value?) 'category_name': value,
-  if (instance.sourceId case final value?) 'source_id': value,
-  if (instance.sourceName case final value?) 'source_name': value,
-  if (instance.sourceIban case final value?) 'source_iban': value,
-  if (accountTypePropertyNullableToJson(instance.sourceType) case final value?)
-    'source_type': value,
-  if (instance.destinationId case final value?) 'destination_id': value,
-  if (instance.destinationName case final value?) 'destination_name': value,
-  if (instance.destinationIban case final value?) 'destination_iban': value,
-  if (accountTypePropertyNullableToJson(instance.destinationType)
-      case final value?)
-    'destination_type': value,
-  if (instance.tags case final value?) 'tags': value,
-  if (instance.piggyBankId case final value?) 'piggy_bank_id': value,
-  if (instance.piggyBankName case final value?) 'piggy_bank_name': value,
-  if (instance.subscriptionId case final value?) 'subscription_id': value,
-  if (instance.subscriptionName case final value?) 'subscription_name': value,
+  'pc_amount': ?instance.pcAmount,
+  'foreign_amount': ?instance.foreignAmount,
+  'pc_foreign_amount': ?instance.pcForeignAmount,
+  'foreign_currency_id': ?instance.foreignCurrencyId,
+  'foreign_currency_name': ?instance.foreignCurrencyName,
+  'foreign_currency_code': ?instance.foreignCurrencyCode,
+  'foreign_currency_symbol': ?instance.foreignCurrencySymbol,
+  'foreign_currency_decimal_places': ?instance.foreignCurrencyDecimalPlaces,
+  'budget_id': ?instance.budgetId,
+  'budget_name': ?instance.budgetName,
+  'category_id': ?instance.categoryId,
+  'category_name': ?instance.categoryName,
+  'source_id': ?instance.sourceId,
+  'source_name': ?instance.sourceName,
+  'source_iban': ?instance.sourceIban,
+  'source_type': ?accountTypePropertyNullableToJson(instance.sourceType),
+  'destination_id': ?instance.destinationId,
+  'destination_name': ?instance.destinationName,
+  'destination_iban': ?instance.destinationIban,
+  'destination_type': ?accountTypePropertyNullableToJson(
+    instance.destinationType,
+  ),
+  'tags': ?instance.tags,
+  'piggy_bank_id': ?instance.piggyBankId,
+  'piggy_bank_name': ?instance.piggyBankName,
+  'subscription_id': ?instance.subscriptionId,
+  'subscription_name': ?instance.subscriptionName,
 };
 
 RecurrenceTransactionStore _$RecurrenceTransactionStoreFromJson(
@@ -3576,20 +3312,18 @@ Map<String, dynamic> _$RecurrenceTransactionStoreToJson(
 ) => <String, dynamic>{
   'description': instance.description,
   'amount': instance.amount,
-  if (instance.foreignAmount case final value?) 'foreign_amount': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.foreignCurrencyId case final value?)
-    'foreign_currency_id': value,
-  if (instance.foreignCurrencyCode case final value?)
-    'foreign_currency_code': value,
-  if (instance.budgetId case final value?) 'budget_id': value,
-  if (instance.categoryId case final value?) 'category_id': value,
+  'foreign_amount': ?instance.foreignAmount,
+  'currency_id': ?instance.currencyId,
+  'currency_code': ?instance.currencyCode,
+  'foreign_currency_id': ?instance.foreignCurrencyId,
+  'foreign_currency_code': ?instance.foreignCurrencyCode,
+  'budget_id': ?instance.budgetId,
+  'category_id': ?instance.categoryId,
   'source_id': instance.sourceId,
   'destination_id': instance.destinationId,
-  if (instance.tags case final value?) 'tags': value,
-  if (instance.piggyBankId case final value?) 'piggy_bank_id': value,
-  if (instance.billId case final value?) 'bill_id': value,
+  'tags': ?instance.tags,
+  'piggy_bank_id': ?instance.piggyBankId,
+  'bill_id': ?instance.billId,
 };
 
 RecurrenceTransactionUpdate _$RecurrenceTransactionUpdateFromJson(
@@ -3616,31 +3350,28 @@ Map<String, dynamic> _$RecurrenceTransactionUpdateToJson(
   RecurrenceTransactionUpdate instance,
 ) => <String, dynamic>{
   'id': instance.id,
-  if (instance.description case final value?) 'description': value,
-  if (instance.amount case final value?) 'amount': value,
-  if (instance.foreignAmount case final value?) 'foreign_amount': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.foreignCurrencyId case final value?)
-    'foreign_currency_id': value,
-  if (instance.budgetId case final value?) 'budget_id': value,
-  if (instance.categoryId case final value?) 'category_id': value,
-  if (instance.sourceId case final value?) 'source_id': value,
-  if (instance.destinationId case final value?) 'destination_id': value,
-  if (instance.tags case final value?) 'tags': value,
-  if (instance.piggyBankId case final value?) 'piggy_bank_id': value,
-  if (instance.billId case final value?) 'bill_id': value,
+  'description': ?instance.description,
+  'amount': ?instance.amount,
+  'foreign_amount': ?instance.foreignAmount,
+  'currency_id': ?instance.currencyId,
+  'currency_code': ?instance.currencyCode,
+  'foreign_currency_id': ?instance.foreignCurrencyId,
+  'budget_id': ?instance.budgetId,
+  'category_id': ?instance.categoryId,
+  'source_id': ?instance.sourceId,
+  'destination_id': ?instance.destinationId,
+  'tags': ?instance.tags,
+  'piggy_bank_id': ?instance.piggyBankId,
+  'bill_id': ?instance.billId,
 };
 
 Rule _$RuleFromJson(Map<String, dynamic> json) => Rule(
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   title: json['title'] as String,
   description: json['description'] as String?,
   ruleGroupId: json['rule_group_id'] as String,
@@ -3663,20 +3394,17 @@ Rule _$RuleFromJson(Map<String, dynamic> json) => Rule(
 );
 
 Map<String, dynamic> _$RuleToJson(Rule instance) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
+  'created_at': ?instance.createdAt?.toIso8601String(),
+  'updated_at': ?instance.updatedAt?.toIso8601String(),
   'title': instance.title,
-  if (instance.description case final value?) 'description': value,
+  'description': ?instance.description,
   'rule_group_id': instance.ruleGroupId,
-  if (instance.ruleGroupTitle case final value?) 'rule_group_title': value,
-  if (instance.order case final value?) 'order': value,
-  if (ruleTriggerTypeToJson(instance.trigger) case final value?)
-    'trigger': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.strict case final value?) 'strict': value,
-  if (instance.stopProcessing case final value?) 'stop_processing': value,
+  'rule_group_title': ?instance.ruleGroupTitle,
+  'order': ?instance.order,
+  'trigger': ?ruleTriggerTypeToJson(instance.trigger),
+  'active': ?instance.active,
+  'strict': ?instance.strict,
+  'stop_processing': ?instance.stopProcessing,
   'triggers': instance.triggers.map((e) => e.toJson()).toList(),
   'actions': instance.actions.map((e) => e.toJson()).toList(),
 };
@@ -3705,15 +3433,14 @@ RuleStore _$RuleStoreFromJson(Map<String, dynamic> json) => RuleStore(
 
 Map<String, dynamic> _$RuleStoreToJson(RuleStore instance) => <String, dynamic>{
   'title': instance.title,
-  if (instance.description case final value?) 'description': value,
+  'description': ?instance.description,
   'rule_group_id': instance.ruleGroupId,
-  if (instance.ruleGroupTitle case final value?) 'rule_group_title': value,
-  if (instance.order case final value?) 'order': value,
-  if (ruleTriggerTypeToJson(instance.trigger) case final value?)
-    'trigger': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.strict case final value?) 'strict': value,
-  if (instance.stopProcessing case final value?) 'stop_processing': value,
+  'rule_group_title': ?instance.ruleGroupTitle,
+  'order': ?instance.order,
+  'trigger': ?ruleTriggerTypeToJson(instance.trigger),
+  'active': ?instance.active,
+  'strict': ?instance.strict,
+  'stop_processing': ?instance.stopProcessing,
   'triggers': instance.triggers.map((e) => e.toJson()).toList(),
   'actions': instance.actions.map((e) => e.toJson()).toList(),
 };
@@ -3741,76 +3468,67 @@ RuleUpdate _$RuleUpdateFromJson(Map<String, dynamic> json) => RuleUpdate(
 
 Map<String, dynamic> _$RuleUpdateToJson(RuleUpdate instance) =>
     <String, dynamic>{
-      if (instance.title case final value?) 'title': value,
-      if (instance.description case final value?) 'description': value,
-      if (instance.ruleGroupId case final value?) 'rule_group_id': value,
-      if (instance.order case final value?) 'order': value,
-      if (ruleTriggerTypeNullableToJson(instance.trigger) case final value?)
-        'trigger': value,
-      if (instance.active case final value?) 'active': value,
-      if (instance.strict case final value?) 'strict': value,
-      if (instance.stopProcessing case final value?) 'stop_processing': value,
-      if (instance.triggers?.map((e) => e.toJson()).toList() case final value?)
-        'triggers': value,
-      if (instance.actions?.map((e) => e.toJson()).toList() case final value?)
-        'actions': value,
+      'title': ?instance.title,
+      'description': ?instance.description,
+      'rule_group_id': ?instance.ruleGroupId,
+      'order': ?instance.order,
+      'trigger': ?ruleTriggerTypeNullableToJson(instance.trigger),
+      'active': ?instance.active,
+      'strict': ?instance.strict,
+      'stop_processing': ?instance.stopProcessing,
+      'triggers': ?instance.triggers?.map((e) => e.toJson()).toList(),
+      'actions': ?instance.actions?.map((e) => e.toJson()).toList(),
     };
 
 RuleAction _$RuleActionFromJson(Map<String, dynamic> json) => RuleAction(
   id: json['id'] as String?,
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   type: ruleActionKeywordFromJson(json['type']),
-  $value: json['value'] as String?,
+  value: json['value'] as String?,
   order: (json['order'] as num?)?.toInt(),
   active: json['active'] as bool? ?? true,
   stopProcessing: json['stop_processing'] as bool? ?? false,
 );
 
-Map<String, dynamic> _$RuleActionToJson(
-  RuleAction instance,
-) => <String, dynamic>{
-  if (instance.id case final value?) 'id': value,
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
-  if (ruleActionKeywordToJson(instance.type) case final value?) 'type': value,
-  if (instance.$value case final value?) 'value': value,
-  if (instance.order case final value?) 'order': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.stopProcessing case final value?) 'stop_processing': value,
-};
+Map<String, dynamic> _$RuleActionToJson(RuleAction instance) =>
+    <String, dynamic>{
+      'id': ?instance.id,
+      'created_at': ?instance.createdAt?.toIso8601String(),
+      'updated_at': ?instance.updatedAt?.toIso8601String(),
+      'type': ?ruleActionKeywordToJson(instance.type),
+      'value': ?instance.value,
+      'order': ?instance.order,
+      'active': ?instance.active,
+      'stop_processing': ?instance.stopProcessing,
+    };
 
 RuleActionStore _$RuleActionStoreFromJson(Map<String, dynamic> json) =>
     RuleActionStore(
       type: ruleActionKeywordFromJson(json['type']),
-      $value: json['value'] as String?,
+      value: json['value'] as String?,
       order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool? ?? true,
       stopProcessing: json['stop_processing'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$RuleActionStoreToJson(
-  RuleActionStore instance,
-) => <String, dynamic>{
-  if (ruleActionKeywordToJson(instance.type) case final value?) 'type': value,
-  if (instance.$value case final value?) 'value': value,
-  if (instance.order case final value?) 'order': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.stopProcessing case final value?) 'stop_processing': value,
-};
+Map<String, dynamic> _$RuleActionStoreToJson(RuleActionStore instance) =>
+    <String, dynamic>{
+      'type': ?ruleActionKeywordToJson(instance.type),
+      'value': ?instance.value,
+      'order': ?instance.order,
+      'active': ?instance.active,
+      'stop_processing': ?instance.stopProcessing,
+    };
 
 RuleActionUpdate _$RuleActionUpdateFromJson(Map<String, dynamic> json) =>
     RuleActionUpdate(
       type: ruleActionKeywordNullableFromJson(json['type']),
-      $value: json['value'] as String?,
+      value: json['value'] as String?,
       order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool?,
       stopProcessing: json['stop_processing'] as bool?,
@@ -3818,23 +3536,20 @@ RuleActionUpdate _$RuleActionUpdateFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$RuleActionUpdateToJson(RuleActionUpdate instance) =>
     <String, dynamic>{
-      if (ruleActionKeywordNullableToJson(instance.type) case final value?)
-        'type': value,
-      if (instance.$value case final value?) 'value': value,
-      if (instance.order case final value?) 'order': value,
-      if (instance.active case final value?) 'active': value,
-      if (instance.stopProcessing case final value?) 'stop_processing': value,
+      'type': ?ruleActionKeywordNullableToJson(instance.type),
+      'value': ?instance.value,
+      'order': ?instance.order,
+      'active': ?instance.active,
+      'stop_processing': ?instance.stopProcessing,
     };
 
 RuleGroup _$RuleGroupFromJson(Map<String, dynamic> json) => RuleGroup(
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   title: json['title'] as String,
   description: json['description'] as String?,
   order: (json['order'] as num?)?.toInt(),
@@ -3842,14 +3557,12 @@ RuleGroup _$RuleGroupFromJson(Map<String, dynamic> json) => RuleGroup(
 );
 
 Map<String, dynamic> _$RuleGroupToJson(RuleGroup instance) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
+  'created_at': ?instance.createdAt?.toIso8601String(),
+  'updated_at': ?instance.updatedAt?.toIso8601String(),
   'title': instance.title,
-  if (instance.description case final value?) 'description': value,
-  if (instance.order case final value?) 'order': value,
-  if (instance.active case final value?) 'active': value,
+  'description': ?instance.description,
+  'order': ?instance.order,
+  'active': ?instance.active,
 };
 
 RuleGroupStore _$RuleGroupStoreFromJson(Map<String, dynamic> json) =>
@@ -3863,9 +3576,9 @@ RuleGroupStore _$RuleGroupStoreFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$RuleGroupStoreToJson(RuleGroupStore instance) =>
     <String, dynamic>{
       'title': instance.title,
-      if (instance.description case final value?) 'description': value,
-      if (instance.order case final value?) 'order': value,
-      if (instance.active case final value?) 'active': value,
+      'description': ?instance.description,
+      'order': ?instance.order,
+      'active': ?instance.active,
     };
 
 RuleGroupUpdate _$RuleGroupUpdateFromJson(Map<String, dynamic> json) =>
@@ -3878,71 +3591,65 @@ RuleGroupUpdate _$RuleGroupUpdateFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$RuleGroupUpdateToJson(RuleGroupUpdate instance) =>
     <String, dynamic>{
-      if (instance.title case final value?) 'title': value,
-      if (instance.description case final value?) 'description': value,
-      if (instance.order case final value?) 'order': value,
-      if (instance.active case final value?) 'active': value,
+      'title': ?instance.title,
+      'description': ?instance.description,
+      'order': ?instance.order,
+      'active': ?instance.active,
     };
 
 RuleTrigger _$RuleTriggerFromJson(Map<String, dynamic> json) => RuleTrigger(
   id: json['id'] as String?,
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   type: ruleTriggerKeywordFromJson(json['type']),
-  $value: json['value'] as String,
+  value: json['value'] as String,
   prohibited: json['prohibited'] as bool? ?? false,
   order: (json['order'] as num?)?.toInt(),
   active: json['active'] as bool? ?? true,
   stopProcessing: json['stop_processing'] as bool? ?? false,
 );
 
-Map<String, dynamic> _$RuleTriggerToJson(
-  RuleTrigger instance,
-) => <String, dynamic>{
-  if (instance.id case final value?) 'id': value,
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
-  if (ruleTriggerKeywordToJson(instance.type) case final value?) 'type': value,
-  'value': instance.$value,
-  if (instance.prohibited case final value?) 'prohibited': value,
-  if (instance.order case final value?) 'order': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.stopProcessing case final value?) 'stop_processing': value,
-};
+Map<String, dynamic> _$RuleTriggerToJson(RuleTrigger instance) =>
+    <String, dynamic>{
+      'id': ?instance.id,
+      'created_at': ?instance.createdAt?.toIso8601String(),
+      'updated_at': ?instance.updatedAt?.toIso8601String(),
+      'type': ?ruleTriggerKeywordToJson(instance.type),
+      'value': instance.value,
+      'prohibited': ?instance.prohibited,
+      'order': ?instance.order,
+      'active': ?instance.active,
+      'stop_processing': ?instance.stopProcessing,
+    };
 
 RuleTriggerStore _$RuleTriggerStoreFromJson(Map<String, dynamic> json) =>
     RuleTriggerStore(
       type: ruleTriggerKeywordFromJson(json['type']),
-      $value: json['value'] as String,
+      value: json['value'] as String,
       order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool? ?? true,
       prohibited: json['prohibited'] as bool? ?? false,
       stopProcessing: json['stop_processing'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$RuleTriggerStoreToJson(
-  RuleTriggerStore instance,
-) => <String, dynamic>{
-  if (ruleTriggerKeywordToJson(instance.type) case final value?) 'type': value,
-  'value': instance.$value,
-  if (instance.order case final value?) 'order': value,
-  if (instance.active case final value?) 'active': value,
-  if (instance.prohibited case final value?) 'prohibited': value,
-  if (instance.stopProcessing case final value?) 'stop_processing': value,
-};
+Map<String, dynamic> _$RuleTriggerStoreToJson(RuleTriggerStore instance) =>
+    <String, dynamic>{
+      'type': ?ruleTriggerKeywordToJson(instance.type),
+      'value': instance.value,
+      'order': ?instance.order,
+      'active': ?instance.active,
+      'prohibited': ?instance.prohibited,
+      'stop_processing': ?instance.stopProcessing,
+    };
 
 RuleTriggerUpdate _$RuleTriggerUpdateFromJson(Map<String, dynamic> json) =>
     RuleTriggerUpdate(
       type: ruleTriggerKeywordNullableFromJson(json['type']),
-      $value: json['value'] as String?,
+      value: json['value'] as String?,
       order: (json['order'] as num?)?.toInt(),
       active: json['active'] as bool?,
       stopProcessing: json['stop_processing'] as bool?,
@@ -3950,23 +3657,20 @@ RuleTriggerUpdate _$RuleTriggerUpdateFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$RuleTriggerUpdateToJson(RuleTriggerUpdate instance) =>
     <String, dynamic>{
-      if (ruleTriggerKeywordNullableToJson(instance.type) case final value?)
-        'type': value,
-      if (instance.$value case final value?) 'value': value,
-      if (instance.order case final value?) 'order': value,
-      if (instance.active case final value?) 'active': value,
-      if (instance.stopProcessing case final value?) 'stop_processing': value,
+      'type': ?ruleTriggerKeywordNullableToJson(instance.type),
+      'value': ?instance.value,
+      'order': ?instance.order,
+      'active': ?instance.active,
+      'stop_processing': ?instance.stopProcessing,
     };
 
 TagModel _$TagModelFromJson(Map<String, dynamic> json) => TagModel(
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   tag: json['tag'] as String,
   date: json['date'] == null ? null : DateTime.parse(json['date'] as String),
   description: json['description'] as String?,
@@ -3976,23 +3680,22 @@ TagModel _$TagModelFromJson(Map<String, dynamic> json) => TagModel(
 );
 
 Map<String, dynamic> _$TagModelToJson(TagModel instance) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
+  'created_at': ?instance.createdAt?.toIso8601String(),
+  'updated_at': ?instance.updatedAt?.toIso8601String(),
   'tag': instance.tag,
-  if (_dateToJson(instance.date) case final value?) 'date': value,
-  if (instance.description case final value?) 'description': value,
-  if (instance.latitude case final value?) 'latitude': value,
-  if (instance.longitude case final value?) 'longitude': value,
-  if (instance.zoomLevel case final value?) 'zoom_level': value,
+  'date': ?_dateToJson(instance.date),
+  'description': ?instance.description,
+  'latitude': ?instance.latitude,
+  'longitude': ?instance.longitude,
+  'zoom_level': ?instance.zoomLevel,
 };
 
 TagModelStore _$TagModelStoreFromJson(Map<String, dynamic> json) =>
     TagModelStore(
       tag: json['tag'] as String,
-      date:
-          json['date'] == null ? null : DateTime.parse(json['date'] as String),
+      date: json['date'] == null
+          ? null
+          : DateTime.parse(json['date'] as String),
       description: json['description'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
@@ -4002,18 +3705,19 @@ TagModelStore _$TagModelStoreFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$TagModelStoreToJson(TagModelStore instance) =>
     <String, dynamic>{
       'tag': instance.tag,
-      if (_dateToJson(instance.date) case final value?) 'date': value,
-      if (instance.description case final value?) 'description': value,
-      if (instance.latitude case final value?) 'latitude': value,
-      if (instance.longitude case final value?) 'longitude': value,
-      if (instance.zoomLevel case final value?) 'zoom_level': value,
+      'date': ?_dateToJson(instance.date),
+      'description': ?instance.description,
+      'latitude': ?instance.latitude,
+      'longitude': ?instance.longitude,
+      'zoom_level': ?instance.zoomLevel,
     };
 
 TagModelUpdate _$TagModelUpdateFromJson(Map<String, dynamic> json) =>
     TagModelUpdate(
       tag: json['tag'] as String?,
-      date:
-          json['date'] == null ? null : DateTime.parse(json['date'] as String),
+      date: json['date'] == null
+          ? null
+          : DateTime.parse(json['date'] as String),
       description: json['description'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
@@ -4022,24 +3726,22 @@ TagModelUpdate _$TagModelUpdateFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$TagModelUpdateToJson(TagModelUpdate instance) =>
     <String, dynamic>{
-      if (instance.tag case final value?) 'tag': value,
-      if (_dateToJson(instance.date) case final value?) 'date': value,
-      if (instance.description case final value?) 'description': value,
-      if (instance.latitude case final value?) 'latitude': value,
-      if (instance.longitude case final value?) 'longitude': value,
-      if (instance.zoomLevel case final value?) 'zoom_level': value,
+      'tag': ?instance.tag,
+      'date': ?_dateToJson(instance.date),
+      'description': ?instance.description,
+      'latitude': ?instance.latitude,
+      'longitude': ?instance.longitude,
+      'zoom_level': ?instance.zoomLevel,
     };
 
 CurrencyProperties _$CurrencyPropertiesFromJson(Map<String, dynamic> json) =>
     CurrencyProperties(
-      createdAt:
-          json['created_at'] == null
-              ? null
-              : DateTime.parse(json['created_at'] as String),
-      updatedAt:
-          json['updated_at'] == null
-              ? null
-              : DateTime.parse(json['updated_at'] as String),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
       enabled: json['enabled'] as bool? ?? true,
       primary: json['primary'] as bool?,
       code: json['code'] as String,
@@ -4050,16 +3752,14 @@ CurrencyProperties _$CurrencyPropertiesFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CurrencyPropertiesToJson(CurrencyProperties instance) =>
     <String, dynamic>{
-      if (instance.createdAt?.toIso8601String() case final value?)
-        'created_at': value,
-      if (instance.updatedAt?.toIso8601String() case final value?)
-        'updated_at': value,
-      if (instance.enabled case final value?) 'enabled': value,
-      if (instance.primary case final value?) 'primary': value,
+      'created_at': ?instance.createdAt?.toIso8601String(),
+      'updated_at': ?instance.updatedAt?.toIso8601String(),
+      'enabled': ?instance.enabled,
+      'primary': ?instance.primary,
       'code': instance.code,
       'name': instance.name,
       'symbol': instance.symbol,
-      if (instance.decimalPlaces case final value?) 'decimal_places': value,
+      'decimal_places': ?instance.decimalPlaces,
     };
 
 CurrencyStore _$CurrencyStoreFromJson(Map<String, dynamic> json) =>
@@ -4074,12 +3774,12 @@ CurrencyStore _$CurrencyStoreFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CurrencyStoreToJson(CurrencyStore instance) =>
     <String, dynamic>{
-      if (instance.enabled case final value?) 'enabled': value,
-      if (instance.primary case final value?) 'primary': value,
+      'enabled': ?instance.enabled,
+      'primary': ?instance.primary,
       'code': instance.code,
       'name': instance.name,
       'symbol': instance.symbol,
-      if (instance.decimalPlaces case final value?) 'decimal_places': value,
+      'decimal_places': ?instance.decimalPlaces,
     };
 
 CurrencyUpdate _$CurrencyUpdateFromJson(Map<String, dynamic> json) =>
@@ -4094,23 +3794,21 @@ CurrencyUpdate _$CurrencyUpdateFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CurrencyUpdateToJson(CurrencyUpdate instance) =>
     <String, dynamic>{
-      if (instance.enabled case final value?) 'enabled': value,
-      if (instance.primary case final value?) 'primary': value,
-      if (instance.code case final value?) 'code': value,
-      if (instance.name case final value?) 'name': value,
-      if (instance.symbol case final value?) 'symbol': value,
-      if (instance.decimalPlaces case final value?) 'decimal_places': value,
+      'enabled': ?instance.enabled,
+      'primary': ?instance.primary,
+      'code': ?instance.code,
+      'name': ?instance.name,
+      'symbol': ?instance.symbol,
+      'decimal_places': ?instance.decimalPlaces,
     };
 
 Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   user: json['user'] as String?,
   groupTitle: json['group_title'] as String?,
   transactions:
@@ -4122,12 +3820,10 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
 
 Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
     <String, dynamic>{
-      if (instance.createdAt?.toIso8601String() case final value?)
-        'created_at': value,
-      if (instance.updatedAt?.toIso8601String() case final value?)
-        'updated_at': value,
-      if (instance.user case final value?) 'user': value,
-      if (instance.groupTitle case final value?) 'group_title': value,
+      'created_at': ?instance.createdAt?.toIso8601String(),
+      'updated_at': ?instance.updatedAt?.toIso8601String(),
+      'user': ?instance.user,
+      'group_title': ?instance.groupTitle,
       'transactions': instance.transactions.map((e) => e.toJson()).toList(),
     };
 
@@ -4149,11 +3845,10 @@ TransactionStore _$TransactionStoreFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$TransactionStoreToJson(TransactionStore instance) =>
     <String, dynamic>{
-      if (instance.errorIfDuplicateHash case final value?)
-        'error_if_duplicate_hash': value,
-      if (instance.applyRules case final value?) 'apply_rules': value,
-      if (instance.fireWebhooks case final value?) 'fire_webhooks': value,
-      if (instance.groupTitle case final value?) 'group_title': value,
+      'error_if_duplicate_hash': ?instance.errorIfDuplicateHash,
+      'apply_rules': ?instance.applyRules,
+      'fire_webhooks': ?instance.fireWebhooks,
+      'group_title': ?instance.groupTitle,
       'transactions': instance.transactions.map((e) => e.toJson()).toList(),
     };
 
@@ -4172,26 +3867,22 @@ TransactionUpdate _$TransactionUpdateFromJson(Map<String, dynamic> json) =>
           [],
     );
 
-Map<String, dynamic> _$TransactionUpdateToJson(
-  TransactionUpdate instance,
-) => <String, dynamic>{
-  if (instance.applyRules case final value?) 'apply_rules': value,
-  if (instance.fireWebhooks case final value?) 'fire_webhooks': value,
-  if (instance.groupTitle case final value?) 'group_title': value,
-  if (instance.transactions?.map((e) => e.toJson()).toList() case final value?)
-    'transactions': value,
-};
+Map<String, dynamic> _$TransactionUpdateToJson(TransactionUpdate instance) =>
+    <String, dynamic>{
+      'apply_rules': ?instance.applyRules,
+      'fire_webhooks': ?instance.fireWebhooks,
+      'group_title': ?instance.groupTitle,
+      'transactions': ?instance.transactions?.map((e) => e.toJson()).toList(),
+    };
 
 TransactionLink _$TransactionLinkFromJson(Map<String, dynamic> json) =>
     TransactionLink(
-      createdAt:
-          json['created_at'] == null
-              ? null
-              : DateTime.parse(json['created_at'] as String),
-      updatedAt:
-          json['updated_at'] == null
-              ? null
-              : DateTime.parse(json['updated_at'] as String),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
       linkTypeId: json['link_type_id'] as String?,
       linkTypeName: json['link_type_name'] as String?,
       inwardId: json['inward_id'] as String,
@@ -4201,15 +3892,13 @@ TransactionLink _$TransactionLinkFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$TransactionLinkToJson(TransactionLink instance) =>
     <String, dynamic>{
-      if (instance.createdAt?.toIso8601String() case final value?)
-        'created_at': value,
-      if (instance.updatedAt?.toIso8601String() case final value?)
-        'updated_at': value,
-      if (instance.linkTypeId case final value?) 'link_type_id': value,
-      if (instance.linkTypeName case final value?) 'link_type_name': value,
+      'created_at': ?instance.createdAt?.toIso8601String(),
+      'updated_at': ?instance.updatedAt?.toIso8601String(),
+      'link_type_id': ?instance.linkTypeId,
+      'link_type_name': ?instance.linkTypeName,
       'inward_id': instance.inwardId,
       'outward_id': instance.outwardId,
-      if (instance.notes case final value?) 'notes': value,
+      'notes': ?instance.notes,
     };
 
 TransactionLinkStore _$TransactionLinkStoreFromJson(
@@ -4225,11 +3914,11 @@ TransactionLinkStore _$TransactionLinkStoreFromJson(
 Map<String, dynamic> _$TransactionLinkStoreToJson(
   TransactionLinkStore instance,
 ) => <String, dynamic>{
-  if (instance.linkTypeId case final value?) 'link_type_id': value,
-  if (instance.linkTypeName case final value?) 'link_type_name': value,
+  'link_type_id': ?instance.linkTypeId,
+  'link_type_name': ?instance.linkTypeName,
   'inward_id': instance.inwardId,
   'outward_id': instance.outwardId,
-  if (instance.notes case final value?) 'notes': value,
+  'notes': ?instance.notes,
 };
 
 TransactionLinkUpdate _$TransactionLinkUpdateFromJson(
@@ -4245,11 +3934,11 @@ TransactionLinkUpdate _$TransactionLinkUpdateFromJson(
 Map<String, dynamic> _$TransactionLinkUpdateToJson(
   TransactionLinkUpdate instance,
 ) => <String, dynamic>{
-  if (instance.linkTypeId case final value?) 'link_type_id': value,
-  if (instance.linkTypeName case final value?) 'link_type_name': value,
-  if (instance.inwardId case final value?) 'inward_id': value,
-  if (instance.outwardId case final value?) 'outward_id': value,
-  if (instance.notes case final value?) 'notes': value,
+  'link_type_id': ?instance.linkTypeId,
+  'link_type_name': ?instance.linkTypeName,
+  'inward_id': ?instance.inwardId,
+  'outward_id': ?instance.outwardId,
+  'notes': ?instance.notes,
 };
 
 LinkType _$LinkTypeFromJson(Map<String, dynamic> json) => LinkType(
@@ -4263,7 +3952,7 @@ Map<String, dynamic> _$LinkTypeToJson(LinkType instance) => <String, dynamic>{
   'name': instance.name,
   'inward': instance.inward,
   'outward': instance.outward,
-  if (instance.editable case final value?) 'editable': value,
+  'editable': ?instance.editable,
 };
 
 LinkTypeUpdate _$LinkTypeUpdateFromJson(Map<String, dynamic> json) =>
@@ -4275,9 +3964,9 @@ LinkTypeUpdate _$LinkTypeUpdateFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$LinkTypeUpdateToJson(LinkTypeUpdate instance) =>
     <String, dynamic>{
-      if (instance.name case final value?) 'name': value,
-      if (instance.inward case final value?) 'inward': value,
-      if (instance.outward case final value?) 'outward': value,
+      'name': ?instance.name,
+      'inward': ?instance.inward,
+      'outward': ?instance.outward,
     };
 
 TransactionSplit _$TransactionSplitFromJson(
@@ -4351,137 +4040,108 @@ TransactionSplit _$TransactionSplitFromJson(
   sepaEp: json['sepa_ep'] as String?,
   sepaCi: json['sepa_ci'] as String?,
   sepaBatchId: json['sepa_batch_id'] as String?,
-  interestDate:
-      json['interest_date'] == null
-          ? null
-          : DateTime.parse(json['interest_date'] as String),
-  bookDate:
-      json['book_date'] == null
-          ? null
-          : DateTime.parse(json['book_date'] as String),
-  processDate:
-      json['process_date'] == null
-          ? null
-          : DateTime.parse(json['process_date'] as String),
-  dueDate:
-      json['due_date'] == null
-          ? null
-          : DateTime.parse(json['due_date'] as String),
-  paymentDate:
-      json['payment_date'] == null
-          ? null
-          : DateTime.parse(json['payment_date'] as String),
-  invoiceDate:
-      json['invoice_date'] == null
-          ? null
-          : DateTime.parse(json['invoice_date'] as String),
+  interestDate: json['interest_date'] == null
+      ? null
+      : DateTime.parse(json['interest_date'] as String),
+  bookDate: json['book_date'] == null
+      ? null
+      : DateTime.parse(json['book_date'] as String),
+  processDate: json['process_date'] == null
+      ? null
+      : DateTime.parse(json['process_date'] as String),
+  dueDate: json['due_date'] == null
+      ? null
+      : DateTime.parse(json['due_date'] as String),
+  paymentDate: json['payment_date'] == null
+      ? null
+      : DateTime.parse(json['payment_date'] as String),
+  invoiceDate: json['invoice_date'] == null
+      ? null
+      : DateTime.parse(json['invoice_date'] as String),
   latitude: (json['latitude'] as num?)?.toDouble(),
   longitude: (json['longitude'] as num?)?.toDouble(),
   zoomLevel: (json['zoom_level'] as num?)?.toInt(),
   hasAttachments: json['has_attachments'] as bool?,
 );
 
-Map<String, dynamic> _$TransactionSplitToJson(
-  TransactionSplit instance,
-) => <String, dynamic>{
-  if (instance.user case final value?) 'user': value,
-  if (instance.transactionJournalId case final value?)
-    'transaction_journal_id': value,
-  if (transactionTypePropertyToJson(instance.type) case final value?)
-    'type': value,
-  'date': instance.date.toIso8601String(),
-  if (instance.order case final value?) 'order': value,
-  if (instance.objectHasCurrencySetting case final value?)
-    'object_has_currency_setting': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.currencySymbol case final value?) 'currency_symbol': value,
-  if (instance.currencyName case final value?) 'currency_name': value,
-  if (instance.currencyDecimalPlaces case final value?)
-    'currency_decimal_places': value,
-  if (instance.foreignCurrencyId case final value?)
-    'foreign_currency_id': value,
-  if (instance.foreignCurrencyCode case final value?)
-    'foreign_currency_code': value,
-  if (instance.foreignCurrencySymbol case final value?)
-    'foreign_currency_symbol': value,
-  if (instance.foreignCurrencyDecimalPlaces case final value?)
-    'foreign_currency_decimal_places': value,
-  if (instance.primaryCurrencyId case final value?)
-    'primary_currency_id': value,
-  if (instance.primaryCurrencyCode case final value?)
-    'primary_currency_code': value,
-  if (instance.primaryCurrencySymbol case final value?)
-    'primary_currency_symbol': value,
-  if (instance.primaryCurrencyDecimalPlaces case final value?)
-    'primary_currency_decimal_places': value,
-  'amount': instance.amount,
-  if (instance.pcAmount case final value?) 'pc_amount': value,
-  if (instance.foreignAmount case final value?) 'foreign_amount': value,
-  if (instance.pcForeignAmount case final value?) 'pc_foreign_amount': value,
-  if (instance.sourceBalanceAfter case final value?)
-    'source_balance_after': value,
-  if (instance.pcSourceBalanceAfter case final value?)
-    'pc_source_balance_after': value,
-  if (instance.destinationBalanceAfter case final value?)
-    'destination_balance_after': value,
-  if (instance.pcDestinationBalanceAfter case final value?)
-    'pc_destination_balance_after': value,
-  'description': instance.description,
-  if (instance.sourceId case final value?) 'source_id': value,
-  if (instance.sourceName case final value?) 'source_name': value,
-  if (instance.sourceIban case final value?) 'source_iban': value,
-  if (accountTypePropertyNullableToJson(instance.sourceType) case final value?)
-    'source_type': value,
-  if (instance.destinationId case final value?) 'destination_id': value,
-  if (instance.destinationName case final value?) 'destination_name': value,
-  if (instance.destinationIban case final value?) 'destination_iban': value,
-  if (accountTypePropertyNullableToJson(instance.destinationType)
-      case final value?)
-    'destination_type': value,
-  if (instance.budgetId case final value?) 'budget_id': value,
-  if (instance.budgetName case final value?) 'budget_name': value,
-  if (instance.categoryId case final value?) 'category_id': value,
-  if (instance.categoryName case final value?) 'category_name': value,
-  if (instance.billId case final value?) 'bill_id': value,
-  if (instance.billName case final value?) 'bill_name': value,
-  if (instance.subscriptionId case final value?) 'subscription_id': value,
-  if (instance.subscriptionName case final value?) 'subscription_name': value,
-  if (instance.reconciled case final value?) 'reconciled': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.tags case final value?) 'tags': value,
-  if (instance.internalReference case final value?) 'internal_reference': value,
-  if (instance.externalId case final value?) 'external_id': value,
-  if (instance.externalUrl case final value?) 'external_url': value,
-  if (instance.originalSource case final value?) 'original_source': value,
-  if (instance.recurrenceId case final value?) 'recurrence_id': value,
-  if (instance.recurrenceTotal case final value?) 'recurrence_total': value,
-  if (instance.recurrenceCount case final value?) 'recurrence_count': value,
-  if (instance.importHashV2 case final value?) 'import_hash_v2': value,
-  if (instance.sepaCc case final value?) 'sepa_cc': value,
-  if (instance.sepaCtOp case final value?) 'sepa_ct_op': value,
-  if (instance.sepaCtId case final value?) 'sepa_ct_id': value,
-  if (instance.sepaDb case final value?) 'sepa_db': value,
-  if (instance.sepaCountry case final value?) 'sepa_country': value,
-  if (instance.sepaEp case final value?) 'sepa_ep': value,
-  if (instance.sepaCi case final value?) 'sepa_ci': value,
-  if (instance.sepaBatchId case final value?) 'sepa_batch_id': value,
-  if (instance.interestDate?.toIso8601String() case final value?)
-    'interest_date': value,
-  if (instance.bookDate?.toIso8601String() case final value?)
-    'book_date': value,
-  if (instance.processDate?.toIso8601String() case final value?)
-    'process_date': value,
-  if (instance.dueDate?.toIso8601String() case final value?) 'due_date': value,
-  if (instance.paymentDate?.toIso8601String() case final value?)
-    'payment_date': value,
-  if (instance.invoiceDate?.toIso8601String() case final value?)
-    'invoice_date': value,
-  if (instance.latitude case final value?) 'latitude': value,
-  if (instance.longitude case final value?) 'longitude': value,
-  if (instance.zoomLevel case final value?) 'zoom_level': value,
-  if (instance.hasAttachments case final value?) 'has_attachments': value,
-};
+Map<String, dynamic> _$TransactionSplitToJson(TransactionSplit instance) =>
+    <String, dynamic>{
+      'user': ?instance.user,
+      'transaction_journal_id': ?instance.transactionJournalId,
+      'type': ?transactionTypePropertyToJson(instance.type),
+      'date': instance.date.toIso8601String(),
+      'order': ?instance.order,
+      'object_has_currency_setting': ?instance.objectHasCurrencySetting,
+      'currency_id': ?instance.currencyId,
+      'currency_code': ?instance.currencyCode,
+      'currency_symbol': ?instance.currencySymbol,
+      'currency_name': ?instance.currencyName,
+      'currency_decimal_places': ?instance.currencyDecimalPlaces,
+      'foreign_currency_id': ?instance.foreignCurrencyId,
+      'foreign_currency_code': ?instance.foreignCurrencyCode,
+      'foreign_currency_symbol': ?instance.foreignCurrencySymbol,
+      'foreign_currency_decimal_places': ?instance.foreignCurrencyDecimalPlaces,
+      'primary_currency_id': ?instance.primaryCurrencyId,
+      'primary_currency_code': ?instance.primaryCurrencyCode,
+      'primary_currency_symbol': ?instance.primaryCurrencySymbol,
+      'primary_currency_decimal_places': ?instance.primaryCurrencyDecimalPlaces,
+      'amount': instance.amount,
+      'pc_amount': ?instance.pcAmount,
+      'foreign_amount': ?instance.foreignAmount,
+      'pc_foreign_amount': ?instance.pcForeignAmount,
+      'source_balance_after': ?instance.sourceBalanceAfter,
+      'pc_source_balance_after': ?instance.pcSourceBalanceAfter,
+      'destination_balance_after': ?instance.destinationBalanceAfter,
+      'pc_destination_balance_after': ?instance.pcDestinationBalanceAfter,
+      'description': instance.description,
+      'source_id': ?instance.sourceId,
+      'source_name': ?instance.sourceName,
+      'source_iban': ?instance.sourceIban,
+      'source_type': ?accountTypePropertyNullableToJson(instance.sourceType),
+      'destination_id': ?instance.destinationId,
+      'destination_name': ?instance.destinationName,
+      'destination_iban': ?instance.destinationIban,
+      'destination_type': ?accountTypePropertyNullableToJson(
+        instance.destinationType,
+      ),
+      'budget_id': ?instance.budgetId,
+      'budget_name': ?instance.budgetName,
+      'category_id': ?instance.categoryId,
+      'category_name': ?instance.categoryName,
+      'bill_id': ?instance.billId,
+      'bill_name': ?instance.billName,
+      'subscription_id': ?instance.subscriptionId,
+      'subscription_name': ?instance.subscriptionName,
+      'reconciled': ?instance.reconciled,
+      'notes': ?instance.notes,
+      'tags': ?instance.tags,
+      'internal_reference': ?instance.internalReference,
+      'external_id': ?instance.externalId,
+      'external_url': ?instance.externalUrl,
+      'original_source': ?instance.originalSource,
+      'recurrence_id': ?instance.recurrenceId,
+      'recurrence_total': ?instance.recurrenceTotal,
+      'recurrence_count': ?instance.recurrenceCount,
+      'import_hash_v2': ?instance.importHashV2,
+      'sepa_cc': ?instance.sepaCc,
+      'sepa_ct_op': ?instance.sepaCtOp,
+      'sepa_ct_id': ?instance.sepaCtId,
+      'sepa_db': ?instance.sepaDb,
+      'sepa_country': ?instance.sepaCountry,
+      'sepa_ep': ?instance.sepaEp,
+      'sepa_ci': ?instance.sepaCi,
+      'sepa_batch_id': ?instance.sepaBatchId,
+      'interest_date': ?instance.interestDate?.toIso8601String(),
+      'book_date': ?instance.bookDate?.toIso8601String(),
+      'process_date': ?instance.processDate?.toIso8601String(),
+      'due_date': ?instance.dueDate?.toIso8601String(),
+      'payment_date': ?instance.paymentDate?.toIso8601String(),
+      'invoice_date': ?instance.invoiceDate?.toIso8601String(),
+      'latitude': ?instance.latitude,
+      'longitude': ?instance.longitude,
+      'zoom_level': ?instance.zoomLevel,
+      'has_attachments': ?instance.hasAttachments,
+    };
 
 TransactionSplitStore _$TransactionSplitStoreFromJson(
   Map<String, dynamic> json,
@@ -4523,85 +4183,71 @@ TransactionSplitStore _$TransactionSplitStoreFromJson(
   sepaEp: json['sepa_ep'] as String?,
   sepaCi: json['sepa_ci'] as String?,
   sepaBatchId: json['sepa_batch_id'] as String?,
-  interestDate:
-      json['interest_date'] == null
-          ? null
-          : DateTime.parse(json['interest_date'] as String),
-  bookDate:
-      json['book_date'] == null
-          ? null
-          : DateTime.parse(json['book_date'] as String),
-  processDate:
-      json['process_date'] == null
-          ? null
-          : DateTime.parse(json['process_date'] as String),
-  dueDate:
-      json['due_date'] == null
-          ? null
-          : DateTime.parse(json['due_date'] as String),
-  paymentDate:
-      json['payment_date'] == null
-          ? null
-          : DateTime.parse(json['payment_date'] as String),
-  invoiceDate:
-      json['invoice_date'] == null
-          ? null
-          : DateTime.parse(json['invoice_date'] as String),
+  interestDate: json['interest_date'] == null
+      ? null
+      : DateTime.parse(json['interest_date'] as String),
+  bookDate: json['book_date'] == null
+      ? null
+      : DateTime.parse(json['book_date'] as String),
+  processDate: json['process_date'] == null
+      ? null
+      : DateTime.parse(json['process_date'] as String),
+  dueDate: json['due_date'] == null
+      ? null
+      : DateTime.parse(json['due_date'] as String),
+  paymentDate: json['payment_date'] == null
+      ? null
+      : DateTime.parse(json['payment_date'] as String),
+  invoiceDate: json['invoice_date'] == null
+      ? null
+      : DateTime.parse(json['invoice_date'] as String),
 );
 
 Map<String, dynamic> _$TransactionSplitStoreToJson(
   TransactionSplitStore instance,
 ) => <String, dynamic>{
-  if (transactionTypePropertyToJson(instance.type) case final value?)
-    'type': value,
+  'type': ?transactionTypePropertyToJson(instance.type),
   'date': instance.date.toIso8601String(),
   'amount': instance.amount,
   'description': instance.description,
-  if (instance.order case final value?) 'order': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.foreignAmount case final value?) 'foreign_amount': value,
-  if (instance.foreignCurrencyId case final value?)
-    'foreign_currency_id': value,
-  if (instance.foreignCurrencyCode case final value?)
-    'foreign_currency_code': value,
-  if (instance.budgetId case final value?) 'budget_id': value,
-  if (instance.budgetName case final value?) 'budget_name': value,
-  if (instance.categoryId case final value?) 'category_id': value,
-  if (instance.categoryName case final value?) 'category_name': value,
-  if (instance.sourceId case final value?) 'source_id': value,
-  if (instance.sourceName case final value?) 'source_name': value,
-  if (instance.destinationId case final value?) 'destination_id': value,
-  if (instance.destinationName case final value?) 'destination_name': value,
-  if (instance.reconciled case final value?) 'reconciled': value,
-  if (instance.piggyBankId case final value?) 'piggy_bank_id': value,
-  if (instance.piggyBankName case final value?) 'piggy_bank_name': value,
-  if (instance.billId case final value?) 'bill_id': value,
-  if (instance.billName case final value?) 'bill_name': value,
-  if (instance.tags case final value?) 'tags': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.internalReference case final value?) 'internal_reference': value,
-  if (instance.externalId case final value?) 'external_id': value,
-  if (instance.externalUrl case final value?) 'external_url': value,
-  if (instance.sepaCc case final value?) 'sepa_cc': value,
-  if (instance.sepaCtOp case final value?) 'sepa_ct_op': value,
-  if (instance.sepaCtId case final value?) 'sepa_ct_id': value,
-  if (instance.sepaDb case final value?) 'sepa_db': value,
-  if (instance.sepaCountry case final value?) 'sepa_country': value,
-  if (instance.sepaEp case final value?) 'sepa_ep': value,
-  if (instance.sepaCi case final value?) 'sepa_ci': value,
-  if (instance.sepaBatchId case final value?) 'sepa_batch_id': value,
-  if (instance.interestDate?.toIso8601String() case final value?)
-    'interest_date': value,
-  if (instance.bookDate?.toIso8601String() case final value?)
-    'book_date': value,
-  if (instance.processDate?.toIso8601String() case final value?)
-    'process_date': value,
-  if (instance.dueDate?.toIso8601String() case final value?) 'due_date': value,
-  if (instance.paymentDate?.toIso8601String() case final value?)
-    'payment_date': value,
-  if (instance.invoiceDate?.toIso8601String() case final value?)
-    'invoice_date': value,
+  'order': ?instance.order,
+  'currency_id': ?instance.currencyId,
+  'currency_code': ?instance.currencyCode,
+  'foreign_amount': ?instance.foreignAmount,
+  'foreign_currency_id': ?instance.foreignCurrencyId,
+  'foreign_currency_code': ?instance.foreignCurrencyCode,
+  'budget_id': ?instance.budgetId,
+  'budget_name': ?instance.budgetName,
+  'category_id': ?instance.categoryId,
+  'category_name': ?instance.categoryName,
+  'source_id': ?instance.sourceId,
+  'source_name': ?instance.sourceName,
+  'destination_id': ?instance.destinationId,
+  'destination_name': ?instance.destinationName,
+  'reconciled': ?instance.reconciled,
+  'piggy_bank_id': ?instance.piggyBankId,
+  'piggy_bank_name': ?instance.piggyBankName,
+  'bill_id': ?instance.billId,
+  'bill_name': ?instance.billName,
+  'tags': ?instance.tags,
+  'notes': ?instance.notes,
+  'internal_reference': ?instance.internalReference,
+  'external_id': ?instance.externalId,
+  'external_url': ?instance.externalUrl,
+  'sepa_cc': ?instance.sepaCc,
+  'sepa_ct_op': ?instance.sepaCtOp,
+  'sepa_ct_id': ?instance.sepaCtId,
+  'sepa_db': ?instance.sepaDb,
+  'sepa_country': ?instance.sepaCountry,
+  'sepa_ep': ?instance.sepaEp,
+  'sepa_ci': ?instance.sepaCi,
+  'sepa_batch_id': ?instance.sepaBatchId,
+  'interest_date': ?instance.interestDate?.toIso8601String(),
+  'book_date': ?instance.bookDate?.toIso8601String(),
+  'process_date': ?instance.processDate?.toIso8601String(),
+  'due_date': ?instance.dueDate?.toIso8601String(),
+  'payment_date': ?instance.paymentDate?.toIso8601String(),
+  'invoice_date': ?instance.invoiceDate?.toIso8601String(),
 };
 
 TransactionSplitUpdate _$TransactionSplitUpdateFromJson(
@@ -4651,106 +4297,86 @@ TransactionSplitUpdate _$TransactionSplitUpdateFromJson(
   sepaEp: json['sepa_ep'] as String?,
   sepaCi: json['sepa_ci'] as String?,
   sepaBatchId: json['sepa_batch_id'] as String?,
-  interestDate:
-      json['interest_date'] == null
-          ? null
-          : DateTime.parse(json['interest_date'] as String),
-  bookDate:
-      json['book_date'] == null
-          ? null
-          : DateTime.parse(json['book_date'] as String),
-  processDate:
-      json['process_date'] == null
-          ? null
-          : DateTime.parse(json['process_date'] as String),
-  dueDate:
-      json['due_date'] == null
-          ? null
-          : DateTime.parse(json['due_date'] as String),
-  paymentDate:
-      json['payment_date'] == null
-          ? null
-          : DateTime.parse(json['payment_date'] as String),
-  invoiceDate:
-      json['invoice_date'] == null
-          ? null
-          : DateTime.parse(json['invoice_date'] as String),
+  interestDate: json['interest_date'] == null
+      ? null
+      : DateTime.parse(json['interest_date'] as String),
+  bookDate: json['book_date'] == null
+      ? null
+      : DateTime.parse(json['book_date'] as String),
+  processDate: json['process_date'] == null
+      ? null
+      : DateTime.parse(json['process_date'] as String),
+  dueDate: json['due_date'] == null
+      ? null
+      : DateTime.parse(json['due_date'] as String),
+  paymentDate: json['payment_date'] == null
+      ? null
+      : DateTime.parse(json['payment_date'] as String),
+  invoiceDate: json['invoice_date'] == null
+      ? null
+      : DateTime.parse(json['invoice_date'] as String),
 );
 
 Map<String, dynamic> _$TransactionSplitUpdateToJson(
   TransactionSplitUpdate instance,
 ) => <String, dynamic>{
-  if (instance.transactionJournalId case final value?)
-    'transaction_journal_id': value,
-  if (transactionTypePropertyNullableToJson(instance.type) case final value?)
-    'type': value,
-  if (instance.date?.toIso8601String() case final value?) 'date': value,
-  if (instance.amount case final value?) 'amount': value,
-  if (instance.description case final value?) 'description': value,
-  if (instance.order case final value?) 'order': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.currencySymbol case final value?) 'currency_symbol': value,
-  if (instance.currencyName case final value?) 'currency_name': value,
-  if (instance.currencyDecimalPlaces case final value?)
-    'currency_decimal_places': value,
-  if (instance.foreignAmount case final value?) 'foreign_amount': value,
-  if (instance.foreignCurrencyId case final value?)
-    'foreign_currency_id': value,
-  if (instance.foreignCurrencyCode case final value?)
-    'foreign_currency_code': value,
-  if (instance.foreignCurrencySymbol case final value?)
-    'foreign_currency_symbol': value,
-  if (instance.foreignCurrencyDecimalPlaces case final value?)
-    'foreign_currency_decimal_places': value,
-  if (instance.budgetId case final value?) 'budget_id': value,
-  if (instance.budgetName case final value?) 'budget_name': value,
-  if (instance.categoryId case final value?) 'category_id': value,
-  if (instance.categoryName case final value?) 'category_name': value,
-  if (instance.sourceId case final value?) 'source_id': value,
-  if (instance.sourceName case final value?) 'source_name': value,
-  if (instance.sourceIban case final value?) 'source_iban': value,
-  if (instance.destinationId case final value?) 'destination_id': value,
-  if (instance.destinationName case final value?) 'destination_name': value,
-  if (instance.destinationIban case final value?) 'destination_iban': value,
-  if (instance.reconciled case final value?) 'reconciled': value,
-  if (instance.billId case final value?) 'bill_id': value,
-  if (instance.billName case final value?) 'bill_name': value,
-  if (instance.tags case final value?) 'tags': value,
-  if (instance.notes case final value?) 'notes': value,
-  if (instance.internalReference case final value?) 'internal_reference': value,
-  if (instance.externalId case final value?) 'external_id': value,
-  if (instance.externalUrl case final value?) 'external_url': value,
-  if (instance.sepaCc case final value?) 'sepa_cc': value,
-  if (instance.sepaCtOp case final value?) 'sepa_ct_op': value,
-  if (instance.sepaCtId case final value?) 'sepa_ct_id': value,
-  if (instance.sepaDb case final value?) 'sepa_db': value,
-  if (instance.sepaCountry case final value?) 'sepa_country': value,
-  if (instance.sepaEp case final value?) 'sepa_ep': value,
-  if (instance.sepaCi case final value?) 'sepa_ci': value,
-  if (instance.sepaBatchId case final value?) 'sepa_batch_id': value,
-  if (instance.interestDate?.toIso8601String() case final value?)
-    'interest_date': value,
-  if (instance.bookDate?.toIso8601String() case final value?)
-    'book_date': value,
-  if (instance.processDate?.toIso8601String() case final value?)
-    'process_date': value,
-  if (instance.dueDate?.toIso8601String() case final value?) 'due_date': value,
-  if (instance.paymentDate?.toIso8601String() case final value?)
-    'payment_date': value,
-  if (instance.invoiceDate?.toIso8601String() case final value?)
-    'invoice_date': value,
+  'transaction_journal_id': ?instance.transactionJournalId,
+  'type': ?transactionTypePropertyNullableToJson(instance.type),
+  'date': ?instance.date?.toIso8601String(),
+  'amount': ?instance.amount,
+  'description': ?instance.description,
+  'order': ?instance.order,
+  'currency_id': ?instance.currencyId,
+  'currency_code': ?instance.currencyCode,
+  'currency_symbol': ?instance.currencySymbol,
+  'currency_name': ?instance.currencyName,
+  'currency_decimal_places': ?instance.currencyDecimalPlaces,
+  'foreign_amount': ?instance.foreignAmount,
+  'foreign_currency_id': ?instance.foreignCurrencyId,
+  'foreign_currency_code': ?instance.foreignCurrencyCode,
+  'foreign_currency_symbol': ?instance.foreignCurrencySymbol,
+  'foreign_currency_decimal_places': ?instance.foreignCurrencyDecimalPlaces,
+  'budget_id': ?instance.budgetId,
+  'budget_name': ?instance.budgetName,
+  'category_id': ?instance.categoryId,
+  'category_name': ?instance.categoryName,
+  'source_id': ?instance.sourceId,
+  'source_name': ?instance.sourceName,
+  'source_iban': ?instance.sourceIban,
+  'destination_id': ?instance.destinationId,
+  'destination_name': ?instance.destinationName,
+  'destination_iban': ?instance.destinationIban,
+  'reconciled': ?instance.reconciled,
+  'bill_id': ?instance.billId,
+  'bill_name': ?instance.billName,
+  'tags': ?instance.tags,
+  'notes': ?instance.notes,
+  'internal_reference': ?instance.internalReference,
+  'external_id': ?instance.externalId,
+  'external_url': ?instance.externalUrl,
+  'sepa_cc': ?instance.sepaCc,
+  'sepa_ct_op': ?instance.sepaCtOp,
+  'sepa_ct_id': ?instance.sepaCtId,
+  'sepa_db': ?instance.sepaDb,
+  'sepa_country': ?instance.sepaCountry,
+  'sepa_ep': ?instance.sepaEp,
+  'sepa_ci': ?instance.sepaCi,
+  'sepa_batch_id': ?instance.sepaBatchId,
+  'interest_date': ?instance.interestDate?.toIso8601String(),
+  'book_date': ?instance.bookDate?.toIso8601String(),
+  'process_date': ?instance.processDate?.toIso8601String(),
+  'due_date': ?instance.dueDate?.toIso8601String(),
+  'payment_date': ?instance.paymentDate?.toIso8601String(),
+  'invoice_date': ?instance.invoiceDate?.toIso8601String(),
 };
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   email: json['email'] as String,
   blocked: json['blocked'] as bool?,
   blockedCode: userBlockedCodePropertyNullableFromJson(json['blocked_code']),
@@ -4758,17 +4384,12 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
 );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
+  'created_at': ?instance.createdAt?.toIso8601String(),
+  'updated_at': ?instance.updatedAt?.toIso8601String(),
   'email': instance.email,
-  if (instance.blocked case final value?) 'blocked': value,
-  if (userBlockedCodePropertyNullableToJson(instance.blockedCode)
-      case final value?)
-    'blocked_code': value,
-  if (userRolePropertyNullableToJson(instance.role) case final value?)
-    'role': value,
+  'blocked': ?instance.blocked,
+  'blocked_code': ?userBlockedCodePropertyNullableToJson(instance.blockedCode),
+  'role': ?userRolePropertyNullableToJson(instance.role),
 };
 
 UserGroupRead _$UserGroupReadFromJson(Map<String, dynamic> json) =>
@@ -4792,14 +4413,12 @@ Map<String, dynamic> _$UserGroupReadToJson(UserGroupRead instance) =>
 UserGroupReadAttributes _$UserGroupReadAttributesFromJson(
   Map<String, dynamic> json,
 ) => UserGroupReadAttributes(
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
+      ? null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   inUse: json['in_use'] as bool?,
   canSeeMembers: json['can_see_members'] as bool?,
   title: json['title'] as String?,
@@ -4818,23 +4437,16 @@ UserGroupReadAttributes _$UserGroupReadAttributesFromJson(
 Map<String, dynamic> _$UserGroupReadAttributesToJson(
   UserGroupReadAttributes instance,
 ) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
-  if (instance.inUse case final value?) 'in_use': value,
-  if (instance.canSeeMembers case final value?) 'can_see_members': value,
-  if (instance.title case final value?) 'title': value,
-  if (instance.primaryCurrencyId case final value?)
-    'primary_currency_id': value,
-  if (instance.primaryCurrencyCode case final value?)
-    'primary_currency_code': value,
-  if (instance.primaryCurrencySymbol case final value?)
-    'primary_currency_symbol': value,
-  if (instance.primaryCurrencyDecimalPlaces case final value?)
-    'primary_currency_decimal_places': value,
-  if (instance.members?.map((e) => e.toJson()).toList() case final value?)
-    'members': value,
+  'created_at': ?instance.createdAt?.toIso8601String(),
+  'updated_at': ?instance.updatedAt?.toIso8601String(),
+  'in_use': ?instance.inUse,
+  'can_see_members': ?instance.canSeeMembers,
+  'title': ?instance.title,
+  'primary_currency_id': ?instance.primaryCurrencyId,
+  'primary_currency_code': ?instance.primaryCurrencyCode,
+  'primary_currency_symbol': ?instance.primaryCurrencySymbol,
+  'primary_currency_decimal_places': ?instance.primaryCurrencyDecimalPlaces,
+  'members': ?instance.members?.map((e) => e.toJson()).toList(),
 };
 
 UserGroupReadMembers _$UserGroupReadMembersFromJson(
@@ -4849,9 +4461,9 @@ UserGroupReadMembers _$UserGroupReadMembersFromJson(
 Map<String, dynamic> _$UserGroupReadMembersToJson(
   UserGroupReadMembers instance,
 ) => <String, dynamic>{
-  if (instance.userId case final value?) 'user_id': value,
-  if (instance.userEmail case final value?) 'user_email': value,
-  if (instance.you case final value?) 'you': value,
+  'user_id': ?instance.userId,
+  'user_email': ?instance.userEmail,
+  'you': ?instance.you,
   'roles': userGroupReadRoleListToJson(instance.roles),
 };
 
@@ -4873,137 +4485,131 @@ UserGroupUpdate _$UserGroupUpdateFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$UserGroupUpdateToJson(UserGroupUpdate instance) =>
     <String, dynamic>{
       'title': instance.title,
-      if (instance.primaryCurrencyId case final value?)
-        'primary_currency_id': value,
-      if (instance.primaryCurrencyCode case final value?)
-        'primary_currency_code': value,
+      'primary_currency_id': ?instance.primaryCurrencyId,
+      'primary_currency_code': ?instance.primaryCurrencyCode,
     };
 
-WebhookProperties _$WebhookPropertiesFromJson(
-  Map<String, dynamic> json,
-) => WebhookProperties(
-  createdAt:
-      json['created_at'] == null
+WebhookProperties _$WebhookPropertiesFromJson(Map<String, dynamic> json) =>
+    WebhookProperties(
+      createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
+      updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
-  active: json['active'] as bool?,
-  title: json['title'] as String,
-  secret: json['secret'] as String?,
-  triggers:
-      (json['triggers'] as List<dynamic>?)?.map((e) => e as String).toList(),
-  responses:
-      (json['responses'] as List<dynamic>?)?.map((e) => e as String).toList(),
-  deliveries:
-      (json['deliveries'] as List<dynamic>?)?.map((e) => e as String).toList(),
-  url: json['url'] as String,
-);
+      active: json['active'] as bool?,
+      title: json['title'] as String,
+      secret: json['secret'] as String?,
+      triggers: (json['triggers'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      responses: (json['responses'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      deliveries: (json['deliveries'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      url: json['url'] as String,
+    );
 
 Map<String, dynamic> _$WebhookPropertiesToJson(WebhookProperties instance) =>
     <String, dynamic>{
-      if (instance.createdAt?.toIso8601String() case final value?)
-        'created_at': value,
-      if (instance.updatedAt?.toIso8601String() case final value?)
-        'updated_at': value,
-      if (instance.active case final value?) 'active': value,
+      'created_at': ?instance.createdAt?.toIso8601String(),
+      'updated_at': ?instance.updatedAt?.toIso8601String(),
+      'active': ?instance.active,
       'title': instance.title,
-      if (instance.secret case final value?) 'secret': value,
-      if (instance.triggers case final value?) 'triggers': value,
-      if (instance.responses case final value?) 'responses': value,
-      if (instance.deliveries case final value?) 'deliveries': value,
+      'secret': ?instance.secret,
+      'triggers': ?instance.triggers,
+      'responses': ?instance.responses,
+      'deliveries': ?instance.deliveries,
       'url': instance.url,
     };
 
 WebhookStore _$WebhookStoreFromJson(Map<String, dynamic> json) => WebhookStore(
   active: json['active'] as bool?,
   title: json['title'] as String,
-  triggers:
-      (json['triggers'] as List<dynamic>?)?.map((e) => e as String).toList(),
-  responses:
-      (json['responses'] as List<dynamic>?)?.map((e) => e as String).toList(),
-  deliveries:
-      (json['deliveries'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  triggers: (json['triggers'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
+  responses: (json['responses'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
+  deliveries: (json['deliveries'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
   url: json['url'] as String,
 );
 
 Map<String, dynamic> _$WebhookStoreToJson(WebhookStore instance) =>
     <String, dynamic>{
-      if (instance.active case final value?) 'active': value,
+      'active': ?instance.active,
       'title': instance.title,
-      if (instance.triggers case final value?) 'triggers': value,
-      if (instance.responses case final value?) 'responses': value,
-      if (instance.deliveries case final value?) 'deliveries': value,
+      'triggers': ?instance.triggers,
+      'responses': ?instance.responses,
+      'deliveries': ?instance.deliveries,
       'url': instance.url,
     };
 
-WebhookUpdate _$WebhookUpdateFromJson(
-  Map<String, dynamic> json,
-) => WebhookUpdate(
-  active: json['active'] as bool?,
-  title: json['title'] as String?,
-  secret: json['secret'] as String?,
-  triggers:
-      (json['triggers'] as List<dynamic>?)?.map((e) => e as String).toList(),
-  responses:
-      (json['responses'] as List<dynamic>?)?.map((e) => e as String).toList(),
-  deliveries:
-      (json['deliveries'] as List<dynamic>?)?.map((e) => e as String).toList(),
-  url: json['url'] as String?,
-);
+WebhookUpdate _$WebhookUpdateFromJson(Map<String, dynamic> json) =>
+    WebhookUpdate(
+      active: json['active'] as bool?,
+      title: json['title'] as String?,
+      secret: json['secret'] as String?,
+      triggers: (json['triggers'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      responses: (json['responses'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      deliveries: (json['deliveries'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      url: json['url'] as String?,
+    );
 
 Map<String, dynamic> _$WebhookUpdateToJson(WebhookUpdate instance) =>
     <String, dynamic>{
-      if (instance.active case final value?) 'active': value,
-      if (instance.title case final value?) 'title': value,
-      if (instance.secret case final value?) 'secret': value,
-      if (instance.triggers case final value?) 'triggers': value,
-      if (instance.responses case final value?) 'responses': value,
-      if (instance.deliveries case final value?) 'deliveries': value,
-      if (instance.url case final value?) 'url': value,
+      'active': ?instance.active,
+      'title': ?instance.title,
+      'secret': ?instance.secret,
+      'triggers': ?instance.triggers,
+      'responses': ?instance.responses,
+      'deliveries': ?instance.deliveries,
+      'url': ?instance.url,
     };
 
 WebhookAttempt _$WebhookAttemptFromJson(Map<String, dynamic> json) =>
     WebhookAttempt(
-      createdAt:
-          json['created_at'] == null
-              ? null
-              : DateTime.parse(json['created_at'] as String),
-      updatedAt:
-          json['updated_at'] == null
-              ? null
-              : DateTime.parse(json['updated_at'] as String),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
       webhookMessageId: json['webhook_message_id'] as String?,
       statusCode: (json['status_code'] as num?)?.toInt(),
       logs: json['logs'] as String?,
       response: json['response'] as String?,
     );
 
-Map<String, dynamic> _$WebhookAttemptToJson(
-  WebhookAttempt instance,
-) => <String, dynamic>{
-  if (instance.createdAt?.toIso8601String() case final value?)
-    'created_at': value,
-  if (instance.updatedAt?.toIso8601String() case final value?)
-    'updated_at': value,
-  if (instance.webhookMessageId case final value?) 'webhook_message_id': value,
-  if (instance.statusCode case final value?) 'status_code': value,
-  if (instance.logs case final value?) 'logs': value,
-  if (instance.response case final value?) 'response': value,
-};
+Map<String, dynamic> _$WebhookAttemptToJson(WebhookAttempt instance) =>
+    <String, dynamic>{
+      'created_at': ?instance.createdAt?.toIso8601String(),
+      'updated_at': ?instance.updatedAt?.toIso8601String(),
+      'webhook_message_id': ?instance.webhookMessageId,
+      'status_code': ?instance.statusCode,
+      'logs': ?instance.logs,
+      'response': ?instance.response,
+    };
 
 WebhookMessage _$WebhookMessageFromJson(Map<String, dynamic> json) =>
     WebhookMessage(
-      createdAt:
-          json['created_at'] == null
-              ? null
-              : DateTime.parse(json['created_at'] as String),
-      updatedAt:
-          json['updated_at'] == null
-              ? null
-              : DateTime.parse(json['updated_at'] as String),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
       sent: json['sent'] as bool?,
       errored: json['errored'] as bool?,
       webhookId: json['webhook_id'] as String?,
@@ -5013,15 +4619,13 @@ WebhookMessage _$WebhookMessageFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$WebhookMessageToJson(WebhookMessage instance) =>
     <String, dynamic>{
-      if (instance.createdAt?.toIso8601String() case final value?)
-        'created_at': value,
-      if (instance.updatedAt?.toIso8601String() case final value?)
-        'updated_at': value,
-      if (instance.sent case final value?) 'sent': value,
-      if (instance.errored case final value?) 'errored': value,
-      if (instance.webhookId case final value?) 'webhook_id': value,
-      if (instance.uuid case final value?) 'uuid': value,
-      if (instance.message case final value?) 'message': value,
+      'created_at': ?instance.createdAt?.toIso8601String(),
+      'updated_at': ?instance.updatedAt?.toIso8601String(),
+      'sent': ?instance.sent,
+      'errored': ?instance.errored,
+      'webhook_id': ?instance.webhookId,
+      'uuid': ?instance.uuid,
+      'message': ?instance.message,
     };
 
 PolymorphicProperty _$PolymorphicPropertyFromJson(Map<String, dynamic> json) =>
@@ -5054,76 +4658,66 @@ BasicSummaryEntry _$BasicSummaryEntryFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$BasicSummaryEntryToJson(BasicSummaryEntry instance) =>
     <String, dynamic>{
-      if (instance.key case final value?) 'key': value,
-      if (instance.title case final value?) 'title': value,
-      if (instance.monetaryValue case final value?) 'monetary_value': value,
-      if (instance.currencyId case final value?) 'currency_id': value,
-      if (instance.currencyCode case final value?) 'currency_code': value,
-      if (instance.currencySymbol case final value?) 'currency_symbol': value,
-      if (instance.currencyDecimalPlaces case final value?)
-        'currency_decimal_places': value,
-      if (instance.noAvailableBudgets case final value?)
-        'no_available_budgets': value,
-      if (instance.valueParsed case final value?) 'value_parsed': value,
-      if (instance.localIcon case final value?) 'local_icon': value,
-      if (instance.subTitle case final value?) 'sub_title': value,
+      'key': ?instance.key,
+      'title': ?instance.title,
+      'monetary_value': ?instance.monetaryValue,
+      'currency_id': ?instance.currencyId,
+      'currency_code': ?instance.currencyCode,
+      'currency_symbol': ?instance.currencySymbol,
+      'currency_decimal_places': ?instance.currencyDecimalPlaces,
+      'no_available_budgets': ?instance.noAvailableBudgets,
+      'value_parsed': ?instance.valueParsed,
+      'local_icon': ?instance.localIcon,
+      'sub_title': ?instance.subTitle,
     };
 
 Configuration _$ConfigurationFromJson(Map<String, dynamic> json) =>
     Configuration(
       title: configValueFilterFromJson(json['title']),
-      $value: PolymorphicProperty.fromJson(
+      value: PolymorphicProperty.fromJson(
         json['value'] as Map<String, dynamic>,
       ),
       editable: json['editable'] as bool,
     );
 
-Map<String, dynamic> _$ConfigurationToJson(
-  Configuration instance,
-) => <String, dynamic>{
-  if (configValueFilterToJson(instance.title) case final value?) 'title': value,
-  'value': instance.$value.toJson(),
-  'editable': instance.editable,
-};
+Map<String, dynamic> _$ConfigurationToJson(Configuration instance) =>
+    <String, dynamic>{
+      'title': ?configValueFilterToJson(instance.title),
+      'value': instance.value.toJson(),
+      'editable': instance.editable,
+    };
 
 ConfigurationUpdate _$ConfigurationUpdateFromJson(Map<String, dynamic> json) =>
     ConfigurationUpdate(
-      $value: PolymorphicProperty.fromJson(
+      value: PolymorphicProperty.fromJson(
         json['value'] as Map<String, dynamic>,
       ),
     );
 
 Map<String, dynamic> _$ConfigurationUpdateToJson(
   ConfigurationUpdate instance,
-) => <String, dynamic>{'value': instance.$value.toJson()};
+) => <String, dynamic>{'value': instance.value.toJson()};
 
 CronResult _$CronResultFromJson(Map<String, dynamic> json) => CronResult(
-  recurringTransactions:
-      json['recurring_transactions'] == null
-          ? null
-          : CronResultRow.fromJson(
-            json['recurring_transactions'] as Map<String, dynamic>,
-          ),
-  autoBudgets:
-      json['auto_budgets'] == null
-          ? null
-          : CronResultRow.fromJson(
-            json['auto_budgets'] as Map<String, dynamic>,
-          ),
-  telemetry:
-      json['telemetry'] == null
-          ? null
-          : CronResultRow.fromJson(json['telemetry'] as Map<String, dynamic>),
+  recurringTransactions: json['recurring_transactions'] == null
+      ? null
+      : CronResultRow.fromJson(
+          json['recurring_transactions'] as Map<String, dynamic>,
+        ),
+  autoBudgets: json['auto_budgets'] == null
+      ? null
+      : CronResultRow.fromJson(json['auto_budgets'] as Map<String, dynamic>),
+  telemetry: json['telemetry'] == null
+      ? null
+      : CronResultRow.fromJson(json['telemetry'] as Map<String, dynamic>),
 );
 
-Map<String, dynamic> _$CronResultToJson(
-  CronResult instance,
-) => <String, dynamic>{
-  if (instance.recurringTransactions?.toJson() case final value?)
-    'recurring_transactions': value,
-  if (instance.autoBudgets?.toJson() case final value?) 'auto_budgets': value,
-  if (instance.telemetry?.toJson() case final value?) 'telemetry': value,
-};
+Map<String, dynamic> _$CronResultToJson(CronResult instance) =>
+    <String, dynamic>{
+      'recurring_transactions': ?instance.recurringTransactions?.toJson(),
+      'auto_budgets': ?instance.autoBudgets?.toJson(),
+      'telemetry': ?instance.telemetry?.toJson(),
+    };
 
 CronResultRow _$CronResultRowFromJson(Map<String, dynamic> json) =>
     CronResultRow(
@@ -5135,23 +4729,20 @@ CronResultRow _$CronResultRowFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CronResultRowToJson(CronResultRow instance) =>
     <String, dynamic>{
-      if (instance.jobFired case final value?) 'job_fired': value,
-      if (instance.jobSucceeded case final value?) 'job_succeeded': value,
-      if (instance.jobErrored case final value?) 'job_errored': value,
-      if (instance.message case final value?) 'message': value,
+      'job_fired': ?instance.jobFired,
+      'job_succeeded': ?instance.jobSucceeded,
+      'job_errored': ?instance.jobErrored,
+      'message': ?instance.message,
     };
 
 SystemInfo _$SystemInfoFromJson(Map<String, dynamic> json) => SystemInfo(
-  data:
-      json['data'] == null
-          ? null
-          : SystemInfo$Data.fromJson(json['data'] as Map<String, dynamic>),
+  data: json['data'] == null
+      ? null
+      : SystemInfo$Data.fromJson(json['data'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$SystemInfoToJson(SystemInfo instance) =>
-    <String, dynamic>{
-      if (instance.data?.toJson() case final value?) 'data': value,
-    };
+    <String, dynamic>{'data': ?instance.data?.toJson()};
 
 UserSingle _$UserSingleFromJson(Map<String, dynamic> json) =>
     UserSingle(data: UserRead.fromJson(json['data'] as Map<String, dynamic>));
@@ -5160,16 +4751,13 @@ Map<String, dynamic> _$UserSingleToJson(UserSingle instance) =>
     <String, dynamic>{'data': instance.data.toJson()};
 
 Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
-  pagination:
-      json['pagination'] == null
-          ? null
-          : Meta$Pagination.fromJson(
-            json['pagination'] as Map<String, dynamic>,
-          ),
+  pagination: json['pagination'] == null
+      ? null
+      : Meta$Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$MetaToJson(Meta instance) => <String, dynamic>{
-  if (instance.pagination?.toJson() case final value?) 'pagination': value,
+  'pagination': ?instance.pagination?.toJson(),
 };
 
 BadRequestResponse _$BadRequestResponseFromJson(Map<String, dynamic> json) =>
@@ -5180,8 +4768,8 @@ BadRequestResponse _$BadRequestResponseFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$BadRequestResponseToJson(BadRequestResponse instance) =>
     <String, dynamic>{
-      if (instance.message case final value?) 'message': value,
-      if (instance.exception case final value?) 'exception': value,
+      'message': ?instance.message,
+      'exception': ?instance.exception,
     };
 
 InternalExceptionResponse _$InternalExceptionResponseFromJson(
@@ -5194,8 +4782,8 @@ InternalExceptionResponse _$InternalExceptionResponseFromJson(
 Map<String, dynamic> _$InternalExceptionResponseToJson(
   InternalExceptionResponse instance,
 ) => <String, dynamic>{
-  if (instance.message case final value?) 'message': value,
-  if (instance.exception case final value?) 'exception': value,
+  'message': ?instance.message,
+  'exception': ?instance.exception,
 };
 
 NotFoundResponse _$NotFoundResponseFromJson(Map<String, dynamic> json) =>
@@ -5206,8 +4794,8 @@ NotFoundResponse _$NotFoundResponseFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$NotFoundResponseToJson(NotFoundResponse instance) =>
     <String, dynamic>{
-      if (instance.message case final value?) 'message': value,
-      if (instance.exception case final value?) 'exception': value,
+      'message': ?instance.message,
+      'exception': ?instance.exception,
     };
 
 UnauthenticatedResponse _$UnauthenticatedResponseFromJson(
@@ -5220,27 +4808,26 @@ UnauthenticatedResponse _$UnauthenticatedResponseFromJson(
 Map<String, dynamic> _$UnauthenticatedResponseToJson(
   UnauthenticatedResponse instance,
 ) => <String, dynamic>{
-  if (instance.message case final value?) 'message': value,
-  if (instance.exception case final value?) 'exception': value,
+  'message': ?instance.message,
+  'exception': ?instance.exception,
 };
 
 ValidationErrorResponse _$ValidationErrorResponseFromJson(
   Map<String, dynamic> json,
 ) => ValidationErrorResponse(
   message: json['message'] as String?,
-  errors:
-      json['errors'] == null
-          ? null
-          : ValidationErrorResponse$Errors.fromJson(
-            json['errors'] as Map<String, dynamic>,
-          ),
+  errors: json['errors'] == null
+      ? null
+      : ValidationErrorResponse$Errors.fromJson(
+          json['errors'] as Map<String, dynamic>,
+        ),
 );
 
 Map<String, dynamic> _$ValidationErrorResponseToJson(
   ValidationErrorResponse instance,
 ) => <String, dynamic>{
-  if (instance.message case final value?) 'message': value,
-  if (instance.errors?.toJson() case final value?) 'errors': value,
+  'message': ?instance.message,
+  'errors': ?instance.errors?.toJson(),
 };
 
 BillProperties$PaidDates$Item _$BillProperties$PaidDates$ItemFromJson(
@@ -5270,32 +4857,24 @@ BillProperties$PaidDates$Item _$BillProperties$PaidDates$ItemFromJson(
 Map<String, dynamic> _$BillProperties$PaidDates$ItemToJson(
   BillProperties$PaidDates$Item instance,
 ) => <String, dynamic>{
-  if (instance.transactionGroupId case final value?)
-    'transaction_group_id': value,
-  if (instance.transactionJournalId case final value?)
-    'transaction_journal_id': value,
-  if (instance.date?.toIso8601String() case final value?) 'date': value,
-  if (instance.subscriptionId case final value?) 'subscription_id': value,
-  if (instance.currencyId case final value?) 'currency_id': value,
-  if (instance.currencyName case final value?) 'currency_name': value,
-  if (instance.currencyCode case final value?) 'currency_code': value,
-  if (instance.currencySymbol case final value?) 'currency_symbol': value,
-  if (instance.currencyDecimalPlaces case final value?)
-    'currency_decimal_places': value,
-  if (instance.primaryCurrencyId case final value?)
-    'primary_currency_id': value,
-  if (instance.primaryCurrencyName case final value?)
-    'primary_currency_name': value,
-  if (instance.primaryCurrencyCode case final value?)
-    'primary_currency_code': value,
-  if (instance.primaryCurrencySymbol case final value?)
-    'primary_currency_symbol': value,
-  if (instance.primaryCurrencyDecimalPlaces case final value?)
-    'primary_currency_decimal_places': value,
-  if (instance.amount case final value?) 'amount': value,
-  if (instance.pcAmount case final value?) 'pc_amount': value,
-  if (instance.foreignAmount case final value?) 'foreign_amount': value,
-  if (instance.pcForeignAmount case final value?) 'pc_foreign_amount': value,
+  'transaction_group_id': ?instance.transactionGroupId,
+  'transaction_journal_id': ?instance.transactionJournalId,
+  'date': ?instance.date?.toIso8601String(),
+  'subscription_id': ?instance.subscriptionId,
+  'currency_id': ?instance.currencyId,
+  'currency_name': ?instance.currencyName,
+  'currency_code': ?instance.currencyCode,
+  'currency_symbol': ?instance.currencySymbol,
+  'currency_decimal_places': ?instance.currencyDecimalPlaces,
+  'primary_currency_id': ?instance.primaryCurrencyId,
+  'primary_currency_name': ?instance.primaryCurrencyName,
+  'primary_currency_code': ?instance.primaryCurrencyCode,
+  'primary_currency_symbol': ?instance.primaryCurrencySymbol,
+  'primary_currency_decimal_places': ?instance.primaryCurrencyDecimalPlaces,
+  'amount': ?instance.amount,
+  'pc_amount': ?instance.pcAmount,
+  'foreign_amount': ?instance.foreignAmount,
+  'pc_foreign_amount': ?instance.pcForeignAmount,
 };
 
 SystemInfo$Data _$SystemInfo$DataFromJson(Map<String, dynamic> json) =>
@@ -5309,11 +4888,11 @@ SystemInfo$Data _$SystemInfo$DataFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$SystemInfo$DataToJson(SystemInfo$Data instance) =>
     <String, dynamic>{
-      if (instance.version case final value?) 'version': value,
-      if (instance.apiVersion case final value?) 'api_version': value,
-      if (instance.phpVersion case final value?) 'php_version': value,
-      if (instance.os case final value?) 'os': value,
-      if (instance.driver case final value?) 'driver': value,
+      'version': ?instance.version,
+      'api_version': ?instance.apiVersion,
+      'php_version': ?instance.phpVersion,
+      'os': ?instance.os,
+      'driver': ?instance.driver,
     };
 
 Meta$Pagination _$Meta$PaginationFromJson(Map<String, dynamic> json) =>
@@ -5327,11 +4906,11 @@ Meta$Pagination _$Meta$PaginationFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$Meta$PaginationToJson(Meta$Pagination instance) =>
     <String, dynamic>{
-      if (instance.total case final value?) 'total': value,
-      if (instance.count case final value?) 'count': value,
-      if (instance.perPage case final value?) 'per_page': value,
-      if (instance.currentPage case final value?) 'current_page': value,
-      if (instance.totalPages case final value?) 'total_pages': value,
+      'total': ?instance.total,
+      'count': ?instance.count,
+      'per_page': ?instance.perPage,
+      'current_page': ?instance.currentPage,
+      'total_pages': ?instance.totalPages,
     };
 
 ValidationErrorResponse$Errors _$ValidationErrorResponse$ErrorsFromJson(
@@ -5369,16 +4948,16 @@ ValidationErrorResponse$Errors _$ValidationErrorResponse$ErrorsFromJson(
 Map<String, dynamic> _$ValidationErrorResponse$ErrorsToJson(
   ValidationErrorResponse$Errors instance,
 ) => <String, dynamic>{
-  if (instance.email case final value?) 'email': value,
-  if (instance.force case final value?) 'force': value,
-  if (instance.blocked case final value?) 'blocked': value,
-  if (instance.field case final value?) 'field': value,
-  if (instance.role case final value?) 'role': value,
-  if (instance.blockedCode case final value?) 'blocked_code': value,
-  if (instance.name case final value?) 'name': value,
-  if (instance.type case final value?) 'type': value,
-  if (instance.iban case final value?) 'iban': value,
-  if (instance.start case final value?) 'start': value,
-  if (instance.end case final value?) 'end': value,
-  if (instance.date case final value?) 'date': value,
+  'email': ?instance.email,
+  'force': ?instance.force,
+  'blocked': ?instance.blocked,
+  'field': ?instance.field,
+  'role': ?instance.role,
+  'blocked_code': ?instance.blockedCode,
+  'name': ?instance.name,
+  'type': ?instance.type,
+  'iban': ?instance.iban,
+  'start': ?instance.start,
+  'end': ?instance.end,
+  'date': ?instance.date,
 };

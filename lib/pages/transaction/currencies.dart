@@ -39,42 +39,42 @@ class CurrencyDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return SimpleDialog(
       title: Text(S.of(context).transactionDialogCurrencyTitle),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       children: <Widget>[
         FutureBuilder<List<CurrencyRead>>(
           future: _getCurrencies(context),
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<List<CurrencyRead>> snapshot,
-          ) {
-            if (snapshot.hasData) {
-              final List<Widget> child = <Widget>[];
-              for (CurrencyRead currency in snapshot.data!) {
-                child.add(
-                  CurrencyDialogOption(
-                    optionCurrency: currency,
-                    currentCurrency: currentCurrency,
-                  ),
-                );
-                child.add(const Divider());
-              }
-              child.removeLast();
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: child,
-              );
-            } else if (snapshot.hasError) {
-              log.severe(
-                "error getting currencies",
-                snapshot.error,
-                snapshot.stackTrace,
-              );
-              Navigator.pop(context);
-              return const CircularProgressIndicator();
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
+          builder:
+              (
+                BuildContext context,
+                AsyncSnapshot<List<CurrencyRead>> snapshot,
+              ) {
+                if (snapshot.hasData) {
+                  final List<Widget> child = <Widget>[];
+                  for (CurrencyRead currency in snapshot.data!) {
+                    child.add(
+                      CurrencyDialogOption(
+                        optionCurrency: currency,
+                        currentCurrency: currentCurrency,
+                      ),
+                    );
+                    child.add(const Divider());
+                  }
+                  child.removeLast();
+                  return Column(crossAxisAlignment: .start, children: child);
+                } else if (snapshot.hasError) {
+                  log.severe(
+                    "error getting currencies",
+                    snapshot.error,
+                    snapshot.stackTrace,
+                  );
+                  Navigator.pop(context);
+                  return const CircularProgressIndicator.adaptive();
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  );
+                }
+              },
         ),
       ],
     );
@@ -98,18 +98,18 @@ class CurrencyDialogOption extends StatelessWidget {
         Navigator.pop(context, currency);
       },
       /*child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: .stretch,
         children: <Widget>[
           Text(
             currencyWithSymbol ?? currency.attributes.code,
             style: const TextStyle(
-              fontWeight: FontWeight.bold,
+              fontWeight: .bold,
             ),
           ),
           Text(currency.attributes.name),
         ],
       ),*/
-      padding: EdgeInsets.zero,
+      padding: .zero,
       child: */ ListTile(
       leading: CircleAvatar(child: Text(optionCurrency.attributes.symbol)),
       title: Text(optionCurrency.attributes.code),
@@ -119,12 +119,12 @@ class CurrencyDialogOption extends StatelessWidget {
       },
       trailing:
           (optionCurrency.id ==
-                  context.read<FireflyService>().defaultCurrency.id)
-              ? Text(
-                S.of(context).generalDefault,
-                style: const TextStyle(fontStyle: FontStyle.italic),
-              )
-              : null,
+              context.read<FireflyService>().defaultCurrency.id)
+          ? Text(
+              S.of(context).generalDefault,
+              style: const TextStyle(fontStyle: .italic),
+            )
+          : null,
       selected: (optionCurrency.id == currentCurrency.id),
     );
   }

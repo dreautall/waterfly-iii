@@ -797,9 +797,25 @@
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
+    "loginFormButtonHideHeaders": "Nascondi intestazioni",
+    "@loginFormButtonHideHeaders": {
+        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
+    },
+    "loginFormButtonShowHeaders": "Intestazioni personalizzate",
+    "@loginFormButtonShowHeaders": {
+        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
+    },
     "loginFormLabelAPIKey": "Chiave API valida",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHeaders": "Intestazioni personalizzate (opzionale)",
+    "@loginFormLabelHeaders": {
+        "description": "Login Form: Label for Custom Headers field"
+    },
+    "loginFormLabelHeadersHelp": "Una per riga, formato: NomeIntestazione: valore",
+    "@loginFormLabelHeadersHelp": {
+        "description": "Login Form: Helper text for Custom Headers field"
     },
     "loginFormLabelHost": "URL del server",
     "@loginFormLabelHost": {
@@ -824,10 +840,6 @@
     "navigationCategories": "Categorie",
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
-    },
-    "navigationMain": "Dashboard principale",
-    "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
     },
     "generalSettings": "Impostazioni",
     "@generalSettings": {
@@ -950,6 +962,38 @@
     "@settingsNLEmptyNote": {
         "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
+    "settingsNLHistory": "Cronologia notifiche",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "Nessuna notifica registrata finora.",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "{notificationHistorySize, plural, one {Questa è la cronologia dell'ultima notifica ricevuta dall'app. Inoltre, puoi creare transazioni da notifiche (valide) o vedere il motivo per cui una notifica non è stata elaborata.} other {Questa è la cronologia delle ultime {notificationHistorySize} notifiche ricevute dall'app. Inoltre, puoi creare transazioni da notifiche (valide) o vedere il motivo per cui una notifica non è stata elaborata.}}",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "Notifica ignorata: {reason, select, noMoney{Nessun valore monetario trovato} noCurrency{Nessuna valuta trovata} appNotUsed{App non monitorata} other{Motivo sconosciuto}}.",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "Elenca le notifiche precedenti",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
+    },
     "settingsNLPermissionGrant": "Tocca per concedere i permessi.",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
@@ -969,6 +1013,14 @@
     "settingsNLPrefillTXTitle": "Compila il titolo della transazione con il titolo della notifica",
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLRegularExpression": "Espressione regolare (opzionale)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "Espressione regolare non valida",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Controllo dello stato…",
     "@settingsNLServiceChecking": {
@@ -1000,6 +1052,14 @@
     "settingsNotificationListener": "Servizio di Lettura Notifiche",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
+    },
+    "settingsServerConnection": "Connessione server",
+    "@settingsServerConnection": {
+        "description": "Settings for the server connection"
+    },
+    "settingsServerConnectionUpdated": "Impostazioni di connessione aggiornate.",
+    "@settingsServerConnectionUpdated": {
+        "description": "Server connection settings have been updated"
     },
     "settingsTheme": "Tema App",
     "@settingsTheme": {

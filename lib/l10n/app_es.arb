@@ -1,5 +1,5 @@
 {
-  "@@locale": "es",
+    "@@locale": "es",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "Billetera de efectivo",
     "@accountRoleAssetCashWallet": {
@@ -645,6 +645,16 @@
             }
         }
     },
+    "homePiggySavePerMonth": "Ahorro mensual: {amount}",
+    "@homePiggySavePerMonth": {
+        "description": "How much should be saved per month to reach the target",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
     "homePiggySavedMultiple": "Ahorrado hasta ahora:",
     "@homePiggySavedMultiple": {
         "description": "Title for a list of multiple accounts with the amount of money saved so far"
@@ -680,6 +690,16 @@
     "homePiggyInPiggyBanks": "En huchas: {amount}",
     "@homePiggyInPiggyBanks": {
         "description": "Amount currently in piggy banks for this account",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyTotal": "Total: {amount}",
+    "@homePiggyTotal": {
+        "description": "Total balance of an account in the Piggy bank",
         "placeholders": {
             "amount": {
                 "type": "String",
@@ -797,9 +817,25 @@
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
+    "loginFormButtonHideHeaders": "Ocultar cabeceras",
+    "@loginFormButtonHideHeaders": {
+        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
+    },
+    "loginFormButtonShowHeaders": "Cabeceras personalizadas",
+    "@loginFormButtonShowHeaders": {
+        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
+    },
     "loginFormLabelAPIKey": "Clave API válida",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHeaders": "Cabeceras personalizadas (opcional)",
+    "@loginFormLabelHeaders": {
+        "description": "Login Form: Label for Custom Headers field"
+    },
+    "loginFormLabelHeadersHelp": "Una por línea, formato: NombreCabecera: valor",
+    "@loginFormLabelHeadersHelp": {
+        "description": "Login Form: Helper text for Custom Headers field"
     },
     "loginFormLabelHost": "URL del servidor",
     "@loginFormLabelHost": {
@@ -825,9 +861,9 @@
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
-    "navigationMain": "Panel principal",
+    "navigationMain": "Panel de control",
     "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
+        "description": "Navigation Label: Dashboard"
     },
     "generalSettings": "Configuración",
     "@generalSettings": {
@@ -950,6 +986,38 @@
     "@settingsNLEmptyNote": {
         "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
+    "settingsNLHistory": "Historial de notificaciones",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "No hay notificaciones registradas hasta el momento.",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "Este es un historial de las últimas {notificationHistorySize, plural, one {notificación recibida} other {{notificationHistorySize} notificaciones recibidas}} por la aplicación. Además, puedes crear transacciones a partir de notificaciones (válidas) o ver la razón por la que una notificación no pudo ser procesada.",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "Notificación omitida: {reason, select, noMoney{No se encontró valor monetario} noCurrency{No se encontró moneda válida} appNotUsed{Aplicación no escuchada} other{Razón desconocida}}.",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "Listar notificaciones previas",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
+    },
     "settingsNLPermissionGrant": "Toque para conceder permiso.",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
@@ -969,6 +1037,14 @@
     "settingsNLPrefillTXTitle": "Rellenar el título de la transacción con el título de la notificación",
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLRegularExpression": "Expresión regular (opcional)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "Expresión regular no válida",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Comprobando estado…",
     "@settingsNLServiceChecking": {
@@ -1000,6 +1076,14 @@
     "settingsNotificationListener": "Servicio de escucha de notificaciones",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
+    },
+    "settingsServerConnection": "Conexión con el servidor",
+    "@settingsServerConnection": {
+        "description": "Settings for the server connection"
+    },
+    "settingsServerConnectionUpdated": "Ajustes de conexión actualizados.",
+    "@settingsServerConnectionUpdated": {
+        "description": "Server connection settings have been updated"
     },
     "settingsTheme": "Tema de la aplicación",
     "@settingsTheme": {

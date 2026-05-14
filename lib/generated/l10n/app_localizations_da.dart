@@ -509,6 +509,11 @@ class SDa extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Opsparet indtil videre:';
 
   @override
@@ -530,6 +535,11 @@ class SDa extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'I sparegrise: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -618,7 +628,20 @@ class SDa extends S {
       'For at bruge Waterfly III produktivt har du brug for din egen server med en Firefly III-instans eller Firefly II-add-on til Home Assistant.\n\nIndtast venligst det fulde URL samt en personlig adgangstoken (Indstillinger -> Profil -> OAuth -> Personlig adgangstoken) nedenfor.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Skjul headere';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Brugerdefinerede headere';
+
+  @override
   String get loginFormLabelAPIKey => 'Gyldig API-nøgle';
+
+  @override
+  String get loginFormLabelHeaders => 'Brugerdefinerede headere (valgfri)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'Én pr. linje, format: HeaderNavn: værdi';
 
   @override
   String get loginFormLabelHost => 'Værts-URL';
@@ -639,7 +662,7 @@ class SDa extends S {
   String get navigationCategories => 'Kategorier';
 
   @override
-  String get navigationMain => 'Hoveddashboard';
+  String get navigationMain => 'Oversigt';
 
   @override
   String get generalSettings => 'Indstillinger';
@@ -649,11 +672,11 @@ class SDa extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -661,11 +684,11 @@ class SDa extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString af $of';
@@ -742,6 +765,39 @@ class SDa extends S {
   String get settingsNLEmptyNote => 'Lad notatfeltet være tomt';
 
   @override
+  String get settingsNLHistory => 'Notifikationshistorik';
+
+  @override
+  String get settingsNLHistoryEmpty =>
+      'Ingen notifikationer registreret endnu.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other: '$notificationHistorySize notifikationer',
+      one: '1 notifikation',
+    );
+    return 'Dette er en historik over de seneste $_temp0 modtaget af appen. Derudover kan du oprette transaktioner fra (gyldige) notifikationer eller se årsagen til, at en notifikation ikke kunne behandles.';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'Ingen pengebeløb fundet',
+      'noCurrency': 'Ingen valuta fundet',
+      'appNotUsed': 'App ikke lyttet til',
+      'other': 'Ukendt årsag',
+    });
+    return 'Notifikation sprunget over: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription =>
+      'Vis tidligere notifikationer';
+
+  @override
   String get settingsNLPermissionGrant => 'Tryk for at give tilladelse.';
 
   @override
@@ -757,6 +813,12 @@ class SDa extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Forudfyld transaktionstitel med nofikationstitel';
+
+  @override
+  String get settingsNLRegularExpression => 'Regulært udtryk (valgfri)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Ugyldigt regulært udtryk';
 
   @override
   String get settingsNLServiceChecking => 'Tjekker status…';
@@ -777,6 +839,13 @@ class SDa extends S {
 
   @override
   String get settingsNotificationListener => 'Notifikationslytter-service';
+
+  @override
+  String get settingsServerConnection => 'Serverforbindelse';
+
+  @override
+  String get settingsServerConnectionUpdated =>
+      'Forbindelsesindstillinger opdateret.';
 
   @override
   String get settingsTheme => 'App tema';

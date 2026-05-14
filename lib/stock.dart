@@ -12,19 +12,33 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.enums.s
     show TransactionTypeFilter;
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
+class TransStockRead {
+  final List<TransactionRead> data;
+  final Meta$Pagination? pagination;
+
+  TransStockRead(this.data, this.pagination);
+}
+
+class TransStockList {
+  final List<String> identifiers;
+  final Meta$Pagination? pagination;
+
+  TransStockList(this.identifiers, this.pagination);
+}
+
 class TransStock with ChangeNotifier {
   final FireflyIii api;
 
   late Stock<String, TransactionRead> _singleStock;
 
-  late Stock<String, List<String>> _getStock;
-  late Stock<String, List<String>> _getAccountStock;
-  late Stock<String, List<String>> _getSearchStock;
+  late Stock<String, TransStockList> _getStock;
+  late Stock<String, TransStockList> _getAccountStock;
+  late Stock<String, TransStockList> _getSearchStock;
 
   final CachedSourceOfTruth<String, TransactionRead> _singleSoT =
       CachedSourceOfTruth<String, TransactionRead>();
-  final CachedSourceOfTruth<String, List<String>> _listSoT =
-      CachedSourceOfTruth<String, List<String>>();
+  final CachedSourceOfTruth<String, TransStockList> _listSoT =
+      CachedSourceOfTruth<String, TransStockList>();
 
   TransStock(this.api) {
     _singleStock = Stock<String, TransactionRead>(
@@ -35,9 +49,9 @@ class TransStock with ChangeNotifier {
       ),
       sourceOfTruth: _singleSoT,
     );
-    _getStock = Stock<String, List<String>>(
-      fetcher: Fetcher.ofFuture<String, List<String>>((String id) {
-        final _getOptions query = _getOptions.fromJson(jsonDecode(id));
+    _getStock = Stock<String, TransStockList>(
+      fetcher: Fetcher.ofFuture<String, TransStockList>((String id) {
+        final _getOptions query = .fromJson(jsonDecode(id));
         return api
             .v1TransactionsGet(
               xTraceId: query.xTraceId,
@@ -47,13 +61,13 @@ class TransStock with ChangeNotifier {
               end: query.end,
               type: query.type,
             )
-            .then<List<String>>(_onAPIValue);
+            .then<TransStockList>(_onAPIValue);
       }),
       sourceOfTruth: _listSoT,
     );
-    _getAccountStock = Stock<String, List<String>>(
-      fetcher: Fetcher.ofFuture<String, List<String>>((String id) {
-        final _getOptions query = _getOptions.fromJson(jsonDecode(id));
+    _getAccountStock = Stock<String, TransStockList>(
+      fetcher: Fetcher.ofFuture<String, TransStockList>((String id) {
+        final _getOptions query = .fromJson(jsonDecode(id));
         return api
             .v1AccountsIdTransactionsGet(
               xTraceId: query.xTraceId,
@@ -64,13 +78,13 @@ class TransStock with ChangeNotifier {
               end: query.end,
               type: query.type,
             )
-            .then<List<String>>(_onAPIValue);
+            .then<TransStockList>(_onAPIValue);
       }),
       sourceOfTruth: _listSoT,
     );
-    _getSearchStock = Stock<String, List<String>>(
-      fetcher: Fetcher.ofFuture<String, List<String>>((String id) {
-        final _getOptions query = _getOptions.fromJson(jsonDecode(id));
+    _getSearchStock = Stock<String, TransStockList>(
+      fetcher: Fetcher.ofFuture<String, TransStockList>((String id) {
+        final _getOptions query = .fromJson(jsonDecode(id));
         return api
             .v1SearchTransactionsGet(
               xTraceId: query.xTraceId,
@@ -78,13 +92,13 @@ class TransStock with ChangeNotifier {
               page: query.page,
               limit: query.limit,
             )
-            .then<List<String>>(_onAPIValue);
+            .then<TransStockList>(_onAPIValue);
       }),
       sourceOfTruth: _listSoT,
     );
   }
 
-  FutureOr<List<String>> _onAPIValue(Response<TransactionArray> response) {
+  FutureOr<TransStockList> _onAPIValue(Response<TransactionArray> response) {
     if (!response.isSuccessful || response.body == null) {
       if (response.error != null && response.error.toString().isNotEmpty) {
         throw Exception("_onAPIValue() call not successful: ${response.error}");
@@ -95,10 +109,13 @@ class TransStock with ChangeNotifier {
     for (TransactionRead element in response.body!.data) {
       _singleSoT.write(element.id, element);
     }
-    return response.body!.data.map((TransactionRead e) => e.id).toList();
+    return TransStockList(
+      response.body!.data.map((TransactionRead e) => e.id).toList(),
+      response.body!.meta.pagination,
+    );
   }
 
-  Future<List<TransactionRead>> get({
+  Future<TransStockRead> get({
     String? xTraceId,
     int? page,
     int? limit,
@@ -122,7 +139,7 @@ class TransStock with ChangeNotifier {
         .then(_onGetValue);
   }
 
-  Future<List<TransactionRead>> getAccount({
+  Future<TransStockRead> getAccount({
     String? xTraceId,
     required String id,
     int? page,
@@ -148,7 +165,7 @@ class TransStock with ChangeNotifier {
         .then(_onGetValue);
   }
 
-  Future<List<TransactionRead>> getSearch({
+  Future<TransStockRead> getSearch({
     String? xTraceId,
     required String? query,
     int? page,
@@ -168,12 +185,12 @@ class TransStock with ChangeNotifier {
         .then(_onGetValue);
   }
 
-  FutureOr<List<TransactionRead>> _onGetValue(List<String> list) async {
+  FutureOr<TransStockRead> _onGetValue(TransStockList list) async {
     final List<TransactionRead> result = <TransactionRead>[];
-    for (String element in list) {
+    for (String element in list.identifiers) {
       result.add(await _singleStock.get(element));
     }
-    return result;
+    return TransStockRead(result, list.pagination);
   }
 
   void clear() {
@@ -184,8 +201,9 @@ class TransStock with ChangeNotifier {
   }
 
   Future<void> setTransaction(TransactionRead transaction) async {
-    final TransactionRead? oldTransaction =
-        await _singleSoT.reader(transaction.id).first;
+    final TransactionRead? oldTransaction = await _singleSoT
+        .reader(transaction.id)
+        .first;
     // if no old transaction (= new one) or date has changed, clear cache
     if (oldTransaction == null ||
         oldTransaction.attributes.transactions.first.date !=

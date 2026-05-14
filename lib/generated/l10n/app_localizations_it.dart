@@ -512,6 +512,11 @@ class SIt extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Risparmiato finora:';
 
   @override
@@ -533,6 +538,11 @@ class SIt extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'Nei salvadanai: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -620,7 +630,20 @@ class SIt extends S {
       'Per utilizzare Waterfly III produttivamente è necessario il proprio server con un\'istanza di Firefly III o l\'add-on di Firefly III per Home Assistant.\n\nInserisci l\'URL completo e un token di accesso personale (Opzioni -> Profilo -> OAuth -> Token di accesso personale) qui sotto.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Nascondi intestazioni';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Intestazioni personalizzate';
+
+  @override
   String get loginFormLabelAPIKey => 'Chiave API valida';
+
+  @override
+  String get loginFormLabelHeaders => 'Intestazioni personalizzate (opzionale)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'Una per riga, formato: NomeIntestazione: valore';
 
   @override
   String get loginFormLabelHost => 'URL del server';
@@ -641,7 +664,7 @@ class SIt extends S {
   String get navigationCategories => 'Categorie';
 
   @override
-  String get navigationMain => 'Dashboard principale';
+  String get navigationMain => 'Dashboard';
 
   @override
   String get generalSettings => 'Impostazioni';
@@ -651,11 +674,11 @@ class SIt extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -663,11 +686,11 @@ class SIt extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString di $of';
@@ -744,6 +767,40 @@ class SIt extends S {
   String get settingsNLEmptyNote => 'Lascia vuota l\'annotazione';
 
   @override
+  String get settingsNLHistory => 'Cronologia notifiche';
+
+  @override
+  String get settingsNLHistoryEmpty => 'Nessuna notifica registrata finora.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other:
+          'Questa è la cronologia delle ultime $notificationHistorySize notifiche ricevute dall\'app. Inoltre, puoi creare transazioni da notifiche (valide) o vedere il motivo per cui una notifica non è stata elaborata.',
+      one:
+          'Questa è la cronologia dell\'ultima notifica ricevuta dall\'app. Inoltre, puoi creare transazioni da notifiche (valide) o vedere il motivo per cui una notifica non è stata elaborata.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'Nessun valore monetario trovato',
+      'noCurrency': 'Nessuna valuta trovata',
+      'appNotUsed': 'App non monitorata',
+      'other': 'Motivo sconosciuto',
+    });
+    return 'Notifica ignorata: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription =>
+      'Elenca le notifiche precedenti';
+
+  @override
   String get settingsNLPermissionGrant => 'Tocca per concedere i permessi.';
 
   @override
@@ -759,6 +816,13 @@ class SIt extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Compila il titolo della transazione con il titolo della notifica';
+
+  @override
+  String get settingsNLRegularExpression => 'Espressione regolare (opzionale)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid =>
+      'Espressione regolare non valida';
 
   @override
   String get settingsNLServiceChecking => 'Controllo dello stato…';
@@ -779,6 +843,13 @@ class SIt extends S {
 
   @override
   String get settingsNotificationListener => 'Servizio di Lettura Notifiche';
+
+  @override
+  String get settingsServerConnection => 'Connessione server';
+
+  @override
+  String get settingsServerConnectionUpdated =>
+      'Impostazioni di connessione aggiornate.';
 
   @override
   String get settingsTheme => 'Tema App';

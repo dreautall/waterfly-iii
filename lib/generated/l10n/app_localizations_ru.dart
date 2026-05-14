@@ -444,8 +444,8 @@ class SRu extends S {
   @override
   String homeMainBudgetSum(String current, String status, String available) {
     String _temp0 = intl.Intl.selectLogic(status, {
-      'over': 'over',
-      'other': 'left from',
+      'over': 'превышен на',
+      'other': 'осталось от',
     });
     return '$current $_temp0 $available';
   }
@@ -519,6 +519,11 @@ class SRu extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Накоплено:';
 
   @override
@@ -543,6 +548,11 @@ class SRu extends S {
   }
 
   @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
+  }
+
+  @override
   String get homeTabLabelBalance => 'Балансовая ведомость';
 
   @override
@@ -558,7 +568,7 @@ class SRu extends S {
   String get homeTransactionsActionFilter => 'Фильтровать список';
 
   @override
-  String get homeTransactionsDialogFilterAccountsAll => '<All Accounts>';
+  String get homeTransactionsDialogFilterAccountsAll => '<Все счета>';
 
   @override
   String get homeTransactionsDialogFilterBillsAll => '<All Bills>';
@@ -567,19 +577,19 @@ class SRu extends S {
   String get homeTransactionsDialogFilterBillUnset => '<No Bill set>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetsAll => '<All Budgets>';
+  String get homeTransactionsDialogFilterBudgetsAll => '<Все бюджеты>';
 
   @override
-  String get homeTransactionsDialogFilterBudgetUnset => '<No Budget set>';
+  String get homeTransactionsDialogFilterBudgetUnset => '<Без бюджета>';
 
   @override
-  String get homeTransactionsDialogFilterCategoriesAll => '<All Categories>';
+  String get homeTransactionsDialogFilterCategoriesAll => '<Все категории>';
 
   @override
-  String get homeTransactionsDialogFilterCategoryUnset => '<No Category set>';
+  String get homeTransactionsDialogFilterCategoryUnset => '<Без категории>';
 
   @override
-  String get homeTransactionsDialogFilterCurrenciesAll => '<All Currencies>';
+  String get homeTransactionsDialogFilterCurrenciesAll => '<Все валюты>';
 
   @override
   String get homeTransactionsDialogFilterDateRange => 'Диапазон дат';
@@ -626,7 +636,21 @@ class SRu extends S {
       'Для эффективного использования Waterfly III Вам необходим собственный сервер с установленным Firefly III или аддоном Firefly III для Home Assistant.\n\nПожалуйста, введите полный URL-адрес и персональный ключ доступа (Настройки -> Профиль -> OAuth -> Персональный ключ доступа).';
 
   @override
+  String get loginFormButtonHideHeaders => 'Скрыть заголовки';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Пользовательские заголовки';
+
+  @override
   String get loginFormLabelAPIKey => 'Действительный ключ API';
+
+  @override
+  String get loginFormLabelHeaders =>
+      'Пользовательские заголовки (необязательно)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'По одному в строке, формат: HeaderName: значение';
 
   @override
   String get loginFormLabelHost => 'URL-адрес хоста';
@@ -647,7 +671,7 @@ class SRu extends S {
   String get navigationCategories => 'Категории';
 
   @override
-  String get navigationMain => 'Главное табло';
+  String get navigationMain => 'Панель управления';
 
   @override
   String get generalSettings => 'Настройки';
@@ -657,11 +681,11 @@ class SRu extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -669,11 +693,11 @@ class SRu extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString из $of';
@@ -727,7 +751,7 @@ class SRu extends S {
   String get settingsNLAppAccount => 'Аккаунт по умолчанию';
 
   @override
-  String get settingsNLAppAccountDynamic => '<Dynamic>';
+  String get settingsNLAppAccountDynamic => '<Динамически>';
 
   @override
   String get settingsNLAppAdd => 'Добавить приложение';
@@ -751,6 +775,40 @@ class SRu extends S {
   String get settingsNLEmptyNote => 'Оставлять поле заметки пустым';
 
   @override
+  String get settingsNLHistory => 'История уведомлений';
+
+  @override
+  String get settingsNLHistoryEmpty => 'Уведомлений пока нет.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other: '# уведомлений',
+      many: '# уведомлений',
+      few: '# уведомлений',
+      one: '# уведомления',
+    );
+    return 'Это история последних $_temp0, полученных приложением. Вы можете создавать транзакции из корректных уведомлений или узнать причину, по которой уведомление не удалось обработать.';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'Не найдена сумма',
+      'noCurrency': 'Не найдена валюта',
+      'appNotUsed': 'Приложение не отслеживается',
+      'other': 'Неизвестная причина',
+    });
+    return 'Уведомление пропущено: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription =>
+      'Список предыдущих уведомлений';
+
+  @override
   String get settingsNLPermissionGrant => 'Нажмите для подтверждения.';
 
   @override
@@ -766,6 +824,14 @@ class SRu extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Заполнить заголовок транзакции, используя заголовок уведомления';
+
+  @override
+  String get settingsNLRegularExpression =>
+      'Регулярное выражение (необязательно)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid =>
+      'Неверное регулярное выражение';
 
   @override
   String get settingsNLServiceChecking => 'Проверка статуса…';
@@ -786,6 +852,13 @@ class SRu extends S {
 
   @override
   String get settingsNotificationListener => 'Сервис прослушивания уведомлений';
+
+  @override
+  String get settingsServerConnection => 'Подключение к серверу';
+
+  @override
+  String get settingsServerConnectionUpdated =>
+      'Настройки подключения обновлены.';
 
   @override
   String get settingsTheme => 'Тема приложения';

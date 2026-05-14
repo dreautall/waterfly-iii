@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
@@ -54,98 +55,136 @@ final RegExp rFindMoney = RegExp(
 );
 
 Future<NotificationListenerStatus> nlStatus() async {
-  return NotificationListenerStatus(
-    await NotificationServicePlugin.instance.isServicePermissionGranted(),
-    await NotificationServicePlugin.instance.isServiceRunning(),
-    await FlutterLocalNotificationsPlugin()
-            .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin
-            >()!
-            .areNotificationsEnabled() ??
-        false,
-  );
+  if (Platform.isAndroid) {
+    return NotificationListenerStatus(
+      await NotificationServicePlugin.instance.isServicePermissionGranted(),
+      await NotificationServicePlugin.instance.isServiceRunning(),
+      await FlutterLocalNotificationsPlugin()
+              .resolvePlatformSpecificImplementation<
+                AndroidFlutterLocalNotificationsPlugin
+              >()!
+              .areNotificationsEnabled() ??
+          false,
+    );
+  } else {
+    return NotificationListenerStatus(false, false, false);
+  }
 }
 
 @pragma('vm:entry-point')
 void nlCallback() {
+  if (!Platform.isAndroid) {
+    return;
+  }
   log.finest(() => "nlCallback()");
   NotificationServicePlugin.instance.executeNotificationListener((
     NotificationEvent? evt,
   ) async {
+    WidgetsFlutterBinding.ensureInitialized();
+
     if (evt == null || evt.packageName == null) {
       return;
     }
     if (evt.packageName?.startsWith("com.dreautall.waterflyiii") ?? false) {
       return;
     }
-    if (evt.state == NotificationState.remove) {
-      return;
-    }
-    final Iterable<RegExpMatch> matches = rFindMoney.allMatches(evt.text ?? "");
-    if (matches.isEmpty) {
-      log.finer(() => "nlCallback(${evt.packageName}): no money found");
+    // if (evt.state == NotificationState.remove) {
+    if (evt.state != NotificationState.post) {
       return;
     }
 
-    bool validMatch = false;
-    for (RegExpMatch match in matches) {
-      if ((match.namedGroup("postCurrency")?.isNotEmpty ?? false) ||
-          (match.namedGroup("preCurrency")?.isNotEmpty ?? false)) {
-        validMatch = true;
-        break;
-      }
-    }
-    if (!validMatch) {
-      log.finer(
-        () => "nlCallback(${evt.packageName}): no money with currency found",
-      );
-      return;
-    }
-
+    // Passed initial checks
     final SettingsProvider settings = SettingsProvider();
-    await settings.notificationAddKnownApp(evt.packageName!);
+    final String notifText = evt.text ?? "";
+    final PastNotification notif = PastNotification(
+      evt.packageName!,
+      evt.title ?? "",
+      notifText,
+      DateTime.now(),
+      null,
+    );
 
-    if (!(await settings.notificationUsedApps()).contains(evt.packageName)) {
-      log.finer(() => "nlCallback(${evt.packageName}): app not used");
+    bool isPotentialMatch = false;
+    if (notifText.contains(RegExp(r'\d'))) {
+      unawaited(settings.notificationAddKnownApp(evt.packageName!));
+    } else {
+      notif.reason = PastNotificationMissedReasons.noMoney;
+      await settings.notificationHistoryAdd(notif);
+      log.finer(() => "nlCallback(${evt.packageName}): no money found");
       return;
     }
 
     final NotificationAppSettings appSettings = await settings
         .notificationGetAppSettings(evt.packageName!);
+
+    if (appSettings.regex != null) {
+      isPotentialMatch = appSettings.regex!.hasMatch(notifText);
+    } else {
+      final Iterable<RegExpMatch> matches = rFindMoney.allMatches(notifText);
+      for (RegExpMatch match in matches) {
+        if ((match.namedGroup("postCurrency")?.isNotEmpty ?? false) ||
+            (match.namedGroup("preCurrency")?.isNotEmpty ?? false)) {
+          isPotentialMatch = true;
+          break;
+        }
+      }
+    }
+
+    if (!isPotentialMatch) {
+      notif.reason = PastNotificationMissedReasons.noCurrency; // :TODO: noMatch
+      await settings.notificationHistoryAdd(notif);
+      log.finer(() => "nlCallback(${evt.packageName}): no match found");
+      return;
+    }
+
+    // Valid notification
+    await settings.notificationAddKnownApp(evt.packageName!);
+
+    if (!(await settings.notificationUsedApps()).contains(evt.packageName)) {
+      notif.reason = PastNotificationMissedReasons.appNotUsed;
+      await settings.notificationHistoryAdd(notif);
+      log.finer(() => "nlCallback(${evt.packageName}): app not used");
+      return;
+    }
+
+    // Passed, add tx/show add notification
+    await settings.notificationHistoryAdd(notif);
     bool showNotification = true;
 
-    if (appSettings.autoAdd) {
-      tz.initializeTimeZones();
-      log.finer(
-        () => "nlCallback(${evt.packageName}): trying to auto-add transaction",
+    tz.initializeTimeZones();
+    try {
+      final FireflyService ffService = FireflyService();
+      if (!await ffService.signInFromStorage()) {
+        throw UnauthenticatedResponse;
+      }
+      final FireflyIii api = ffService.api;
+      final CurrencyRead localCurrency = ffService.defaultCurrency;
+      late CurrencyRead? currency;
+      late double amount;
+
+      (currency, amount) = await parseNotificationText(
+        api,
+        notifText,
+        localCurrency,
+        userRegex: appSettings.regex,
       );
-      try {
-        final FireflyService ffService = FireflyService();
-        if (!await ffService.signInFromStorage()) {
-          throw UnauthenticatedResponse;
-        }
-        final FireflyIii api = ffService.api;
-        final CurrencyRead localCurrency = ffService.defaultCurrency;
-        late CurrencyRead? currency;
-        late double amount;
 
-        (currency, amount) = await parseNotificationText(
-          api,
-          evt.text!,
-          localCurrency,
+      if (amount <= 0) {
+        log.finer(() => "nlCallback(${evt.packageName}): amount is 0");
+        return;
+      }
+
+      if (appSettings.autoAdd) {
+        log.finer(
+          () =>
+              "nlCallback(${evt.packageName}): trying to auto-add transaction",
         );
-
         // Set date
-        final DateTime date =
-            ffService.tzHandler
-                .notificationTXTime(
-                  DateTime.tryParse(evt.postTime ?? "") ?? DateTime.now(),
-                )
-                .toLocal();
-        String note = "";
-        if (appSettings.autoAdd) {
-          note = evt.text ?? "";
-        }
+        final DateTime date = ffService.tzHandler
+            .notificationTXTime(
+              DateTime.tryParse(evt.postTime ?? "") ?? DateTime.now(),
+            )
+            .toLocal();
 
         // Check currency
         if (currency?.id != localCurrency.id) {
@@ -161,13 +200,11 @@ void nlCallback() {
           groupTitle: null,
           transactions: <TransactionSplitStore>[
             TransactionSplitStore(
-              type: TransactionTypeProperty.withdrawal,
+              type: .withdrawal,
               date: date,
               amount: amount.toString(),
-              description: evt.title!,
-              // destinationId
-              // destinationName
-              notes: note,
+              description: evt.title ?? "Notification Transaction",
+              notes: notifText,
               order: 0,
               sourceId: appSettings.defaultAccountId,
             ),
@@ -181,10 +218,9 @@ void nlCallback() {
         );
         if (!resp.isSuccessful || resp.body == null) {
           try {
-            final ValidationErrorResponse valError =
-                ValidationErrorResponse.fromJson(
-                  json.decode(resp.error.toString()),
-                );
+            final ValidationErrorResponse valError = .fromJson(
+              json.decode(resp.error.toString()),
+            );
             throw Exception("nlCallBack PostTransaction: ${valError.message}");
           } catch (_) {
             throw Exception("nlCallBack PostTransaction: unknown");
@@ -193,17 +229,17 @@ void nlCallback() {
 
         unawaited(
           FlutterLocalNotificationsPlugin().show(
-            DateTime.now().millisecondsSinceEpoch ~/ 1000,
-            "Transaction created",
-            "Transaction created based on notification ${evt.title}",
-            const NotificationDetails(
+            id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+            title: "Transaction created",
+            body: "Transaction created based on notification ${evt.title}",
+            notificationDetails: const NotificationDetails(
               android: AndroidNotificationDetails(
                 'extract_transaction_created',
                 'Transaction from Notification Created',
                 channelDescription:
                     'Notification that a Transaction has been created from another Notification.',
-                importance: Importance.low, // Android 8.0 and higher
-                priority: Priority.low, // Android 7.1 and lower
+                importance: .low, // Android 8.0 and higher
+                priority: .low, // Android 7.1 and lower
               ),
             ),
             payload: "",
@@ -211,35 +247,36 @@ void nlCallback() {
         );
 
         showNotification = false;
-      } catch (e, stackTrace) {
-        log.severe("Error while auto-adding transaction", e, stackTrace);
-        showNotification = true;
       }
+    } catch (e, stackTrace) {
+      log.severe("Error while processing notification", e, stackTrace);
+      showNotification = true;
     }
 
     if (showNotification) {
       // :TODO: l10n
       unawaited(
         FlutterLocalNotificationsPlugin().show(
-          DateTime.now().millisecondsSinceEpoch ~/ 1000,
-          "Create Transaction?",
+          id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+          title: "Create Transaction?",
           // :TODO: once we l10n this, a better switch can be implemented...
-          "Click to create a transaction based on the notification ${evt.title ?? evt.packageName ?? ""}",
-          const NotificationDetails(
+          body:
+              "Click to create a transaction based on the notification ${evt.title ?? evt.packageName ?? ""}",
+          notificationDetails: const NotificationDetails(
             android: AndroidNotificationDetails(
               'extract_transaction',
               'Create Transaction from Notification',
               channelDescription:
                   'Notification asking to create a transaction from another Notification.',
-              importance: Importance.low, // Android 8.0 and higher
-              priority: Priority.low, // Android 7.1 and lower
+              importance: .low, // Android 8.0 and higher
+              priority: .low, // Android 7.1 and lower
             ),
           ),
           payload: jsonEncode(
             NotificationTransaction(
               evt.packageName ?? "",
               evt.title ?? "",
-              evt.text ?? "",
+              notifText,
               DateTime.tryParse(evt.postTime ?? "") ?? DateTime.now(),
             ),
           ),
@@ -250,9 +287,11 @@ void nlCallback() {
 }
 
 Future<void> nlInit() async {
+  if (!Platform.isAndroid) {
+    return;
+  }
   log.finest(() => "nlInit()");
   await NotificationServicePlugin.instance.initialize(nlCallback);
-  nlCallback();
 }
 
 Future<void> nlNotificationTap(
@@ -264,92 +303,98 @@ Future<void> nlNotificationTap(
   }
   await showDialog(
     context: navigatorKey.currentState!.context,
-    builder:
-        (BuildContext context) => TransactionPage(
-          notification: NotificationTransaction.fromJson(
-            jsonDecode(notificationResponse.payload!),
-          ),
-        ),
+    builder: (BuildContext context) => TransactionPage(
+      notification: .fromJson(jsonDecode(notificationResponse.payload!)),
+    ),
   );
 }
 
 Future<(CurrencyRead?, double)> parseNotificationText(
   FireflyIii api,
   String notificationBody,
-  CurrencyRead localCurrency,
-) async {
+  CurrencyRead localCurrency, {
+  RegExp? userRegex,
+}) async {
   CurrencyRead? currency;
   double amount = 0;
+  String? extractedAmountStr;
 
-  // Try to extract substrings that may (or may not) relate to spending amount
-  final Iterable<RegExpMatch> matches = rFindMoney.allMatches(notificationBody);
-
-  if (matches.isNotEmpty) {
-    final List<CurrencyRead> currencies =
-        (await api.v1CurrenciesGet()).body!.data;
-    currencies.removeWhere(
-      (CurrencyRead currency) => currency.attributes.enabled != true,
-    );
-    currencies.add(localCurrency);
-
-    int bestMatchIndex = -1;
-
-    matchesloop:
-    for (int i = 0; i < matches.length; ++i) {
-      final RegExpMatch match = matches.elementAt(i);
-
-      final bool hasPre = match.namedGroup("preCurrency")?.isNotEmpty ?? false;
-      final bool hasPost = match.namedGroup("postCurrency")!.isNotEmpty;
-
-      if (hasPre || hasPost) {
-        final String preCurrency = match.namedGroup("preCurrency")!;
-        final String postCurrency = match.namedGroup("postCurrency")!;
-
-        // If we haven't found any good match (meaning a match with some valid
-        // pre or post currency) then we should regard the current one as the
-        // best one so far
-        if (bestMatchIndex == -1) {
-          bestMatchIndex = i;
-        }
-
-        for (CurrencyRead apiCurrency in currencies) {
-          if (apiCurrency.attributes.code == preCurrency ||
-              apiCurrency.attributes.symbol == preCurrency ||
-              apiCurrency.attributes.code == postCurrency ||
-              apiCurrency.attributes.symbol == postCurrency) {
-            bestMatchIndex = i;
-            currency = apiCurrency;
-            break matchesloop;
-          }
-        }
+  // Prioritizes userRegex
+  if (userRegex != null) {
+    final RegExpMatch? match = userRegex.firstMatch(notificationBody);
+    if (match != null) {
+      extractedAmountStr = match.namedGroup("amount");
+      if (extractedAmountStr == null && match.groupCount > 0) {
+        extractedAmountStr = match.group(1);
       }
     }
+  } else {
+    // Fallback to legacy
+    final Iterable<RegExpMatch> matches = rFindMoney.allMatches(
+      notificationBody,
+    );
 
-    if (bestMatchIndex != -1) {
-      final RegExpMatch bestMatch = matches.elementAt(bestMatchIndex);
+    if (matches.isNotEmpty) {
+      final List<CurrencyRead> currencies =
+          (await api.v1CurrenciesGet()).body!.data;
+      currencies.removeWhere((CurrencyRead c) => c.attributes.enabled != true);
+      currencies.add(localCurrency);
 
-      String amountStr = (bestMatch.namedGroup("amount") ?? "").replaceAll(
-        RegExp(r"\s+"),
-        "",
-      );
+      int bestMatchIndex = -1;
 
-      if (amountStr.isNotEmpty) {
-        // Find the first non-digit character at the end of the string
-        String separator = amountStr[0];
-        for (int i = amountStr.length - 1; i >= 0; i--) {
-          separator = amountStr[i];
-          if (!RegExp(r'\d').hasMatch(separator)) {
-            break;
+      matchesloop:
+      for (int i = 0; i < matches.length; i++) {
+        final RegExpMatch match = matches.elementAt(i);
+        final String preCurrency = match.namedGroup("preCurrency") ?? "";
+        final String postCurrency = match.namedGroup("postCurrency") ?? "";
+
+        if (preCurrency.isNotEmpty || postCurrency.isNotEmpty) {
+          // If we haven't found any good match (meaning a match with some valid
+          // pre or post currency) then we should regard the current one as the
+          // best one so far
+          if (bestMatchIndex == -1) {
+            bestMatchIndex = i;
+          }
+          for (CurrencyRead apiCurrency in currencies) {
+            if (apiCurrency.attributes.code == preCurrency ||
+                apiCurrency.attributes.symbol == preCurrency ||
+                apiCurrency.attributes.code == postCurrency ||
+                apiCurrency.attributes.symbol == postCurrency) {
+              bestMatchIndex = i;
+              currency = apiCurrency;
+              break matchesloop;
+            }
           }
         }
-
-        // Strip all non-digit characters that are not decimal separators
-        if (separator == "." || separator == ",") {
-          amountStr = amountStr.replaceAll(RegExp('[^0-9$separator]'), '');
-        }
-
-        amount = double.tryParse(amountStr.replaceAll(",", "."))!;
       }
+
+      if (bestMatchIndex == -1) {
+        bestMatchIndex = 0;
+      }
+
+      extractedAmountStr = matches
+          .elementAt(bestMatchIndex)
+          .namedGroup("amount");
+    } // end if legacy
+  }
+
+  String? cleanAmount;
+  if (extractedAmountStr != null) {
+    cleanAmount = extractedAmountStr.replaceAll(RegExp(r'[^0-9.,]'), '');
+
+    if (cleanAmount.isNotEmpty) {
+      cleanAmount = cleanAmount.replaceAll(',', '.');
+
+      if ('.'.allMatches(cleanAmount).length > 1) {
+        final int lastDotIndex = cleanAmount.lastIndexOf('.');
+        final String beforeDot = cleanAmount
+            .substring(0, lastDotIndex)
+            .replaceAll('.', '');
+        final String afterDot = cleanAmount.substring(lastDotIndex + 1);
+        cleanAmount = '$beforeDot.$afterDot';
+      }
+
+      amount = double.tryParse(cleanAmount) ?? 0.0;
     }
   }
 

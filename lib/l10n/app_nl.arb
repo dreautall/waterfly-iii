@@ -797,9 +797,25 @@
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
+    "loginFormButtonHideHeaders": "Headers verbergen",
+    "@loginFormButtonHideHeaders": {
+        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
+    },
+    "loginFormButtonShowHeaders": "Aangepaste headers",
+    "@loginFormButtonShowHeaders": {
+        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
+    },
     "loginFormLabelAPIKey": "Geldige API-sleutel",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHeaders": "Aangepaste headers (optioneel)",
+    "@loginFormLabelHeaders": {
+        "description": "Login Form: Label for Custom Headers field"
+    },
+    "loginFormLabelHeadersHelp": "Eén per regel, formaat: HeaderNaam: waarde",
+    "@loginFormLabelHeadersHelp": {
+        "description": "Login Form: Helper text for Custom Headers field"
     },
     "loginFormLabelHost": "Host-URL",
     "@loginFormLabelHost": {
@@ -824,10 +840,6 @@
     "navigationCategories": "Categorieën",
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
-    },
-    "navigationMain": "Hoofd Dashboard",
-    "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
     },
     "generalSettings": "Instellingen",
     "@generalSettings": {
@@ -950,6 +962,38 @@
     "@settingsNLEmptyNote": {
         "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
+    "settingsNLHistory": "Notificatiegeschiedenis",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "Nog geen notificaties opgeslagen.",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "{notificationHistorySize, plural, =1 {Dit is de geschiedenis van de laatste notificatie ontvangen door de app. Daarnaast kun je transacties maken van (geldige) notificaties of zien waarom een notificatie niet kon worden verwerkt.} other {Dit is de geschiedenis van de laatste {notificationHistorySize} notificaties ontvangen door de app. Daarnaast kun je transacties maken van (geldige) notificaties of zien waarom een notificatie niet kon worden verwerkt.}}",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "Notificatie overgeslagen: {reason, select, noMoney{Geen geldwaarde gevonden} noCurrency{Geen valuta gevonden} appNotUsed{App niet in lijst} other{Onbekende reden}}.",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "Toon eerdere notificaties",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
+    },
     "settingsNLPermissionGrant": "Klik hier om toestemming te geven.",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
@@ -969,6 +1013,14 @@
     "settingsNLPrefillTXTitle": "Transactietitel vooraf invullen met meldingstitel",
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLRegularExpression": "Reguliere expressie (optioneel)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "Ongeldige reguliere expressie",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Status controleren…",
     "@settingsNLServiceChecking": {
@@ -1000,6 +1052,14 @@
     "settingsNotificationListener": "Notificatie Luister Service",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
+    },
+    "settingsServerConnection": "Serververbinding",
+    "@settingsServerConnection": {
+        "description": "Settings for the server connection"
+    },
+    "settingsServerConnectionUpdated": "Verbindingsinstellingen bijgewerkt.",
+    "@settingsServerConnectionUpdated": {
+        "description": "Server connection settings have been updated"
     },
     "settingsTheme": "Applicatie thema",
     "@settingsTheme": {

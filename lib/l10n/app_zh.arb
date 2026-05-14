@@ -1,5 +1,5 @@
 {
-  "@@locale": "zh",
+    "@@locale": "zh",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "现金",
     "@accountRoleAssetCashWallet": {
@@ -797,9 +797,25 @@
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
+    "loginFormButtonHideHeaders": "隐藏请求头",
+    "@loginFormButtonHideHeaders": {
+        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
+    },
+    "loginFormButtonShowHeaders": "自定义请求头",
+    "@loginFormButtonShowHeaders": {
+        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
+    },
     "loginFormLabelAPIKey": "无效的 API 密钥",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHeaders": "自定义请求头 (可选)",
+    "@loginFormLabelHeaders": {
+        "description": "Login Form: Label for Custom Headers field"
+    },
+    "loginFormLabelHeadersHelp": "每行一个，格式：HeaderName: value",
+    "@loginFormLabelHeadersHelp": {
+        "description": "Login Form: Helper text for Custom Headers field"
     },
     "loginFormLabelHost": "主机URL",
     "@loginFormLabelHost": {
@@ -825,9 +841,9 @@
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
-    "navigationMain": "主仪表盘",
+    "navigationMain": "仪表盘",
     "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
+        "description": "Navigation Label: Dashboard"
     },
     "generalSettings": "设置",
     "@generalSettings": {
@@ -950,6 +966,38 @@
     "@settingsNLEmptyNote": {
         "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
+    "settingsNLHistory": "通知记录",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "暂无通知记录。",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "{notificationHistorySize, plural, other {这是该应用收到的最近 {notificationHistorySize} 条通知的历史记录。此外，您可以从（有效的）通知中创建交易，或查看通知无法处理的原因。}}",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "通知已跳过：{reason, select, noMoney{未找到货币金额} noCurrency{未找到货币单位} appNotUsed{未监听该应用} other{未知原因}}。",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "查看过往通知列表",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
+    },
     "settingsNLPermissionGrant": "轻触来授予权限。",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
@@ -969,6 +1017,14 @@
     "settingsNLPrefillTXTitle": "使用通知标题预填交易标题",
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLRegularExpression": "正则表达式 (可选)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "无效的正则表达式",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "正在检查状态...",
     "@settingsNLServiceChecking": {
@@ -1000,6 +1056,14 @@
     "settingsNotificationListener": "提示监听服务",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
+    },
+    "settingsServerConnection": "服务器连接",
+    "@settingsServerConnection": {
+        "description": "Settings for the server connection"
+    },
+    "settingsServerConnectionUpdated": "连接设置已更新。",
+    "@settingsServerConnectionUpdated": {
+        "description": "Server connection settings have been updated"
     },
     "settingsTheme": "应用主题",
     "@settingsTheme": {

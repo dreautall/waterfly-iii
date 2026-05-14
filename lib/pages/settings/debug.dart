@@ -17,13 +17,13 @@ class DebugDialog extends StatelessWidget {
       title: Text(S.of(context).settingsDialogDebugTitle),
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
+          padding: const .fromLTRB(24, 12, 24, 0),
           child: Text(S.of(context).settingsDialogDebugInfo),
         ),
-        SwitchListTile(
+        SwitchListTile.adaptive(
           value: context.select((SettingsProvider s) => s.debug),
-          onChanged:
-              (bool value) => context.read<SettingsProvider>().debug = value,
+          onChanged: (bool value) =>
+              context.read<SettingsProvider>().debug = value,
 
           title: Text(S.of(context).settingsDialogDebugTitle),
           secondary: const Icon(Icons.bug_report),
@@ -36,33 +36,28 @@ class DebugDialog extends StatelessWidget {
           onTap: () async {
             final bool? ok = await showDialog<bool>(
               context: context,
-              builder:
-                  (BuildContext context) => AlertDialog(
-                    icon: const Icon(Icons.mail),
-                    title: Text(S.of(context).settingsDialogDebugSendButton),
-                    clipBehavior: Clip.hardEdge,
-                    actions: <Widget>[
-                      TextButton(
-                        child: Text(
-                          MaterialLocalizations.of(context).cancelButtonLabel,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      FilledButton(
-                        child: Text(
-                          S.of(context).settingsDialogDebugMailCreate,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop(true);
-                        },
-                      ),
-                    ],
-                    content: Text(
-                      S.of(context).settingsDialogDebugMailDisclaimer,
+              builder: (BuildContext context) => AlertDialog(
+                icon: const Icon(Icons.mail),
+                title: Text(S.of(context).settingsDialogDebugSendButton),
+                clipBehavior: .hardEdge,
+                actions: <Widget>[
+                  TextButton(
+                    child: Text(
+                      MaterialLocalizations.of(context).cancelButtonLabel,
                     ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
+                  FilledButton(
+                    child: Text(S.of(context).settingsDialogDebugMailCreate),
+                    onPressed: () {
+                      Navigator.of(context).pop(true);
+                    },
+                  ),
+                ],
+                content: Text(S.of(context).settingsDialogDebugMailDisclaimer),
+              ),
             );
             if (!(ok ?? false)) {
               return;
@@ -78,8 +73,9 @@ class DebugDialog extends StatelessWidget {
                     "Debug Logs generated from ${appInfo.appName}, ${appInfo.version}+${appInfo.buildNumber}",
                 subject: "Waterfly III Debug Logs",
                 recipients: <String>["app@vogt.pw"],
-                attachmentPaths:
-                    logExists ? <String>[logPath] : const <String>[],
+                attachmentPaths: logExists
+                    ? <String>[logPath]
+                    : const <String>[],
                 isHTML: false,
               ),
             );

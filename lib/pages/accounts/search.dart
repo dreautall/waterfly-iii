@@ -8,6 +8,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/accounts/row.dart';
+import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
 
 class AccountSearch extends StatefulWidget {
   const AccountSearch({super.key, required this.type});
@@ -60,7 +61,7 @@ class _AccountSearchState extends State<AccountSearch> {
           type: currentFilter,
           page: pageKey,
           query: _searchController.text,
-          field: AccountSearchFieldFilter.all,
+          field: .all,
         );
       } else {
         respAccounts = await api.v1AccountsGet(
@@ -101,46 +102,45 @@ class _AccountSearchState extends State<AccountSearch> {
         AnimatedSize(
           duration: animDurationEmphasized,
           curve: animCurveEmphasized,
-          alignment: Alignment.center,
+          alignment: .center,
           child: SizedBox(
             height: 40,
-            child:
-                currentFilter == accType
-                    ? FilterChip(
-                      label: Text(currentFilter!.friendlyName(context)),
-                      onSelected: (bool selected) {
-                        log.finest(
-                          () => "current chip $currentFilter now $selected",
-                        );
-                        setState(() {
-                          currentFilter = null;
-                          if (_searchController.text.isEmpty) {
-                            _searched = false;
-                            _searchFocusNode.requestFocus();
-                          } else {
-                            _pagingState = _pagingState.reset();
-                          }
-                        });
-                      },
-                      selected: true,
-                      visualDensity: const VisualDensity(vertical: -2),
-                    )
-                    : currentFilter == null
-                    ? ActionChip(
-                      label: Text(accType.friendlyName(context)),
-                      onPressed: () {
-                        log.finest(() => "chip $accType selected");
-                        setState(() {
-                          currentFilter = accType;
-                          _searched = true;
+            child: currentFilter == accType
+                ? FilterChip(
+                    label: Text(currentFilter!.friendlyName(context)),
+                    onSelected: (bool selected) {
+                      log.finest(
+                        () => "current chip $currentFilter now $selected",
+                      );
+                      setState(() {
+                        currentFilter = null;
+                        if (_searchController.text.isEmpty) {
+                          _searched = false;
+                          _searchFocusNode.requestFocus();
+                        } else {
                           _pagingState = _pagingState.reset();
-                        });
-                        FocusScope.of(context).unfocus();
-                      },
-                      avatar: Icon(accType.icon()),
-                      visualDensity: const VisualDensity(vertical: -2),
-                    )
-                    : const SizedBox.shrink(),
+                        }
+                      });
+                    },
+                    selected: true,
+                    visualDensity: const VisualDensity(vertical: -2),
+                  )
+                : currentFilter == null
+                ? ActionChip(
+                    label: Text(accType.friendlyName(context)),
+                    onPressed: () {
+                      log.finest(() => "chip $accType selected");
+                      setState(() {
+                        currentFilter = accType;
+                        _searched = true;
+                        _pagingState = _pagingState.reset();
+                      });
+                      FocusScope.of(context).unfocus();
+                    },
+                    avatar: Icon(accType.icon()),
+                    visualDensity: const VisualDensity(vertical: -2),
+                  )
+                : const SizedBox.shrink(),
           ),
         ),
       );
@@ -159,33 +159,30 @@ class _AccountSearchState extends State<AccountSearch> {
           focusNode: _searchFocusNode,
           decoration: InputDecoration(
             hintText: MaterialLocalizations.of(context).searchFieldLabel,
-            border: InputBorder.none,
-            suffixIcon:
-                _searchController.text.isNotEmpty
-                    ? IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: () {
-                        _searchController.clear();
-                        _searchFocusNode.requestFocus();
-                        setState(() {
-                          _searched = false;
-                        });
-                      },
-                    )
-                    : null,
+            border: .none,
+            suffixIcon: _searchController.text.isNotEmpty
+                ? IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      _searchController.clear();
+                      _searchFocusNode.requestFocus();
+                      setState(() {
+                        _searched = false;
+                      });
+                    },
+                  )
+                : null,
           ),
           autofocus: true,
-          onChanged:
-              (_) => setState(() {
-                _searched = false;
-              }),
-          onSubmitted:
-              (_) => setState(() {
-                if (!_searched) {
-                  _searched = true;
-                  _pagingState = _pagingState.reset();
-                }
-              }),
+          onChanged: (_) => setState(() {
+            _searched = false;
+          }),
+          onSubmitted: (_) => setState(() {
+            if (!_searched) {
+              _searched = true;
+              _pagingState = _pagingState.reset();
+            }
+          }),
         ),
       ),
       body: Column(
@@ -193,37 +190,34 @@ class _AccountSearchState extends State<AccountSearch> {
           SizedBox(
             height: 40 + 8 + 8,
             child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              scrollDirection: .horizontal,
+              padding: const .symmetric(horizontal: 16, vertical: 8),
               children: chips,
             ),
           ),
           Expanded(
-            child:
-                _searched
-                    ? PagedListView<int, AccountRead>(
-                      state: _pagingState,
-                      fetchNextPage: _fetchPage,
-                      builderDelegate: PagedChildBuilderDelegate<AccountRead>(
-                        animateTransitions: true,
-                        transitionDuration: animDurationStandard,
-                        invisibleItemsThreshold: 10,
-                        itemBuilder:
-                            (
-                              BuildContext context,
-                              AccountRead item,
-                              int index,
-                            ) => accountRowBuilder(
-                              context,
-                              item,
-                              index,
-                              () => setState(() {
-                                _pagingState = _pagingState.reset();
-                              }),
-                            ),
-                      ),
-                    )
-                    : const SizedBox.expand(),
+            child: _searched
+                ? PagedListView<int, AccountRead>(
+                    state: _pagingState,
+                    fetchNextPage: _fetchPage,
+                    builderDelegate:
+                        customPagedChildBuilderDelegate<AccountRead>(
+                          itemBuilder:
+                              (
+                                BuildContext context,
+                                AccountRead item,
+                                int index,
+                              ) => accountRowBuilder(
+                                context,
+                                item,
+                                index,
+                                () => setState(() {
+                                  _pagingState = _pagingState.reset();
+                                }),
+                              ),
+                        ),
+                  )
+                : const SizedBox.expand(),
           ),
         ],
       ),

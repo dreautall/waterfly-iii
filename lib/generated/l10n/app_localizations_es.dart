@@ -510,6 +510,11 @@ class SEs extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Ahorro mensual: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Ahorrado hasta ahora:';
 
   @override
@@ -531,6 +536,11 @@ class SEs extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'En huchas: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -622,7 +632,20 @@ class SEs extends S {
       'Para usar Waterfly III es necesario disponer de un servidor con una instancia de Firefly III o del add-on de Firefly III para Home Assistant.\n\nPor favor, introduzca la URL completa y el token de acceso personal (Ajustes -> Perfil -> OAuth -> Token de Acceso Personal) debajo.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Ocultar cabeceras';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Cabeceras personalizadas';
+
+  @override
   String get loginFormLabelAPIKey => 'Clave API válida';
+
+  @override
+  String get loginFormLabelHeaders => 'Cabeceras personalizadas (opcional)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'Una por línea, formato: NombreCabecera: valor';
 
   @override
   String get loginFormLabelHost => 'URL del servidor';
@@ -643,7 +666,7 @@ class SEs extends S {
   String get navigationCategories => 'Categorías';
 
   @override
-  String get navigationMain => 'Panel principal';
+  String get navigationMain => 'Panel de control';
 
   @override
   String get generalSettings => 'Configuración';
@@ -653,11 +676,11 @@ class SEs extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -665,11 +688,11 @@ class SEs extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString de $of';
@@ -747,6 +770,39 @@ class SEs extends S {
   String get settingsNLEmptyNote => 'Mantener campo nota vacío';
 
   @override
+  String get settingsNLHistory => 'Historial de notificaciones';
+
+  @override
+  String get settingsNLHistoryEmpty =>
+      'No hay notificaciones registradas hasta el momento.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other: '$notificationHistorySize notificaciones recibidas',
+      one: 'notificación recibida',
+    );
+    return 'Este es un historial de las últimas $_temp0 por la aplicación. Además, puedes crear transacciones a partir de notificaciones (válidas) o ver la razón por la que una notificación no pudo ser procesada.';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'No se encontró valor monetario',
+      'noCurrency': 'No se encontró moneda válida',
+      'appNotUsed': 'Aplicación no escuchada',
+      'other': 'Razón desconocida',
+    });
+    return 'Notificación omitida: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription =>
+      'Listar notificaciones previas';
+
+  @override
   String get settingsNLPermissionGrant => 'Toque para conceder permiso.';
 
   @override
@@ -762,6 +818,13 @@ class SEs extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Rellenar el título de la transacción con el título de la notificación';
+
+  @override
+  String get settingsNLRegularExpression => 'Expresión regular (opcional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid =>
+      'Expresión regular no válida';
 
   @override
   String get settingsNLServiceChecking => 'Comprobando estado…';
@@ -783,6 +846,13 @@ class SEs extends S {
   @override
   String get settingsNotificationListener =>
       'Servicio de escucha de notificaciones';
+
+  @override
+  String get settingsServerConnection => 'Conexión con el servidor';
+
+  @override
+  String get settingsServerConnectionUpdated =>
+      'Ajustes de conexión actualizados.';
 
   @override
   String get settingsTheme => 'Tema de la aplicación';

@@ -513,6 +513,11 @@ class SCa extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Estalviat fins ara:';
 
   @override
@@ -534,6 +539,11 @@ class SCa extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'En guardioles: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -625,7 +635,20 @@ class SCa extends S {
       'Per a fer servir Waterfly III adequadament cal que tingues el teu propi servidor de Firefly III o l\'add-on de Firefly III a Home Assistant.\n\nPer favor, introdueix la URL completa a més del token d\'accés (Configuració -> Perfil -> OAuth -> Token d\'Accés Personal) a sota.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Amaga les capçaleres';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Capçaleres personalitzades';
+
+  @override
   String get loginFormLabelAPIKey => 'Clau d\'API vàlida';
+
+  @override
+  String get loginFormLabelHeaders => 'Capçaleres personalitzades (opcional)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'Una per línia, format: NomCapçalera: valor';
 
   @override
   String get loginFormLabelHost => 'URL d\'allotjament';
@@ -646,7 +669,7 @@ class SCa extends S {
   String get navigationCategories => 'Categories';
 
   @override
-  String get navigationMain => 'Tauler de control Principal';
+  String get navigationMain => 'Tauler de control';
 
   @override
   String get generalSettings => 'Configuració';
@@ -656,11 +679,11 @@ class SCa extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -668,11 +691,11 @@ class SCa extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString de $of';
@@ -751,6 +774,39 @@ class SCa extends S {
   String get settingsNLEmptyNote => 'Mantén el camp de nota buit';
 
   @override
+  String get settingsNLHistory => 'Historial de notificacions';
+
+  @override
+  String get settingsNLHistoryEmpty =>
+      'No s\'ha registrat cap notificació fins ara.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other: '# notificacions rebudes',
+      one: 'notificació rebuda',
+    );
+    return 'Aquest és l\'historial de les últimes $_temp0 per l\'aplicació. A més, podeu crear transaccions a partir de notificacions (vàlides) o veure el motiu pel qual una notificació no s\'ha pogut processar.';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'No s\'ha trobat cap valor monetari',
+      'noCurrency': 'No s\'ha trobat cap moneda',
+      'appNotUsed': 'L\'aplicació no està a la llista d\'escolta',
+      'other': 'Motiu desconegut',
+    });
+    return 'Notificació omesa: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription =>
+      'Llista les notificacions anteriors';
+
+  @override
   String get settingsNLPermissionGrant => 'Toca per a donar permís.';
 
   @override
@@ -766,6 +822,13 @@ class SCa extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Emplena automàticament el títol de la transacció amb el títol de la notificació';
+
+  @override
+  String get settingsNLRegularExpression => 'Expressió regular (opcional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid =>
+      'Expressió regular no vàlida';
 
   @override
   String get settingsNLServiceChecking => 'Comprovant l\'estat…';
@@ -787,6 +850,13 @@ class SCa extends S {
   @override
   String get settingsNotificationListener =>
       'Servei d\'escolta de notificacions';
+
+  @override
+  String get settingsServerConnection => 'Connexió al servidor';
+
+  @override
+  String get settingsServerConnectionUpdated =>
+      'S\'ha actualitzat la configuració de connexió.';
 
   @override
   String get settingsTheme => 'Tema de l\'aplicació';

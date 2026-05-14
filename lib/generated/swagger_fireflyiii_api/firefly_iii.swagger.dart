@@ -1,4 +1,6 @@
+// coverage:ignore-file
 // ignore_for_file: type=lint
+// ignore_for_file: unused_element_parameter
 
 import 'package:json_annotation/json_annotation.dart';
 import 'package:json_annotation/json_annotation.dart' as json;
@@ -14,6 +16,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;
 import 'firefly_iii.enums.swagger.dart' as enums;
+import 'firefly_iii.metadata.swagger.dart';
 export 'firefly_iii.enums.swagger.dart';
 export 'firefly_iii.models.swagger.dart';
 
@@ -91,6 +94,18 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('date') String? date,
     @Query('types') List<Object?>? types,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all accounts of the user returned in a basic auto-complete array.',
+      operationId: 'getAccountsAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all bills of the user returned in a basic auto-complete array.
@@ -123,6 +138,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all bills of the user returned in a basic auto-complete array.',
+      operationId: 'getBillsAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all budgets of the user returned in a basic auto-complete array.
@@ -155,6 +182,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all budgets of the user returned in a basic auto-complete array.',
+      operationId: 'getBudgetsAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all categories of the user returned in a basic auto-complete array.
@@ -185,6 +224,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all categories of the user returned in a basic auto-complete array.',
+      operationId: 'getCategoriesAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all currencies of the user returned in a basic auto-complete array.
@@ -215,6 +266,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all currencies of the user returned in a basic auto-complete array.',
+      operationId: 'getCurrenciesAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all currencies of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.
@@ -249,6 +312,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all currencies of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.',
+      operationId: 'getCurrenciesCodeAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all object groups of the user returned in a basic auto-complete array.
@@ -279,6 +354,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all object groups of the user returned in a basic auto-complete array.',
+      operationId: 'getObjectGroupsAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all piggy banks of the user returned in a basic auto-complete array.
@@ -312,6 +399,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all piggy banks of the user returned in a basic auto-complete array.',
+      operationId: 'getPiggiesAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all piggy banks of the user returned in a basic auto-complete array.
@@ -346,6 +445,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all piggy banks of the user returned in a basic auto-complete array.',
+      operationId: 'getPiggiesBalanceAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all recurring transactions of the user returned in a basic auto-complete array.
@@ -376,6 +487,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all recurring transactions of the user returned in a basic auto-complete array.',
+      operationId: 'getRecurringAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all rule groups of the user returned in a basic auto-complete array.
@@ -406,6 +529,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all rule groups of the user returned in a basic auto-complete array.',
+      operationId: 'getRuleGroupsAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all rules of the user returned in a basic auto-complete array.
@@ -438,6 +573,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all rules of the user returned in a basic auto-complete array.',
+      operationId: 'getRulesAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all subscriptions of the user returned in a basic auto-complete array.
@@ -472,6 +619,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all subscriptions of the user returned in a basic auto-complete array.',
+      operationId: 'getSubscriptionsAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all tags of the user returned in a basic auto-complete array.
@@ -504,6 +663,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all tags of the user returned in a basic auto-complete array.',
+      operationId: 'getTagAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all transaction types returned in a basic auto-complete array. English only.
@@ -538,6 +709,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all transaction types returned in a basic auto-complete array. English only.',
+      operationId: 'getTransactionTypesAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all transaction descriptions of the user returned in a basic auto-complete array.
@@ -568,6 +751,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all transaction descriptions of the user returned in a basic auto-complete array.',
+      operationId: 'getTransactionsAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Returns all transactions, complemented with their ID, of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.
@@ -602,6 +797,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') String? query,
     @Query('limit') int? limit,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary:
+          'Returns all transactions, complemented with their ID, of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.',
+      operationId: 'getTransactionsIDAC',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["autocomplete"],
+      deprecated: false,
+    ),
   });
 
   ///Dashboard chart with asset account balance information.
@@ -644,6 +851,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('end') required String? end,
     @Query('period') String? period,
     @Query('preselected') String? preselected,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint returns the data required to generate a chart with basic asset account balance information. This is used on the dashboard.
+''',
+      summary: 'Dashboard chart with asset account balance information.',
+      operationId: 'getChartAccountOverview',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["charts"],
+      deprecated: false,
+    ),
   });
 
   ///Dashboard chart with balance information.
@@ -691,6 +911,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('period') String? period,
     @Query('preselected') String? preselected,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint returns the data required to generate a chart with balance information.
+''',
+      summary: 'Dashboard chart with balance information.',
+      operationId: 'getChartBalance',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["charts"],
+      deprecated: false,
+    ),
   });
 
   ///Dashboard chart with budget information.
@@ -723,6 +956,19 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint returns the data required to generate a chart with basic budget information.
+''',
+      summary: 'Dashboard chart with budget information.',
+      operationId: 'getChartBudgetOverview',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["charts"],
+      deprecated: false,
+    ),
   });
 
   ///Dashboard chart with category information.
@@ -755,6 +1001,19 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint returns the data required to generate a chart with basic category information.
+''',
+      summary: 'Dashboard chart with category information.',
+      operationId: 'getChartCategoryOverview',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["charts"],
+      deprecated: false,
+    ),
   });
 
   ///Bulk update transaction properties. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/
@@ -777,6 +1036,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1DataBulkTransactionsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('query') required String? query,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '''Allows you to update transactions in bulk.
+''',
+      summary:
+          'Bulk update transaction properties. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/',
+      operationId: 'bulkUpdateTransactions',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["data"],
+      deprecated: false,
+    ),
   });
 
   ///Endpoint to destroy user data
@@ -799,6 +1071,20 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1DataDestroyDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('objects') required String? objects,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''A call to this endpoint deletes the requested data type. Use it with care and always with user permission.
+The demo user is incapable of using this endpoint.
+''',
+      summary: 'Endpoint to destroy user data',
+      operationId: 'destroyData',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["data"],
+      deprecated: false,
+    ),
   });
 
   ///Export account data from Firefly III
@@ -821,6 +1107,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<String>> _v1DataExportAccountsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint allows you to export your accounts from Firefly III into a file. Currently supports CSV exports only.
+''',
+      summary: 'Export account data from Firefly III',
+      operationId: 'exportAccounts',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["data"],
+      deprecated: false,
+    ),
   });
 
   ///Export bills from Firefly III
@@ -843,6 +1142,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<String>> _v1DataExportBillsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint allows you to export your bills from Firefly III into a file. Currently supports CSV exports only.
+''',
+      summary: 'Export bills from Firefly III',
+      operationId: 'exportBills',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["data"],
+      deprecated: false,
+    ),
   });
 
   ///Export budgets and budget amount data from Firefly III
@@ -865,6 +1177,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<String>> _v1DataExportBudgetsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint allows you to export your budgets and associated budget data from Firefly III into a file. Currently supports CSV exports only.
+''',
+      summary: 'Export budgets and budget amount data from Firefly III',
+      operationId: 'exportBudgets',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["data"],
+      deprecated: false,
+    ),
   });
 
   ///Export category data from Firefly III
@@ -887,6 +1212,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<String>> _v1DataExportCategoriesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint allows you to export your categories from Firefly III into a file. Currently supports CSV exports only.
+''',
+      summary: 'Export category data from Firefly III',
+      operationId: 'exportCategories',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["data"],
+      deprecated: false,
+    ),
   });
 
   ///Export piggy banks from Firefly III
@@ -909,6 +1247,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<String>> _v1DataExportPiggyBanksGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint allows you to export your piggy banks from Firefly III into a file. Currently supports CSV exports only.
+''',
+      summary: 'Export piggy banks from Firefly III',
+      operationId: 'exportPiggies',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["data"],
+      deprecated: false,
+    ),
   });
 
   ///Export recurring transaction data from Firefly III
@@ -931,6 +1282,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<String>> _v1DataExportRecurringGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint allows you to export your recurring transactions from Firefly III into a file. Currently supports CSV exports only.
+''',
+      summary: 'Export recurring transaction data from Firefly III',
+      operationId: 'exportRecurring',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["data"],
+      deprecated: false,
+    ),
   });
 
   ///Export rule groups and rule data from Firefly III
@@ -953,6 +1317,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<String>> _v1DataExportRulesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint allows you to export your rules and rule groups from Firefly III into a file. Currently supports CSV exports only.
+''',
+      summary: 'Export rule groups and rule data from Firefly III',
+      operationId: 'exportRules',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["data"],
+      deprecated: false,
+    ),
   });
 
   ///Export tag data from Firefly III
@@ -975,6 +1352,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<String>> _v1DataExportTagsGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint allows you to export your tags from Firefly III into a file. Currently supports CSV exports only.
+''',
+      summary: 'Export tag data from Firefly III',
+      operationId: 'exportTags',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["data"],
+      deprecated: false,
+    ),
   });
 
   ///Export transaction data from Firefly III
@@ -1012,6 +1402,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('end') required String? end,
     @Query('accounts') String? accounts,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint allows you to export transactions from Firefly III into a file. Currently supports CSV exports only.
+''',
+      summary: 'Export transaction data from Firefly III',
+      operationId: 'exportTransactions',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["data"],
+      deprecated: false,
+    ),
   });
 
   ///Endpoint to purge user data
@@ -1025,6 +1428,20 @@ abstract class FireflyIii extends ChopperService {
   @DELETE(path: '/v1/data/purge')
   Future<chopper.Response> _v1DataPurgeDelete({
     @Header('X-Trace-Id') String? xTraceId,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''A call to this endpoint purges all previously deleted data. Use it with care and always with user permission.
+The demo user is incapable of using this endpoint.
+''',
+      summary: 'Endpoint to purge user data',
+      operationId: 'purgeData',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["data"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into expenses, grouped by expense account.
@@ -1062,6 +1479,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, grouped by expense account.
+''',
+      summary: 'Insight into expenses, grouped by expense account.',
+      operationId: 'insightExpenseExpense',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into expenses, grouped by asset account.
@@ -1099,6 +1529,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, grouped by asset account.
+''',
+      summary: 'Insight into expenses, grouped by asset account.',
+      operationId: 'insightExpenseAsset',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into income, grouped by revenue account.
@@ -1136,6 +1579,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the income received by the user, grouped by revenue account.
+''',
+      summary: 'Insight into income, grouped by revenue account.',
+      operationId: 'insightIncomeRevenue',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into income, grouped by asset account.
@@ -1173,6 +1629,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the income received by the user, grouped by asset account.
+''',
+      summary: 'Insight into income, grouped by asset account.',
+      operationId: 'insightIncomeAsset',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into transfers, grouped by account.
@@ -1210,6 +1679,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the transfers made by the user, grouped by asset account or lability.
+''',
+      summary: 'Insight into transfers, grouped by account.',
+      operationId: 'insightTransfers',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into expenses, grouped by bill.
@@ -1252,6 +1734,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('end') required String? end,
     @Query('bills[]') List<int>? bills,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, grouped by (any) bill.
+''',
+      summary: 'Insight into expenses, grouped by bill.',
+      operationId: 'insightExpenseBill',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into expenses, without bill.
@@ -1289,6 +1784,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, including only expenses with no bill.
+''',
+      summary: 'Insight into expenses, without bill.',
+      operationId: 'insightExpenseNoBill',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into expenses, grouped by budget.
@@ -1331,6 +1839,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('end') required String? end,
     @Query('budgets[]') List<int>? budgets,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, grouped by (any) budget.
+''',
+      summary: 'Insight into expenses, grouped by budget.',
+      operationId: 'insightExpenseBudget',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into expenses, without budget.
@@ -1368,6 +1889,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, including only expenses with no budget.
+''',
+      summary: 'Insight into expenses, without budget.',
+      operationId: 'insightExpenseNoBudget',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into expenses, grouped by category.
@@ -1410,6 +1944,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('end') required String? end,
     @Query('categories[]') List<int>? categories,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, grouped by (any) category.
+''',
+      summary: 'Insight into expenses, grouped by category.',
+      operationId: 'insightExpenseCategory',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into expenses, without category.
@@ -1447,6 +1994,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, including only expenses with no category.
+''',
+      summary: 'Insight into expenses, without category.',
+      operationId: 'insightExpenseNoCategory',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into income, grouped by category.
@@ -1489,6 +2049,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('end') required String? end,
     @Query('categories[]') List<int>? categories,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the income received by the user, grouped by (any) category.
+''',
+      summary: 'Insight into income, grouped by category.',
+      operationId: 'insightIncomeCategory',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into income, without category.
@@ -1526,6 +2099,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the income received by the user, including only income with no category.
+''',
+      summary: 'Insight into income, without category.',
+      operationId: 'insightIncomeNoCategory',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into transfers, grouped by category.
@@ -1568,6 +2154,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('end') required String? end,
     @Query('categories[]') List<int>? categories,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the transfers made by the user, grouped by (any) category.
+''',
+      summary: 'Insight into transfers, grouped by category.',
+      operationId: 'insightTransferCategory',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into transfers, without category.
@@ -1605,6 +2204,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the transfers made by the user, including only transfers with no category.
+''',
+      summary: 'Insight into transfers, without category.',
+      operationId: 'insightTransferNoCategory',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into expenses, grouped by tag.
@@ -1647,6 +2259,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('end') required String? end,
     @Query('tags[]') List<int>? tags,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, grouped by (any) tag.
+''',
+      summary: 'Insight into expenses, grouped by tag.',
+      operationId: 'insightExpenseTag',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into expenses, without tag.
@@ -1684,6 +2309,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, including only expenses with no tag.
+''',
+      summary: 'Insight into expenses, without tag.',
+      operationId: 'insightExpenseNoTag',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into income, grouped by tag.
@@ -1726,6 +2364,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('end') required String? end,
     @Query('tags[]') List<int>? tags,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the income received by the user, grouped by (any) tag.
+''',
+      summary: 'Insight into income, grouped by tag.',
+      operationId: 'insightIncomeTag',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into income, without tag.
@@ -1763,6 +2414,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the income received by the user, including only income with no tag.
+''',
+      summary: 'Insight into income, without tag.',
+      operationId: 'insightIncomeNoTag',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into transfers, grouped by tag.
@@ -1805,6 +2469,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('end') required String? end,
     @Query('tags[]') List<int>? tags,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the transfers created by the user, grouped by (any) tag.
+''',
+      summary: 'Insight into transfers, grouped by tag.',
+      operationId: 'insightTransferTag',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into expenses, without tag.
@@ -1842,6 +2519,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a summary of the transfers made by the user, including only transfers with no tag.
+''',
+      summary: 'Insight into expenses, without tag.',
+      operationId: 'insightTransferNoTag',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into total expenses.
@@ -1879,6 +2569,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a sum of the total expenses made by the user.
+''',
+      summary: 'Insight into total expenses.',
+      operationId: 'insightExpenseTotal',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into total income.
@@ -1916,6 +2619,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a sum of the total income received by the user.
+''',
+      summary: 'Insight into total income.',
+      operationId: 'insightIncomeTotal',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///Insight into total transfers.
@@ -1953,6 +2669,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint gives a sum of the total amount transfers made by the user.
+''',
+      summary: 'Insight into total transfers.',
+      operationId: 'insightTransferTotal',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["insight"],
+      deprecated: false,
+    ),
   });
 
   ///List all transactions related to the account.
@@ -2005,6 +2734,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint returns a list of all the transactions connected to the account.
+''',
+      summary: 'List all transactions related to the account.',
+      operationId: 'listTransactionByAccount',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["accounts"],
+      deprecated: false,
+    ),
   });
 
   ///Lists all attachments.
@@ -2042,6 +2784,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Lists all attachments.',
+      summary: 'Lists all attachments.',
+      operationId: 'listAttachmentByAccount',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["accounts"],
+      deprecated: false,
+    ),
   });
 
   ///List all piggy banks related to the account.
@@ -2079,6 +2832,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint returns a list of all the piggy banks connected to the account.
+''',
+      summary: 'List all piggy banks related to the account.',
+      operationId: 'listPiggyBankByAccount',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["accounts"],
+      deprecated: false,
+    ),
   });
 
   ///List all accounts.
@@ -2131,6 +2897,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('end') String? end,
     @Query('date') String? date,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint returns a list of all the accounts owned by the authenticated user.
+''',
+      summary: 'List all accounts.',
+      operationId: 'listAccount',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["accounts"],
+      deprecated: false,
+    ),
   });
 
   ///Create new account.
@@ -2153,6 +2932,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<AccountSingle>> _v1AccountsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required AccountStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Creates a new account. The data required can be submitted as a JSON body or as a list of parameters (in key=value pairs, like a webform).',
+      summary: 'Create new account.',
+      operationId: 'storeAccount',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["accounts"],
+      deprecated: false,
+    ),
   });
 
   ///Get single account.
@@ -2195,6 +2986,18 @@ abstract class FireflyIii extends ChopperService {
     @Query('end') String? end,
     @Path('id') required String? id,
     @Query('date') String? date,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '''Returns a single account by its ID.
+''',
+      summary: 'Get single account.',
+      operationId: 'getAccount',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["accounts"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing account.
@@ -2221,6 +3024,19 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required AccountUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Used to update a single account. All fields that are not submitted will be cleared (set to NULL). The model will tell you which fields are mandatory.
+''',
+      summary: 'Update existing account.',
+      operationId: 'updateAccount',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["accounts"],
+      deprecated: false,
+    ),
   });
 
   ///Permanently delete account.
@@ -2240,6 +3056,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1AccountsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Will permanently delete an account. Any associated transactions and piggy banks are ALSO deleted. Cannot be recovered from.
+''',
+      summary: 'Permanently delete account.',
+      operationId: 'deleteAccount',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["accounts"],
+      deprecated: false,
+    ),
   });
 
   ///List all attachments.
@@ -2272,6 +3101,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '''This endpoint lists all attachments.
+''',
+      summary: 'List all attachments.',
+      operationId: 'listAttachment',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["attachments"],
+      deprecated: false,
+    ),
   });
 
   ///Store a new attachment.
@@ -2294,6 +3135,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<AttachmentSingle>> _v1AttachmentsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required AttachmentStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Creates a new attachment. The data required can be submitted as a JSON body or as a list of parameters. You cannot use this endpoint to upload the actual file data (see below). This endpoint only creates the attachment object.
+''',
+      summary: 'Store a new attachment.',
+      operationId: 'storeAttachment',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["attachments"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single attachment.
@@ -2318,6 +3172,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<AttachmentSingle>> _v1AttachmentsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Get a single attachment. This endpoint only returns the available metadata for the attachment. Actual file data is handled in two other endpoints (see below).
+''',
+      summary: 'Get a single attachment.',
+      operationId: 'getAttachment',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["attachments"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing attachment.
@@ -2348,6 +3215,19 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required AttachmentUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Update the meta data for an existing attachment. This endpoint does not allow you to upload or download data. For that, see below.
+''',
+      summary: 'Update existing attachment.',
+      operationId: 'updateAttachment',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["attachments"],
+      deprecated: false,
+    ),
   });
 
   ///Delete an attachment.
@@ -2367,6 +3247,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1AttachmentsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''With this endpoint you delete an attachment, including any stored file data.
+''',
+      summary: 'Delete an attachment.',
+      operationId: 'deleteAttachment',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["attachments"],
+      deprecated: false,
+    ),
   });
 
   ///Download a single attachment.
@@ -2386,6 +3279,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<String>> _v1AttachmentsIdDownloadGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint allows you to download the binary content of a transaction. It will be sent to you as a download, using the content type "application/octet-stream" and content disposition "attachment; filename=example.pdf".
+''',
+      summary: 'Download a single attachment.',
+      operationId: 'downloadAttachment',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["attachments"],
+      deprecated: false,
+    ),
   });
 
   ///Upload an attachment.
@@ -2411,6 +3317,19 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required Object? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Use this endpoint to upload (and possible overwrite) the file contents of an attachment. Simply put the entire file in the body as binary data.
+''',
+      summary: 'Upload an attachment.',
+      operationId: 'uploadAttachment',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["attachments"],
+      deprecated: false,
+    ),
   });
 
   ///List all available budget amounts.
@@ -2453,6 +3372,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('page') int? page,
     @Query('start') String? start,
     @Query('end') String? end,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Firefly III calculates the total amount of money budgeted in so-called "available budgets". This endpoint returns all of these amounts and the periods for which they are calculated.
+''',
+      summary: 'List all available budget amounts.',
+      operationId: 'listAvailableBudgets',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["available_budgets"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single available budget.
@@ -2477,6 +3409,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<AvailableBudgetSingle>> _v1AvailableBudgetsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Get a single available budget, by ID.',
+      summary: 'Get a single available budget.',
+      operationId: 'getAvailableBudget',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["available_budgets"],
+      deprecated: false,
+    ),
   });
 
   ///List all attachments uploaded to the bill.
@@ -2514,6 +3457,18 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'This endpoint will list all attachments linked to the bill.',
+      summary: 'List all attachments uploaded to the bill.',
+      operationId: 'listAttachmentByBill',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["bills"],
+      deprecated: false,
+    ),
   });
 
   ///List all rules associated with the bill.
@@ -2535,6 +3490,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<RuleArray>> _v1BillsIdRulesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'This endpoint will list all rules that have an action to set the bill to this bill.',
+      summary: 'List all rules associated with the bill.',
+      operationId: 'listRuleByBill',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["bills"],
+      deprecated: false,
+    ),
   });
 
   ///List all transactions associated with the  bill.
@@ -2587,6 +3554,18 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'This endpoint will list all transactions linked to this bill.',
+      summary: 'List all transactions associated with the  bill.',
+      operationId: 'listTransactionByBill',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["bills"],
+      deprecated: false,
+    ),
   });
 
   ///List all bills.
@@ -2626,6 +3605,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('page') int? page,
     @Query('start') String? start,
     @Query('end') String? end,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'This endpoint will list all the user\'s bills.',
+      summary: 'List all bills.',
+      operationId: 'listBill',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["bills"],
+      deprecated: false,
+    ),
   });
 
   ///Store a new bill
@@ -2645,6 +3635,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<BillSingle>> _v1BillsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required BillStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Creates a new bill. The data required can be submitted as a JSON body or as a list of parameters.',
+      summary: 'Store a new bill',
+      operationId: 'storeBill',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["bills"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single bill.
@@ -2679,6 +3681,17 @@ abstract class FireflyIii extends ChopperService {
     @Path('id') required String? id,
     @Query('start') String? start,
     @Query('end') String? end,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Get a single bill.',
+      summary: 'Get a single bill.',
+      operationId: 'getBill',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["bills"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing bill.
@@ -2702,6 +3715,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required BillUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Update existing bill.',
+      summary: 'Update existing bill.',
+      operationId: 'updateBill',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["bills"],
+      deprecated: false,
+    ),
   });
 
   ///Delete a bill.
@@ -2721,6 +3745,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1BillsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Delete a bill. This will not delete any associated rules. Will not remove associated transactions. WILL remove all associated attachments.',
+      summary: 'Delete a bill.',
+      operationId: 'deleteBill',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["bills"],
+      deprecated: false,
+    ),
   });
 
   ///List all transactions by a budget limit ID.
@@ -2770,6 +3806,18 @@ abstract class FireflyIii extends ChopperService {
     @Path('id') required String? id,
     @Path('limitId') required String? limitId,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'List all the transactions within one budget limit. The start and end date are dictated by the budget limit.',
+      summary: 'List all transactions by a budget limit ID.',
+      operationId: 'listTransactionByBudgetLimit',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["budgets"],
+      deprecated: false,
+    ),
   });
 
   ///Get all limits for a budget.
@@ -2807,6 +3855,19 @@ abstract class FireflyIii extends ChopperService {
     @Path('id') required String? id,
     @Query('start') String? start,
     @Query('end') String? end,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Get all budget limits for this budget and the money spent, and money left. You can limit the list by submitting a date range as well. The "spent" array for each budget limit is NOT influenced by the start and end date of your query, but by the start and end date of the budget limit itself.
+''',
+      summary: 'Get all limits for a budget.',
+      operationId: 'listBudgetLimitByBudget',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["budgets"],
+      deprecated: false,
+    ),
   });
 
   ///Store new budget limit.
@@ -2837,6 +3898,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required BudgetLimitStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Store a new budget limit under this budget.',
+      summary: 'Store new budget limit.',
+      operationId: 'storeBudgetLimit',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["budgets"],
+      deprecated: false,
+    ),
   });
 
   ///Get single budget limit.
@@ -2869,6 +3941,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Path('limitId') required int? limitId,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '',
+      summary: 'Get single budget limit.',
+      operationId: 'getBudgetLimit',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["budgets"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing budget limit.
@@ -2904,6 +3987,17 @@ abstract class FireflyIii extends ChopperService {
     @Path('id') required String? id,
     @Path('limitId') required String? limitId,
     @Body() required BudgetLimitUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Update existing budget limit.',
+      summary: 'Update existing budget limit.',
+      operationId: 'updateBudgetLimit',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["budgets"],
+      deprecated: false,
+    ),
   });
 
   ///Delete a budget limit.
@@ -2931,6 +4025,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Path('limitId') required String? limitId,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Delete a budget limit.',
+      summary: 'Delete a budget limit.',
+      operationId: 'deleteBudgetLimit',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["budgets"],
+      deprecated: false,
+    ),
   });
 
   ///Get list of budget limits by date
@@ -2963,6 +4068,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('start') required String? start,
     @Query('end') required String? end,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '''Get all budget limits for for this date range.
+''',
+      summary: 'Get list of budget limits by date',
+      operationId: 'listBudgetLimit',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["budgets"],
+      deprecated: false,
+    ),
   });
 
   ///All transactions to a budget.
@@ -3015,6 +4132,18 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Get all transactions linked to a budget, possibly limited by start and end',
+      summary: 'All transactions to a budget.',
+      operationId: 'listTransactionByBudget',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["budgets"],
+      deprecated: false,
+    ),
   });
 
   ///Lists all attachments of a budget.
@@ -3052,6 +4181,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Lists all attachments.',
+      summary: 'Lists all attachments of a budget.',
+      operationId: 'listAttachmentByBudget',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["budgets"],
+      deprecated: false,
+    ),
   });
 
   ///All transactions without a budget.
@@ -3096,6 +4236,18 @@ abstract class FireflyIii extends ChopperService {
     @Query('page') int? page,
     @Query('start') String? start,
     @Query('end') String? end,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Get all transactions NOT linked to a budget, possibly limited by start and end',
+      summary: 'All transactions without a budget.',
+      operationId: 'listTransactionWithoutBudget',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["budgets"],
+      deprecated: false,
+    ),
   });
 
   ///List all budgets.
@@ -3138,6 +4290,18 @@ abstract class FireflyIii extends ChopperService {
     @Query('page') int? page,
     @Query('start') String? start,
     @Query('end') String? end,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'List all the budgets the user has made. If the start date and end date are submitted as well, the "spent" array will be updated accordingly.',
+      summary: 'List all budgets.',
+      operationId: 'listBudget',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["budgets"],
+      deprecated: false,
+    ),
   });
 
   ///Store a new budget
@@ -3160,6 +4324,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<BudgetSingle>> _v1BudgetsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required BudgetStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Creates a new budget. The data required can be submitted as a JSON body or as a list of parameters.',
+      summary: 'Store a new budget',
+      operationId: 'storeBudget',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["budgets"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single budget.
@@ -3197,6 +4373,18 @@ abstract class FireflyIii extends ChopperService {
     @Path('id') required String? id,
     @Query('start') String? start,
     @Query('end') String? end,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Get a single budget. If the start date and end date are submitted as well, the "spent" array will be updated accordingly.',
+      summary: 'Get a single budget.',
+      operationId: 'getBudget',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["budgets"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing budget.
@@ -3223,6 +4411,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required BudgetUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Update existing budget. This endpoint cannot be used to set budget amount limits.',
+      summary: 'Update existing budget.',
+      operationId: 'updateBudget',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["budgets"],
+      deprecated: false,
+    ),
   });
 
   ///Delete a budget.
@@ -3242,6 +4442,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1BudgetsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Delete a budget. Transactions will not be deleted.',
+      summary: 'Delete a budget.',
+      operationId: 'deleteBudget',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["budgets"],
+      deprecated: false,
+    ),
   });
 
   ///List all transactions in a category.
@@ -3294,6 +4505,18 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'List all transactions in a category, optionally limited to the date ranges specified.',
+      summary: 'List all transactions in a category.',
+      operationId: 'listTransactionByCategory',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["categories"],
+      deprecated: false,
+    ),
   });
 
   ///Lists all attachments.
@@ -3331,6 +4554,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Lists all attachments.',
+      summary: 'Lists all attachments.',
+      operationId: 'listAttachmentByCategory',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["categories"],
+      deprecated: false,
+    ),
   });
 
   ///List all categories.
@@ -3363,6 +4597,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all categories.',
+      summary: 'List all categories.',
+      operationId: 'listCategory',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["categories"],
+      deprecated: false,
+    ),
   });
 
   ///Store a new category
@@ -3385,6 +4630,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<CategorySingle>> _v1CategoriesPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required CategoryStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Creates a new category. The data required can be submitted as a JSON body or as a list of parameters.',
+      summary: 'Store a new category',
+      operationId: 'storeCategory',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["categories"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single category.
@@ -3422,6 +4679,17 @@ abstract class FireflyIii extends ChopperService {
     @Path('id') required String? id,
     @Query('start') String? start,
     @Query('end') String? end,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Get a single category.',
+      summary: 'Get a single category.',
+      operationId: 'getCategory',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["categories"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing category.
@@ -3452,6 +4720,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required CategoryUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Update existing category.',
+      summary: 'Update existing category.',
+      operationId: 'updateCategory',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["categories"],
+      deprecated: false,
+    ),
   });
 
   ///Delete a category.
@@ -3471,6 +4750,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1CategoriesIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Delete a category. Transactions will not be removed.',
+      summary: 'Delete a category.',
+      operationId: 'deleteCategory',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["categories"],
+      deprecated: false,
+    ),
   });
 
   ///List all exchange rates that Firefly III knows.
@@ -3503,6 +4793,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List exchange rates that Firefly III knows.',
+      summary: 'List all exchange rates that Firefly III knows.',
+      operationId: 'listCurrencyExchangeRates',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currency_exchange_rates"],
+      deprecated: false,
+    ),
   });
 
   ///Store a new currency exchange rate.
@@ -3525,6 +4826,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<CurrencyExchangeRateSingle>> _v1ExchangeRatesPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required CurrencyExchangeRateStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Stores a new exchange rate. The data required can be submitted as a JSON body or as a list of parameters.',
+      summary: 'Store a new currency exchange rate.',
+      operationId: 'storeCurrencyExchangeRate',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currency_exchange_rates"],
+      deprecated: false,
+    ),
   });
 
   ///List a single specific exchange rate.
@@ -3562,6 +4875,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List a single specific exchange rate by its ID.',
+      summary: 'List a single specific exchange rate.',
+      operationId: 'listSpecificCurrencyExchangeRate',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currency_exchange_rates"],
+      deprecated: false,
+    ),
   });
 
   ///Delete a specific currency exchange rate.
@@ -3581,6 +4905,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1ExchangeRatesIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Delete a specific currency exchange rate by its internal ID.',
+      summary: 'Delete a specific currency exchange rate.',
+      operationId: 'deleteSpecificCurrencyExchangeRate',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currency_exchange_rates"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing currency exchange rate.
@@ -3611,6 +4947,19 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required CurrencyExchangeRateUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Used to update a single currency exchange rate by its ID. Including the from/to currency is optional.
+''',
+      summary: 'Update existing currency exchange rate.',
+      operationId: 'updateCurrencyExchangeRate',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currency_exchange_rates"],
+      deprecated: false,
+    ),
   });
 
   ///List all exchange rates from/to the mentioned currencies.
@@ -3654,6 +5003,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('page') int? page,
     @Path('from') required String? from,
     @Path('to') required String? to,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all exchange rates from/to the mentioned currencies.',
+      summary: 'List all exchange rates from/to the mentioned currencies.',
+      operationId: 'listSpecificCurrencyExchangeRates',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currency_exchange_rates"],
+      deprecated: false,
+    ),
   });
 
   ///Deletes ALL currency exchange rates from 'from' to 'to'.
@@ -3681,6 +5041,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('from') required String? from,
     @Path('to') required String? to,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Deletes ALL currency exchange rates from \'from\' to \'to\'. It\'s important to know that the reverse exchange rates (from \'to\' to \'from\') will not be deleted and Firefly III will still be able to infer the correct exchange rate from the reverse one.',
+      summary: 'Deletes ALL currency exchange rates from \'from\' to \'to\'.',
+      operationId: 'deleteSpecificCurrencyExchangeRates',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currency_exchange_rates"],
+      deprecated: false,
+    ),
   });
 
   ///List the exchange rate for the from and to-currency on the requested date.
@@ -3730,6 +5102,19 @@ abstract class FireflyIii extends ChopperService {
     @Path('from') required String? from,
     @Path('to') required String? to,
     @Path('date') required String? date,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'List the exchange rate for the from and to-currency on the requested date.',
+      summary:
+          'List the exchange rate for the from and to-currency on the requested date.',
+      operationId: 'listSpecificCurrencyExchangeRateOnDate',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currency_exchange_rates"],
+      deprecated: false,
+    ),
   });
 
   ///Delete the currency exchange rate from 'from' to 'to' on the specified date.
@@ -3762,6 +5147,19 @@ abstract class FireflyIii extends ChopperService {
     @Path('from') required String? from,
     @Path('to') required String? to,
     @Path('date') required String? date,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Delete the currency exchange rate from \'from\' to \'to\' on the specified date.  It\'s important to know that the reverse exchange rate (from \'to\' to \'from\') will not be deleted and Firefly III will still be able to infer the correct exchange rate from the reverse one.',
+      summary:
+          'Delete the currency exchange rate from \'from\' to \'to\' on the specified date.',
+      operationId: 'deleteSpecificCurrencyExchangeRateOnDate',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currency_exchange_rates"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing currency exchange rate.
@@ -3804,6 +5202,19 @@ abstract class FireflyIii extends ChopperService {
     @Path('to') required String? to,
     @Path('date') required String? date,
     @Body() required CurrencyExchangeRateUpdateNoDate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Used to update a single currency exchange rate by its currency codes and date
+''',
+      summary: 'Update existing currency exchange rate.',
+      operationId: 'updateCurrencyExchangeRateByDate',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currency_exchange_rates"],
+      deprecated: false,
+    ),
   });
 
   ///Store new currency exchange rates under this date
@@ -3836,6 +5247,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('date') required String? date,
     @Body() required CurrencyExchangeRateStoreByDate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Stores a new set of exchange rates. The date is fixed (in the URL parameter) and the data required can be submitted as a JSON body.',
+      summary: 'Store new currency exchange rates under this date',
+      operationId: 'storeCurrencyExchangeRatesByDate',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currency_exchange_rates"],
+      deprecated: false,
+    ),
   });
 
   ///Store new currency exchange rates under this from/to pair.
@@ -3876,6 +5299,18 @@ abstract class FireflyIii extends ChopperService {
     @Path('from') required String? from,
     @Path('to') required String? to,
     @Body() required CurrencyExchangeRateStoreByPair? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Stores a new set of exchange rates for this pair. The date is variable, and the data required can be submitted as a JSON body.',
+      summary: 'Store new currency exchange rates under this from/to pair.',
+      operationId: 'storeCurrencyExchangeRatesByPair',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currency_exchange_rates"],
+      deprecated: false,
+    ),
   });
 
   ///List all transactions under this link type.
@@ -3928,6 +5363,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''List all transactions under this link type, both the inward and outward transactions.
+''',
+      summary: 'List all transactions under this link type.',
+      operationId: 'listTransactionByLinkType',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["links"],
+      deprecated: false,
+    ),
   });
 
   ///List all types of links.
@@ -3960,6 +5408,19 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''List all the link types the system has. These include the default ones as well as any new ones.
+''',
+      summary: 'List all types of links.',
+      operationId: 'listLinkType',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["links"],
+      deprecated: false,
+    ),
   });
 
   ///Create a new link type
@@ -3982,6 +5443,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<LinkTypeSingle>> _v1LinkTypesPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required LinkType? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Creates a new link type. The data required can be submitted as a JSON body or as a list of parameters (in key=value pairs, like a webform).',
+      summary: 'Create a new link type',
+      operationId: 'storeLinkType',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["links"],
+      deprecated: false,
+    ),
   });
 
   ///Get single a link type.
@@ -4006,6 +5479,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<LinkTypeSingle>> _v1LinkTypesIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '''Returns a single link type by its ID.
+''',
+      summary: 'Get single a link type.',
+      operationId: 'getLinkType',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["links"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing link type.
@@ -4036,6 +5521,19 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required LinkTypeUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Used to update a single link type. All fields that are not submitted will be cleared (set to NULL). The model will tell you which fields are mandatory. You cannot update some of the system provided link types, indicated by the editable=false flag when you list it.
+''',
+      summary: 'Update existing link type.',
+      operationId: 'updateLinkType',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["links"],
+      deprecated: false,
+    ),
   });
 
   ///Permanently delete link type.
@@ -4055,6 +5553,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1LinkTypesIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Will permanently delete a link type. The links between transactions will be removed. The transactions themselves remain. You cannot delete some of the system provided link types, indicated by the editable=false flag when you list it.
+''',
+      summary: 'Permanently delete link type.',
+      operationId: 'deleteLinkType',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["links"],
+      deprecated: false,
+    ),
   });
 
   ///List all transaction links.
@@ -4087,6 +5598,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '''List all the transaction links.
+''',
+      summary: 'List all transaction links.',
+      operationId: 'listTransactionLink',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["links"],
+      deprecated: false,
+    ),
   });
 
   ///Create a new link between transactions
@@ -4109,6 +5632,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<TransactionLinkSingle>> _v1TransactionLinksPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required TransactionLinkStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Store a new link between two transactions. For this end point you need the journal_id from a transaction.',
+      summary: 'Create a new link between transactions',
+      operationId: 'storeTransactionLink',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["links"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single link.
@@ -4133,6 +5668,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<TransactionLinkSingle>> _v1TransactionLinksIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '''Returns a single link by its ID.
+''',
+      summary: 'Get a single link.',
+      operationId: 'getTransactionLink',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["links"],
+      deprecated: false,
+    ),
   });
 
   ///Permanently delete link between transactions.
@@ -4152,6 +5699,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1TransactionLinksIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '''Will permanently delete link. Transactions remain.
+''',
+      summary: 'Permanently delete link between transactions.',
+      operationId: 'deleteTransactionLink',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["links"],
+      deprecated: false,
+    ),
   });
 
   ///Update an existing link between transactions.
@@ -4182,6 +5741,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required TransactionLinkUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '''Used to update a single existing link.
+''',
+      summary: 'Update an existing link between transactions.',
+      operationId: 'updateTransactionLink',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["links"],
+      deprecated: false,
+    ),
   });
 
   ///List all piggy banks related to the object group.
@@ -4219,6 +5790,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''This endpoint returns a list of all the piggy banks connected to the object group.
+''',
+      summary: 'List all piggy banks related to the object group.',
+      operationId: 'listPiggyBankByObjectGroup',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["object_groups"],
+      deprecated: false,
+    ),
   });
 
   ///List all bills with this object group.
@@ -4253,6 +5837,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all bills with this object group.',
+      summary: 'List all bills with this object group.',
+      operationId: 'listBillByObjectGroup',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["object_groups"],
+      deprecated: false,
+    ),
   });
 
   ///List all object groups.
@@ -4285,6 +5880,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all object groups.',
+      summary: 'List all object groups.',
+      operationId: 'listObjectGroups',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["object_groups"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single object group.
@@ -4309,6 +5915,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<ObjectGroupSingle>> _v1ObjectGroupsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Get a single object group.',
+      summary: 'Get a single object group.',
+      operationId: 'getObjectGroup',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["object_groups"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing object group.
@@ -4339,6 +5956,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required ObjectGroupUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Update existing object group.',
+      summary: 'Update existing object group.',
+      operationId: 'updateObjectGroup',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["object_groups"],
+      deprecated: false,
+    ),
   });
 
   ///Delete a object group.
@@ -4358,6 +5986,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1ObjectGroupsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Delete a object group.',
+      summary: 'Delete a object group.',
+      operationId: 'deleteObjectGroup',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["object_groups"],
+      deprecated: false,
+    ),
   });
 
   ///List all events linked to a piggy bank.
@@ -4395,6 +6034,18 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'List all events linked to a piggy bank (adding and removing money).',
+      summary: 'List all events linked to a piggy bank.',
+      operationId: 'listEventByPiggyBank',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["piggy_banks"],
+      deprecated: false,
+    ),
   });
 
   ///Lists all attachments.
@@ -4432,6 +6083,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Lists all attachments.',
+      summary: 'Lists all attachments.',
+      operationId: 'listAttachmentByPiggyBank',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["piggy_banks"],
+      deprecated: false,
+    ),
   });
 
   ///List all piggy banks.
@@ -4464,6 +6126,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all piggy banks.',
+      summary: 'List all piggy banks.',
+      operationId: 'listPiggyBank',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["piggy_banks"],
+      deprecated: false,
+    ),
   });
 
   ///Store a new piggy bank
@@ -4486,6 +6159,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<PiggyBankSingle>> _v1PiggyBanksPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required PiggyBankStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Creates a new piggy bank. The data required can be submitted as a JSON body or as a list of parameters.',
+      summary: 'Store a new piggy bank',
+      operationId: 'storePiggyBank',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["piggy_banks"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single piggy bank.
@@ -4510,6 +6195,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<PiggyBankSingle>> _v1PiggyBanksIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Get a single piggy bank.',
+      summary: 'Get a single piggy bank.',
+      operationId: 'getPiggyBank',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["piggy_banks"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing piggy bank.
@@ -4540,6 +6236,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required PiggyBankUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Update existing piggy bank.',
+      summary: 'Update existing piggy bank.',
+      operationId: 'updatePiggyBank',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["piggy_banks"],
+      deprecated: false,
+    ),
   });
 
   ///Delete a piggy bank.
@@ -4559,6 +6266,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1PiggyBanksIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Delete a piggy bank.',
+      summary: 'Delete a piggy bank.',
+      operationId: 'deletePiggyBank',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["piggy_banks"],
+      deprecated: false,
+    ),
   });
 
   ///List all transactions created by a recurring transaction.
@@ -4611,6 +6329,18 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'List all transactions created by a recurring transaction, optionally limited to the date ranges specified.',
+      summary: 'List all transactions created by a recurring transaction.',
+      operationId: 'listTransactionByRecurrence',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["recurrences"],
+      deprecated: false,
+    ),
   });
 
   ///List all recurring transactions.
@@ -4643,6 +6373,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all recurring transactions.',
+      summary: 'List all recurring transactions.',
+      operationId: 'listRecurrence',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["recurrences"],
+      deprecated: false,
+    ),
   });
 
   ///Store a new recurring transaction
@@ -4665,6 +6406,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<RecurrenceSingle>> _v1RecurrencesPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required RecurrenceStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Creates a new recurring transaction. The data required can be submitted as a JSON body or as a list of parameters.',
+      summary: 'Store a new recurring transaction',
+      operationId: 'storeRecurrence',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["recurrences"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single recurring transaction.
@@ -4689,6 +6442,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<RecurrenceSingle>> _v1RecurrencesIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Get a single recurring transaction.',
+      summary: 'Get a single recurring transaction.',
+      operationId: 'getRecurrence',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["recurrences"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing recurring transaction.
@@ -4719,6 +6483,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required RecurrenceUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Update existing recurring transaction.',
+      summary: 'Update existing recurring transaction.',
+      operationId: 'updateRecurrence',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["recurrences"],
+      deprecated: false,
+    ),
   });
 
   ///Delete a recurring transaction.
@@ -4738,6 +6513,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1RecurrencesIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Delete a recurring transaction. Transactions created by the recurring transaction will not be deleted.',
+      summary: 'Delete a recurring transaction.',
+      operationId: 'deleteRecurrence',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["recurrences"],
+      deprecated: false,
+    ),
   });
 
   ///Trigger the creation of a transaction for a specific recurring transaction
@@ -4770,6 +6557,22 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Query('date') required String? date,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Trigger the creation of a transaction for a specific recurring transaction. All recurrences have a set of future occurrences. For those moments, you can trigger the creation of the transaction. That means the transaction will be created NOW, instead of on the indicated date. The transaction will be dated to _today_.
+
+So, if you recurring transaction that occurs every Monday, you can trigger the creation of a transaction for Monday in two weeks, today. On that Monday two weeks from now, no transaction will be created. Instead, the transaction is created right now, and dated _today_.
+''',
+      summary:
+          'Trigger the creation of a transaction for a specific recurring transaction',
+      operationId: 'triggerRecurrenceRecurrence',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["recurrences"],
+      deprecated: false,
+    ),
   });
 
   ///List rules in this rule group.
@@ -4804,6 +6607,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List rules in this rule group.',
+      summary: 'List rules in this rule group.',
+      operationId: 'listRuleByGroup',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["rule_groups"],
+      deprecated: false,
+    ),
   });
 
   ///Test which transactions would be hit by the rule group. No changes will be made.
@@ -4866,6 +6680,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('search_limit') int? searchLimit,
     @Query('triggered_limit') int? triggeredLimit,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Test which transactions would be hit by the rule group. No changes will be made. Limit the result if you want to.',
+      summary:
+          'Test which transactions would be hit by the rule group. No changes will be made.',
+      operationId: 'testRuleGroup',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["rule_groups"],
+      deprecated: false,
+    ),
   });
 
   ///Fire the rule group on your transactions.
@@ -4903,6 +6730,18 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Fire the rule group on your transactions. Changes will be made by the rules in the rule group. Limit the result if you want to.',
+      summary: 'Fire the rule group on your transactions.',
+      operationId: 'fireRuleGroup',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["rule_groups"],
+      deprecated: false,
+    ),
   });
 
   ///List all rule groups.
@@ -4935,6 +6774,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all rule groups.',
+      summary: 'List all rule groups.',
+      operationId: 'listRuleGroup',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["rule_groups"],
+      deprecated: false,
+    ),
   });
 
   ///Store a new rule group.
@@ -4957,6 +6807,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<RuleGroupSingle>> _v1RuleGroupsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required RuleGroupStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Creates a new rule group. The data required can be submitted as a JSON body or as a list of parameters.',
+      summary: 'Store a new rule group.',
+      operationId: 'storeRuleGroup',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["rule_groups"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single rule group.
@@ -4981,6 +6843,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<RuleGroupSingle>> _v1RuleGroupsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Get a single rule group. This does not include the rules. For that, see below.',
+      summary: 'Get a single rule group.',
+      operationId: 'getRuleGroup',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["rule_groups"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing rule group.
@@ -5011,6 +6885,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required RuleGroupUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Update existing rule group.',
+      summary: 'Update existing rule group.',
+      operationId: 'updateRuleGroup',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["rule_groups"],
+      deprecated: false,
+    ),
   });
 
   ///Delete a rule group.
@@ -5030,6 +6915,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1RuleGroupsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Delete a rule group.',
+      summary: 'Delete a rule group.',
+      operationId: 'deleteRuleGroup',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["rule_groups"],
+      deprecated: false,
+    ),
   });
 
   ///Test which transactions would be hit by the rule. No changes will be made.
@@ -5072,6 +6968,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Test which transactions would be hit by the rule. No changes will be made. Limit the result if you want to.',
+      summary:
+          'Test which transactions would be hit by the rule. No changes will be made.',
+      operationId: 'testRule',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["rules"],
+      deprecated: false,
+    ),
   });
 
   ///Fire the rule on your transactions.
@@ -5109,6 +7018,18 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('accounts[]') List<int>? accounts,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Fire the rule group on your transactions. Changes will be made by the rules in the group. Limit the result if you want to.',
+      summary: 'Fire the rule on your transactions.',
+      operationId: 'fireRule',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["rules"],
+      deprecated: false,
+    ),
   });
 
   ///List all rules.
@@ -5138,6 +7059,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all rules.',
+      summary: 'List all rules.',
+      operationId: 'listRule',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["rules"],
+      deprecated: false,
+    ),
   });
 
   ///Store a new rule
@@ -5157,6 +7089,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<RuleSingle>> _v1RulesPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required RuleStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Creates a new rule. The data required can be submitted as a JSON body or as a list of parameters.',
+      summary: 'Store a new rule',
+      operationId: 'storeRule',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["rules"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single rule.
@@ -5178,6 +7122,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<RuleSingle>> _v1RulesIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Get a single rule.',
+      summary: 'Get a single rule.',
+      operationId: 'getRule',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["rules"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing rule.
@@ -5201,6 +7156,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required RuleUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Update existing rule.',
+      summary: 'Update existing rule.',
+      operationId: 'updateRule',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["rules"],
+      deprecated: false,
+    ),
   });
 
   ///Delete an rule.
@@ -5220,6 +7186,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1RulesIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Delete an rule.',
+      summary: 'Delete an rule.',
+      operationId: 'deleteRule',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["rules"],
+      deprecated: false,
+    ),
   });
 
   ///Lists all attachments.
@@ -5257,6 +7234,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('tag') required String? tag,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Lists all attachments.',
+      summary: 'Lists all attachments.',
+      operationId: 'listAttachmentByTag',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["tags"],
+      deprecated: false,
+    ),
   });
 
   ///List all transactions with this tag.
@@ -5309,6 +7297,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all transactions with this tag.',
+      summary: 'List all transactions with this tag.',
+      operationId: 'listTransactionByTag',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["tags"],
+      deprecated: false,
+    ),
   });
 
   ///List all tags.
@@ -5334,6 +7333,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all of the user\'s tags.',
+      summary: 'List all tags.',
+      operationId: 'listTag',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["tags"],
+      deprecated: false,
+    ),
   });
 
   ///Store a new tag
@@ -5353,6 +7363,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<TagSingle>> _v1TagsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required TagModelStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Creates a new tag. The data required can be submitted as a JSON body or as a list of parameters.',
+      summary: 'Store a new tag',
+      operationId: 'storeTag',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["tags"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single tag.
@@ -5387,6 +7409,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('tag') required String? tag,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Get a single tag.',
+      summary: 'Get a single tag.',
+      operationId: 'getTag',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["tags"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing tag.
@@ -5410,6 +7443,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('tag') required String? tag,
     @Body() required TagModelUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Update existing tag.',
+      summary: 'Update existing tag.',
+      operationId: 'updateTag',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["tags"],
+      deprecated: false,
+    ),
   });
 
   ///Delete an tag.
@@ -5429,6 +7473,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1TagsTagDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('tag') required String? tag,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Delete an tag.',
+      summary: 'Delete an tag.',
+      operationId: 'deleteTag',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["tags"],
+      deprecated: false,
+    ),
   });
 
   ///List all accounts with this currency.
@@ -5476,6 +7531,17 @@ abstract class FireflyIii extends ChopperService {
     @Path('code') required String? code,
     @Query('date') String? date,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all accounts with this currency.',
+      summary: 'List all accounts with this currency.',
+      operationId: 'listAccountByCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///List all available budgets with this currency.
@@ -5515,6 +7581,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('code') required String? code,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all available budgets with this currency.',
+      summary: 'List all available budgets with this currency.',
+      operationId: 'listAvailableBudgetByCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///List all bills with this currency.
@@ -5549,6 +7626,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('code') required String? code,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all bills with this currency.',
+      summary: 'List all bills with this currency.',
+      operationId: 'listBillByCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///List all budget limits with this currency
@@ -5596,6 +7684,17 @@ abstract class FireflyIii extends ChopperService {
     @Path('code') required String? code,
     @Query('start') String? start,
     @Query('end') String? end,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all budget limits with this currency',
+      summary: 'List all budget limits with this currency',
+      operationId: 'listBudgetLimitByCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///List all recurring transactions with this currency.
@@ -5633,6 +7732,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('code') required String? code,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all recurring transactions with this currency.',
+      summary: 'List all recurring transactions with this currency.',
+      operationId: 'listRecurrenceByCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///List all rules with this currency.
@@ -5667,6 +7777,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('code') required String? code,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all rules with this currency.',
+      summary: 'List all rules with this currency.',
+      operationId: 'listRuleByCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///List all transactions with this currency.
@@ -5719,6 +7840,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all transactions with this currency.',
+      summary: 'List all transactions with this currency.',
+      operationId: 'listTransactionByCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///List all currencies.
@@ -5751,6 +7883,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all currencies.',
+      summary: 'List all currencies.',
+      operationId: 'listCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///Store a new currency
@@ -5773,6 +7916,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<CurrencySingle>> _v1CurrenciesPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required CurrencyStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Creates a new currency. The data required can be submitted as a JSON body or as a list of parameters.',
+      summary: 'Store a new currency',
+      operationId: 'storeCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///Enable a single currency.
@@ -5800,6 +7955,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodeEnablePost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Enable a single currency.',
+      summary: 'Enable a single currency.',
+      operationId: 'enableCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///Disable a currency.
@@ -5827,6 +7993,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodeDisablePost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Disable a currency.',
+      summary: 'Disable a currency.',
+      operationId: 'disableCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///Make currency primary currency.
@@ -5854,6 +8031,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodePrimaryPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Make this currency the primary currency for the current financial administration. If the currency is not enabled, it will be enabled as well.',
+      summary: 'Make currency primary currency.',
+      operationId: 'primaryCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single currency.
@@ -5878,6 +8067,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<CurrencySingle>> _v1CurrenciesCodeGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Get a single currency.',
+      summary: 'Get a single currency.',
+      operationId: 'getCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing currency.
@@ -5912,6 +8112,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
     @Body() required Map<String, String> body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Update existing currency.',
+      summary: 'Update existing currency.',
+      operationId: 'updateCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///Delete a currency.
@@ -5931,6 +8142,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1CurrenciesCodeDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('code') required String? code,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Delete a currency.',
+      summary: 'Delete a currency.',
+      operationId: 'deleteCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///Get the primary currency of the current administration.
@@ -5951,6 +8173,18 @@ abstract class FireflyIii extends ChopperService {
   @GET(path: '/v1/currencies/primary')
   Future<chopper.Response<CurrencySingle>> _v1CurrenciesPrimaryGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Get the primary currency of the current administration. This replaces what was called "the user\'s default currency" although they are essentially the same.',
+      summary: 'Get the primary currency of the current administration.',
+      operationId: 'getPrimaryCurrency',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["currencies"],
+      deprecated: false,
+    ),
   });
 
   ///Lists all the transaction links for an individual journal (individual split).
@@ -5990,6 +8224,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Lists all the transaction links for an individual journal (a split). Don\'t use the group ID, you need the actual underlying journal (the split).',
+      summary:
+          'Lists all the transaction links for an individual journal (individual split).',
+      operationId: 'listLinksByJournal',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["transactions"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single transaction, based on one of the underlying transaction journals (transaction splits).
@@ -6014,6 +8261,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<TransactionSingle>> _v1TransactionJournalsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Get a single transaction by underlying journal (split).',
+      summary:
+          'Get a single transaction, based on one of the underlying transaction journals (transaction splits).',
+      operationId: 'getTransactionByJournal',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["transactions"],
+      deprecated: false,
+    ),
   });
 
   ///Delete split from transaction
@@ -6036,6 +8295,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1TransactionJournalsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Delete an individual journal (split) from a transaction.',
+      summary: 'Delete split from transaction',
+      operationId: 'deleteTransactionJournal',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["transactions"],
+      deprecated: false,
+    ),
   });
 
   ///Lists all attachments.
@@ -6073,6 +8343,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Lists all attachments.',
+      summary: 'Lists all attachments.',
+      operationId: 'listAttachmentByTransaction',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["transactions"],
+      deprecated: false,
+    ),
   });
 
   ///Lists all piggy bank events.
@@ -6112,6 +8393,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Lists all piggy bank events.',
+      summary: 'Lists all piggy bank events.',
+      operationId: 'listEventByTransaction',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["transactions"],
+      deprecated: false,
+    ),
   });
 
   ///List all the user's transactions.
@@ -6161,6 +8453,18 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') String? start,
     @Query('end') String? end,
     @Query('type') String? type,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all the user\'s transactions.',
+      summary: '''List all the user\'s transactions.
+''',
+      operationId: 'listTransaction',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["transactions"],
+      deprecated: false,
+    ),
   });
 
   ///Store a new transaction
@@ -6183,6 +8487,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<TransactionSingle>> _v1TransactionsPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required TransactionStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Creates a new transaction. The data required can be submitted as a JSON body or as a list of parameters.',
+      summary: 'Store a new transaction',
+      operationId: 'storeTransaction',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["transactions"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single transaction.
@@ -6207,6 +8523,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<TransactionSingle>> _v1TransactionsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Get a single transaction.',
+      summary: 'Get a single transaction.',
+      operationId: 'getTransaction',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["transactions"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing transaction. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/
@@ -6237,6 +8564,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required TransactionUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Update an existing transaction.',
+      summary:
+          'Update existing transaction. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/',
+      operationId: 'updateTransaction',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["transactions"],
+      deprecated: false,
+    ),
   });
 
   ///Delete a transaction.
@@ -6256,6 +8595,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1TransactionsIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Delete a transaction.',
+      summary: 'Delete a transaction.',
+      operationId: 'deleteTransaction',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["transactions"],
+      deprecated: false,
+    ),
   });
 
   ///List all the user groups available to this user.
@@ -6290,6 +8640,19 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'List all the user groups available to this user. These are essentially the \'financial administrations\' that Firefly III supports.',
+      summary: '''List all the user groups available to this user.
+''',
+      operationId: 'listUserGroups',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["user_groups"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single user group.
@@ -6314,6 +8677,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<UserGroupSingle>> _v1UserGroupsIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '''Returns a single user group by its ID.
+''',
+      summary: 'Get a single user group.',
+      operationId: 'getUserGroup',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["user_groups"],
+      deprecated: false,
+    ),
   });
 
   ///Update an existing user group.
@@ -6344,6 +8719,19 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required UserGroupUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Used to update a single user group. The available fields are still limited.
+''',
+      summary: 'Update an existing user group.',
+      operationId: 'updateUserGroup',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["user_groups"],
+      deprecated: false,
+    ),
   });
 
   ///Search for accounts
@@ -6391,6 +8779,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('query') required String? query,
     @Query('type') String? type,
     @Query('field') required String? field,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Search for accounts',
+      summary: 'Search for accounts',
+      operationId: 'searchAccounts',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["search"],
+      deprecated: false,
+    ),
   });
 
   ///Search for transactions
@@ -6428,6 +8827,17 @@ abstract class FireflyIii extends ChopperService {
     @Query('limit') int? limit,
     @Query('page') int? page,
     @Query('query') required String? query,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Searches through the users transactions.',
+      summary: 'Search for transactions',
+      operationId: 'searchTransactions',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["search"],
+      deprecated: false,
+    ),
   });
 
   ///Returns basic sums of the users data.
@@ -6465,6 +8875,19 @@ abstract class FireflyIii extends ChopperService {
     @Query('start') required String? start,
     @Query('end') required String? end,
     @Query('currency_code') String? currencyCode,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Returns basic sums of the users data, like the net worth, spent and earned amounts. It is multi-currency, and is used in Firefly III to populate the dashboard.
+''',
+      summary: 'Returns basic sums of the users data.',
+      operationId: 'getBasicSummary',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["summary"],
+      deprecated: false,
+    ),
   });
 
   ///System information end point.
@@ -6480,6 +8903,19 @@ abstract class FireflyIii extends ChopperService {
   @GET(path: '/v1/about')
   Future<chopper.Response<SystemInfo>> _v1AboutGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Returns general system information and versions of the (supporting) software.
+''',
+      summary: 'System information end point.',
+      operationId: 'getAbout',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["about"],
+      deprecated: false,
+    ),
   });
 
   ///Currently authenticated user endpoint.
@@ -6495,6 +8931,18 @@ abstract class FireflyIii extends ChopperService {
   @GET(path: '/v1/about/user')
   Future<chopper.Response<UserSingle>> _v1AboutUserGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '''Returns the currently authenticated user.
+''',
+      summary: 'Currently authenticated user endpoint.',
+      operationId: 'getCurrentUser',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["about"],
+      deprecated: false,
+    ),
   });
 
   ///Get Firefly III system configuration values.
@@ -6515,6 +8963,18 @@ abstract class FireflyIii extends ChopperService {
   @GET(path: '/v1/configuration')
   Future<chopper.Response<ConfigurationArray>> _v1ConfigurationGet({
     @Header('X-Trace-Id') String? xTraceId,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Returns all editable and not-editable configuration values for this Firefly III installation',
+      summary: 'Get Firefly III system configuration values.',
+      operationId: 'getConfiguration',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["configuration"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single Firefly III system configuration value
@@ -6542,6 +9002,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<ConfigurationSingle>> _v1ConfigurationNameGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('name') required String? name,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Returns one configuration variable for this Firefly III installation',
+      summary: 'Get a single Firefly III system configuration value',
+      operationId: 'getSingleConfiguration',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["configuration"],
+      deprecated: false,
+    ),
   });
 
   ///Update configuration value
@@ -6572,6 +9044,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('name') required String? name,
     @Body() required ConfigurationUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Set a single configuration value. Not all configuration values can be updated so the list of accepted configuration variables is small.',
+      summary: 'Update configuration value',
+      operationId: 'setConfiguration',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["configuration"],
+      deprecated: false,
+    ),
   });
 
   ///Cron job endpoint
@@ -6606,6 +9090,21 @@ abstract class FireflyIii extends ChopperService {
     @Path('cliToken') required String? cliToken,
     @Query('date') String? date,
     @Query('force') bool? force,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Firefly III has one endpoint for its various cron related tasks. Send a GET to this endpoint
+to run the cron. The cron requires the CLI token to be present. The cron job will fire for all
+users.
+''',
+      summary: 'Cron job endpoint',
+      operationId: 'getCron',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["about"],
+      deprecated: false,
+    ),
   });
 
   ///List all users.
@@ -6635,6 +9134,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all the users in this instance of Firefly III.',
+      summary: 'List all users.',
+      operationId: 'listUser',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["users"],
+      deprecated: false,
+    ),
   });
 
   ///Store a new user
@@ -6654,6 +9164,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<UserSingle>> _v1UsersPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required User? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Creates a new user. The data required can be submitted as a JSON body or as a list of parameters. The user will be given a random password, which they can reset using the "forgot password" function.
+''',
+      summary: 'Store a new user',
+      operationId: 'storeUser',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["users"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single user.
@@ -6675,6 +9198,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<UserSingle>> _v1UsersIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Gets all info of a single user.',
+      summary: 'Get a single user.',
+      operationId: 'getUser',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["users"],
+      deprecated: false,
+    ),
   });
 
   ///Update an existing user's information.
@@ -6698,6 +9232,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required User? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Update existing user.',
+      summary: 'Update an existing user\'s information.',
+      operationId: 'updateUser',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["users"],
+      deprecated: false,
+    ),
   });
 
   ///Delete a user.
@@ -6717,6 +9262,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1UsersIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Delete a user. You cannot delete the user you\'re authenticated with. This cannot be undone. Be careful.',
+      summary: 'Delete a user.',
+      operationId: 'deleteUser',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["users"],
+      deprecated: false,
+    ),
   });
 
   ///List all users preferences.
@@ -6749,6 +9306,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all of the preferences of the user.',
+      summary: 'List all users preferences.',
+      operationId: 'listPreference',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["preferences"],
+      deprecated: false,
+    ),
   });
 
   ///Store a new preference for this user.
@@ -6771,6 +9339,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<PreferenceSingle>> _v1PreferencesPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required Preference? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'This endpoint creates a new preference. The name and data are free-format, and entirely up to you. If the preference is not used in Firefly III itself it may not be configurable through the user interface, but you can use this endpoint to persist custom data for your own app.',
+      summary: 'Store a new preference for this user.',
+      operationId: 'storePreference',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["preferences"],
+      deprecated: false,
+    ),
   });
 
   ///Return a single preference.
@@ -6795,6 +9375,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<PreferenceSingle>> _v1PreferencesNameGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('name') required String? name,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Return a single preference and the value.',
+      summary: 'Return a single preference.',
+      operationId: 'getPreference',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["preferences"],
+      deprecated: false,
+    ),
   });
 
   ///Update preference
@@ -6825,6 +9416,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('name') required String? name,
     @Body() required PreferenceUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Update a user\'s preference.',
+      summary: 'Update preference',
+      operationId: 'updatePreference',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["preferences"],
+      deprecated: false,
+    ),
   });
 
   ///Get all the messages of a single webhook.
@@ -6849,6 +9451,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<WebhookMessageArray>> _v1WebhooksIdMessagesGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'When a webhook is triggered the actual message that will be send is stored in a "message". You can view and analyse these messages.',
+      summary: 'Get all the messages of a single webhook.',
+      operationId: 'getWebhookMessages',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["webhooks"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single message from a webhook.
@@ -6883,6 +9497,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Path('messageId') required int? messageId,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'When a webhook is triggered it will store the actual content of the webhook in a webhook message. You can view and analyse a single one using this endpoint.',
+      summary: 'Get a single message from a webhook.',
+      operationId: 'getSingleWebhookMessage',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["webhooks"],
+      deprecated: false,
+    ),
   });
 
   ///Delete a webhook message.
@@ -6910,6 +9536,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Path('messageId') required int? messageId,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Delete a webhook message. Any time a webhook is triggered the message is stored before it\'s sent. You can delete them before or after sending.',
+      summary: 'Delete a webhook message.',
+      operationId: 'deleteWebhookMessage',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["webhooks"],
+      deprecated: false,
+    ),
   });
 
   ///Get all the failed attempts of a single webhook message.
@@ -6954,6 +9592,18 @@ abstract class FireflyIii extends ChopperService {
     @Query('page') int? page,
     @Path('id') required String? id,
     @Path('messageId') required int? messageId,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'When a webhook message fails to send it will store the failure in an "attempt". You can view and analyse these. Webhook messages that receive too many attempts (failures) will not be sent again. You must first clear out old attempts before the message can go out again.',
+      summary: 'Get all the failed attempts of a single webhook message.',
+      operationId: 'getWebhookMessageAttempts',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["webhooks"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single failed attempt from a single webhook message.
@@ -6993,6 +9643,18 @@ abstract class FireflyIii extends ChopperService {
     @Path('id') required String? id,
     @Path('messageId') required int? messageId,
     @Path('attemptId') required int? attemptId,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'When a webhook message fails to send it will store the failure in an "attempt". You can view and analyse these. Webhooks messages that receive too many attempts (failures) will not be fired. You must first clear out old attempts and try again. This endpoint shows you the details of a single attempt. The ID of the attempt must match the corresponding webhook and webhook message.',
+      summary: 'Get a single failed attempt from a single webhook message.',
+      operationId: 'getSingleWebhookMessageAttempt',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["webhooks"],
+      deprecated: false,
+    ),
   });
 
   ///Delete a webhook attempt.
@@ -7027,6 +9689,18 @@ abstract class FireflyIii extends ChopperService {
     @Path('id') required String? id,
     @Path('messageId') required int? messageId,
     @Path('attemptId') required int? attemptId,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Delete a webhook message attempt. If you delete all attempts for a webhook message, Firefly III will (once again) assume all is well with the webhook message and will try to send it again.',
+      summary: 'Delete a webhook attempt.',
+      operationId: 'deleteWebhookMessageAttempt',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["webhooks"],
+      deprecated: false,
+    ),
   });
 
   ///Submit messages for a webhook.
@@ -7046,6 +9720,18 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1WebhooksIdSubmitPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'This endpoint will submit any open messages for this webhook. This is an asynchronous operation, so you can\'t see the result. Refresh the webhook message and/or the webhook message attempts to see the results. This may take some time if the webhook receiver is slow.',
+      summary: 'Submit messages for a webhook.',
+      operationId: 'submitWebhook',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["webhooks"],
+      deprecated: false,
+    ),
   });
 
   ///Trigger webhook for a given transaction.
@@ -7076,6 +9762,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Path('transactionId') required String? transactionId,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'This endpoint will execute this webhook for a given transaction ID. This is an asynchronous operation, so you can\'t see the result. Refresh the webhook message and/or the webhook message attempts to see the results. This may take some time if the webhook receiver is slow.',
+      summary: 'Trigger webhook for a given transaction.',
+      operationId: 'triggerTransactionWebhook',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["webhooks"],
+      deprecated: false,
+    ),
   });
 
   ///List all webhooks.
@@ -7108,6 +9806,17 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Query('limit') int? limit,
     @Query('page') int? page,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'List all the user\'s webhooks.',
+      summary: 'List all webhooks.',
+      operationId: 'listWebhook',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["webhooks"],
+      deprecated: false,
+    ),
   });
 
   ///Store a new webhook
@@ -7130,6 +9839,19 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<WebhookSingle>> _v1WebhooksPost({
     @Header('X-Trace-Id') String? xTraceId,
     @Body() required WebhookStore? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          '''Creates a new webhook. The data required can be submitted as a JSON body or as a list of parameters. The webhook will be given a random secret.
+''',
+      summary: 'Store a new webhook',
+      operationId: 'storeWebhook',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["webhooks"],
+      deprecated: false,
+    ),
   });
 
   ///Get a single webhook.
@@ -7154,6 +9876,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response<WebhookSingle>> _v1WebhooksIdGet({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Gets all info of a single webhook.',
+      summary: 'Get a single webhook.',
+      operationId: 'getWebhook',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["webhooks"],
+      deprecated: false,
+    ),
   });
 
   ///Update existing webhook.
@@ -7180,6 +9913,18 @@ abstract class FireflyIii extends ChopperService {
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
     @Body() required WebhookUpdate? body,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description:
+          'Update an existing webhook\'s information. If you wish to reset the secret, submit any value as the "secret". Firefly III will take this as a hint and reset the secret of the webhook.',
+      summary: 'Update existing webhook.',
+      operationId: 'updateWebhook',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["webhooks"],
+      deprecated: false,
+    ),
   });
 
   ///Delete a webhook.
@@ -7199,6 +9944,17 @@ abstract class FireflyIii extends ChopperService {
   Future<chopper.Response> _v1WebhooksIdDelete({
     @Header('X-Trace-Id') String? xTraceId,
     @Path('id') required String? id,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: 'Delete a webhook.',
+      summary: 'Delete a webhook.',
+      operationId: 'deleteWebhook',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["webhooks"],
+      deprecated: false,
+    ),
   });
 }
 

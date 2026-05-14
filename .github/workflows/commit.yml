@@ -8,21 +8,26 @@ on:
   workflow_call:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   analyze:
     runs-on: ubuntu-latest
     name: Analyze and Test
+    timeout-minutes: 20
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       # Call setup_env action to setup workspace
       - name: Setup Flutter environment
         uses: ./.github/actions/setup_env
         with:
           java-version: 17.x
-          flutter-channel: stable
 
       # Check for any formatting issues in the code.
       - name: Check for any formatting issues

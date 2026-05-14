@@ -9,7 +9,7 @@
     "@accountRoleAssetCC": {
         "description": "Firefly Translation String: account_role_ccAsset"
     },
-    "accountRoleAssetDefault": "Alapértelmezett vagyon számla",
+  "accountRoleAssetDefault": "Alapértelmezett eszközszámla",
     "@accountRoleAssetDefault": {
         "description": "Firefly Translation String: account_role_defaultAsset"
     },
@@ -17,7 +17,7 @@
     "@accountRoleAssetSavings": {
         "description": "Firefly Translation String: account_role_savingAsset"
     },
-    "accountRoleAssetShared": "Megosztott vagyon számla",
+  "accountRoleAssetShared": "Megosztott eszközszámla",
     "@accountRoleAssetShared": {
         "description": "Firefly Translation String: account_role_sharedAsset"
     },
@@ -645,6 +645,16 @@
             }
         }
     },
+  "homePiggySavePerMonth": "Spórolás havonta: {amount}",
+  "@homePiggySavePerMonth": {
+    "description": "How much should be saved per month to reach the target",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€12.34"
+            }
+        }
+    },
     "homePiggySavedMultiple": "Eddig megtakarítva:",
     "@homePiggySavedMultiple": {
         "description": "Title for a list of multiple accounts with the amount of money saved so far"
@@ -687,7 +697,17 @@
             }
         }
     },
-    "homeTabLabelBalance": "Mérleg",
+  "homePiggyTotal": "Egyenleg: {amount}",
+  "@homePiggyTotal": {
+    "description": "Total balance of an account in the Piggy bank",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€12.34"
+      }
+    }
+  },
+  "homeTabLabelBalance": "Egyenleg",
     "@homeTabLabelBalance": {
         "description": "Tab Label: Balance Sheet page"
     },
@@ -797,9 +817,25 @@
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
+    "loginFormButtonHideHeaders": "Fejlécek elrejtése",
+    "@loginFormButtonHideHeaders": {
+        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
+    },
+    "loginFormButtonShowHeaders": "Egyéni fejlécek",
+    "@loginFormButtonShowHeaders": {
+        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
+    },
     "loginFormLabelAPIKey": "Érvényes API kulcs",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHeaders": "Egyéni fejlécek (opcionális)",
+    "@loginFormLabelHeaders": {
+        "description": "Login Form: Label for Custom Headers field"
+    },
+    "loginFormLabelHeadersHelp": "Soronként egy, formátum: FejlécNév: érték",
+    "@loginFormLabelHeadersHelp": {
+        "description": "Login Form: Helper text for Custom Headers field"
     },
     "loginFormLabelHost": "Szerver URL",
     "@loginFormLabelHost": {
@@ -825,9 +861,9 @@
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
-    "navigationMain": "Főoldal",
+    "navigationMain": "Irányítópult",
     "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
+        "description": "Navigation Label: Dashboard"
     },
     "generalSettings": "Beállítások",
     "@generalSettings": {
@@ -950,6 +986,38 @@
     "@settingsNLEmptyNote": {
         "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
+    "settingsNLHistory": "Értesítési előzmények",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "Még nincs rögzített értesítés.",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "{notificationHistorySize, plural, one {Ez az alkalmazás által fogadott legutóbbi 1 értesítés előzménye. Emellett létrehozhat tranzakciókat (érvényes) értesítésekből, vagy megtekintheti, miért nem sikerült feldolgozni egy értesítést.} other {Ez az alkalmazás által fogadott legutóbbi {notificationHistorySize} értesítés előzménye. Emellett létrehozhat tranzakciókat (érvényes) értesítésekből, vagy megtekintheti, miért nem sikerült feldolgozni egy értesítést.}}",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "Értesítés kihagyva: {reason, select, noMoney{Nem található pénzösszeg} noCurrency{Nem található pénznem} appNotUsed{Az alkalmazás nincs a figyeltek között} other{Ismeretlen ok}}.",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "Korábbi értesítések listázása",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
+    },
     "settingsNLPermissionGrant": "Koppintson az engedélyezéshez.",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
@@ -969,6 +1037,14 @@
     "settingsNLPrefillTXTitle": "A tranzakció leírásának előzetes kitöltése az értesítés címével",
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLRegularExpression": "Reguláris kifejezés (opcionális)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "Érvénytelen reguláris kifejezés",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Állapot ellenőrzése…",
     "@settingsNLServiceChecking": {
@@ -1000,6 +1076,14 @@
     "settingsNotificationListener": "Értesítés Figyelő Szolgáltatás",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
+    },
+    "settingsServerConnection": "Kiszolgáló kapcsolat",
+    "@settingsServerConnection": {
+        "description": "Settings for the server connection"
+    },
+    "settingsServerConnectionUpdated": "Kapcsolati beállítások frissítve.",
+    "@settingsServerConnectionUpdated": {
+        "description": "Server connection settings have been updated"
     },
     "settingsTheme": "Alkalmazás Téma",
     "@settingsTheme": {

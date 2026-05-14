@@ -56,20 +56,20 @@ class SId extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'setiap minggu',
+      'monthly': 'setiap bulan',
+      'quarterly': 'setiap kuartal',
+      'halfyear': 'setiap semester',
+      'yearly': 'setiap tahun',
+      'other': 'tidak diketahui',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', melewati $skip kali',
       zero: '',
     );
-    return 'Subscription matches transactions between $minValue and $maxvalue. Repeats $_temp0$_temp1.';
+    return 'Langganan mencocokkan transaksi antara $minValue dan $maxvalue. Berulang $_temp0$_temp1.';
   }
 
   @override
@@ -88,20 +88,20 @@ class SId extends S {
     num skip,
   ) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'weekly',
-      'monthly': 'monthly',
-      'quarterly': 'quarterly',
-      'halfyear': 'half-yearly',
-      'yearly': 'yearly',
-      'other': 'unknown',
+      'weekly': 'setiap minggu',
+      'monthly': 'setiap bulan',
+      'quarterly': 'setiap kuartal',
+      'halfyear': 'setiap semester',
+      'yearly': 'setiap tahun',
+      'other': 'tidak diketahui',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', melewati $skip kali',
       zero: '',
     );
-    return 'Subscription matches transactions of $value. Repeats $_temp0$_temp1.';
+    return 'Langganan mencocokkan transaksi sebesar $value. Berulang $_temp0$_temp1.';
   }
 
   @override
@@ -128,17 +128,17 @@ class SId extends S {
   @override
   String billsFrequencySkip(String frequency, num skip) {
     String _temp0 = intl.Intl.selectLogic(frequency, {
-      'weekly': 'Weekly',
-      'monthly': 'Monthly',
-      'quarterly': 'Quarterly',
-      'halfyear': 'Half-yearly',
-      'yearly': 'Yearly',
-      'other': 'Unknown',
+      'weekly': 'Mingguan',
+      'monthly': 'Bulanan',
+      'quarterly': 'Kuartalan',
+      'halfyear': 'Semesteran',
+      'yearly': 'Tahunan',
+      'other': 'Tidak diketahui',
     });
     String _temp1 = intl.Intl.pluralLogic(
       skip,
       locale: localeName,
-      other: ', skips over $skip',
+      other: ', melewati $skip kali',
       zero: '',
     );
     return '$_temp0$_temp1';
@@ -510,6 +510,11 @@ class SId extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Tersimpan sejauh ini:';
 
   @override
@@ -531,6 +536,11 @@ class SId extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'Di celengan: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -620,7 +630,20 @@ class SId extends S {
       'Untuk menggunakan Waterfly III secara produktif anda memerlukan server sendiri dengan instansi Firefly III atau tambahan Firefly III untuk Home Assistant.\n\nSilahkan masukkan URL penuh serta token akses pribadi (Pengaturan -> Profil -> OAuth -> Token Akses Pribadi) di bawah.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Sembunyikan Header';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Header Kustom';
+
+  @override
   String get loginFormLabelAPIKey => 'Kunci API Valid';
+
+  @override
+  String get loginFormLabelHeaders => 'Header Kustom (opsional)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'Satu per baris, format: NamaHeader: nilai';
 
   @override
   String get loginFormLabelHost => 'URL Host';
@@ -641,7 +664,7 @@ class SId extends S {
   String get navigationCategories => 'Kategori';
 
   @override
-  String get navigationMain => 'Dasbor Utama';
+  String get navigationMain => 'Dasbor';
 
   @override
   String get generalSettings => 'Pengaturan';
@@ -651,11 +674,11 @@ class SId extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -663,11 +686,11 @@ class SId extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString dari $of';
@@ -745,6 +768,32 @@ class SId extends S {
   String get settingsNLEmptyNote => 'Biarkan kolom catatan kosong';
 
   @override
+  String get settingsNLHistory => 'Riwayat Notifikasi';
+
+  @override
+  String get settingsNLHistoryEmpty => 'Belum ada notifikasi yang tercatat.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    return 'Ini adalah riwayat dari $notificationHistorySize notifikasi terakhir yang diterima aplikasi. Selain itu, Anda dapat membuat transaksi dari notifikasi (yang valid) atau melihat alasan mengapa notifikasi tidak dapat diproses.';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'Tidak ada nilai moneter ditemukan',
+      'noCurrency': 'Tidak ada mata uang ditemukan',
+      'appNotUsed': 'Aplikasi tidak didengarkan',
+      'other': 'Alasan tidak diketahui',
+    });
+    return 'Notifikasi dilewati: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription =>
+      'Daftar notifikasi sebelumnya';
+
+  @override
   String get settingsNLPermissionGrant => 'Ketuk untuk memberikan izin.';
 
   @override
@@ -760,6 +809,13 @@ class SId extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Isi otomatis judul transaksi dengan judul notifikasi';
+
+  @override
+  String get settingsNLRegularExpression => 'Ekspresi Reguler (opsional)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid =>
+      'Ekspresi Reguler Tidak Valid';
 
   @override
   String get settingsNLServiceChecking => 'Memeriksa status…';
@@ -780,6 +836,13 @@ class SId extends S {
 
   @override
   String get settingsNotificationListener => 'Layanan Pendengar Notifikasi';
+
+  @override
+  String get settingsServerConnection => 'Koneksi Server';
+
+  @override
+  String get settingsServerConnectionUpdated =>
+      'Pengaturan koneksi telah diperbarui.';
 
   @override
   String get settingsTheme => 'Tema Aplikasi';
@@ -850,10 +913,10 @@ class SId extends S {
   String get transactionDialogCurrencyTitle => 'Pilih mata uang';
 
   @override
-  String get transactionDialogPiggyNoPiggy => 'No Piggy Bank';
+  String get transactionDialogPiggyNoPiggy => 'Tidak Ada Celengan';
 
   @override
-  String get transactionDialogPiggyTitle => 'Link to Piggy Bank';
+  String get transactionDialogPiggyTitle => 'Tautkan ke Celengan';
 
   @override
   String get transactionDialogTagsAdd => 'Tambahkan Label';

@@ -63,12 +63,12 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     );
     request.headers.addAll(user.headers());
     final http.StreamedResponse resp = await httpClient.send(request);
-    if (resp.statusCode != 200) {
+    if (resp.statusCode != HttpStatus.ok) {
       log.warning("got invalid status code ${resp.statusCode}");
       msg.showSnackBar(
         SnackBar(
           content: Text(l10n.transactionDialogAttachmentsErrorDownload),
-          behavior: SnackBarBehavior.floating,
+          behavior: .floating,
         ),
       );
       return;
@@ -97,14 +97,14 @@ class _AttachmentDialogState extends State<AttachmentDialog>
         log.finest(() => "writing ${fileData.length} bytes to $filePath");
         await File(filePath).writeAsBytes(fileData, flush: true);
         final OpenResult file = await OpenFile.open(filePath);
-        if (file.type != ResultType.done) {
+        if (file.type != .done) {
           log.severe("error opening file", file.message);
           msg.showSnackBar(
             SnackBar(
               content: Text(
                 l10n.transactionDialogAttachmentsErrorOpen(file.message),
               ),
-              behavior: SnackBarBehavior.floating,
+              behavior: .floating,
             ),
           );
         }
@@ -117,7 +117,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
         msg.showSnackBar(
           SnackBar(
             content: Text(l10n.transactionDialogAttachmentsErrorDownload),
-            behavior: SnackBarBehavior.floating,
+            behavior: .floating,
           ),
         );
       },
@@ -132,8 +132,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     final FireflyIii api = context.read<FireflyService>().api;
     final bool? ok = await showDialog<bool>(
       context: context,
-      builder:
-          (BuildContext context) => const AttachmentDeletionConfirmDialog(),
+      builder: (BuildContext context) =>
+          const AttachmentDeletionConfirmDialog(),
     );
     if (ok == null || !ok) {
       return;
@@ -160,17 +160,16 @@ class _AttachmentDialogState extends State<AttachmentDialog>
         .v1AttachmentsPost(
           body: AttachmentStore(
             filename: file.name,
-            attachableType: AttachableType.transactionjournal,
+            attachableType: .transactionjournal,
             attachableId: widget.transactionId!,
           ),
         );
     if (!respAttachment.isSuccessful || respAttachment.body == null) {
       late String error;
       try {
-        final ValidationErrorResponse valError =
-            ValidationErrorResponse.fromJson(
-              json.decode(respAttachment.error.toString()),
-            );
+        final ValidationErrorResponse valError = .fromJson(
+          json.decode(respAttachment.error.toString()),
+        );
         error = valError.message ?? l10n.errorUnknown;
       } catch (_) {
         error = l10n.errorUnknown;
@@ -178,7 +177,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       msg.showSnackBar(
         SnackBar(
           content: Text(l10n.transactionDialogAttachmentsErrorUpload(error)),
-          behavior: SnackBarBehavior.floating,
+          behavior: .floating,
         ),
       );
       return;
@@ -237,7 +236,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     late String error;
     try {
       final String respString = await resp.stream.bytesToString();
-      final ValidationErrorResponse valError = ValidationErrorResponse.fromJson(
+      final ValidationErrorResponse valError = .fromJson(
         json.decode(respString),
       );
       error = valError.message ?? l10n.errorUnknown;
@@ -247,7 +246,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     msg.showSnackBar(
       SnackBar(
         content: Text(l10n.transactionDialogAttachmentsErrorUpload(error)),
-        behavior: SnackBarBehavior.floating,
+        behavior: .floating,
       ),
     );
     await api.v1AttachmentsIdDelete(id: newAttachment.id);
@@ -273,7 +272,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
           content: Text(
             l10n.transactionDialogAttachmentsErrorOpen(file.message),
           ),
-          behavior: SnackBarBehavior.floating,
+          behavior: .floating,
         ),
       );
     }
@@ -282,8 +281,8 @@ class _AttachmentDialogState extends State<AttachmentDialog>
   Future<void> fakeDeleteAttachment(BuildContext context, int i) async {
     final bool? ok = await showDialog<bool>(
       context: context,
-      builder:
-          (BuildContext context) => const AttachmentDeletionConfirmDialog(),
+      builder: (BuildContext context) =>
+          const AttachmentDeletionConfirmDialog(),
     );
     if (ok == null || !ok) {
       return;
@@ -301,7 +300,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       type: "attachments",
       id: widget.attachments.length.toString(),
       attributes: AttachmentProperties(
-        attachableType: AttachableType.transactionjournal,
+        attachableType: .transactionjournal,
         attachableId: "FAKE",
         filename: file.name,
         uploadUrl: file.path,
@@ -332,39 +331,33 @@ class _AttachmentDialogState extends State<AttachmentDialog>
       }
       childs.add(
         ListTile(
-          enabled:
-              (_dlProgress[i] != null && _dlProgress[i]! < 0) ? false : true,
+          enabled: (_dlProgress[i] != null && _dlProgress[i]! < 0)
+              ? false
+              : true,
           leading: MaterialIconButton(
-            icon:
-                (_dlProgress[i] != null && _dlProgress[i]! < 0)
-                    ? Icons.upload
-                    : Icons.download,
-            onPressed:
-                _dlProgress[i] != null
-                    ? null
-                    : widget.transactionId == null
-                    ? () => fakeDownloadAttachment(context, attachment)
-                    : () => downloadAttachment(context, attachment, i),
+            icon: (_dlProgress[i] != null && _dlProgress[i]! < 0)
+                ? Icons.upload
+                : Icons.download,
+            onPressed: _dlProgress[i] != null
+                ? null
+                : widget.transactionId == null
+                ? () => fakeDownloadAttachment(context, attachment)
+                : () => downloadAttachment(context, attachment, i),
           ),
           title: Text(
             attachment.attributes.title ?? attachment.attributes.filename!,
             maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+            overflow: .ellipsis,
           ),
-          subtitle: Text(
-            subtitle,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
+          subtitle: Text(subtitle, maxLines: 1, overflow: .ellipsis),
           isThreeLine: false,
           trailing: MaterialIconButton(
             icon: Icons.delete,
-            onPressed:
-                (_dlProgress[i] != null && _dlProgress[i]! < 0)
-                    ? null
-                    : widget.transactionId == null
-                    ? () => fakeDeleteAttachment(context, i)
-                    : () => deleteAttachment(context, attachment, i),
+            onPressed: (_dlProgress[i] != null && _dlProgress[i]! < 0)
+                ? null
+                : widget.transactionId == null
+                ? () => fakeDeleteAttachment(context, i)
+                : () => deleteAttachment(context, attachment, i),
           ),
         ),
       );
@@ -373,21 +366,20 @@ class _AttachmentDialogState extends State<AttachmentDialog>
         SizedBox(
           height: divTheme.space ?? 16,
           child: Center(
-            child:
-                _dlProgress[i] == null
-                    ? const Divider(height: 0)
-                    : LinearProgressIndicator(
-                      value: _dlProgress[i]!.abs(),
-                      //minHeight: divTheme.thickness ?? 4,
-                      //backgroundColor: divTheme.color ?? theme.colorScheme.outlineVariant,
-                    ),
+            child: _dlProgress[i] == null
+                ? const Divider(height: 0)
+                : LinearProgressIndicator(
+                    value: _dlProgress[i]!.abs(),
+                    //minHeight: divTheme.thickness ?? 4,
+                    //backgroundColor: divTheme.color ?? theme.colorScheme.outlineVariant,
+                  ),
           ),
         ),
       );
     }
     childs.add(
       OverflowBar(
-        alignment: MainAxisAlignment.end,
+        alignment: .end,
         spacing: 12,
         overflowSpacing: 12,
         children: <Widget>[
@@ -398,9 +390,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
           FilledButton(
             onPressed: () async {
               final ImagePicker picker = ImagePicker();
-              final XFile? imageFile = await picker.pickImage(
-                source: ImageSource.camera,
-              );
+              final XFile? imageFile = await picker.pickImage(source: .camera);
 
               if (imageFile == null) {
                 log.finest(() => "no image returned");
@@ -425,8 +415,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
           ),
           FilledButton(
             onPressed: () async {
-              final FilePickerResult? file =
-                  await FilePicker.platform.pickFiles();
+              final FilePickerResult? file = await FilePicker.pickFiles();
               if (file == null || file.files.first.path == null) {
                 return;
               }
@@ -446,7 +435,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     );
     return SimpleDialog(
       title: Text(S.of(context).transactionDialogAttachmentsTitle),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       children: childs,
     );
   }
@@ -460,7 +449,7 @@ class AttachmentDeletionConfirmDialog extends StatelessWidget {
     return AlertDialog(
       icon: const Icon(Icons.delete),
       title: Text(S.of(context).transactionDialogAttachmentsDelete),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       actions: <Widget>[
         TextButton(
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),

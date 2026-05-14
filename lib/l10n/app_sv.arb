@@ -1,5 +1,5 @@
 {
-  "@@locale": "sv",
+    "@@locale": "sv",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "Plånbok",
     "@accountRoleAssetCashWallet": {
@@ -797,9 +797,25 @@
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
+    "loginFormButtonHideHeaders": "Dölj rubriker",
+    "@loginFormButtonHideHeaders": {
+        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
+    },
+    "loginFormButtonShowHeaders": "Anpassade rubriker",
+    "@loginFormButtonShowHeaders": {
+        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
+    },
     "loginFormLabelAPIKey": "Giltig API-nyckel",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHeaders": "Anpassade rubriker (valfritt)",
+    "@loginFormLabelHeaders": {
+        "description": "Login Form: Label for Custom Headers field"
+    },
+    "loginFormLabelHeadersHelp": "En per rad, format: Rubriknamn: värde",
+    "@loginFormLabelHeadersHelp": {
+        "description": "Login Form: Helper text for Custom Headers field"
     },
     "loginFormLabelHost": "Värd URL",
     "@loginFormLabelHost": {
@@ -827,7 +843,7 @@
     },
     "navigationMain": "Kontrollpanel",
     "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
+        "description": "Navigation Label: Dashboard"
     },
     "generalSettings": "Inställningar",
     "@generalSettings": {
@@ -950,6 +966,38 @@
     "@settingsNLEmptyNote": {
         "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
+    "settingsNLHistory": "Aviseringshistorik",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "Inga aviseringar har registrerats än.",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "{notificationHistorySize, plural, one {Detta är historiken för den senaste av Aviseringen som tagits emot av appen. Dessutom kan du skapa transaktioner från (giltiga) aviseringar eller se anledningen till varför en avisering inte kunde bearbetas.} other {Detta är historiken för de senaste {notificationHistorySize} aviseringarna som tagits emot av appen. Dessutom kan du skapa transaktioner från (giltiga) aviseringar eller se anledningen till varför en avisering inte kunde bearbetas.}}",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "Avisering hoppades över: {reason, select, noMoney{Inget monetärt värde hittades} noCurrency{Ingen valuta hittades} appNotUsed{Appen är inte aktiverad för avlyssning} other{Okänd anledning}}.",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "Lista tidigare aviseringar",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
+    },
     "settingsNLPermissionGrant": "Tryck för att bevilja tillstånd.",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
@@ -969,6 +1017,14 @@
     "settingsNLPrefillTXTitle": "Fyll i transaktionstiteln med nofikationstiteln i förväg",
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLRegularExpression": "Reguljärt uttryck (valfritt)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "Ogiltigt reguljärt uttryck",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Kontrollerar status…",
     "@settingsNLServiceChecking": {
@@ -1000,6 +1056,14 @@
     "settingsNotificationListener": "Notifikationslyssningstjänst",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
+    },
+    "settingsServerConnection": "Serveranslutning",
+    "@settingsServerConnection": {
+        "description": "Settings for the server connection"
+    },
+    "settingsServerConnectionUpdated": "Anslutningsinställningar uppdaterade.",
+    "@settingsServerConnectionUpdated": {
+        "description": "Server connection settings have been updated"
     },
     "settingsTheme": "Apptema",
     "@settingsTheme": {

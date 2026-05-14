@@ -2,69 +2,71 @@ name: waterflyiii
 description: Waterfly III, a mobile client for Firefly III
 publish_to: 'none'
 
-version: 1.1.10
+version: 1.2.0
 
 environment:
-  sdk: '>=3.7.0 <4.0.0'
+  sdk: '>=3.10.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  async: 2.13.0
+  # dart.dev
+  async: ^2.13.1
   intl: 0.20.2
-  path_provider: ^2.1.4
   collection: ^1.19.0
-  flutter_secure_storage: ^10.0.0
-  provider: ^6.1.2
+  logging: ^1.3.0
+  timezone: ^0.11.0
+  http: ^1.6.0
+  cronet_http: ^1.8.0
+  cupertino_http: ^2.3.0
+  # flutter.dev
+  path_provider: ^2.1.4
   shared_preferences: ^2.3.4
-  chopper: ^8.4.0
-  json_annotation: ^4.8.0
-  flutter_svg: ^2.2.3
+  flutter_svg: ^2.2.4
   url_launcher: ^6.3.2
+  animations: ^2.1.2
+  local_auth: ^3.0.0
+  quick_actions: ^1.0.7
+  image_picker: ^1.2.2
+  # material.io
+  dynamic_color: ^1.7.0
+  material_color_utilities: ^0.13.0
+  # other
+  flutter_secure_storage: ^10.2.0
+  provider: ^6.1.2
+  chopper: ^8.5.2
   infinite_scroll_pagination: ^5.1.1
   badges: ^3.1.2
   filesize: ^2.0.1
   community_charts_flutter: ^1.0.2
-  file_picker: ^10.3.8
-  animations: ^2.0.11
-  flutter_local_notifications: ^19.4.0
+  file_picker: ^12.0.0-beta.2
+  flutter_local_notifications: ^21.0.0
   notifications_listener_service:
     git:
       url: https://github.com/dreautall/notification_listener_service.git
       ref: main
-  appcheck:
-    git:
-      url: https://github.com/bugrevealingbme/AppCheck.git
-      ref: ce371398f86412a8d9a2e0b75a9b51597ea1d79f
-  package_info_plus: ^9.0.0
-  logging: ^1.1.1
+  appcheck: ^1.7.0
+  package_info_plus: ^10.1.0
   flutter_email_sender: ^8.0.0
-  local_auth: ^3.0.0
-  dynamic_color: ^1.7.0
-  material_color_utilities: ^0.11.1
   version: ^3.0.2
-  quick_actions: ^1.0.7
   stock: ^1.1.0
-  syncfusion_flutter_charts: ^32.1.21
-  image_picker: ^1.0.7
-  timezone: ^0.10.0
+  syncfusion_flutter_charts: ^33.1.46
   flutter_timezone: ^5.0.0
   flutter_sharing_intent: ^2.0.3
-  http: ^1.6.0
   open_file_plus:
     git:
       url: https://github.com/postflow/open_file_plus.git
       ref: main
-  cronet_http: ^1.5.0
+  expressions: ^0.2.5+3
 
 dev_dependencies:
   flutter_lints: ^6.0.0
   # needed for swagger_dart_code_generator
-  build_runner: ^2.10.4
-  chopper_generator: ^8.2.0
-  json_serializable: ^6.11.2
+  build_runner: ^2.15.0
+  chopper_generator: ^8.6.2
+  json_serializable: ^6.13.2
   swagger_dart_code_generator: ^4.1.0
   flutter_native_splash: ^2.4.6
   flutter_test:
@@ -80,7 +82,7 @@ flutter:
 
 flutter_native_splash:
   android: true
-  ios: false
+  ios: true
   web: false
   color: "#fdfcfe"
   color_dark: "#1a1c1e"

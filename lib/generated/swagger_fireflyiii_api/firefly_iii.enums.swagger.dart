@@ -1,3 +1,6 @@
+// coverage:ignore-file
+// ignore_for_file: type=lint
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:collection/collection.dart';
 
@@ -106,7 +109,23 @@ enum ConfigValueFilter {
   @JsonValue('firefly.languages')
   fireflyLanguages('firefly.languages'),
   @JsonValue('firefly.valid_view_ranges')
-  fireflyValidViewRanges('firefly.valid_view_ranges');
+  fireflyValidViewRanges('firefly.valid_view_ranges'),
+  @JsonValue('cer.enabled')
+  cerEnabled('cer.enabled'),
+  @JsonValue('firefly.preselected_accounts')
+  fireflyPreselectedAccounts('firefly.preselected_accounts'),
+  @JsonValue('firefly.rule-actions')
+  fireflyRuleActions('firefly.rule-actions'),
+  @JsonValue('firefly.context-rule-actions')
+  fireflyContextRuleActions('firefly.context-rule-actions'),
+  @JsonValue('search.operators')
+  searchOperators('search.operators'),
+  @JsonValue('webhook.triggers')
+  webhookTriggers('webhook.triggers'),
+  @JsonValue('webhook.responses')
+  webhookResponses('webhook.responses'),
+  @JsonValue('webhook.deliveries')
+  webhookDeliveries('webhook.deliveries');
 
   final String? value;
 
@@ -528,7 +547,9 @@ enum RuleTriggerType {
   @JsonValue('store-journal')
   storeJournal('store-journal'),
   @JsonValue('update-journal')
-  updateJournal('update-journal');
+  updateJournal('update-journal'),
+  @JsonValue('manual-activation')
+  manualActivation('manual-activation');
 
   final String? value;
 

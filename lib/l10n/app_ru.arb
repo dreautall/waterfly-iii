@@ -527,6 +527,24 @@
             }
         }
     },
+    "homeMainBudgetSum": "{current} {status, select, over{превышен на} other{осталось от}} {available}",
+    "@homeMainBudgetSum": {
+        "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
+        "placeholders": {
+            "current": {
+                "type": "String",
+                "example": "12.34€"
+            },
+            "status": {
+                "type": "String",
+                "example": "left from"
+            },
+            "available": {
+                "type": "String",
+                "example": "12.34€"
+            }
+        }
+    },
     "homeMainBudgetTitle": "Бюджеты за текущий месяц",
     "@homeMainBudgetTitle": {
         "description": "Title: Budgets for current month"
@@ -689,6 +707,10 @@
     "@homeTransactionsActionFilter": {
         "description": "Action Button Label: Filter list."
     },
+    "homeTransactionsDialogFilterAccountsAll": "<Все счета>",
+    "@homeTransactionsDialogFilterAccountsAll": {
+        "description": "Don't filter for a specific account (default entry)"
+    },
     "homeTransactionsDialogFilterBillsAll": "<All Bills>",
     "@homeTransactionsDialogFilterBillsAll": {
         "description": "Don't filter for a specific subscription (default entry)"
@@ -696,6 +718,26 @@
     "homeTransactionsDialogFilterBillUnset": "<No Bill set>",
     "@homeTransactionsDialogFilterBillUnset": {
         "description": "Filter for unset subscription"
+    },
+    "homeTransactionsDialogFilterBudgetsAll": "<Все бюджеты>",
+    "@homeTransactionsDialogFilterBudgetsAll": {
+        "description": "Don't filter for a specific budget (default entry)"
+    },
+    "homeTransactionsDialogFilterBudgetUnset": "<Без бюджета>",
+    "@homeTransactionsDialogFilterBudgetUnset": {
+        "description": "Filter for unset budgets"
+    },
+    "homeTransactionsDialogFilterCategoriesAll": "<Все категории>",
+    "@homeTransactionsDialogFilterCategoriesAll": {
+        "description": "Don't filter for a specific category (default entry)"
+    },
+    "homeTransactionsDialogFilterCategoryUnset": "<Без категории>",
+    "@homeTransactionsDialogFilterCategoryUnset": {
+        "description": "Filter for unset categories"
+    },
+    "homeTransactionsDialogFilterCurrenciesAll": "<Все валюты>",
+    "@homeTransactionsDialogFilterCurrenciesAll": {
+        "description": "Don't filter for a specific currency (default entry)"
     },
     "homeTransactionsDialogFilterDateRange": "Диапазон дат",
     "@homeTransactionsDialogFilterDateRange": {
@@ -755,9 +797,25 @@
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
+    "loginFormButtonHideHeaders": "Скрыть заголовки",
+    "@loginFormButtonHideHeaders": {
+        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
+    },
+    "loginFormButtonShowHeaders": "Пользовательские заголовки",
+    "@loginFormButtonShowHeaders": {
+        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
+    },
     "loginFormLabelAPIKey": "Действительный ключ API",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHeaders": "Пользовательские заголовки (необязательно)",
+    "@loginFormLabelHeaders": {
+        "description": "Login Form: Label for Custom Headers field"
+    },
+    "loginFormLabelHeadersHelp": "По одному в строке, формат: HeaderName: значение",
+    "@loginFormLabelHeadersHelp": {
+        "description": "Login Form: Helper text for Custom Headers field"
     },
     "loginFormLabelHost": "URL-адрес хоста",
     "@loginFormLabelHost": {
@@ -783,9 +841,9 @@
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
-    "navigationMain": "Главное табло",
+    "navigationMain": "Панель управления",
     "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
+        "description": "Navigation Label: Dashboard"
     },
     "generalSettings": "Настройки",
     "@generalSettings": {
@@ -867,6 +925,10 @@
     "@settingsNLAppAccount": {
         "description": "Default account which will be used for the transaction."
     },
+    "settingsNLAppAccountDynamic": "<Динамически>",
+    "@settingsNLAppAccountDynamic": {
+        "description": "Account will be selected dynamically by the content of the notification."
+    },
     "settingsNLAppAdd": "Добавить приложение",
     "@settingsNLAppAdd": {
         "description": "Button title to add a new app."
@@ -891,6 +953,38 @@
     "@settingsNLEmptyNote": {
         "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
+    "settingsNLHistory": "История уведомлений",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "Уведомлений пока нет.",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "Это история последних {notificationHistorySize, plural, one{# уведомления} few{# уведомлений} many{# уведомлений} other{# уведомлений}}, полученных приложением. Вы можете создавать транзакции из корректных уведомлений или узнать причину, по которой уведомление не удалось обработать.",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "Уведомление пропущено: {reason, select, noMoney{Не найдена сумма} noCurrency{Не найдена валюта} appNotUsed{Приложение не отслеживается} other{Неизвестная причина}}.",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "Список предыдущих уведомлений",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
+    },
     "settingsNLPermissionGrant": "Нажмите для подтверждения.",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
@@ -910,6 +1004,14 @@
     "settingsNLPrefillTXTitle": "Заполнить заголовок транзакции, используя заголовок уведомления",
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLRegularExpression": "Регулярное выражение (необязательно)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "Неверное регулярное выражение",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Проверка статуса…",
     "@settingsNLServiceChecking": {
@@ -941,6 +1043,14 @@
     "settingsNotificationListener": "Сервис прослушивания уведомлений",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
+    },
+    "settingsServerConnection": "Подключение к серверу",
+    "@settingsServerConnection": {
+        "description": "Settings for the server connection"
+    },
+    "settingsServerConnectionUpdated": "Настройки подключения обновлены.",
+    "@settingsServerConnectionUpdated": {
+        "description": "Server connection settings have been updated"
     },
     "settingsTheme": "Тема приложения",
     "@settingsTheme": {

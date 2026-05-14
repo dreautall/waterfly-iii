@@ -312,6 +312,13 @@ void main() {
         cadCurrency,
       );
       expect(extractedAmount, 4);
+
+      (extractedCurrency, extractedAmount) = await parseNotificationText(
+        apiService,
+        r"Operazione autorizzata: 98.25 euro, PAYPAL *PAG PUB AMM PAaa 35314312345. aNon sei stato tu? Blocca subito la carta.",
+        cadCurrency,
+      );
+      expect(extractedAmount, 98.25);
     });
   });
 }

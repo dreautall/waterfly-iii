@@ -13,6 +13,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/bills/billchart.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/timezonehandler.dart';
+import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
 
 class BillDetails extends StatefulWidget {
   const BillDetails({super.key, required this.bill});
@@ -66,15 +67,15 @@ class _BillDetailsState extends State<BillDetails> {
         children: <Widget>[
           AnimatedHeight(
             child: Card(
-              margin: const EdgeInsets.fromLTRB(0, 0, 0, 1),
+              margin: const .fromLTRB(0, 0, 0, 1),
               shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(12),
-                  bottomRight: Radius.circular(12),
+                borderRadius: .only(
+                  bottomLeft: .circular(12),
+                  bottomRight: .circular(12),
                 ),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: <Widget>[
                   ListTile(
                     leading: const CircleAvatar(
@@ -82,46 +83,44 @@ class _BillDetailsState extends State<BillDetails> {
                     ),
                     title:
                         widget.bill.attributes.amountMax ==
-                                widget.bill.attributes.amountMin
-                            ? Text(
-                              S
-                                  .of(context)
-                                  .billsExactAmountAndFrequency(
-                                    _currency.fmt(
-                                      double.tryParse(
-                                            widget.bill.attributes.amountMin ??
-                                                "0",
-                                          ) ??
-                                          0,
-                                    ),
-                                    widget.bill.attributes.repeatFreq
-                                        .toString(),
-                                    widget.bill.attributes.skip ?? 0,
+                            widget.bill.attributes.amountMin
+                        ? Text(
+                            S
+                                .of(context)
+                                .billsExactAmountAndFrequency(
+                                  _currency.fmt(
+                                    double.tryParse(
+                                          widget.bill.attributes.amountMin ??
+                                              "0",
+                                        ) ??
+                                        0,
                                   ),
-                            )
-                            : Text(
-                              S
-                                  .of(context)
-                                  .billsAmountAndFrequency(
-                                    _currency.fmt(
-                                      double.tryParse(
-                                            widget.bill.attributes.amountMin ??
-                                                "0",
-                                          ) ??
-                                          0,
-                                    ),
-                                    _currency.fmt(
-                                      double.tryParse(
-                                            widget.bill.attributes.amountMax ??
-                                                "0",
-                                          ) ??
-                                          0,
-                                    ),
-                                    widget.bill.attributes.repeatFreq
-                                        .toString(),
-                                    widget.bill.attributes.skip ?? 0,
+                                  widget.bill.attributes.repeatFreq.toString(),
+                                  widget.bill.attributes.skip ?? 0,
+                                ),
+                          )
+                        : Text(
+                            S
+                                .of(context)
+                                .billsAmountAndFrequency(
+                                  _currency.fmt(
+                                    double.tryParse(
+                                          widget.bill.attributes.amountMin ??
+                                              "0",
+                                        ) ??
+                                        0,
                                   ),
-                            ),
+                                  _currency.fmt(
+                                    double.tryParse(
+                                          widget.bill.attributes.amountMax ??
+                                              "0",
+                                        ) ??
+                                        0,
+                                  ),
+                                  widget.bill.attributes.repeatFreq.toString(),
+                                  widget.bill.attributes.skip ?? 0,
+                                ),
+                          ),
                   ),
                   ListTile(
                     leading: CircleAvatar(
@@ -160,7 +159,7 @@ class _BillDetailsState extends State<BillDetails> {
           const SizedBox(height: 16),
           Expanded(
             /*child: RawScrollbar(
-              radius: const Radius.circular(12),
+              radius: const .circular(12),
               thickness: 5,
               thumbVisibility: true,
               thumbColor: Theme.of(context).colorScheme.outlineVariant,
@@ -170,9 +169,7 @@ class _BillDetailsState extends State<BillDetails> {
               state: _pagingState,
               fetchNextPage: _fetchPage,
               physics: const ClampingScrollPhysics(),
-              builderDelegate: PagedChildBuilderDelegate<TransactionRead>(
-                animateTransitions: true,
-                transitionDuration: animDurationStandard,
+              builderDelegate: customPagedChildBuilderDelegate<TransactionRead>(
                 invisibleItemsThreshold: 20,
                 itemBuilder: _transactionRowBuilder,
                 noItemsFoundIndicatorBuilder: _emptyListBuilder,
@@ -190,10 +187,9 @@ class _BillDetailsState extends State<BillDetails> {
     TransactionRead transaction,
     int index,
   ) {
-    final DateTime date =
-        _tzHandler
-            .sTime(transaction.attributes.transactions.first.date)
-            .toLocal();
+    final DateTime date = _tzHandler
+        .sTime(transaction.attributes.transactions.first.date)
+        .toLocal();
     Widget? openContainerWidget;
 
     return OpenContainer(
@@ -203,66 +199,61 @@ class _BillDetailsState extends State<BillDetails> {
         }
         openContainerWidget = FutureBuilder<TransactionRead>(
           future: _fetchFullTx(transaction.id),
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<TransactionRead> snapshot,
-          ) {
-            if (snapshot.connectionState == ConnectionState.done &&
-                snapshot.hasData &&
-                snapshot.data != null) {
-              return TransactionPage(transaction: snapshot.data);
-            }
-            if (snapshot.hasError) {
-              Navigator.of(context).pop();
-            }
-            return const Center(child: CircularProgressIndicator());
-          },
+          builder:
+              (BuildContext context, AsyncSnapshot<TransactionRead> snapshot) {
+                if (snapshot.connectionState == .done &&
+                    snapshot.hasData &&
+                    snapshot.data != null) {
+                  return TransactionPage(transaction: snapshot.data);
+                }
+                if (snapshot.hasError) {
+                  Navigator.of(context).pop();
+                }
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              },
         );
         return openContainerWidget!;
       },
       openColor: Theme.of(context).cardColor,
       closedColor: Theme.of(context).cardColor,
       closedShape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+        borderRadius: .all(.circular(16)),
       ),
       closedElevation: 0,
-      closedBuilder:
-          (BuildContext context, Function openContainer) => ListTile(
-            title: Text.rich(_getTransactionTitle(transaction)),
-            subtitle: Text(
-              DateFormat.yMMMMd().format(date),
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: Theme.of(context).colorScheme.secondary,
-              ),
-            ),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(16)),
-            ),
-            isThreeLine: false,
-            trailing: RichText(
-              textAlign: TextAlign.end,
-              maxLines: 2,
-              text: TextSpan(
-                text: _getTransactionAmount(transaction),
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Colors.red,
-                  fontFeatures: const <FontFeature>[
-                    FontFeature.tabularFigures(),
-                  ],
-                ),
-                children: <InlineSpan>[
-                  const TextSpan(text: "\n"),
-                  TextSpan(
-                    text: _getTransactionSource(transaction),
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            onTap: () => openContainer(),
+      closedBuilder: (BuildContext context, Function openContainer) => ListTile(
+        title: Text.rich(_getTransactionTitle(transaction)),
+        subtitle: Text(
+          DateFormat.yMMMMd().format(date),
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+            color: Theme.of(context).colorScheme.secondary,
           ),
+        ),
+        shape: const RoundedRectangleBorder(borderRadius: .all(.circular(16))),
+        isThreeLine: false,
+        trailing: RichText(
+          textAlign: TextAlign.end,
+          maxLines: 2,
+          text: TextSpan(
+            text: _getTransactionAmount(transaction),
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: Colors.red,
+              fontFeatures: const <FontFeature>[.tabularFigures()],
+            ),
+            children: <InlineSpan>[
+              const TextSpan(text: "\n"),
+              TextSpan(
+                text: _getTransactionSource(transaction),
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+            ],
+          ),
+        ),
+        onTap: () => openContainer(),
+      ),
     );
   }
 
@@ -308,11 +299,11 @@ class _BillDetailsState extends State<BillDetails> {
 
   Widget _emptyListBuilder(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+      padding: const .fromLTRB(0, 30, 0, 0),
       child: Align(
-        alignment: Alignment.topCenter,
+        alignment: .topCenter,
         child: Text.rich(
-          textAlign: TextAlign.center,
+          textAlign: .center,
           TextSpan(
             text: S.of(context).billsNoTransactions,
             style: Theme.of(context).textTheme.titleMedium,

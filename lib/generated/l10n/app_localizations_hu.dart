@@ -15,13 +15,13 @@ class SHu extends S {
   String get accountRoleAssetCC => 'Hitelkártya';
 
   @override
-  String get accountRoleAssetDefault => 'Alapértelmezett vagyon számla';
+  String get accountRoleAssetDefault => 'Alapértelmezett eszközszámla';
 
   @override
   String get accountRoleAssetSavings => 'Megtakarítási számla';
 
   @override
-  String get accountRoleAssetShared => 'Megosztott vagyon számla';
+  String get accountRoleAssetShared => 'Megosztott eszközszámla';
 
   @override
   String get accountsLabelAsset => 'Eszközszámlák';
@@ -515,6 +515,11 @@ class SHu extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Spórolás havonta: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Eddig megtakarítva:';
 
   @override
@@ -539,7 +544,12 @@ class SHu extends S {
   }
 
   @override
-  String get homeTabLabelBalance => 'Mérleg';
+  String homePiggyTotal(String amount) {
+    return 'Egyenleg: $amount';
+  }
+
+  @override
+  String get homeTabLabelBalance => 'Egyenleg';
 
   @override
   String get homeTabLabelMain => 'Kezdőlap';
@@ -625,7 +635,20 @@ class SHu extends S {
       'A Waterfly III hatékony használatához saját szerveren futtatott Firefly III-ra vagy Firefly III kiegészítővel ellátott Home Assistant-re van szükség.\n\nKérjük, adja meg alább a teljes URL-t, valamint egy személyes hozzáférési tokent (Beállítások -> Profil -> OAuth -> Személyes hozzáférési tokenek).';
 
   @override
+  String get loginFormButtonHideHeaders => 'Fejlécek elrejtése';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Egyéni fejlécek';
+
+  @override
   String get loginFormLabelAPIKey => 'Érvényes API kulcs';
+
+  @override
+  String get loginFormLabelHeaders => 'Egyéni fejlécek (opcionális)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'Soronként egy, formátum: FejlécNév: érték';
 
   @override
   String get loginFormLabelHost => 'Szerver URL';
@@ -646,7 +669,7 @@ class SHu extends S {
   String get navigationCategories => 'Kategóriák';
 
   @override
-  String get navigationMain => 'Főoldal';
+  String get navigationMain => 'Irányítópult';
 
   @override
   String get generalSettings => 'Beállítások';
@@ -656,11 +679,11 @@ class SHu extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -668,11 +691,11 @@ class SHu extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$of $percString-a';
@@ -751,6 +774,40 @@ class SHu extends S {
   String get settingsNLEmptyNote => 'A \"Jegyzetek\" mező maradjon üres';
 
   @override
+  String get settingsNLHistory => 'Értesítési előzmények';
+
+  @override
+  String get settingsNLHistoryEmpty => 'Még nincs rögzített értesítés.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other:
+          'Ez az alkalmazás által fogadott legutóbbi $notificationHistorySize értesítés előzménye. Emellett létrehozhat tranzakciókat (érvényes) értesítésekből, vagy megtekintheti, miért nem sikerült feldolgozni egy értesítést.',
+      one:
+          'Ez az alkalmazás által fogadott legutóbbi 1 értesítés előzménye. Emellett létrehozhat tranzakciókat (érvényes) értesítésekből, vagy megtekintheti, miért nem sikerült feldolgozni egy értesítést.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'Nem található pénzösszeg',
+      'noCurrency': 'Nem található pénznem',
+      'appNotUsed': 'Az alkalmazás nincs a figyeltek között',
+      'other': 'Ismeretlen ok',
+    });
+    return 'Értesítés kihagyva: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription =>
+      'Korábbi értesítések listázása';
+
+  @override
   String get settingsNLPermissionGrant => 'Koppintson az engedélyezéshez.';
 
   @override
@@ -766,6 +823,13 @@ class SHu extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'A tranzakció leírásának előzetes kitöltése az értesítés címével';
+
+  @override
+  String get settingsNLRegularExpression => 'Reguláris kifejezés (opcionális)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid =>
+      'Érvénytelen reguláris kifejezés';
 
   @override
   String get settingsNLServiceChecking => 'Állapot ellenőrzése…';
@@ -786,6 +850,13 @@ class SHu extends S {
 
   @override
   String get settingsNotificationListener => 'Értesítés Figyelő Szolgáltatás';
+
+  @override
+  String get settingsServerConnection => 'Kiszolgáló kapcsolat';
+
+  @override
+  String get settingsServerConnectionUpdated =>
+      'Kapcsolati beállítások frissítve.';
 
   @override
   String get settingsTheme => 'Alkalmazás Téma';

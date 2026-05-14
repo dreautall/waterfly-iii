@@ -46,7 +46,7 @@ class NetEarningsChart extends StatelessWidget {
     expenseChartData = expenseChartData.reversed.toList();
 
     return Padding(
-      padding: const EdgeInsets.only(left: 12),
+      padding: const .only(left: 12),
       child: charts.BarChart(
         <charts.Series<LabelAmountChart, String>>[
           charts.Series<LabelAmountChart, String>(
@@ -160,144 +160,155 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
 
     return SimpleDialog(
       title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: <Widget>[
           Text(DateFormat.yMMMM().format(currentMonth)),
           Row(
             children: <Widget>[
               IconButton(
-                onPressed:
-                    () => setState(() {
-                      monthOffset++;
-                    }),
+                onPressed: () => setState(() {
+                  monthOffset++;
+                }),
                 icon: const Icon(Icons.arrow_back),
               ),
               IconButton(
-                onPressed:
-                    monthOffset == 0
-                        ? null
-                        : () => setState(() {
-                          if (monthOffset != 0) {
-                            monthOffset--;
-                          }
-                        }),
+                onPressed: monthOffset == 0
+                    ? null
+                    : () => setState(() {
+                        if (monthOffset != 0) {
+                          monthOffset--;
+                        }
+                      }),
                 icon: const Icon(Icons.arrow_forward),
               ),
             ],
           ),
         ],
       ),
-      clipBehavior: Clip.hardEdge,
-      insetPadding: const EdgeInsets.all(12),
+      clipBehavior: .hardEdge,
+      insetPadding: const .all(12),
       children: <Widget>[
         FutureBuilder<Map<String, double>>(
           future: _fetchData(context),
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<Map<String, double>> snapshot,
-          ) {
-            if (snapshot.connectionState == ConnectionState.done &&
-                snapshot.hasData) {
-              final List<WFChartData> chartData = <WFChartData>[];
+          builder:
+              (
+                BuildContext context,
+                AsyncSnapshot<Map<String, double>> snapshot,
+              ) {
+                if (snapshot.connectionState == .done && snapshot.hasData) {
+                  final List<WFChartData> chartData = <WFChartData>[];
 
-              double min = 0;
-              double max = 0;
-              double currentSum = 0;
+                  double min = 0;
+                  double max = 0;
+                  double currentSum = 0;
 
-              for (MapEntry<String, double> e
-                  in snapshot.data!.entries.toList()..sort(
-                    (MapEntry<String, double> a, MapEntry<String, double> b) =>
-                        b.value.compareTo(a.value),
-                  )) {
-                if (e.value != 0) {
-                  chartData.add(WFChartData(e.key, e.value));
-                  currentSum += e.value;
-                  if (currentSum < 0 && currentSum < min) {
-                    min = currentSum;
+                  for (MapEntry<String, double> e
+                      in snapshot.data!.entries.toList()..sort(
+                        (
+                          MapEntry<String, double> a,
+                          MapEntry<String, double> b,
+                        ) => b.value.compareTo(a.value),
+                      )) {
+                    if (e.value != 0) {
+                      chartData.add(WFChartData(e.key, e.value));
+                      currentSum += e.value;
+                      if (currentSum < 0 && currentSum < min) {
+                        min = currentSum;
+                      }
+                      if (currentSum > 0 && currentSum > max) {
+                        max = currentSum;
+                      }
+                    }
                   }
-                  if (currentSum > 0 && currentSum > max) {
-                    max = currentSum;
-                  }
-                }
-              }
 
-              return Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12),
-                    child: SizedBox(
-                      height: 400,
-                      width: MediaQuery.of(context).size.width,
-                      child: SfCartesianChart(
-                        primaryXAxis: CategoryAxis(
-                          labelRotation: 90,
-                          labelStyle: Theme.of(context).textTheme.labelSmall
-                              ?.copyWith(fontWeight: FontWeight.normal),
-                          axisLine: AxisLine(
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant,
-                          ),
-                          interval: 1,
-                        ),
-                        primaryYAxis: NumericAxis(
-                          labelStyle: Theme.of(context).textTheme.labelMedium
-                              ?.copyWith(fontWeight: FontWeight.normal),
-                          axisLine: AxisLine(
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant,
-                          ),
-                          axisLabelFormatter:
-                              (AxisLabelRenderDetails args) => ChartAxisLabel(
-                                NumberFormat().format(double.parse(args.text)),
-                                args.textStyle,
+                  return Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const .only(left: 12),
+                        child: SizedBox(
+                          height: 400,
+                          width: MediaQuery.of(context).size.width,
+                          child: SfCartesianChart(
+                            primaryXAxis: CategoryAxis(
+                              labelRotation: 90,
+                              labelStyle: Theme.of(context).textTheme.labelSmall
+                                  ?.copyWith(fontWeight: .normal),
+                              axisLine: AxisLine(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant,
                               ),
-                          minimum: min,
-                          maximum: max,
-                          decimalPlaces: 0,
-                        ),
-                        series: <CartesianSeries<WFChartData, String>>[
-                          WaterfallSeries<WFChartData, String>(
-                            dataSource: chartData,
-                            negativePointsColor: Colors.red,
-                            intermediateSumColor: Colors.orange,
-                            totalSumColor: Colors.black,
-                            color: Colors.green,
-                            xValueMapper: (WFChartData data, _) => data.label,
-                            yValueMapper: (WFChartData data, _) => data.value,
-                            intermediateSumPredicate:
-                                (WFChartData data, _) => data.isIntermediate,
-                            totalSumPredicate:
-                                (WFChartData data, _) => data.isTotal,
-                            width: 0.95,
-                            dataLabelMapper:
-                                (WFChartData data, _) =>
+                              interval: 1,
+                            ),
+                            primaryYAxis: NumericAxis(
+                              labelStyle: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium
+                                  ?.copyWith(fontWeight: .normal),
+                              axisLine: AxisLine(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant,
+                              ),
+                              axisLabelFormatter:
+                                  (AxisLabelRenderDetails args) =>
+                                      ChartAxisLabel(
+                                        NumberFormat().format(
+                                          double.parse(args.text),
+                                        ),
+                                        args.textStyle,
+                                      ),
+                              minimum: min,
+                              maximum: max,
+                              decimalPlaces: 0,
+                            ),
+                            series: <CartesianSeries<WFChartData, String>>[
+                              WaterfallSeries<WFChartData, String>(
+                                dataSource: chartData,
+                                negativePointsColor: Colors.red,
+                                intermediateSumColor: Colors.orange,
+                                totalSumColor: Colors.black,
+                                color: Colors.green,
+                                xValueMapper: (WFChartData data, _) =>
+                                    data.label,
+                                yValueMapper: (WFChartData data, _) =>
+                                    data.value,
+                                intermediateSumPredicate:
+                                    (WFChartData data, _) =>
+                                        data.isIntermediate,
+                                totalSumPredicate: (WFChartData data, _) =>
+                                    data.isTotal,
+                                width: 0.95,
+                                dataLabelMapper: (WFChartData data, _) =>
                                     data.value!.abs().toStringAsFixed(0),
-                            dataLabelSettings: DataLabelSettings(
-                              isVisible: true,
-                              angle: 90,
-                              alignment: ChartAlignment.center,
-                              labelAlignment: ChartDataLabelAlignment.outer,
-                              labelPosition: ChartDataLabelPosition.outside,
-                              textStyle: Theme.of(context).textTheme.labelSmall
-                                  ?.copyWith(fontWeight: FontWeight.normal),
+                                dataLabelSettings: DataLabelSettings(
+                                  isVisible: true,
+                                  angle: 90,
+                                  alignment: .center,
+                                  labelAlignment: .outer,
+                                  labelPosition: .outside,
+                                  textStyle: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall
+                                      ?.copyWith(fontWeight: .normal),
+                                ),
+                              ),
+                            ],
+                            enableAxisAnimation: true,
+                            palette: possibleChartColorsDart,
+                            tooltipBehavior: TooltipBehavior(enable: false),
+                            crosshairBehavior: CrosshairBehavior(enable: false),
+                            zoomPanBehavior: ZoomPanBehavior(
+                              enablePanning: true,
+                              enablePinching: true,
+                              zoomMode: .x,
+                              enableDoubleTapZooming: true,
                             ),
                           ),
-                        ],
-                        enableAxisAnimation: true,
-                        palette: possibleChartColorsDart,
-                        tooltipBehavior: TooltipBehavior(enable: false),
-                        crosshairBehavior: CrosshairBehavior(enable: false),
-                        zoomPanBehavior: ZoomPanBehavior(
-                          enablePanning: true,
-                          enablePinching: true,
-                          zoomMode: ZoomMode.x,
-                          enableDoubleTapZooming: true,
                         ),
                       ),
-                    ),
-                  ),
-                  /*Padding(
-                    padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                      /*Padding(
+                    padding: const .fromLTRB(12, 12, 12, 0),
                     child: ValueListenableBuilder<DateTime?>(
                       valueListenable: date,
                       builder: (BuildContext context, DateTime? value,
@@ -311,23 +322,23 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                       ),
                     ),
                   ),*/
-                ],
-              );
-            } else if (snapshot.hasError) {
-              log.severe(
-                "error getting chart card data",
-                snapshot.error,
-                snapshot.stackTrace,
-              );
-              Navigator.of(context).pop();
-              return const SizedBox.shrink();
-            } else {
-              return const Padding(
-                padding: EdgeInsets.all(8),
-                child: Center(child: CircularProgressIndicator()),
-              );
-            }
-          },
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  log.severe(
+                    "error getting chart card data",
+                    snapshot.error,
+                    snapshot.stackTrace,
+                  );
+                  Navigator.of(context).pop();
+                  return const SizedBox.shrink();
+                } else {
+                  return const Padding(
+                    padding: .all(8),
+                    child: Center(child: CircularProgressIndicator.adaptive()),
+                  );
+                }
+              },
         ),
       ],
     );

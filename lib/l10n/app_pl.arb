@@ -797,9 +797,25 @@
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
+    "loginFormButtonHideHeaders": "Ukryj nagłówki",
+    "@loginFormButtonHideHeaders": {
+        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
+    },
+    "loginFormButtonShowHeaders": "Własne nagłówki",
+    "@loginFormButtonShowHeaders": {
+        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
+    },
     "loginFormLabelAPIKey": "Prawidłowy klucz API",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHeaders": "Własne nagłówki (opcjonalnie)",
+    "@loginFormLabelHeaders": {
+        "description": "Login Form: Label for Custom Headers field"
+    },
+    "loginFormLabelHeadersHelp": "Jeden na linię, format: NazwaNagłówka: wartość",
+    "@loginFormLabelHeadersHelp": {
+        "description": "Login Form: Helper text for Custom Headers field"
     },
     "loginFormLabelHost": "Adres URL hosta",
     "@loginFormLabelHost": {
@@ -825,9 +841,9 @@
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
-    "navigationMain": "Panel główny",
+    "navigationMain": "Pulpit",
     "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
+        "description": "Navigation Label: Dashboard"
     },
     "generalSettings": "Ustawienia",
     "@generalSettings": {
@@ -950,6 +966,38 @@
     "@settingsNLEmptyNote": {
         "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
+    "settingsNLHistory": "Historia powiadomień",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "Brak zarejestrowanych powiadomień.",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "{notificationHistorySize, plural, one {To jest historia 1 ostatniego powiadomienia odebranego przez aplikację. Dodatkowo możesz tworzyć transakcje z (prawidłowych) powiadomień lub sprawdzić powód, dla którego powiadomienie nie mogło zostać przetworzone.} few {To jest historia {notificationHistorySize} ostatnich powiadomień odebranych przez aplikację. Dodatkowo możesz tworzyć transakcje z (prawidłowych) powiadomień lub sprawdzić powód, dla którego powiadomienie nie mogło zostać przetworzone.} other {To jest historia {notificationHistorySize} ostatnich powiadomień odebranych przez aplikację. Dodatkowo możesz tworzyć transakcje z (prawidłowych) powiadomień lub sprawdzić powód, dla którego powiadomienie nie mogło zostać przetworzone.}}",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "Powiadomienie pominięte: {reason, select, noMoney{Nie znaleziono wartości pieniężnej} noCurrency{Nie znaleziono waluty} appNotUsed{Aplikacja nie jest monitorowana} other{Nieznany powód}}.",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "Lista poprzednich powiadomień",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
+    },
     "settingsNLPermissionGrant": "Dotknij, aby udzielić uprawnień.",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
@@ -969,6 +1017,14 @@
     "settingsNLPrefillTXTitle": "Uzupełnij tytuł transakcji tytułem powiadomienia",
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLRegularExpression": "Wyrażenie regularne (opcjonalnie)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "Nieprawidłowe wyrażenie regularne",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Sprawdzam stan…",
     "@settingsNLServiceChecking": {
@@ -1000,6 +1056,14 @@
     "settingsNotificationListener": "Usługa nasłuchiwania powiadomień",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
+    },
+    "settingsServerConnection": "Połączenie z serwerem",
+    "@settingsServerConnection": {
+        "description": "Settings for the server connection"
+    },
+    "settingsServerConnectionUpdated": "Ustawienia połączenia zostały zaktualizowane.",
+    "@settingsServerConnectionUpdated": {
+        "description": "Server connection settings have been updated"
     },
     "settingsTheme": "Motyw aplikacji",
     "@settingsTheme": {

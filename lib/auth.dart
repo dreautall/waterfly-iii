@@ -12,6 +12,7 @@ import 'package:chopper/chopper.dart'
         StripStringExtension,
         applyHeaders;
 import 'package:cronet_http/cronet_http.dart';
+import 'package:cupertino_http/cupertino_http.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -25,6 +26,57 @@ import 'package:waterflyiii/timezonehandler.dart';
 
 final Logger log = Logger("Auth");
 final Version minApiVersion = Version(6, 3, 2);
+final RegExp _httpHeaderNamePattern = RegExp(r"^[!#$%&'*+\-.^_`|~0-9A-Za-z]+$");
+
+String _stripWrappingQuotes(String value) {
+  if (value.length >= 2 &&
+      ((value.startsWith('"') && value.endsWith('"')) ||
+          (value.startsWith("'") && value.endsWith("'")))) {
+    return value.substring(1, value.length - 1);
+  }
+  return value;
+}
+
+Map<String, String> parseCustomHeaders(String rawInput) {
+  final Map<String, String> headers = <String, String>{};
+
+  final List<String> lines = rawInput.replaceAll('\r', '').strip().split('\n');
+  for (int i = 0; i < lines.length; i++) {
+    final String line = lines[i].strip();
+    if (line.isEmpty) {
+      continue;
+    }
+
+    final int separator = line.indexOf(':');
+    if (separator <= 0 || separator == line.length - 1) {
+      throw AuthErrorCustomHeaders(i + 1);
+    }
+
+    final String name = line.substring(0, separator).strip();
+    String value = line.substring(separator + 1).strip();
+    value = _stripWrappingQuotes(value).strip();
+    if (name.isEmpty ||
+        !_httpHeaderNamePattern.hasMatch(name) ||
+        value.isEmpty) {
+      throw AuthErrorCustomHeaders(i + 1);
+    }
+
+    headers[name] = value;
+  }
+
+  return headers;
+}
+
+String encodeCustomHeaders(Map<String, String> headers) {
+  if (headers.isEmpty) {
+    return "";
+  }
+  return headers.entries
+      .map((MapEntry<String, String> entry) {
+        return "${entry.key}: ${entry.value}";
+      })
+      .join('\n');
+}
 
 class APITZReply {
   APITZReply(this.data);
@@ -67,6 +119,13 @@ class AuthErrorApiKey extends AuthError {
   const AuthErrorApiKey() : super("Invalid API key");
 }
 
+class AuthErrorCustomHeaders extends AuthError {
+  const AuthErrorCustomHeaders(this.lineNumber)
+    : super("Invalid custom headers");
+
+  final int lineNumber;
+}
+
 class AuthErrorVersionInvalid extends AuthError {
   const AuthErrorVersionInvalid() : super("Invalid Firefly API version");
 }
@@ -91,8 +150,25 @@ class AuthErrorNoInstance extends AuthError {
   final String host;
 }
 
-http.Client get httpClient =>
-    CronetClient.fromCronetEngine(CronetEngine.build(), closeEngine: false);
+class AuthCredentials {
+  const AuthCredentials({this.host, this.apiKey, this.customHeadersRaw});
+
+  final String? host;
+  final String? apiKey;
+  final String? customHeadersRaw;
+}
+
+http.Client get httpClient => Platform.isAndroid
+    ? CronetClient.fromCronetEngine(
+        CronetEngine.build(cacheMode: .memory, cacheMaxSize: 2 * 1024 * 1024),
+        closeEngine: false,
+      )
+    : Platform.isIOS
+    ? CupertinoClient.fromSessionConfiguration(
+        URLSessionConfiguration.ephemeralSessionConfiguration()
+          ..cache = URLCache.withCapacity(memoryCapacity: 2 * 1024 * 1024),
+      )
+    : http.Client();
 
 class APIRequestInterceptor implements Interceptor {
   APIRequestInterceptor(this.headerFunc);
@@ -120,6 +196,7 @@ class AuthUser {
   late Uri _host;
   late String _apiKey;
   late FireflyIii _api;
+  late Map<String, String> _customHeaders;
 
   //late FireflyIiiV2 _apiV2;
 
@@ -130,11 +207,15 @@ class AuthUser {
 
   final Logger log = Logger("Auth.AuthUser");
 
-  AuthUser._create(Uri host, String apiKey) {
+  AuthUser._create(
+    Uri host,
+    String apiKey,
+    Map<String, String>? customHeaders,
+  ) {
     log.config("AuthUser->_create($host)");
-    _apiKey = apiKey;
-
     _host = host.replace(pathSegments: <String>[...host.pathSegments, "api"]);
+    _apiKey = apiKey;
+    _customHeaders = customHeaders ?? const <String, String>{};
 
     _api = FireflyIii.create(
       baseUrl: _host,
@@ -153,10 +234,15 @@ class AuthUser {
     return <String, String>{
       HttpHeaders.authorizationHeader: "Bearer $_apiKey",
       HttpHeaders.acceptHeader: "application/json",
+      ..._customHeaders,
     };
   }
 
-  static Future<AuthUser> create(String host, String apiKey) async {
+  static Future<AuthUser> create(
+    String host,
+    String apiKey, {
+    Map<String, String>? customHeaders,
+  }) async {
     final Logger log = Logger("Auth.AuthUser");
     log.config("AuthUser->create($host)");
 
@@ -177,24 +263,30 @@ class AuthUser {
     try {
       final http.Request request = http.Request(HttpMethod.Get, aboutUri);
       request.headers[HttpHeaders.authorizationHeader] = "Bearer $apiKey";
+      if (customHeaders?.isNotEmpty ?? false) {
+        request.headers.addAll(customHeaders!);
+      }
       // See #497, redirect is a bad way to check for (un)successful login.
       request.followRedirects = true;
       request.maxRedirects = 5;
       final http.StreamedResponse response = await client.send(request);
 
-      // If we get an html page, it's most likely the login page, and auth failed
-      if (response.headers[HttpHeaders.contentTypeHeader]?.startsWith(
-            "text/html",
-          ) ??
-          true) {
+      if (response.statusCode == 401) {
         throw const AuthErrorApiKey();
       }
       if (response.statusCode != 200) {
         throw AuthErrorStatusCode(response.statusCode);
       }
 
-      final String stringData = await response.stream.bytesToString();
+      // If we get an html page with status 200, auth probably got redirected to a login page.
+      if (response.headers[HttpHeaders.contentTypeHeader]?.startsWith(
+            "text/html",
+          ) ??
+          true) {
+        throw const AuthErrorApiKey();
+      }
 
+      final String stringData = await response.stream.bytesToString();
       try {
         SystemInfo.fromJson(json.decode(stringData));
       } on FormatException {
@@ -204,7 +296,7 @@ class AuthUser {
       client.close();
     }
 
-    return AuthUser._create(uri, apiKey);
+    return AuthUser._create(uri, apiKey, customHeaders);
   }
 }
 
@@ -253,13 +345,24 @@ class FireflyService with ChangeNotifier {
     log.finest(() => "new FireflyService");
   }
 
+  Future<AuthCredentials> readStoredCredentials() async {
+    return AuthCredentials(
+      host: await storage.read(key: 'api_host'),
+      apiKey: await storage.read(key: 'api_key'),
+      customHeadersRaw: await storage.read(key: 'api_headers'),
+    );
+  }
+
   Future<bool> signInFromStorage() async {
     _storageSignInException = null;
-    final String? apiHost = await storage.read(key: 'api_host');
-    final String? apiKey = await storage.read(key: 'api_key');
+    final AuthCredentials storedCredentials = await readStoredCredentials();
+    final String? apiHost = storedCredentials.host;
+    final String? apiKey = storedCredentials.apiKey;
+    final String? customHeadersRaw = storedCredentials.customHeadersRaw;
 
     log.config(
-      "storage: $apiHost, apiKey ${apiKey?.isEmpty ?? true ? "unset" : "set"}",
+      "storage: $apiHost, apiKey ${apiKey?.isEmpty ?? true ? "unset" : "set"}, "
+      "customHeaders ${(customHeadersRaw?.isNotEmpty ?? false) ? "set" : "unset"}",
     );
 
     if (apiHost == null || apiKey == null) {
@@ -267,7 +370,7 @@ class FireflyService with ChangeNotifier {
     }
 
     try {
-      await signIn(apiHost, apiKey);
+      await signIn(apiHost, apiKey, customHeadersRaw: customHeadersRaw);
       return true;
     } catch (e) {
       _storageSignInException = e;
@@ -290,62 +393,84 @@ class FireflyService with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> signIn(String host, String apiKey) async {
+  Future<bool> signIn(
+    String host,
+    String apiKey, {
+    String? customHeadersRaw,
+  }) async {
     log.config("FireflyService->signIn($host)");
     host = host.strip().rightStrip('/');
     apiKey = apiKey.strip();
 
     _lastTriedHost = host;
-    _currentUser = await AuthUser.create(host, apiKey);
-    if (_currentUser == null || !hasApi) return false;
+    final Map<String, String> customHeaders = parseCustomHeaders(
+      customHeadersRaw ?? "",
+    );
 
-    final Response<CurrencySingle> currencyInfo =
-        await api.v1CurrenciesPrimaryGet();
-    defaultCurrency = currencyInfo.body!.data;
+    final AuthUser nextUser = await AuthUser.create(
+      host,
+      apiKey,
+      customHeaders: customHeaders,
+    );
+    final Response<CurrencySingle> currencyInfo = await nextUser.api
+        .v1CurrenciesPrimaryGet();
+    final CurrencyRead nextDefaultCurrency = currencyInfo.body!.data;
 
-    final Response<SystemInfo> about = await api.v1AboutGet();
+    final Response<SystemInfo> about = await nextUser.api.v1AboutGet();
+    late Version nextApiVersion;
     try {
       String apiVersionStr = about.body?.data?.apiVersion ?? "";
       if (apiVersionStr.startsWith("develop/")) {
         apiVersionStr = "9.9.9";
       }
-      _apiVersion = Version.parse(apiVersionStr);
+      nextApiVersion = Version.parse(apiVersionStr);
     } on FormatException {
       throw const AuthErrorVersionInvalid();
     }
-    log.info(() => "Firefly API version $_apiVersion");
-    if (apiVersion == null || apiVersion! < minApiVersion) {
+    log.info(() => "Firefly API version $nextApiVersion");
+    if (nextApiVersion < minApiVersion) {
       throw AuthErrorVersionTooLow(minApiVersion);
     }
 
     // Manual API query as the Swagger type doesn't resolve in Flutter :(
     final http.Client client = httpClient;
-    final Uri tzUri = user!.host.replace(
+    final Uri tzUri = nextUser.host.replace(
       pathSegments: <String>[
-        ...user!.host.pathSegments,
+        ...nextUser.host.pathSegments,
         "v1",
         "configuration",
         ConfigValueFilter.appTimezone.value!,
       ],
     );
+    late TimeZoneHandler nextTzHandler;
     try {
       final http.Response response = await client.get(
         tzUri,
-        headers: user!.headers(),
+        headers: nextUser.headers(),
       );
-      final APITZReply reply = APITZReply.fromJson(json.decode(response.body));
-      tzHandler = TimeZoneHandler(reply.data.value);
+      final APITZReply reply = .fromJson(json.decode(response.body));
+      nextTzHandler = TimeZoneHandler(reply.data.value);
     } finally {
       client.close();
     }
 
+    _currentUser = nextUser;
+    defaultCurrency = nextDefaultCurrency;
+    _apiVersion = nextApiVersion;
+    tzHandler = nextTzHandler;
     _signedIn = true;
-    _transStock = TransStock(api);
+    _transStock = TransStock(nextUser.api);
     log.finest(() => "notify FireflyService->signIn");
     notifyListeners();
 
     await storage.write(key: 'api_host', value: host);
     await storage.write(key: 'api_key', value: apiKey);
+    if (customHeaders.isNotEmpty) {
+      await storage.write(
+        key: 'api_headers',
+        value: encodeCustomHeaders(customHeaders),
+      );
+    }
 
     return true;
   }

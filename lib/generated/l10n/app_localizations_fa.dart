@@ -506,6 +506,11 @@ class SFa extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'تاکنون ذخیره شده:';
 
   @override
@@ -527,6 +532,11 @@ class SFa extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'در قلک‌ها: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -614,7 +624,20 @@ class SFa extends S {
       'برای استفاده مؤثر از Waterfly III به سرور خود با نمونه Firefly III یا افزونه Firefly III برای Home Assistant نیاز دارید.\n\nلطفاً URL کامل و همچنین یک نشانه دسترسی شخصی (تنظیمات -> نمایه -> OAuth -> رمز دسترسی شخصی) را در زیر وارد کنید.\n';
 
   @override
+  String get loginFormButtonHideHeaders => 'مخفی‌سازی سرآیندها';
+
+  @override
+  String get loginFormButtonShowHeaders => 'سرآیندهای سفارشی';
+
+  @override
   String get loginFormLabelAPIKey => 'کلید API معتبر\n';
+
+  @override
+  String get loginFormLabelHeaders => 'سرآیندهای سفارشی (اختیاری)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'هر مورد در یک خط، قالب: HeaderName: value';
 
   @override
   String get loginFormLabelHost => 'URL میزبان\n';
@@ -635,7 +658,7 @@ class SFa extends S {
   String get navigationCategories => 'دسته\n';
 
   @override
-  String get navigationMain => 'داشبورد اصلی\n';
+  String get navigationMain => 'داشبورد';
 
   @override
   String get generalSettings => 'تنظیمات';
@@ -645,11 +668,11 @@ class SFa extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -657,11 +680,11 @@ class SFa extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString از $of\n\n\n\n\n\n';
@@ -739,6 +762,40 @@ class SFa extends S {
   String get settingsNLEmptyNote => 'فیلد یادداشت را خالی بگذار';
 
   @override
+  String get settingsNLHistory => 'تاریخچه اعلان‌ها';
+
+  @override
+  String get settingsNLHistoryEmpty => 'تاکنون اعلانی ثبت نشده است.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other:
+          'این تاریخچه شامل $notificationHistorySize اعلان اخیر دریافتی توسط برنامه است. همچنین می‌توانید از اعلان‌های (معتبر) تراکنش ایجاد کنید یا دلیل پردازش نشدن یک اعلان را مشاهده کنید.',
+      one:
+          'این تاریخچه شامل ۱ اعلان اخیر دریافتی توسط برنامه است. همچنین می‌توانید از اعلان‌های (معتبر) تراکنش ایجاد کنید یا دلیل پردازش نشدن یک اعلان را مشاهده کنید.',
+      zero: 'این تاریخچه‌ای از اعلان‌های دریافتی توسط برنامه است.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'مقدار پولی یافت نشد',
+      'noCurrency': 'واحد پولی معتبری یافت نشد',
+      'appNotUsed': 'برنامه در لیست نظارت نیست',
+      'other': 'دلیل نامشخص',
+    });
+    return 'اعلان رد شد: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription => 'فهرست اعلان‌های قبلی';
+
+  @override
   String get settingsNLPermissionGrant => 'برای اعطای مجوز ضربه بزنید.\n';
 
   @override
@@ -754,6 +811,12 @@ class SFa extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'عنوان تراکنش را با عنوان اعلان از قبل پر کنید\n';
+
+  @override
+  String get settingsNLRegularExpression => 'عبارت باقاعده (اختیاری)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'عبارت باقاعده نامعتبر';
 
   @override
   String get settingsNLServiceChecking => 'در حال بررسی وضعیت...';
@@ -774,6 +837,12 @@ class SFa extends S {
 
   @override
   String get settingsNotificationListener => 'سرویس شنونده اعلان\n';
+
+  @override
+  String get settingsServerConnection => 'اتصال به سرور';
+
+  @override
+  String get settingsServerConnectionUpdated => 'تنظیمات اتصال به‌روزرسانی شد.';
 
   @override
   String get settingsTheme => 'تم برنامه\n';

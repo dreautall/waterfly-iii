@@ -38,6 +38,8 @@ class _LoginPageState extends State<LoginPage> {
 
   final TextEditingController _hostTextController = TextEditingController();
   final TextEditingController _keyTextController = TextEditingController();
+  final TextEditingController _customHeadersTextController =
+      TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _uriScheme = UriScheme.https;
@@ -45,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
   ErrorIcon _hostErrorIcon = const ErrorIcon(false);
   String? _keyError;
   ErrorIcon _keyErrorIcon = const ErrorIcon(false);
+  bool _showCustomHeadersField = false;
   //bool _formSubmitted = false;
 
   final FocusNode _hostFocusNode = FocusNode();
@@ -60,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
   void dispose() {
     _hostTextController.dispose();
     _keyTextController.dispose();
+    _customHeadersTextController.dispose();
     _hostFocusNode.dispose();
 
     super.dispose();
@@ -83,27 +87,28 @@ class _LoginPageState extends State<LoginPage> {
           key: _formKey,
           child: ListView(
             shrinkWrap: true,
-            padding: const EdgeInsets.all(24),
+            padding: const .all(24),
             children: <Widget>[
               Column(
                 children: <Widget>[
                   const SizedBox(height: 20),
                   const AppLogo(),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                    padding: const .fromLTRB(0, 20, 0, 20),
                     child: Text(
                       S.of(context).loginWelcome,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
                   SizedBox(
-                    width: double.infinity,
+                    width: .infinity,
                     child: Card(
                       elevation: 0,
-                      color:
-                          Theme.of(context).colorScheme.surfaceContainerHighest,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.surfaceContainerHighest,
                       child: Padding(
-                        padding: const EdgeInsets.all(12),
+                        padding: const .all(12),
                         child: Text(
                           S.of(context).loginAbout,
                           style: const TextStyle(height: 2),
@@ -205,19 +210,19 @@ class _LoginPageState extends State<LoginPage> {
                                 _hostError != S.of(context).errorInvalidURL)) {
                           setState(() {
                             _hostErrorIcon = ErrorIcon(error);
-                            _hostError =
-                                error ? S.of(context).errorInvalidURL : null;
+                            _hostError = error
+                                ? S.of(context).errorInvalidURL
+                                : null;
                           });
                         }
                       },
                       autovalidateMode: AutovalidateMode.disabled,
                       validator: (String? value) {
-                        final String? error =
-                            value == null || value.isEmpty
-                                ? S.of(context).errorFieldRequired
-                                : !_hostValid(value)
-                                ? S.of(context).errorInvalidURL
-                                : null;
+                        final String? error = value == null || value.isEmpty
+                            ? S.of(context).errorFieldRequired
+                            : !_hostValid(value)
+                            ? S.of(context).errorInvalidURL
+                            : null;
                         if (_hostError != error ||
                             _hostErrorIcon.isError != (error != null)) {
                           setState(() {
@@ -250,10 +255,9 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       autovalidateMode: AutovalidateMode.disabled,
                       validator: (String? value) {
-                        final String? error =
-                            value == null || value.isEmpty
-                                ? S.of(context).errorFieldRequired
-                                : null;
+                        final String? error = value == null || value.isEmpty
+                            ? S.of(context).errorFieldRequired
+                            : null;
                         if (_keyError != error ||
                             _keyErrorIcon.isError != (error != null)) {
                           setState(() {
@@ -265,9 +269,32 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                   ),
+                  AnimatedHeight(
+                    child: (_showCustomHeadersField)
+                        ? const SizedBox(height: 12)
+                        : const SizedBox.shrink(),
+                  ),
+                  AnimatedHeight(
+                    child: _showCustomHeadersField
+                        ? TextFormField(
+                            controller: _customHeadersTextController,
+                            decoration: InputDecoration(
+                              filled: true,
+                              labelText: S.of(context).loginFormLabelHeaders,
+                              helperText: S
+                                  .of(context)
+                                  .loginFormLabelHeadersHelp,
+                            ),
+                            minLines: 2,
+                            maxLines: 5,
+                            autocorrect: false,
+                            autovalidateMode: AutovalidateMode.disabled,
+                          )
+                        : const SizedBox.shrink(),
+                  ),
                   const SizedBox(height: 12),
                   OverflowBar(
-                    alignment: MainAxisAlignment.end,
+                    alignment: .end,
                     spacing: 12,
                     overflowSpacing: 12,
                     children: <Widget>[
@@ -284,6 +311,18 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: Text(S.of(context).formButtonHelp),
                       ),
+                      OutlinedButton(
+                        onPressed: () {
+                          setState(() {
+                            _showCustomHeadersField = !_showCustomHeadersField;
+                          });
+                        },
+                        child: Text(
+                          _showCustomHeadersField
+                              ? S.of(context).loginFormButtonHideHeaders
+                              : S.of(context).loginFormButtonShowHeaders,
+                        ),
+                      ),
                       FilledButton(
                         onPressed: /*_formSubmitted
                             ? null
@@ -293,14 +332,18 @@ class _LoginPageState extends State<LoginPage> {
                               (_hostError != null && _hostError!.isNotEmpty)) {
                             return;
                           }
+                          if (_showCustomHeadersField == false) {
+                            _customHeadersTextController.text = "";
+                          }
                           Navigator.push(
                             context,
                             MaterialPageRoute<Widget>(
-                              builder:
-                                  (BuildContext context) => SplashPage(
-                                    host: _hostTextController.text,
-                                    apiKey: _keyTextController.text,
-                                  ),
+                              builder: (BuildContext context) => SplashPage(
+                                host: _hostTextController.text,
+                                apiKey: _keyTextController.text,
+                                customHeadersRaw:
+                                    _customHeadersTextController.text,
+                              ),
                             ),
                           );
                           /*setState(() {

@@ -51,6 +51,28 @@
             }
         }
     },
+    "billsAmountAndFrequency": "Langganan mencocokkan transaksi antara {minValue} dan {maxvalue}. Berulang {frequency, select, weekly{setiap minggu} monthly{setiap bulan} quarterly{setiap kuartal} halfyear{setiap semester} yearly{setiap tahun} other{tidak diketahui}}{skip, plural, =0{} other{, melewati {skip} kali}}.",
+    "@billsAmountAndFrequency": {
+        "description": "Subscription match for min and max amounts, and frequency",
+        "placeholders": {
+            "minValue": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "maxvalue": {
+                "type": "String",
+                "example": "$60.50"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
+    },
     "billsChangeLayoutTooltip": "Ubah tata letak",
     "@billsChangeLayoutTooltip": {
         "description": "Text for layout change button tooltip"
@@ -62,6 +84,24 @@
     "billsErrorLoading": "Terjadi kesalahan saat memuat langganan.",
     "@billsErrorLoading": {
         "description": "Generic error message when subscriptions can't be loaded (shouldn't occur)"
+    },
+    "billsExactAmountAndFrequency": "Langganan mencocokkan transaksi sebesar {value}. Berulang {frequency, select, weekly{setiap minggu} monthly{setiap bulan} quarterly{setiap kuartal} halfyear{setiap semester} yearly{setiap tahun} other{tidak diketahui}}{skip, plural, =0{} other{, melewati {skip} kali}}.",
+    "@billsExactAmountAndFrequency": {
+        "description": "Subscription match for exact amount and frequency",
+        "placeholders": {
+            "value": {
+                "type": "String",
+                "example": "$50.12"
+            },
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
+            }
+        }
     },
     "billsExpectedOn": "Diharapkan {date}",
     "@billsExpectedOn": {
@@ -81,6 +121,20 @@
             "frequency": {
                 "type": "String",
                 "example": "yearly"
+            }
+        }
+    },
+    "billsFrequencySkip": "{frequency, select, weekly{Mingguan} monthly{Bulanan} quarterly{Kuartalan} halfyear{Semesteran} yearly{Tahunan} other{Tidak diketahui}}{skip, plural, =0{} other{, melewati {skip} kali}}",
+    "@billsFrequencySkip": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            },
+            "skip": {
+                "type": "num",
+                "example": "1"
             }
         }
     },
@@ -739,9 +793,25 @@
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
+    "loginFormButtonHideHeaders": "Sembunyikan Header",
+    "@loginFormButtonHideHeaders": {
+        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
+    },
+    "loginFormButtonShowHeaders": "Header Kustom",
+    "@loginFormButtonShowHeaders": {
+        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
+    },
     "loginFormLabelAPIKey": "Kunci API Valid",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHeaders": "Header Kustom (opsional)",
+    "@loginFormLabelHeaders": {
+        "description": "Login Form: Label for Custom Headers field"
+    },
+    "loginFormLabelHeadersHelp": "Satu per baris, format: NamaHeader: nilai",
+    "@loginFormLabelHeadersHelp": {
+        "description": "Login Form: Helper text for Custom Headers field"
     },
     "loginFormLabelHost": "URL Host",
     "@loginFormLabelHost": {
@@ -767,9 +837,9 @@
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
-    "navigationMain": "Dasbor Utama",
+    "navigationMain": "Dasbor",
     "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
+        "description": "Navigation Label: Dashboard"
     },
     "generalSettings": "Pengaturan",
     "@generalSettings": {
@@ -875,6 +945,38 @@
     "@settingsNLEmptyNote": {
         "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
+    "settingsNLHistory": "Riwayat Notifikasi",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "Belum ada notifikasi yang tercatat.",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "Ini adalah riwayat dari {notificationHistorySize} notifikasi terakhir yang diterima aplikasi. Selain itu, Anda dapat membuat transaksi dari notifikasi (yang valid) atau melihat alasan mengapa notifikasi tidak dapat diproses.",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "Notifikasi dilewati: {reason, select, noMoney{Tidak ada nilai moneter ditemukan} noCurrency{Tidak ada mata uang ditemukan} appNotUsed{Aplikasi tidak didengarkan} other{Alasan tidak diketahui}}.",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "Daftar notifikasi sebelumnya",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
+    },
     "settingsNLPermissionGrant": "Ketuk untuk memberikan izin.",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
@@ -894,6 +996,14 @@
     "settingsNLPrefillTXTitle": "Isi otomatis judul transaksi dengan judul notifikasi",
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLRegularExpression": "Ekspresi Reguler (opsional)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "Ekspresi Reguler Tidak Valid",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Memeriksa status…",
     "@settingsNLServiceChecking": {
@@ -925,6 +1035,14 @@
     "settingsNotificationListener": "Layanan Pendengar Notifikasi",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
+    },
+    "settingsServerConnection": "Koneksi Server",
+    "@settingsServerConnection": {
+        "description": "Settings for the server connection"
+    },
+    "settingsServerConnectionUpdated": "Pengaturan koneksi telah diperbarui.",
+    "@settingsServerConnectionUpdated": {
+        "description": "Server connection settings have been updated"
     },
     "settingsTheme": "Tema Aplikasi",
     "@settingsTheme": {
@@ -1013,6 +1131,14 @@
     "transactionDialogCurrencyTitle": "Pilih mata uang",
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "Tidak Ada Celengan",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Tautkan ke Celengan",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
     },
     "transactionDialogTagsAdd": "Tambahkan Label",
     "@transactionDialogTagsAdd": {

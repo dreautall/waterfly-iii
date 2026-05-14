@@ -69,7 +69,7 @@ class _DashboardDialogState extends State<DashboardDialog> {
 
     return AlertDialog(
       title: Text(S.of(context).homeMainDialogSettingsTitle),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       actions: <Widget>[
         OutlinedButton(
           child: Text(S.of(context).generalReset),
@@ -94,7 +94,7 @@ class _DashboardDialogState extends State<DashboardDialog> {
         ),
       ],
       content: SizedBox(
-        width: double.maxFinite,
+        width: .maxFinite,
         height: cardWidgets.length * 96,
         child: ReorderableListView(
           onReorder: (int oldIndex, int newIndex) async {
@@ -107,7 +107,7 @@ class _DashboardDialogState extends State<DashboardDialog> {
             });
             await context.read<SettingsProvider>().setDashboardOrder(cards);
           },
-          padding: const EdgeInsets.all(8),
+          padding: const .all(8),
           proxyDecorator: proxyDecorator,
           children: cardWidgets,
         ),
@@ -128,14 +128,14 @@ class DashboardCard extends StatelessWidget {
 
     late String chartTitle;
     chartTitle = switch (card) {
-      DashboardCards.dailyavg => S.of(context).homeMainChartDailyAvg,
-      DashboardCards.categories => S.of(context).homeMainChartCategoriesTitle,
-      DashboardCards.tags => S.of(context).homeMainChartTagsTitle,
-      DashboardCards.accounts => S.of(context).homeMainChartAccountsTitle,
-      DashboardCards.netearnings => S.of(context).homeMainChartNetEarningsTitle,
-      DashboardCards.networth => S.of(context).homeMainChartNetWorthTitle,
-      DashboardCards.budgets => S.of(context).homeMainBudgetTitle,
-      DashboardCards.bills => S.of(context).homeMainBillsTitle,
+      .dailyavg => S.of(context).homeMainChartDailyAvg,
+      .categories => S.of(context).homeMainChartCategoriesTitle,
+      .tags => S.of(context).homeMainChartTagsTitle,
+      .accounts => S.of(context).homeMainChartAccountsTitle,
+      .netearnings => S.of(context).homeMainChartNetEarningsTitle,
+      .networth => S.of(context).homeMainChartNetWorthTitle,
+      .budgets => S.of(context).homeMainBudgetTitle,
+      .bills => S.of(context).homeMainBillsTitle,
     };
 
     final bool hidden = context
@@ -151,15 +151,9 @@ class DashboardCard extends StatelessWidget {
             icon: const Icon(Icons.visibility),
             selectedIcon: const Icon(Icons.visibility_off_outlined),
             isSelected: hidden,
-            onPressed:
-                () =>
-                    hidden
-                        ? context.read<SettingsProvider>().dashboardShowCard(
-                          card,
-                        )
-                        : context.read<SettingsProvider>().dashboardHideCard(
-                          card,
-                        ),
+            onPressed: () => hidden
+                ? context.read<SettingsProvider>().dashboardShowCard(card)
+                : context.read<SettingsProvider>().dashboardHideCard(card),
           ),
           trailing: ReorderableDragStartListener(
             index: index,

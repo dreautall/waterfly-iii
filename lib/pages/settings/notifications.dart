@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:appcheck/appcheck.dart';
 import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/material.dart';
@@ -9,7 +10,9 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/notificationlistener.dart';
+import 'package:waterflyiii/pages/settings/notifications/history.dart';
 import 'package:waterflyiii/settings.dart';
+import 'package:waterflyiii/widgets/erroricon.dart';
 
 class SettingsNotifications extends StatefulWidget {
   const SettingsNotifications({super.key});
@@ -37,76 +40,79 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
     return Scaffold(
       appBar: AppBar(title: Text(S.of(context).settingsNotificationListener)),
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const .symmetric(horizontal: 24),
         primary: false,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: const .symmetric(horizontal: 12),
             child: Text(S.of(context).settingsNLDescription),
           ),
           const Divider(),
           FutureBuilder<NotificationListenerStatus>(
             future: updateStatus(),
-            builder: (
-              BuildContext context,
-              AsyncSnapshot<NotificationListenerStatus> snapshot,
-            ) {
-              final S l10n = S.of(context);
-              final ScaffoldMessengerState msg = ScaffoldMessenger.of(context);
+            builder:
+                (
+                  BuildContext context,
+                  AsyncSnapshot<NotificationListenerStatus> snapshot,
+                ) {
+                  final S l10n = S.of(context);
+                  final ScaffoldMessengerState msg = ScaffoldMessenger.of(
+                    context,
+                  );
 
-              late String subtitle;
-              late Function clickFn;
-              if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.hasData) {
-                if (!snapshot.data!.servicePermission) {
-                  subtitle = l10n.settingsNLPermissionGrant;
-                  clickFn = () async {
-                    final bool granted =
+                  late String subtitle;
+                  late Function clickFn;
+                  if (snapshot.connectionState == .done && snapshot.hasData) {
+                    if (!snapshot.data!.servicePermission) {
+                      subtitle = l10n.settingsNLPermissionGrant;
+                      clickFn = () async {
+                        final bool granted =
+                            await FlutterLocalNotificationsPlugin()
+                                .resolvePlatformSpecificImplementation<
+                                  AndroidFlutterLocalNotificationsPlugin
+                                >()!
+                                .requestNotificationsPermission() ??
+                            false;
+                        if (!granted) {
+                          msg.showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                l10n.settingsNLPermissionNotGranted,
+                              ),
+                              behavior: .floating,
+                            ),
+                          );
+                          return;
+                        }
+                        await NotificationServicePlugin.instance
+                            .requestPermissionsIfDenied();
+                        await nlInit();
+                      };
+                    } else if (!snapshot.data!.notificationPermission) {
+                      subtitle = l10n.settingsNLPermissionGrant;
+                      clickFn = () async {
                         await FlutterLocalNotificationsPlugin()
                             .resolvePlatformSpecificImplementation<
                               AndroidFlutterLocalNotificationsPlugin
                             >()!
-                            .requestNotificationsPermission() ??
-                        false;
-                    if (!granted) {
-                      msg.showSnackBar(
-                        SnackBar(
-                          content: Text(l10n.settingsNLPermissionNotGranted),
-                          behavior: SnackBarBehavior.floating,
-                        ),
-                      );
-                      return;
-                    }
-                    await NotificationServicePlugin.instance
-                        .requestPermissionsIfDenied();
-                    await nlInit();
-                  };
-                } else if (!snapshot.data!.notificationPermission) {
-                  subtitle = l10n.settingsNLPermissionGrant;
-                  clickFn = () async {
-                    await FlutterLocalNotificationsPlugin()
-                        .resolvePlatformSpecificImplementation<
-                          AndroidFlutterLocalNotificationsPlugin
-                        >()!
-                        .requestNotificationsPermission();
-                  };
-                } else if (!snapshot.data!.serviceRunning) {
-                  subtitle = l10n.settingsNLServiceStopped;
-                  clickFn = () async {
-                    await NotificationServicePlugin.instance.startService();
-                  };
-                } else {
-                  subtitle = l10n.settingsNLServiceRunning;
-                  clickFn = () async {
-                    final bool? ok = await showDialog<bool>(
-                      context: context,
-                      builder:
-                          (BuildContext context) => AlertDialog(
+                            .requestNotificationsPermission();
+                      };
+                    } else if (!snapshot.data!.serviceRunning) {
+                      subtitle = l10n.settingsNLServiceStopped;
+                      clickFn = () async {
+                        await NotificationServicePlugin.instance.startService();
+                      };
+                    } else {
+                      subtitle = l10n.settingsNLServiceRunning;
+                      clickFn = () async {
+                        final bool? ok = await showDialog<bool>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
                             icon: const Icon(Icons.remove_done),
                             title: Text(
                               S.of(context).settingsNLPermissionRemove,
                             ),
-                            clipBehavior: Clip.hardEdge,
+                            clipBehavior: .hardEdge,
                             actions: <Widget>[
                               TextButton(
                                 child: Text(
@@ -129,45 +135,65 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                               S.of(context).settingsNLPermissionRemoveHelp,
                             ),
                           ),
-                    );
-                    if (!(ok ?? false)) {
-                      return;
+                        );
+                        if (!(ok ?? false)) {
+                          return;
+                        }
+                        await NotificationServicePlugin.instance
+                            .requestServicePermission();
+                      };
                     }
-                    await NotificationServicePlugin.instance
-                        .requestServicePermission();
-                  };
-                }
-              } else if (snapshot.hasError) {
-                log.severe(
-                  "error updating status",
-                  snapshot.error,
-                  snapshot.stackTrace,
-                );
-                subtitle = S
-                    .of(context)
-                    .settingsNLServiceCheckingError(snapshot.error.toString());
-              } else {
-                subtitle = S.of(context).settingsNLServiceChecking;
-              }
-              return ListTile(
-                title: Text(S.of(context).settingsNLServiceStatus),
-                leading: CircleAvatar(
-                  child:
-                      (snapshot.data?.serviceRunning ?? false)
+                  } else if (snapshot.hasError) {
+                    log.severe(
+                      "error updating status",
+                      snapshot.error,
+                      snapshot.stackTrace,
+                    );
+                    subtitle = S
+                        .of(context)
+                        .settingsNLServiceCheckingError(
+                          snapshot.error.toString(),
+                        );
+                  } else {
+                    subtitle = S.of(context).settingsNLServiceChecking;
+                  }
+                  return ListTile(
+                    title: Text(S.of(context).settingsNLServiceStatus),
+                    leading: CircleAvatar(
+                      child: (snapshot.data?.serviceRunning ?? false)
                           ? const Icon(Icons.check)
                           : const Icon(Icons.close),
-                ),
-                subtitle: Text(subtitle, maxLines: 1),
-                onTap: () async {
-                  await clickFn();
-                  setState(() {});
+                    ),
+                    subtitle: Text(subtitle, maxLines: 1),
+                    onTap: () async {
+                      await clickFn();
+                      setState(() {});
+                    },
+                  );
                 },
-              );
-            },
           ),
           if (status != null &&
               status!.serviceRunning &&
               status!.notificationPermission) ...<Widget>[
+            const Divider(),
+            OpenContainer(
+              openBuilder: (BuildContext context, Function closedContainer) =>
+                  const NotificationHistory(),
+              openColor: Theme.of(context).cardColor,
+              closedColor: Theme.of(context).cardColor,
+              closedElevation: 0,
+              closedBuilder: (BuildContext context, Function openContainer) =>
+                  ListTile(
+                    title: Text(S.of(context).settingsNLHistory),
+                    leading: const CircleAvatar(child: Icon(Icons.history)),
+                    subtitle: Text(
+                      S.of(context).settingsNLHistoryShortDescription,
+                      maxLines: 1,
+                    ),
+                    isThreeLine: false,
+                    onTap: () => openContainer(),
+                  ),
+            ),
             const Divider(),
             ListTile(
               title: Text(S.of(context).settingsNLAppAdd),
@@ -175,8 +201,8 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
               subtitle: Text(S.of(context).settingsNLAppAddHelp, maxLines: 2),
               isThreeLine: true,
               onTap: () async {
-                final SettingsProvider settings =
-                    context.read<SettingsProvider>();
+                final SettingsProvider settings = context
+                    .read<SettingsProvider>();
                 final AppInfo? app = await showDialog<AppInfo>(
                   context: context,
                   builder: (BuildContext context) => const AppDialog(),
@@ -210,7 +236,7 @@ class NotificationApps extends StatelessWidget {
 
     // Accounts
     final Response<AccountArray> respAccounts = await api.v1AccountsGet(
-      type: AccountTypeFilter.assetAccount,
+      type: .assetAccount,
     );
     apiThrowErrorIfEmpty(respAccounts, context.mounted ? context : null);
 
@@ -224,10 +250,9 @@ class NotificationApps extends StatelessWidget {
     return FutureBuilder<AccountArray>(
       future: _getAccounts(context),
       builder: (BuildContext context, AsyncSnapshot<AccountArray> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done &&
-            snapshot.hasData) {
+        if (snapshot.connectionState == .done && snapshot.hasData) {
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: .stretch,
             children: <Widget>[
               ...context.watch<SettingsProvider>().notificationApps.map((
                 String app,
@@ -236,28 +261,31 @@ class NotificationApps extends StatelessWidget {
                   future: context
                       .read<SettingsProvider>()
                       .notificationGetAppSettings(app),
-                  builder: (
-                    BuildContext context,
-                    AsyncSnapshot<NotificationAppSettings> snap,
-                  ) {
-                    if (snap.connectionState == ConnectionState.done &&
-                        snap.hasData) {
-                      return AppCard(
-                        app: app,
-                        accounts: snapshot.data!,
-                        settings: snap.data!,
-                      );
-                    } else if (snapshot.hasError) {
-                      log.severe(
-                        "error getting app settings",
-                        snapshot.error,
-                        snapshot.stackTrace,
-                      );
-                      return const SizedBox.shrink();
-                    } else {
-                      return const CircularProgressIndicator();
-                    }
-                  },
+                  builder:
+                      (
+                        BuildContext context,
+                        AsyncSnapshot<NotificationAppSettings> snap,
+                      ) {
+                        if (snap.connectionState == .done && snap.hasData) {
+                          debugPrint("trying to make AppCard for $app");
+                          return AppCard(
+                            app: app,
+                            accounts: snapshot.data!,
+                            settings: snap.data!,
+                          );
+                        } else if (snap.hasError) {
+                          debugPrint("erroring out");
+                          log.severe(
+                            "error getting app settings",
+                            snapshot.error,
+                            snapshot.stackTrace,
+                          );
+                          return const SizedBox.shrink();
+                        } else {
+                          debugPrint("waiting");
+                          return const CircularProgressIndicator.adaptive();
+                        }
+                      },
                 );
               }),
             ],
@@ -274,7 +302,7 @@ class NotificationApps extends StatelessWidget {
                 .settingsNLServiceCheckingError(snapshot.error.toString()),
           );
         } else {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator.adaptive());
         }
       },
     );
@@ -300,6 +328,7 @@ class AppCard extends StatefulWidget {
 class _AppCardState extends State<AppCard> {
   final TextEditingController accountTextController = TextEditingController();
   final FocusNode accountFocusNode = FocusNode();
+  ErrorIcon _regexErrorIcon = const ErrorIcon(false);
 
   String? appAccountId;
 
@@ -313,7 +342,7 @@ class _AppCardState extends State<AppCard> {
               type: "dummy",
               attributes: AccountProperties(
                 name: S.of(context).settingsNLAppAccountDynamic,
-                type: ShortAccountTypeProperty.swaggerGeneratedUnknown,
+                type: .swaggerGeneratedUnknown,
               ),
             ),
             label: S.of(context).settingsNLAppAccountDynamic,
@@ -329,14 +358,14 @@ class _AppCardState extends State<AppCard> {
       }
     }
     return Card(
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const .all(12),
         child: Row(
           children: <Widget>[
             Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: <Widget>[
                   Text(
                     widget.settings.appName,
@@ -368,7 +397,7 @@ class _AppCardState extends State<AppCard> {
                     },
                   ),
                   const SizedBox(height: 16),
-                  CheckboxListTile(
+                  CheckboxListTile.adaptive(
                     title: Text(S.of(context).settingsNLPrefillTXTitle),
                     isThreeLine: false,
                     value: widget.settings.includeTitle,
@@ -385,7 +414,7 @@ class _AppCardState extends State<AppCard> {
                           );
                     },
                   ),
-                  CheckboxListTile(
+                  CheckboxListTile.adaptive(
                     title: Text(S.of(context).settingsNLAutoAdd),
                     isThreeLine: false,
                     value: widget.settings.autoAdd,
@@ -403,7 +432,7 @@ class _AppCardState extends State<AppCard> {
                           );
                     },
                   ),
-                  CheckboxListTile(
+                  CheckboxListTile.adaptive(
                     title: Text(S.of(context).settingsNLEmptyNote),
                     isThreeLine: false,
                     value: widget.settings.emptyNote,
@@ -419,13 +448,67 @@ class _AppCardState extends State<AppCard> {
                           );
                     },
                   ),
+                  const SizedBox(height: 16),
+                  // Regex field
+                  TextFormField(
+                    decoration: InputDecoration(
+                      label: Text(S.of(context).settingsNLRegularExpression),
+                      icon: const Icon(Icons.code),
+                      border: const OutlineInputBorder(),
+                      suffixIcon: _regexErrorIcon,
+                      errorText: _regexErrorIcon.isError
+                          ? S.of(context).settingsNLRegularExpressionInvalid
+                          : null,
+                    ),
+                    initialValue: widget.settings.regex?.pattern,
+                    onChanged: (String value) async {
+                      value = value.trim();
+                      if (value.isEmpty) {
+                        setState(() {
+                          widget.settings.regex = null;
+                          _regexErrorIcon = const ErrorIcon(false);
+                        });
+                        await context
+                            .read<SettingsProvider>()
+                            .notificationSetAppSettings(
+                              widget.app,
+                              widget.settings,
+                            );
+                        return;
+                      }
+                      try {
+                        debugPrint("trying");
+                        final RegExp validRegex = RegExp(
+                          value,
+                          caseSensitive: false,
+                        );
+                        setState(() {
+                          widget.settings.regex = validRegex;
+                          _regexErrorIcon = const ErrorIcon(false);
+                        });
+
+                        await context
+                            .read<SettingsProvider>()
+                            .notificationSetAppSettings(
+                              widget.app,
+                              widget.settings,
+                            );
+                        debugPrint("settings updated with $value");
+                      } on FormatException catch (_) {
+                        debugPrint("showing error");
+                        setState(() {
+                          _regexErrorIcon = const ErrorIcon(true);
+                        });
+                      }
+                    },
+                  ),
                 ],
               ),
             ),
             SizedBox(
               width: 48,
               child: Align(
-                alignment: Alignment.centerRight,
+                alignment: .centerRight,
                 child: IconButton(
                   icon: const Icon(Icons.delete),
                   onPressed: () {
@@ -453,43 +536,40 @@ class AppDialog extends StatelessWidget {
 
     return SimpleDialog(
       title: Text(S.of(context).settingsNLAppAdd),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       children: <Widget>[
         FutureBuilder<List<String>>(
           future: context.read<SettingsProvider>().notificationKnownApps(
             filterUsed: true,
           ),
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<List<String>> snapshot,
-          ) {
-            if (snapshot.hasData) {
-              final List<Widget> child = <Widget>[];
-              child.add(
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Text(S.of(context).settingsNLAppAddInfo),
-                ),
-              );
-              for (String app in snapshot.data!) {
-                child.add(AppDialogEntry(app: app));
-              }
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: child,
-              );
-            } else if (snapshot.hasError) {
-              log.severe(
-                "error getting app settings",
-                snapshot.error,
-                snapshot.stackTrace,
-              );
-              Navigator.pop(context);
-              return const SizedBox.shrink();
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
+          builder:
+              (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+                if (snapshot.hasData) {
+                  final List<Widget> child = <Widget>[];
+                  child.add(
+                    Padding(
+                      padding: const .symmetric(horizontal: 24),
+                      child: Text(S.of(context).settingsNLAppAddInfo),
+                    ),
+                  );
+                  for (String app in snapshot.data!) {
+                    child.add(AppDialogEntry(app: app));
+                  }
+                  return Column(crossAxisAlignment: .start, children: child);
+                } else if (snapshot.hasError) {
+                  log.severe(
+                    "error getting app settings",
+                    snapshot.error,
+                    snapshot.stackTrace,
+                  );
+                  Navigator.pop(context);
+                  return const SizedBox.shrink();
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  );
+                }
+              },
         ),
       ],
     );
@@ -508,7 +588,7 @@ class AppDialogEntry extends StatelessWidget {
     return FutureBuilder<AppInfo?>(
       future: AppCheck().checkAvailability(app),
       builder: (BuildContext context, AsyncSnapshot<AppInfo?> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.connectionState == .done) {
           if (snapshot.data == null || snapshot.data!.appName == null) {
             return const SizedBox.shrink();
           }
@@ -537,7 +617,7 @@ class AppDialogEntry extends StatelessWidget {
           );
           return const SizedBox.shrink();
         } else {
-          return const CircularProgressIndicator();
+          return const CircularProgressIndicator.adaptive();
         }
       },
     );

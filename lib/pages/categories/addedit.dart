@@ -51,11 +51,10 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
             }
           }
           setState(() {
-            includeInSum =
-                !context
-                    .read<SettingsProvider>()
-                    .categoriesSumExcluded
-                    .contains(widget.category!.id);
+            includeInSum = !context
+                .read<SettingsProvider>()
+                .categoriesSumExcluded
+                .contains(widget.category!.id);
             notesController.text = resp.body?.data.attributes.notes ?? "";
             loaded = true;
           });
@@ -74,7 +73,7 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
             ? S.of(context).categoryTitleAdd
             : S.of(context).categoryTitleEdit,
       ),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       actions: <Widget>[
         if (widget.category != null)
           OutlinedButton(
@@ -90,8 +89,8 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
 
               final bool? ok = await showDialog(
                 context: context,
-                builder:
-                    (BuildContext context) => const DeletionConfirmDialog(),
+                builder: (BuildContext context) =>
+                    const DeletionConfirmDialog(),
               );
               if (!(ok ?? false)) {
                 return;
@@ -137,20 +136,18 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
             if (!resp.isSuccessful || resp.body == null) {
               late String error;
               try {
-                final ValidationErrorResponse valError =
-                    ValidationErrorResponse.fromJson(
-                      json.decode(resp.error.toString()),
-                    );
+                final ValidationErrorResponse valError = .fromJson(
+                  json.decode(resp.error.toString()),
+                );
                 error =
                     valError.message ??
                     (context.mounted
                         ? S.of(context).errorUnknown
                         : "[nocontext] Unknown error.");
               } catch (_) {
-                error =
-                    context.mounted
-                        ? S.of(context).errorUnknown
-                        : "[nocontext] Unknown error.";
+                error = context.mounted
+                    ? S.of(context).errorUnknown
+                    : "[nocontext] Unknown error.";
               }
 
               msg.showSnackBar(
@@ -181,7 +178,7 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
       ],
       content: SingleChildScrollView(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: .min,
           children: <Widget>[
             SizedBox(
               width: inputWidth,
@@ -214,16 +211,15 @@ class _CategoryAddEditDialogState extends State<CategoryAddEditDialog> {
             if (widget.category != null)
               SizedBox(
                 width: inputWidth,
-                child: SwitchListTile(
+                child: SwitchListTile.adaptive(
                   title: Text(S.of(context).categoryFormLabelIncludeInSum),
                   value: includeInSum,
                   isThreeLine: false,
-                  onChanged:
-                      loaded != true
-                          ? null
-                          : (bool value) => setState(() {
-                            includeInSum = value;
-                          }),
+                  onChanged: loaded != true
+                      ? null
+                      : (bool value) => setState(() {
+                          includeInSum = value;
+                        }),
                 ),
               ),
           ],
@@ -241,7 +237,7 @@ class DeletionConfirmDialog extends StatelessWidget {
     return AlertDialog(
       icon: const Icon(Icons.delete),
       title: Text(S.of(context).categoryTitleDelete),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       actions: <Widget>[
         TextButton(
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),

@@ -510,6 +510,11 @@ class SSv extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Hittills sparat:';
 
   @override
@@ -531,6 +536,11 @@ class SSv extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'I spargrisar: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -617,7 +627,20 @@ class SSv extends S {
       'För att använda Waterfly III på ett produktivt sätt behöver du din egen server med en Firefly III instans eller Firefly III-tillägget för Home Assistant.\n\nAnge hela URL: en samt en personlig åtkomst-token (inställningar -> Profil -> OAuth -> Personlig åtkomst-token) nedan.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Dölj rubriker';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Anpassade rubriker';
+
+  @override
   String get loginFormLabelAPIKey => 'Giltig API-nyckel';
+
+  @override
+  String get loginFormLabelHeaders => 'Anpassade rubriker (valfritt)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'En per rad, format: Rubriknamn: värde';
 
   @override
   String get loginFormLabelHost => 'Värd URL';
@@ -648,11 +671,11 @@ class SSv extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -660,11 +683,11 @@ class SSv extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString av $of';
@@ -741,6 +764,39 @@ class SSv extends S {
   String get settingsNLEmptyNote => 'Håll anteckningsfältet tomt';
 
   @override
+  String get settingsNLHistory => 'Aviseringshistorik';
+
+  @override
+  String get settingsNLHistoryEmpty => 'Inga aviseringar har registrerats än.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other:
+          'Detta är historiken för de senaste $notificationHistorySize aviseringarna som tagits emot av appen. Dessutom kan du skapa transaktioner från (giltiga) aviseringar eller se anledningen till varför en avisering inte kunde bearbetas.',
+      one:
+          'Detta är historiken för den senaste av Aviseringen som tagits emot av appen. Dessutom kan du skapa transaktioner från (giltiga) aviseringar eller se anledningen till varför en avisering inte kunde bearbetas.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'Inget monetärt värde hittades',
+      'noCurrency': 'Ingen valuta hittades',
+      'appNotUsed': 'Appen är inte aktiverad för avlyssning',
+      'other': 'Okänd anledning',
+    });
+    return 'Avisering hoppades över: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription => 'Lista tidigare aviseringar';
+
+  @override
   String get settingsNLPermissionGrant => 'Tryck för att bevilja tillstånd.';
 
   @override
@@ -756,6 +812,12 @@ class SSv extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Fyll i transaktionstiteln med nofikationstiteln i förväg';
+
+  @override
+  String get settingsNLRegularExpression => 'Reguljärt uttryck (valfritt)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid => 'Ogiltigt reguljärt uttryck';
 
   @override
   String get settingsNLServiceChecking => 'Kontrollerar status…';
@@ -776,6 +838,13 @@ class SSv extends S {
 
   @override
   String get settingsNotificationListener => 'Notifikationslyssningstjänst';
+
+  @override
+  String get settingsServerConnection => 'Serveranslutning';
+
+  @override
+  String get settingsServerConnectionUpdated =>
+      'Anslutningsinställningar uppdaterade.';
 
   @override
   String get settingsTheme => 'Apptema';

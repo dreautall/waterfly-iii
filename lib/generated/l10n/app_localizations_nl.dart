@@ -510,6 +510,11 @@ class SNl extends S {
   }
 
   @override
+  String homePiggySavePerMonth(String amount) {
+    return 'Save per month: $amount';
+  }
+
+  @override
   String get homePiggySavedMultiple => 'Tot nu toe gespaard:';
 
   @override
@@ -531,6 +536,11 @@ class SNl extends S {
   @override
   String homePiggyInPiggyBanks(String amount) {
     return 'In spaarpotjes: $amount';
+  }
+
+  @override
+  String homePiggyTotal(String amount) {
+    return 'Total: $amount';
   }
 
   @override
@@ -619,7 +629,20 @@ class SNl extends S {
       'Om Waterfly III productief te gebruiken, heb je je eigen server nodig met een Firefly III-installatie of de Firefly III-add-on voor Home Assistant.\n\nVoer de volledige URL en ook een persoonlijke toegangstoken in (Instellingen -> Profiel -> OAuth -> Persoonlijke Toegang) hieronder in.';
 
   @override
+  String get loginFormButtonHideHeaders => 'Headers verbergen';
+
+  @override
+  String get loginFormButtonShowHeaders => 'Aangepaste headers';
+
+  @override
   String get loginFormLabelAPIKey => 'Geldige API-sleutel';
+
+  @override
+  String get loginFormLabelHeaders => 'Aangepaste headers (optioneel)';
+
+  @override
+  String get loginFormLabelHeadersHelp =>
+      'Eén per regel, formaat: HeaderNaam: waarde';
 
   @override
   String get loginFormLabelHost => 'Host-URL';
@@ -640,7 +663,7 @@ class SNl extends S {
   String get navigationCategories => 'Categorieën';
 
   @override
-  String get navigationMain => 'Hoofd Dashboard';
+  String get navigationMain => 'Dashboard';
 
   @override
   String get generalSettings => 'Instellingen';
@@ -650,11 +673,11 @@ class SNl extends S {
 
   @override
   String numPercent(double num) {
-    final intl.NumberFormat numNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat numNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String numString = numNumberFormat.format(num);
 
     return '$numString';
@@ -662,11 +685,11 @@ class SNl extends S {
 
   @override
   String numPercentOf(double perc, String of) {
-    final intl.NumberFormat percNumberFormat = intl
-        .NumberFormat.decimalPercentPattern(
-      locale: localeName,
-      decimalDigits: 0,
-    );
+    final intl.NumberFormat percNumberFormat =
+        intl.NumberFormat.decimalPercentPattern(
+          locale: localeName,
+          decimalDigits: 0,
+        );
     final String percString = percNumberFormat.format(perc);
 
     return '$percString van $of';
@@ -744,6 +767,39 @@ class SNl extends S {
   String get settingsNLEmptyNote => 'Houd notitie veld leeg';
 
   @override
+  String get settingsNLHistory => 'Notificatiegeschiedenis';
+
+  @override
+  String get settingsNLHistoryEmpty => 'Nog geen notificaties opgeslagen.';
+
+  @override
+  String settingsNLHistoryLongDescription(int notificationHistorySize) {
+    String _temp0 = intl.Intl.pluralLogic(
+      notificationHistorySize,
+      locale: localeName,
+      other:
+          'Dit is de geschiedenis van de laatste $notificationHistorySize notificaties ontvangen door de app. Daarnaast kun je transacties maken van (geldige) notificaties of zien waarom een notificatie niet kon worden verwerkt.',
+      one:
+          'Dit is de geschiedenis van de laatste notificatie ontvangen door de app. Daarnaast kun je transacties maken van (geldige) notificaties of zien waarom een notificatie niet kon worden verwerkt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String settingsNLHistoryRejectedReason(String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'noMoney': 'Geen geldwaarde gevonden',
+      'noCurrency': 'Geen valuta gevonden',
+      'appNotUsed': 'App niet in lijst',
+      'other': 'Onbekende reden',
+    });
+    return 'Notificatie overgeslagen: $_temp0.';
+  }
+
+  @override
+  String get settingsNLHistoryShortDescription => 'Toon eerdere notificaties';
+
+  @override
   String get settingsNLPermissionGrant => 'Klik hier om toestemming te geven.';
 
   @override
@@ -759,6 +815,13 @@ class SNl extends S {
   @override
   String get settingsNLPrefillTXTitle =>
       'Transactietitel vooraf invullen met meldingstitel';
+
+  @override
+  String get settingsNLRegularExpression => 'Reguliere expressie (optioneel)';
+
+  @override
+  String get settingsNLRegularExpressionInvalid =>
+      'Ongeldige reguliere expressie';
 
   @override
   String get settingsNLServiceChecking => 'Status controleren…';
@@ -779,6 +842,13 @@ class SNl extends S {
 
   @override
   String get settingsNotificationListener => 'Notificatie Luister Service';
+
+  @override
+  String get settingsServerConnection => 'Serververbinding';
+
+  @override
+  String get settingsServerConnectionUpdated =>
+      'Verbindingsinstellingen bijgewerkt.';
 
   @override
   String get settingsTheme => 'Applicatie thema';

@@ -114,6 +114,16 @@
             }
         }
     },
+    "billsFrequency": "{frequency, select, weekly{매주} monthly{매월} quarterly{매분기} halfyear{반기별} yearly{매년} other{알 수 없음}}",
+    "@billsFrequency": {
+        "description": "Subscription frequency",
+        "placeholders": {
+            "frequency": {
+                "type": "String",
+                "example": "yearly"
+            }
+        }
+    },
     "billsFrequencySkip": "{frequency, select, weekly{Weekly} monthly{Monthly} quarterly{Quarterly} halfyear{Half-yearly} yearly{Yearly} other{Unknown}}{skip, plural, =0{} other{, skips over {skip}}}",
     "@billsFrequencySkip": {
         "description": "Subscription frequency",
@@ -156,9 +166,32 @@
     "@billsListEmpty": {
         "description": "Describes that the list is empty"
     },
+    "billsNextExpectedMatch": "다음 예상 결제일",
+    "@billsNextExpectedMatch": {
+        "description": "Text: next expected match for subscription"
+    },
     "billsNotActive": "구독이 비활성화되어 있습니다",
     "@billsNotActive": {
         "description": "Text: the subscription is inactive"
+    },
+    "billsNotExpected": "이번 기간에는 예상되지 않음",
+    "@billsNotExpected": {
+        "description": "Describes that the subscription is not expected this period"
+    },
+    "billsNoTransactions": "거래 내역이 없습니다.",
+    "@billsNoTransactions": {
+        "description": "Describes that there are no transactions connected to the subscription"
+    },
+    "billsPaidOn": "{date}에 결제됨",
+    "@billsPaidOn": {
+        "description": "Describes what date the subscription was paid",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMMd",
+                "example": "January 5, 2024"
+            }
+        }
     },
     "billsSortAlphabetical": "알파벳 순",
     "@billsSortAlphabetical": {
@@ -179,6 +212,26 @@
     "billsUngrouped": "그룹 지정 안 됨",
     "@billsUngrouped": {
         "description": "Title for ungrouped subscriptions"
+    },
+    "billsSettingsShowOnlyActive": "활성 항목만 표시",
+    "@billsSettingsShowOnlyActive": {
+        "description": "Text for show only active subscriptions settings item"
+    },
+    "billsSettingsShowOnlyActiveDesc": "활성 상태인 구독 항목만 표시합니다.",
+    "@billsSettingsShowOnlyActiveDesc": {
+        "description": "Text for show only active subscriptions settings item description"
+    },
+    "billsSettingsShowOnlyExpected": "예상 항목만 표시",
+    "@billsSettingsShowOnlyExpected": {
+        "description": "Text for show only expected subscriptions settings item"
+    },
+    "billsSettingsShowOnlyExpectedDesc": "이번 달에 예상되거나(결제된) 구독 항목만 표시합니다.",
+    "@billsSettingsShowOnlyExpectedDesc": {
+        "description": "Text for show only expected subscriptions settings item description"
+    },
+    "categoryDeleteConfirm": "이 카테고리를 삭제하시겠습니까? 거래 내역은 삭제되지 않지만, 더 이상 카테고리가 지정되지 않습니다.",
+    "@categoryDeleteConfirm": {
+        "description": "Confirmation text to delete category"
     },
     "categoryErrorLoading": "분류를 읽어들이는 중 오류가 발생했습니다.",
     "@categoryErrorLoading": {
@@ -215,6 +268,14 @@
     "categoryTitleEdit": "카테고리 수정",
     "@categoryTitleEdit": {
         "description": "Title for Dialog: Edit Category"
+    },
+    "catNone": "<카테고리 없음>",
+    "@catNone": {
+        "description": "Placeholder when no category has been set."
+    },
+    "catOther": "기타",
+    "@catOther": {
+        "description": "Category description for summary category 'Other'"
     },
     "errorAPIInvalidResponse": "API에서 잘못된 응답: {message}",
     "@errorAPIInvalidResponse": {
@@ -328,6 +389,30 @@
     "@generalCurrency": {
         "description": "(Money) Currency"
     },
+    "generalDateRangeCurrentMonth": "이번 달",
+    "@generalDateRangeCurrentMonth": {
+        "description": "Date Range: Current Month"
+    },
+    "generalDateRangeLast30Days": "최근 30일",
+    "@generalDateRangeLast30Days": {
+        "description": "Date Range: Last 30 days"
+    },
+    "generalDateRangeCurrentYear": "올해",
+    "@generalDateRangeCurrentYear": {
+        "description": "Date Range: Current Year"
+    },
+    "generalDateRangeLastYear": "작년",
+    "@generalDateRangeLastYear": {
+        "description": "Date Range: Last year"
+    },
+    "generalDateRangeAll": "전체",
+    "@generalDateRangeAll": {
+        "description": "Date Range: All"
+    },
+    "generalDefault": "기본값",
+    "@generalDefault": {
+        "description": "Indicates that something is the default choice"
+    },
     "generalDestinationAccount": "대상 계정",
     "@generalDestinationAccount": {
         "description": "Destination Account (for transaction)"
@@ -356,6 +441,14 @@
     "@generalLiabilities": {
         "description": "Firefly Translation String: liabilities"
     },
+    "generalMultiple": "다중",
+    "@generalMultiple": {
+        "description": "Multiples of a single thing (e.g. source accounts) are existing"
+    },
+    "generalNever": "없음",
+    "@generalNever": {
+        "description": "Has never happened, no update etc."
+    },
     "generalReconcile": "조정됨",
     "@generalReconcile": {
         "description": "Booking has been confirmed/reconciled"
@@ -383,6 +476,16 @@
     "generalUnknown": "알 수 없는",
     "@generalUnknown": {
         "description": "Something is unknown."
+    },
+    "homeMainBillsInterval": " ({period, select, weekly{매주} monthly{매월} quarterly{매분기} halfyear{반기별} yearly{매년} other{알 수 없음}})",
+    "@homeMainBillsInterval": {
+        "description": "subscription interval type",
+        "placeholders": {
+            "period": {
+                "type": "String",
+                "example": "weekly"
+            }
+        }
     },
     "homeMainBillsTitle": "다음 주 구독",
     "@homeMainBillsTitle": {
@@ -424,6 +527,24 @@
             }
         }
     },
+    "homeMainBudgetSum": "{available} 중 {status, select, over{초과} other{남음}}: {current}",
+    "@homeMainBudgetSum": {
+        "description": "Budget has 'current' money over/left from ('status') of total budget 'available' money.",
+        "placeholders": {
+            "current": {
+                "type": "String",
+                "example": "12.34€"
+            },
+            "status": {
+                "type": "String",
+                "example": "left from"
+            },
+            "available": {
+                "type": "String",
+                "example": "12.34€"
+            }
+        }
+    },
     "homeMainBudgetTitle": "현재 월 예산",
     "@homeMainBudgetTitle": {
         "description": "Title: Budgets for current month"
@@ -451,6 +572,10 @@
     "homeMainChartNetWorthTitle": "순자산",
     "@homeMainChartNetWorthTitle": {
         "description": "Chart Label: Net Worth"
+    },
+    "homeMainChartTagsTitle": "이번 달 태그 요약",
+    "@homeMainChartTagsTitle": {
+        "description": "Chart Label: Tags Summary"
     },
     "homePiggyAdjustDialogTitle": "지출/저장",
     "@homePiggyAdjustDialogTitle": {
@@ -482,6 +607,16 @@
     "@homeMainDialogSettingsTitle": {
         "description": "Dialog title for dashboard settings (card order & visibility)"
     },
+    "homePiggyLinked": "{account}에 연결됨",
+    "@homePiggyLinked": {
+        "description": "Piggy bank is linked to asset account {account}.",
+        "placeholders": {
+            "account": {
+                "type": "String",
+                "example": "Awesome Bank Account"
+            }
+        }
+    },
     "homePiggyNoAccounts": "저금통이 설정되지 않음.",
     "@homePiggyNoAccounts": {
         "description": "Information that no piggy banks are existing"
@@ -489,6 +624,72 @@
     "homePiggyNoAccountsSubtitle": "웹 인터페이스 만들기!",
     "@homePiggyNoAccountsSubtitle": {
         "description": "Subtitle if no piggy banks are existing, hinting to use the webinterface to create some."
+    },
+    "homePiggyRemaining": "저축할 금액: {amount}",
+    "@homePiggyRemaining": {
+        "description": "How much money is left to save",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggySaved": "현재까지 저축액: {amount}",
+    "@homePiggySaved": {
+        "description": "How much money already was saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggySavedMultiple": "현재까지 저축액:",
+    "@homePiggySavedMultiple": {
+        "description": "Title for a list of multiple accounts with the amount of money saved so far"
+    },
+    "homePiggyTarget": "목표 금액: {amount}",
+    "@homePiggyTarget": {
+        "description": "How much money should be saved",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyAccountStatus": "계좌 상태",
+    "@homePiggyAccountStatus": {
+        "description": "Title for the account status section showing balances and piggy bank totals"
+    },
+    "homePiggyAvailableAmounts": "가용 금액",
+    "@homePiggyAvailableAmounts": {
+        "description": "Title for the available amounts section showing money not in piggy banks"
+    },
+    "homePiggyAvailable": "가용 금액: {amount}",
+    "@homePiggyAvailable": {
+        "description": "Available balance after subtracting piggy bank amounts",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyInPiggyBanks": "저금통에 포함됨: {amount}",
+    "@homePiggyInPiggyBanks": {
+        "description": "Amount currently in piggy banks for this account",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homeTabLabelBalance": "재무 상태표",
+    "@homeTabLabelBalance": {
+        "description": "Tab Label: Balance Sheet page"
     },
     "homeTabLabelMain": "메인",
     "@homeTabLabelMain": {
@@ -510,6 +711,42 @@
     "@homeTransactionsDialogFilterAccountsAll": {
         "description": "Don't filter for a specific account (default entry)"
     },
+    "homeTransactionsDialogFilterBillsAll": "<모든 구독>",
+    "@homeTransactionsDialogFilterBillsAll": {
+        "description": "Don't filter for a specific subscription (default entry)"
+    },
+    "homeTransactionsDialogFilterBillUnset": "<설정된 구독 없음>",
+    "@homeTransactionsDialogFilterBillUnset": {
+        "description": "Filter for unset subscription"
+    },
+    "homeTransactionsDialogFilterBudgetsAll": "<모든 예산>",
+    "@homeTransactionsDialogFilterBudgetsAll": {
+        "description": "Don't filter for a specific budget (default entry)"
+    },
+    "homeTransactionsDialogFilterBudgetUnset": "<설정된 예산 없음>",
+    "@homeTransactionsDialogFilterBudgetUnset": {
+        "description": "Filter for unset budgets"
+    },
+    "homeTransactionsDialogFilterCategoriesAll": "<모든 분류>",
+    "@homeTransactionsDialogFilterCategoriesAll": {
+        "description": "Don't filter for a specific category (default entry)"
+    },
+    "homeTransactionsDialogFilterCategoryUnset": "<설정된 분류 없음>",
+    "@homeTransactionsDialogFilterCategoryUnset": {
+        "description": "Filter for unset categories"
+    },
+    "homeTransactionsDialogFilterCurrenciesAll": "<모든 통화>",
+    "@homeTransactionsDialogFilterCurrenciesAll": {
+        "description": "Don't filter for a specific currency (default entry)"
+    },
+    "homeTransactionsDialogFilterDateRange": "날짜 범위",
+    "@homeTransactionsDialogFilterDateRange": {
+        "description": "Label for the date range dropdown (all, last year, last month, last 30 days etc)"
+    },
+    "homeTransactionsDialogFilterFutureTransactions": "미래 거래 표시",
+    "@homeTransactionsDialogFilterFutureTransactions": {
+        "description": "Setting to show future transactions"
+    },
     "homeTransactionsDialogFilterSearch": "검색어",
     "@homeTransactionsDialogFilterSearch": {
         "description": "Search term for filter"
@@ -517,6 +754,10 @@
     "homeTransactionsDialogFilterTitle": "필터 선택",
     "@homeTransactionsDialogFilterTitle": {
         "description": "Title of Filter Dialog"
+    },
+    "homeTransactionsEmpty": "거래 내역이 없습니다.",
+    "@homeTransactionsEmpty": {
+        "description": "Message when no transactions are found."
     },
     "homeTransactionsMultipleCategories": "{num} 분류",
     "@homeTransactionsMultipleCategories": {
@@ -532,6 +773,18 @@
     "@homeTransactionsSettingsShowTags": {
         "description": "Setting label to show tags in transactioon list."
     },
+    "liabilityDirectionCredit": "받을 채권",
+    "@liabilityDirectionCredit": {
+        "description": "Firefly Translation String: liability_direction_credit"
+    },
+    "liabilityDirectionDebit": "갚을 채무",
+    "@liabilityDirectionDebit": {
+        "description": "Firefly Translation String: liability_direction_debit"
+    },
+    "liabilityTypeDebt": "부채",
+    "@liabilityTypeDebt": {
+        "description": "Firefly Translation String: account_type_debt"
+    },
     "liabilityTypeLoan": "대출",
     "@liabilityTypeLoan": {
         "description": "Firefly Translation String: account_type_loan"
@@ -544,9 +797,25 @@
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
+    "loginFormButtonHideHeaders": "헤더 숨기기",
+    "@loginFormButtonHideHeaders": {
+        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
+    },
+    "loginFormButtonShowHeaders": "사용자 지정 헤더",
+    "@loginFormButtonShowHeaders": {
+        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
+    },
     "loginFormLabelAPIKey": "유효한 API 키",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHeaders": "사용자 지정 헤더 (선택 사항)",
+    "@loginFormLabelHeaders": {
+        "description": "Login Form: Label for Custom Headers field"
+    },
+    "loginFormLabelHeadersHelp": "줄당 하나씩, 형식: HeaderName: value",
+    "@loginFormLabelHeadersHelp": {
+        "description": "Login Form: Helper text for Custom Headers field"
     },
     "loginFormLabelHost": "호스트 URL",
     "@loginFormLabelHost": {
@@ -572,9 +841,33 @@
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
-    "navigationMain": "보고서",
+    "navigationMain": "대시보드",
     "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
+        "description": "Navigation Label: Dashboard"
+    },
+    "generalSettings": "설정",
+    "@generalSettings": {
+        "description": "Label: Settings"
+    },
+    "no": "아니요",
+    "@no": {
+        "description": "The word no"
+    },
+    "numPercentOf": "{of} 중 {perc}",
+    "@numPercentOf": {
+        "description": "Number formatted as percentage, with total amount provided",
+        "placeholders": {
+            "perc": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            },
+            "of": {
+                "type": "String"
+            }
+        }
     },
     "settingsDialogDebugInfo": "여기에서 디버그 로그를 활성화하고 보낼 수 있습니다. 이는 성능에 나쁜 영향을 미치므로 권장받지 않는 한 활성화하지 마십시오. 로깅을 비활성화하면 저장된 로그가 삭제됩니다.",
     "@settingsDialogDebugInfo": {
@@ -620,6 +913,10 @@
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
     },
+    "settingsLockscreenHelp": "앱 실행 시 인증 요구",
+    "@settingsLockscreenHelp": {
+        "description": "Description for lockscreen setting"
+    },
     "settingsLockscreenInitial": "잠금 화면을 활성화하려면 인증을 해주세요.",
     "@settingsLockscreenInitial": {
         "description": "Prompt to authenticate once to set up the lockscreen"
@@ -627,6 +924,10 @@
     "settingsNLAppAccount": "기본 계정",
     "@settingsNLAppAccount": {
         "description": "Default account which will be used for the transaction."
+    },
+    "settingsNLAppAccountDynamic": "<동적>",
+    "@settingsNLAppAccountDynamic": {
+        "description": "Account will be selected dynamically by the content of the notification."
     },
     "settingsNLAppAdd": "App 추가",
     "@settingsNLAppAdd": {
@@ -648,6 +949,42 @@
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
     },
+    "settingsNLEmptyNote": "메모 필드를 비워두기",
+    "@settingsNLEmptyNote": {
+        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
+    },
+    "settingsNLHistory": "알림 기록",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "기록된 알림이 없습니다.",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "이 앱이 수신한 최근 {notificationHistorySize}개의 알림 기록입니다. (유효한) 알림으로부터 거래를 생성하거나, 알림이 처리되지 못한 이유를 확인할 수 있습니다.",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "알림 건너뜀: {reason, select, noMoney{금액 정보를 찾을 수 없음} noCurrency{통화 정보를 찾을 수 없음} appNotUsed{수신 대상 앱이 아님} other{알 수 없는 이유}}.",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "이전 알림 목록",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
+    },
     "settingsNLPermissionGrant": "권한을 부여하려면 탭하세요.",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
@@ -667,6 +1004,14 @@
     "settingsNLPrefillTXTitle": "알림 제목으로 거래 제목을 미리 채워주세요",
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLRegularExpression": "정규 표현식 (선택 사항)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "유효하지 않은 정규 표현식",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "상태 확인 중…",
     "@settingsNLServiceChecking": {
@@ -699,6 +1044,14 @@
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
     },
+    "settingsServerConnection": "서버 연결",
+    "@settingsServerConnection": {
+        "description": "Settings for the server connection"
+    },
+    "settingsServerConnectionUpdated": "연결 설정이 업데이트되었습니다.",
+    "@settingsServerConnectionUpdated": {
+        "description": "Server connection settings have been updated"
+    },
     "settingsTheme": "테마변경",
     "@settingsTheme": {
         "description": "App theme (dark or light)"
@@ -706,6 +1059,16 @@
     "settingsThemeDynamicColors": "다이나믹 컬러",
     "@settingsThemeDynamicColors": {
         "description": "Material You Dynamic Colors feature"
+    },
+    "settingsThemeValue": "{theme, select, dark{다크 모드} light{라이트 모드} other{시스템 기본값}}",
+    "@settingsThemeValue": {
+        "description": "Currently selected theme (either dark, light or system)",
+        "placeholders": {
+            "theme": {
+                "type": "String",
+                "example": "ThemeMode.dark"
+            }
+        }
     },
     "settingsUseServerTimezone": "서버 시간대 사용",
     "@settingsUseServerTimezone": {
@@ -777,9 +1140,21 @@
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
     },
+    "transactionDialogPiggyNoPiggy": "저금통 없음",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "저금통에 연결",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
+    },
     "transactionDialogTagsAdd": "태그 추가",
     "@transactionDialogTagsAdd": {
         "description": "Button Label: Add Tag"
+    },
+    "transactionDialogTagsHint": "태그 검색/추가",
+    "@transactionDialogTagsHint": {
+        "description": "Hint Text for search tag field"
     },
     "transactionDialogTagsTitle": "태그 선택",
     "@transactionDialogTagsTitle": {
@@ -813,6 +1188,14 @@
     "@transactionFormLabelAccountDestination": {
         "description": "Transaction Form: Label for destination account for transfer transaction"
     },
+    "transactionFormLabelAccountForeign": "외부 계좌",
+    "@transactionFormLabelAccountForeign": {
+        "description": "Transaction Form: Label for foreign (other) account"
+    },
+    "transactionFormLabelAccountOwn": "내 계좌",
+    "@transactionFormLabelAccountOwn": {
+        "description": "Transaction Form: Label for own account"
+    },
     "transactionFormLabelAccountSource": "소스 계정",
     "@transactionFormLabelAccountSource": {
         "description": "Transaction Form: Label for source account for transfer transaction"
@@ -829,6 +1212,26 @@
     "@transactionFormLabelTitle": {
         "description": "Transaction Form: Label for title field"
     },
+    "transactionSplitAdd": "분할 거래 추가",
+    "@transactionSplitAdd": {
+        "description": "Button Label: Add a split"
+    },
+    "transactionSplitChangeCurrency": "분할 통화 변경",
+    "@transactionSplitChangeCurrency": {
+        "description": "Hint Text: Change currency for a single split"
+    },
+    "transactionSplitChangeDestinationAccount": "분할 대상 계좌 변경",
+    "@transactionSplitChangeDestinationAccount": {
+        "description": "Hint Text: Change destination account for a single split"
+    },
+    "transactionSplitChangeSourceAccount": "분할 원본 계좌 변경",
+    "@transactionSplitChangeSourceAccount": {
+        "description": "Hint Text: Change source account for a single split"
+    },
+    "transactionSplitChangeTarget": "분할 목표 계좌 변경",
+    "@transactionSplitChangeTarget": {
+        "description": "Hint Text: Change target account for single split"
+    },
     "transactionSplitDelete": "분할 삭제",
     "@transactionSplitDelete": {
         "description": "Hint Text: Delete single split"
@@ -844,6 +1247,10 @@
     "transactionTitleEdit": "거래내역 편집",
     "@transactionTitleEdit": {
         "description": "Title: Edit existing transaction"
+    },
+    "transactionTypeDeposit": "입금",
+    "@transactionTypeDeposit": {
+        "description": "Deposit transaction type"
     },
     "transactionTypeTransfer": "이체",
     "@transactionTypeTransfer": {

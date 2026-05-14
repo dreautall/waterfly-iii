@@ -797,9 +797,25 @@
     "@loginAbout": {
         "description": "Login screen welcome description"
     },
+    "loginFormButtonHideHeaders": "Skrýt hlavičky",
+    "@loginFormButtonHideHeaders": {
+        "description": "Login Form: Label for button to hide Custom Headers field - should be similar length than show custom headers button"
+    },
+    "loginFormButtonShowHeaders": "Vlastní hlavičky",
+    "@loginFormButtonShowHeaders": {
+        "description": "Login Form: Label for button to show Custom Headers field - should be similar length than hide custom headers button"
+    },
     "loginFormLabelAPIKey": "Platný klíč API",
     "@loginFormLabelAPIKey": {
         "description": "Login Form: Label for API Key field"
+    },
+    "loginFormLabelHeaders": "Vlastní hlavičky (volitelné)",
+    "@loginFormLabelHeaders": {
+        "description": "Login Form: Label for Custom Headers field"
+    },
+    "loginFormLabelHeadersHelp": "Jedna na řádek, formát: NázevHlavičky: hodnota",
+    "@loginFormLabelHeadersHelp": {
+        "description": "Login Form: Helper text for Custom Headers field"
     },
     "loginFormLabelHost": "URL serveru",
     "@loginFormLabelHost": {
@@ -825,9 +841,9 @@
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
-    "navigationMain": "Přehled",
+    "navigationMain": "Nástěnka",
     "@navigationMain": {
-        "description": "Navigation Label: Main Dashboard"
+        "description": "Navigation Label: Dashboard"
     },
     "generalSettings": "Nastavení",
     "@generalSettings": {
@@ -950,6 +966,38 @@
     "@settingsNLEmptyNote": {
         "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
     },
+    "settingsNLHistory": "Historie oznámení",
+    "@settingsNLHistory": {
+        "description": "Label: Notification History view"
+    },
+    "settingsNLHistoryEmpty": "Zatím nebyla zaznamenána žádná oznámení.",
+    "@settingsNLHistoryEmpty": {
+        "description": "Notification history is empty"
+    },
+    "settingsNLHistoryLongDescription": "Toto je historie posledních {notificationHistorySize, plural, one{# oznámení} few{# oznámení} other{# oznámení}} přijatých aplikací. Dále můžete vytvářet transakce z (platných) oznámení nebo zjistit důvod, proč nebylo oznámení zpracováno.",
+    "@settingsNLHistoryLongDescription": {
+        "description": "Long description of the notification history feature.",
+        "placeholders": {
+            "notificationHistorySize": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
+    "settingsNLHistoryRejectedReason": "Oznámení přeskočeno: {reason, select, noMoney{Nebyla nalezena peněžní hodnota} noCurrency{Nebyla nalezena měna} appNotUsed{Aplikace není sledována} other{Neznámý důvod}}.",
+    "@settingsNLHistoryRejectedReason": {
+        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
+        "placeholders": {
+            "reason": {
+                "type": "String",
+                "example": "noMoney"
+            }
+        }
+    },
+    "settingsNLHistoryShortDescription": "Seznam předchozích oznámení",
+    "@settingsNLHistoryShortDescription": {
+        "description": "Short description of the notification history feature (for the settings navigation)"
+    },
     "settingsNLPermissionGrant": "Klepnutím udělte oprávnění.",
     "@settingsNLPermissionGrant": {
         "description": "Indicates user should tap the text to grant certain permissions (notification access)."
@@ -969,6 +1017,14 @@
     "settingsNLPrefillTXTitle": "Doplnit název transakce pomocí nadpisu nofikace",
     "@settingsNLPrefillTXTitle": {
         "description": "Setting pre-fill transaction title with notification title."
+    },
+    "settingsNLRegularExpression": "Regulární výraz (volitelné)",
+    "@settingsNLRegularExpression": {
+        "description": "Setting to use a custom regular expression (regex)."
+    },
+    "settingsNLRegularExpressionInvalid": "Neplatný regulární výraz",
+    "@settingsNLRegularExpressionInvalid": {
+        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Kontroluji stav…",
     "@settingsNLServiceChecking": {
@@ -1000,6 +1056,14 @@
     "settingsNotificationListener": "Služba pro čtení oznámení",
     "@settingsNotificationListener": {
         "description": "Setting for the notification listener service."
+    },
+    "settingsServerConnection": "Připojení k serveru",
+    "@settingsServerConnection": {
+        "description": "Settings for the server connection"
+    },
+    "settingsServerConnectionUpdated": "Nastavení připojení byla aktualizována.",
+    "@settingsServerConnectionUpdated": {
+        "description": "Server connection settings have been updated"
     },
     "settingsTheme": "Motiv aplikace",
     "@settingsTheme": {
@@ -1088,6 +1152,14 @@
     "transactionDialogCurrencyTitle": "Vybrat měnu",
     "@transactionDialogCurrencyTitle": {
         "description": "Dialog Title: Currency Selection"
+    },
+    "transactionDialogPiggyNoPiggy": "Žádné prasátko",
+    "@transactionDialogPiggyNoPiggy": {
+        "description": "Button Label: no piggy bank to be used"
+    },
+    "transactionDialogPiggyTitle": "Propojit s prasátkem",
+    "@transactionDialogPiggyTitle": {
+        "description": "Dialog Title: Link transaction to piggy bank"
     },
     "transactionDialogTagsAdd": "Přidat štítek",
     "@transactionDialogTagsAdd": {

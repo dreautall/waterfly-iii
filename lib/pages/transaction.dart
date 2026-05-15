@@ -39,6 +39,8 @@ class TransactionState extends ChangeNotifier {
   TransactionTypeProperty type = .swaggerGeneratedUnknown;
   final TextEditingController groupTitleTC = TextEditingController();
   final FocusNode groupTitleFN = FocusNode();
+  final TextEditingController totalAmountTC = TextEditingController();
+  final FocusNode totalAmountFN = FocusNode();
   String? ownAccountID;
   late tz.TZDateTime _date;
   final TextEditingController dateTC = TextEditingController();
@@ -102,6 +104,15 @@ class TransactionState extends ChangeNotifier {
 
   TransactionState(this.localCurrency);
 
+  void notify() => notifyListeners();
+
+  void addAttachment(AttachmentRead attachment) {
+    log.finest(() => "[TS] addAttachment()");
+    _attachments ??= <AttachmentRead>[];
+    _attachments!.add(attachment);
+    notifyListeners();
+  }
+
   void splitAdd() {
     log.fine(() => "[TS] splitAdd()");
     splits.add(TransactionSplitState(this));
@@ -125,6 +136,10 @@ class TransactionState extends ChangeNotifier {
     // As firefly doesn't allow editing accounts or sums when reconciled,
     // deactivate reconciled.
     reconciled = false;
+    // Recalculate total amount
+    totalAmountTC.text = totalAmount.toStringAsFixed(
+      localCurrency.attributes.decimalPlaces ?? 2,
+    );
 
     notifyListeners();
     return true;
@@ -270,6 +285,8 @@ class TransactionState extends ChangeNotifier {
     }
     groupTitleTC.dispose();
     groupTitleFN.dispose();
+    totalAmountTC.dispose();
+    totalAmountFN.dispose();
     dateTC.dispose();
     timeTC.dispose();
 
@@ -452,7 +469,7 @@ class TransactionSplitState {
     log.fine(() => "[TSS] set localAmount($amount)");
     _localAmount = amount;
     // To update the global amount for splits
-    parent.notifyListeners();
+    parent.notify();
   }
 
   double get foreignAmount => _foreignAmount;
@@ -531,8 +548,6 @@ class _TransactionPageState extends State<TransactionPage>
   late TimeZoneHandler _tzHandler;
 
   // Common fields
-  final TextEditingController _totalAmountTC = TextEditingController();
-  final FocusNode _totalAmountFN = FocusNode();
   final TextEditingController _commonSourceTC = TextEditingController();
   final FocusNode _commonSourceFN = FocusNode();
   final TextEditingController _commonDestinationTC = TextEditingController();
@@ -577,12 +592,11 @@ class _TransactionPageState extends State<TransactionPage>
           ),
         );
       }
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (_tx.attachments == null) {
+      if (_tx.attachments == null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
           updateAttachmentCount();
-        }
-        updateTransactionAmounts();
-      });
+        });
+      }
     } else {
       // New transaction
       _tx = TransactionState(context.read<FireflyService>().defaultCurrency);
@@ -713,7 +727,7 @@ class _TransactionPageState extends State<TransactionPage>
               continue;
             }
             final XFile xfile = XFile(file.value!);
-            _tx.attachments!.add(
+            _tx.addAttachment(
               AttachmentRead(
                 type: "attachments",
                 id: _tx.attachments!.length.toString(),
@@ -749,8 +763,6 @@ class _TransactionPageState extends State<TransactionPage>
 
   @override
   void dispose() {
-    _totalAmountTC.dispose();
-    _totalAmountFN.dispose();
     _commonSourceTC.dispose();
     _commonSourceFN.dispose();
     _commonDestinationTC.dispose();
@@ -762,18 +774,6 @@ class _TransactionPageState extends State<TransactionPage>
     }
 
     super.dispose();
-  }
-
-  void updateTransactionAmounts() {
-    // Individual for split transactions, show common for single transaction
-    /// local amount
-    if (_tx.splits.length == 1) {
-      _totalAmountTC.text = _tx.splits.first.localAmountTC.text;
-    } else {
-      _totalAmountTC.text = _tx.totalAmount.toStringAsFixed(
-        _tx.localCurrency.attributes.decimalPlaces ?? 2,
-      );
-    }
   }
 
   void Function(AnimationStatus) deleteCardAnimated(int i) {
@@ -792,7 +792,6 @@ class _TransactionPageState extends State<TransactionPage>
     _cardsAnimation.removeAt(i);
 
     // Update summary values
-    updateTransactionAmounts();
     if (!_tx.split) {
       // This is similar to the web interface --> summary text gets deleted when split is removed.
       if (_tx.splits.first.titleTC.text.isNotEmpty) {
@@ -1251,8 +1250,8 @@ class _TransactionPageState extends State<TransactionPage>
     childs.add(
       TransactionHeaderSection(
         tx: _tx,
-        totalAmountTC: _totalAmountTC,
-        totalAmountFN: _totalAmountFN,
+        totalAmountTC: _tx.totalAmountTC,
+        totalAmountFN: _tx.totalAmountFN,
         saving: _savingInProgress,
         readOnly: _tx.reconciled && _tx.initiallyReconciled,
       ),
@@ -1518,7 +1517,6 @@ class _TransactionPageState extends State<TransactionPage>
       _lastTXType = _tx.type;
     }
 
-    updateTransactionAmounts();
     setState(() {});
   }
 
@@ -2471,7 +2469,7 @@ class TransactionSplitCard extends StatelessWidget {
                                 }
                                 if (newBill != split.bill) {
                                   split.bill = newBill;
-                                  tx.notifyListeners();
+                                  tx.notify();
                                 }
                               },
                         tooltip: S.of(context).transactionDialogBillTitle,
@@ -2511,7 +2509,7 @@ class TransactionSplitCard extends StatelessWidget {
                                 );
 
                                 split.foreignCurrency = newCurrency;
-                                tx.notifyListeners();
+                                tx.notify();
                               }
                             : null,
                         tooltip: (tx.split)
@@ -2549,7 +2547,7 @@ class TransactionSplitCard extends StatelessWidget {
                                   }
                                   if (newPiggy != split.piggy) {
                                     split.piggy = newPiggy;
-                                    tx.notifyListeners();
+                                    tx.notify();
                                   }
                                 },
                           tooltip: S.of(context).transactionDialogPiggyTitle,
@@ -2573,7 +2571,7 @@ class TransactionSplitCard extends StatelessWidget {
                                             "adding separate source account for $index",
                                       );
                                       split.sourceAccountTC.text = "";
-                                      tx.notifyListeners();
+                                      tx.notify();
                                     }
                                   : null,
                               tooltip: (tx.split)
@@ -2600,7 +2598,7 @@ class TransactionSplitCard extends StatelessWidget {
                                         () =>
                                             "adding separate destination account for $index",
                                       );
-                                      tx.notifyListeners();
+                                      tx.notify();
                                       split.destinationAccountTC.text = "";
                                     }
                                   : null,

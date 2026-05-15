@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:chopper/chopper.dart' show Response;
+import 'package:chopper/chopper.dart' show Response, HttpMethod;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_sharing_intent/model/sharing_file.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
@@ -18,6 +22,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/layout.dart';
 import 'package:waterflyiii/notificationlistener.dart';
+import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/transaction/bill.dart';
 import 'package:waterflyiii/pages/transaction/currencies.dart';
 import 'package:waterflyiii/pages/transaction/delete.dart';
@@ -26,6 +31,7 @@ import 'package:waterflyiii/pages/transaction/piggy.dart';
 import 'package:waterflyiii/pages/transaction/tags.dart';
 import 'package:waterflyiii/pages/transaction/title.dart';
 import 'package:waterflyiii/settings.dart';
+import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
@@ -37,11 +43,11 @@ bool _savingInProgress = false;
 
 class TransactionState extends ChangeNotifier {
   TransactionTypeProperty type = .swaggerGeneratedUnknown;
+  String? ownAccountID;
   final TextEditingController groupTitleTC = TextEditingController();
   final FocusNode groupTitleFN = FocusNode();
   final TextEditingController totalAmountTC = TextEditingController();
   final FocusNode totalAmountFN = FocusNode();
-  String? ownAccountID;
   late tz.TZDateTime _date;
   final TextEditingController dateTC = TextEditingController();
   final TextEditingController timeTC = TextEditingController();
@@ -52,6 +58,8 @@ class TransactionState extends ChangeNotifier {
   List<AttachmentRead>? _attachments = <AttachmentRead>[];
   AccountTypeProperty sourceAccountType = .swaggerGeneratedUnknown;
   AccountTypeProperty destinationAccountType = .swaggerGeneratedUnknown;
+  final List<String> _deletedSplitIDs = <String>[];
+  final TransactionRead? originalTX;
 
   bool get split => splits.length > 1;
   double get totalAmount => splits.fold(
@@ -62,7 +70,15 @@ class TransactionState extends ChangeNotifier {
   tz.TZDateTime get date => _date;
   set date(tz.TZDateTime date) {
     log.finest(() => "[TS] set date");
-    _date = date;
+    // same as date.copyWith(second: 0, millisecond: 0, microsecond: 0)
+    _date = tz.TZDateTime(
+      date.location,
+      date.year,
+      date.month,
+      date.day,
+      date.hour,
+      date.minute,
+    );
     dateTC.text = DateFormat.yMMMd().format(_date);
     timeTC.text = DateFormat.Hm().format(_date);
     //notifyListeners();
@@ -102,7 +118,7 @@ class TransactionState extends ChangeNotifier {
   bool get showSplitDestinationAccount =>
       type == .withdrawal && !hasCommonDestinationAccount;
 
-  TransactionState(this.localCurrency);
+  TransactionState(this.localCurrency, {this.originalTX});
 
   void notify() => notifyListeners();
 
@@ -148,6 +164,9 @@ class TransactionState extends ChangeNotifier {
     if (splits.length == 1) {
       log.severe(("trying to remove last split!"));
       return false;
+    }
+    if (splits[i].journalID != null) {
+      _deletedSplitIDs.add(splits[i].journalID!);
     }
     splits[i].dispose();
     splits.removeAt(i);
@@ -295,6 +314,161 @@ class TransactionState extends ChangeNotifier {
     }
   }
 
+  TransactionSplitUpdate _filterSameFields(TransactionSplitUpdate txU) {
+    /* https://github.com/firefly-iii/firefly-iii/blob/main/app/Validation/GroupValidation.php#L105
+     $forbidden = ['amount', 'foreign_amount', 'currency_code', 'currency_id', 'foreign_currency_code', 'foreign_currency_id',
+       'source_id', 'source_name', 'source_number', 'source_iban',
+       'destination_id', 'destination_name', 'destination_number', 'destination_iban',
+     ];
+       */
+    // if no originalTX exists or the journal is new --> nothing to filter
+    if (originalTX == null || (txU.transactionJournalId?.isEmpty ?? true)) {
+      return txU;
+    }
+    final TransactionSplit? tx = originalTX!.attributes.transactions
+        .firstWhereOrNull(
+          (TransactionSplit s) =>
+              s.transactionJournalId == txU.transactionJournalId,
+        );
+    // if no previous transaction with the journalID is found --> nothing to filter
+    if (tx == null) {
+      return txU;
+    }
+    return txU.copyWith(
+      amount: tx.amount == txU.amount ? null : txU.amount,
+      foreignAmount: tx.foreignAmount == txU.foreignAmount
+          ? null
+          : txU.foreignAmount,
+      foreignCurrencyId: tx.foreignCurrencyId == txU.foreignCurrencyId
+          ? null
+          : txU.foreignCurrencyId,
+      sourceName: tx.sourceName == txU.sourceName ? null : txU.sourceName,
+      destinationName: tx.destinationName == txU.destinationName
+          ? null
+          : txU.destinationName,
+    );
+  }
+
+  Future<TransactionRead> save(FireflyIii api, AuthUser user) async {
+    log.info("[TS] save()");
+    late Response<TransactionSingle> resp;
+    if (originalTX == null) {
+      // new TX
+      resp = await api.v1TransactionsPost(body: _toStore());
+    } else {
+      // updated TX
+      final List<Future<Response<dynamic>>> futures = _deletedSplitIDs
+          .where((String id) => id.isNotEmpty)
+          .map((String id) {
+            log.fine(() => "[TS] save(): deleting split $id");
+            return api.v1TransactionJournalsIdDelete(id: id);
+          })
+          .toList();
+      if (futures.isNotEmpty) {
+        await Future.wait(futures);
+      }
+      resp = await api.v1TransactionsIdPut(
+        id: originalTX!.id,
+        body: _toUpdate(),
+      );
+    }
+
+    // Check if insert/update was successful
+    if (!resp.isSuccessful || resp.body == null) {
+      String? error;
+      try {
+        final ValidationErrorResponse valError = .fromJson(
+          json.decode(resp.error.toString()),
+        );
+        error = valError.message;
+      } catch (_) {}
+      log.severe("[TS] save(): failed ($error)");
+      throw Exception(error);
+    }
+
+    // for new TX: save transactions
+    if ((_attachments?.isNotEmpty ?? false) && originalTX == null) {
+      log.fine(
+        () => "[TS] save(): uploading ${_attachments!.length} attachments",
+      );
+      final TransactionSplit? tx = resp.body?.data.attributes.transactions
+          .firstWhereOrNull(
+            (TransactionSplit e) => e.transactionJournalId != null,
+          );
+      if (tx != null) {
+        final String txId = tx.transactionJournalId!;
+        log.finest(() => "[TS] save(): uploading to txId $txId");
+        for (AttachmentRead attachment in _attachments!) {
+          log.finest(
+            () =>
+                "[TS] save(): uploading attachment ${attachment.id}: ${attachment.attributes.filename}",
+          );
+          final Response<AttachmentSingle> respAttachment = await api
+              .v1AttachmentsPost(
+                body: AttachmentStore(
+                  filename: attachment.attributes.filename!,
+                  attachableType: .transactionjournal,
+                  attachableId: txId,
+                ),
+              );
+          if (!respAttachment.isSuccessful || respAttachment.body == null) {
+            log.warning(() => "[TS] save(): error uploading attachment");
+            continue;
+          }
+          final AttachmentRead newAttachment = respAttachment.body!.data;
+          log.finest(() => "[TS] save(): attachment id is ${newAttachment.id}");
+
+          final File file = File(attachment.attributes.uploadUrl!);
+
+          final http.StreamedRequest request = http.StreamedRequest(
+            HttpMethod.Post,
+            Uri.parse(newAttachment.attributes.uploadUrl!),
+          );
+          request.headers.addAll(user.headers());
+          request.headers[HttpHeaders.contentTypeHeader] =
+              ContentType.binary.mimeType;
+          request.contentLength = await file.length();
+          log.fine(() => "[TS] save(): Starting Upload ${newAttachment.id}");
+
+          file.openRead().listen(
+            (List<int> data) {
+              log.finest(() => "[TS] save(): sent ${data.length} bytes");
+              request.sink.add(data);
+            },
+            onDone: () {
+              request.sink.close();
+            },
+          );
+
+          await httpClient.send(request);
+
+          log.fine(() => "[TS] save(): done uploading attachment");
+        }
+      }
+    }
+
+    return resp.body!.data;
+  }
+
+  TransactionStore _toStore() => TransactionStore(
+    groupTitle: split ? groupTitleTC.text : null,
+    transactions: <TransactionSplitStore>[
+      ...splits.map((TransactionSplitState s) => s.toStore()),
+    ],
+    applyRules: true,
+    fireWebhooks: true,
+    errorIfDuplicateHash: true,
+  );
+
+  TransactionUpdate _toUpdate() => TransactionUpdate(
+    groupTitle: split ? groupTitleTC.text : null,
+    transactions: <TransactionSplitUpdate>[
+      ...splits.map(
+        (TransactionSplitState s) => _filterSameFields(s.toUpdate()),
+      ),
+    ],
+  );
+
   @override
   void dispose() {
     log.fine(() => "[TS] dispose");
@@ -331,6 +505,7 @@ class TransactionState extends ChangeNotifier {
           decimalPlaces: transactions.first.currencyDecimalPlaces,
         ),
       ),
+      originalTX: transaction,
     );
     tx.type = transactions.first.type;
 
@@ -525,6 +700,47 @@ class TransactionSplitState {
     );
   }
 
+  TransactionSplitStore toStore() => TransactionSplitStore(
+    type: parent.type,
+    date: parent.date,
+    amount: localAmount.toString(),
+    description: titleTC.text,
+    billId: bill?.id ?? "0",
+    piggyBankId: (piggy?.id != null) ? int.parse(piggy!.id) : null,
+    budgetName: parent.type == .withdrawal ? budgetTC.text : "",
+    categoryName: categoryTC.text,
+    destinationName: destinationAccountTC.text,
+    // :HAX: Since nulled fields are not submitted, we set
+    // the value to 0 so the foreign currency is gone...
+    foreignAmount: foreignCurrency != null ? foreignAmountTC.text : "0",
+    foreignCurrencyId: foreignCurrency?.id,
+    notes: noteTC.text,
+    // order: :TODO:
+    sourceName: sourceAccountTC.text,
+    tags: tags.tags,
+    reconciled: parent.reconciled,
+  );
+
+  TransactionSplitUpdate toUpdate() => TransactionSplitUpdate(
+    type: parent.type,
+    date: parent.date,
+    amount: localAmount.toString(),
+    description: titleTC.text,
+    billId: bill?.id ?? "0",
+    budgetName: parent.type == .withdrawal ? budgetTC.text : "",
+    categoryName: categoryTC.text,
+    destinationName: destinationAccountTC.text,
+    // :HAX: Since nulled fields are not submitted, we set
+    // the value to 0 so the foreign currency is gone...
+    foreignAmount: foreignCurrency != null ? foreignAmountTC.text : "0",
+    foreignCurrencyId: foreignCurrency?.id,
+    notes: noteTC.text,
+    // order: :TODO:
+    sourceName: sourceAccountTC.text,
+    tags: tags.tags,
+    reconciled: parent.reconciled,
+  );
+
   void dispose() {
     log.fine(() => "[TSS] dispose()");
 
@@ -573,7 +789,6 @@ class _TransactionPageState extends State<TransactionPage>
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late final TransactionState _tx;
-  final List<String> _deletedSplitIDs = <String>[];
 
   bool _txTypeChipExtended = false;
   late TransactionTypeProperty _lastTXType;
@@ -904,7 +1119,6 @@ class _TransactionPageState extends State<TransactionPage>
         onPressed: _savingInProgress
             ? null
             : () async {
-                /* :TODO: refactor
                 final ScaffoldMessengerState msg = ScaffoldMessenger.of(
                   context,
                 );
@@ -918,16 +1132,17 @@ class _TransactionPageState extends State<TransactionPage>
                 // Sanity checks
                 String? error;
 
-                if (_ownAccountId == null) {
+                if (_tx.ownAccountID == null) {
                   error = S.of(context).transactionErrorNoAssetAccount;
                 }
-                if (_titleTextController.text.isEmpty) {
+                if (_tx.groupTitleTC.text.isEmpty &&
+                    _tx.splits.first.titleTC.text.isEmpty) {
                   error = S.of(context).transactionErrorTitle;
                 }
                 if (user == null || stock == null) {
                   error = S.of(context).errorAPIUnavailable;
                 }
-                if (_transactionType == .swaggerGeneratedUnknown) {
+                if (_tx.type == .swaggerGeneratedUnknown) {
                   error = S.of(context).transactionErrorNoAccounts;
                 }
                 if (error != null) {
@@ -942,171 +1157,19 @@ class _TransactionPageState extends State<TransactionPage>
                 });
                 // Fires calculation of text fields
                 FocusScope.of(context).unfocus();
-                late Response<TransactionSingle> resp;
 
-                // Update existing transaction
-                if (!_newTX) {
-                  final String id = widget.transaction!.id;
-                  final List<TransactionSplitUpdate> txS =
-                      <TransactionSplitUpdate>[];
-                  for (int i = 0; i < _localAmounts.length; i++) {
-                    late String sourceName, destinationName;
+                late final TransactionRead newTX;
 
-                    sourceName = _sourceAccountTextControllers[i].text;
-                    if (sourceName.isEmpty) {
-                      sourceName = _sourceAccountTextController.text;
-                    }
-                    destinationName =
-                        _destinationAccountTextControllers[i].text;
-                    if (destinationName.isEmpty) {
-                      destinationName = _destinationAccountTextController.text;
-                    }
-
-                    final TransactionSplitUpdate txSs = TransactionSplitUpdate(
-                      amount: _localAmounts[i].toString(),
-                      billId: _bills[i]?.id ?? "0",
-                      budgetName: (_transactionType == .withdrawal)
-                          ? _budgetTextControllers[i].text
-                          : "",
-                      categoryName: _categoryTextControllers[i].text,
-                      date: _date,
-                      description: _split
-                          ? _titleTextControllers[i].text
-                          : _titleTextController.text,
-                      destinationName: destinationName,
-                      // :HAX: Since nulled fields are not submitted, we set
-                      // the value to 0 so the foreign currency is gone...
-                      foreignAmount: _foreignCurrencies[i] != null
-                          ? _foreignAmounts[i].toString()
-                          : "0",
-                      foreignCurrencyId: _foreignCurrencies[i]?.id,
-                      notes: _noteTextControllers[i].text,
-                      order: i,
-                      sourceName: sourceName,
-                      tags: _tags[i].tags,
-                      transactionJournalId: _transactionJournalIDs
-                          .elementAtOrNull(i),
-                      type: _transactionType,
-                      reconciled: _reconciled,
-                    );
-
-                    final TransactionSplit? oldSplit = widget
-                        .transaction
-                        ?.attributes
-                        .transactions
-                        .firstWhereOrNull(
-                          (TransactionSplit e) =>
-                              e.transactionJournalId != null &&
-                              e.transactionJournalId ==
-                                  txSs.transactionJournalId,
-                        );
-                    if (oldSplit != null) {
-                      txS.add(txFilterSameFields(txSs, oldSplit));
-                    } else {
-                      txS.add(txSs);
-                    }
-                  }
-                  final TransactionUpdate txUpdate = TransactionUpdate(
-                    groupTitle: _split ? _titleTextController.text : null,
-                    transactions: txS,
-                  );
-                  // Delete old splits
-                  final List<Future<Response<dynamic>>> futures =
-                      _deletedSplitIDs.where((String id) => id.isNotEmpty).map((
-                        String id,
-                      ) {
-                        log.fine(() => "deleting split $id");
-                        return api.v1TransactionJournalsIdDelete(id: id);
-                      }).toList();
-                  if (futures.isNotEmpty) {
-                    await Future.wait(futures);
-                  }
-                  resp = await api.v1TransactionsIdPut(id: id, body: txUpdate);
-                } else {
-                  // New transaction
-                  final List<TransactionSplitStore> txS =
-                      <TransactionSplitStore>[];
-                  for (int i = 0; i < _localAmounts.length; i++) {
-                    late String sourceName, destinationName;
-
-                    sourceName = _sourceAccountTextControllers[i].text;
-                    if (sourceName.isEmpty) {
-                      sourceName = _sourceAccountTextController.text;
-                    }
-                    destinationName =
-                        _destinationAccountTextControllers[i].text;
-                    if (destinationName.isEmpty) {
-                      destinationName = _destinationAccountTextController.text;
-                    }
-
-                    txS.add(
-                      TransactionSplitStore(
-                        type: _transactionType,
-                        date: _date.copyWith(
-                          second: 0,
-                          millisecond: 0,
-                          microsecond: 0,
-                        ),
-                        amount: _localAmounts[i].toString(),
-                        description: _split
-                            ? _titleTextControllers[i].text
-                            : _titleTextController.text,
-                        billId: _bills[i]?.id ?? "0",
-                        piggyBankId: (_piggy[i]?.id != null)
-                            ? (int.parse(_piggy[i]!.id))
-                            : null,
-                        budgetName:
-                            (_transactionType ==
-                                TransactionTypeProperty.withdrawal)
-                            ? _budgetTextControllers[i].text
-                            : "",
-                        categoryName: _categoryTextControllers[i].text,
-                        destinationName: destinationName,
-                        // :HAX: Since nulled fields are not submitted, we set
-                        // the value to 0 so the foreign currency is gone...
-                        foreignAmount: _foreignCurrencies[i] != null
-                            ? _foreignAmounts[i].toString()
-                            : "0",
-                        foreignCurrencyId: _foreignCurrencies[i]?.id,
-                        notes: _noteTextControllers[i].text,
-                        order: i,
-                        sourceName: sourceName,
-                        tags: _tags[i].tags,
-                        reconciled: _reconciled,
-                      ),
-                    );
-                  }
-                  final TransactionStore newTx = TransactionStore(
-                    groupTitle: _split ? _titleTextController.text : null,
-                    transactions: txS,
-                    applyRules: true,
-                    fireWebhooks: true,
-                    errorIfDuplicateHash: true,
-                  );
-                  resp = await api.v1TransactionsPost(body: newTx);
-                }
-
-                // Check if insert/update was successful
-                if (!resp.isSuccessful || resp.body == null) {
-                  try {
-                    final ValidationErrorResponse valError = .fromJson(
-                      json.decode(resp.error.toString()),
-                    );
-                    error =
-                        valError.message ??
-                        // ignore: use_build_context_synchronously
-                        (context.mounted
-                            // ignore: use_build_context_synchronously
-                            ? S.of(context).errorUnknown
-                            : "[nocontext] Unknown error.");
-                  } catch (_) {
-                    // ignore: use_build_context_synchronously
-                    error = context.mounted
-                        // ignore: use_build_context_synchronously
+                try {
+                  newTX = await _tx.save(api, user!);
+                } catch (e, stack) {
+                  log.severe("Failed to save transaction", e, stack);
+                  error = e.toString();
+                  if (error.isEmpty) {
+                    error = (context.mounted
                         ? S.of(context).errorUnknown
-                        : "[nocontext] Unknown error.";
+                        : "[nocontext] Unknown error.");
                   }
-
                   msg.showSnackBar(
                     SnackBar(content: Text(error), behavior: .floating),
                   );
@@ -1117,81 +1180,7 @@ class _TransactionPageState extends State<TransactionPage>
                 }
 
                 // Update stock
-                await stock!.setTransaction(resp.body!.data);
-
-                // Upload attachments if required
-                if ((_attachments?.isNotEmpty ?? false) &&
-                    _transactionJournalIDs.firstWhereOrNull(
-                          (String? e) => e != null,
-                        ) ==
-                        null) {
-                  log.fine(
-                    () => "uploading ${_attachments!.length} attachments",
-                  );
-                  final TransactionSplit? tx = resp
-                      .body
-                      ?.data
-                      .attributes
-                      .transactions
-                      .firstWhereOrNull(
-                        (TransactionSplit e) => e.transactionJournalId != null,
-                      );
-                  if (tx != null) {
-                    final String txId = tx.transactionJournalId!;
-                    log.finest(() => "uploading to txId $txId");
-                    for (AttachmentRead attachment in _attachments!) {
-                      log.finest(
-                        () =>
-                            "uploading attachment ${attachment.id}: ${attachment.attributes.filename}",
-                      );
-                      final Response<AttachmentSingle> respAttachment =
-                          await api.v1AttachmentsPost(
-                            body: AttachmentStore(
-                              filename: attachment.attributes.filename!,
-                              attachableType: .transactionjournal,
-                              attachableId: txId,
-                            ),
-                          );
-                      if (!respAttachment.isSuccessful ||
-                          respAttachment.body == null) {
-                        log.warning(() => "error uploading attachment");
-                        continue;
-                      }
-                      final AttachmentRead newAttachment =
-                          respAttachment.body!.data;
-                      log.finest(() => "attachment id is ${newAttachment.id}");
-
-                      final File file = File(attachment.attributes.uploadUrl!);
-
-                      final http.StreamedRequest request = http.StreamedRequest(
-                        HttpMethod.Post,
-                        Uri.parse(newAttachment.attributes.uploadUrl!),
-                      );
-                      request.headers.addAll(user!.headers());
-                      request.headers[HttpHeaders.contentTypeHeader] =
-                          ContentType.binary.mimeType;
-                      request.contentLength = await file.length();
-                      log.fine(
-                        () =>
-                            "AttachmentUpload: Starting Upload ${newAttachment.id}",
-                      );
-
-                      file.openRead().listen(
-                        (List<int> data) {
-                          log.finest(() => "sent ${data.length} bytes");
-                          request.sink.add(data);
-                        },
-                        onDone: () {
-                          request.sink.close();
-                        },
-                      );
-
-                      await httpClient.send(request);
-
-                      log.fine(() => "done uploading attachment");
-                    }
-                  }
-                }
+                await stock!.setTransaction(newTX);
 
                 // Done saving
                 setState(() => _savingInProgress = false);
@@ -1203,7 +1192,7 @@ class _TransactionPageState extends State<TransactionPage>
                   // 2. the date has been changed (changing the order of the TX list)
                   nav.pop(
                     widget.transaction == null ||
-                        _date !=
+                        _tx.date !=
                             _tzHandler.sTime(
                               widget
                                   .transaction!
@@ -1224,7 +1213,7 @@ class _TransactionPageState extends State<TransactionPage>
                       builder: (BuildContext context) => const NavPage(),
                     ),
                   );
-                }*/
+                }
               },
         child: _savingInProgress
             ? const SizedBox(
@@ -1579,31 +1568,6 @@ class _TransactionPageState extends State<TransactionPage>
       onDelete: _cardsAnimationController[i].reverse,
     );
   }
-}
-
-TransactionSplitUpdate txFilterSameFields(
-  TransactionSplitUpdate txU,
-  TransactionSplit tx,
-) {
-  /* https://github.com/firefly-iii/firefly-iii/blob/main/app/Validation/GroupValidation.php#L105
-     $forbidden = ['amount', 'foreign_amount', 'currency_code', 'currency_id', 'foreign_currency_code', 'foreign_currency_id',
-       'source_id', 'source_name', 'source_number', 'source_iban',
-       'destination_id', 'destination_name', 'destination_number', 'destination_iban',
-     ];
-       */
-  return txU.copyWith(
-    amount: tx.amount == txU.amount ? null : txU.amount,
-    foreignAmount: tx.foreignAmount == txU.foreignAmount
-        ? null
-        : txU.foreignAmount,
-    foreignCurrencyId: tx.foreignCurrencyId == txU.foreignCurrencyId
-        ? null
-        : txU.foreignCurrencyId,
-    sourceName: tx.sourceName == txU.sourceName ? null : txU.sourceName,
-    destinationName: tx.destinationName == txU.destinationName
-        ? null
-        : txU.destinationName,
-  );
 }
 
 class TransactionDeleteButton extends StatelessWidget {

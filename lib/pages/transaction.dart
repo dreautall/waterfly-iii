@@ -2358,7 +2358,7 @@ class TransactionSplitCard extends StatelessWidget {
                                       "${split.foreignCurrency?.attributes.code ?? split.localCurrency.attributes.code} ",
                                   onChanged: (String string) {
                                     if (split.foreignCurrency != null) {
-                                      split._foreignAmount =
+                                      split.foreignAmount =
                                           double.tryParse(string) ?? 0;
                                     } else {
                                       split.localAmount =
@@ -2471,6 +2471,7 @@ class TransactionSplitCard extends StatelessWidget {
                                 }
                                 if (newBill != split.bill) {
                                   split.bill = newBill;
+                                  tx.notifyListeners();
                                 }
                               },
                         tooltip: S.of(context).transactionDialogBillTitle,
@@ -2510,6 +2511,7 @@ class TransactionSplitCard extends StatelessWidget {
                                 );
 
                                 split.foreignCurrency = newCurrency;
+                                tx.notifyListeners();
                               }
                             : null,
                         tooltip: (tx.split)
@@ -2547,6 +2549,7 @@ class TransactionSplitCard extends StatelessWidget {
                                   }
                                   if (newPiggy != split.piggy) {
                                     split.piggy = newPiggy;
+                                    tx.notifyListeners();
                                   }
                                 },
                           tooltip: S.of(context).transactionDialogPiggyTitle,
@@ -2570,6 +2573,7 @@ class TransactionSplitCard extends StatelessWidget {
                                             "adding separate source account for $index",
                                       );
                                       split.sourceAccountTC.text = "";
+                                      tx.notifyListeners();
                                     }
                                   : null,
                               tooltip: (tx.split)
@@ -2596,6 +2600,7 @@ class TransactionSplitCard extends StatelessWidget {
                                         () =>
                                             "adding separate destination account for $index",
                                       );
+                                      tx.notifyListeners();
                                       split.destinationAccountTC.text = "";
                                     }
                                   : null,

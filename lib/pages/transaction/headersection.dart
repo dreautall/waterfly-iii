@@ -7,9 +7,8 @@ import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
-import 'package:waterflyiii/pages/transaction.dart'
-    show TransactionState, TransactionSplitState;
-import 'package:waterflyiii/pages/transaction/attachments.dart';
+import 'package:waterflyiii/pages/transaction/dialogs/attachments.dart';
+import 'package:waterflyiii/pages/transaction/state.dart';
 import 'package:waterflyiii/pages/transaction/title.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';

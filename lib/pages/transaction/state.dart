@@ -365,7 +365,7 @@ class TransactionState extends ChangeNotifier {
       throw Exception(error);
     }
 
-    // for new TX: save transactions
+    // for new TX: save attachments
     if ((_attachments?.isNotEmpty ?? false) && originalTX == null) {
       log.fine(
         () => "[TS] save(): uploading ${_attachments!.length} attachments",
@@ -702,6 +702,7 @@ class TransactionSplitState {
   );
 
   TransactionSplitUpdate toUpdate() => TransactionSplitUpdate(
+    transactionJournalId: journalID,
     type: parent.type,
     date: parent.date,
     amount: localAmount.toString(),

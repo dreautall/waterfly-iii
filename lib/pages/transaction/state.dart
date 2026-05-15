@@ -62,9 +62,7 @@ class TransactionState extends ChangeNotifier {
   }
 
   List<AttachmentRead>? get attachments => _attachments;
-
   bool get hasAttachments => attachments?.isNotEmpty ?? false;
-
   set attachments(List<AttachmentRead>? attachments) {
     log.finest(() => "[TS] set attachments");
     _attachments = attachments;
@@ -109,6 +107,8 @@ class TransactionState extends ChangeNotifier {
       localCurrency.attributes.decimalPlaces ?? 2,
     );
   }
+
+  bool get newTX => originalTX == null;
 
   void addAttachment(AttachmentRead attachment) {
     log.finest(() => "[TS] addAttachment()");
@@ -467,8 +467,9 @@ class TransactionState extends ChangeNotifier {
 
   static TransactionState fromExisting(
     TransactionRead transaction,
-    TimeZoneHandler tzHandler,
-  ) {
+    TimeZoneHandler tzHandler, {
+    bool clone = false,
+  }) {
     final List<TransactionSplit> transactions =
         transaction.attributes.transactions;
 
@@ -484,7 +485,7 @@ class TransactionState extends ChangeNotifier {
           decimalPlaces: transactions.first.currencyDecimalPlaces,
         ),
       ),
-      originalTX: transaction,
+      originalTX: !clone ? transaction : null,
     );
     tx.type = transactions.first.type;
 
@@ -586,7 +587,7 @@ class TransactionState extends ChangeNotifier {
       }
 
       /// Journal ID
-      newSplit.journalID = trans.transactionJournalId;
+      newSplit.journalID = clone ? null : trans.transactionJournalId;
 
       /// attachments
       hasAttachments = hasAttachments || (trans.hasAttachments ?? false);
@@ -598,6 +599,13 @@ class TransactionState extends ChangeNotifier {
       // If any split had an attachment, there are some. Set to "null" to
       // trigger a separate API call to fetch the list!
       tx.attachments = null;
+    }
+
+    // If we're cloning, unset some values
+    if (clone) {
+      tx.date = tzHandler.newTXTime().toLocal();
+      tx.reconciled = false;
+      tx.attachments = <AttachmentRead>[];
     }
 
     return tx;

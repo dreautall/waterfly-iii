@@ -313,18 +313,20 @@ class TransactionState extends ChangeNotifier {
     if (tx == null) {
       return txU;
     }
-    return txU.copyWith(
-      amount: tx.amount == txU.amount ? null : txU.amount,
+    return txU.copyWithWrapped(
+      amount: tx.amount == txU.amount ? const .value(null) : .value(txU.amount),
       foreignAmount: tx.foreignAmount == txU.foreignAmount
-          ? null
-          : txU.foreignAmount,
+          ? const .value(null)
+          : .value(txU.foreignAmount),
       foreignCurrencyId: tx.foreignCurrencyId == txU.foreignCurrencyId
-          ? null
-          : txU.foreignCurrencyId,
-      sourceName: tx.sourceName == txU.sourceName ? null : txU.sourceName,
+          ? const .value(null)
+          : .value(txU.foreignCurrencyId),
+      sourceName: tx.sourceName == txU.sourceName
+          ? const .value(null)
+          : .value(txU.sourceName),
       destinationName: tx.destinationName == txU.destinationName
-          ? null
-          : txU.destinationName,
+          ? const .value(null)
+          : .value(txU.destinationName),
     );
   }
 
@@ -333,7 +335,7 @@ class TransactionState extends ChangeNotifier {
     late Response<TransactionSingle> resp;
     if (originalTX == null) {
       // new TX
-      resp = await api.v1TransactionsPost(body: _toStore());
+      resp = await api.v1TransactionsPost(body: toStore());
     } else {
       // updated TX
       final List<Future<Response<dynamic>>> futures = _deletedSplitIDs
@@ -348,7 +350,7 @@ class TransactionState extends ChangeNotifier {
       }
       resp = await api.v1TransactionsIdPut(
         id: originalTX!.id,
-        body: _toUpdate(),
+        body: toUpdate(),
       );
     }
 
@@ -429,7 +431,8 @@ class TransactionState extends ChangeNotifier {
     return resp.body!.data;
   }
 
-  TransactionStore _toStore() => TransactionStore(
+  @visibleForTesting
+  TransactionStore toStore() => TransactionStore(
     groupTitle: split ? groupTitleTC.text : null,
     transactions: <TransactionSplitStore>[
       ...splits.map((TransactionSplitState s) => s.toStore()),
@@ -439,7 +442,8 @@ class TransactionState extends ChangeNotifier {
     errorIfDuplicateHash: true,
   );
 
-  TransactionUpdate _toUpdate() => TransactionUpdate(
+  @visibleForTesting
+  TransactionUpdate toUpdate() => TransactionUpdate(
     groupTitle: split ? groupTitleTC.text : null,
     transactions: <TransactionSplitUpdate>[
       ...splits.map(

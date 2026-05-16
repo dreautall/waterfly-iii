@@ -33,7 +33,7 @@ class AttachmentDialog extends StatefulWidget {
 
 class _AttachmentDialogState extends State<AttachmentDialog>
     with SingleTickerProviderStateMixin {
-  final Logger log = Logger("Pages.Transaction.AttachmentDialog");
+  final Logger log = Logger("Pages.Transaction.Dialogs.Attachment");
 
   final Map<int, double> _dlProgress = <int, double>{};
 

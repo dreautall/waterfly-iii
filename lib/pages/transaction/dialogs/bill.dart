@@ -17,7 +17,7 @@ class BillDialog extends StatefulWidget {
 }
 
 class _BillDialogState extends State<BillDialog> {
-  final Logger log = Logger("Pages.Transaction.Bill");
+  final Logger log = Logger("Pages.Transaction.Dialogs.Bill");
 
   final TextEditingController _billTextController = TextEditingController();
   final FocusNode _billFocusNode = FocusNode();
@@ -42,6 +42,8 @@ class _BillDialogState extends State<BillDialog> {
 
   @override
   Widget build(BuildContext context) {
+    log.finest(() => "build()");
+
     return AlertDialog(
       icon: const Icon(Icons.calendar_today),
       title: Text(S.of(context).transactionDialogBillTitle),

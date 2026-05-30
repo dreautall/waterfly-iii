@@ -20,7 +20,7 @@ dependencies:
   timezone: ^0.11.0
   http: ^1.6.0
   cronet_http: ^1.8.0
-  cupertino_http: ^2.3.0
+  cupertino_http: ^3.0.2
   # flutter.dev
   path_provider: ^2.1.4
   shared_preferences: ^2.3.4

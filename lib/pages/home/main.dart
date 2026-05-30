@@ -557,7 +557,7 @@ class _HomeMainState extends State<HomeMain>
     return RefreshIndicator.adaptive(
       onRefresh: _refreshStats,
       child: ListView(
-        cacheExtent: 1000,
+        scrollCacheExtent: const .pixels(1000),
         padding: const .all(8),
         children: <Widget>[
           for (int i = 0; i < cards.length; i++)

@@ -167,7 +167,7 @@ class _BillsPageState extends State<BillsPage>
 
   Widget _groupBuilder(Map<String, List<BillRead>> groupedBills) {
     return ListView(
-      cacheExtent: 1000,
+      scrollCacheExtent: const .pixels(1000),
       children: <Widget>[
         ...groupedBills.keys.map(
           (String groupName) => Card(

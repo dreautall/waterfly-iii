@@ -97,11 +97,8 @@ class _DashboardDialogState extends State<DashboardDialog> {
         width: .maxFinite,
         height: cardWidgets.length * 96,
         child: ReorderableListView(
-          onReorder: (int oldIndex, int newIndex) async {
+          onReorderItem: (int oldIndex, int newIndex) async {
             setState(() {
-              if (oldIndex < newIndex) {
-                newIndex -= 1;
-              }
               final DashboardCards item = cards.removeAt(oldIndex);
               cards.insert(newIndex, item);
             });

@@ -188,7 +188,7 @@ class TransactionState extends ChangeNotifier {
     );
     log.finer(
       () =>
-          "selected source account ${option.name}, type ${sourceAccountType.toString()} (${option.type})",
+          "selected source account ${option.name}, type ${sourceAccountType.toString()} (${option.type}) - asset ${sourceAccountType.isAsset}",
     );
     if (sourceAccountType.isAsset) {
       ownAccountID = option.id;
@@ -254,12 +254,12 @@ class TransactionState extends ChangeNotifier {
      * in this app] will throw an error!).
      */
     if (txType == .swaggerGeneratedUnknown &&
-        sourceAccountType == .assetAccount &&
+        sourceAccountType.isAsset &&
         destinationAccountType == .swaggerGeneratedUnknown) {
       txType = .withdrawal;
     } else if (txType == .swaggerGeneratedUnknown &&
         sourceAccountType == .swaggerGeneratedUnknown &&
-        destinationAccountType == .assetAccount) {
+        destinationAccountType.isAsset) {
       txType = .deposit;
     }
 

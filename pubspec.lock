@@ -914,7 +914,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "256d74f54f2f526a0570239c75fee416e541ec42"
+      resolved-ref: "390c3e403eefd5c84f5d95465dbd61cea7ece2ce"
       url: "https://github.com/dreautall/notification_listener_service.git"
     source: git
     version: "0.0.2"
@@ -926,15 +926,70 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.4.1"
-  open_file_plus:
+  open_file:
     dependency: "direct main"
     description:
-      path: "."
-      ref: main
-      resolved-ref: b29351d11174869ebe0d7a5401ecad0a2300a63b
-      url: "https://github.com/postflow/open_file_plus.git"
-    source: git
-    version: "3.4.1+1"
+      name: open_file
+      sha256: b22decdae85b459eac24aeece48f33845c6f16d278a9c63d75c5355345ca236b
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.5.11"
+  open_file_android:
+    dependency: transitive
+    description:
+      name: open_file_android
+      sha256: "58141fcaece2f453a9684509a7275f231ac0e3d6ceb9a5e6de310a7dff9084aa"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.6"
+  open_file_ios:
+    dependency: transitive
+    description:
+      name: open_file_ios
+      sha256: a5acd07ba1f304f807a97acbcc489457e1ad0aadff43c467987dd9eef814098f
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
+  open_file_linux:
+    dependency: transitive
+    description:
+      name: open_file_linux
+      sha256: d189f799eecbb139c97f8bc7d303f9e720954fa4e0fa1b0b7294767e5f2d7550
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5"
+  open_file_mac:
+    dependency: transitive
+    description:
+      name: open_file_mac
+      sha256: cd293f6750de6438ab2390513c99128ade8c974825d4d8128886d1cda8c64d01
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
+  open_file_platform_interface:
+    dependency: transitive
+    description:
+      name: open_file_platform_interface
+      sha256: "101b424ca359632699a7e1213e83d025722ab668b9fd1412338221bf9b0e5757"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
+  open_file_web:
+    dependency: transitive
+    description:
+      name: open_file_web
+      sha256: e3dbc9584856283dcb30aef5720558b90f88036360bd078e494ab80a80130c4f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
+  open_file_windows:
+    dependency: transitive
+    description:
+      name: open_file_windows
+      sha256: d26c31ddf935a94a1a3aa43a23f4fff8a5ff4eea395fe7a8cb819cf55431c875
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   package_config:
     dependency: transitive
     description:

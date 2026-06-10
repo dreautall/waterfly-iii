@@ -1,5 +1,5 @@
 {
-    "@@locale": "es",
+    "@@locale": "es-ES",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "Billetera de efectivo",
     "@accountRoleAssetCashWallet": {
@@ -945,10 +945,6 @@
     "settingsLockscreen": "Pantalla de bloqueo",
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
-    },
-    "settingsLockscreenHelp": "Requerir autenticación al iniciar la aplicación",
-    "@settingsLockscreenHelp": {
-        "description": "Description for lockscreen setting"
     },
     "settingsLockscreenInitial": "Por favor, autentíquese para activar la pantalla de bloqueo.",
     "@settingsLockscreenInitial": {

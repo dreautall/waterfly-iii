@@ -1,5 +1,5 @@
 {
-    "@@locale": "sv",
+    "@@locale": "sv-SE",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "Plånbok",
     "@accountRoleAssetCashWallet": {
@@ -925,10 +925,6 @@
     "settingsLockscreen": "Låsskärm",
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
-    },
-    "settingsLockscreenHelp": "Kräv autentisering vid appstart",
-    "@settingsLockscreenHelp": {
-        "description": "Description for lockscreen setting"
     },
     "settingsLockscreenInitial": "Vänligen autentisera för att aktivera låsskärmen.",
     "@settingsLockscreenInitial": {

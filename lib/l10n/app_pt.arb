@@ -1,5 +1,5 @@
 {
-    "@@locale": "pt",
+    "@@locale": "pt-PT",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "Carteira de dinheiro",
     "@accountRoleAssetCashWallet": {
@@ -858,10 +858,6 @@
     "settingsLockscreen": "Tela de bloqueio",
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
-    },
-    "settingsLockscreenHelp": "Exigir autenticação ao iniciar o aplicativo",
-    "@settingsLockscreenHelp": {
-        "description": "Description for lockscreen setting"
     },
     "settingsLockscreenInitial": "Por favor, autentique-se para ativar a tela de bloqueio.",
     "@settingsLockscreenInitial": {

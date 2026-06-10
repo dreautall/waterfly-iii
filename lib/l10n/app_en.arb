@@ -946,7 +946,7 @@
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
     },
-    "settingsLockscreenHelp": "Require authenticiation on app startup",
+    "settingsLockscreenHelp": "Require authentication on app startup",
     "@settingsLockscreenHelp": {
         "description": "Description for lockscreen setting"
     },

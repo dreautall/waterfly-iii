@@ -1215,7 +1215,7 @@ abstract class S {
   /// Description for lockscreen setting
   ///
   /// In en, this message translates to:
-  /// **'Require authenticiation on app startup'**
+  /// **'Require authentication on app startup'**
   String get settingsLockscreenHelp;
 
   /// Prompt to authenticate once to set up the lockscreen

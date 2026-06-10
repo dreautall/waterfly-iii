@@ -729,7 +729,7 @@ class SEn extends S {
   String get settingsLockscreen => 'Lockscreen';
 
   @override
-  String get settingsLockscreenHelp => 'Require authenticiation on app startup';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>

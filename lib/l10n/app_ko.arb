@@ -913,10 +913,6 @@
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
     },
-    "settingsLockscreenHelp": "앱 실행 시 인증 요구",
-    "@settingsLockscreenHelp": {
-        "description": "Description for lockscreen setting"
-    },
     "settingsLockscreenInitial": "잠금 화면을 활성화하려면 인증을 해주세요.",
     "@settingsLockscreenInitial": {
         "description": "Prompt to authenticate once to set up the lockscreen"

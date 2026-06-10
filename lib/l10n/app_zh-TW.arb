@@ -1,5 +1,5 @@
 {
-    "@@locale": "zh_TW",
+    "@@locale": "zh-TW",
     "@@x-reference": true,
     "accountRoleAssetCashWallet": "現金皮夾",
     "@accountRoleAssetCashWallet": {
@@ -925,10 +925,6 @@
     "settingsLockscreen": "鎖定畫面選項",
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
-    },
-    "settingsLockscreenHelp": "程動程式時需要先通過身份認證",
-    "@settingsLockscreenHelp": {
-        "description": "Description for lockscreen setting"
     },
     "settingsLockscreenInitial": "請通過身份認證以啟用鎖定螢幕功能。",
     "@settingsLockscreenInitial": {

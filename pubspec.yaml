@@ -22,7 +22,7 @@ dependencies:
   cronet_http: ^1.8.0
   cupertino_http: ^3.0.2
   # flutter.dev
-  path_provider: ^2.1.4
+  path_provider: ^2.1.6
   shared_preferences: ^2.3.4
   flutter_svg: ^2.2.4
   url_launcher: ^6.3.2

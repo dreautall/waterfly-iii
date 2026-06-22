@@ -37,10 +37,10 @@ packages:
     dependency: "direct main"
     description:
       name: appcheck
-      sha256: "63abf1ba508a86cd5f7bf134d202d008562ac9bbdbc713c92c28bf3f45beca1d"
+      sha256: e23f3034f70c347e7287f50462e7eb5517322cb998331e51d387717bcd7017ae
       url: "https://pub.dev"
     source: hosted
-    version: "1.7.0"
+    version: "1.8.0"
   archive:
     dependency: transitive
     description:

@@ -9,7 +9,7 @@
     "@accountRoleAssetCC": {
         "description": "Firefly Translation String: account_role_ccAsset"
     },
-  "accountRoleAssetDefault": "Alapértelmezett eszközszámla",
+    "accountRoleAssetDefault": "Alapértelmezett eszközszámla",
     "@accountRoleAssetDefault": {
         "description": "Firefly Translation String: account_role_defaultAsset"
     },
@@ -17,7 +17,7 @@
     "@accountRoleAssetSavings": {
         "description": "Firefly Translation String: account_role_savingAsset"
     },
-  "accountRoleAssetShared": "Megosztott eszközszámla",
+    "accountRoleAssetShared": "Megosztott eszközszámla",
     "@accountRoleAssetShared": {
         "description": "Firefly Translation String: account_role_sharedAsset"
     },
@@ -645,13 +645,13 @@
             }
         }
     },
-  "homePiggySavePerMonth": "Spórolás havonta: {amount}",
-  "@homePiggySavePerMonth": {
-    "description": "How much should be saved per month to reach the target",
-    "placeholders": {
-      "amount": {
-        "type": "String",
-        "example": "€12.34"
+    "homePiggySavePerMonth": "Spórolás havonta: {amount}",
+    "@homePiggySavePerMonth": {
+        "description": "How much should be saved per month to reach the target",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
             }
         }
     },
@@ -697,17 +697,17 @@
             }
         }
     },
-  "homePiggyTotal": "Egyenleg: {amount}",
-  "@homePiggyTotal": {
-    "description": "Total balance of an account in the Piggy bank",
-    "placeholders": {
-      "amount": {
-        "type": "String",
-        "example": "€12.34"
-      }
-    }
-  },
-  "homeTabLabelBalance": "Egyenleg",
+    "homePiggyTotal": "Egyenleg: {amount}",
+    "@homePiggyTotal": {
+        "description": "Total balance of an account in the Piggy bank",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homeTabLabelBalance": "Egyenleg",
     "@homeTabLabelBalance": {
         "description": "Tab Label: Balance Sheet page"
     },
@@ -945,10 +945,6 @@
     "settingsLockscreen": "Zárképernyő",
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
-    },
-    "settingsLockscreenHelp": "Hitelesítés szükséges az alkalmazás indításakor",
-    "@settingsLockscreenHelp": {
-        "description": "Description for lockscreen setting"
     },
     "settingsLockscreenInitial": "A lezárási képernyő engedélyezéséhez hitelesítsen.",
     "@settingsLockscreenInitial": {

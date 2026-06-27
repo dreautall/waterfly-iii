@@ -727,8 +727,7 @@ class SFa extends S {
   String get settingsLockscreen => 'صفحه قفل';
 
   @override
-  String get settingsLockscreenHelp =>
-      'نیاز به احراز هویت در راه اندازی برنامه\n';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>

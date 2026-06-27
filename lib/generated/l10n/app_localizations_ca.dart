@@ -739,8 +739,7 @@ class SCa extends S {
   String get settingsLockscreen => 'Pantalla de Bloqueig';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Requereix autenticació en iniciar l\'aplicació';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>

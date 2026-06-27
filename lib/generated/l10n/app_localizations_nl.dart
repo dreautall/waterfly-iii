@@ -732,8 +732,7 @@ class SNl extends S {
   String get settingsLockscreen => 'Vergrendelscherm';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Authenticatie vereist bij opstarten van de app';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>

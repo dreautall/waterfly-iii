@@ -739,8 +739,7 @@ class SFr extends S {
   String get settingsLockscreen => 'Écran de verrouillage';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Exiger une authentification au démarrage de l\'application';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>

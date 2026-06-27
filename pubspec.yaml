@@ -47,7 +47,7 @@ dependencies:
     git:
       url: https://github.com/dreautall/notification_listener_service.git
       ref: main
-  appcheck: ^1.7.0
+  appcheck: ^1.8.0
   package_info_plus: ^10.1.0
   flutter_email_sender: ^9.0.0
   version: ^3.0.2

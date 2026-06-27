@@ -722,7 +722,7 @@ class SKo extends S {
   String get settingsLockscreen => '잠금 화면';
 
   @override
-  String get settingsLockscreenHelp => '앱 실행 시 인증 요구';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial => '잠금 화면을 활성화하려면 인증을 해주세요.';

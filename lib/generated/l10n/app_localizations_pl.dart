@@ -736,8 +736,7 @@ class SPl extends S {
   String get settingsLockscreen => 'Ekran blokady';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Wymagaj uwierzytelnienia przy starcie aplikacji';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>

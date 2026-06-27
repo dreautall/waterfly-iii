@@ -731,7 +731,7 @@ class SDa extends S {
   String get settingsLockscreen => 'Låst skærm';
 
   @override
-  String get settingsLockscreenHelp => 'Kræv godkendelse ved opstart af app';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>

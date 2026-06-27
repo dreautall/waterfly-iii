@@ -49,7 +49,7 @@ dependencies:
       ref: main
   appcheck: ^1.8.0
   package_info_plus: ^10.1.0
-  flutter_email_sender: ^9.0.0
+  flutter_email_sender: ^10.0.1
   version: ^3.0.2
   stock: ^1.1.0
   syncfusion_flutter_charts: ^33.2.13+1

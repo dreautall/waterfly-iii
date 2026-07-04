@@ -926,10 +926,6 @@
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
     },
-    "settingsLockscreenHelp": "Kræv godkendelse ved opstart af app",
-    "@settingsLockscreenHelp": {
-        "description": "Description for lockscreen setting"
-    },
     "settingsLockscreenInitial": "Godkend venligst for at aktivere skærmlåsning.",
     "@settingsLockscreenInitial": {
         "description": "Prompt to authenticate once to set up the lockscreen"

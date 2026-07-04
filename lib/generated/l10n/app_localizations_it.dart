@@ -732,8 +732,7 @@ class SIt extends S {
   String get settingsLockscreen => 'Schermata di blocco';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Richiedi l\'autenticazione all\'avvio dell\'app';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>

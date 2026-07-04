@@ -730,8 +730,7 @@ class SDe extends S {
   String get settingsLockscreen => 'App-Sperre';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Authentifizierung beim Start der App erzwingen';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>

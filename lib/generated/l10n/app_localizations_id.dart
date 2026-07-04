@@ -733,8 +733,7 @@ class SId extends S {
   String get settingsLockscreen => 'Layar Kunci';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Memerlukan autentikasi saat memulai aplikasi';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>

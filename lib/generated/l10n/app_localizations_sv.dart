@@ -730,7 +730,7 @@ class SSv extends S {
   String get settingsLockscreen => 'Låsskärm';
 
   @override
-  String get settingsLockscreenHelp => 'Kräv autentisering vid appstart';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>

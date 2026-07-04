@@ -10,17 +10,17 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 
-bool _savingInProgress = false; // :TODO:
-
 class TransactionTitle extends StatelessWidget {
   const TransactionTitle({
     super.key,
     required this.textController,
     required this.focusNode,
+    required this.savingInProgress,
   });
 
   final TextEditingController textController;
   final FocusNode focusNode;
+  final bool savingInProgress;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class TransactionTitle extends StatelessWidget {
     log.finest(() => "build()");
     return Expanded(
       child: AutoCompleteText<String>(
-        disabled: _savingInProgress,
+        disabled: savingInProgress,
         labelText: S.of(context).transactionFormLabelTitle,
         labelIcon: Icons.receipt_long,
         textController: textController,

@@ -420,7 +420,11 @@ class TransactionSplitCard extends StatelessWidget {
 
   Widget _buildTitle(BuildContext context) => Row(
     children: <Widget>[
-      TransactionTitle(textController: split.titleTC, focusNode: split.titleFN),
+      TransactionTitle(
+        textController: split.titleTC,
+        focusNode: split.titleFN,
+        savingInProgress: saving,
+      ),
     ],
   );
 

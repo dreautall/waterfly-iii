@@ -67,6 +67,7 @@ class TransactionHeaderSection extends StatelessWidget {
       return TransactionTitle(
         textController: tx.groupTitleTC,
         focusNode: tx.groupTitleFN,
+        savingInProgress: saving,
       );
     } else {
       final TransactionSplitState split = tx.splits.first;
@@ -74,6 +75,7 @@ class TransactionHeaderSection extends StatelessWidget {
       return TransactionTitle(
         textController: split.titleTC,
         focusNode: split.titleFN,
+        savingInProgress: saving,
       );
     }
   }

@@ -370,6 +370,9 @@ class SCa extends S {
   String get generalIncome => 'Ingressos';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Passius';
 
   @override

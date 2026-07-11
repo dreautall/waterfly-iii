@@ -367,6 +367,9 @@ class SSv extends S {
   String get generalIncome => 'Inkomst';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Skulder';
 
   @override

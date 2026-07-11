@@ -367,6 +367,9 @@ class SDe extends S {
   String get generalIncome => 'Einnahmen';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Verbindlichkeiten';
 
   @override

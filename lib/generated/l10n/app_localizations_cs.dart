@@ -367,6 +367,9 @@ class SCs extends S {
   String get generalIncome => 'Příjmy';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Závazky';
 
   @override

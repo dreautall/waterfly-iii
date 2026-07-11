@@ -362,6 +362,9 @@ class SZh extends S {
   String get generalIncome => '收入';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => '负债';
 
   @override

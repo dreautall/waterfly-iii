@@ -367,6 +367,9 @@ class SPt extends S {
   String get generalIncome => 'Receita';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Passivos';
 
   @override

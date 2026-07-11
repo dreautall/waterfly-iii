@@ -1105,6 +1105,9 @@ class BudgetList extends StatelessWidget {
             final List<Widget> widgets = <Widget>[];
             final int tsNow = tzHandler.sNow().millisecondsSinceEpoch;
 
+            double totalBudgeted = 0;
+            double totalSpent = 0;
+
             for (BudgetLimitRead budget in snapshot.data!) {
               final List<Widget> stackWidgets = <Widget>[];
               late double spent;
@@ -1142,6 +1145,10 @@ class BudgetList extends StatelessWidget {
               if (budgetInfo == null || available == 0) {
                 continue;
               }
+
+              totalBudgeted += available;
+              totalSpent += spent;
+
               final CurrencyRead currency = CurrencyRead(
                 id: budget.attributes.currencyId ?? "0",
                 type: "currencies",
@@ -1264,9 +1271,77 @@ class BudgetList extends StatelessWidget {
                 ),
               );
             }
+
+            // Summary line above the budgets with the total budgeted, spent
+            // and left amounts (summed in the default currency, like the
+            // categories overview).
+            if (totalBudgeted > 0) {
+              final CurrencyRead defaultCurrency = context
+                  .read<FireflyService>()
+                  .defaultCurrency;
+              final double totalLeft = totalBudgeted - totalSpent;
+              widgets.insert(0, const Divider());
+              widgets.insert(
+                0,
+                Row(
+                  children: <Widget>[
+                    _BudgetSummaryItem(
+                      label: S.of(context).generalBudget,
+                      value: defaultCurrency.fmt(
+                        totalBudgeted,
+                        decimalDigits: 0,
+                      ),
+                    ),
+                    _BudgetSummaryItem(
+                      label: S.of(context).generalSpent,
+                      value: defaultCurrency.fmt(totalSpent, decimalDigits: 0),
+                    ),
+                    _BudgetSummaryItem(
+                      label: S.of(context).generalLeft,
+                      value: defaultCurrency.fmt(totalLeft, decimalDigits: 0),
+                      color: totalLeft < 0 ? Colors.red : null,
+                    ),
+                  ],
+                ),
+              );
+            }
+
             return Column(crossAxisAlignment: .start, children: widgets);
           },
         ),
+      ),
+    );
+  }
+}
+
+/// A single labelled amount (e.g. "Budget", "Spent", "Left") shown in the
+/// budget summary line on top of the dashboard budget card.
+class _BudgetSummaryItem extends StatelessWidget {
+  const _BudgetSummaryItem({
+    required this.label,
+    required this.value,
+    this.color,
+  });
+
+  final String label;
+  final String value;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(label, style: Theme.of(context).textTheme.labelSmall),
+          Text(
+            value,
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
+          ),
+        ],
       ),
     );
   }

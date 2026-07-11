@@ -364,6 +364,9 @@ class SFa extends S {
   String get generalIncome => 'درآمد';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'بدهی ها';
 
   @override

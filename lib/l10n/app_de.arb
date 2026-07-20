@@ -645,6 +645,16 @@
             }
         }
     },
+    "homePiggySavePerMonth": "Spare pro Monat: {amount}",
+    "@homePiggySavePerMonth": {
+        "description": "How much should be saved per month to reach the target",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
     "homePiggySavedMultiple": "Bereits gespart:",
     "@homePiggySavedMultiple": {
         "description": "Title for a list of multiple accounts with the amount of money saved so far"
@@ -680,6 +690,16 @@
     "homePiggyInPiggyBanks": "In Sparschweinen: {amount}",
     "@homePiggyInPiggyBanks": {
         "description": "Amount currently in piggy banks for this account",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyTotal": "Total: {amount}",
+    "@homePiggyTotal": {
+        "description": "Total balance of an account in the Piggy bank",
         "placeholders": {
             "amount": {
                 "type": "String",
@@ -925,6 +945,10 @@
     "settingsLockscreen": "App-Sperre",
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
+    },
+    "settingsLockscreenHelp": "Anmeldung beim App-Start erforderlich",
+    "@settingsLockscreenHelp": {
+        "description": "Description for lockscreen setting"
     },
     "settingsLockscreenInitial": "Bitte authentifiziere dich, um die App-Sperre zu aktivieren.",
     "@settingsLockscreenInitial": {

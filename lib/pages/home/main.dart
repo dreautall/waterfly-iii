@@ -433,12 +433,22 @@ class _HomeMainState extends State<HomeMain>
       for (AccountRead e in respLiabilityAccounts.body!.data)
         e.attributes.name: e.attributes.includeNetWorth ?? true,
     });
+    // Prefer entries converted to the primary currency when the server
+    // provides them ("convert to primary" enabled on recent Firefly
+    // versions). Raw entries are in each account's own currency and cannot
+    // be summed across accounts. Decided once for the whole response so a
+    // single dataset can never mix currencies into the totals.
+    final bool usePrimaryEntries = respBalanceData.body!.every(
+      (ChartDataSet e) => e.pcEntries is Map<String, dynamic>,
+    );
     for (ChartDataSet e in respBalanceData.body!) {
       if (includeInNetWorth.containsKey(e.label) &&
           includeInNetWorth[e.label] != true) {
         continue;
       }
-      final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
+      final Map<String, dynamic> entries = usePrimaryEntries
+          ? e.pcEntries as Map<String, dynamic>
+          : e.entries as Map<String, dynamic>;
       entries.forEach((String dateStr, dynamic valueStr) {
         DateTime date = tzHandler.sTime(DateTime.parse(dateStr)).toLocal();
         if (

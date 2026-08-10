@@ -735,8 +735,7 @@ class SEs extends S {
   String get settingsLockscreen => 'Pantalla de bloqueo';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Requerir autenticación al iniciar la aplicación';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>

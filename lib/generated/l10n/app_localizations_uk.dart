@@ -752,8 +752,7 @@ class SUk extends S {
   String get settingsLockscreen => 'Екран блокування';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Вимагати автентифікацію при запуску програми';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>

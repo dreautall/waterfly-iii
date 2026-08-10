@@ -738,8 +738,7 @@ class STr extends S {
   String get settingsLockscreen => 'Kilit Ekranı';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Uygulama başlatılırken kimlik doğrulaması iste';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>

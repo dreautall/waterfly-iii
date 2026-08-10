@@ -734,8 +734,7 @@ class SCs extends S {
   String get settingsLockscreen => 'Obrazovka uzamčení';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Při spuštění aplikace požadovat ověření';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>

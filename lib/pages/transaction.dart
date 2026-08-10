@@ -1215,7 +1215,7 @@ class _TransactionPageState extends State<TransactionPage>
         key: _formKey,
         child: ListView(
           shrinkWrap: true,
-          cacheExtent: 10000,
+          scrollCacheExtent: const .pixels(10000),
           padding: const .symmetric(horizontal: 24, vertical: 16),
           children: _transactionDetailBuilder(context),
         ),

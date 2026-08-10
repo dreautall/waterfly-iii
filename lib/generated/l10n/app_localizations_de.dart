@@ -511,7 +511,7 @@ class SDe extends S {
 
   @override
   String homePiggySavePerMonth(String amount) {
-    return 'Save per month: $amount';
+    return 'Spare pro Monat: $amount';
   }
 
   @override
@@ -730,8 +730,7 @@ class SDe extends S {
   String get settingsLockscreen => 'App-Sperre';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Authentifizierung beim Start der App erzwingen';
+  String get settingsLockscreenHelp => 'Anmeldung beim App-Start erforderlich';
 
   @override
   String get settingsLockscreenInitial =>

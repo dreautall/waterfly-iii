@@ -32,6 +32,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
 
       # Call setup_env action to setup workspace
       - name: Setup Flutter environment
@@ -57,7 +58,8 @@ jobs:
       # Set build number in pubspec.yaml
       - name: Set build number
         run: |
-          sed -i 's/^\(version: [0-9\.]\{1,\}\(-[a-z]\{1,\}\)\{0,1\}\([0-9\.]\)\{0,\}\)$/\1+${{ github.run_number }}/m' pubspec.yaml
+          COMMIT_COUNT=$(git rev-list --count HEAD)
+          sed -i "s/^\(version: [0-9\.]\{1,\}\(-[a-z]\{1,\}\)\{0,1\}\([0-9\.]\)\{0,\}\)$/\1+${COMMIT_COUNT}/m" pubspec.yaml
 
       # Build l10n files
       - name: Generate localization files

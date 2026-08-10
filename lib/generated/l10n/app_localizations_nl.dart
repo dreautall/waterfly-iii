@@ -511,7 +511,7 @@ class SNl extends S {
 
   @override
   String homePiggySavePerMonth(String amount) {
-    return 'Save per month: $amount';
+    return 'Bespaar per maand: $amount';
   }
 
   @override
@@ -540,7 +540,7 @@ class SNl extends S {
 
   @override
   String homePiggyTotal(String amount) {
-    return 'Total: $amount';
+    return 'Totaal: $amount';
   }
 
   @override

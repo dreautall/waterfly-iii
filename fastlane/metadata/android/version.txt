@@ -1,2 +1,2 @@
-versionName=1.2.0
-versionCode=627
+versionName=1.2.1
+versionCode=4102

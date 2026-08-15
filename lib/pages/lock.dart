@@ -32,7 +32,7 @@ class _LockPageState extends State<LockPage> {
       if (success) {
         widget.onSuccess();
       }
-    } on Exception catch (e, _) {
+    } on Exception catch (e) {
       log.shout(() => "Authentication failed: $e");
     }
   }

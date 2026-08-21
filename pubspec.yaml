@@ -58,6 +58,8 @@ dependencies:
   open_file: ^4.0.0
   expressions: ^0.2.5+3
 
+  material_ui: any
+  android_file_picker: any
 dev_dependencies:
   flutter_lints: ^6.0.0
   # needed for swagger_dart_code_generator

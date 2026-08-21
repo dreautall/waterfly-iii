@@ -13,10 +13,10 @@ import 'package:chopper/chopper.dart'
         applyHeaders;
 import 'package:cronet_http/cronet_http.dart';
 import 'package:cupertino_http/cupertino_http.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:version/version.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';

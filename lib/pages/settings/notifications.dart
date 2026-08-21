@@ -1,9 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:appcheck/appcheck.dart';
 import 'package:chopper/chopper.dart' show Response;
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';
 import 'package:provider/provider.dart';
 import 'package:waterflyiii/auth.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // on screen
 const Duration animDurationEmphasized = Duration(milliseconds: 500);

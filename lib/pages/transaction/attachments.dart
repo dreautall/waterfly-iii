@@ -6,11 +6,11 @@ import 'package:android_file_picker/android_file_picker.dart'
 import 'package:chopper/chopper.dart' show HttpMethod, Response;
 import 'package:file_picker/file_picker.dart';
 import 'package:filesize/filesize.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:provider/provider.dart';

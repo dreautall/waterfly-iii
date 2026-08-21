@@ -1,17 +1,14 @@
-import 'package:badges/badges.dart' as badges;
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:timezone/timezone.dart' as tz;
-import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/extensions.dart';
-import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/transaction/attachmentbutton.dart';
 import 'package:waterflyiii/pages/transaction/dialogs/attachments.dart';
 import 'package:waterflyiii/pages/transaction/state.dart';
 import 'package:waterflyiii/pages/transaction/title.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
-import 'package:waterflyiii/widgets/materialiconbutton.dart';
 
 final Logger log = Logger("Pages.Transaction.TransactionHeaderSection");
 
@@ -81,37 +78,21 @@ class TransactionHeaderSection extends StatelessWidget {
   }
 
   Widget _buildAttachmentButton(BuildContext context) {
-    return badges.Badge(
-      badgeContent: Text(
-        tx.attachments == null ? ".." : tx.attachments!.length.toString(),
-        style: Theme.of(context).textTheme.labelMedium!.copyWith(
-          color: Theme.of(context).colorScheme.onSurfaceVariant,
-        ),
-      ),
-      showBadge: tx.hasAttachments,
-      badgeStyle: badges.BadgeStyle(
-        badgeColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-      ),
-      badgeAnimation: const badges.BadgeAnimation.scale(
-        animationDuration: animDurationEmphasized,
-        curve: animCurveEmphasized,
-      ),
-      child: MaterialIconButton(
-        icon: Icons.attach_file,
-        tooltip: S.of(context).transactionAttachments,
-        onPressed: () async {
-          final List<AttachmentRead> dialogAttachments =
-              tx.attachments ?? <AttachmentRead>[];
-          await showDialog<List<AttachmentRead>>(
-            context: context,
-            builder: (BuildContext context) => AttachmentDialog(
-              attachments: dialogAttachments,
-              transactionId: tx.splits.first.journalID,
-            ),
-          );
-          tx.attachments = dialogAttachments;
-        },
-      ),
+    return AttachmentButton(
+      attachments: tx.attachments,
+      saving: saving,
+      onPressed: () async {
+        final List<AttachmentRead> dialogAttachments =
+            tx.attachments ?? <AttachmentRead>[];
+        await showDialog<List<AttachmentRead>>(
+          context: context,
+          builder: (BuildContext context) => AttachmentDialog(
+            attachments: dialogAttachments,
+            transactionId: tx.splits.first.journalID,
+          ),
+        );
+        tx.attachments = dialogAttachments;
+      },
     );
   }
 

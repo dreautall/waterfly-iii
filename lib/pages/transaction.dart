@@ -993,17 +993,19 @@ class _TransactionBudgetState extends State<TransactionBudget> {
             .v1AutocompleteBudgetsGet(query: widget.textController.text);
         apiThrowErrorIfEmpty(response, mounted ? context : null);
 
-        if (response.body!.isEmpty ||
-            (response.body!.length > 1 &&
-                response.body!.first.name != widget.textController.text)) {
-          setState(() {
-            _budgetId = null;
-          });
-        } else {
-          widget.textController.text = response.body!.first.name;
-          setState(() {
-            _budgetId = response.body!.first.id;
-          });
+        if (mounted) {
+          if (response.body!.isEmpty ||
+              (response.body!.length > 1 &&
+                  response.body!.first.name != widget.textController.text)) {
+            setState(() {
+              _budgetId = null;
+            });
+          } else {
+            widget.textController.text = response.body!.first.name;
+            setState(() {
+              _budgetId = response.body!.first.id;
+            });
+          }
         }
       } catch (e, stackTrace) {
         log.severe("Error while fetching autocomplete from API", e, stackTrace);

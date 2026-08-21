@@ -293,6 +293,24 @@ class TransactionState extends ChangeNotifier {
     }
   }
 
+  bool _isSameAmount(String? s1, String? s2) {
+    if (s1 == "0") s1 = null;
+    if (s2 == "0") s2 = null;
+
+    if (s1 == s2) return true;
+
+    // Either is zero (both being zero was filtered out before)
+    if (s1 == null || s2 == null) return false;
+
+    final d1 = double.tryParse(s1);
+    final d2 = double.tryParse(s2);
+
+    // parse error
+    if (d1 == null || d2 == null) return false;
+
+    return (d1 - d2).abs() < 0.00001;
+  }
+
   TransactionSplitUpdate _filterSameFields(TransactionSplitUpdate txU) {
     /* https://github.com/firefly-iii/firefly-iii/blob/main/app/Validation/GroupValidation.php#L105
      $forbidden = ['amount', 'foreign_amount', 'currency_code', 'currency_id', 'foreign_currency_code', 'foreign_currency_id',
@@ -313,9 +331,12 @@ class TransactionState extends ChangeNotifier {
     if (tx == null) {
       return txU;
     }
+
     return txU.copyWithWrapped(
-      amount: tx.amount == txU.amount ? const .value(null) : .value(txU.amount),
-      foreignAmount: tx.foreignAmount == txU.foreignAmount
+      amount: (_isSameAmount(tx.amount, txU.amount))
+          ? const .value(null)
+          : .value(txU.amount),
+      foreignAmount: (_isSameAmount(tx.foreignAmount, txU.foreignAmount))
           ? const .value(null)
           : .value(txU.foreignAmount),
       foreignCurrencyId: tx.foreignCurrencyId == txU.foreignCurrencyId

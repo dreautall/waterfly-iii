@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:chopper/chopper.dart' show Response, HttpMethod;
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';

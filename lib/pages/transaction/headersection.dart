@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart' as badges;
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/extensions.dart';

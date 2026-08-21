@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/widgets/logo.dart';
 
 final Logger log = Logger("Pages.Lock");
@@ -32,7 +32,7 @@ class _LockPageState extends State<LockPage> {
       if (success) {
         widget.onSuccess();
       }
-    } on Exception catch (e, _) {
+    } on Exception catch (e) {
       log.shout(() => "Authentication failed: $e");
     }
   }

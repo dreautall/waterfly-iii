@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:android_file_picker/android_file_picker.dart'
+    show AndroidPlatformFile;
 import 'package:chopper/chopper.dart' show HttpMethod, Response;
 import 'package:file_picker/file_picker.dart';
 import 'package:filesize/filesize.dart';
@@ -185,7 +187,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     AttachmentRead newAttachment = respAttachment.body!.data;
     final int newAttachmentIndex =
         widget.attachments.length; // Will be added later, no -1 needed.
-    final int total = file.size;
+    final int total = await file.length();
     newAttachment = newAttachment.copyWith(
       attributes: newAttachment.attributes.copyWith(size: total),
     );
@@ -304,7 +306,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
         attachableId: "FAKE",
         filename: file.name,
         uploadUrl: file.path,
-        size: file.size,
+        size: await file.length(),
       ),
       links: const ObjectLink(),
     );
@@ -398,10 +400,10 @@ class _AttachmentDialogState extends State<AttachmentDialog>
               }
 
               log.finer(() => "Image ${imageFile.path} will be uploaded");
-              final PlatformFile file = PlatformFile(
-                path: imageFile.path,
+              final PlatformFile file = AndroidPlatformFile(
+                uri: Uri.file(imageFile.path),
                 name: imageFile.name,
-                size: await imageFile.length(),
+                bytesLength: await imageFile.length(),
               );
               if (context.mounted) {
                 if (widget.transactionId == null) {
@@ -415,15 +417,15 @@ class _AttachmentDialogState extends State<AttachmentDialog>
           ),
           FilledButton(
             onPressed: () async {
-              final FilePickerResult? file = await FilePicker.pickFiles();
-              if (file == null || file.files.first.path == null) {
+              final PlatformFile? file = await FilePicker.pickFile();
+              if (file == null) {
                 return;
               }
               if (context.mounted) {
                 if (widget.transactionId == null) {
-                  await fakeUploadAttachment(context, file.files.first);
+                  await fakeUploadAttachment(context, file);
                 } else {
-                  await uploadAttachment(context, file.files.first);
+                  await uploadAttachment(context, file);
                 }
               }
             },

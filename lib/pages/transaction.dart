@@ -124,7 +124,7 @@ class _TransactionPageState extends State<TransactionPage>
       }
 
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        _tx.groupTitleFN.requestFocus();
+        _tx.splits.first.titleFN.requestFocus();
         // Extract notification
         if (widget.notification != null) {
           final FireflyIii api = context.read<FireflyService>().api;

@@ -302,8 +302,8 @@ class TransactionState extends ChangeNotifier {
     // Either is zero (both being zero was filtered out before)
     if (s1 == null || s2 == null) return false;
 
-    final d1 = double.tryParse(s1);
-    final d2 = double.tryParse(s2);
+    final double? d1 = double.tryParse(s1);
+    final double? d2 = double.tryParse(s2);
 
     // parse error
     if (d1 == null || d2 == null) return false;

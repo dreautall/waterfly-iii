@@ -213,22 +213,27 @@ class _TransactionPageState extends State<TransactionPage>
         }
         // Created from account screen, set account already
         if (widget.accountId != null && mounted) {
-          // Check account
-          final Response<AccountArray> response = await context
-              .read<FireflyService>()
-              .api
-              .v1AccountsGet(type: .assetAccount);
-          if (!response.isSuccessful || response.body == null) {
+          final FireflyIii api = context.read<FireflyService>().api;
+          final Response<AccountSingle> response = await api.v1AccountsIdGet(
+            id: widget.accountId,
+          );
+          if (response.isSuccessful && response.body != null) {
+            final AccountRead acc = response.body!.data;
+            final AutocompleteAccount option = AutocompleteAccount(
+              id: acc.id,
+              name: acc.attributes.name,
+              nameWithBalance: acc.attributes.name,
+              type: AccountTypeProperty.assetAccount.value!,
+              currencyId: acc.attributes.currencyId ?? "",
+              currencyName: acc.attributes.currencyName ?? "",
+              currencyCode: acc.attributes.currencyCode ?? "",
+              currencySymbol: acc.attributes.currencySymbol ?? "",
+              currencyDecimalPlaces: acc.attributes.currencyDecimalPlaces ?? 2,
+            );
+            _tx.selectSourceAccount(option);
+            checkAccountCurrency(option, true);
+          } else {
             log.warning("api account fetch failed");
-            return;
-          }
-          for (AccountRead acc in response.body!.data) {
-            if (acc.id == widget.accountId) {
-              _tx.splits.first.sourceAccountTC.text = acc.attributes.name;
-              _tx.sourceAccountType = .assetAccount;
-              _tx.ownAccountID = acc.id;
-              break;
-            }
           }
         }
         // Created from a file share to app
@@ -254,6 +259,7 @@ class _TransactionPageState extends State<TransactionPage>
             );
           }
         }
+        unawaited(onTXChanged());
       });
     }
 

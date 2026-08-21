@@ -26,12 +26,12 @@ dependencies:
   shared_preferences: ^2.3.4
   flutter_svg: ^2.2.4
   url_launcher: ^6.3.2
-  animations: ^2.1.2
+  animations: ^3.0.0
   local_auth: ^3.0.2
   quick_actions: ^1.0.7
   image_picker: ^1.2.2
   # material.io
-  dynamic_color: ^1.7.0
+  dynamic_color: ^2.1.0
   material_color_utilities: ^0.13.0
   # other
   flutter_secure_storage: ^11.0.0

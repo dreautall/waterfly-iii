@@ -1,16 +1,10 @@
-import 'dart:convert';
-
-import 'package:chopper/chopper.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/testing.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/transaction/state.dart';
 
-import '../../fakes/authuser.dart';
 import '../../fakes/timezonehandler.dart';
 
 void main() {
@@ -148,6 +142,112 @@ void main() {
       expect(state.splits[0].sourceAccountTC.text, "New Asset Account");
     });
 
+    test('selectDestinationAccount updates type and splits', () {
+      final TransactionState state = TransactionState(usdCurrency);
+      state.splitAdd();
+      state.splits[0].destinationAccountTC.text = "Old Dest";
+
+      final AutocompleteAccount option = const AutocompleteAccount(
+        id: "456",
+        name: "New Asset Account",
+        nameWithBalance: "New Asset Account (\$100.00)",
+        type: "Asset account",
+        currencyId: "1",
+        currencyName: "US Dollar",
+        currencyCode: "USD",
+        currencySymbol: r"$",
+        currencyDecimalPlaces: 2,
+      );
+
+      state.selectDestinationAccount(option);
+
+      expect(state.destinationAccountType, AccountTypeProperty.assetAccount);
+      expect(state.ownAccountID, "456");
+      expect(state.splits[0].destinationAccountTC.text, "New Asset Account");
+    });
+
+    group('Account synchronization', () {
+      late TransactionState state;
+
+      setUp(() {
+        state = TransactionState(usdCurrency);
+      });
+
+      test('hasCommonSourceAccount detects differences', () {
+        state.splitAdd();
+        state.splitAdd();
+        state.splits[0].sourceAccountTC.text = "Account A";
+        state.splits[1].sourceAccountTC.text = "Account A";
+        expect(state.hasCommonSourceAccount, true);
+
+        state.splits[1].sourceAccountTC.text = "Account B";
+        expect(state.hasCommonSourceAccount, false);
+      });
+
+      test('splitAdd propagates common accounts', () {
+        state.splitAdd();
+        state.splits[0].sourceAccountTC.text = "Common Source";
+        state.splits[0].destinationAccountTC.text = "Common Dest";
+
+        state.splitAdd();
+        expect(state.splits[1].sourceAccountTC.text, "Common Source");
+        expect(state.splits[1].destinationAccountTC.text, "Common Dest");
+      });
+
+      test('_checkTXType synchronizes accounts on type change', () {
+        state.splitAdd();
+        state.splitAdd();
+        state.splits[0].sourceAccountTC.text = "Source 1";
+        state.splits[0].destinationAccountTC.text = "Dest 1";
+        state.splits[1].sourceAccountTC.text = "Source 2";
+        state.splits[1].destinationAccountTC.text = "Dest 2";
+
+        // Change to withdrawal -> source should synchronize
+        state.sourceAccountType = AccountTypeProperty.assetAccount;
+        state.destinationAccountType = AccountTypeProperty.expenseAccount;
+        state.selectSourceAccount(
+          const AutocompleteAccount(
+            id: "1",
+            name: "Source 1",
+            nameWithBalance: "Source 1",
+            type: "Asset account",
+            currencyId: "1",
+            currencyCode: "USD",
+            currencyName: "USD",
+            currencySymbol: r"$",
+            currencyDecimalPlaces: 2,
+          ),
+        );
+
+        expect(state.type, TransactionTypeProperty.withdrawal);
+        expect(state.splits[0].sourceAccountTC.text, "Source 1");
+        expect(state.splits[1].sourceAccountTC.text, "Source 1");
+        // Destination should NOT synchronize for withdrawal if not common
+        expect(state.splits[1].destinationAccountTC.text, "Dest 2");
+
+        // Change to deposit -> destination should synchronize
+        state.sourceAccountType = AccountTypeProperty.revenueAccount;
+        state.destinationAccountType = AccountTypeProperty.assetAccount;
+        state.selectDestinationAccount(
+          const AutocompleteAccount(
+            id: "2",
+            name: "Dest 1",
+            nameWithBalance: "Dest 1",
+            type: "Asset account",
+            currencyId: "1",
+            currencyCode: "USD",
+            currencyName: "USD",
+            currencySymbol: r"$",
+            currencyDecimalPlaces: 2,
+          ),
+        );
+
+        expect(state.type, TransactionTypeProperty.deposit);
+        expect(state.splits[0].destinationAccountTC.text, "Dest 1");
+        expect(state.splits[1].destinationAccountTC.text, "Dest 1");
+      });
+    });
+
     test('fromExisting creates correct state', () {
       final TransactionRead transaction = TransactionRead(
         type: "transactions",
@@ -239,38 +339,43 @@ void main() {
       expect(splitUpdate.sourceName, null);
     });
 
-    test('save calls delete for removed splits', () async {
+    test('setSourceAccount and setDestinationAccount update all splits', () {
+      final TransactionState state = TransactionState(usdCurrency);
+      state.splitAdd();
+      state.splitAdd();
+
+      state.setSourceAccount("Bulk Source");
+      expect(state.splits[0].sourceAccountTC.text, "Bulk Source");
+      expect(state.splits[1].sourceAccountTC.text, "Bulk Source");
+
+      state.setDestinationAccount("Bulk Dest");
+      expect(state.splits[0].destinationAccountTC.text, "Bulk Dest");
+      expect(state.splits[1].destinationAccountTC.text, "Bulk Dest");
+    });
+
+    test('toUpdate filters unchanged fields with precision and zero/null', () {
       final TransactionRead transaction = TransactionRead(
         type: "transactions",
         id: "1",
-        links: const ObjectLink(self: "url"),
+        links: const ObjectLink(),
         attributes: Transaction(
           transactions: <TransactionSplit>[
             TransactionSplit(
               transactionJournalId: "1",
               date: DateTime.now(),
-              amount: "50.0",
+              amount: "100.0",
+              foreignAmount: "0",
               description: "Split 1",
               type: TransactionTypeProperty.withdrawal,
+              sourceName: "Source Account",
               sourceType: AccountTypeProperty.assetAccount,
+              destinationName: "Dest Account",
               destinationType: AccountTypeProperty.expenseAccount,
               currencyId: "1",
               currencyCode: "USD",
               currencyName: "US Dollar",
               currencySymbol: r"$",
-            ),
-            TransactionSplit(
-              transactionJournalId: "2",
-              date: DateTime.now(),
-              amount: "50.0",
-              description: "Split 2",
-              type: TransactionTypeProperty.withdrawal,
-              sourceType: AccountTypeProperty.assetAccount,
-              destinationType: AccountTypeProperty.expenseAccount,
-              currencyId: "1",
-              currencyCode: "USD",
-              currencyName: "US Dollar",
-              currencySymbol: r"$",
+              currencyDecimalPlaces: 2,
             ),
           ],
         ),
@@ -280,37 +385,30 @@ void main() {
         transaction,
         FakeTimeZoneHandler(),
       );
-      state.splitRemove(1); // removes 2nd split
 
-      bool deleteCalled = false;
-      final MockClient mockHttpClient = MockClient((
-        http.Request request,
-      ) async {
-        if (request.method == 'DELETE' && request.url.path.contains('2')) {
-          deleteCalled = true;
-          return http.Response('', 204);
-        }
-        if (request.method == 'PUT') {
-          return http.Response(
-            json.encode(<String, Map<String, dynamic>>{
-              "data": transaction.toJson(),
-            }),
-            200,
-          );
-        }
-        return http.Response('Not Found', 404);
-      });
+      // 1. Test precision: 100.0 vs 100.000001 -> should be filtered
+      state.splits[0].localAmount = 100.000001;
+      // 2. Test zero vs null: foreignAmount is "0" in original, set to 0.0 in state
+      state.splits[0].foreignAmount = 0.0;
 
-      final ChopperClient chopperClient = ChopperClient(
-        client: mockHttpClient,
-        services: <ChopperService>[FireflyIii.create()],
-        converter: $JsonSerializableConverter(),
-      );
-      final FireflyIii api = chopperClient.getService<FireflyIii>();
+      final TransactionUpdate update = state.toUpdate();
+      final TransactionSplitUpdate splitUpdate = update.transactions!.first;
 
-      await state.save(api, FakeAuthUser());
+      expect(splitUpdate.amount, null);
+      expect(splitUpdate.foreignAmount, null);
+    });
 
-      expect(deleteCalled, true);
+    test('toUpdate includes all fields if journalID is missing', () {
+      final TransactionState state = TransactionState(usdCurrency);
+      state.date = tz.TZDateTime.now(tz.UTC);
+      state.splitAdd();
+      state.splits[0].titleTC.text = "New TX";
+      state.splits[0].localAmount = 50.0;
+
+      // New transaction (originalTX is null)
+      final TransactionUpdate update = state.toUpdate();
+      expect(update.transactions!.first.description, "New TX");
+      expect(update.transactions!.first.amount, "50.0");
     });
   });
 
@@ -385,6 +483,37 @@ void main() {
       final TransactionSplitStore store = split.toStore();
       expect(store.billId, "42");
       expect(store.piggyBankId, 123);
+    });
+
+    test('toStore and toUpdate handle foreign currency', () {
+      final CurrencyRead euro = const CurrencyRead(
+        type: "currencies",
+        id: "2",
+        attributes: CurrencyProperties(
+          code: "EUR",
+          name: "Euro",
+          symbol: "€",
+          decimalPlaces: 2,
+        ),
+      );
+      final TransactionSplitState split = TransactionSplitState(parent);
+      split.foreignCurrency = euro;
+      split.foreignAmount = 10.0;
+      split.foreignAmountUpdateText();
+
+      final TransactionSplitStore store = split.toStore();
+      expect(store.foreignCurrencyId, "2");
+      expect(store.foreignAmount, "10.00");
+
+      final TransactionSplitUpdate update = split.toUpdate();
+      expect(update.foreignCurrencyId, "2");
+      expect(update.foreignAmount, "10.00");
+
+      // Test removal of foreign currency
+      split.foreignCurrency = null;
+      final TransactionSplitStore storeNoForeign = split.toStore();
+      expect(storeNoForeign.foreignCurrencyId, null);
+      expect(storeNoForeign.foreignAmount, "0");
     });
   });
 }

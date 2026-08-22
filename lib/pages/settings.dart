@@ -40,7 +40,7 @@ class SettingsPageState extends State<SettingsPage>
   Widget build(BuildContext context) {
     log.finest(() => "build()");
 
-    final SettingsProvider settings = context.read<SettingsProvider>();
+    final SettingsProvider settings = context.watch<SettingsProvider>();
 
     return ListView(
       padding: const .symmetric(horizontal: 24),
@@ -203,9 +203,7 @@ class SettingsPageState extends State<SettingsPage>
           // :TODO: l10n
           subtitle: settings.autoTagAll.isEmpty
               ? Text("Automatically tag all new transactions.")
-              : Text(
-                  "Selected Tag: ${context.select((SettingsProvider s) => s.autoTagAll)}",
-                ),
+              : Text("Selected Tag(s): ${settings.autoTagAll.join(", ")}"),
           // :TODO: l10n
           value: settings.autoTagAll.isNotEmpty,
           secondary: CircleAvatar(
@@ -215,13 +213,19 @@ class SettingsPageState extends State<SettingsPage>
                   : Icons.bookmarks_outlined,
             ),
           ),
-          onChanged: (bool value) async {
-            await showDialog(
-              context: context,
-              builder: (BuildContext context) =>
-                  const TagDialog(selectedTags: <String>[], enableAdd: true),
-            );
-          },
+          onChanged: (bool value) =>
+              showDialog<List<String>>(
+                context: context,
+                builder: (BuildContext context) => TagDialog(
+                  selectedTags: settings.autoTagAll,
+                  enableAdd: true,
+                ),
+              ).then((List<String>? tags) {
+                if (tags == null) {
+                  return;
+                }
+                settings.setAutoTagAll(tags);
+              }),
         ),
         const Divider(),
         // Notification Listener
@@ -369,7 +373,7 @@ class ThemeDialog extends StatelessWidget {
         dynamicColorAvailable
             ? SwitchListTile.adaptive(
                 title: Text(S.of(context).settingsThemeDynamicColors),
-                value: context.select((SettingsProvider s) => s.dynamicColors),
+                value: settings.dynamicColors,
                 isThreeLine: false,
                 onChanged: (bool value) => settings.dynamicColors = value,
               )

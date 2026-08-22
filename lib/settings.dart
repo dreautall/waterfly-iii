@@ -852,6 +852,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<void> setAutoTagAll(List<String> tags) async {
+    _autoTagAll = tags;
     await SharedPreferencesAsync().setStringList(settingAutoTagAll, tags);
 
     log.finest(() => "notify SettingsProvider->setAutoTagAll()");
@@ -859,6 +860,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<void> setAutoTagNL(List<String> tags) async {
+    _autoTagNL = tags;
     await SharedPreferencesAsync().setStringList(settingAutoTagNL, tags);
 
     log.finest(() => "notify SettingsProvider->setAutoTagNL()");

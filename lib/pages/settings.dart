@@ -200,7 +200,6 @@ class SettingsPageState extends State<SettingsPage>
         // Auto Tag
         SwitchListTile.adaptive(
           title: Text(S.of(context).settingsTag),
-          // :TODO: l10n
           subtitle: settings.autoTagAll.isEmpty
               ? Text(S.of(context).settingsTagAllHelp)
               : Text(

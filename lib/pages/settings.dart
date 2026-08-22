@@ -20,6 +20,7 @@ import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/settings/connection.dart';
 import 'package:waterflyiii/pages/settings/debug.dart';
 import 'package:waterflyiii/pages/settings/notifications.dart';
+import 'package:waterflyiii/pages/transaction/tags.dart';
 import 'package:waterflyiii/settings.dart';
 
 final Logger log = Logger("Pages.Settings");
@@ -200,6 +201,28 @@ class SettingsPageState extends State<SettingsPage>
               value,
             );
             settings.useServerTime = value;
+          },
+        ),
+        // Auto Tag
+        SwitchListTile.adaptive(
+          title: Text("Tag transactions"),
+          // :TODO: l10n
+          subtitle: Text("Automatically tag all new transactions."),
+          // :TODO: l10n
+          value: context.select((SettingsProvider s) => s.useServerTime),
+          secondary: CircleAvatar(
+            child: Icon(
+              context.select((SettingsProvider s) => s.useServerTime)
+                  ? Icons.bookmarks
+                  : Icons.bookmarks_outlined,
+            ),
+          ),
+          onChanged: (bool value) async {
+            await showDialog(
+              context: context,
+              builder: (BuildContext context) =>
+                  const TagDialog(selectedTags: <String>[], enableAdd: true),
+            );
           },
         ),
         const Divider(),

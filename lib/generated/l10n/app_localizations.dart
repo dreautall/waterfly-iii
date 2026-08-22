@@ -1392,6 +1392,24 @@ abstract class S {
   /// **'Connection settings updated.'**
   String get settingsServerConnectionUpdated;
 
+  /// Setting to (automatically) tag transactions
+  ///
+  /// In en, this message translates to:
+  /// **'Tag Transactions'**
+  String get settingsTag;
+
+  /// Help text to automatically tag (all!) transactions
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically add a tag for all new transactions.'**
+  String get settingsTagAllHelp;
+
+  /// List of selected tags (for auto-tag feature). If no tags are selected, a help text will be shown instead.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected {count, plural, =1{tag: {tags}} other{tags: {tags}}}'**
+  String settingsTagList(int count, String tags);
+
   /// App theme (dark or light)
   ///
   /// In en, this message translates to:

@@ -1085,6 +1085,28 @@
     "@settingsServerConnectionUpdated": {
         "description": "Server connection settings have been updated"
     },
+    "settingsTag": "Tag Transactions",
+    "@settingsTag": {
+        "description": "Setting to (automatically) tag transactions"
+    },
+    "settingsTagAllHelp": "Automatically add a tag for all new transactions.",
+    "@settingsTagAllHelp": {
+        "description": "Help text to automatically tag (all!) transactions"
+    },
+    "settingsTagList": "Selected {count, plural, =1{tag: {tags}} other{tags: {tags}}}",
+    "@settingsTagList": {
+        "description": "List of selected tags (for auto-tag feature). If no tags are selected, a help text will be shown instead.",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "2"
+            },
+            "tags": {
+                "type": "String",
+                "example": "tag1, tag2"
+            }
+        }
+    },
     "settingsTheme": "App Theme",
     "@settingsTheme": {
         "description": "App theme (dark or light)"

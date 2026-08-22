@@ -199,12 +199,18 @@ class SettingsPageState extends State<SettingsPage>
         ),
         // Auto Tag
         SwitchListTile.adaptive(
-          title: Text("Tag transactions"),
+          title: Text(S.of(context).settingsTag),
           // :TODO: l10n
           subtitle: settings.autoTagAll.isEmpty
-              ? Text("Automatically tag all new transactions.")
-              : Text("Selected Tag(s): ${settings.autoTagAll.join(", ")}"),
-          // :TODO: l10n
+              ? Text(S.of(context).settingsTagAllHelp)
+              : Text(
+                  S
+                      .of(context)
+                      .settingsTagList(
+                        settings.autoTagAll.length,
+                        settings.autoTagAll.join(", "),
+                      ),
+                ),
           value: settings.autoTagAll.isNotEmpty,
           secondary: CircleAvatar(
             child: Icon(

@@ -83,14 +83,14 @@ class SettingsPageState extends State<SettingsPage>
                 snapshot.data != null) {
               // Dynamic color support available
               dynamicColorAvailable = true;
-              if (context.select((SettingsProvider s) => s.dynamicColors)) {
+              if (settings.dynamicColors) {
                 dynamicColor = " - ${S.of(context).settingsThemeDynamicColors}";
               }
             }
             return ListTile(
               title: Text(S.of(context).settingsTheme),
               subtitle: Text(
-                "${S.of(context).settingsThemeValue(context.select((SettingsProvider s) => s.theme).toString().split('.').last)}$dynamicColor",
+                "${S.of(context).settingsThemeValue(settings.theme.toString().split('.').last)}$dynamicColor",
               ),
               leading: const CircleAvatar(child: Icon(Icons.format_paint)),
               onTap: () {
@@ -113,13 +113,9 @@ class SettingsPageState extends State<SettingsPage>
         SwitchListTile.adaptive(
           title: Text(S.of(context).settingsLockscreen),
           subtitle: Text(S.of(context).settingsLockscreenHelp),
-          value: context.select((SettingsProvider s) => s.lock),
+          value: settings.lock,
           secondary: CircleAvatar(
-            child: Icon(
-              context.select((SettingsProvider s) => s.lock)
-                  ? Icons.lock
-                  : Icons.lock_outline,
-            ),
+            child: Icon(settings.lock ? Icons.lock : Icons.lock_outline),
           ),
           onChanged: (bool value) async {
             final S l10n = S.of(context);
@@ -188,12 +184,10 @@ class SettingsPageState extends State<SettingsPage>
         SwitchListTile.adaptive(
           title: Text(S.of(context).settingsUseServerTimezone),
           subtitle: Text(S.of(context).settingsUseServerTimezoneHelp),
-          value: context.select((SettingsProvider s) => s.useServerTime),
+          value: settings.useServerTime,
           secondary: CircleAvatar(
             child: Icon(
-              context.select((SettingsProvider s) => s.useServerTime)
-                  ? Icons.schedule
-                  : Icons.schedule_outlined,
+              settings.useServerTime ? Icons.schedule : Icons.schedule_outlined,
             ),
           ),
           onChanged: (bool value) async {
@@ -207,12 +201,16 @@ class SettingsPageState extends State<SettingsPage>
         SwitchListTile.adaptive(
           title: Text("Tag transactions"),
           // :TODO: l10n
-          subtitle: Text("Automatically tag all new transactions."),
+          subtitle: settings.autoTagAll.isEmpty
+              ? Text("Automatically tag all new transactions.")
+              : Text(
+                  "Selected Tag: ${context.select((SettingsProvider s) => s.autoTagAll)}",
+                ),
           // :TODO: l10n
-          value: context.select((SettingsProvider s) => s.useServerTime),
+          value: settings.autoTagAll.isNotEmpty,
           secondary: CircleAvatar(
             child: Icon(
-              context.select((SettingsProvider s) => s.useServerTime)
+              settings.autoTagAll.isNotEmpty
                   ? Icons.bookmarks
                   : Icons.bookmarks_outlined,
             ),

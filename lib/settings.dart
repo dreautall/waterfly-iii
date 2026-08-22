@@ -179,6 +179,8 @@ class SettingsProvider with ChangeNotifier {
   static const String settingsDashboardOrder = "DASHBOARD_ORDER";
   static const String settingsDashboardHidden = "DASHBOARD_HIDDEN";
   static const String settingTransactionDateFilter = "TX_DATE_FILTER";
+  static const String settingAutoTagAll = "AUTOTAG_ALL";
+  static const String settingAutoTagNL = "AUTOTAG_NL";
 
   bool get debug => _loaded ? _boolSettings[.debug] : false;
   bool get lock => _loaded ? _boolSettings[.lock] : false;
@@ -190,8 +192,8 @@ class SettingsProvider with ChangeNotifier {
       _loaded ? _boolSettings[.billsShowOnlyActive] : false;
   bool get billsShowOnlyExpected =>
       _loaded ? _boolSettings[.billsShowOnlyExpected] : false;
-  bool _isSessionAuthed = false;
 
+  bool _isSessionAuthed = false;
   bool get isSessionAuthed => _isSessionAuthed;
 
   ThemeMode _theme = .system;
@@ -230,8 +232,15 @@ class SettingsProvider with ChangeNotifier {
   SettingsBitmask get boolSettings => _boolSettings;
 
   TransactionDateFilter _transactionDateFilter = .all;
-
   TransactionDateFilter get transactionDateFilter => _transactionDateFilter;
+
+  List<String> _autoTagAll = <String>[];
+
+  List<String> get autoTagAll => _autoTagAll;
+
+  List<String> _autoTagNL = <String>[];
+
+  List<String> get autoTagNL => _autoTagNL;
 
   Future<void> migrateLegacy(SharedPreferencesAsync prefs) async {
     log.config("trying to migrate old prefs");
@@ -442,6 +451,17 @@ class SettingsProvider with ChangeNotifier {
         ? .all
         : .values[txDateFilterIndex];
 
+    final List<String>? autoTagAll = await prefs.getStringList(
+      settingAutoTagAll,
+    );
+    if (autoTagAll != null) {
+      _autoTagAll = autoTagAll;
+    }
+    final List<String>? autoTagNL = await prefs.getStringList(settingAutoTagNL);
+    if (autoTagNL != null) {
+      _autoTagNL = autoTagNL;
+    }
+
     _loaded = _loading = true;
     log.finest(() => "notify SettingsProvider->loadSettings()");
     notifyListeners();
@@ -497,11 +517,8 @@ class SettingsProvider with ChangeNotifier {
   }
 
   set showFutureTXs(bool enabled) => _setBool(.showFutureTXs, enabled);
-
   set dynamicColors(bool enabled) => _setBool(.dynamicColors, enabled);
-
   set useServerTime(bool enabled) => _setBool(.useServerTime, enabled);
-
   set hideTags(bool enabled) => _setBool(.hideTags, enabled);
   set billsShowOnlyActive(bool enabled) =>
       _setBool(.billsShowOnlyActive, enabled);
@@ -832,6 +849,20 @@ class SettingsProvider with ChangeNotifier {
         .toList();
 
     return notifs;
+  }
+
+  Future<void> setAutoTagAll(List<String> tags) async {
+    await SharedPreferencesAsync().setStringList(settingAutoTagAll, tags);
+
+    log.finest(() => "notify SettingsProvider->setAutoTagAll()");
+    notifyListeners();
+  }
+
+  Future<void> setAutoTagNL(List<String> tags) async {
+    await SharedPreferencesAsync().setStringList(settingAutoTagNL, tags);
+
+    log.finest(() => "notify SettingsProvider->setAutoTagNL()");
+    notifyListeners();
   }
 
   void sessionAuthed() {

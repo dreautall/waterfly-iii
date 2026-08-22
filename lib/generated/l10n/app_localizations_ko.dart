@@ -856,6 +856,9 @@ class SKo extends S {
   String get settingsVersionChecking => '확인 중…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => '첨부 파일';
 
   @override

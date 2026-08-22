@@ -1119,6 +1119,10 @@
     "@settingsVersionChecking": {
         "description": "Shown while checking for app version"
     },
+    "tagNone": "<no tag>",
+    "@tagNone": {
+        "description": "Placeholder when no tag has been set."
+    },
     "transactionAttachments": "Attachments",
     "@transactionAttachments": {
         "description": "Button Label: Attachments"

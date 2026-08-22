@@ -904,6 +904,9 @@ class SUk extends S {
   String get settingsVersionChecking => 'перевірка…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Вкладення';
 
   @override

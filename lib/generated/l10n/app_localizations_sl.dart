@@ -878,6 +878,9 @@ class SSl extends S {
   String get settingsVersionChecking => 'preverjam…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Priponke';
 
   @override

@@ -876,6 +876,9 @@ class STr extends S {
   String get settingsVersionChecking => 'kontrol ediliyor…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Ekler';
 
   @override

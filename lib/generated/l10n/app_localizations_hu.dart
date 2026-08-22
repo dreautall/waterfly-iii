@@ -887,6 +887,9 @@ class SHu extends S {
   String get settingsVersionChecking => 'ellenőrzés…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Mellékletek';
 
   @override

@@ -242,8 +242,15 @@ class _HomeMainState extends State<HomeMain>
 
     late final Response<InsightGroup> respIncomeData;
     late final Response<InsightGroup> respExpenseData;
+    late final Response<InsightTotal> respIncomeDataNo;
+    late final Response<InsightTotal> respExpenseDataNo;
     if (!tags) {
-      (respIncomeData, respExpenseData) = await (
+      (
+        respIncomeData,
+        respExpenseData,
+        respIncomeDataNo,
+        respExpenseDataNo,
+      ) = await (
         api.v1InsightIncomeCategoryGet(
           start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
@@ -252,14 +259,35 @@ class _HomeMainState extends State<HomeMain>
           start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
         ),
+        api.v1InsightIncomeNoCategoryGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
+        api.v1InsightExpenseNoCategoryGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
       ).wait;
     } else {
-      (respIncomeData, respExpenseData) = await (
+      (
+        respIncomeData,
+        respExpenseData,
+        respIncomeDataNo,
+        respExpenseDataNo,
+      ) = await (
         api.v1InsightIncomeTagGet(
           start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
         ),
         api.v1InsightExpenseTagGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
+        api.v1InsightIncomeNoTagGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
+        api.v1InsightExpenseNoTagGet(
           start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
         ),
@@ -299,6 +327,37 @@ class _HomeMainState extends State<HomeMain>
           ? tagChartData.add(entry.copyWith(differenceFloat: amount))
           : catChartData.add(entry.copyWith(differenceFloat: amount));
     }
+    // Handle "no category"
+    final double noIncome =
+        respIncomeDataNo.body!
+            .firstWhereOrNull(
+              (InsightTotalEntry e) => e.currencyId == defaultCurrency.id,
+            )
+            ?.differenceFloat ??
+        0;
+    final double noExpense =
+        respExpenseDataNo.body!
+            .firstWhereOrNull(
+              (InsightTotalEntry e) => e.currencyId == defaultCurrency.id,
+            )
+            ?.differenceFloat ??
+        0;
+    final double noAmount = noExpense + noIncome;
+    tags
+        ? tagChartData.add(
+            InsightGroupEntry(
+              id: "0",
+              name: S.of(context).tagNone,
+              differenceFloat: noAmount,
+            ),
+          )
+        : catChartData.add(
+            InsightGroupEntry(
+              id: "0",
+              name: S.of(context).catNone,
+              differenceFloat: noAmount,
+            ),
+          );
 
     return true;
   }

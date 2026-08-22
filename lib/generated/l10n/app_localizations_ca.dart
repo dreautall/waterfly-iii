@@ -888,6 +888,9 @@ class SCa extends S {
   String get settingsVersionChecking => 'comprovant…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Adjunts';
 
   @override

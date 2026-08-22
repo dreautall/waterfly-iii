@@ -876,6 +876,9 @@ class SSv extends S {
   String get settingsVersionChecking => 'kontrollerar…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Bilagor';
 
   @override

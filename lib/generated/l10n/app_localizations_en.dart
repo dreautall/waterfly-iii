@@ -866,6 +866,9 @@ class SEn extends S {
   String get settingsVersionChecking => 'checking…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Attachments';
 
   @override

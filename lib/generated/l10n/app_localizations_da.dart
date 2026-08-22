@@ -877,6 +877,9 @@ class SDa extends S {
   String get settingsVersionChecking => 'tjekker…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Bilag';
 
   @override

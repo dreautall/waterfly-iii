@@ -872,6 +872,9 @@ class SDe extends S {
   String get settingsVersionChecking => 'Überprüfe…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Anhänge';
 
   @override

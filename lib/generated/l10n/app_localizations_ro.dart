@@ -882,6 +882,9 @@ class SRo extends S {
   String get settingsVersionChecking => 'verificare…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Atașamente';
 
   @override

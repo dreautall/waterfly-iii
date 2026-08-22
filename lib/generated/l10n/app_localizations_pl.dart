@@ -886,6 +886,9 @@ class SPl extends S {
   String get settingsVersionChecking => 'sprawdzenie…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Załączniki';
 
   @override

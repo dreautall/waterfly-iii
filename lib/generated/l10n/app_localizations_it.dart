@@ -880,6 +880,9 @@ class SIt extends S {
   String get settingsVersionChecking => 'verifica…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Allegati';
 
   @override

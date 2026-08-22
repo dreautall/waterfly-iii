@@ -889,6 +889,9 @@ class SPt extends S {
   String get settingsVersionChecking => 'a verificar…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Anexos';
 
   @override

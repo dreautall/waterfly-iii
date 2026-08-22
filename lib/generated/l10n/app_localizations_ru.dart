@@ -889,6 +889,9 @@ class SRu extends S {
   String get settingsVersionChecking => 'проверка…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Вложения';
 
   @override

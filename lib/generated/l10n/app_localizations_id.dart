@@ -873,6 +873,9 @@ class SId extends S {
   String get settingsVersionChecking => 'memeriksa…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Lampiran';
 
   @override

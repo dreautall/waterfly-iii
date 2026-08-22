@@ -883,6 +883,9 @@ class SEs extends S {
   String get settingsVersionChecking => 'comprobando…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => 'Archivos adjuntos';
 
   @override

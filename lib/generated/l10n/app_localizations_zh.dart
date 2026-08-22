@@ -858,6 +858,9 @@ class SZh extends S {
   String get settingsVersionChecking => '正在检查…';
 
   @override
+  String get tagNone => '<no tag>';
+
+  @override
   String get transactionAttachments => '附件';
 
   @override

@@ -1343,23 +1343,55 @@ class BudgetList extends StatelessWidget {
               widgets.insert(0, const Divider());
               widgets.insert(
                 0,
-                Row(
-                  children: <Widget>[
-                    _BudgetSummaryItem(
-                      label: S.of(context).generalBudget,
-                      value: defaultCurrency.fmt(
-                        totalBudgeted,
-                        decimalDigits: 0,
-                      ),
+                Table(
+                  //border: TableBorder.all(), // :DEBUG:
+                  columnWidths: const <int, TableColumnWidth>{
+                    0: FlexColumnWidth(),
+                    1: FlexColumnWidth(),
+                    2: FlexColumnWidth(),
+                  },
+                  children: <TableRow>[
+                    TableRow(
+                      children: <Widget>[
+                        Text(
+                          S.of(context).generalBudget,
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
+                        Text(
+                          S.of(context).generalSpent,
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
+                        Text(
+                          S.of(context).generalLeft,
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
+                      ],
                     ),
-                    _BudgetSummaryItem(
-                      label: S.of(context).generalSpent,
-                      value: defaultCurrency.fmt(totalSpent, decimalDigits: 0),
-                    ),
-                    _BudgetSummaryItem(
-                      label: S.of(context).generalLeft,
-                      value: defaultCurrency.fmt(totalLeft, decimalDigits: 0),
-                      color: totalLeft < 0 ? Colors.red : null,
+                    TableRow(
+                      children: <Widget>[
+                        Text(
+                          defaultCurrency.fmt(totalBudgeted),
+                          style: const TextStyle(
+                            fontFeatures: <FontFeature>[.tabularFigures()],
+                          ),
+                        ),
+                        Text(
+                          defaultCurrency.fmt(totalSpent),
+                          style: const TextStyle(
+                            fontFeatures: <FontFeature>[.tabularFigures()],
+                          ),
+                        ),
+                        Text(
+                          defaultCurrency.fmt(totalLeft),
+                          style: TextStyle(
+                            color: (totalLeft < 0) ? Colors.red : Colors.green,
+                            fontWeight: .bold,
+                            fontFeatures: const <FontFeature>[
+                              .tabularFigures(),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -1369,39 +1401,6 @@ class BudgetList extends StatelessWidget {
             return Column(crossAxisAlignment: .start, children: widgets);
           },
         ),
-      ),
-    );
-  }
-}
-
-/// A single labelled amount (e.g. "Budget", "Spent", "Left") shown in the
-/// budget summary line on top of the dashboard budget card.
-class _BudgetSummaryItem extends StatelessWidget {
-  const _BudgetSummaryItem({
-    required this.label,
-    required this.value,
-    this.color,
-  });
-
-  final String label;
-  final String value;
-  final Color? color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(label, style: Theme.of(context).textTheme.labelSmall),
-          Text(
-            value,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-        ],
       ),
     );
   }

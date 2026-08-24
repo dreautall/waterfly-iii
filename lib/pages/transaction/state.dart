@@ -100,6 +100,7 @@ class TransactionState extends ChangeNotifier {
   void notify() => notifyListeners();
 
   void updateAmount() {
+    log.finest(() => "[TS] updateAmount()");
     if (!split) {
       return;
     }
@@ -164,7 +165,6 @@ class TransactionState extends ChangeNotifier {
 
   void setSourceAccount(String s) {
     log.finest(() => "[TS] setSourceAccount($s)");
-
     for (final TransactionSplitState split in splits) {
       split.sourceAccountTC.text = s;
     }
@@ -178,7 +178,6 @@ class TransactionState extends ChangeNotifier {
 
   void selectSourceAccount(AutocompleteAccount option) {
     log.finest(() => "[TS] selectSourceAccount(${option.name})");
-
     for (final TransactionSplitState split in splits) {
       split.sourceAccountTC.text = option.name;
     }
@@ -192,6 +191,9 @@ class TransactionState extends ChangeNotifier {
     );
     if (sourceAccountType.isAsset) {
       ownAccountID = option.id;
+      if (option.currencyId != localCurrency.id) {
+        debugPrint("changing currency!");
+      }
     }
 
     _checkTXType();
@@ -199,7 +201,6 @@ class TransactionState extends ChangeNotifier {
 
   void setDestinationAccount(String s) {
     log.finest(() => "[TS] setDestinationAccount($s)");
-
     for (final TransactionSplitState split in splits) {
       split.destinationAccountTC.text = s;
     }
@@ -213,7 +214,6 @@ class TransactionState extends ChangeNotifier {
 
   void selectDestinationAccount(AutocompleteAccount option) {
     log.finest(() => "[TS] selectDestinationAccount(${option.name})");
-
     for (final TransactionSplitState split in splits) {
       split.destinationAccountTC.text = option.name;
     }
@@ -234,7 +234,6 @@ class TransactionState extends ChangeNotifier {
 
   TransactionTypeProperty computeTransactionType() {
     log.finest(() => "[TS] computeTransactionType()");
-
     TransactionTypeProperty txType = accountsToTransaction(
       sourceAccountType,
       destinationAccountType,
@@ -268,10 +267,10 @@ class TransactionState extends ChangeNotifier {
 
   void _checkTXType() {
     log.finest(() => "[TS] checkTXType()");
-
     final TransactionTypeProperty newType = computeTransactionType();
 
     if (type != newType) {
+      final TransactionTypeProperty oldType = type;
       type = newType;
 
       // Withdrawal: splits have common source account
@@ -288,7 +287,9 @@ class TransactionState extends ChangeNotifier {
         }
       }
 
-      log.finest(() => "[TS] checkTXType(): notify due to new $type");
+      log.finest(
+        () => "[TS] checkTXType(): notify due to new $newType (was: $oldType)",
+      );
       notifyListeners();
     }
   }

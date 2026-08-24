@@ -367,6 +367,9 @@ class SId extends S {
   String get generalIncome => 'Pendapatan';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Kewajiban';
 
   @override
@@ -871,6 +874,9 @@ class SId extends S {
 
   @override
   String get settingsVersionChecking => 'memeriksa…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Lampiran';

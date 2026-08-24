@@ -367,6 +367,9 @@ class SRo extends S {
   String get generalIncome => 'Venit';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Pasive';
 
   @override
@@ -880,6 +883,9 @@ class SRo extends S {
 
   @override
   String get settingsVersionChecking => 'verificare…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Atașamente';

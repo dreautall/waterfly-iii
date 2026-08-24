@@ -108,11 +108,13 @@ class _HomeMainState extends State<HomeMain>
           ).format(now.copyWith(day: now.day - 6)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
           period: .value_1d,
+          preselected: .assets,
         );
     apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
 
     for (ChartDataSet e in respBalanceData.body!) {
-      final Map<String, dynamic> entries = e.pcEntries as Map<String, dynamic>;
+      final Map<String, dynamic> entries =
+          (e.usePrimary ? e.pcEntries : e.entries) as Map<String, dynamic>;
       entries.forEach((String dateStr, dynamic valueStr) {
         final DateTime date = tzHandler
             .sTime(DateTime.parse(dateStr))
@@ -242,8 +244,15 @@ class _HomeMainState extends State<HomeMain>
 
     late final Response<InsightGroup> respIncomeData;
     late final Response<InsightGroup> respExpenseData;
+    late final Response<InsightTotal> respIncomeDataNo;
+    late final Response<InsightTotal> respExpenseDataNo;
     if (!tags) {
-      (respIncomeData, respExpenseData) = await (
+      (
+        respIncomeData,
+        respExpenseData,
+        respIncomeDataNo,
+        respExpenseDataNo,
+      ) = await (
         api.v1InsightIncomeCategoryGet(
           start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
@@ -252,14 +261,35 @@ class _HomeMainState extends State<HomeMain>
           start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
         ),
+        api.v1InsightIncomeNoCategoryGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
+        api.v1InsightExpenseNoCategoryGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
       ).wait;
     } else {
-      (respIncomeData, respExpenseData) = await (
+      (
+        respIncomeData,
+        respExpenseData,
+        respIncomeDataNo,
+        respExpenseDataNo,
+      ) = await (
         api.v1InsightIncomeTagGet(
           start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
         ),
         api.v1InsightExpenseTagGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
+        api.v1InsightIncomeNoTagGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
+        api.v1InsightExpenseNoTagGet(
           start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
         ),
@@ -299,6 +329,37 @@ class _HomeMainState extends State<HomeMain>
           ? tagChartData.add(entry.copyWith(differenceFloat: amount))
           : catChartData.add(entry.copyWith(differenceFloat: amount));
     }
+    // Handle "no category"
+    final double noIncome =
+        respIncomeDataNo.body!
+            .firstWhereOrNull(
+              (InsightTotalEntry e) => e.currencyId == defaultCurrency.id,
+            )
+            ?.differenceFloat ??
+        0;
+    final double noExpense =
+        respExpenseDataNo.body!
+            .firstWhereOrNull(
+              (InsightTotalEntry e) => e.currencyId == defaultCurrency.id,
+            )
+            ?.differenceFloat ??
+        0;
+    final double noAmount = noExpense + noIncome;
+    tags
+        ? tagChartData.add(
+            InsightGroupEntry(
+              id: "0",
+              name: S.of(context).tagNone,
+              differenceFloat: noAmount,
+            ),
+          )
+        : catChartData.add(
+            InsightGroupEntry(
+              id: "0",
+              name: S.of(context).catNone,
+              differenceFloat: noAmount,
+            ),
+          );
 
     return true;
   }
@@ -438,7 +499,8 @@ class _HomeMainState extends State<HomeMain>
           includeInNetWorth[e.label] != true) {
         continue;
       }
-      final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
+      final Map<String, dynamic> entries =
+          (e.usePrimary ? e.pcEntries : e.entries) as Map<String, dynamic>;
       entries.forEach((String dateStr, dynamic valueStr) {
         DateTime date = tzHandler.sTime(DateTime.parse(dateStr)).toLocal();
         if (
@@ -635,19 +697,22 @@ class _HomeMainState extends State<HomeMain>
                     ),
                     ...overviewChartData.mapIndexed((int i, ChartDataSet e) {
                       final Map<String, dynamic> entries =
-                          e.entries as Map<String, dynamic>;
+                          (e.usePrimary ? e.pcEntries : e.entries)
+                              as Map<String, dynamic>;
                       final double balance =
                           double.tryParse(entries.entries.last.value) ?? 0;
-                      final CurrencyRead currency = CurrencyRead(
-                        id: e.currencyId ?? "0",
-                        type: "currencies",
-                        attributes: CurrencyProperties(
-                          code: e.currencyCode ?? "",
-                          name: "",
-                          symbol: e.currencySymbol ?? "",
-                          decimalPlaces: e.currencyDecimalPlaces,
-                        ),
-                      );
+                      final CurrencyRead currency = e.usePrimary
+                          ? defaultCurrency
+                          : CurrencyRead(
+                              id: e.currencyId ?? "0",
+                              type: "currencies",
+                              attributes: CurrencyProperties(
+                                code: e.currencyCode ?? "",
+                                name: "",
+                                symbol: e.currencySymbol ?? "",
+                                decimalPlaces: e.currencyDecimalPlaces,
+                              ),
+                            );
                       return TableRow(
                         children: <Widget>[
                           Align(
@@ -1105,6 +1170,9 @@ class BudgetList extends StatelessWidget {
             final List<Widget> widgets = <Widget>[];
             final int tsNow = tzHandler.sNow().millisecondsSinceEpoch;
 
+            double totalBudgeted = 0;
+            double totalSpent = 0;
+
             for (BudgetLimitRead budget in snapshot.data!) {
               final List<Widget> stackWidgets = <Widget>[];
               late double spent;
@@ -1142,6 +1210,10 @@ class BudgetList extends StatelessWidget {
               if (budgetInfo == null || available == 0) {
                 continue;
               }
+
+              totalBudgeted += available;
+              totalSpent += spent;
+
               final CurrencyRead currency = CurrencyRead(
                 id: budget.attributes.currencyId ?? "0",
                 type: "currencies",
@@ -1264,6 +1336,73 @@ class BudgetList extends StatelessWidget {
                 ),
               );
             }
+
+            // Summary line above the budgets with the total budgeted, spent
+            // and left amounts (summed in the default currency, like the
+            // categories overview).
+            if (totalBudgeted > 0) {
+              final CurrencyRead defaultCurrency = context
+                  .read<FireflyService>()
+                  .defaultCurrency;
+              final double totalLeft = totalBudgeted - totalSpent;
+              widgets.insert(0, const Divider());
+              widgets.insert(
+                0,
+                Table(
+                  //border: TableBorder.all(), // :DEBUG:
+                  columnWidths: const <int, TableColumnWidth>{
+                    0: FlexColumnWidth(),
+                    1: FlexColumnWidth(),
+                    2: FlexColumnWidth(),
+                  },
+                  children: <TableRow>[
+                    TableRow(
+                      children: <Widget>[
+                        Text(
+                          S.of(context).generalBudget,
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
+                        Text(
+                          S.of(context).generalSpent,
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
+                        Text(
+                          S.of(context).generalLeft,
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
+                      ],
+                    ),
+                    TableRow(
+                      children: <Widget>[
+                        Text(
+                          defaultCurrency.fmt(totalBudgeted),
+                          style: const TextStyle(
+                            fontFeatures: <FontFeature>[.tabularFigures()],
+                          ),
+                        ),
+                        Text(
+                          defaultCurrency.fmt(totalSpent),
+                          style: const TextStyle(
+                            fontFeatures: <FontFeature>[.tabularFigures()],
+                          ),
+                        ),
+                        Text(
+                          defaultCurrency.fmt(totalLeft),
+                          style: TextStyle(
+                            color: (totalLeft < 0) ? Colors.red : Colors.green,
+                            fontWeight: .bold,
+                            fontFeatures: const <FontFeature>[
+                              .tabularFigures(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }
+
             return Column(crossAxisAlignment: .start, children: widgets);
           },
         ),

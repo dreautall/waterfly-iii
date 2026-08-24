@@ -367,6 +367,9 @@ class SIt extends S {
   String get generalIncome => 'Entrate';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Passività';
 
   @override
@@ -878,6 +881,9 @@ class SIt extends S {
 
   @override
   String get settingsVersionChecking => 'verifica…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Allegati';

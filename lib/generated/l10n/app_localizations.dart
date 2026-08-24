@@ -654,6 +654,12 @@ abstract class S {
   /// **'Income'**
   String get generalIncome;
 
+  /// Label for the remaining (not yet spent) amount of a budget.
+  ///
+  /// In en, this message translates to:
+  /// **'Left'**
+  String get generalLeft;
+
   /// Firefly Translation String: liabilities
   ///
   /// In en, this message translates to:
@@ -1433,6 +1439,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'checking…'**
   String get settingsVersionChecking;
+
+  /// Placeholder when no tag has been set.
+  ///
+  /// In en, this message translates to:
+  /// **'<no tag>'**
+  String get tagNone;
 
   /// Button Label: Attachments
   ///

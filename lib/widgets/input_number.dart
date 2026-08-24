@@ -34,7 +34,6 @@ class NumberInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Focus(
       onFocusChange: (bool hasFocus) {
-        debugPrint("focuschange: $hasFocus");
         if (hasFocus) {
           return;
         }

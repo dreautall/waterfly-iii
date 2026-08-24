@@ -15,7 +15,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/pages/transaction.dart';
-import 'package:waterflyiii/pages/transaction/delete.dart';
+import 'package:waterflyiii/pages/transaction/dialogs/delete.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/timezonehandler.dart';

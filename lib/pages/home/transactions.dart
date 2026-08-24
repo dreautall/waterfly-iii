@@ -895,56 +895,57 @@ class _HomeTransactionsState extends State<HomeTransactions>
                     children: <Widget>[
                       // Front part
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: .start,
-                          children: <Widget>[
-                            RichText(
-                              overflow: .ellipsis,
-                              maxLines: 2,
-                              text: TextSpan(
-                                style: Theme.of(context).textTheme.bodyMedium,
-                                children: subtitle,
-                              ),
-                            ),
-                          ],
+                        child: RichText(
+                          overflow: .ellipsis,
+                          maxLines: 2,
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            children: subtitle,
+                          ),
                         ),
                       ),
                       // Trailing part
-                      RichText(
-                        textAlign: .end,
-                        maxLines: 1,
-                        text: TextSpan(
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          children: <InlineSpan>[
-                            if (reconciled)
-                              const WidgetSpan(
-                                baseline: .ideographic,
-                                alignment: .middle,
-                                child: Padding(
-                                  padding: .only(right: 2),
-                                  child: Icon(Icons.check),
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width * 0.4,
+                        ),
+                        child: RichText(
+                          textAlign: .end,
+                          maxLines: 1,
+                          overflow: .ellipsis,
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            children: <InlineSpan>[
+                              if (reconciled)
+                                const WidgetSpan(
+                                  baseline: .ideographic,
+                                  alignment: .middle,
+                                  child: Padding(
+                                    padding: .only(right: 2),
+                                    child: Icon(Icons.check),
+                                  ),
                                 ),
-                              ),
-                            if (_filters.account != null)
-                              TextSpan(
-                                text: currency.fmt(balance),
-                                style: Theme.of(context).textTheme.bodyMedium!
-                                    .copyWith(
-                                      fontFeatures: const <FontFeature>[
-                                        .tabularFigures(),
-                                      ],
-                                    ),
-                              ),
-                            if (_filters.account == null)
-                              TextSpan(
-                                text: switch (transactions.first.type) {
-                                  .deposit => destinationName,
-                                  .openingBalance => "",
-                                  .reconciliation => "",
-                                  _ => sourceName,
-                                },
-                              ),
-                          ],
+                              if (_filters.account != null)
+                                TextSpan(
+                                  text: currency.fmt(balance),
+                                  style: Theme.of(context).textTheme.bodyMedium!
+                                      .copyWith(
+                                        fontFeatures: const <FontFeature>[
+                                          .tabularFigures(),
+                                        ],
+                                      ),
+                                ),
+                              if (_filters.account == null)
+                                TextSpan(
+                                  text: switch (transactions.first.type) {
+                                    .deposit => destinationName,
+                                    .openingBalance => "",
+                                    .reconciliation => "",
+                                    _ => sourceName,
+                                  },
+                                ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

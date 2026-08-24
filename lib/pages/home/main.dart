@@ -113,7 +113,8 @@ class _HomeMainState extends State<HomeMain>
     apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
 
     for (ChartDataSet e in respBalanceData.body!) {
-      final Map<String, dynamic> entries = e.pcEntries as Map<String, dynamic>;
+      final Map<String, dynamic> entries =
+          (e.usePrimary ? e.pcEntries : e.entries) as Map<String, dynamic>;
       entries.forEach((String dateStr, dynamic valueStr) {
         final DateTime date = tzHandler
             .sTime(DateTime.parse(dateStr))
@@ -493,22 +494,13 @@ class _HomeMainState extends State<HomeMain>
       for (AccountRead e in respLiabilityAccounts.body!.data)
         e.attributes.name: e.attributes.includeNetWorth ?? true,
     });
-    // Prefer entries converted to the primary currency when the server
-    // provides them ("convert to primary" enabled on recent Firefly
-    // versions). Raw entries are in each account's own currency and cannot
-    // be summed across accounts. Decided once for the whole response so a
-    // single dataset can never mix currencies into the totals.
-    final bool usePrimaryEntries = respBalanceData.body!.every(
-      (ChartDataSet e) => e.pcEntries is Map<String, dynamic>,
-    );
     for (ChartDataSet e in respBalanceData.body!) {
       if (includeInNetWorth.containsKey(e.label) &&
           includeInNetWorth[e.label] != true) {
         continue;
       }
-      final Map<String, dynamic> entries = usePrimaryEntries
-          ? e.pcEntries as Map<String, dynamic>
-          : e.entries as Map<String, dynamic>;
+      final Map<String, dynamic> entries =
+          (e.usePrimary ? e.pcEntries : e.entries) as Map<String, dynamic>;
       entries.forEach((String dateStr, dynamic valueStr) {
         DateTime date = tzHandler.sTime(DateTime.parse(dateStr)).toLocal();
         if (
@@ -705,19 +697,22 @@ class _HomeMainState extends State<HomeMain>
                     ),
                     ...overviewChartData.mapIndexed((int i, ChartDataSet e) {
                       final Map<String, dynamic> entries =
-                          e.entries as Map<String, dynamic>;
+                          (e.usePrimary ? e.pcEntries : e.entries)
+                              as Map<String, dynamic>;
                       final double balance =
                           double.tryParse(entries.entries.last.value) ?? 0;
-                      final CurrencyRead currency = CurrencyRead(
-                        id: e.currencyId ?? "0",
-                        type: "currencies",
-                        attributes: CurrencyProperties(
-                          code: e.currencyCode ?? "",
-                          name: "",
-                          symbol: e.currencySymbol ?? "",
-                          decimalPlaces: e.currencyDecimalPlaces,
-                        ),
-                      );
+                      final CurrencyRead currency = e.usePrimary
+                          ? defaultCurrency
+                          : CurrencyRead(
+                              id: e.currencyId ?? "0",
+                              type: "currencies",
+                              attributes: CurrencyProperties(
+                                code: e.currencyCode ?? "",
+                                name: "",
+                                symbol: e.currencySymbol ?? "",
+                                decimalPlaces: e.currencyDecimalPlaces,
+                              ),
+                            );
                       return TableRow(
                         children: <Widget>[
                           Align(

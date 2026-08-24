@@ -192,7 +192,18 @@ class TransactionState extends ChangeNotifier {
     if (sourceAccountType.isAsset) {
       ownAccountID = option.id;
       if (option.currencyId != localCurrency.id) {
-        debugPrint("changing currency!");
+        log.finer(() => "main currency was switched");
+        localCurrency = CurrencyRead(
+          id: option.currencyId,
+          type: "currencies",
+          attributes: CurrencyProperties(
+            code: option.currencyCode,
+            name: option.currencyName,
+            symbol: option.currencySymbol,
+            decimalPlaces: option.currencyDecimalPlaces,
+          ),
+        );
+        _checkNewCurrency();
       }
     }
 
@@ -227,6 +238,21 @@ class TransactionState extends ChangeNotifier {
     );
     if (destinationAccountType.isAsset) {
       ownAccountID = option.id;
+      // if source is NOT an asset (i.e., not a transfer), change currency
+      if (!sourceAccountType.isAsset && option.currencyId != localCurrency.id) {
+        log.finer(() => "main currency was switched");
+        localCurrency = CurrencyRead(
+          id: option.currencyId,
+          type: "currencies",
+          attributes: CurrencyProperties(
+            code: option.currencyCode,
+            name: option.currencyName,
+            symbol: option.currencySymbol,
+            decimalPlaces: option.currencyDecimalPlaces,
+          ),
+        );
+        _checkNewCurrency();
+      }
     }
 
     _checkTXType();
@@ -292,6 +318,23 @@ class TransactionState extends ChangeNotifier {
       );
       notifyListeners();
     }
+  }
+
+  void _checkNewCurrency() {
+    log.finest(() => "[TS] checkNewCurrency()");
+
+    for (final TransactionSplitState s in splits) {
+      if (s.foreignCurrency?.id == localCurrency.id) {
+        // If local amount was not set, use foreign amount instead
+        if (s.localAmount == 0) {
+          s.localAmount = s.foreignAmount;
+        }
+        s.foreignCurrency = null;
+        s.foreignAmount = 0;
+      }
+    }
+
+    // no additional update required, is done by split setters
   }
 
   bool _isSameAmount(String? s1, String? s2) {

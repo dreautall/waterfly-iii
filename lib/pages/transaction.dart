@@ -231,7 +231,6 @@ class _TransactionPageState extends State<TransactionPage>
               currencyDecimalPlaces: acc.attributes.currencyDecimalPlaces ?? 2,
             );
             _tx.selectSourceAccount(option);
-            checkAccountCurrency(option, true);
           } else {
             log.warning("api account fetch failed");
           }
@@ -559,7 +558,6 @@ class _TransactionPageState extends State<TransactionPage>
                   },
                   onSelected: (AutocompleteAccount option) {
                     _tx.selectSourceAccount(option);
-                    checkAccountCurrency(option, true);
                   },
                   displayStringForOption: (AutocompleteAccount option) =>
                       option.name,
@@ -625,7 +623,6 @@ class _TransactionPageState extends State<TransactionPage>
                         option.name,
                     onSelected: (AutocompleteAccount option) {
                       _tx.selectDestinationAccount(option);
-                      checkAccountCurrency(option, false);
                     },
                     optionsBuilder: (TextEditingValue textEditingValue) async {
                       try {
@@ -723,63 +720,6 @@ class _TransactionPageState extends State<TransactionPage>
     );
 
     return childs;
-  }
-
-  void checkAccountCurrency(AutocompleteAccount option, bool isSource) {
-    // :TODO: ONLY ASSET ACCOUNTS HAVE A CURRENCY!
-
-    // Update currency when:
-    // 1. set account is source & assetAccount
-    // 2. set account is destination & assetAccount & source account is NOT an
-    //    asset account
-    // 3. either source or destination account are still unset, so first to set
-    if ((isSource && _tx.sourceAccountType == .assetAccount) ||
-        (!isSource &&
-            _tx.destinationAccountType == .assetAccount &&
-            _tx.sourceAccountType != .assetAccount) ||
-        (_tx.sourceAccountType == .swaggerGeneratedUnknown ||
-            _tx.destinationAccountType == .swaggerGeneratedUnknown)) {
-      if (_tx.localCurrency.id != option.currencyId.toString()) {
-        setState(() {
-          _tx.localCurrency = CurrencyRead(
-            type: "currencies",
-            id: option.currencyId.toString(),
-            attributes: CurrencyProperties(
-              code: option.currencyCode,
-              name: option.currencyName,
-              symbol: option.currencySymbol,
-              decimalPlaces: option.currencyDecimalPlaces,
-            ),
-          );
-        });
-      }
-    }
-    // set foreign currency if account is destination & asset account and source
-    // account is also asset account (transfer from one currency to other)
-    if ((!isSource &&
-            _tx.destinationAccountType == .assetAccount &&
-            _tx.sourceAccountType == .assetAccount) &&
-        _tx.localCurrency.id != option.currencyId) {
-      // Only when destination & source account have different currency
-      if (!_tx.splits.every(
-        (TransactionSplitState s) => s.foreignCurrency?.id == option.currencyId,
-      )) {
-        setState(() {
-          for (TransactionSplitState s in _tx.splits) {
-            s.foreignCurrency = CurrencyRead(
-              type: "currencies",
-              id: option.currencyId,
-              attributes: CurrencyProperties(
-                code: option.currencyCode,
-                name: option.currencyName,
-                symbol: option.currencySymbol,
-                decimalPlaces: option.currencyDecimalPlaces,
-              ),
-            );
-          }
-        });
-      }
-    }
   }
 
   Future<void> onTXChanged() async {

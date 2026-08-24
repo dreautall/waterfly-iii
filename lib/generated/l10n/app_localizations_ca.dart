@@ -370,6 +370,9 @@ class SCa extends S {
   String get generalIncome => 'Ingressos';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Passius';
 
   @override
@@ -739,8 +742,7 @@ class SCa extends S {
   String get settingsLockscreen => 'Pantalla de Bloqueig';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Requereix autenticació en iniciar l\'aplicació';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>
@@ -887,6 +889,9 @@ class SCa extends S {
 
   @override
   String get settingsVersionChecking => 'comprovant…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Adjunts';

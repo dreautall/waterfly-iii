@@ -367,6 +367,9 @@ class SEn extends S {
   String get generalIncome => 'Income';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Liabilities';
 
   @override
@@ -864,6 +867,9 @@ class SEn extends S {
 
   @override
   String get settingsVersionChecking => 'checking…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Attachments';

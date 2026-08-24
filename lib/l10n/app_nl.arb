@@ -645,6 +645,16 @@
             }
         }
     },
+    "homePiggySavePerMonth": "Bespaar per maand: {amount}",
+    "@homePiggySavePerMonth": {
+        "description": "How much should be saved per month to reach the target",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
     "homePiggySavedMultiple": "Tot nu toe gespaard:",
     "@homePiggySavedMultiple": {
         "description": "Title for a list of multiple accounts with the amount of money saved so far"
@@ -680,6 +690,16 @@
     "homePiggyInPiggyBanks": "In spaarpotjes: {amount}",
     "@homePiggyInPiggyBanks": {
         "description": "Amount currently in piggy banks for this account",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyTotal": "Totaal: {amount}",
+    "@homePiggyTotal": {
+        "description": "Total balance of an account in the Piggy bank",
         "placeholders": {
             "amount": {
                 "type": "String",
@@ -841,6 +861,10 @@
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
+    "navigationMain": "Dashboard",
+    "@navigationMain": {
+        "description": "Navigation Label: Dashboard"
+    },
     "generalSettings": "Instellingen",
     "@generalSettings": {
         "description": "Label: Settings"
@@ -921,10 +945,6 @@
     "settingsLockscreen": "Vergrendelscherm",
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
-    },
-    "settingsLockscreenHelp": "Authenticatie vereist bij opstarten van de app",
-    "@settingsLockscreenHelp": {
-        "description": "Description for lockscreen setting"
     },
     "settingsLockscreenInitial": "Authenticeer a.u.b. om het vergrendelscherm in te schakelen.",
     "@settingsLockscreenInitial": {

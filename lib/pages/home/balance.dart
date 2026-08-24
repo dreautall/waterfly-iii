@@ -1,8 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:chopper/chopper.dart' show Response;
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -53,7 +53,7 @@ class _HomeBalanceState extends State<HomeBalance>
         builder: (BuildContext context, AsyncSnapshot<AccountArray> snapshot) {
           if (snapshot.connectionState == .done && snapshot.hasData) {
             return ListView(
-              cacheExtent: 1000,
+              scrollCacheExtent: const .pixels(1000),
               padding: const .all(8),
               children: <Widget>[
                 ...snapshot.data!.data.map((AccountRead account) {

@@ -367,6 +367,9 @@ class SEs extends S {
   String get generalIncome => 'Ingresos';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Pasivos';
 
   @override
@@ -735,8 +738,7 @@ class SEs extends S {
   String get settingsLockscreen => 'Pantalla de bloqueo';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Requerir autenticación al iniciar la aplicación';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>
@@ -882,6 +884,9 @@ class SEs extends S {
 
   @override
   String get settingsVersionChecking => 'comprobando…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Archivos adjuntos';

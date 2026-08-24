@@ -376,6 +376,9 @@ class SUk extends S {
   String get generalIncome => 'Дохід';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Зобов’язання';
 
   @override
@@ -752,8 +755,7 @@ class SUk extends S {
   String get settingsLockscreen => 'Екран блокування';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Вимагати автентифікацію при запуску програми';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>
@@ -903,6 +905,9 @@ class SUk extends S {
 
   @override
   String get settingsVersionChecking => 'перевірка…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Вкладення';

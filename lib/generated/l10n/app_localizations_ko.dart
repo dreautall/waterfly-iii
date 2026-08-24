@@ -364,6 +364,9 @@ class SKo extends S {
   String get generalIncome => '수입';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => '부채';
 
   @override
@@ -722,7 +725,7 @@ class SKo extends S {
   String get settingsLockscreen => '잠금 화면';
 
   @override
-  String get settingsLockscreenHelp => '앱 실행 시 인증 요구';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial => '잠금 화면을 활성화하려면 인증을 해주세요.';
@@ -854,6 +857,9 @@ class SKo extends S {
 
   @override
   String get settingsVersionChecking => '확인 중…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => '첨부 파일';

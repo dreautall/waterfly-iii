@@ -367,6 +367,9 @@ class SPl extends S {
   String get generalIncome => 'Przychód';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Zobowiązania';
 
   @override
@@ -736,8 +739,7 @@ class SPl extends S {
   String get settingsLockscreen => 'Ekran blokady';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Wymagaj uwierzytelnienia przy starcie aplikacji';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>
@@ -885,6 +887,9 @@ class SPl extends S {
 
   @override
   String get settingsVersionChecking => 'sprawdzenie…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Załączniki';

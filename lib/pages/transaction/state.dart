@@ -328,6 +328,7 @@ class TransactionState extends ChangeNotifier {
         // If local amount was not set, use foreign amount instead
         if (s.localAmount == 0) {
           s.localAmount = s.foreignAmount;
+          s.localAmountUpdateText();
         }
         s.foreignCurrency = null;
         s.foreignAmount = 0;

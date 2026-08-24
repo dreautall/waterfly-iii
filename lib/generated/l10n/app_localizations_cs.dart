@@ -367,6 +367,9 @@ class SCs extends S {
   String get generalIncome => 'Příjmy';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Závazky';
 
   @override
@@ -878,6 +881,9 @@ class SCs extends S {
 
   @override
   String get settingsVersionChecking => 'kontroluji…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Přílohy';

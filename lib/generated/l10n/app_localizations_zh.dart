@@ -362,6 +362,9 @@ class SZh extends S {
   String get generalIncome => '收入';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => '负债';
 
   @override
@@ -856,6 +859,9 @@ class SZh extends S {
 
   @override
   String get settingsVersionChecking => '正在检查…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => '附件';

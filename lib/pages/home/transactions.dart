@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:animations/animations.dart';
 import 'package:chopper/chopper.dart' show Response;
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -887,15 +887,15 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   ),
                 ],
               ),
-              subtitle: Row(
+              subtitle: Column(
                 crossAxisAlignment: .start,
                 children: <Widget>[
-                  // Front part
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: .start,
-                      children: <Widget>[
-                        RichText(
+                  Row(
+                    crossAxisAlignment: .start,
+                    children: <Widget>[
+                      // Front part
+                      Expanded(
+                        child: RichText(
                           overflow: .ellipsis,
                           maxLines: 2,
                           text: TextSpan(
@@ -903,82 +903,85 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             children: subtitle,
                           ),
                         ),
-                        if (!context.watch<SettingsProvider>().hideTags &&
-                            tags.isNotEmpty) ...<Widget>[
-                          Wrap(
-                            children: tags
-                                .map(
-                                  (String tag) => Card(
-                                    child: Padding(
-                                      padding: const .all(6.0),
-                                      child: Row(
-                                        mainAxisSize: .min,
-                                        children: <Widget>[
-                                          const Icon(
-                                            Icons.label_outline,
-                                            size: 16,
-                                          ),
-                                          const SizedBox(width: 5),
-                                          Flexible(
-                                            child: RichText(
-                                              overflow: .fade,
-                                              text: TextSpan(
-                                                style: Theme.of(
-                                                  context,
-                                                ).textTheme.bodyMedium,
-                                                text: tag,
-                                              ),
-                                            ),
-                                          ),
+                      ),
+                      // Trailing part
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width * 0.4,
+                        ),
+                        child: RichText(
+                          textAlign: .end,
+                          maxLines: 1,
+                          overflow: .ellipsis,
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            children: <InlineSpan>[
+                              if (reconciled)
+                                const WidgetSpan(
+                                  baseline: .ideographic,
+                                  alignment: .middle,
+                                  child: Padding(
+                                    padding: .only(right: 2),
+                                    child: Icon(Icons.check),
+                                  ),
+                                ),
+                              if (_filters.account != null)
+                                TextSpan(
+                                  text: currency.fmt(balance),
+                                  style: Theme.of(context).textTheme.bodyMedium!
+                                      .copyWith(
+                                        fontFeatures: const <FontFeature>[
+                                          .tabularFigures(),
                                         ],
                                       ),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
+                                ),
+                              if (_filters.account == null)
+                                TextSpan(
+                                  text: switch (transactions.first.type) {
+                                    .deposit => destinationName,
+                                    .openingBalance => "",
+                                    .reconciliation => "",
+                                    _ => sourceName,
+                                  },
+                                ),
+                            ],
                           ),
-                        ],
-                      ],
-                    ),
+                        ),
+                      ),
+                    ],
                   ),
-                  // Trailing part
-                  RichText(
-                    textAlign: .end,
-                    maxLines: 1,
-                    text: TextSpan(
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      children: <InlineSpan>[
-                        if (reconciled)
-                          const WidgetSpan(
-                            baseline: .ideographic,
-                            alignment: .middle,
-                            child: Padding(
-                              padding: .only(right: 2),
-                              child: Icon(Icons.check),
-                            ),
-                          ),
-                        if (_filters.account != null)
-                          TextSpan(
-                            text: currency.fmt(balance),
-                            style: Theme.of(context).textTheme.bodyMedium!
-                                .copyWith(
-                                  fontFeatures: const <FontFeature>[
-                                    .tabularFigures(),
+                  if (!context.watch<SettingsProvider>().hideTags &&
+                      tags.isNotEmpty) ...<Widget>[
+                    Wrap(
+                      children: tags
+                          .map(
+                            (String tag) => Card(
+                              child: Padding(
+                                padding: const .all(6.0),
+                                child: Row(
+                                  mainAxisSize: .min,
+                                  children: <Widget>[
+                                    const Icon(Icons.label_outline, size: 16),
+                                    const SizedBox(width: 5),
+                                    Flexible(
+                                      child: RichText(
+                                        overflow: .fade,
+                                        text: TextSpan(
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium,
+                                          text: tag,
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
-                          ),
-                        if (_filters.account == null)
-                          TextSpan(
-                            text: switch (transactions.first.type) {
-                              .deposit => destinationName,
-                              .openingBalance => "",
-                              .reconciliation => "",
-                              _ => sourceName,
-                            },
-                          ),
-                      ],
+                              ),
+                            ),
+                          )
+                          .toList(),
                     ),
-                  ),
+                  ],
                 ],
               ),
               isThreeLine: true,

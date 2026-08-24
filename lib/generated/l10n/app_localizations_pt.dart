@@ -367,6 +367,9 @@ class SPt extends S {
   String get generalIncome => 'Receita';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Passivos';
 
   @override
@@ -887,6 +890,9 @@ class SPt extends S {
 
   @override
   String get settingsVersionChecking => 'a verificar…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Anexos';

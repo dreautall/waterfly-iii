@@ -367,6 +367,9 @@ class SHu extends S {
   String get generalIncome => 'Bevétel';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Kötelezettségek';
 
   @override
@@ -885,6 +888,9 @@ class SHu extends S {
 
   @override
   String get settingsVersionChecking => 'ellenőrzés…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Mellékletek';

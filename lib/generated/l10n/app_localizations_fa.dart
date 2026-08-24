@@ -364,6 +364,9 @@ class SFa extends S {
   String get generalIncome => 'درآمد';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'بدهی ها';
 
   @override
@@ -871,6 +874,9 @@ class SFa extends S {
 
   @override
   String get settingsVersionChecking => 'چک کردن…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'پیوست ها';

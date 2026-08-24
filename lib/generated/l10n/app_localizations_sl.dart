@@ -367,6 +367,9 @@ class SSl extends S {
   String get generalIncome => 'Prihodek';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Obveznosti';
 
   @override
@@ -876,6 +879,9 @@ class SSl extends S {
 
   @override
   String get settingsVersionChecking => 'preverjam…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Priponke';

@@ -367,6 +367,9 @@ class SDa extends S {
   String get generalIncome => 'Indtægter';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Gældsforpligtelser';
 
   @override
@@ -875,6 +878,9 @@ class SDa extends S {
 
   @override
   String get settingsVersionChecking => 'tjekker…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Bilag';

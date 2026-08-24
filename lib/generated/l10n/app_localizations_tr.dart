@@ -367,6 +367,9 @@ class STr extends S {
   String get generalIncome => 'Gelir';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Yükümlülükler';
 
   @override
@@ -874,6 +877,9 @@ class STr extends S {
 
   @override
   String get settingsVersionChecking => 'kontrol ediliyor…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Ekler';

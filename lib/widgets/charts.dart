@@ -6,7 +6,7 @@ import 'package:community_charts_flutter/community_charts_flutter.dart'
 import 'package:community_charts_flutter/src/text_element.dart' as charts_text;
 // ignore: implementation_imports
 import 'package:community_charts_flutter/src/text_style.dart' as charts_style;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 
 class TimeSeriesChart {
@@ -17,10 +17,15 @@ class TimeSeriesChart {
 }
 
 extension ConvertChartDataSet on ChartDataSet {
+  bool get usePrimary =>
+      pcEntries is Map<String, dynamic> &&
+      (pcEntries as Map<String, dynamic>).isNotEmpty;
+
   List<TimeSeriesChart> toChart() {
     final List<TimeSeriesChart> data = <TimeSeriesChart>[];
 
-    final Map<String, dynamic> e = entries! as Map<String, dynamic>;
+    final Map<String, dynamic> e =
+        (usePrimary ? pcEntries! : entries!) as Map<String, dynamic>;
     e.forEach(
       (String key, dynamic value) => data.add(
         TimeSeriesChart(DateTime.parse(key), double.tryParse(value) ?? 0),

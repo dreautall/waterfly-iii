@@ -376,6 +376,9 @@ class SUk extends S {
   String get generalIncome => 'Дохід';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Зобов’язання';
 
   @override
@@ -902,6 +905,9 @@ class SUk extends S {
 
   @override
   String get settingsVersionChecking => 'перевірка…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Вкладення';

@@ -370,6 +370,9 @@ class SFr extends S {
   String get generalIncome => 'Revenus';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Passifs';
 
   @override
@@ -887,6 +890,9 @@ class SFr extends S {
 
   @override
   String get settingsVersionChecking => 'vérification…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Pièces jointes';

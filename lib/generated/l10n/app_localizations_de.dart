@@ -367,6 +367,9 @@ class SDe extends S {
   String get generalIncome => 'Einnahmen';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Verbindlichkeiten';
 
   @override
@@ -870,6 +873,9 @@ class SDe extends S {
 
   @override
   String get settingsVersionChecking => 'Überprüfe…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Anhänge';

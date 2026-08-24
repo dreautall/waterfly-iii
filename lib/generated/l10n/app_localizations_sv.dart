@@ -367,6 +367,9 @@ class SSv extends S {
   String get generalIncome => 'Inkomst';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Skulder';
 
   @override
@@ -874,6 +877,9 @@ class SSv extends S {
 
   @override
   String get settingsVersionChecking => 'kontrollerar…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Bilagor';

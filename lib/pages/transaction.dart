@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:async/async.dart';
 import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter/services.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_sharing_intent/model/sharing_file.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logging/logging.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -369,6 +371,52 @@ class _TransactionPageState extends State<TransactionPage>
     log.finest(() => "build()");
 
     final List<Widget> actions = <Widget>[
+      IconButton(
+        icon: const Icon(Icons.bug_report),
+        onPressed: () => showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            icon: const Icon(Icons.bug_report),
+            title: const Text("BETA PAGE"),
+            clipBehavior: .hardEdge,
+            actions: <Widget>[
+              FilledButton(
+                child: const Text("Mail"),
+                onPressed: () => FlutterEmailSender.send(
+                  const Email(
+                    body: "Debug Logs generated from transaction page",
+                    subject: "Waterfly III Issue on Transaction Page",
+                    recipients: <String>["app@vogt.pw"],
+                    isHTML: false,
+                  ),
+                ),
+              ),
+              FilledButton(
+                child: const Text("GitHub"),
+                onPressed: () async {
+                  final Uri uri = Uri.parse(
+                    "https://github.com/dreautall/waterfly-iii/issues",
+                  );
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(uri);
+                  } else {
+                    throw Exception("Could not open URL");
+                  }
+                },
+              ),
+              TextButton(
+                child: Text(MaterialLocalizations.of(context).closeButtonLabel),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+            content: const Text(
+              "The transaction page has been completely rewritten in this beta (even though it looks the same). The goal of the beta is to find out any issues with it - especially around multi currency usage I expect some bugs. Please report any bugs you might encounter via mail or GitHub.\n\nIf you encounter any bugs that are breaking your workflow, please opt out of the beta program!",
+            ),
+          ),
+        ),
+      ),
       if (!_tx.newTX) ...<Widget>[
         TransactionDeleteButton(transactionId: widget.transaction?.id),
         const SizedBox(width: 8),

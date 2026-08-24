@@ -1440,6 +1440,12 @@ abstract class S {
   /// **'checking…'**
   String get settingsVersionChecking;
 
+  /// Placeholder when no tag has been set.
+  ///
+  /// In en, this message translates to:
+  /// **'<no tag>'**
+  String get tagNone;
+
   /// Button Label: Attachments
   ///
   /// In en, this message translates to:

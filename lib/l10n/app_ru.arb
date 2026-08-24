@@ -913,10 +913,6 @@
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
     },
-    "settingsLockscreenHelp": "Требовать аутентификацию при запуске приложения",
-    "@settingsLockscreenHelp": {
-        "description": "Description for lockscreen setting"
-    },
     "settingsLockscreenInitial": "Пожалуйста, авторизуйтесь, чтобы включить экран блокировки.",
     "@settingsLockscreenInitial": {
         "description": "Prompt to authenticate once to set up the lockscreen"

@@ -4,9 +4,9 @@ import 'package:chopper/chopper.dart' show Response;
 import 'package:collection/collection.dart';
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart';
 import 'package:waterflyiii/animations.dart';
@@ -108,6 +108,7 @@ class _HomeMainState extends State<HomeMain>
           ).format(now.copyWith(day: now.day - 6)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
           period: .value_1d,
+          preselected: .assets,
         );
     apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
 
@@ -242,8 +243,15 @@ class _HomeMainState extends State<HomeMain>
 
     late final Response<InsightGroup> respIncomeData;
     late final Response<InsightGroup> respExpenseData;
+    late final Response<InsightTotal> respIncomeDataNo;
+    late final Response<InsightTotal> respExpenseDataNo;
     if (!tags) {
-      (respIncomeData, respExpenseData) = await (
+      (
+        respIncomeData,
+        respExpenseData,
+        respIncomeDataNo,
+        respExpenseDataNo,
+      ) = await (
         api.v1InsightIncomeCategoryGet(
           start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
@@ -252,14 +260,35 @@ class _HomeMainState extends State<HomeMain>
           start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
         ),
+        api.v1InsightIncomeNoCategoryGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
+        api.v1InsightExpenseNoCategoryGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
       ).wait;
     } else {
-      (respIncomeData, respExpenseData) = await (
+      (
+        respIncomeData,
+        respExpenseData,
+        respIncomeDataNo,
+        respExpenseDataNo,
+      ) = await (
         api.v1InsightIncomeTagGet(
           start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
         ),
         api.v1InsightExpenseTagGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
+        api.v1InsightIncomeNoTagGet(
+          start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
+          end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
+        ),
+        api.v1InsightExpenseNoTagGet(
           start: DateFormat('yyyy-MM-dd', 'en_US').format(now.copyWith(day: 1)),
           end: DateFormat('yyyy-MM-dd', 'en_US').format(now),
         ),
@@ -299,6 +328,37 @@ class _HomeMainState extends State<HomeMain>
           ? tagChartData.add(entry.copyWith(differenceFloat: amount))
           : catChartData.add(entry.copyWith(differenceFloat: amount));
     }
+    // Handle "no category"
+    final double noIncome =
+        respIncomeDataNo.body!
+            .firstWhereOrNull(
+              (InsightTotalEntry e) => e.currencyId == defaultCurrency.id,
+            )
+            ?.differenceFloat ??
+        0;
+    final double noExpense =
+        respExpenseDataNo.body!
+            .firstWhereOrNull(
+              (InsightTotalEntry e) => e.currencyId == defaultCurrency.id,
+            )
+            ?.differenceFloat ??
+        0;
+    final double noAmount = noExpense + noIncome;
+    tags
+        ? tagChartData.add(
+            InsightGroupEntry(
+              id: "0",
+              name: S.of(context).tagNone,
+              differenceFloat: noAmount,
+            ),
+          )
+        : catChartData.add(
+            InsightGroupEntry(
+              id: "0",
+              name: S.of(context).catNone,
+              differenceFloat: noAmount,
+            ),
+          );
 
     return true;
   }
@@ -557,7 +617,7 @@ class _HomeMainState extends State<HomeMain>
     return RefreshIndicator.adaptive(
       onRefresh: _refreshStats,
       child: ListView(
-        cacheExtent: 1000,
+        scrollCacheExtent: const .pixels(1000),
         padding: const .all(8),
         children: <Widget>[
           for (int i = 0; i < cards.length; i++)

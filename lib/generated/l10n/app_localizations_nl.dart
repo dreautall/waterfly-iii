@@ -514,7 +514,7 @@ class SNl extends S {
 
   @override
   String homePiggySavePerMonth(String amount) {
-    return 'Save per month: $amount';
+    return 'Bespaar per maand: $amount';
   }
 
   @override
@@ -543,7 +543,7 @@ class SNl extends S {
 
   @override
   String homePiggyTotal(String amount) {
-    return 'Total: $amount';
+    return 'Totaal: $amount';
   }
 
   @override
@@ -735,8 +735,7 @@ class SNl extends S {
   String get settingsLockscreen => 'Vergrendelscherm';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Authenticatie vereist bij opstarten van de app';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>
@@ -881,6 +880,9 @@ class SNl extends S {
 
   @override
   String get settingsVersionChecking => 'controleren...';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Bijlagen';

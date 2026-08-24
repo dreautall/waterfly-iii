@@ -735,8 +735,7 @@ class SRo extends S {
   String get settingsLockscreen => 'Ecran de blocare';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Necesită autentificarea la pornirea aplicației';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>
@@ -884,6 +883,9 @@ class SRo extends S {
 
   @override
   String get settingsVersionChecking => 'verificare…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Atașamente';

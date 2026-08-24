@@ -733,7 +733,7 @@ class SSv extends S {
   String get settingsLockscreen => 'Låsskärm';
 
   @override
-  String get settingsLockscreenHelp => 'Kräv autentisering vid appstart';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>
@@ -877,6 +877,9 @@ class SSv extends S {
 
   @override
   String get settingsVersionChecking => 'kontrollerar…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Bilagor';

@@ -735,8 +735,7 @@ class SIt extends S {
   String get settingsLockscreen => 'Schermata di blocco';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Richiedi l\'autenticazione all\'avvio dell\'app';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>
@@ -882,6 +881,9 @@ class SIt extends S {
 
   @override
   String get settingsVersionChecking => 'verifica…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Allegati';

@@ -736,8 +736,7 @@ class SSl extends S {
   String get settingsLockscreen => 'Zaklenjen zaslon';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Zahtevaj preverjanje pristnosti ob zagonu aplikacije';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>
@@ -880,6 +879,9 @@ class SSl extends S {
 
   @override
   String get settingsVersionChecking => 'preverjam…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Priponke';

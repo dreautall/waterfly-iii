@@ -723,7 +723,7 @@ class SZh extends S {
   String get settingsLockscreen => '锁屏选项';
 
   @override
-  String get settingsLockscreenHelp => '应用程序启动时需要进行身份验证';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial => '请验证以启用锁屏界面。';
@@ -859,6 +859,9 @@ class SZh extends S {
 
   @override
   String get settingsVersionChecking => '正在检查…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => '附件';
@@ -1692,9 +1695,6 @@ class SZhTw extends SZh {
 
   @override
   String get settingsLockscreen => '鎖定畫面選項';
-
-  @override
-  String get settingsLockscreenHelp => '程動程式時需要先通過身份認證';
 
   @override
   String get settingsLockscreenInitial => '請通過身份認證以啟用鎖定螢幕功能。';

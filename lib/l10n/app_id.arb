@@ -905,10 +905,6 @@
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
     },
-    "settingsLockscreenHelp": "Memerlukan autentikasi saat memulai aplikasi",
-    "@settingsLockscreenHelp": {
-        "description": "Description for lockscreen setting"
-    },
     "settingsLockscreenInitial": "Mohon autentikasi untuk mengaktifkan layar kunci.",
     "@settingsLockscreenInitial": {
         "description": "Prompt to authenticate once to set up the lockscreen"

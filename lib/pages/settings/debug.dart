@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart' show getTemporaryDirectory;
 import 'package:provider/provider.dart';

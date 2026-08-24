@@ -734,7 +734,7 @@ class SDa extends S {
   String get settingsLockscreen => 'Låst skærm';
 
   @override
-  String get settingsLockscreenHelp => 'Kræv godkendelse ved opstart af app';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>
@@ -878,6 +878,9 @@ class SDa extends S {
 
   @override
   String get settingsVersionChecking => 'tjekker…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Bilag';

@@ -743,8 +743,7 @@ class SRu extends S {
   String get settingsLockscreen => 'Экран блокировки';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Требовать аутентификацию при запуске приложения';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>
@@ -891,6 +890,9 @@ class SRu extends S {
 
   @override
   String get settingsVersionChecking => 'проверка…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Вложения';

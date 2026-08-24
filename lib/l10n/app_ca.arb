@@ -926,10 +926,6 @@
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
     },
-    "settingsLockscreenHelp": "Requereix autenticació en iniciar l'aplicació",
-    "@settingsLockscreenHelp": {
-        "description": "Description for lockscreen setting"
-    },
     "settingsLockscreenInitial": "Per favor, autentica't per habilitar la pantalla de bloqueig.",
     "@settingsLockscreenInitial": {
         "description": "Prompt to authenticate once to set up the lockscreen"

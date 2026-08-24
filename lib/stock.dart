@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:chopper/chopper.dart' show Response;
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:stock/stock.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.enums.swagger.dart'

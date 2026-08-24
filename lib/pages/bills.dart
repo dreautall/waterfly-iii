@@ -1,8 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:chopper/chopper.dart' show Response;
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart' show SortingOrder;
 import 'package:waterflyiii/auth.dart';
@@ -167,7 +167,7 @@ class _BillsPageState extends State<BillsPage>
 
   Widget _groupBuilder(Map<String, List<BillRead>> groupedBills) {
     return ListView(
-      cacheExtent: 1000,
+      scrollCacheExtent: const .pixels(1000),
       children: <Widget>[
         ...groupedBills.keys.map(
           (String groupName) => Card(

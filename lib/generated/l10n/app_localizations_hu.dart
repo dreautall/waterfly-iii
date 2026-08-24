@@ -741,8 +741,7 @@ class SHu extends S {
   String get settingsLockscreen => 'Zárképernyő';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Hitelesítés szükséges az alkalmazás indításakor';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>
@@ -889,6 +888,9 @@ class SHu extends S {
 
   @override
   String get settingsVersionChecking => 'ellenőrzés…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Mellékletek';

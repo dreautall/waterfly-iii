@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/settings.dart';
@@ -97,11 +97,8 @@ class _DashboardDialogState extends State<DashboardDialog> {
         width: .maxFinite,
         height: cardWidgets.length * 96,
         child: ReorderableListView(
-          onReorder: (int oldIndex, int newIndex) async {
+          onReorderItem: (int oldIndex, int newIndex) async {
             setState(() {
-              if (oldIndex < newIndex) {
-                newIndex -= 1;
-              }
               final DashboardCards item = cards.removeAt(oldIndex);
               cards.insert(newIndex, item);
             });

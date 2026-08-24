@@ -743,8 +743,7 @@ class SPt extends S {
   String get settingsLockscreen => 'Tela de bloqueio';
 
   @override
-  String get settingsLockscreenHelp =>
-      'Exigir autenticação ao iniciar o aplicativo';
+  String get settingsLockscreenHelp => 'Require authentication on app startup';
 
   @override
   String get settingsLockscreenInitial =>
@@ -891,6 +890,9 @@ class SPt extends S {
 
   @override
   String get settingsVersionChecking => 'a verificar…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Anexos';
@@ -1746,9 +1748,6 @@ class SPtBr extends SPt {
 
   @override
   String get settingsLockscreen => 'Tela de bloqueio';
-
-  @override
-  String get settingsLockscreenHelp => 'Exigir autenticação ao abrir o app';
 
   @override
   String get settingsLockscreenInitial =>

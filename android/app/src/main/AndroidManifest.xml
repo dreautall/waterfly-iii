@@ -196,6 +196,7 @@
         <package android:name="com.mercadolibre"/>
         <package android:name="com.mercadopago.wallet"/>
         <package android:name="com.microsoft.android.smsorganizer"/>
+        <package android:name="com.mobicon.mbank2.belarusbank" />
         <package android:name="com.mtbank"/>
         <package android:name="com.nequi.MobileApp"/>
         <package android:name="com.nordea.mep.npay"/>

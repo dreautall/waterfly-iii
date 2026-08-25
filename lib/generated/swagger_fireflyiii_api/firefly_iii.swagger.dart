@@ -102,7 +102,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all accounts of the user returned in a basic auto-complete array.',
+      summary:
+          'Returns all accounts of the user returned in a basic auto-complete array.',
       operationId: 'getAccountsAC',
       consumes: [],
       produces: [],
@@ -145,7 +146,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all bills of the user returned in a basic auto-complete array.',
+      summary:
+          'Returns all bills of the user returned in a basic auto-complete array.',
       operationId: 'getBillsAC',
       consumes: [],
       produces: [],
@@ -188,7 +190,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all budgets of the user returned in a basic auto-complete array.',
+      summary:
+          'Returns all budgets of the user returned in a basic auto-complete array.',
       operationId: 'getBudgetsAC',
       consumes: [],
       produces: [],
@@ -229,7 +232,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all categories of the user returned in a basic auto-complete array.',
+      summary:
+          'Returns all categories of the user returned in a basic auto-complete array.',
       operationId: 'getCategoriesAC',
       consumes: [],
       produces: [],
@@ -270,7 +274,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all currencies of the user returned in a basic auto-complete array.',
+      summary:
+          'Returns all currencies of the user returned in a basic auto-complete array.',
       operationId: 'getCurrenciesAC',
       consumes: [],
       produces: [],
@@ -315,7 +320,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all currencies of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.',
+      summary:
+          'Returns all currencies of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.',
       operationId: 'getCurrenciesCodeAC',
       consumes: [],
       produces: [],
@@ -356,7 +362,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all object groups of the user returned in a basic auto-complete array.',
+      summary:
+          'Returns all object groups of the user returned in a basic auto-complete array.',
       operationId: 'getObjectGroupsAC',
       consumes: [],
       produces: [],
@@ -400,7 +407,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all piggy banks of the user returned in a basic auto-complete array.',
+      summary:
+          'Returns all piggy banks of the user returned in a basic auto-complete array.',
       operationId: 'getPiggiesAC',
       consumes: [],
       produces: [],
@@ -445,7 +453,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all piggy banks of the user returned in a basic auto-complete array.',
+      summary:
+          'Returns all piggy banks of the user returned in a basic auto-complete array.',
       operationId: 'getPiggiesBalanceAC',
       consumes: [],
       produces: [],
@@ -486,7 +495,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all recurring transactions of the user returned in a basic auto-complete array.',
+      summary:
+          'Returns all recurring transactions of the user returned in a basic auto-complete array.',
       operationId: 'getRecurringAC',
       consumes: [],
       produces: [],
@@ -527,7 +537,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all rule groups of the user returned in a basic auto-complete array.',
+      summary:
+          'Returns all rule groups of the user returned in a basic auto-complete array.',
       operationId: 'getRuleGroupsAC',
       consumes: [],
       produces: [],
@@ -570,7 +581,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all rules of the user returned in a basic auto-complete array.',
+      summary:
+          'Returns all rules of the user returned in a basic auto-complete array.',
       operationId: 'getRulesAC',
       consumes: [],
       produces: [],
@@ -615,7 +627,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all subscriptions of the user returned in a basic auto-complete array.',
+      summary:
+          'Returns all subscriptions of the user returned in a basic auto-complete array.',
       operationId: 'getSubscriptionsAC',
       consumes: [],
       produces: [],
@@ -658,7 +671,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all tags of the user returned in a basic auto-complete array.',
+      summary:
+          'Returns all tags of the user returned in a basic auto-complete array.',
       operationId: 'getTagAC',
       consumes: [],
       produces: [],
@@ -703,7 +717,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all transaction types returned in a basic auto-complete array. English only.',
+      summary:
+          'Returns all transaction types returned in a basic auto-complete array. English only.',
       operationId: 'getTransactionTypesAC',
       consumes: [],
       produces: [],
@@ -744,7 +759,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all transaction descriptions of the user returned in a basic auto-complete array.',
+      summary:
+          'Returns all transaction descriptions of the user returned in a basic auto-complete array.',
       operationId: 'getTransactionsAC',
       consumes: [],
       produces: [],
@@ -789,7 +805,8 @@ abstract class FireflyIii extends ChopperService {
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '',
-      summary: 'Returns all transactions, complemented with their ID, of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.',
+      summary:
+          'Returns all transactions, complemented with their ID, of the user returned in a basic auto-complete array. This endpoint is DEPRECATED and I suggest you DO NOT use it.',
       operationId: 'getTransactionsIDAC',
       consumes: [],
       produces: [],
@@ -841,7 +858,8 @@ abstract class FireflyIii extends ChopperService {
     @Query('preselected') String? preselected,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint returns the data required to generate a chart with basic asset account balance information. This is used on the dashboard.
+      description:
+          '''This endpoint returns the data required to generate a chart with basic asset account balance information. This is used on the dashboard.
 ''',
       summary: 'Dashboard chart with asset account balance information.',
       operationId: 'getChartAccountOverview',
@@ -900,7 +918,8 @@ abstract class FireflyIii extends ChopperService {
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint returns the data required to generate a chart with balance information.
+      description:
+          '''This endpoint returns the data required to generate a chart with balance information.
 ''',
       summary: 'Dashboard chart with balance information.',
       operationId: 'getChartBalance',
@@ -944,7 +963,8 @@ abstract class FireflyIii extends ChopperService {
     @Query('end') required String? end,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint returns the data required to generate a chart with basic budget information.
+      description:
+          '''This endpoint returns the data required to generate a chart with basic budget information.
 ''',
       summary: 'Dashboard chart with budget information.',
       operationId: 'getChartBudgetOverview',
@@ -988,7 +1008,8 @@ abstract class FireflyIii extends ChopperService {
     @Query('end') required String? end,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint returns the data required to generate a chart with basic category information.
+      description:
+          '''This endpoint returns the data required to generate a chart with basic category information.
 ''',
       summary: 'Dashboard chart with category information.',
       operationId: 'getChartCategoryOverview',
@@ -1024,7 +1045,8 @@ abstract class FireflyIii extends ChopperService {
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: '''Allows you to update transactions in bulk.
 ''',
-      summary: 'Bulk update transaction properties. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/',
+      summary:
+          'Bulk update transaction properties. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/',
       operationId: 'bulkUpdateTransactions',
       consumes: [],
       produces: [],
@@ -1056,7 +1078,8 @@ abstract class FireflyIii extends ChopperService {
     @Query('objects') required String? objects,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''A call to this endpoint deletes the requested data type. Use it with care and always with user permission.
+      description:
+          '''A call to this endpoint deletes the requested data type. Use it with care and always with user permission.
 The demo user is incapable of using this endpoint.
 ''',
       summary: 'Endpoint to destroy user data',
@@ -1091,7 +1114,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint allows you to export your accounts from Firefly III into a file. Currently supports CSV exports only.
+      description:
+          '''This endpoint allows you to export your accounts from Firefly III into a file. Currently supports CSV exports only.
 ''',
       summary: 'Export account data from Firefly III',
       operationId: 'exportAccounts',
@@ -1125,7 +1149,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint allows you to export your bills from Firefly III into a file. Currently supports CSV exports only.
+      description:
+          '''This endpoint allows you to export your bills from Firefly III into a file. Currently supports CSV exports only.
 ''',
       summary: 'Export bills from Firefly III',
       operationId: 'exportBills',
@@ -1159,7 +1184,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint allows you to export your budgets and associated budget data from Firefly III into a file. Currently supports CSV exports only.
+      description:
+          '''This endpoint allows you to export your budgets and associated budget data from Firefly III into a file. Currently supports CSV exports only.
 ''',
       summary: 'Export budgets and budget amount data from Firefly III',
       operationId: 'exportBudgets',
@@ -1193,7 +1219,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint allows you to export your categories from Firefly III into a file. Currently supports CSV exports only.
+      description:
+          '''This endpoint allows you to export your categories from Firefly III into a file. Currently supports CSV exports only.
 ''',
       summary: 'Export category data from Firefly III',
       operationId: 'exportCategories',
@@ -1227,7 +1254,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint allows you to export your piggy banks from Firefly III into a file. Currently supports CSV exports only.
+      description:
+          '''This endpoint allows you to export your piggy banks from Firefly III into a file. Currently supports CSV exports only.
 ''',
       summary: 'Export piggy banks from Firefly III',
       operationId: 'exportPiggies',
@@ -1261,7 +1289,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint allows you to export your recurring transactions from Firefly III into a file. Currently supports CSV exports only.
+      description:
+          '''This endpoint allows you to export your recurring transactions from Firefly III into a file. Currently supports CSV exports only.
 ''',
       summary: 'Export recurring transaction data from Firefly III',
       operationId: 'exportRecurring',
@@ -1295,7 +1324,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint allows you to export your rules and rule groups from Firefly III into a file. Currently supports CSV exports only.
+      description:
+          '''This endpoint allows you to export your rules and rule groups from Firefly III into a file. Currently supports CSV exports only.
 ''',
       summary: 'Export rule groups and rule data from Firefly III',
       operationId: 'exportRules',
@@ -1329,7 +1359,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint allows you to export your tags from Firefly III into a file. Currently supports CSV exports only.
+      description:
+          '''This endpoint allows you to export your tags from Firefly III into a file. Currently supports CSV exports only.
 ''',
       summary: 'Export tag data from Firefly III',
       operationId: 'exportTags',
@@ -1378,7 +1409,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint allows you to export transactions from Firefly III into a file. Currently supports CSV exports only.
+      description:
+          '''This endpoint allows you to export transactions from Firefly III into a file. Currently supports CSV exports only.
 ''',
       summary: 'Export transaction data from Firefly III',
       operationId: 'exportTransactions',
@@ -1403,7 +1435,8 @@ The demo user is incapable of using this endpoint.
     @Header('X-Trace-Id') String? xTraceId,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''A call to this endpoint purges all previously deleted data. Use it with care and always with user permission.
+      description:
+          '''A call to this endpoint purges all previously deleted data. Use it with care and always with user permission.
 The demo user is incapable of using this endpoint.
 ''',
       summary: 'Endpoint to purge user data',
@@ -1453,7 +1486,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the expenses made by the user, grouped by expense account.
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, grouped by expense account.
 ''',
       summary: 'Insight into expenses, grouped by expense account.',
       operationId: 'insightExpenseExpense',
@@ -1502,7 +1536,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the expenses made by the user, grouped by asset account.
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, grouped by asset account.
 ''',
       summary: 'Insight into expenses, grouped by asset account.',
       operationId: 'insightExpenseAsset',
@@ -1551,7 +1586,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the income received by the user, grouped by revenue account.
+      description:
+          '''This endpoint gives a summary of the income received by the user, grouped by revenue account.
 ''',
       summary: 'Insight into income, grouped by revenue account.',
       operationId: 'insightIncomeRevenue',
@@ -1600,7 +1636,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the income received by the user, grouped by asset account.
+      description:
+          '''This endpoint gives a summary of the income received by the user, grouped by asset account.
 ''',
       summary: 'Insight into income, grouped by asset account.',
       operationId: 'insightIncomeAsset',
@@ -1649,7 +1686,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the transfers made by the user, grouped by asset account or lability.
+      description:
+          '''This endpoint gives a summary of the transfers made by the user, grouped by asset account or lability.
 ''',
       summary: 'Insight into transfers, grouped by account.',
       operationId: 'insightTransfers',
@@ -1703,7 +1741,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the expenses made by the user, grouped by (any) bill.
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, grouped by (any) bill.
 ''',
       summary: 'Insight into expenses, grouped by bill.',
       operationId: 'insightExpenseBill',
@@ -1752,7 +1791,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the expenses made by the user, including only expenses with no bill.
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, including only expenses with no bill.
 ''',
       summary: 'Insight into expenses, without bill.',
       operationId: 'insightExpenseNoBill',
@@ -1806,7 +1846,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the expenses made by the user, grouped by (any) budget.
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, grouped by (any) budget.
 ''',
       summary: 'Insight into expenses, grouped by budget.',
       operationId: 'insightExpenseBudget',
@@ -1855,7 +1896,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the expenses made by the user, including only expenses with no budget.
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, including only expenses with no budget.
 ''',
       summary: 'Insight into expenses, without budget.',
       operationId: 'insightExpenseNoBudget',
@@ -1909,7 +1951,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the expenses made by the user, grouped by (any) category.
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, grouped by (any) category.
 ''',
       summary: 'Insight into expenses, grouped by category.',
       operationId: 'insightExpenseCategory',
@@ -1958,7 +2001,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the expenses made by the user, including only expenses with no category.
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, including only expenses with no category.
 ''',
       summary: 'Insight into expenses, without category.',
       operationId: 'insightExpenseNoCategory',
@@ -2012,7 +2056,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the income received by the user, grouped by (any) category.
+      description:
+          '''This endpoint gives a summary of the income received by the user, grouped by (any) category.
 ''',
       summary: 'Insight into income, grouped by category.',
       operationId: 'insightIncomeCategory',
@@ -2061,7 +2106,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the income received by the user, including only income with no category.
+      description:
+          '''This endpoint gives a summary of the income received by the user, including only income with no category.
 ''',
       summary: 'Insight into income, without category.',
       operationId: 'insightIncomeNoCategory',
@@ -2115,7 +2161,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the transfers made by the user, grouped by (any) category.
+      description:
+          '''This endpoint gives a summary of the transfers made by the user, grouped by (any) category.
 ''',
       summary: 'Insight into transfers, grouped by category.',
       operationId: 'insightTransferCategory',
@@ -2164,7 +2211,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the transfers made by the user, including only transfers with no category.
+      description:
+          '''This endpoint gives a summary of the transfers made by the user, including only transfers with no category.
 ''',
       summary: 'Insight into transfers, without category.',
       operationId: 'insightTransferNoCategory',
@@ -2218,7 +2266,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the expenses made by the user, grouped by (any) tag.
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, grouped by (any) tag.
 ''',
       summary: 'Insight into expenses, grouped by tag.',
       operationId: 'insightExpenseTag',
@@ -2267,7 +2316,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the expenses made by the user, including only expenses with no tag.
+      description:
+          '''This endpoint gives a summary of the expenses made by the user, including only expenses with no tag.
 ''',
       summary: 'Insight into expenses, without tag.',
       operationId: 'insightExpenseNoTag',
@@ -2321,7 +2371,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the income received by the user, grouped by (any) tag.
+      description:
+          '''This endpoint gives a summary of the income received by the user, grouped by (any) tag.
 ''',
       summary: 'Insight into income, grouped by tag.',
       operationId: 'insightIncomeTag',
@@ -2370,7 +2421,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the income received by the user, including only income with no tag.
+      description:
+          '''This endpoint gives a summary of the income received by the user, including only income with no tag.
 ''',
       summary: 'Insight into income, without tag.',
       operationId: 'insightIncomeNoTag',
@@ -2424,7 +2476,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the transfers created by the user, grouped by (any) tag.
+      description:
+          '''This endpoint gives a summary of the transfers created by the user, grouped by (any) tag.
 ''',
       summary: 'Insight into transfers, grouped by tag.',
       operationId: 'insightTransferTag',
@@ -2473,7 +2526,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a summary of the transfers made by the user, including only transfers with no tag.
+      description:
+          '''This endpoint gives a summary of the transfers made by the user, including only transfers with no tag.
 ''',
       summary: 'Insight into expenses, without tag.',
       operationId: 'insightTransferNoTag',
@@ -2622,7 +2676,8 @@ The demo user is incapable of using this endpoint.
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint gives a sum of the total amount transfers made by the user.
+      description:
+          '''This endpoint gives a sum of the total amount transfers made by the user.
 ''',
       summary: 'Insight into total transfers.',
       operationId: 'insightTransferTotal',
@@ -2686,7 +2741,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint returns a list of all the transactions connected to the account.
+      description:
+          '''This endpoint returns a list of all the transactions connected to the account.
 ''',
       summary: 'List all transactions related to the account.',
       operationId: 'listTransactionByAccount',
@@ -2783,7 +2839,8 @@ The demo user is incapable of using this endpoint.
     @Path('id') required String? id,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint returns a list of all the piggy banks connected to the account.
+      description:
+          '''This endpoint returns a list of all the piggy banks connected to the account.
 ''',
       summary: 'List all piggy banks related to the account.',
       operationId: 'listPiggyBankByAccount',
@@ -2847,7 +2904,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint returns a list of all the accounts owned by the authenticated user.
+      description:
+          '''This endpoint returns a list of all the accounts owned by the authenticated user.
 ''',
       summary: 'List all accounts.',
       operationId: 'listAccount',
@@ -2881,7 +2939,8 @@ The demo user is incapable of using this endpoint.
     @Body() required AccountStore? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Creates a new account. The data required can be submitted as a JSON body or as a list of parameters (in key=value pairs, like a webform).',
+      description:
+          'Creates a new account. The data required can be submitted as a JSON body or as a list of parameters (in key=value pairs, like a webform).',
       summary: 'Create new account.',
       operationId: 'storeAccount',
       consumes: [],
@@ -2972,7 +3031,8 @@ The demo user is incapable of using this endpoint.
     @Body() required AccountUpdate? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Used to update a single account. All fields that are not submitted will be cleared (set to NULL). The model will tell you which fields are mandatory.
+      description:
+          '''Used to update a single account. All fields that are not submitted will be cleared (set to NULL). The model will tell you which fields are mandatory.
 ''',
       summary: 'Update existing account.',
       operationId: 'updateAccount',
@@ -3003,7 +3063,8 @@ The demo user is incapable of using this endpoint.
     @Path('id') required String? id,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Will permanently delete an account. Any associated transactions and piggy banks are ALSO deleted. Cannot be recovered from.
+      description:
+          '''Will permanently delete an account. Any associated transactions and piggy banks are ALSO deleted. Cannot be recovered from.
 ''',
       summary: 'Permanently delete account.',
       operationId: 'deleteAccount',
@@ -3081,7 +3142,8 @@ The demo user is incapable of using this endpoint.
     @Body() required AttachmentStore? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Creates a new attachment. The data required can be submitted as a JSON body or as a list of parameters. You cannot use this endpoint to upload the actual file data (see below). This endpoint only creates the attachment object.
+      description:
+          '''Creates a new attachment. The data required can be submitted as a JSON body or as a list of parameters. You cannot use this endpoint to upload the actual file data (see below). This endpoint only creates the attachment object.
 ''',
       summary: 'Store a new attachment.',
       operationId: 'storeAttachment',
@@ -3117,7 +3179,8 @@ The demo user is incapable of using this endpoint.
     @Path('id') required String? id,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Get a single attachment. This endpoint only returns the available metadata for the attachment. Actual file data is handled in two other endpoints (see below).
+      description:
+          '''Get a single attachment. This endpoint only returns the available metadata for the attachment. Actual file data is handled in two other endpoints (see below).
 ''',
       summary: 'Get a single attachment.',
       operationId: 'getAttachment',
@@ -3159,7 +3222,8 @@ The demo user is incapable of using this endpoint.
     @Body() required AttachmentUpdate? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Update the meta data for an existing attachment. This endpoint does not allow you to upload or download data. For that, see below.
+      description:
+          '''Update the meta data for an existing attachment. This endpoint does not allow you to upload or download data. For that, see below.
 ''',
       summary: 'Update existing attachment.',
       operationId: 'updateAttachment',
@@ -3190,7 +3254,8 @@ The demo user is incapable of using this endpoint.
     @Path('id') required String? id,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''With this endpoint you delete an attachment, including any stored file data.
+      description:
+          '''With this endpoint you delete an attachment, including any stored file data.
 ''',
       summary: 'Delete an attachment.',
       operationId: 'deleteAttachment',
@@ -3221,7 +3286,8 @@ The demo user is incapable of using this endpoint.
     @Path('id') required String? id,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint allows you to download the binary content of a transaction. It will be sent to you as a download, using the content type "application/octet-stream" and content disposition "attachment; filename=example.pdf".
+      description:
+          '''This endpoint allows you to download the binary content of a transaction. It will be sent to you as a download, using the content type "application/octet-stream" and content disposition "attachment; filename=example.pdf".
 ''',
       summary: 'Download a single attachment.',
       operationId: 'downloadAttachment',
@@ -3258,7 +3324,8 @@ The demo user is incapable of using this endpoint.
     @Body() required Object? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Use this endpoint to upload (and possible overwrite) the file contents of an attachment. Simply put the entire file in the body as binary data.
+      description:
+          '''Use this endpoint to upload (and possible overwrite) the file contents of an attachment. Simply put the entire file in the body as binary data.
 ''',
       summary: 'Upload an attachment.',
       operationId: 'uploadAttachment',
@@ -3312,7 +3379,8 @@ The demo user is incapable of using this endpoint.
     @Query('end') String? end,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Firefly III calculates the total amount of money budgeted in so-called "available budgets". This endpoint returns all of these amounts and the periods for which they are calculated.
+      description:
+          '''Firefly III calculates the total amount of money budgeted in so-called "available budgets". This endpoint returns all of these amounts and the periods for which they are calculated.
 ''',
       summary: 'List all available budget amounts.',
       operationId: 'listAvailableBudgets',
@@ -3429,7 +3497,8 @@ The demo user is incapable of using this endpoint.
     @Path('id') required String? id,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'This endpoint will list all rules that have an action to set the bill to this bill.',
+      description:
+          'This endpoint will list all rules that have an action to set the bill to this bill.',
       summary: 'List all rules associated with the bill.',
       operationId: 'listRuleByBill',
       consumes: [],
@@ -3573,7 +3642,8 @@ The demo user is incapable of using this endpoint.
     @Body() required BillStore? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Creates a new bill. The data required can be submitted as a JSON body or as a list of parameters.',
+      description:
+          'Creates a new bill. The data required can be submitted as a JSON body or as a list of parameters.',
       summary: 'Store a new bill',
       operationId: 'storeBill',
       consumes: [],
@@ -3682,7 +3752,8 @@ The demo user is incapable of using this endpoint.
     @Path('id') required String? id,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Delete a bill. This will not delete any associated rules. Will not remove associated transactions. WILL remove all associated attachments.',
+      description:
+          'Delete a bill. This will not delete any associated rules. Will not remove associated transactions. WILL remove all associated attachments.',
       summary: 'Delete a bill.',
       operationId: 'deleteBill',
       consumes: [],
@@ -3742,7 +3813,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'List all the transactions within one budget limit. The start and end date are dictated by the budget limit.',
+      description:
+          'List all the transactions within one budget limit. The start and end date are dictated by the budget limit.',
       summary: 'List all transactions by a budget limit ID.',
       operationId: 'listTransactionByBudgetLimit',
       consumes: [],
@@ -3790,7 +3862,8 @@ The demo user is incapable of using this endpoint.
     @Query('end') String? end,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Get all budget limits for this budget and the money spent, and money left. You can limit the list by submitting a date range as well. The "spent" array for each budget limit is NOT influenced by the start and end date of your query, but by the start and end date of the budget limit itself.
+      description:
+          '''Get all budget limits for this budget and the money spent, and money left. You can limit the list by submitting a date range as well. The "spent" array for each budget limit is NOT influenced by the start and end date of your query, but by the start and end date of the budget limit itself.
 ''',
       summary: 'Get all limits for a budget.',
       operationId: 'listBudgetLimitByBudget',
@@ -4066,7 +4139,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Get all transactions linked to a budget, possibly limited by start and end',
+      description:
+          'Get all transactions linked to a budget, possibly limited by start and end',
       summary: 'All transactions to a budget.',
       operationId: 'listTransactionByBudget',
       consumes: [],
@@ -4169,7 +4243,8 @@ The demo user is incapable of using this endpoint.
     @Query('end') String? end,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Get all transactions NOT linked to a budget, possibly limited by start and end',
+      description:
+          'Get all transactions NOT linked to a budget, possibly limited by start and end',
       summary: 'All transactions without a budget.',
       operationId: 'listTransactionWithoutBudget',
       consumes: [],
@@ -4222,7 +4297,8 @@ The demo user is incapable of using this endpoint.
     @Query('end') String? end,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'List all the budgets the user has made. If the start date and end date are submitted as well, the "spent" array will be updated accordingly.',
+      description:
+          'List all the budgets the user has made. If the start date and end date are submitted as well, the "spent" array will be updated accordingly.',
       summary: 'List all budgets.',
       operationId: 'listBudget',
       consumes: [],
@@ -4255,7 +4331,8 @@ The demo user is incapable of using this endpoint.
     @Body() required BudgetStore? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Creates a new budget. The data required can be submitted as a JSON body or as a list of parameters.',
+      description:
+          'Creates a new budget. The data required can be submitted as a JSON body or as a list of parameters.',
       summary: 'Store a new budget',
       operationId: 'storeBudget',
       consumes: [],
@@ -4303,7 +4380,8 @@ The demo user is incapable of using this endpoint.
     @Query('end') String? end,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Get a single budget. If the start date and end date are submitted as well, the "spent" array will be updated accordingly.',
+      description:
+          'Get a single budget. If the start date and end date are submitted as well, the "spent" array will be updated accordingly.',
       summary: 'Get a single budget.',
       operationId: 'getBudget',
       consumes: [],
@@ -4340,7 +4418,8 @@ The demo user is incapable of using this endpoint.
     @Body() required BudgetUpdate? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Update existing budget. This endpoint cannot be used to set budget amount limits.',
+      description:
+          'Update existing budget. This endpoint cannot be used to set budget amount limits.',
       summary: 'Update existing budget.',
       operationId: 'updateBudget',
       consumes: [],
@@ -4433,7 +4512,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'List all transactions in a category, optionally limited to the date ranges specified.',
+      description:
+          'List all transactions in a category, optionally limited to the date ranges specified.',
       summary: 'List all transactions in a category.',
       operationId: 'listTransactionByCategory',
       consumes: [],
@@ -4557,7 +4637,8 @@ The demo user is incapable of using this endpoint.
     @Body() required CategoryStore? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Creates a new category. The data required can be submitted as a JSON body or as a list of parameters.',
+      description:
+          'Creates a new category. The data required can be submitted as a JSON body or as a list of parameters.',
       summary: 'Store a new category',
       operationId: 'storeCategory',
       consumes: [],
@@ -4752,7 +4833,8 @@ The demo user is incapable of using this endpoint.
     @Body() required CurrencyExchangeRateStore? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Stores a new exchange rate. The data required can be submitted as a JSON body or as a list of parameters.',
+      description:
+          'Stores a new exchange rate. The data required can be submitted as a JSON body or as a list of parameters.',
       summary: 'Store a new currency exchange rate.',
       operationId: 'storeCurrencyExchangeRate',
       consumes: [],
@@ -4872,7 +4954,8 @@ The demo user is incapable of using this endpoint.
     @Body() required CurrencyExchangeRateUpdate? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Used to update a single currency exchange rate by its ID. Including the from/to currency is optional.
+      description:
+          '''Used to update a single currency exchange rate by its ID. Including the from/to currency is optional.
 ''',
       summary: 'Update existing currency exchange rate.',
       operationId: 'updateCurrencyExchangeRate',
@@ -4965,7 +5048,8 @@ The demo user is incapable of using this endpoint.
     @Path('to') required String? to,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Deletes ALL currency exchange rates from \'from\' to \'to\'. It\'s important to know that the reverse exchange rates (from \'to\' to \'from\') will not be deleted and Firefly III will still be able to infer the correct exchange rate from the reverse one.',
+      description:
+          'Deletes ALL currency exchange rates from \'from\' to \'to\'. It\'s important to know that the reverse exchange rates (from \'to\' to \'from\') will not be deleted and Firefly III will still be able to infer the correct exchange rate from the reverse one.',
       summary: 'Deletes ALL currency exchange rates from \'from\' to \'to\'.',
       operationId: 'deleteSpecificCurrencyExchangeRates',
       consumes: [],
@@ -5025,8 +5109,10 @@ The demo user is incapable of using this endpoint.
     @Path('date') required String? date,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'List the exchange rate for the from and to-currency on the requested date.',
-      summary: 'List the exchange rate for the from and to-currency on the requested date.',
+      description:
+          'List the exchange rate for the from and to-currency on the requested date.',
+      summary:
+          'List the exchange rate for the from and to-currency on the requested date.',
       operationId: 'listSpecificCurrencyExchangeRateOnDate',
       consumes: [],
       produces: [],
@@ -5068,8 +5154,10 @@ The demo user is incapable of using this endpoint.
     @Path('date') required String? date,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Delete the currency exchange rate from \'from\' to \'to\' on the specified date.  It\'s important to know that the reverse exchange rate (from \'to\' to \'from\') will not be deleted and Firefly III will still be able to infer the correct exchange rate from the reverse one.',
-      summary: 'Delete the currency exchange rate from \'from\' to \'to\' on the specified date.',
+      description:
+          'Delete the currency exchange rate from \'from\' to \'to\' on the specified date.  It\'s important to know that the reverse exchange rate (from \'to\' to \'from\') will not be deleted and Firefly III will still be able to infer the correct exchange rate from the reverse one.',
+      summary:
+          'Delete the currency exchange rate from \'from\' to \'to\' on the specified date.',
       operationId: 'deleteSpecificCurrencyExchangeRateOnDate',
       consumes: [],
       produces: [],
@@ -5121,7 +5209,8 @@ The demo user is incapable of using this endpoint.
     @Body() required CurrencyExchangeRateUpdateNoDate? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Used to update a single currency exchange rate by its currency codes and date
+      description:
+          '''Used to update a single currency exchange rate by its currency codes and date
 ''',
       summary: 'Update existing currency exchange rate.',
       operationId: 'updateCurrencyExchangeRateByDate',
@@ -5165,7 +5254,8 @@ The demo user is incapable of using this endpoint.
     @Body() required CurrencyExchangeRateStoreByDate? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Stores a new set of exchange rates. The date is fixed (in the URL parameter) and the data required can be submitted as a JSON body.',
+      description:
+          'Stores a new set of exchange rates. The date is fixed (in the URL parameter) and the data required can be submitted as a JSON body.',
       summary: 'Store new currency exchange rates under this date',
       operationId: 'storeCurrencyExchangeRatesByDate',
       consumes: [],
@@ -5216,7 +5306,8 @@ The demo user is incapable of using this endpoint.
     @Body() required CurrencyExchangeRateStoreByPair? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Stores a new set of exchange rates for this pair. The date is variable, and the data required can be submitted as a JSON body.',
+      description:
+          'Stores a new set of exchange rates for this pair. The date is variable, and the data required can be submitted as a JSON body.',
       summary: 'Store new currency exchange rates under this from/to pair.',
       operationId: 'storeCurrencyExchangeRatesByPair',
       consumes: [],
@@ -5279,7 +5370,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''List all transactions under this link type, both the inward and outward transactions.
+      description:
+          '''List all transactions under this link type, both the inward and outward transactions.
 ''',
       summary: 'List all transactions under this link type.',
       operationId: 'listTransactionByLinkType',
@@ -5323,7 +5415,8 @@ The demo user is incapable of using this endpoint.
     @Query('page') int? page,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''List all the link types the system has. These include the default ones as well as any new ones.
+      description:
+          '''List all the link types the system has. These include the default ones as well as any new ones.
 ''',
       summary: 'List all types of links.',
       operationId: 'listLinkType',
@@ -5357,7 +5450,8 @@ The demo user is incapable of using this endpoint.
     @Body() required LinkType? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Creates a new link type. The data required can be submitted as a JSON body or as a list of parameters (in key=value pairs, like a webform).',
+      description:
+          'Creates a new link type. The data required can be submitted as a JSON body or as a list of parameters (in key=value pairs, like a webform).',
       summary: 'Create a new link type',
       operationId: 'storeLinkType',
       consumes: [],
@@ -5434,7 +5528,8 @@ The demo user is incapable of using this endpoint.
     @Body() required LinkTypeUpdate? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Used to update a single link type. All fields that are not submitted will be cleared (set to NULL). The model will tell you which fields are mandatory. You cannot update some of the system provided link types, indicated by the editable=false flag when you list it.
+      description:
+          '''Used to update a single link type. All fields that are not submitted will be cleared (set to NULL). The model will tell you which fields are mandatory. You cannot update some of the system provided link types, indicated by the editable=false flag when you list it.
 ''',
       summary: 'Update existing link type.',
       operationId: 'updateLinkType',
@@ -5465,7 +5560,8 @@ The demo user is incapable of using this endpoint.
     @Path('id') required String? id,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Will permanently delete a link type. The links between transactions will be removed. The transactions themselves remain. You cannot delete some of the system provided link types, indicated by the editable=false flag when you list it.
+      description:
+          '''Will permanently delete a link type. The links between transactions will be removed. The transactions themselves remain. You cannot delete some of the system provided link types, indicated by the editable=false flag when you list it.
 ''',
       summary: 'Permanently delete link type.',
       operationId: 'deleteLinkType',
@@ -5543,7 +5639,8 @@ The demo user is incapable of using this endpoint.
     @Body() required TransactionLinkStore? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Store a new link between two transactions. For this end point you need the journal_id from a transaction.',
+      description:
+          'Store a new link between two transactions. For this end point you need the journal_id from a transaction.',
       summary: 'Create a new link between transactions',
       operationId: 'storeTransactionLink',
       consumes: [],
@@ -5700,7 +5797,8 @@ The demo user is incapable of using this endpoint.
     @Path('id') required String? id,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''This endpoint returns a list of all the piggy banks connected to the object group.
+      description:
+          '''This endpoint returns a list of all the piggy banks connected to the object group.
 ''',
       summary: 'List all piggy banks related to the object group.',
       operationId: 'listPiggyBankByObjectGroup',
@@ -6068,7 +6166,8 @@ The demo user is incapable of using this endpoint.
     @Body() required PiggyBankStore? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Creates a new piggy bank. The data required can be submitted as a JSON body or as a list of parameters.',
+      description:
+          'Creates a new piggy bank. The data required can be submitted as a JSON body or as a list of parameters.',
       summary: 'Store a new piggy bank',
       operationId: 'storePiggyBank',
       consumes: [],
@@ -6237,7 +6336,8 @@ The demo user is incapable of using this endpoint.
     @Query('type') String? type,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'List all transactions created by a recurring transaction, optionally limited to the date ranges specified.',
+      description:
+          'List all transactions created by a recurring transaction, optionally limited to the date ranges specified.',
       summary: 'List all transactions created by a recurring transaction.',
       operationId: 'listTransactionByRecurrence',
       consumes: [],
@@ -6313,7 +6413,8 @@ The demo user is incapable of using this endpoint.
     @Body() required RecurrenceStore? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Creates a new recurring transaction. The data required can be submitted as a JSON body or as a list of parameters.',
+      description:
+          'Creates a new recurring transaction. The data required can be submitted as a JSON body or as a list of parameters.',
       summary: 'Store a new recurring transaction',
       operationId: 'storeRecurrence',
       consumes: [],
@@ -6419,7 +6520,8 @@ The demo user is incapable of using this endpoint.
     @Path('id') required String? id,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Delete a recurring transaction. Transactions created by the recurring transaction will not be deleted.',
+      description:
+          'Delete a recurring transaction. Transactions created by the recurring transaction will not be deleted.',
       summary: 'Delete a recurring transaction.',
       operationId: 'deleteRecurrence',
       consumes: [],
@@ -6462,11 +6564,13 @@ The demo user is incapable of using this endpoint.
     @Query('date') required String? date,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Trigger the creation of a transaction for a specific recurring transaction. All recurrences have a set of future occurrences. For those moments, you can trigger the creation of the transaction. That means the transaction will be created NOW, instead of on the indicated date. The transaction will be dated to _today_.
+      description:
+          '''Trigger the creation of a transaction for a specific recurring transaction. All recurrences have a set of future occurrences. For those moments, you can trigger the creation of the transaction. That means the transaction will be created NOW, instead of on the indicated date. The transaction will be dated to _today_.
 
 So, if you recurring transaction that occurs every Monday, you can trigger the creation of a transaction for Monday in two weeks, today. On that Monday two weeks from now, no transaction will be created. Instead, the transaction is created right now, and dated _today_.
 ''',
-      summary: 'Trigger the creation of a transaction for a specific recurring transaction',
+      summary:
+          'Trigger the creation of a transaction for a specific recurring transaction',
       operationId: 'triggerRecurrenceRecurrence',
       consumes: [],
       produces: [],
@@ -6583,8 +6687,10 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Test which transactions would be hit by the rule group. No changes will be made. Limit the result if you want to.',
-      summary: 'Test which transactions would be hit by the rule group. No changes will be made.',
+      description:
+          'Test which transactions would be hit by the rule group. No changes will be made. Limit the result if you want to.',
+      summary:
+          'Test which transactions would be hit by the rule group. No changes will be made.',
       operationId: 'testRuleGroup',
       consumes: [],
       produces: [],
@@ -6631,7 +6737,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Fire the rule group on your transactions. Changes will be made by the rules in the rule group. Limit the result if you want to.',
+      description:
+          'Fire the rule group on your transactions. Changes will be made by the rules in the rule group. Limit the result if you want to.',
       summary: 'Fire the rule group on your transactions.',
       operationId: 'fireRuleGroup',
       consumes: [],
@@ -6707,7 +6814,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Body() required RuleGroupStore? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Creates a new rule group. The data required can be submitted as a JSON body or as a list of parameters.',
+      description:
+          'Creates a new rule group. The data required can be submitted as a JSON body or as a list of parameters.',
       summary: 'Store a new rule group.',
       operationId: 'storeRuleGroup',
       consumes: [],
@@ -6742,7 +6850,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Path('id') required String? id,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Get a single rule group. This does not include the rules. For that, see below.',
+      description:
+          'Get a single rule group. This does not include the rules. For that, see below.',
       summary: 'Get a single rule group.',
       operationId: 'getRuleGroup',
       consumes: [],
@@ -6866,8 +6975,10 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Test which transactions would be hit by the rule. No changes will be made. Limit the result if you want to.',
-      summary: 'Test which transactions would be hit by the rule. No changes will be made.',
+      description:
+          'Test which transactions would be hit by the rule. No changes will be made. Limit the result if you want to.',
+      summary:
+          'Test which transactions would be hit by the rule. No changes will be made.',
       operationId: 'testRule',
       consumes: [],
       produces: [],
@@ -6914,7 +7025,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Query('accounts[]') List<int>? accounts,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Fire the rule group on your transactions. Changes will be made by the rules in the group. Limit the result if you want to.',
+      description:
+          'Fire the rule group on your transactions. Changes will be made by the rules in the group. Limit the result if you want to.',
       summary: 'Fire the rule on your transactions.',
       operationId: 'fireRule',
       consumes: [],
@@ -6984,7 +7096,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Body() required RuleStore? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Creates a new rule. The data required can be submitted as a JSON body or as a list of parameters.',
+      description:
+          'Creates a new rule. The data required can be submitted as a JSON body or as a list of parameters.',
       summary: 'Store a new rule',
       operationId: 'storeRule',
       consumes: [],
@@ -7257,7 +7370,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Body() required TagModelStore? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Creates a new tag. The data required can be submitted as a JSON body or as a list of parameters.',
+      description:
+          'Creates a new tag. The data required can be submitted as a JSON body or as a list of parameters.',
       summary: 'Store a new tag',
       operationId: 'storeTag',
       consumes: [],
@@ -7809,7 +7923,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Body() required CurrencyStore? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Creates a new currency. The data required can be submitted as a JSON body or as a list of parameters.',
+      description:
+          'Creates a new currency. The data required can be submitted as a JSON body or as a list of parameters.',
       summary: 'Store a new currency',
       operationId: 'storeCurrency',
       consumes: [],
@@ -7923,7 +8038,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Path('code') required String? code,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Make this currency the primary currency for the current financial administration. If the currency is not enabled, it will be enabled as well.',
+      description:
+          'Make this currency the primary currency for the current financial administration. If the currency is not enabled, it will be enabled as well.',
       summary: 'Make currency primary currency.',
       operationId: 'primaryCurrency',
       consumes: [],
@@ -8064,7 +8180,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Header('X-Trace-Id') String? xTraceId,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Get the primary currency of the current administration. This replaces what was called "the user\'s default currency" although they are essentially the same.',
+      description:
+          'Get the primary currency of the current administration. This replaces what was called "the user\'s default currency" although they are essentially the same.',
       summary: 'Get the primary currency of the current administration.',
       operationId: 'getPrimaryCurrency',
       consumes: [],
@@ -8114,8 +8231,10 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Path('id') required String? id,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Lists all the transaction links for an individual journal (a split). Don\'t use the group ID, you need the actual underlying journal (the split).',
-      summary: 'Lists all the transaction links for an individual journal (individual split).',
+      description:
+          'Lists all the transaction links for an individual journal (a split). Don\'t use the group ID, you need the actual underlying journal (the split).',
+      summary:
+          'Lists all the transaction links for an individual journal (individual split).',
       operationId: 'listLinksByJournal',
       consumes: [],
       produces: [],
@@ -8150,7 +8269,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: 'Get a single transaction by underlying journal (split).',
-      summary: 'Get a single transaction, based on one of the underlying transaction journals (transaction splits).',
+      summary:
+          'Get a single transaction, based on one of the underlying transaction journals (transaction splits).',
       operationId: 'getTransactionByJournal',
       consumes: [],
       produces: [],
@@ -8374,7 +8494,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Body() required TransactionStore? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Creates a new transaction. The data required can be submitted as a JSON body or as a list of parameters.',
+      description:
+          'Creates a new transaction. The data required can be submitted as a JSON body or as a list of parameters.',
       summary: 'Store a new transaction',
       operationId: 'storeTransaction',
       consumes: [],
@@ -8451,7 +8572,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
       description: 'Update an existing transaction.',
-      summary: 'Update existing transaction. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/',
+      summary:
+          'Update existing transaction. For more information, see https://docs.firefly-iii.org/references/firefly-iii/api/specials/',
       operationId: 'updateTransaction',
       consumes: [],
       produces: [],
@@ -8525,7 +8647,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Query('page') int? page,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'List all the user groups available to this user. These are essentially the \'financial administrations\' that Firefly III supports.',
+      description:
+          'List all the user groups available to this user. These are essentially the \'financial administrations\' that Firefly III supports.',
       summary: '''List all the user groups available to this user.
 ''',
       operationId: 'listUserGroups',
@@ -8603,7 +8726,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Body() required UserGroupUpdate? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Used to update a single user group. The available fields are still limited.
+      description:
+          '''Used to update a single user group. The available fields are still limited.
 ''',
       summary: 'Update an existing user group.',
       operationId: 'updateUserGroup',
@@ -8758,7 +8882,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Query('currency_code') String? currencyCode,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Returns basic sums of the users data, like the net worth, spent and earned amounts. It is multi-currency, and is used in Firefly III to populate the dashboard.
+      description:
+          '''Returns basic sums of the users data, like the net worth, spent and earned amounts. It is multi-currency, and is used in Firefly III to populate the dashboard.
 ''',
       summary: 'Returns basic sums of the users data.',
       operationId: 'getBasicSummary',
@@ -8785,7 +8910,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Header('X-Trace-Id') String? xTraceId,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Returns general system information and versions of the (supporting) software.
+      description:
+          '''Returns general system information and versions of the (supporting) software.
 ''',
       summary: 'System information end point.',
       operationId: 'getAbout',
@@ -8869,7 +8995,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Header('X-Trace-Id') String? xTraceId,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Returns all editable and not-editable configuration values for this Firefly III installation',
+      description:
+          'Returns all editable and not-editable configuration values for this Firefly III installation',
       summary: 'Get Firefly III system configuration values.',
       operationId: 'getConfiguration',
       consumes: [],
@@ -8907,7 +9034,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Path('name') required String? name,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Returns one configuration variable for this Firefly III installation',
+      description:
+          'Returns one configuration variable for this Firefly III installation',
       summary: 'Get a single Firefly III system configuration value',
       operationId: 'getSingleConfiguration',
       consumes: [],
@@ -8948,7 +9076,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Body() required ConfigurationUpdate? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Set a single configuration value. Not all configuration values can be updated so the list of accepted configuration variables is small.',
+      description:
+          'Set a single configuration value. Not all configuration values can be updated so the list of accepted configuration variables is small.',
       summary: 'Update configuration value',
       operationId: 'setConfiguration',
       consumes: [],
@@ -8993,7 +9122,8 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
     @Query('force') bool? force,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Firefly III has one endpoint for its various cron related tasks. Send a GET to this endpoint
+      description:
+          '''Firefly III has one endpoint for its various cron related tasks. Send a GET to this endpoint
 to run the cron. The cron requires the CLI token to be present. The cron job will fire for all
 users.
 ''',
@@ -9066,7 +9196,8 @@ users.
     @Body() required User? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Creates a new user. The data required can be submitted as a JSON body or as a list of parameters. The user will be given a random password, which they can reset using the "forgot password" function.
+      description:
+          '''Creates a new user. The data required can be submitted as a JSON body or as a list of parameters. The user will be given a random password, which they can reset using the "forgot password" function.
 ''',
       summary: 'Store a new user',
       operationId: 'storeUser',
@@ -9163,7 +9294,8 @@ users.
     @Path('id') required String? id,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Delete a user. You cannot delete the user you\'re authenticated with. This cannot be undone. Be careful.',
+      description:
+          'Delete a user. You cannot delete the user you\'re authenticated with. This cannot be undone. Be careful.',
       summary: 'Delete a user.',
       operationId: 'deleteUser',
       consumes: [],
@@ -9239,7 +9371,8 @@ users.
     @Body() required Preference? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'This endpoint creates a new preference. The name and data are free-format, and entirely up to you. If the preference is not used in Firefly III itself it may not be configurable through the user interface, but you can use this endpoint to persist custom data for your own app.',
+      description:
+          'This endpoint creates a new preference. The name and data are free-format, and entirely up to you. If the preference is not used in Firefly III itself it may not be configurable through the user interface, but you can use this endpoint to persist custom data for your own app.',
       summary: 'Store a new preference for this user.',
       operationId: 'storePreference',
       consumes: [],
@@ -9350,7 +9483,8 @@ users.
     @Path('id') required String? id,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'When a webhook is triggered the actual message that will be send is stored in a "message". You can view and analyse these messages.',
+      description:
+          'When a webhook is triggered the actual message that will be send is stored in a "message". You can view and analyse these messages.',
       summary: 'Get all the messages of a single webhook.',
       operationId: 'getWebhookMessages',
       consumes: [],
@@ -9395,7 +9529,8 @@ users.
     @Path('messageId') required int? messageId,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'When a webhook is triggered it will store the actual content of the webhook in a webhook message. You can view and analyse a single one using this endpoint.',
+      description:
+          'When a webhook is triggered it will store the actual content of the webhook in a webhook message. You can view and analyse a single one using this endpoint.',
       summary: 'Get a single message from a webhook.',
       operationId: 'getSingleWebhookMessage',
       consumes: [],
@@ -9433,7 +9568,8 @@ users.
     @Path('messageId') required int? messageId,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Delete a webhook message. Any time a webhook is triggered the message is stored before it\'s sent. You can delete them before or after sending.',
+      description:
+          'Delete a webhook message. Any time a webhook is triggered the message is stored before it\'s sent. You can delete them before or after sending.',
       summary: 'Delete a webhook message.',
       operationId: 'deleteWebhookMessage',
       consumes: [],
@@ -9488,7 +9624,8 @@ users.
     @Path('messageId') required int? messageId,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'When a webhook message fails to send it will store the failure in an "attempt". You can view and analyse these. Webhook messages that receive too many attempts (failures) will not be sent again. You must first clear out old attempts before the message can go out again.',
+      description:
+          'When a webhook message fails to send it will store the failure in an "attempt". You can view and analyse these. Webhook messages that receive too many attempts (failures) will not be sent again. You must first clear out old attempts before the message can go out again.',
       summary: 'Get all the failed attempts of a single webhook message.',
       operationId: 'getWebhookMessageAttempts',
       consumes: [],
@@ -9538,7 +9675,8 @@ users.
     @Path('attemptId') required int? attemptId,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'When a webhook message fails to send it will store the failure in an "attempt". You can view and analyse these. Webhooks messages that receive too many attempts (failures) will not be fired. You must first clear out old attempts and try again. This endpoint shows you the details of a single attempt. The ID of the attempt must match the corresponding webhook and webhook message.',
+      description:
+          'When a webhook message fails to send it will store the failure in an "attempt". You can view and analyse these. Webhooks messages that receive too many attempts (failures) will not be fired. You must first clear out old attempts and try again. This endpoint shows you the details of a single attempt. The ID of the attempt must match the corresponding webhook and webhook message.',
       summary: 'Get a single failed attempt from a single webhook message.',
       operationId: 'getSingleWebhookMessageAttempt',
       consumes: [],
@@ -9583,7 +9721,8 @@ users.
     @Path('attemptId') required int? attemptId,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Delete a webhook message attempt. If you delete all attempts for a webhook message, Firefly III will (once again) assume all is well with the webhook message and will try to send it again.',
+      description:
+          'Delete a webhook message attempt. If you delete all attempts for a webhook message, Firefly III will (once again) assume all is well with the webhook message and will try to send it again.',
       summary: 'Delete a webhook attempt.',
       operationId: 'deleteWebhookMessageAttempt',
       consumes: [],
@@ -9613,7 +9752,8 @@ users.
     @Path('id') required String? id,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'This endpoint will submit any open messages for this webhook. This is an asynchronous operation, so you can\'t see the result. Refresh the webhook message and/or the webhook message attempts to see the results. This may take some time if the webhook receiver is slow.',
+      description:
+          'This endpoint will submit any open messages for this webhook. This is an asynchronous operation, so you can\'t see the result. Refresh the webhook message and/or the webhook message attempts to see the results. This may take some time if the webhook receiver is slow.',
       summary: 'Submit messages for a webhook.',
       operationId: 'submitWebhook',
       consumes: [],
@@ -9654,7 +9794,8 @@ users.
     @Path('transactionId') required String? transactionId,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'This endpoint will execute this webhook for a given transaction ID. This is an asynchronous operation, so you can\'t see the result. Refresh the webhook message and/or the webhook message attempts to see the results. This may take some time if the webhook receiver is slow.',
+      description:
+          'This endpoint will execute this webhook for a given transaction ID. This is an asynchronous operation, so you can\'t see the result. Refresh the webhook message and/or the webhook message attempts to see the results. This may take some time if the webhook receiver is slow.',
       summary: 'Trigger webhook for a given transaction.',
       operationId: 'triggerTransactionWebhook',
       consumes: [],
@@ -9730,7 +9871,8 @@ users.
     @Body() required WebhookStore? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: '''Creates a new webhook. The data required can be submitted as a JSON body or as a list of parameters. The webhook will be given a random secret.
+      description:
+          '''Creates a new webhook. The data required can be submitted as a JSON body or as a list of parameters. The webhook will be given a random secret.
 ''',
       summary: 'Store a new webhook',
       operationId: 'storeWebhook',
@@ -9803,7 +9945,8 @@ users.
     @Body() required WebhookUpdate? body,
     @chopper.Tag()
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
-      description: 'Update an existing webhook\'s information. If you wish to reset the secret, submit any value as the "secret". Firefly III will take this as a hint and reset the secret of the webhook.',
+      description:
+          'Update an existing webhook\'s information. If you wish to reset the secret, submit any value as the "secret". Firefly III will take this as a hint and reset the secret of the webhook.',
       summary: 'Update existing webhook.',
       operationId: 'updateWebhook',
       consumes: [],
@@ -9906,9 +10049,9 @@ class $JsonSerializableConverter extends chopper.JsonConverter {
 
     if (ResultType == DateTime) {
       return response.copyWith(
-        body: DateTime.parse(
-          (response.body as String).replaceAll('"', ''),
-        ) as ResultType,
+        body:
+            DateTime.parse((response.body as String).replaceAll('"', ''))
+                as ResultType,
       );
     }
 

@@ -715,7 +715,18 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
     // Account balance
     late double balance;
+    CurrencyRead accountCurrency = currency;
     if (_filters.account != null) {
+      accountCurrency = CurrencyRead(
+        id: _filters.account!.attributes.currencyId ?? "0",
+        type: "currencies",
+        attributes: CurrencyProperties(
+          code: _filters.account!.attributes.currencyCode ?? "",
+          name: _filters.account!.attributes.currencyName ?? "",
+          symbol: _filters.account!.attributes.currencySymbol ?? "",
+          decimalPlaces: _filters.account!.attributes.currencyDecimalPlaces,
+        ),
+      );
       if (item.attributes.transactions.first.sourceBalanceAfter != null) {
         balance =
             double.tryParse(
@@ -927,7 +938,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                                 ),
                               if (_filters.account != null)
                                 TextSpan(
-                                  text: currency.fmt(balance),
+                                  text: accountCurrency.fmt(balance),
                                   style: Theme.of(context).textTheme.bodyMedium!
                                       .copyWith(
                                         fontFeatures: const <FontFeature>[

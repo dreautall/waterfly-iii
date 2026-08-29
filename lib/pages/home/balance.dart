@@ -130,7 +130,7 @@ class _HomeBalanceState extends State<HomeBalance>
                                       .titleMedium!
                                       .copyWith(
                                         color: (balance < 0)
-                                            ? Colors.red
+                                            ? const Color(0xFFFF4F4B)
                                             : Colors.green,
                                         fontWeight: .bold,
                                         fontFeatures: const <FontFeature>[

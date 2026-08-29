@@ -268,7 +268,7 @@ class _BillsPageState extends State<BillsPage>
               TextSpan(
                 text: _getAverageBillAmount(bill),
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: Colors.red,
+                  color: const Color(0xFFFF4F4B),
                   fontFeatures: const <FontFeature>[.tabularFigures()],
                 ),
               ),

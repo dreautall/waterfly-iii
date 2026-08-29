@@ -348,7 +348,9 @@ class SummaryTable extends StatelessWidget {
                     child: Text(
                       currency.fmt(balance, locale: S.of(context).localeName),
                       style: TextStyle(
-                        color: (balance < 0) ? Colors.red : Colors.green,
+                        color: (balance < 0)
+                            ? const Color(0xFFFF4F4B)
+                            : Colors.green,
                         fontWeight: .bold,
                         fontFeatures: const <FontFeature>[.tabularFigures()],
                       ),

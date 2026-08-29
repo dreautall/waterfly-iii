@@ -642,7 +642,9 @@ class _HomeMainState extends State<HomeMain>
                       Text(
                         defaultCurrency.fmt(sevenDayTotal / 7),
                         style: TextStyle(
-                          color: sevenDayTotal < 0 ? Colors.red : Colors.green,
+                          color: sevenDayTotal < 0
+                              ? const Color(0xFFFF4F4B)
+                              : Colors.green,
                           fontWeight: .bold,
                           fontFeatures: const <FontFeature>[.tabularFigures()],
                         ),
@@ -736,7 +738,7 @@ class _HomeMainState extends State<HomeMain>
                               currency.fmt(balance),
                               style: TextStyle(
                                 color: (balance < 0)
-                                    ? Colors.red
+                                    ? const Color(0xFFFF4F4B)
                                     : Colors.green,
                                 fontWeight: .bold,
                                 fontFeatures: const <FontFeature>[
@@ -819,7 +821,7 @@ class _HomeMainState extends State<HomeMain>
                           child: Text(
                             "⬤",
                             style: TextStyle(
-                              color: Colors.red,
+                              color: Color(0xFFFF4F4B),
                               textBaseline: .ideographic,
                               height: 1.3,
                             ),
@@ -861,7 +863,9 @@ class _HomeMainState extends State<HomeMain>
                             child: Text(
                               defaultCurrency.fmt(sum),
                               style: TextStyle(
-                                color: (sum < 0) ? Colors.red : Colors.green,
+                                color: (sum < 0)
+                                    ? const Color(0xFFFF4F4B)
+                                    : Colors.green,
                                 fontWeight: .bold,
                                 fontFeatures: const <FontFeature>[
                                   .tabularFigures(),
@@ -960,7 +964,7 @@ class _HomeMainState extends State<HomeMain>
                           child: Text(
                             "⬤",
                             style: TextStyle(
-                              color: Colors.red,
+                              color: Color(0xFFFF4F4B),
                               textBaseline: .ideographic,
                               height: 1.3,
                             ),
@@ -1012,7 +1016,7 @@ class _HomeMainState extends State<HomeMain>
                                   defaultCurrency.fmt(sum),
                                   style: TextStyle(
                                     color: (sum < 0)
-                                        ? Colors.red
+                                        ? const Color(0xFFFF4F4B)
                                         : Colors.green,
                                     fontWeight: .bold,
                                     fontFeatures: const <FontFeature>[
@@ -1228,7 +1232,7 @@ class BudgetList extends StatelessWidget {
               Color? bgColor;
               double value = spent / available;
               if (spent > available) {
-                lineColor = Colors.red;
+                lineColor = const Color(0xFFFF4F4B);
                 bgColor = Colors.green;
                 value = value % 1;
               }
@@ -1327,7 +1331,7 @@ class BudgetList extends StatelessWidget {
                             width: 3,
                             child: Container(
                               color: (spent / available > passedDays)
-                                  ? Colors.redAccent
+                                  ? const Color(0xFFFF4F4B)
                                   : Colors.blueAccent,
                             ),
                           ),
@@ -1389,7 +1393,9 @@ class BudgetList extends StatelessWidget {
                         Text(
                           defaultCurrency.fmt(totalLeft),
                           style: TextStyle(
-                            color: (totalLeft < 0) ? Colors.red : Colors.green,
+                            color: (totalLeft < 0)
+                                ? const Color(0xFFFF4F4B)
+                                : Colors.green,
                             fontWeight: .bold,
                             fontFeatures: const <FontFeature>[
                               .tabularFigures(),
@@ -1513,7 +1519,7 @@ class BillList extends StatelessWidget {
                     Text(
                       currency.fmt(bill.attributes.avgAmount()),
                       style: const TextStyle(
-                        color: Colors.red,
+                        color: Color(0xFFFF4F4B),
                         fontWeight: .bold,
                         fontFeatures: <FontFeature>[.tabularFigures()],
                       ),

@@ -303,7 +303,7 @@ class SumLine extends StatelessWidget {
             textAlign: .end,
             style: TextStyle(
               color: totalSpent < 0
-                  ? Colors.red
+                  ? const Color(0xFFFF4F4B)
                   : totalSpent > 0
                   ? Colors.green
                   : Colors.grey,
@@ -318,7 +318,7 @@ class SumLine extends StatelessWidget {
             textAlign: .end,
             style: TextStyle(
               color: totalEarned < 0
-                  ? Colors.red
+                  ? const Color(0xFFFF4F4B)
                   : totalEarned > 0
                   ? Colors.green
                   : Colors.grey,
@@ -333,7 +333,7 @@ class SumLine extends StatelessWidget {
             textAlign: .end,
             style: TextStyle(
               color: (totalSpent + totalEarned) < 0
-                  ? Colors.red
+                  ? const Color(0xFFFF4F4B)
                   : (totalSpent + totalEarned) > 0
                   ? Colors.green
                   : Colors.grey,
@@ -516,7 +516,7 @@ class CategoryLine extends StatelessWidget {
                               ),
                               side: BorderSide(
                                 color: totalBalance < 0
-                                    ? Colors.red
+                                    ? const Color(0xFFFF4F4B)
                                     : totalBalance > 0
                                     ? Colors.green
                                     : Colors.grey,
@@ -551,7 +551,7 @@ class CategoryLine extends StatelessWidget {
                               textAlign: .end,
                               style: TextStyle(
                                 color: cs.sumSpent < 0
-                                    ? Colors.red
+                                    ? const Color(0xFFFF4F4B)
                                     : cs.sumSpent > 0
                                     ? Colors.green
                                     : Colors.grey,
@@ -568,7 +568,7 @@ class CategoryLine extends StatelessWidget {
                               textAlign: .end,
                               style: TextStyle(
                                 color: cs.sumEarned < 0
-                                    ? Colors.red
+                                    ? const Color(0xFFFF4F4B)
                                     : cs.sumEarned > 0
                                     ? Colors.green
                                     : Colors.grey,
@@ -585,7 +585,7 @@ class CategoryLine extends StatelessWidget {
                               textAlign: .end,
                               style: TextStyle(
                                 color: totalBalance < 0
-                                    ? Colors.red
+                                    ? const Color(0xFFFF4F4B)
                                     : totalBalance > 0
                                     ? Colors.green
                                     : Colors.grey,

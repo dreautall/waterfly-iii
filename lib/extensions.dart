@@ -55,7 +55,7 @@ extension TransactionType on TransactionTypeProperty {
       case .deposit:
         return Colors.green;
       case .withdrawal:
-        return Colors.red;
+        return const Color(0xFFEE5A5A);
       case .transfer:
         return Colors.blue;
       // reconciliation

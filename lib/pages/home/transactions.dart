@@ -487,7 +487,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             defaultCurrency.fmt(_txSum.withdrawals),
                             style: Theme.of(context).textTheme.bodyMedium!
                                 .copyWith(
-                                  color: Colors.red,
+                                  color: const Color(0xFFFF4F4B),
                                   fontWeight: .bold,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
@@ -530,7 +530,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             style: Theme.of(context).textTheme.bodyLarge!
                                 .copyWith(
                                   color: _txSum.total < 0
-                                      ? Colors.red
+                                      ? const Color(0xFFFF4F4B)
                                       : Colors.green,
                                   fontWeight: .bold,
                                   fontFeatures: const <FontFeature>[
@@ -887,7 +887,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                                     : (transactions.first.sourceType ==
                                           .reconciliationAccount)
                                     ? Colors.green
-                                    : Colors.red,
+                                    : const Color(0xFFFF4F4B),
                                 fontFeatures: const <FontFeature>[
                                   .tabularFigures(),
                                 ],

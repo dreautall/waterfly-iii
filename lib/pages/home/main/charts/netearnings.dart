@@ -265,7 +265,7 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                             series: <CartesianSeries<WFChartData, String>>[
                               WaterfallSeries<WFChartData, String>(
                                 dataSource: chartData,
-                                negativePointsColor: Colors.red,
+                                negativePointsColor: const Color(0xFFFF4F4B),
                                 intermediateSumColor: Colors.orange,
                                 totalSumColor: Colors.black,
                                 color: Colors.green,

@@ -238,7 +238,7 @@ class _BillDetailsState extends State<BillDetails> {
           text: TextSpan(
             text: _getTransactionAmount(transaction),
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: Colors.red,
+              color: const Color(0xFFFF4F4B),
               fontFeatures: const <FontFeature>[.tabularFigures()],
             ),
             children: <InlineSpan>[

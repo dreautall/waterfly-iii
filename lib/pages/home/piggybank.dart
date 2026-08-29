@@ -329,7 +329,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                           style: Theme.of(context).textTheme.titleMedium!
                               .copyWith(
                                 color: (currentAmount < 0)
-                                    ? Colors.red
+                                    ? const Color(0xFFFF4F4B)
                                     : Colors.green,
                                 fontWeight: .bold,
                                 fontFeatures: const <FontFeature>[
@@ -479,7 +479,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                   textAlign: .end,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: (statusData.availableBalance < 0)
-                        ? Colors.red
+                        ? const Color(0xFFFF4F4B)
                         : Colors.green,
                     fontWeight: .bold,
                     fontFeatures: const <FontFeature>[.tabularFigures()],

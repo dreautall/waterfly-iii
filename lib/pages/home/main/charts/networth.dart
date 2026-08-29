@@ -56,7 +56,7 @@ class NetWorthChart extends StatelessWidget {
         xValueMapper: (LabelAmountChart data, _) => data.label,
         yValueMapper: (LabelAmountChart data, _) => data.amount,
         animationDuration: animDurationEmphasized.inMilliseconds.toDouble() * 2,
-        color: Colors.red,
+        color: const Color(0xFFFF4F4B),
         opacity: 0.4,
       ),
     );
@@ -91,11 +91,11 @@ class NetWorthChart extends StatelessWidget {
         xValueMapper: (LabelAmountChart data, _) => data.label,
         yValueMapper: (LabelAmountChart data, _) => data.amount,
         animationDuration: animDurationEmphasized.inMilliseconds.toDouble() * 2,
-        color: Colors.red,
+        color: Colors.redAccent,
         markerSettings: const MarkerSettings(
           isVisible: true,
           borderWidth: 0,
-          color: Colors.red,
+          color: Colors.redAccent,
         ),
       ),
     );

@@ -300,7 +300,10 @@ class _WaterflyAppState extends State<WaterflyApp> {
                 useMaterial3: true,
               ),
               themeMode: settings.theme,
-              localizationsDelegates: S.localizationsDelegates,
+              localizationsDelegates: <LocalizationsDelegate<dynamic>>[
+                S.delegate,
+                ...GlobalMaterialLocalizations.delegates,
+              ],
               supportedLocales: S.supportedLocales,
               locale: settings.locale,
               navigatorKey: navigatorKey,

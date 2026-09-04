@@ -53,6 +53,7 @@ class BudgetList extends StatelessWidget {
               final int tsEnd = tzHandler
                   .sTime(budget.attributes.end!)
                   .millisecondsSinceEpoch;
+              final bool alreadyPassed = tsNow > tsEnd;
               late double passedDays;
               if (tsEnd == tsStart) {
                 passedDays = 2; // Hides the bar
@@ -100,7 +101,9 @@ class BudgetList extends StatelessWidget {
                     children: <InlineSpan>[
                       TextSpan(
                         text: budgetInfo.name,
-                        style: Theme.of(context).textTheme.titleSmall,
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          color: alreadyPassed ? Colors.grey : null,
+                        ),
                       ),
                       TextSpan(
                         text: budget.attributes.period?.isNotEmpty ?? false
@@ -125,7 +128,9 @@ class BudgetList extends StatelessWidget {
                                         .sTime(budget.attributes.end!)
                                         .toLocal(),
                                   ),
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: alreadyPassed ? Colors.grey : null,
+                        ),
                       ),
                     ],
                   ),

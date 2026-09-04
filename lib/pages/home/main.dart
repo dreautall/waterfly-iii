@@ -25,6 +25,7 @@ import 'package:waterflyiii/pages/home/main/charts/summary.dart';
 import 'package:waterflyiii/pages/home/main/dashboard.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
@@ -644,9 +645,7 @@ class _HomeMainState extends State<HomeMain>
                       Text(
                         defaultCurrency.fmt(sevenDayTotal / 7),
                         style: TextStyle(
-                          color: sevenDayTotal < 0
-                              ? const Color(0xFFFF4F4B)
-                              : Colors.green,
+                          color: context.balanceColor(sevenDayTotal),
                           fontWeight: .bold,
                           fontFeatures: const <FontFeature>[.tabularFigures()],
                         ),
@@ -739,9 +738,7 @@ class _HomeMainState extends State<HomeMain>
                             child: Text(
                               currency.fmt(balance),
                               style: TextStyle(
-                                color: (balance < 0)
-                                    ? const Color(0xFFFF4F4B)
-                                    : Colors.green,
+                                color: context.balanceColor(balance),
                                 fontWeight: .bold,
                                 fontFeatures: const <FontFeature>[
                                   .tabularFigures(),
@@ -791,12 +788,14 @@ class _HomeMainState extends State<HomeMain>
                     ),
                     TableRow(
                       children: <Widget>[
-                        const Align(
+                        Align(
                           alignment: .center,
                           child: Text(
                             "⬤",
                             style: TextStyle(
-                              color: Colors.green,
+                              color: Theme.of(
+                                context,
+                              ).extension<TransactionColors>()!.positiveColor,
                               textBaseline: .ideographic,
                               height: 1.3,
                             ),
@@ -818,12 +817,14 @@ class _HomeMainState extends State<HomeMain>
                     ),
                     TableRow(
                       children: <Widget>[
-                        const Align(
+                        Align(
                           alignment: .center,
                           child: Text(
                             "⬤",
                             style: TextStyle(
-                              color: Color(0xFFFF4F4B),
+                              color: Theme.of(
+                                context,
+                              ).extension<TransactionColors>()!.negativeColor,
                               textBaseline: .ideographic,
                               height: 1.3,
                             ),
@@ -865,9 +866,7 @@ class _HomeMainState extends State<HomeMain>
                             child: Text(
                               defaultCurrency.fmt(sum),
                               style: TextStyle(
-                                color: (sum < 0)
-                                    ? const Color(0xFFFF4F4B)
-                                    : Colors.green,
+                                color: context.balanceColor(sum),
                                 fontWeight: .bold,
                                 fontFeatures: const <FontFeature>[
                                   .tabularFigures(),
@@ -926,12 +925,14 @@ class _HomeMainState extends State<HomeMain>
                     ),
                     TableRow(
                       children: <Widget>[
-                        const Align(
+                        Align(
                           alignment: .center,
                           child: Text(
                             "⬤",
                             style: TextStyle(
-                              color: Colors.green,
+                              color: Theme.of(
+                                context,
+                              ).extension<TransactionColors>()!.positiveColor,
                               textBaseline: .ideographic,
                               height: 1.3,
                             ),
@@ -961,12 +962,14 @@ class _HomeMainState extends State<HomeMain>
                     ),
                     TableRow(
                       children: <Widget>[
-                        const Align(
+                        Align(
                           alignment: .center,
                           child: Text(
                             "⬤",
                             style: TextStyle(
-                              color: Color(0xFFFF4F4B),
+                              color: Theme.of(
+                                context,
+                              ).extension<TransactionColors>()!.negativeColor,
                               textBaseline: .ideographic,
                               height: 1.3,
                             ),
@@ -1017,9 +1020,7 @@ class _HomeMainState extends State<HomeMain>
                                 child: Text(
                                   defaultCurrency.fmt(sum),
                                   style: TextStyle(
-                                    color: (sum < 0)
-                                        ? const Color(0xFFFF4F4B)
-                                        : Colors.green,
+                                    color: context.balanceColor(sum),
                                     fontWeight: .bold,
                                     fontFeatures: const <FontFeature>[
                                       .tabularFigures(),

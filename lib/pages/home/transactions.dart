@@ -477,7 +477,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             defaultCurrency.fmt(_txSum.deposits),
                             style: Theme.of(context).textTheme.bodyMedium!
                                 .copyWith(
-                                  color: Colors.green,
+                                  color: Theme.of(context)
+                                      .extension<TransactionColors>()!
+                                      .positiveColor,
                                   fontWeight: .bold,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
@@ -488,7 +490,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             defaultCurrency.fmt(_txSum.withdrawals),
                             style: Theme.of(context).textTheme.bodyMedium!
                                 .copyWith(
-                                  color: const Color(0xFFFF4F4B),
+                                  color: Theme.of(context)
+                                      .extension<TransactionColors>()!
+                                      .negativeColor,
                                   fontWeight: .bold,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
@@ -499,7 +503,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             defaultCurrency.fmt(_txSum.transfers),
                             style: Theme.of(context).textTheme.bodyMedium!
                                 .copyWith(
-                                  color: Colors.blue,
+                                  color: Theme.of(context)
+                                      .extension<TransactionColors>()!
+                                      .transferColor,
                                   fontWeight: .bold,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
@@ -530,9 +536,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             defaultCurrency.fmt(_txSum.total),
                             style: Theme.of(context).textTheme.bodyLarge!
                                 .copyWith(
-                                  color: _txSum.total < 0
-                                      ? const Color(0xFFFF4F4B)
-                                      : Colors.green,
+                                  color: context.balanceColor(_txSum.total),
                                   fontWeight: .bold,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
@@ -874,7 +878,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             text: foreignText,
                             style: Theme.of(context).textTheme.bodySmall!
                                 .copyWith(
-                                  color: Colors.blue,
+                                  color: Theme.of(context)
+                                      .extension<TransactionColors>()!
+                                      .transferColor,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
                                   ],
@@ -891,8 +897,12 @@ class _HomeTransactionsState extends State<HomeTransactions>
                                       )
                                     : (transactions.first.sourceType ==
                                           .reconciliationAccount)
-                                    ? Colors.green
-                                    : const Color(0xFFFF4F4B),
+                                    ? Theme.of(context)
+                                          .extension<TransactionColors>()!
+                                          .positiveColor
+                                    : Theme.of(context)
+                                          .extension<TransactionColors>()!
+                                          .negativeColor,
                                 fontFeatures: const <FontFeature>[
                                   .tabularFigures(),
                                 ],

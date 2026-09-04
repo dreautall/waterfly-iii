@@ -57,4 +57,18 @@ extension ColorHelper on BuildContext {
         return theme.neutralColor!;
     }
   }
+
+  Color balanceColor(num amount) {
+    final TransactionColors theme = Theme.of(
+      this,
+    ).extension<TransactionColors>()!;
+
+    if (amount > 0) {
+      return theme.positiveColor!;
+    } else if (amount < 0) {
+      return theme.negativeColor!;
+    } else {
+      return theme.neutralColor!;
+    }
+  }
 }

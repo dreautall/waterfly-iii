@@ -10,6 +10,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/widgets/fabs.dart';
 
 class HomeBalance extends StatefulWidget {
@@ -129,9 +130,7 @@ class _HomeBalanceState extends State<HomeBalance>
                                       .textTheme
                                       .titleMedium!
                                       .copyWith(
-                                        color: (balance < 0)
-                                            ? const Color(0xFFFF4F4B)
-                                            : Colors.green,
+                                        color: context.balanceColor(balance),
                                         fontWeight: .bold,
                                         fontFeatures: const <FontFeature>[
                                           .tabularFigures(),

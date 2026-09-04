@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waterflyiii/animations.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
 class NetWorthChart extends StatelessWidget {
@@ -46,7 +47,7 @@ class NetWorthChart extends StatelessWidget {
         xValueMapper: (LabelAmountChart data, _) => data.label,
         yValueMapper: (LabelAmountChart data, _) => data.amount,
         animationDuration: animDurationEmphasized.inMilliseconds.toDouble() * 2,
-        color: Colors.green,
+        color: Theme.of(context).extension<TransactionColors>()!.positiveColor,
         opacity: 0.4,
       ),
     );
@@ -56,7 +57,7 @@ class NetWorthChart extends StatelessWidget {
         xValueMapper: (LabelAmountChart data, _) => data.label,
         yValueMapper: (LabelAmountChart data, _) => data.amount,
         animationDuration: animDurationEmphasized.inMilliseconds.toDouble() * 2,
-        color: const Color(0xFFFF4F4B),
+        color: Theme.of(context).extension<TransactionColors>()!.negativeColor,
         opacity: 0.4,
       ),
     );
@@ -66,7 +67,7 @@ class NetWorthChart extends StatelessWidget {
         xValueMapper: (LabelAmountChart data, _) => data.label,
         yValueMapper: (LabelAmountChart data, _) => data.amount,
         animationDuration: animDurationEmphasized.inMilliseconds.toDouble() * 2,
-        color: Colors.blue,
+        color: Theme.of(context).extension<TransactionColors>()!.transferColor,
         opacity: 0.4,
       ),
     );
@@ -77,11 +78,13 @@ class NetWorthChart extends StatelessWidget {
         xValueMapper: (LabelAmountChart data, _) => data.label,
         yValueMapper: (LabelAmountChart data, _) => data.amount,
         animationDuration: animDurationEmphasized.inMilliseconds.toDouble() * 2,
-        color: Colors.green,
-        markerSettings: const MarkerSettings(
+        color: Theme.of(context).extension<TransactionColors>()!.positiveColor,
+        markerSettings: MarkerSettings(
           isVisible: true,
           borderWidth: 0,
-          color: Colors.green,
+          color: Theme.of(
+            context,
+          ).extension<TransactionColors>()!.positiveColor,
         ),
       ),
     );
@@ -91,11 +94,13 @@ class NetWorthChart extends StatelessWidget {
         xValueMapper: (LabelAmountChart data, _) => data.label,
         yValueMapper: (LabelAmountChart data, _) => data.amount,
         animationDuration: animDurationEmphasized.inMilliseconds.toDouble() * 2,
-        color: Colors.redAccent,
-        markerSettings: const MarkerSettings(
+        color: Theme.of(context).extension<TransactionColors>()!.negativeColor,
+        markerSettings: MarkerSettings(
           isVisible: true,
           borderWidth: 0,
-          color: Colors.redAccent,
+          color: Theme.of(
+            context,
+          ).extension<TransactionColors>()!.negativeColor,
         ),
       ),
     );
@@ -105,11 +110,13 @@ class NetWorthChart extends StatelessWidget {
         xValueMapper: (LabelAmountChart data, _) => data.label,
         yValueMapper: (LabelAmountChart data, _) => data.amount,
         animationDuration: animDurationEmphasized.inMilliseconds.toDouble() * 2,
-        color: Colors.blue,
-        markerSettings: const MarkerSettings(
+        color: Theme.of(context).extension<TransactionColors>()!.transferColor,
+        markerSettings: MarkerSettings(
           isVisible: true,
           borderWidth: 0,
-          color: Colors.blue,
+          color: Theme.of(
+            context,
+          ).extension<TransactionColors>()!.transferColor,
         ),
       ),
     );

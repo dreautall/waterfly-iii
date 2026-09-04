@@ -9,6 +9,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
 class SummaryChart extends StatelessWidget {
@@ -348,9 +349,7 @@ class SummaryTable extends StatelessWidget {
                     child: Text(
                       currency.fmt(balance, locale: S.of(context).localeName),
                       style: TextStyle(
-                        color: (balance < 0)
-                            ? const Color(0xFFFF4F4B)
-                            : Colors.green,
+                        color: context.balanceColor(balance),
                         fontWeight: .bold,
                         fontFeatures: const <FontFeature>[.tabularFigures()],
                       ),

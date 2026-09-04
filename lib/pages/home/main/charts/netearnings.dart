@@ -9,6 +9,7 @@ import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
 class NetEarningsChart extends StatelessWidget {
@@ -265,10 +266,14 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                             series: <CartesianSeries<WFChartData, String>>[
                               WaterfallSeries<WFChartData, String>(
                                 dataSource: chartData,
-                                negativePointsColor: const Color(0xFFFF4F4B),
+                                negativePointsColor: Theme.of(
+                                  context,
+                                ).extension<TransactionColors>()!.negativeColor,
                                 intermediateSumColor: Colors.orange,
                                 totalSumColor: Colors.black,
-                                color: Colors.green,
+                                color: Theme.of(
+                                  context,
+                                ).extension<TransactionColors>()!.positiveColor,
                                 xValueMapper: (WFChartData data, _) =>
                                     data.label,
                                 yValueMapper: (WFChartData data, _) =>

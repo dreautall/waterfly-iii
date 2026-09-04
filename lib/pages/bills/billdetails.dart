@@ -12,6 +12,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/bills/billchart.dart';
 import 'package:waterflyiii/pages/transaction.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
 
@@ -238,7 +239,9 @@ class _BillDetailsState extends State<BillDetails> {
           text: TextSpan(
             text: _getTransactionAmount(transaction),
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: const Color(0xFFFF4F4B),
+              color: Theme.of(
+                context,
+              ).extension<TransactionColors>()!.negativeColor,
               fontFeatures: const <FontFeature>[.tabularFigures()],
             ),
             children: <InlineSpan>[

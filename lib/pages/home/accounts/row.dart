@@ -12,6 +12,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/widgets/fabs.dart';
 
 Widget accountRowBuilder(
@@ -145,9 +146,7 @@ Widget accountRowBuilder(
             TextSpan(
               text: currency.fmt(currentAmount),
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: (currentAmount < 0)
-                    ? const Color(0xFFFF4F4B)
-                    : Colors.green,
+                color: context.balanceColor(currentAmount),
                 fontWeight: .bold,
                 fontFeatures: const <FontFeature>[.tabularFigures()],
               ),

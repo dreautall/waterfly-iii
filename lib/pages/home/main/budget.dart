@@ -4,6 +4,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 
 class BudgetList extends StatelessWidget {
@@ -83,12 +84,18 @@ class BudgetList extends StatelessWidget {
                   decimalPlaces: budget.attributes.currencyDecimalPlaces,
                 ),
               );
-              Color lineColor = Colors.green;
+              Color lineColor = Theme.of(
+                context,
+              ).extension<TransactionColors>()!.positiveColor!;
               Color? bgColor;
               double value = spent / available;
               if (spent > available) {
-                lineColor = const Color(0xFFFF4F4B);
-                bgColor = Colors.green;
+                lineColor = Theme.of(
+                  context,
+                ).extension<TransactionColors>()!.negativeColor!;
+                bgColor = Theme.of(
+                  context,
+                ).extension<TransactionColors>()!.positiveColor;
                 value = value % 1;
               }
 
@@ -102,7 +109,11 @@ class BudgetList extends StatelessWidget {
                       TextSpan(
                         text: budgetInfo.name,
                         style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          color: alreadyPassed ? Colors.grey : null,
+                          color: alreadyPassed
+                              ? Theme.of(
+                                  context,
+                                ).extension<TransactionColors>()!.neutralColor
+                              : null,
                         ),
                       ),
                       TextSpan(
@@ -129,7 +140,11 @@ class BudgetList extends StatelessWidget {
                                         .toLocal(),
                                   ),
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: alreadyPassed ? Colors.grey : null,
+                          color: alreadyPassed
+                              ? Theme.of(
+                                  context,
+                                ).extension<TransactionColors>()!.neutralColor
+                              : null,
                         ),
                       ),
                     ],
@@ -190,8 +205,12 @@ class BudgetList extends StatelessWidget {
                             width: 3,
                             child: Container(
                               color: (spent / available > passedDays)
-                                  ? const Color(0xFFFF4F4B)
-                                  : Colors.blueAccent,
+                                  ? Theme.of(context)
+                                        .extension<TransactionColors>()!
+                                        .negativeColor
+                                  : Theme.of(context)
+                                        .extension<TransactionColors>()!
+                                        .transferColor,
                             ),
                           ),
                         ],
@@ -252,9 +271,7 @@ class BudgetList extends StatelessWidget {
                         Text(
                           defaultCurrency.fmt(totalLeft),
                           style: TextStyle(
-                            color: (totalLeft < 0)
-                                ? const Color(0xFFFF4F4B)
-                                : Colors.green,
+                            color: context.balanceColor(totalLeft),
                             fontWeight: .bold,
                             fontFeatures: const <FontFeature>[
                               .tabularFigures(),

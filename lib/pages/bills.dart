@@ -12,6 +12,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/bills/billdetails.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/settings.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 
 class BillsPage extends StatefulWidget {
@@ -268,7 +269,9 @@ class _BillsPageState extends State<BillsPage>
               TextSpan(
                 text: _getAverageBillAmount(bill),
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: const Color(0xFFFF4F4B),
+                  color: Theme.of(
+                    context,
+                  ).extension<TransactionColors>()!.negativeColor,
                   fontFeatures: const <FontFeature>[.tabularFigures()],
                 ),
               ),

@@ -82,6 +82,7 @@ class _TransactionPageState extends State<TransactionPage>
     // opening an existing transaction, extract information
     if (widget.transaction != null) {
       _tx = .fromExisting(widget.transaction!, _tzHandler, clone: widget.clone);
+      _tx.updateAmount();
       // Card Animations
       for (int i = 0; i < _tx.splits.length; i++) {
         _cardsAnimationController.add(

@@ -135,6 +135,8 @@ class TransactionState extends ChangeNotifier {
     // As firefly doesn't allow editing accounts or sums when reconciled,
     // deactivate reconciled.
     reconciled = false;
+    // Recalculate total amount
+    updateAmount();
 
     notifyListeners();
   }
@@ -540,6 +542,8 @@ class TransactionState extends ChangeNotifier {
     TimeZoneHandler tzHandler, {
     bool clone = false,
   }) {
+    log.finest(() => "[TS] fromExisting()");
+
     final List<TransactionSplit> transactions =
         transaction.attributes.transactions;
 

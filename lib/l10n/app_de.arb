@@ -437,6 +437,10 @@
     "@generalIncome": {
         "description": "(Account) Info"
     },
+    "generalLeft": "Übrig",
+    "@generalLeft": {
+        "description": "Label for the remaining (not yet spent) amount of a budget."
+    },
     "generalLiabilities": "Verbindlichkeiten",
     "@generalLiabilities": {
         "description": "Firefly Translation String: liabilities"
@@ -1118,6 +1122,10 @@
     "settingsVersionChecking": "Überprüfe…",
     "@settingsVersionChecking": {
         "description": "Shown while checking for app version"
+    },
+    "tagNone": "<kein Schlagwort>",
+    "@tagNone": {
+        "description": "Placeholder when no tag has been set."
     },
     "transactionAttachments": "Anhänge",
     "@transactionAttachments": {

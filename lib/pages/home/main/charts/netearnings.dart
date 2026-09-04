@@ -46,10 +46,6 @@ class NetEarningsChart extends StatelessWidget {
     incomeChartData = incomeChartData.reversed.toList();
     expenseChartData = expenseChartData.reversed.toList();
 
-    final Color? redColor = Theme.of(
-      context,
-    ).extension<TransactionColors>()!.negativeColor!;
-
     return Padding(
       padding: const .only(left: 12),
       child: charts.BarChart(

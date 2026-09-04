@@ -46,6 +46,10 @@ class NetEarningsChart extends StatelessWidget {
     incomeChartData = incomeChartData.reversed.toList();
     expenseChartData = expenseChartData.reversed.toList();
 
+    final Color? redColor = Theme.of(
+      context,
+    ).extension<TransactionColors>()!.negativeColor!;
+
     return Padding(
       padding: const .only(left: 12),
       child: charts.BarChart(
@@ -55,14 +59,18 @@ class NetEarningsChart extends StatelessWidget {
             domainFn: (LabelAmountChart entry, _) => entry.label,
             measureFn: (LabelAmountChart entry, _) => entry.amount.abs(),
             data: incomeChartData,
-            colorFn: (_, _) => charts.MaterialPalette.green.shadeDefault,
+            colorFn: (_, _) => charts.ColorUtil.fromDartColor(
+              Theme.of(context).extension<TransactionColors>()!.positiveColor!,
+            ),
           ),
           charts.Series<LabelAmountChart, String>(
             id: 'Expense',
             domainFn: (LabelAmountChart entry, _) => entry.label,
             measureFn: (LabelAmountChart entry, _) => entry.amount.abs(),
             data: expenseChartData,
-            colorFn: (_, _) => charts.MaterialPalette.red.shadeDefault,
+            colorFn: (_, _) => charts.ColorUtil.fromDartColor(
+              Theme.of(context).extension<TransactionColors>()!.negativeColor!,
+            ),
           ),
         ],
         animate: true,

@@ -310,7 +310,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
                 extensions: <ThemeExtension<dynamic>>[
                   TransactionColors(
                     positiveColor: Colors.green,
-                    negativeColor: Colors.red.shade200,
+                    negativeColor: Colors.red.shade300,
                     transferColor: Colors.blue,
                     neutralColor: Colors.grey,
                   ),

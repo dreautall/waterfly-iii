@@ -50,21 +50,6 @@ extension AccountRole on AccountRoleProperty {
 }
 
 extension TransactionType on TransactionTypeProperty {
-  Color get color {
-    switch (this) {
-      case .deposit:
-        return Colors.green;
-      case .withdrawal:
-        return const Color(0xFFEE5A5A);
-      case .transfer:
-        return Colors.blue;
-      // reconciliation
-      // openingBalance
-      default:
-        return Colors.grey;
-    }
-  }
-
   IconData get icon {
     switch (this) {
       case .deposit:
@@ -699,45 +684,5 @@ extension LocaleExt on Locale {
       regionCode = tag.substring(regionCodeIndex);
     }
     return Locale(langCode, regionCode);
-  }
-}
-
-class TransactionColors extends ThemeExtension<TransactionColors> {
-  final Color? positiveColor;
-  final Color? negativeColor;
-  final Color? transferColor;
-  final Color? neutralColor;
-
-  const TransactionColors({
-    required this.positiveColor,
-    required this.negativeColor,
-    required this.transferColor,
-    required this.neutralColor,
-  });
-
-  @override
-  TransactionColors copyWith({
-    Color? positiveColor,
-    Color? negativeColor,
-    Color? transferColor,
-    Color? neutralColor,
-  }) {
-    return TransactionColors(
-      negativeColor: negativeColor ?? this.negativeColor,
-      positiveColor: positiveColor ?? this.positiveColor,
-      transferColor: transferColor ?? this.transferColor,
-      neutralColor: neutralColor ?? this.neutralColor,
-    );
-  }
-
-  @override
-  TransactionColors lerp(ThemeExtension<TransactionColors>? other, double t) {
-    if (other is! TransactionColors) return this;
-    return TransactionColors(
-      positiveColor: Color.lerp(positiveColor, other.positiveColor, t),
-      negativeColor: Color.lerp(negativeColor, other.negativeColor, t),
-      transferColor: Color.lerp(transferColor, other.transferColor, t),
-      neutralColor: Color.lerp(neutralColor, other.neutralColor, t),
-    );
   }
 }

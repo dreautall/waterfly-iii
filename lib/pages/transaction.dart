@@ -24,6 +24,7 @@ import 'package:waterflyiii/pages/transaction/splitcard.dart';
 import 'package:waterflyiii/pages/transaction/state.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 
@@ -738,7 +739,7 @@ class _TransactionPageState extends State<TransactionPage>
               icon: Icon(_tx.type.verticalIcon),
               backgroundColor: _savingInProgress
                   ? Theme.of(context).colorScheme.surfaceContainerHighest
-                  : _tx.type.color,
+                  : context.transactionColor(_tx.type),
             ),
           ),
         ],

@@ -18,6 +18,7 @@ import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/pages/transaction/dialogs/delete.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
 
@@ -848,7 +849,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
             child: ListTile(
               leading: CircleAvatar(
                 foregroundColor: Colors.white,
-                backgroundColor: transactions.first.type.color,
+                backgroundColor: context.transactionColor(
+                  transactions.first.type,
+                ),
                 child: Icon(transactions.first.type.icon),
               ),
               title: Row(
@@ -883,7 +886,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                               .copyWith(
                                 color:
                                     transactions.first.type != .reconciliation
-                                    ? transactions.first.type.color
+                                    ? context.transactionColor(
+                                        transactions.first.type,
+                                      )
                                     : (transactions.first.sourceType ==
                                           .reconciliationAccount)
                                     ? Colors.green

@@ -13,6 +13,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/piggybank/chart.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
@@ -794,7 +795,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                   MaterialIconButton(
                     icon: _transactionType.icon,
                     foregroundColor: Colors.white,
-                    backgroundColor: _transactionType.color,
+                    backgroundColor: context.transactionColor(_transactionType),
                     onPressed: () {
                       setState(() {
                         if (_transactionType == .deposit) {

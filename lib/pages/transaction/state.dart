@@ -593,6 +593,11 @@ class TransactionState extends ChangeNotifier {
 
     bool hasAttachments = false;
 
+    transactions.sort(
+      (TransactionSplit a, TransactionSplit b) =>
+          a.order?.compareTo(b.order ?? 0) ?? 0,
+    );
+
     for (TransactionSplit trans in transactions) {
       final TransactionSplitState newSplit = TransactionSplitState(tx);
 

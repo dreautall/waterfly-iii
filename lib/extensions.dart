@@ -16,8 +16,10 @@ extension CurrencyFormat on CurrencyRead {
     String? locale,
     bool forceCode = false,
     int? decimalDigits,
+    bool ignorePrivacyMode = false,
   }) {
-    final num effectiveAmount = SettingsProvider.isPrivacyMode ? 0 : amount;
+    final num effectiveAmount =
+        SettingsProvider.isPrivacyMode && !ignorePrivacyMode ? 0 : amount;
     return NumberFormat.currency(
       locale: locale ?? Intl.defaultLocale,
       name: attributes.code,

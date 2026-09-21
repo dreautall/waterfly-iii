@@ -16,8 +16,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.dreautall.waterflyiii"
-    //compileSdk = flutter.compileSdkVersion
-    compileSdk = 37 // see https://github.com/juliansteenbakker/flutter_secure_storage/issues/1224
+    compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

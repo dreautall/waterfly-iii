@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/settings.dart';
 
 class AlwaysDisabledFocusNode extends FocusNode {
   @override
@@ -15,12 +16,15 @@ extension CurrencyFormat on CurrencyRead {
     String? locale,
     bool forceCode = false,
     int? decimalDigits,
-  }) => NumberFormat.currency(
-    locale: locale ?? Intl.defaultLocale,
-    name: attributes.code,
-    decimalDigits: decimalDigits ?? attributes.decimalPlaces,
-    symbol: forceCode ? null : attributes.symbol,
-  ).format(amount);
+  }) {
+    final num effectiveAmount = SettingsProvider.isPrivacyMode ? 0 : amount;
+    return NumberFormat.currency(
+      locale: locale ?? Intl.defaultLocale,
+      name: attributes.code,
+      decimalDigits: decimalDigits ?? attributes.decimalPlaces,
+      symbol: forceCode ? null : attributes.symbol,
+    ).format(effectiveAmount);
+  }
 
   String zero({String? locale}) => NumberFormat.currency(
     locale: locale ?? Intl.defaultLocale,

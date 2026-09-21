@@ -73,6 +73,7 @@ enum BoolSettings {
   hideTags,
   billsShowOnlyActive,
   billsShowOnlyExpected,
+  privacyMode,
 }
 
 enum TransactionDateFilter {
@@ -191,8 +192,10 @@ class SettingsProvider with ChangeNotifier {
   bool get billsShowOnlyExpected =>
       _loaded ? _boolSettings[.billsShowOnlyExpected] : false;
   bool _isSessionAuthed = false;
-
   bool get isSessionAuthed => _isSessionAuthed;
+  static bool _isPrivacyMode = false;
+
+  static bool get isPrivacyMode => _isPrivacyMode;
 
   ThemeMode _theme = .system;
   ThemeMode get theme => _theme;
@@ -442,6 +445,8 @@ class SettingsProvider with ChangeNotifier {
         ? .all
         : .values[txDateFilterIndex];
 
+    _isPrivacyMode = _boolSettings[.privacyMode];
+
     _loaded = _loading = true;
     log.finest(() => "notify SettingsProvider->loadSettings()");
     notifyListeners();
@@ -507,6 +512,11 @@ class SettingsProvider with ChangeNotifier {
       _setBool(.billsShowOnlyActive, enabled);
   set billsShowOnlyExpected(bool enabled) =>
       _setBool(.billsShowOnlyExpected, enabled);
+
+  void setPrivacyMode(bool enabled) {
+    _isPrivacyMode = enabled;
+    _setBool(.privacyMode, enabled);
+  }
 
   Future<void> setTheme(ThemeMode theme) async {
     _theme = theme;

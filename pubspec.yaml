@@ -28,7 +28,7 @@ dependencies:
   url_launcher: ^6.3.2
   animations: ^3.0.0
   local_auth: ^3.0.2
-  quick_actions: ^1.0.7
+  quick_actions: ^1.1.1
   image_picker: ^1.2.2
   # material.io
   dynamic_color: ^2.1.0

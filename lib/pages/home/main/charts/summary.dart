@@ -9,6 +9,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/settings.dart' show SettingsProvider;
 import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
@@ -54,7 +55,9 @@ class SummaryChart extends StatelessWidget {
           color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
         axisLabelFormatter: (AxisLabelRenderDetails args) => ChartAxisLabel(
-          NumberFormat().format(double.parse(args.text)),
+          SettingsProvider.isPrivacyMode
+              ? " "
+              : NumberFormat().format(double.parse(args.text)),
           args.textStyle,
         ),
       ),
@@ -221,9 +224,11 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                               axisLabelFormatter:
                                   (AxisLabelRenderDetails args) =>
                                       ChartAxisLabel(
-                                        NumberFormat().format(
-                                          double.parse(args.text),
-                                        ),
+                                        SettingsProvider.isPrivacyMode
+                                            ? " "
+                                            : NumberFormat().format(
+                                                double.parse(args.text),
+                                              ),
                                         args.textStyle,
                                       ),
                             ),

@@ -8,6 +8,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/pages/transaction/tags.dart';
+import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
 class CategoryChart extends StatelessWidget {
@@ -75,7 +76,7 @@ class CategoryChart extends StatelessWidget {
             dataLabelMapper: (LabelAmountChart data, _) =>
                 data.amount.abs().toStringAsFixed(0),
             dataLabelSettings: DataLabelSettings(
-              isVisible: true,
+              isVisible: !SettingsProvider.isPrivacyMode,
               textStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
                 fontWeight: .normal,
                 color: Theme.of(context).colorScheme.onSurfaceVariant,

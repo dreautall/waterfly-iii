@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waterflyiii/animations.dart';
+import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
@@ -138,7 +139,9 @@ class NetWorthChart extends StatelessWidget {
           color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
         axisLabelFormatter: (AxisLabelRenderDetails args) => ChartAxisLabel(
-          NumberFormat().format(double.parse(args.text)),
+          SettingsProvider.isPrivacyMode
+              ? " "
+              : NumberFormat().format(double.parse(args.text)),
           args.textStyle,
         ),
       ),

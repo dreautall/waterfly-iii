@@ -79,6 +79,17 @@ class _HomeMainState extends State<HomeMain>
             }
           },
         ),
+        IconButton(
+          icon: const Icon(Icons.bug_report),
+          tooltip: S.of(context).homeMainDialogSettingsTitle,
+          onPressed: () {
+            debugPrint("currently: ${SettingsProvider.isPrivacyMode}");
+            context.read<SettingsProvider>().setPrivacyMode(
+              !SettingsProvider.isPrivacyMode,
+            );
+            debugPrint("new: ${SettingsProvider.isPrivacyMode}");
+          },
+        ),
       ]);
     });
   }

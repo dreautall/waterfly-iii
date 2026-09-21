@@ -9,6 +9,7 @@ import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/settings.dart' show SettingsProvider;
 import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
@@ -77,6 +78,8 @@ class NetEarningsChart extends StatelessWidget {
           ),
           renderSpec: charts.SmallTickRendererSpec<num>(
             labelStyle: charts.TextStyleSpec(
+              fontSize: SettingsProvider.isPrivacyMode ? 0 : null,
+              lineHeight: SettingsProvider.isPrivacyMode ? 0 : null,
               color: charts.ColorUtil.fromDartColor(
                 Theme.of(context).colorScheme.onSurfaceVariant,
               ),
@@ -258,9 +261,11 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                               axisLabelFormatter:
                                   (AxisLabelRenderDetails args) =>
                                       ChartAxisLabel(
-                                        NumberFormat().format(
-                                          double.parse(args.text),
-                                        ),
+                                        SettingsProvider.isPrivacyMode
+                                            ? " "
+                                            : NumberFormat().format(
+                                                double.parse(args.text),
+                                              ),
                                         args.textStyle,
                                       ),
                               minimum: min,
@@ -291,7 +296,7 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                                 dataLabelMapper: (WFChartData data, _) =>
                                     data.value!.abs().toStringAsFixed(0),
                                 dataLabelSettings: DataLabelSettings(
-                                  isVisible: true,
+                                  isVisible: !SettingsProvider.isPrivacyMode,
                                   angle: 90,
                                   alignment: .center,
                                   labelAlignment: .outer,

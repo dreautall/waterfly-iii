@@ -840,6 +840,28 @@ class SEn extends S {
   String get settingsServerConnectionUpdated => 'Connection settings updated.';
 
   @override
+  String get settingsTag => 'Tag Transactions';
+
+  @override
+  String get settingsTagAllHelp =>
+      'Automatically add a tag for all new transactions.';
+
+  @override
+  String settingsTagList(int count, String tags) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'tags: $tags',
+      one: 'tag: $tags',
+    );
+    return 'Selected $_temp0';
+  }
+
+  @override
+  String get settingsTagNLHelp =>
+      'Automatically add a tag for transactions created from the listener.';
+
+  @override
   String get settingsTheme => 'App Theme';
 
   @override

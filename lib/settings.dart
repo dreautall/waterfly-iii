@@ -235,11 +235,8 @@ class SettingsProvider with ChangeNotifier {
   TransactionDateFilter get transactionDateFilter => _transactionDateFilter;
 
   List<String> _autoTagAll = <String>[];
-
   List<String> get autoTagAll => _autoTagAll;
-
   List<String> _autoTagNL = <String>[];
-
   List<String> get autoTagNL => _autoTagNL;
 
   Future<void> migrateLegacy(SharedPreferencesAsync prefs) async {

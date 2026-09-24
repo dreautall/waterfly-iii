@@ -125,6 +125,11 @@ class _TransactionPageState extends State<TransactionPage>
         _tx.date = _tzHandler.newTXTime().toLocal();
       }
 
+      final List<String> autoTags = context.read<SettingsProvider>().autoTagAll;
+      for (String s in autoTags) {
+        _tx.splits.first.tags.add(s);
+      }
+
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         _tx.splits.first.titleFN.requestFocus();
         // Extract notification
@@ -214,7 +219,18 @@ class _TransactionPageState extends State<TransactionPage>
             _tx.splits.first.foreignAmount = amount;
             _tx.splits.first.foreignAmountUpdateText();
           }
+
+          // Tag
+          if (mounted) {
+            final List<String> autoTagsNL = context
+                .read<SettingsProvider>()
+                .autoTagNL;
+            for (String s in autoTagsNL) {
+              _tx.splits.first.tags.add(s);
+            }
+          }
         }
+
         // Created from account screen, set account already
         if (widget.accountId != null && mounted) {
           final FireflyIii api = context.read<FireflyService>().api;

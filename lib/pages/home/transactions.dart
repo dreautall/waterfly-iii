@@ -21,6 +21,7 @@ import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
+import 'package:waterflyiii/widgets/privacybutton.dart';
 
 class TransactionSum {
   double withdrawals = 0;
@@ -166,6 +167,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
               },
             ),
           ),
+          const PrivacyButton(),
         ]);
       });
     }

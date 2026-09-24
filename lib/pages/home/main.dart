@@ -28,6 +28,7 @@ import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/charts.dart';
+import 'package:waterflyiii/widgets/privacybutton.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({super.key});
@@ -79,17 +80,7 @@ class _HomeMainState extends State<HomeMain>
             }
           },
         ),
-        IconButton(
-          icon: const Icon(Icons.bug_report),
-          tooltip: S.of(context).homeMainDialogSettingsTitle,
-          onPressed: () {
-            debugPrint("currently: ${SettingsProvider.isPrivacyMode}");
-            context.read<SettingsProvider>().setPrivacyMode(
-              !SettingsProvider.isPrivacyMode,
-            );
-            debugPrint("new: ${SettingsProvider.isPrivacyMode}");
-          },
-        ),
+        const PrivacyButton(),
       ]);
     });
   }

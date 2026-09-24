@@ -17,6 +17,7 @@ import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/theme.dart';
+import 'package:waterflyiii/widgets/privacybutton.dart';
 
 final Logger log = Logger("Pages.Categories");
 
@@ -104,12 +105,13 @@ class _CategoriesPageState extends State<CategoriesPage>
                 });
               },
       ),
+      const PrivacyButton(),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    log.fine(() => "build");
+    log.fine(() => "build()");
 
     late DateTime stockDate;
     if (selectedMonth.year == now.year && selectedMonth.month == now.month) {
@@ -142,6 +144,10 @@ class _CategoriesPageState extends State<CategoriesPage>
             ),
           );
         }
+
+        // For privacy mode
+        context.watch<SettingsProvider>().privacyMode;
+
         final List<Widget> childs = <Widget>[];
         childs.add(
           Padding(

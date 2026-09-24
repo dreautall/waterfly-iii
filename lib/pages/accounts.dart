@@ -11,7 +11,9 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/accounts/search.dart';
 import 'package:waterflyiii/pages/home/accounts/row.dart';
 import 'package:waterflyiii/pages/navigation.dart';
+import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
+import 'package:waterflyiii/widgets/privacybutton.dart';
 
 final Logger log = Logger("Pages.Accounts");
 
@@ -82,6 +84,7 @@ class _AccountsPageState extends State<AccountsPage>
             );
           },
         ),
+        const PrivacyButton(),
       ];
 
       // Call once to set fab/page actions
@@ -184,6 +187,9 @@ class _AccountDetailsState extends State<AccountDetails>
   Widget build(BuildContext context) {
     super.build(context);
     log.fine(() => "build()");
+
+    // For privacy mode
+    context.watch<SettingsProvider>().privacyMode;
 
     return RefreshIndicator.adaptive(
       onRefresh: () => Future<void>.sync(

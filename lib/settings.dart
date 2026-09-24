@@ -196,9 +196,11 @@ class SettingsProvider with ChangeNotifier {
 
   bool _isSessionAuthed = false;
   bool get isSessionAuthed => _isSessionAuthed;
-  static bool _isPrivacyMode = false;
 
+  static bool _isPrivacyMode = false;
   static bool get isPrivacyMode => _isPrivacyMode;
+
+  bool get privacyMode => _isPrivacyMode;
 
   ThemeMode _theme = .system;
   ThemeMode get theme => _theme;
@@ -529,6 +531,10 @@ class SettingsProvider with ChangeNotifier {
       _setBool(.billsShowOnlyExpected, enabled);
 
   void setPrivacyMode(bool enabled) {
+    if (enabled == _isPrivacyMode) {
+      return;
+    }
+
     _isPrivacyMode = enabled;
     _setBool(.privacyMode, enabled);
   }

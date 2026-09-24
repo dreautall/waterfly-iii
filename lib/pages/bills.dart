@@ -14,6 +14,7 @@ import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/timezonehandler.dart';
+import 'package:waterflyiii/widgets/privacybutton.dart';
 
 class BillsPage extends StatefulWidget {
   const BillsPage({super.key});
@@ -89,6 +90,7 @@ class _BillsPageState extends State<BillsPage>
           tooltip: S.of(context).billsChangeLayoutTooltip,
           onPressed: _showLayoutPickerDialog,
         ),
+        const PrivacyButton(),
       ];
     });
 
@@ -123,6 +125,10 @@ class _BillsPageState extends State<BillsPage>
                   ),
                 );
               }
+
+              // For privacy mode
+              context.watch<SettingsProvider>().privacyMode;
+
               return Padding(
                 padding: const .fromLTRB(8, 0, 8, 8),
                 child: _billsLayout == .list

@@ -5,6 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.models.swagger.dart';
+import 'package:waterflyiii/settings.dart' show SettingsProvider;
 import 'package:waterflyiii/widgets/charts.dart';
 
 class BillChart extends StatefulWidget {
@@ -55,7 +56,9 @@ class BillChartState extends State<BillChart> {
               ),
               axisLabelFormatter: (AxisLabelRenderDetails args) =>
                   ChartAxisLabel(
-                    NumberFormat().format(double.parse(args.text)),
+                    SettingsProvider.isPrivacyMode
+                        ? " "
+                        : NumberFormat().format(double.parse(args.text)),
                     args.textStyle,
                   ),
             ),

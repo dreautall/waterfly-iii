@@ -853,6 +853,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.14.1"
+  kaisel:
+    dependency: "direct main"
+    description:
+      name: kaisel
+      sha256: c205470b2fba57105e6bfdd5e43b6cf007e051fd2b2ef68639c96ab3e2d7c5e7
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
+  kaisel_core:
+    dependency: transitive
+    description:
+      name: kaisel_core
+      sha256: af9f87790eaea4980288a2f185e0350d6d80ebdedd62b0946e298dba01a0df37
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   leak_tracker:
     dependency: transitive
     description:

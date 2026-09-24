@@ -1111,6 +1111,10 @@
             }
         }
     },
+    "settingsTagNLHelp": "Automatically add a tag for transactions created from the listener.",
+    "@settingsTagNLHelp": {
+        "description": "Help text to automatically tag transactions from the notification listener"
+    },
     "settingsTheme": "App Theme",
     "@settingsTheme": {
         "description": "App theme (dark or light)"

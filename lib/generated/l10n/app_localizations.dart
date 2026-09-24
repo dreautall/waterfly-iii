@@ -1416,6 +1416,12 @@ abstract class S {
   /// **'Selected {count, plural, =1{tag: {tags}} other{tags: {tags}}}'**
   String settingsTagList(int count, String tags);
 
+  /// Help text to automatically tag transactions from the notification listener
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically add a tag for transactions created from the listener.'**
+  String get settingsTagNLHelp;
+
   /// App theme (dark or light)
   ///
   /// In en, this message translates to:

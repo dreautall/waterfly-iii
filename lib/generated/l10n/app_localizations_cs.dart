@@ -872,6 +872,10 @@ class SCs extends S {
   }
 
   @override
+  String get settingsTagNLHelp =>
+      'Automatically add a tag for transactions created from the listener.';
+
+  @override
   String get settingsTheme => 'Motiv aplikace';
 
   @override

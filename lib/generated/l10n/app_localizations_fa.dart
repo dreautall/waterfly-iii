@@ -397,6 +397,10 @@ class SFa extends S {
   String get generalUnknown => 'ناشناخته';
 
   @override
+  String get homeMainActionPrivacyMode =>
+      'Show/Hide all amounts (Privacy Mode)';
+
+  @override
   String homeMainBillsInterval(String period) {
     String _temp0 = intl.Intl.selectLogic(period, {
       'weekly': 'هفتگی',

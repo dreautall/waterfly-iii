@@ -481,6 +481,10 @@
     "@generalUnknown": {
         "description": "Something is unknown."
     },
+    "homeMainActionPrivacyMode": "Show/Hide all amounts (Privacy Mode)",
+    "@homeMainActionPrivacyMode": {
+        "description": "Tooltip label for privacy mode button"
+    },
     "homeMainBillsInterval": " ({period, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-year} yearly{yearly} other{unknown}})",
     "@homeMainBillsInterval": {
         "description": "subscription interval type",

@@ -720,6 +720,12 @@ abstract class S {
   /// **'Unknown'**
   String get generalUnknown;
 
+  /// Tooltip label for privacy mode button
+  ///
+  /// In en, this message translates to:
+  /// **'Show/Hide all amounts (Privacy Mode)'**
+  String get homeMainActionPrivacyMode;
+
   /// subscription interval type
   ///
   /// In en, this message translates to:

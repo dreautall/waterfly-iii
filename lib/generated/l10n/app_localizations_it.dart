@@ -400,6 +400,10 @@ class SIt extends S {
   String get generalUnknown => 'Sconosciuto';
 
   @override
+  String get homeMainActionPrivacyMode =>
+      'Show/Hide all amounts (Privacy Mode)';
+
+  @override
   String homeMainBillsInterval(String period) {
     String _temp0 = intl.Intl.selectLogic(period, {
       'weekly': 'settimanale',

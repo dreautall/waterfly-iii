@@ -14,7 +14,7 @@ class PrivacyButton extends StatelessWidget {
         icon: const Icon(Icons.visibility),
         selectedIcon: const Icon(Icons.visibility_off),
         isSelected: context.watch<SettingsProvider>().privacyMode,
-        tooltip: S.of(context).homeMainDialogSettingsTitle,
+        tooltip: S.of(context).homeMainActionPrivacyMode,
         onPressed: () {
           context.read<SettingsProvider>().setPrivacyMode(
             !SettingsProvider.isPrivacyMode,

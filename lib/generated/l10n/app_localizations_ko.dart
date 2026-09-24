@@ -397,6 +397,10 @@ class SKo extends S {
   String get generalUnknown => '알 수 없는';
 
   @override
+  String get homeMainActionPrivacyMode =>
+      'Show/Hide all amounts (Privacy Mode)';
+
+  @override
   String homeMainBillsInterval(String period) {
     String _temp0 = intl.Intl.selectLogic(period, {
       'weekly': '매주',

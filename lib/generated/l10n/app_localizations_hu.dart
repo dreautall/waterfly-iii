@@ -367,6 +367,9 @@ class SHu extends S {
   String get generalIncome => 'Bevétel';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Kötelezettségek';
 
   @override

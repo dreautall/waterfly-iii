@@ -367,6 +367,9 @@ class SPl extends S {
   String get generalIncome => 'Przychód';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Zobowiązania';
 
   @override

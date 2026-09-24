@@ -364,6 +364,9 @@ class SKo extends S {
   String get generalIncome => '수입';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => '부채';
 
   @override

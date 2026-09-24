@@ -16,8 +16,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.dreautall.waterflyiii"
-    //compileSdk = flutter.compileSdkVersion
-    compileSdk = 37 // see https://github.com/juliansteenbakker/flutter_secure_storage/issues/1224
+    compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -32,7 +31,7 @@ android {
         applicationId = "com.dreautall.waterflyiii"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 34
+        minSdk = 28
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

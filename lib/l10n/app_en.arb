@@ -437,6 +437,10 @@
     "@generalIncome": {
         "description": "(Account) Info"
     },
+    "generalLeft": "Left",
+    "@generalLeft": {
+        "description": "Label for the remaining (not yet spent) amount of a budget."
+    },
     "generalLiabilities": "Liabilities",
     "@generalLiabilities": {
         "description": "Firefly Translation String: liabilities"

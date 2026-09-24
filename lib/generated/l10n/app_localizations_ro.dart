@@ -367,6 +367,9 @@ class SRo extends S {
   String get generalIncome => 'Venit';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Pasive';
 
   @override

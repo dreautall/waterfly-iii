@@ -367,6 +367,9 @@ class SIt extends S {
   String get generalIncome => 'Entrate';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Passività';
 
   @override

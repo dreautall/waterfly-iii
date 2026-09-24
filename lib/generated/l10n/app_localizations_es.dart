@@ -367,6 +367,9 @@ class SEs extends S {
   String get generalIncome => 'Ingresos';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Pasivos';
 
   @override

@@ -50,21 +50,6 @@ extension AccountRole on AccountRoleProperty {
 }
 
 extension TransactionType on TransactionTypeProperty {
-  Color get color {
-    switch (this) {
-      case .deposit:
-        return Colors.green;
-      case .withdrawal:
-        return Colors.red;
-      case .transfer:
-        return Colors.blue;
-      // reconciliation
-      // openingBalance
-      default:
-        return Colors.grey;
-    }
-  }
-
   IconData get icon {
     switch (this) {
       case .deposit:

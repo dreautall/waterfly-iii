@@ -35,7 +35,7 @@ class AttachmentDialog extends StatefulWidget {
 
 class _AttachmentDialogState extends State<AttachmentDialog>
     with SingleTickerProviderStateMixin {
-  final Logger log = Logger("Pages.Transaction.AttachmentDialog");
+  final Logger log = Logger("Pages.Transaction.Dialogs.Attachment");
 
   final Map<int, double> _dlProgress = <int, double>{};
 
@@ -187,7 +187,7 @@ class _AttachmentDialogState extends State<AttachmentDialog>
     AttachmentRead newAttachment = respAttachment.body!.data;
     final int newAttachmentIndex =
         widget.attachments.length; // Will be added later, no -1 needed.
-    final int total = await file.length();
+    final int total = await file.length() ?? 0;
     newAttachment = newAttachment.copyWith(
       attributes: newAttachment.attributes.copyWith(size: total),
     );

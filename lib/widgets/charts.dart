@@ -17,10 +17,15 @@ class TimeSeriesChart {
 }
 
 extension ConvertChartDataSet on ChartDataSet {
+  bool get usePrimary =>
+      pcEntries is Map<String, dynamic> &&
+      (pcEntries as Map<String, dynamic>).isNotEmpty;
+
   List<TimeSeriesChart> toChart() {
     final List<TimeSeriesChart> data = <TimeSeriesChart>[];
 
-    final Map<String, dynamic> e = entries! as Map<String, dynamic>;
+    final Map<String, dynamic> e =
+        (usePrimary ? pcEntries! : entries!) as Map<String, dynamic>;
     e.forEach(
       (String key, dynamic value) => data.add(
         TimeSeriesChart(DateTime.parse(key), double.tryParse(value) ?? 0),

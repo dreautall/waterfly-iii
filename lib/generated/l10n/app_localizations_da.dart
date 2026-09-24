@@ -367,6 +367,9 @@ class SDa extends S {
   String get generalIncome => 'Indtægter';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Gældsforpligtelser';
 
   @override

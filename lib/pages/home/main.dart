@@ -15,6 +15,8 @@ import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home.dart';
+import 'package:waterflyiii/pages/home/main/bill.dart';
+import 'package:waterflyiii/pages/home/main/budget.dart';
 import 'package:waterflyiii/pages/home/main/charts/category.dart';
 import 'package:waterflyiii/pages/home/main/charts/lastdays.dart';
 import 'package:waterflyiii/pages/home/main/charts/netearnings.dart';
@@ -23,6 +25,7 @@ import 'package:waterflyiii/pages/home/main/charts/summary.dart';
 import 'package:waterflyiii/pages/home/main/dashboard.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
@@ -113,7 +116,8 @@ class _HomeMainState extends State<HomeMain>
     apiThrowErrorIfEmpty(respBalanceData, mounted ? context : null);
 
     for (ChartDataSet e in respBalanceData.body!) {
-      final Map<String, dynamic> entries = e.pcEntries as Map<String, dynamic>;
+      final Map<String, dynamic> entries =
+          (e.usePrimary ? e.pcEntries : e.entries) as Map<String, dynamic>;
       entries.forEach((String dateStr, dynamic valueStr) {
         final DateTime date = tzHandler
             .sTime(DateTime.parse(dateStr))
@@ -498,7 +502,8 @@ class _HomeMainState extends State<HomeMain>
           includeInNetWorth[e.label] != true) {
         continue;
       }
-      final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
+      final Map<String, dynamic> entries =
+          (e.usePrimary ? e.pcEntries : e.entries) as Map<String, dynamic>;
       entries.forEach((String dateStr, dynamic valueStr) {
         DateTime date = tzHandler.sTime(DateTime.parse(dateStr)).toLocal();
         if (
@@ -640,7 +645,7 @@ class _HomeMainState extends State<HomeMain>
                       Text(
                         defaultCurrency.fmt(sevenDayTotal / 7),
                         style: TextStyle(
-                          color: sevenDayTotal < 0 ? Colors.red : Colors.green,
+                          color: context.balanceColor(sevenDayTotal),
                           fontWeight: .bold,
                           fontFeatures: const <FontFeature>[.tabularFigures()],
                         ),
@@ -695,19 +700,22 @@ class _HomeMainState extends State<HomeMain>
                     ),
                     ...overviewChartData.mapIndexed((int i, ChartDataSet e) {
                       final Map<String, dynamic> entries =
-                          e.entries as Map<String, dynamic>;
+                          (e.usePrimary ? e.pcEntries : e.entries)
+                              as Map<String, dynamic>;
                       final double balance =
                           double.tryParse(entries.entries.last.value) ?? 0;
-                      final CurrencyRead currency = CurrencyRead(
-                        id: e.currencyId ?? "0",
-                        type: "currencies",
-                        attributes: CurrencyProperties(
-                          code: e.currencyCode ?? "",
-                          name: "",
-                          symbol: e.currencySymbol ?? "",
-                          decimalPlaces: e.currencyDecimalPlaces,
-                        ),
-                      );
+                      final CurrencyRead currency = e.usePrimary
+                          ? defaultCurrency
+                          : CurrencyRead(
+                              id: e.currencyId ?? "0",
+                              type: "currencies",
+                              attributes: CurrencyProperties(
+                                code: e.currencyCode ?? "",
+                                name: "",
+                                symbol: e.currencySymbol ?? "",
+                                decimalPlaces: e.currencyDecimalPlaces,
+                              ),
+                            );
                       return TableRow(
                         children: <Widget>[
                           Align(
@@ -730,9 +738,7 @@ class _HomeMainState extends State<HomeMain>
                             child: Text(
                               currency.fmt(balance),
                               style: TextStyle(
-                                color: (balance < 0)
-                                    ? Colors.red
-                                    : Colors.green,
+                                color: context.balanceColor(balance),
                                 fontWeight: .bold,
                                 fontFeatures: const <FontFeature>[
                                   .tabularFigures(),
@@ -782,12 +788,14 @@ class _HomeMainState extends State<HomeMain>
                     ),
                     TableRow(
                       children: <Widget>[
-                        const Align(
+                        Align(
                           alignment: .center,
                           child: Text(
                             "⬤",
                             style: TextStyle(
-                              color: Colors.green,
+                              color: Theme.of(
+                                context,
+                              ).extension<TransactionColors>()!.positiveColor,
                               textBaseline: .ideographic,
                               height: 1.3,
                             ),
@@ -809,12 +817,14 @@ class _HomeMainState extends State<HomeMain>
                     ),
                     TableRow(
                       children: <Widget>[
-                        const Align(
+                        Align(
                           alignment: .center,
                           child: Text(
                             "⬤",
                             style: TextStyle(
-                              color: Colors.red,
+                              color: Theme.of(
+                                context,
+                              ).extension<TransactionColors>()!.negativeColor,
                               textBaseline: .ideographic,
                               height: 1.3,
                             ),
@@ -856,7 +866,7 @@ class _HomeMainState extends State<HomeMain>
                             child: Text(
                               defaultCurrency.fmt(sum),
                               style: TextStyle(
-                                color: (sum < 0) ? Colors.red : Colors.green,
+                                color: context.balanceColor(sum),
                                 fontWeight: .bold,
                                 fontFeatures: const <FontFeature>[
                                   .tabularFigures(),
@@ -915,12 +925,14 @@ class _HomeMainState extends State<HomeMain>
                     ),
                     TableRow(
                       children: <Widget>[
-                        const Align(
+                        Align(
                           alignment: .center,
                           child: Text(
                             "⬤",
                             style: TextStyle(
-                              color: Colors.green,
+                              color: Theme.of(
+                                context,
+                              ).extension<TransactionColors>()!.positiveColor,
                               textBaseline: .ideographic,
                               height: 1.3,
                             ),
@@ -950,12 +962,14 @@ class _HomeMainState extends State<HomeMain>
                     ),
                     TableRow(
                       children: <Widget>[
-                        const Align(
+                        Align(
                           alignment: .center,
                           child: Text(
                             "⬤",
                             style: TextStyle(
-                              color: Colors.red,
+                              color: Theme.of(
+                                context,
+                              ).extension<TransactionColors>()!.negativeColor,
                               textBaseline: .ideographic,
                               height: 1.3,
                             ),
@@ -1006,9 +1020,7 @@ class _HomeMainState extends State<HomeMain>
                                 child: Text(
                                   defaultCurrency.fmt(sum),
                                   style: TextStyle(
-                                    color: (sum < 0)
-                                        ? Colors.red
-                                        : Colors.green,
+                                    color: context.balanceColor(sum),
                                     fontWeight: .bold,
                                     fontFeatures: const <FontFeature>[
                                       .tabularFigures(),
@@ -1138,314 +1150,6 @@ class _HomeMainState extends State<HomeMain>
             },
           const SizedBox(height: 68),
         ],
-      ),
-    );
-  }
-}
-
-class BudgetList extends StatelessWidget {
-  const BudgetList({
-    super.key,
-    required this.budgetInfos,
-    required this.snapshot,
-  });
-
-  final Map<String, BudgetProperties> budgetInfos;
-  final AsyncSnapshot<List<BudgetLimitRead>> snapshot;
-
-  @override
-  Widget build(BuildContext context) {
-    final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
-
-    return SizedBox(
-      child: Padding(
-        padding: const .fromLTRB(12, 0, 12, 12),
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            final List<Widget> widgets = <Widget>[];
-            final int tsNow = tzHandler.sNow().millisecondsSinceEpoch;
-
-            for (BudgetLimitRead budget in snapshot.data!) {
-              final List<Widget> stackWidgets = <Widget>[];
-              late double spent;
-              if (budget.attributes.spent?.isNotEmpty ?? false) {
-                spent =
-                    (double.tryParse(
-                              budget.attributes.spent!.first.sum ?? "",
-                            ) ??
-                            0)
-                        .abs();
-              } else {
-                spent = 0;
-              }
-              final double available =
-                  double.tryParse(budget.attributes.amount ?? "") ?? 0;
-
-              final int tsStart = tzHandler
-                  .sTime(budget.attributes.start!)
-                  .millisecondsSinceEpoch;
-              final int tsEnd = tzHandler
-                  .sTime(budget.attributes.end!)
-                  .millisecondsSinceEpoch;
-              late double passedDays;
-              if (tsEnd == tsStart) {
-                passedDays = 2; // Hides the bar
-              } else {
-                passedDays = (tsNow - tsStart) / (tsEnd - tsStart);
-                if (passedDays > 1) {
-                  passedDays = 2; // Hides the bar
-                }
-              }
-
-              final BudgetProperties? budgetInfo =
-                  budgetInfos[budget.attributes.budgetId];
-              if (budgetInfo == null || available == 0) {
-                continue;
-              }
-              final CurrencyRead currency = CurrencyRead(
-                id: budget.attributes.currencyId ?? "0",
-                type: "currencies",
-                attributes: CurrencyProperties(
-                  code: budget.attributes.currencyCode ?? "",
-                  name: budget.attributes.currencyName ?? "",
-                  symbol: budget.attributes.currencySymbol ?? "",
-                  decimalPlaces: budget.attributes.currencyDecimalPlaces,
-                ),
-              );
-              Color lineColor = Colors.green;
-              Color? bgColor;
-              double value = spent / available;
-              if (spent > available) {
-                lineColor = Colors.red;
-                bgColor = Colors.green;
-                value = value % 1;
-              }
-
-              if (widgets.isNotEmpty) {
-                widgets.add(const SizedBox(height: 8));
-              }
-              widgets.add(
-                RichText(
-                  text: TextSpan(
-                    children: <InlineSpan>[
-                      TextSpan(
-                        text: budgetInfo.name,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      TextSpan(
-                        text: budget.attributes.period?.isNotEmpty ?? false
-                            ? S
-                                  .of(context)
-                                  .homeMainBudgetInterval(
-                                    tzHandler
-                                        .sTime(budget.attributes.start!)
-                                        .toLocal(),
-                                    tzHandler
-                                        .sTime(budget.attributes.end!)
-                                        .toLocal(),
-                                    budget.attributes.period!,
-                                  )
-                            : S
-                                  .of(context)
-                                  .homeMainBudgetIntervalSingle(
-                                    tzHandler
-                                        .sTime(budget.attributes.start!)
-                                        .toLocal(),
-                                    tzHandler
-                                        .sTime(budget.attributes.end!)
-                                        .toLocal(),
-                                  ),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-              stackWidgets.add(
-                Row(
-                  mainAxisAlignment: .spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      S.of(context).numPercent(spent / available),
-                      style: Theme.of(
-                        context,
-                      ).textTheme.labelLarge!.copyWith(color: lineColor),
-                    ),
-                    Text(
-                      S
-                          .of(context)
-                          .homeMainBudgetSum(
-                            currency.fmt(
-                              (available - spent).abs(),
-                              decimalDigits: 0,
-                            ),
-                            (spent > available) ? "over" : "leftfrom",
-                            currency.fmt(available, decimalDigits: 0),
-                          ),
-                      style: Theme.of(
-                        context,
-                      ).textTheme.labelLarge!.copyWith(color: lineColor),
-                    ),
-                  ],
-                ),
-              );
-              stackWidgets.add(
-                Positioned.fill(
-                  top: 20, // Height of Row() with text
-                  bottom: 4,
-                  child: LinearProgressIndicator(
-                    color: lineColor,
-                    backgroundColor: bgColor,
-                    value: value,
-                  ),
-                ),
-              );
-              widgets.add(
-                LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints) =>
-                      Stack(
-                        children: <Widget>[
-                          // Row + ProgressIndicator + Bottom Padding
-                          const SizedBox(height: 20 + 4 + 4),
-                          ...stackWidgets,
-                          Positioned(
-                            left: constraints.biggest.width * passedDays,
-                            top: 16,
-                            bottom: 0,
-                            width: 3,
-                            child: Container(
-                              color: (spent / available > passedDays)
-                                  ? Colors.redAccent
-                                  : Colors.blueAccent,
-                            ),
-                          ),
-                        ],
-                      ),
-                ),
-              );
-            }
-            return Column(crossAxisAlignment: .start, children: widgets);
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class BillList extends StatelessWidget {
-  const BillList({super.key, required this.snapshot});
-
-  final AsyncSnapshot<List<BillRead>> snapshot;
-
-  @override
-  Widget build(BuildContext context) {
-    final TimeZoneHandler tzHandler = context.read<FireflyService>().tzHandler;
-
-    return SizedBox(
-      child: Padding(
-        padding: const .fromLTRB(12, 0, 12, 12),
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            final List<Widget> widgets = <Widget>[];
-            snapshot.data!.sort((BillRead a, BillRead b) {
-              final int dateCompare =
-                  (a.attributes.nextExpectedMatch ?? tzHandler.sNow())
-                      .compareTo(
-                        b.attributes.nextExpectedMatch ?? tzHandler.sNow(),
-                      );
-              if (dateCompare != 0) {
-                return dateCompare;
-              }
-              final int orderCompare = (a.attributes.order ?? 0).compareTo(
-                b.attributes.order ?? 0,
-              );
-              if (orderCompare != 0) {
-                return orderCompare;
-              }
-              return a.attributes.avgAmount().compareTo(
-                b.attributes.avgAmount(),
-              );
-            });
-
-            DateTime lastDate =
-                (snapshot.data!.first.attributes.nextExpectedMatch ??
-                        tzHandler.sNow())
-                    .subtract(const Duration(days: 1));
-            for (BillRead bill in snapshot.data!) {
-              final DateTime nextMatch =
-                  bill.attributes.nextExpectedMatch != null
-                  ? tzHandler
-                        .sTime(bill.attributes.nextExpectedMatch!)
-                        .toLocal()
-                  : tzHandler.sNow();
-              final CurrencyRead currency = CurrencyRead(
-                id: bill.attributes.currencyId ?? "0",
-                type: "currencies",
-                attributes: CurrencyProperties(
-                  code: bill.attributes.currencyCode ?? "",
-                  name: "",
-                  symbol: bill.attributes.currencySymbol ?? "",
-                  decimalPlaces: bill.attributes.currencyDecimalPlaces,
-                ),
-              );
-
-              if (nextMatch != lastDate) {
-                if (widgets.isNotEmpty) {
-                  widgets.add(const SizedBox(height: 8));
-                }
-                widgets.add(
-                  Text(
-                    DateFormat.yMd().format(nextMatch),
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                );
-                lastDate = nextMatch;
-              }
-              widgets.add(
-                Row(
-                  mainAxisAlignment: .spaceBetween,
-                  children: <Widget>[
-                    RichText(
-                      maxLines: 1,
-                      overflow: .ellipsis,
-                      text: TextSpan(
-                        children: <InlineSpan>[
-                          TextSpan(
-                            text: bill.attributes.name!.length > 30
-                                ? bill.attributes.name!.replaceRange(
-                                    30,
-                                    bill.attributes.name!.length,
-                                    "…",
-                                  )
-                                : bill.attributes.name,
-                            style: Theme.of(context).textTheme.titleSmall,
-                          ),
-                          TextSpan(
-                            text: S
-                                .of(context)
-                                .homeMainBillsInterval(
-                                  bill.attributes.repeatFreq!.value ?? "",
-                                ),
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Text(
-                      currency.fmt(bill.attributes.avgAmount()),
-                      style: const TextStyle(
-                        color: Colors.red,
-                        fontWeight: .bold,
-                        fontFeatures: <FontFeature>[.tabularFigures()],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-            return Column(crossAxisAlignment: .start, children: widgets);
-          },
-        ),
       ),
     );
   }

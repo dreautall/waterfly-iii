@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:material_ui/material_ui.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waterflyiii/animations.dart';
@@ -18,11 +20,18 @@ class CategoryChart extends StatelessWidget {
   Widget build(BuildContext context) {
     List<LabelAmountChart> chartData = <LabelAmountChart>[];
 
+    final int maxLabelLength =
+        max(S.of(context).catNone.length, S.of(context).tagNone.length) + 2;
+
     for (InsightGroupEntry e in data) {
       if ((e.name?.isEmpty ?? true) || e.differenceFloat == 0) {
         continue;
       }
-      chartData.add(LabelAmountChart(e.name!, e.differenceFloat ?? 0));
+      String name = e.name!;
+      if (name.length > maxLabelLength) {
+        name = "${name.substring(0, maxLabelLength)}…";
+      }
+      chartData.add(LabelAmountChart(name, e.differenceFloat ?? 0));
     }
 
     chartData.sort(
@@ -53,6 +62,7 @@ class CategoryChart extends StatelessWidget {
           textStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
             fontWeight: .normal,
             color: Theme.of(context).colorScheme.onSurfaceVariant,
+            overflow: TextOverflow.ellipsis,
           ),
           alignment: .center,
           isResponsive: false,

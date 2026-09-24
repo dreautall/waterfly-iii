@@ -367,6 +367,9 @@ class SNl extends S {
   String get generalIncome => 'Inkomen';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Schulden';
 
   @override

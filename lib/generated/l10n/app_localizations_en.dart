@@ -367,6 +367,9 @@ class SEn extends S {
   String get generalIncome => 'Income';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Liabilities';
 
   @override

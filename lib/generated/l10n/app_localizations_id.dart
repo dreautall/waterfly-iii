@@ -367,6 +367,9 @@ class SId extends S {
   String get generalIncome => 'Pendapatan';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Kewajiban';
 
   @override

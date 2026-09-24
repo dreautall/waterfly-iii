@@ -370,6 +370,9 @@ class SFr extends S {
   String get generalIncome => 'Revenus';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Passifs';
 
   @override

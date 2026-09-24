@@ -9,6 +9,7 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
 class SummaryChart extends StatelessWidget {
@@ -79,6 +80,9 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
 
   Future<List<ChartDataSet>> _fetchData(BuildContext context) async {
     final FireflyIii api = context.read<FireflyService>().api;
+    final CurrencyRead defaultCurrency = context
+        .read<FireflyService>()
+        .defaultCurrency;
     final DateTime now = DateTime.now().toLocal().clearTime();
 
     final Response<ChartLine> respChartData = await api
@@ -102,18 +106,21 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
         latestDate = e.endDate;
       }
       currencies.add(
-        CurrencyRead(
-          id: e.currencyId ?? "0",
-          type: "currencies",
-          attributes: CurrencyProperties(
-            code: e.currencyCode ?? "",
-            name: "",
-            symbol: e.currencySymbol ?? "",
-            decimalPlaces: e.currencyDecimalPlaces,
-          ),
-        ),
+        e.usePrimary
+            ? defaultCurrency
+            : CurrencyRead(
+                id: e.currencyId ?? "0",
+                type: "currencies",
+                attributes: CurrencyProperties(
+                  code: e.currencyCode ?? "",
+                  name: "",
+                  symbol: e.currencySymbol ?? "",
+                  decimalPlaces: e.currencyDecimalPlaces,
+                ),
+              ),
       );
-      final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
+      final Map<String, dynamic> entries =
+          (e.usePrimary ? e.pcEntries : e.entries) as Map<String, dynamic>;
       balances.add(double.tryParse(entries.entries.last.value) ?? 0);
       accounts.add(e.label!);
     }
@@ -342,7 +349,7 @@ class SummaryTable extends StatelessWidget {
                     child: Text(
                       currency.fmt(balance, locale: S.of(context).localeName),
                       style: TextStyle(
-                        color: (balance < 0) ? Colors.red : Colors.green,
+                        color: context.balanceColor(balance),
                         fontWeight: .bold,
                         fontFeatures: const <FontFeature>[.tabularFigures()],
                       ),

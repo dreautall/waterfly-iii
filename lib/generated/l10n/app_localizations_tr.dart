@@ -367,6 +367,9 @@ class STr extends S {
   String get generalIncome => 'Gelir';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Yükümlülükler';
 
   @override

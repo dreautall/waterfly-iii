@@ -376,6 +376,9 @@ class SRu extends S {
   String get generalIncome => 'Доходы';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Обязательства';
 
   @override

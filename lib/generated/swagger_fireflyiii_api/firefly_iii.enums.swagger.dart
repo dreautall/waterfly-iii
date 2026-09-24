@@ -143,7 +143,19 @@ enum ConfigValueUpdateFilter {
   @JsonValue('configuration.last_update_check')
   configurationLastUpdateCheck('configuration.last_update_check'),
   @JsonValue('configuration.single_user_mode')
-  configurationSingleUserMode('configuration.single_user_mode');
+  configurationSingleUserMode('configuration.single_user_mode'),
+  @JsonValue('configuration.enable_exchange_rates')
+  configurationEnableExchangeRates('configuration.enable_exchange_rates'),
+  @JsonValue('configuration.use_running_balance')
+  configurationUseRunningBalance('configuration.use_running_balance'),
+  @JsonValue('configuration.enable_external_map')
+  configurationEnableExternalMap('configuration.enable_external_map'),
+  @JsonValue('configuration.enable_external_rates')
+  configurationEnableExternalRates('configuration.enable_external_rates'),
+  @JsonValue('configuration.allow_webhooks')
+  configurationAllowWebhooks('configuration.allow_webhooks'),
+  @JsonValue('configuration.valid_url_protocols')
+  configurationValidUrlProtocols('configuration.valid_url_protocols');
 
   final String? value;
 
@@ -518,8 +530,8 @@ enum RuleTriggerKeyword {
   hasAnyTag('has_any_tag'),
   @JsonValue('notes_contains')
   notesContains('notes_contains'),
-  @JsonValue('notes_start')
-  notesStart('notes_start'),
+  @JsonValue('notes_starts')
+  notesStarts('notes_starts'),
   @JsonValue('notes_end')
   notesEnd('notes_end'),
   @JsonValue('notes_are')
@@ -772,6 +784,8 @@ enum InterestPeriodProperty {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
 
+  @JsonValue('daily')
+  daily('daily'),
   @JsonValue('weekly')
   weekly('weekly'),
   @JsonValue('monthly')

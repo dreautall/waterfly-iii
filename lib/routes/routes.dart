@@ -1,3 +1,5 @@
+import 'dart:ui' show VoidCallback;
+
 import 'package:flutter_sharing_intent/model/sharing_file.dart';
 import 'package:kaisel/kaisel.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart'
@@ -18,7 +20,12 @@ final class LoginRoute extends AppRoute {
 }
 
 final class LockRoute extends AppRoute {
-  const LockRoute();
+  const LockRoute(this.onSuccess);
+
+  final VoidCallback onSuccess;
+
+  @override
+  List<Object?> get props => [onSuccess];
 }
 
 // Main App Tabs

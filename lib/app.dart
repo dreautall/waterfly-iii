@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -48,9 +49,25 @@ class _WaterflyAppState extends State<WaterflyApp> {
   final SettingsProvider _settingsProvider = SettingsProvider();
   final LayoutProvider _layoutProvider = LayoutProvider();
 
+  late final KaiselRouterConfig<AppRoute> _routerConfig;
+
   @override
   void initState() {
     super.initState();
+
+    _routerConfig = KaiselRouterConfig<AppRoute>(
+      initial: const SplashRoute(),
+      builder: buildScreen,
+      guards: <KaiselGuard<AppRoute>>[
+        createAuthGuard(_fireflyService),
+        createLockGuard(_settingsProvider),
+      ],
+      androidPredictiveBack: true,
+      reevaluateOn: Listenable.merge(<Listenable?>[
+        _fireflyService,
+        _settingsProvider,
+      ]),
+    );
 
     _initializePlatformServices();
     _handleStartup();
@@ -131,6 +148,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
     FlutterSharingIntent.instance.getInitialSharing().then((
       List<SharedFile> value,
     ) {
+      if (value.isEmpty) return;
+
       log.config("App was opened via file sharing");
       log.finest(
         () => "files: ${value.map((SharedFile f) => f.value).join(",")}",
@@ -175,6 +194,21 @@ class _WaterflyAppState extends State<WaterflyApp> {
     log.finer(() => "Loading done.");
     if (mounted) {
       setState(() => _startup = false);
+    }
+
+    //final AppRoute? intentRoute = _getInitialIntentRoute();
+    final AppRoute? intentRoute = null;
+
+    // Set initial target stack after startup resolves
+    if (intentRoute != null) {
+      unawaited(
+        _routerConfig.router.set(<AppRoute>[
+          const DashboardRoute(),
+          intentRoute,
+        ]),
+      );
+    } else {
+      unawaited(_routerConfig.router.set(<AppRoute>[const DashboardRoute()]));
     }
   }
 
@@ -273,67 +307,61 @@ class _WaterflyAppState extends State<WaterflyApp> {
               value: _layoutProvider,
             ),
           ],
-          builder: (BuildContext context, _) {
-            final SettingsProvider settings = context.watch<SettingsProvider>();
-            final FireflyService firefly = context.watch<FireflyService>();
-
-            return MaterialApp.router(
-              title: 'Waterfly III',
-              theme: ThemeData(
-                brightness: .light,
-                colorScheme: settings.dynamicColors
-                    ? cSchemeDynamicLight?.harmonized() ?? cSchemeLight
-                    : cSchemeLight,
-                useMaterial3: true,
-                // See https://github.com/flutter/flutter/issues/131042#issuecomment-1690737834
-                appBarTheme: const AppBarTheme(shape: RoundedRectangleBorder()),
-                pageTransitionsTheme: const PageTransitionsTheme(
-                  builders: <TargetPlatform, PageTransitionsBuilder>{
-                    TargetPlatform.android:
-                        PredictiveBackPageTransitionsBuilder(),
-                  },
+          child: Consumer<SettingsProvider>(
+            builder: (BuildContext context, SettingsProvider settings, _) {
+              return MaterialApp.router(
+                title: 'Waterfly III',
+                theme: ThemeData(
+                  brightness: .light,
+                  colorScheme: settings.dynamicColors
+                      ? cSchemeDynamicLight?.harmonized() ?? cSchemeLight
+                      : cSchemeLight,
+                  useMaterial3: true,
+                  // See https://github.com/flutter/flutter/issues/131042#issuecomment-1690737834
+                  appBarTheme: const AppBarTheme(
+                    shape: RoundedRectangleBorder(),
+                  ),
+                  pageTransitionsTheme: const PageTransitionsTheme(
+                    builders: <TargetPlatform, PageTransitionsBuilder>{
+                      TargetPlatform.android:
+                          PredictiveBackPageTransitionsBuilder(),
+                    },
+                  ),
+                  extensions: <ThemeExtension<dynamic>>[
+                    const TransactionColors(
+                      positiveColor: Colors.green,
+                      negativeColor: Colors.red,
+                      transferColor: Colors.blue,
+                      neutralColor: Colors.grey,
+                    ),
+                  ],
                 ),
-                extensions: <ThemeExtension<dynamic>>[
-                  const TransactionColors(
-                    positiveColor: Colors.green,
-                    negativeColor: Colors.red,
-                    transferColor: Colors.blue,
-                    neutralColor: Colors.grey,
-                  ),
+                darkTheme: ThemeData(
+                  brightness: .dark,
+                  colorScheme: settings.dynamicColors
+                      ? cSchemeDynamicDark?.harmonized() ?? cSchemeDark
+                      : cSchemeDark,
+                  useMaterial3: true,
+                  extensions: <ThemeExtension<dynamic>>[
+                    TransactionColors(
+                      positiveColor: Colors.green,
+                      negativeColor: Colors.red.shade300,
+                      transferColor: Colors.blue,
+                      neutralColor: Colors.grey,
+                    ),
+                  ],
+                ),
+                themeMode: settings.theme,
+                localizationsDelegates: <LocalizationsDelegate<dynamic>>[
+                  S.delegate,
+                  ...GlobalMaterialLocalizations.delegates,
                 ],
-              ),
-              darkTheme: ThemeData(
-                brightness: .dark,
-                colorScheme: settings.dynamicColors
-                    ? cSchemeDynamicDark?.harmonized() ?? cSchemeDark
-                    : cSchemeDark,
-                useMaterial3: true,
-                extensions: <ThemeExtension<dynamic>>[
-                  TransactionColors(
-                    positiveColor: Colors.green,
-                    negativeColor: Colors.red.shade300,
-                    transferColor: Colors.blue,
-                    neutralColor: Colors.grey,
-                  ),
-                ],
-              ),
-              themeMode: settings.theme,
-              localizationsDelegates: <LocalizationsDelegate<dynamic>>[
-                S.delegate,
-                ...GlobalMaterialLocalizations.delegates,
-              ],
-              supportedLocales: S.supportedLocales,
-              locale: settings.locale,
-              routerConfig: KaiselRouterConfig<AppRoute>(
-                initial: const SplashRoute(),
-                builder: buildScreen,
-                guards: <KaiselGuard<AppRoute>>[
-                  createAuthGuard(firefly),
-                  createLockGuard(settings),
-                ],
-              ),
-            );
-          },
+                supportedLocales: S.supportedLocales,
+                locale: settings.locale,
+                routerConfig: _routerConfig,
+              );
+            },
+          ),
         );
       },
     );

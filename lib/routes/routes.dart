@@ -25,7 +25,7 @@ final class LockRoute extends AppRoute {
   final VoidCallback onSuccess;
 
   @override
-  List<Object?> get props => [onSuccess];
+  List<Object?> get props => <Object?>[onSuccess];
 }
 
 // Main App Tabs
@@ -66,7 +66,7 @@ final class TransactionDetail extends AppRoute {
   final String? accountId;
 
   @override
-  List<Object?> get props => [
+  List<Object?> get props => <Object?>[
     transaction,
     notification,
     files,

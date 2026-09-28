@@ -5,6 +5,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_sharing_intent/flutter_sharing_intent.dart';
 import 'package:flutter_sharing_intent/model/sharing_file.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:logging/logging.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
@@ -19,14 +20,13 @@ import 'package:waterflyiii/pages/login.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/splash.dart';
 import 'package:waterflyiii/pages/transaction.dart';
+import 'package:waterflyiii/routes/guards.dart';
+import 'package:waterflyiii/routes/router.dart';
+import 'package:waterflyiii/routes/routes.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/theme.dart';
 
 final Logger log = Logger("App");
-
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>(
-  debugLabel: "Main Navigator",
-);
 
 class WaterflyApp extends StatefulWidget {
   const WaterflyApp({super.key});
@@ -96,6 +96,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
     quickActions.initialize((String shortcutType) {
       log.info("Was launched from QuickAction $shortcutType");
       _quickAction = shortcutType;
+      /* :TODO:
       if (!_startup && navigatorKey.currentState != null) {
         log.finest(() => "App already started, pushing route");
         navigatorKey.currentState!.push(
@@ -103,7 +104,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
             builder: (BuildContext context) => const TransactionPage(),
           ),
         );
-      }
+      }*/
     });
     quickActions.clearShortcutItems();
   }
@@ -276,7 +277,7 @@ class _WaterflyAppState extends State<WaterflyApp> {
             final SettingsProvider settings = context.watch<SettingsProvider>();
             final FireflyService firefly = context.watch<FireflyService>();
 
-            return MaterialApp(
+            return MaterialApp.router(
               title: 'Waterfly III',
               theme: ThemeData(
                 brightness: .light,
@@ -323,8 +324,14 @@ class _WaterflyAppState extends State<WaterflyApp> {
               ],
               supportedLocales: S.supportedLocales,
               locale: settings.locale,
-              navigatorKey: navigatorKey,
-              home: _getHome(settings, firefly),
+              routerConfig: KaiselRouterConfig<AppRoute>(
+                initial: const SplashRoute(),
+                builder: buildScreen,
+                guards: <KaiselGuard<AppRoute>>[
+                  createAuthGuard(firefly),
+                  createLockGuard(settings),
+                ],
+              ),
             );
           },
         );

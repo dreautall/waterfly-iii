@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -16,16 +15,12 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/layout.dart';
 import 'package:waterflyiii/notificationlistener.dart';
-import 'package:waterflyiii/pages/lock.dart';
-import 'package:waterflyiii/pages/login.dart';
-import 'package:waterflyiii/pages/navigation.dart';
-import 'package:waterflyiii/pages/splash.dart';
-import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/routes/guards.dart';
 import 'package:waterflyiii/routes/router.dart';
 import 'package:waterflyiii/routes/routes.dart';
 import 'package:waterflyiii/settings.dart';
-import 'package:waterflyiii/theme.dart';
+import 'package:waterflyiii/themes/dark.dart';
+import 'package:waterflyiii/themes/light.dart';
 
 final Logger log = Logger("App");
 
@@ -70,10 +65,10 @@ class _WaterflyAppState extends State<WaterflyApp> {
     );
 
     _initializePlatformServices();
-    _handleStartup();
   }
 
   void _initializePlatformServices() {
+    return; // :TODO:
     // Notifications (Android only)
     if (Platform.isAndroid) {
       _initNotifications();
@@ -184,34 +179,6 @@ class _WaterflyAppState extends State<WaterflyApp> {
     );
   }
 
-  Future<void> _handleStartup() async {
-    log.finer(() => "Load Step 1: Loading Settings");
-    await _settingsProvider.loadSettings();
-
-    log.finer(() => "Load Step 2: Sign in");
-    await _fireflyService.signInFromStorage();
-
-    log.finer(() => "Loading done.");
-    if (mounted) {
-      setState(() => _startup = false);
-    }
-
-    //final AppRoute? intentRoute = _getInitialIntentRoute();
-    final AppRoute? intentRoute = null;
-
-    // Set initial target stack after startup resolves
-    if (intentRoute != null) {
-      unawaited(
-        _routerConfig.router.set(<AppRoute>[
-          const DashboardRoute(),
-          intentRoute,
-        ]),
-      );
-    } else {
-      unawaited(_routerConfig.router.set(<AppRoute>[const DashboardRoute()]));
-    }
-  }
-
   @override
   void dispose() {
     _fireflyService.dispose();
@@ -228,68 +195,12 @@ class _WaterflyAppState extends State<WaterflyApp> {
     }
   }
 
-  Widget _getHome(SettingsProvider settings, FireflyService firefly) {
-    // 1. Show Splash during initial startup or until settings are loaded
-    if (_startup || !settings.loaded) {
-      log.finest(
-        () =>
-            "_getHome: showing splash (startup: $_startup, settings: ${settings.loaded})",
-      );
-      return const SplashPage();
-    }
-
-    // 2. Show LockPage if security is enabled and user isn't authenticated
-    if (settings.lock && !settings.isSessionAuthed) {
-      log.finest(
-        () =>
-            "_getHome: showing lockpage (authed: ${settings.isSessionAuthed})",
-      );
-      return LockPage(onSuccess: settings.sessionAuthed);
-    }
-
-    // 3. Handle Login/Errors
-    if (firefly.storageSignInException != null) {
-      log.finest(() => "_getHome: showing splash (storageSignInException)");
-      return const SplashPage();
-    }
-
-    if (!firefly.signedIn) {
-      log.finest(() => "_getHome: showing login");
-      return const LoginPage();
-    }
-
-    // 4. Handle Deep Links
-    if (_notificationPayload != null ||
-        _quickAction == "action_transaction_add" ||
-        (_filesSharedToApp?.isNotEmpty ?? false)) {
-      log.finest(() => "_getHome: showing transaction");
-      return TransactionPage(
-        notification: _notificationPayload,
-        files: _filesSharedToApp,
-      );
-    }
-
-    // 5. Default to Home
-    log.finest(() => "_getHome: showing navpage");
-    return const NavPage();
-  }
-
   @override
   Widget build(BuildContext context) {
     log.fine(() => "WaterflyApp() building");
 
     return DynamicColorBuilder(
       builder: (ColorScheme? cSchemeDynamicLight, ColorScheme? cSchemeDynamicDark) {
-        final ColorScheme cSchemeLight = .fromSeed(seedColor: Colors.blue);
-        final ColorScheme cSchemeDark =
-            .fromSeed(
-              seedColor: Colors.blue,
-              brightness: Brightness.dark,
-            ).copyWith(
-              surfaceContainerHighest: Colors.blueGrey.shade900,
-              onSurfaceVariant: Colors.white,
-            );
-
         log.finest(
           () =>
               "has dynamic color? light: ${cSchemeDynamicLight != null}, dark: ${cSchemeDynamicDark != null}",
@@ -311,46 +222,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
             builder: (BuildContext context, SettingsProvider settings, _) {
               return MaterialApp.router(
                 title: 'Waterfly III',
-                theme: ThemeData(
-                  brightness: .light,
-                  colorScheme: settings.dynamicColors
-                      ? cSchemeDynamicLight?.harmonized() ?? cSchemeLight
-                      : cSchemeLight,
-                  useMaterial3: true,
-                  // See https://github.com/flutter/flutter/issues/131042#issuecomment-1690737834
-                  appBarTheme: const AppBarTheme(
-                    shape: RoundedRectangleBorder(),
-                  ),
-                  pageTransitionsTheme: const PageTransitionsTheme(
-                    builders: <TargetPlatform, PageTransitionsBuilder>{
-                      TargetPlatform.android:
-                          PredictiveBackPageTransitionsBuilder(),
-                    },
-                  ),
-                  extensions: <ThemeExtension<dynamic>>[
-                    const TransactionColors(
-                      positiveColor: Colors.green,
-                      negativeColor: Colors.red,
-                      transferColor: Colors.blue,
-                      neutralColor: Colors.grey,
-                    ),
-                  ],
-                ),
-                darkTheme: ThemeData(
-                  brightness: .dark,
-                  colorScheme: settings.dynamicColors
-                      ? cSchemeDynamicDark?.harmonized() ?? cSchemeDark
-                      : cSchemeDark,
-                  useMaterial3: true,
-                  extensions: <ThemeExtension<dynamic>>[
-                    TransactionColors(
-                      positiveColor: Colors.green,
-                      negativeColor: Colors.red.shade300,
-                      transferColor: Colors.blue,
-                      neutralColor: Colors.grey,
-                    ),
-                  ],
-                ),
+                theme: lightTheme(settings, cSchemeDynamicLight),
+                darkTheme: darkTheme(settings, cSchemeDynamicDark),
                 themeMode: settings.theme,
                 localizationsDelegates: <LocalizationsDelegate<dynamic>>[
                   S.delegate,

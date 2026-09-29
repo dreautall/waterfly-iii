@@ -12,7 +12,7 @@ import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/settings.dart';
-import 'package:waterflyiii/theme.dart';
+import 'package:waterflyiii/themes/transactioncolors.dart';
 import 'package:waterflyiii/widgets/fabs.dart';
 import 'package:waterflyiii/widgets/privacybutton.dart';
 

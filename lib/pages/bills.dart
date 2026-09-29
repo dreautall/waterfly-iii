@@ -12,7 +12,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/bills/billdetails.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/settings.dart';
-import 'package:waterflyiii/theme.dart';
+import 'package:waterflyiii/themes/transactioncolors.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/privacybutton.dart';
 

@@ -12,7 +12,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
-import 'package:waterflyiii/theme.dart';
+import 'package:waterflyiii/themes/transactioncolors.dart';
 import 'package:waterflyiii/widgets/fabs.dart';
 
 Widget accountRowBuilder(

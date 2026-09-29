@@ -24,7 +24,7 @@ import 'package:waterflyiii/pages/transaction/splitcard.dart';
 import 'package:waterflyiii/pages/transaction/state.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
-import 'package:waterflyiii/theme.dart';
+import 'package:waterflyiii/themes/transactioncolors.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/autocompletetext.dart';
 

@@ -38,7 +38,7 @@ dependencies:
   provider: ^6.1.2
   chopper: ^8.7.0
   infinite_scroll_pagination: ^5.1.1
-  badges: ^3.1.2
+  badges: ^4.0.1
   filesize: ^2.0.1
   community_charts_flutter: ^1.0.2
   file_picker: ^13.1.0
@@ -52,7 +52,7 @@ dependencies:
   flutter_email_sender: ^10.0.1
   version: ^3.0.2
   stock: ^1.1.0
-  syncfusion_flutter_charts: ^34.2.7
+  syncfusion_flutter_charts: ^35.1.37
   flutter_timezone: ^5.0.0
   flutter_sharing_intent: ^2.0.3
   open_file: ^4.0.0

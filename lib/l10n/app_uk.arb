@@ -913,97 +913,13 @@
     "@settingsLockscreenInitial": {
         "description": "Prompt to authenticate once to set up the lockscreen"
     },
-    "settingsNLAppAccount": "Типовий рахунок",
-    "@settingsNLAppAccount": {
-        "description": "Default account which will be used for the transaction."
-    },
-    "settingsNLAppAccountDynamic": "<Динамічно>",
-    "@settingsNLAppAccountDynamic": {
-        "description": "Account will be selected dynamically by the content of the notification."
-    },
-    "settingsNLAppAdd": "Додати програму",
-    "@settingsNLAppAdd": {
-        "description": "Button title to add a new app."
-    },
-    "settingsNLAppAddHelp": "Натисніть, щоб додати програму для відстеження. У списку відображатимуться лише відповідні програми.",
-    "@settingsNLAppAddHelp": {
-        "description": "Help text below adding the new app button."
-    },
-    "settingsNLAppAddInfo": "Здійсніть кілька транзакцій, після яких ви отримуєте сповіщення на телефон, щоб додати програми до цього списку. Якщо програма все одно не з'являється, будь ласка, повідомте про це на app@vogt.pw.",
-    "@settingsNLAppAddInfo": {
-        "description": "Help text when no more app is available to add."
-    },
-    "settingsNLAutoAdd": "Створювати транзакцію без взаємодії",
-    "@settingsNLAutoAdd": {
-        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
-    },
     "settingsNLDescription": "Ця служба дозволяє отримувати деталі транзакцій з вхідних push-сповіщень. Крім того, ви можете вибрати типовий рахунок, до якого має бути прив'язана транзакція — якщо значення не встановлено, програма спробує витягти рахунок зі сповіщення.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
     },
-    "settingsNLEmptyNote": "Залишати поле примітки порожнім",
-    "@settingsNLEmptyNote": {
-        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
-    },
-    "settingsNLHistory": "Історія сповіщень",
-    "@settingsNLHistory": {
-        "description": "Label: Notification History view"
-    },
-    "settingsNLHistoryEmpty": "Сповіщень поки не записано.",
-    "@settingsNLHistoryEmpty": {
-        "description": "Notification history is empty"
-    },
-    "settingsNLHistoryLongDescription": "{notificationHistorySize, plural, one {Це історія останнього сповіщення, отриманого програмою. Крім того, ви можете створювати транзакції з (дійсних) сповіщень або дізнатися причину, чому сповіщення не вдалося опрацювати.} few {Це історія останніх {notificationHistorySize} сповіщень, отриманих програмою. Крім того, ви можете створювати транзакції з (дійсних) сповіщень або дізнатися причину, чому сповіщення не вдалося опрацювати.} many {Це історія останніх {notificationHistorySize} сповіщень, отриманих програмою. Крім того, ви можете створювати транзакції з (дійсних) сповіщень або дізнатися причину, чому сповіщення не вдалося опрацювати.} other {Це історія останніх {notificationHistorySize} сповіщень, отриманих програмою. Крім того, ви можете створювати транзакції з (дійсних) сповіщень або дізнатися причину, чому сповіщення не вдалося опрацювати.}}",
-    "@settingsNLHistoryLongDescription": {
-        "description": "Long description of the notification history feature.",
-        "placeholders": {
-            "notificationHistorySize": {
-                "type": "int",
-                "example": "5"
-            }
-        }
-    },
-    "settingsNLHistoryRejectedReason": "Сповіщення пропущено: {reason, select, noMoney{Грошову суму не знайдено} noCurrency{Валюту не знайдено} appNotUsed{Програму не відстежуємо} other{Невідома причина}}.",
-    "@settingsNLHistoryRejectedReason": {
-        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
-        "placeholders": {
-            "reason": {
-                "type": "String",
-                "example": "noMoney"
-            }
-        }
-    },
-    "settingsNLHistoryShortDescription": "Переглянути попередні сповіщення",
-    "@settingsNLHistoryShortDescription": {
-        "description": "Short description of the notification history feature (for the settings navigation)"
-    },
-    "settingsNLPermissionGrant": "Торкніться, щоб надати дозвіл.",
-    "@settingsNLPermissionGrant": {
-        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
-    },
     "settingsNLPermissionNotGranted": "Дозвіл не надано.",
     "@settingsNLPermissionNotGranted": {
         "description": "A requested permission was not granted."
-    },
-    "settingsNLPermissionRemove": "Скасувати дозвіл?",
-    "@settingsNLPermissionRemove": {
-        "description": "Dialog title asking if permission should be removed."
-    },
-    "settingsNLPermissionRemoveHelp": "Щоб вимкнути цю службу, натисніть на додаток і видаліть дозволи на наступному екрані.",
-    "@settingsNLPermissionRemoveHelp": {
-        "description": "Dialog text giving hint how to remove the permission."
-    },
-    "settingsNLPrefillTXTitle": "Попередньо заповнювати назву транзакції заголовком сповіщення",
-    "@settingsNLPrefillTXTitle": {
-        "description": "Setting pre-fill transaction title with notification title."
-    },
-    "settingsNLRegularExpression": "Регулярний вираз (необов'язково)",
-    "@settingsNLRegularExpression": {
-        "description": "Setting to use a custom regular expression (regex)."
-    },
-    "settingsNLRegularExpressionInvalid": "Недійсний регулярний вираз",
-    "@settingsNLRegularExpressionInvalid": {
-        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Перевірка стану…",
     "@settingsNLServiceChecking": {

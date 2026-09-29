@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
@@ -16,41 +14,6 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/pages/bills.dart';
 
 final Logger log = Logger("Settings");
-
-class NotificationAppSettings {
-  NotificationAppSettings(
-    this.appName, {
-    this.defaultAccountId,
-    this.includeTitle = true,
-    this.autoAdd = false,
-    this.emptyNote = false,
-    this.regex,
-  });
-
-  final String appName;
-  String? defaultAccountId;
-  bool includeTitle = true;
-  bool autoAdd = false;
-  bool emptyNote = false;
-  RegExp? regex;
-
-  NotificationAppSettings.fromJson(Map<String, dynamic> json)
-    : appName = json['appName'],
-      defaultAccountId = json['defaultAccountId'],
-      includeTitle = json['includeTitle'] ?? true,
-      autoAdd = json['autoAdd'] ?? false,
-      emptyNote = json['emptyNote'] ?? false,
-      regex = (json['regex'] != null) ? RegExp(json['regex']) : null;
-
-  Map<String, dynamic> toJson() => <String, dynamic>{
-    'appName': appName,
-    'defaultAccountId': defaultAccountId,
-    'includeTitle': includeTitle,
-    'autoAdd': autoAdd,
-    'emptyNote': emptyNote,
-    'regex': regex?.pattern,
-  };
-}
 
 // in default order
 enum DashboardCards {
@@ -83,35 +46,6 @@ enum TransactionDateFilter {
   lastYear,
   all,
 }
-
-class PastNotification {
-  PastNotification(this.appName, this.title, this.body, this.time, this.reason);
-
-  final String appName;
-  final String title;
-  final String body;
-  final DateTime time;
-  PastNotificationMissedReasons? reason;
-
-  PastNotification.fromJson(Map<String, dynamic> json)
-    : appName = json['appName'],
-      title = json['title'],
-      body = json['body'],
-      time = DateTime.fromMillisecondsSinceEpoch(json['time']),
-      reason = (json['reason'] != null && json['reason'] != '')
-          ? PastNotificationMissedReasons.values[json['reason']]
-          : null;
-
-  Map<String, dynamic> toJson() => <String, dynamic>{
-    'appName': appName,
-    'title': title,
-    'body': body,
-    'time': time.millisecondsSinceEpoch,
-    'reason': reason?.index,
-  };
-}
-
-enum PastNotificationMissedReasons { noMoney, noCurrency, appNotUsed }
 
 class SettingsBitmask {
   int _value;
@@ -162,11 +96,6 @@ class SettingsProvider with ChangeNotifier {
   static const String settingLocale = "LOCALE";
   static const String settingLock = "LOCK";
   static const String settingShowFutureTXs = "SHOWFUTURETXS";
-  static const String settingNLKnownApps = "NL_KNOWNAPPS";
-  static const String settingNLUsedApps = "NL_USEDAPPS";
-  static const String settingNLAppPrefix = "NL_APP_";
-  static const String settingNLHistory = "NL_HISTORY";
-  static const int settingNLHistoryLength = 15;
   static const String settingTheme = "THEME";
   static const String settingThemeDark = "DARK";
   static const String settingThemeLight = "LIGHT";
@@ -215,9 +144,6 @@ class SettingsProvider with ChangeNotifier {
 
   bool _loading = false;
 
-  List<String> _notificationApps = <String>[];
-  List<String> get notificationApps => _notificationApps;
-
   BillsLayout _billsLayout = .grouped;
   BillsLayout get billsLayout => _billsLayout;
   BillsSort _billsSort = .name;
@@ -244,6 +170,32 @@ class SettingsProvider with ChangeNotifier {
   List<String> get autoTagAll => _autoTagAll;
   List<String> _autoTagNL = <String>[];
   List<String> get autoTagNL => _autoTagNL;
+
+  static Future<bool> loadUseServerTime({
+    Future<bool> Function(String key)? containsKey,
+    Future<int?> Function(String key)? getInt,
+    Future<bool?> Function(String key)? getLegacyBool,
+  }) async {
+    SharedPreferencesAsync? preferences;
+    SharedPreferencesAsync getPreferences() =>
+        preferences ??= SharedPreferencesAsync();
+    final Future<bool> Function(String) readContainsKey =
+        containsKey ?? (String key) => getPreferences().containsKey(key);
+    final Future<int?> Function(String) readInt =
+        getInt ?? (String key) => getPreferences().getInt(key);
+    if (await readContainsKey(settingsBitmask)) {
+      final SettingsBitmask settings = SettingsBitmask(
+        await readInt(settingsBitmask) ?? 0,
+      );
+      return settings[.useServerTime];
+    }
+
+    final Future<bool?> Function(String) readLegacyBool =
+        getLegacyBool ??
+        (String key) async =>
+            (await SharedPreferences.getInstance()).getBool(key);
+    return await readLegacyBool(settingUseServerTime) ?? true;
+  }
 
   Future<void> migrateLegacy(SharedPreferencesAsync prefs) async {
     log.config("trying to migrate old prefs");
@@ -277,13 +229,6 @@ class SettingsProvider with ChangeNotifier {
       await prefs.setString(settingLocale, locale);
     }
 
-    final List<String>? notificationApps = oldPrefs.getStringList(
-      settingNLUsedApps,
-    );
-    if (notificationApps != null) {
-      await prefs.setStringList(settingNLUsedApps, notificationApps);
-    }
-
     final int? billsLayoutIndex = oldPrefs.getInt(settingBillsDefaultLayout);
     if (billsLayoutIndex != null) {
       await prefs.setInt(settingBillsDefaultLayout, billsLayoutIndex);
@@ -309,25 +254,6 @@ class SettingsProvider with ChangeNotifier {
         settingsCategoriesSumExcluded,
         categoriesSumExcluded,
       );
-    }
-
-    // Migrate notification settings
-    final List<String>? knownApps = oldPrefs.getStringList(settingNLKnownApps);
-    if (knownApps != null) {
-      await prefs.setStringList(settingNLKnownApps, knownApps);
-    }
-    final List<String>? usedApps = oldPrefs.getStringList(settingNLUsedApps);
-    if (usedApps != null) {
-      await prefs.setStringList(settingNLUsedApps, usedApps);
-      for (String packageName in usedApps) {
-        final String? json = oldPrefs.getString(
-          "$settingNLAppPrefix$packageName",
-        );
-        if (json == null) {
-          continue;
-        }
-        await prefs.setString("$settingNLAppPrefix$packageName", json);
-      }
     }
   }
 
@@ -386,9 +312,6 @@ class SettingsProvider with ChangeNotifier {
       log.config("not setting debug");
       Logger.root.level = kDebugMode ? .ALL : .INFO;
     }
-
-    _notificationApps =
-        await prefs.getStringList(settingNLUsedApps) ?? <String>[];
 
     final int? billsLayoutIndex = await prefs.getInt(settingBillsDefaultLayout);
     _billsLayout = billsLayoutIndex == null
@@ -587,111 +510,6 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> notificationAddKnownApp(String packageName) async {
-    final SharedPreferencesAsync prefs = SharedPreferencesAsync();
-    final List<String> apps =
-        await prefs.getStringList(settingNLKnownApps) ?? <String>[];
-
-    if (packageName.isEmpty || apps.contains(packageName)) {
-      return;
-    }
-
-    apps.add(packageName);
-    return prefs.setStringList(settingNLKnownApps, apps);
-  }
-
-  Future<List<String>> notificationKnownApps({bool filterUsed = false}) async {
-    final List<String> apps =
-        await SharedPreferencesAsync().getStringList(settingNLKnownApps) ??
-        <String>[];
-    if (filterUsed) {
-      final List<String> knownApps = await notificationUsedApps();
-      return apps
-          .where((String element) => !knownApps.contains(element))
-          .toList();
-    }
-
-    return apps;
-  }
-
-  Future<bool> notificationAddUsedApp(String packageName) async {
-    final SharedPreferencesAsync prefs = SharedPreferencesAsync();
-    final List<String> apps =
-        await prefs.getStringList(settingNLUsedApps) ?? <String>[];
-
-    if (packageName.isEmpty || apps.contains(packageName)) {
-      return false;
-    }
-
-    apps.add(packageName);
-    await prefs.setStringList(settingNLUsedApps, apps);
-
-    _notificationApps = apps;
-
-    log.finest(() => "notify SettingsProvider->notificationAddUsedApp()");
-    notifyListeners();
-    return true;
-  }
-
-  Future<bool> notificationRemoveUsedApp(String packageName) async {
-    final SharedPreferencesAsync prefs = SharedPreferencesAsync();
-    final List<String> apps =
-        await prefs.getStringList(settingNLUsedApps) ?? <String>[];
-
-    if (packageName.isEmpty || !apps.contains(packageName)) {
-      return false;
-    }
-
-    apps.remove(packageName);
-    await prefs.remove("$settingNLAppPrefix$packageName");
-    await prefs.setStringList(settingNLUsedApps, apps);
-
-    _notificationApps = apps;
-
-    log.finest(() => "notify SettingsProvider->notificationRemoveUsedApp()");
-    notifyListeners();
-    return true;
-  }
-
-  Future<List<String>> notificationUsedApps() async {
-    final List<String> apps =
-        await SharedPreferencesAsync().getStringList(settingNLUsedApps) ??
-        <String>[];
-    if (!const ListEquality<String>().equals(apps, _notificationApps)) {
-      _notificationApps = apps;
-
-      log.finest(() => "notify SettingsProvider->notificationUsedApps()");
-      notifyListeners();
-    }
-
-    return _notificationApps;
-  }
-
-  Future<NotificationAppSettings> notificationGetAppSettings(
-    String packageName,
-  ) async {
-    final String json =
-        await SharedPreferencesAsync().getString(
-          "$settingNLAppPrefix$packageName",
-        ) ??
-        "";
-    try {
-      return .fromJson(jsonDecode(json));
-    } on FormatException catch (_) {
-      return NotificationAppSettings(packageName);
-    }
-  }
-
-  Future<void> notificationSetAppSettings(
-    String packageName,
-    NotificationAppSettings settings,
-  ) async {
-    await SharedPreferencesAsync().setString(
-      "$settingNLAppPrefix$packageName",
-      jsonEncode(settings),
-    );
-  }
-
   Future<void> setBillsLayout(BillsLayout billsLayout) async {
     if (billsLayout == _billsLayout) {
       return;
@@ -837,32 +655,6 @@ class SettingsProvider with ChangeNotifier {
 
     log.finest(() => "notify SettingsProvider->setTransactionDateFilter()");
     notifyListeners();
-  }
-
-  Future<void> notificationHistoryAdd(PastNotification notification) async {
-    final SharedPreferencesAsync prefs = SharedPreferencesAsync();
-    final List<String> notifs =
-        await prefs.getStringList(settingNLHistory) ?? <String>[];
-
-    if (notifs.length > settingNLHistoryLength) {
-      notifs.removeAt(0);
-    }
-
-    notifs.add(jsonEncode(notification));
-
-    return prefs.setStringList(settingNLHistory, notifs);
-  }
-
-  Future<List<PastNotification>> notificationHistoryGet() async {
-    final List<String> notifsStr =
-        await SharedPreferencesAsync().getStringList(settingNLHistory) ??
-        <String>[];
-
-    final List<PastNotification> notifs = notifsStr
-        .map((String e) => PastNotification.fromJson(jsonDecode(e)))
-        .toList();
-
-    return notifs;
   }
 
   Future<void> setAutoTagAll(List<String> tags) async {

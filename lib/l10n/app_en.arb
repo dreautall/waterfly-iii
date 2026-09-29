@@ -962,101 +962,21 @@
     "@settingsLockscreenInitial": {
         "description": "Prompt to authenticate once to set up the lockscreen"
     },
-    "settingsNLAppAccount": "Default Account",
-    "@settingsNLAppAccount": {
-        "description": "Default account which will be used for the transaction."
-    },
-    "settingsNLAppAccountDynamic": "<Dynamic>",
-    "@settingsNLAppAccountDynamic": {
-        "description": "Account will be selected dynamically by the content of the notification."
-    },
-    "settingsNLAppAdd": "Add App",
-    "@settingsNLAppAdd": {
-        "description": "Button title to add a new app."
-    },
-    "settingsNLAppAddHelp": "Click to add an app to listen to. Only eligible apps will show up in the list.",
-    "@settingsNLAppAddHelp": {
-        "description": "Help text below adding the new app button."
-    },
-    "settingsNLAppAddInfo": "Make some transactions where you receive phone notifications to add apps to this list. If the app still doesn't show up, please report it to app@vogt.pw.",
-    "@settingsNLAppAddInfo": {
-        "description": "Help text when no more app is available to add."
-    },
-    "settingsNLAutoAdd": "Create transaction without interaction",
-    "@settingsNLAutoAdd": {
-        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
-    },
-    "settingsNLDescription": "This service allows you to fetch transaction details from incoming push notifications. Additionally, you can select a default account which the transaction should be assigned to - if no value is set, it tries to extract an account from the notification.",
+    "settingsNLDescription": "Turn supported push notifications into transactions. Add apps, configure how Waterfly reads their notifications, and review created transactions before enabling automation.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
-    },
-    "settingsNLEmptyNote": "Keep note field empty",
-    "@settingsNLEmptyNote": {
-        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
-    },
-    "settingsNLHistory": "Notification History",
-    "@settingsNLHistory": {
-        "description": "Label: Notification History view"
-    },
-    "settingsNLHistoryEmpty": "No notifications recorded so far.",
-    "@settingsNLHistoryEmpty": {
-        "description": "Notification history is empty"
-    },
-    "settingsNLHistoryLongDescription": "This is a history of the last {notificationHistorySize} notifications received by the app. Additionally, you can create transactions from (valid) notifications or see the reason why a notification could not be processed.",
-    "@settingsNLHistoryLongDescription": {
-        "description": "Long description of the notification history feature.",
-        "placeholders": {
-            "notificationHistorySize": {
-                "type": "int",
-                "example": "5"
-            }
-        }
-    },
-    "settingsNLHistoryRejectedReason": "Notification skipped: {reason, select, noMoney{No monetary value found} noCurrency{No currency found} appNotUsed{App not listened to} other{Unknown reason}}.",
-    "@settingsNLHistoryRejectedReason": {
-        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
-        "placeholders": {
-            "reason": {
-                "type": "String",
-                "example": "noMoney"
-            }
-        }
-    },
-    "settingsNLHistoryShortDescription": "List previous notifications",
-    "@settingsNLHistoryShortDescription": {
-        "description": "Short description of the notification history feature (for the settings navigation)"
-    },
-    "settingsNLPermissionGrant": "Tap to grant permission.",
-    "@settingsNLPermissionGrant": {
-        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
     },
     "settingsNLPermissionNotGranted": "Permission not granted.",
     "@settingsNLPermissionNotGranted": {
         "description": "A requested permission was not granted."
     },
-    "settingsNLPermissionRemove": "Remove permission?",
-    "@settingsNLPermissionRemove": {
-        "description": "Dialog title asking if permission should be removed."
-    },
-    "settingsNLPermissionRemoveHelp": "To disable this service, click on the app and remove the permissions in the next screen.",
-    "@settingsNLPermissionRemoveHelp": {
-        "description": "Dialog text giving hint how to remove the permission."
-    },
-    "settingsNLPrefillTXTitle": "Prefill transaction title with notification title",
-    "@settingsNLPrefillTXTitle": {
-        "description": "Setting pre-fill transaction title with notification title."
-    },
-    "settingsNLRegularExpression": "Regular Expression (optional)",
-    "@settingsNLRegularExpression": {
-        "description": "Setting to use a custom regular expression (regex)."
-    },
-    "settingsNLRegularExpressionInvalid": "Invalid Regular Expression",
-    "@settingsNLRegularExpressionInvalid": {
-        "description": "Custom provided regular expression is invalid."
-    },
     "settingsNLServiceChecking": "Checking status…",
     "@settingsNLServiceChecking": {
         "description": "Checking the status of the background service"
+    },
+    "settingsNLServiceCheckingTitle": "Checking notification access",
+    "@settingsNLServiceCheckingTitle": {
+        "description": "Title shown while checking notification listener readiness."
     },
     "settingsNLServiceCheckingError": "Error checking status: {error}",
     "@settingsNLServiceCheckingError": {
@@ -1068,6 +988,34 @@
                 "example": "Timeout"
             }
         }
+    },
+    "settingsNLServiceUnavailableTitle": "Status unavailable",
+    "@settingsNLServiceUnavailableTitle": {
+        "description": "Title shown when notification listener readiness cannot be checked."
+    },
+    "settingsNLAccessNeededTitle": "Notification access needed",
+    "@settingsNLAccessNeededTitle": {
+        "description": "Title shown when notification listener access has not been granted."
+    },
+    "settingsNLAccessNeededDescription": "Grant notification access so Waterfly can read supported notifications.",
+    "@settingsNLAccessNeededDescription": {
+        "description": "Description shown when notification listener access has not been granted."
+    },
+    "settingsNLAccessEnabledTitle": "Notification access enabled",
+    "@settingsNLAccessEnabledTitle": {
+        "description": "Title shown when notification listener access is enabled and running."
+    },
+    "settingsNLAccessEnabledDescription": "Waterfly can listen for supported notifications.",
+    "@settingsNLAccessEnabledDescription": {
+        "description": "Description shown when notification listener access is enabled and running."
+    },
+    "settingsNLListenerStoppedTitle": "Listener service stopped",
+    "@settingsNLListenerStoppedTitle": {
+        "description": "Title shown when notification access is granted but the listener service is stopped."
+    },
+    "settingsNLListenerStoppedDescription": "Open Android notification access settings and re-enable Waterfly.",
+    "@settingsNLListenerStoppedDescription": {
+        "description": "Description shown when notification access is granted but the listener service is stopped."
     },
     "settingsNLServiceRunning": "Service is running.",
     "@settingsNLServiceRunning": {
@@ -1330,5 +1278,1567 @@
     "transactionTypeWithdrawal": "Withdrawal",
     "@transactionTypeWithdrawal": {
         "description": "Withdrawal transaction type"
-    }
+    },
+    "notificationsRuleActionCount": "{count, plural, =0{No actions} =1{1 action} other{{count} actions}}",
+    "@notificationsRuleActionCount": {
+        "description": "Number of actions configured for a notification rule.",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "2"
+            }
+        }
+    },
+    "notificationsRuleAppliesWhenTitle": "Applies when",
+    "@notificationsRuleAppliesWhenTitle": {
+        "description": "Title of the applicability conditions section in a notification rule."
+    },
+    "notificationsRuleAppliesWhenDescription": "Rules are checked from top to bottom. This rule is selected when every condition below matches.",
+    "@notificationsRuleAppliesWhenDescription": {
+        "description": "Description of first-match behavior in the rule applicability section."
+    },
+    "notificationsRuleAlwaysMatches": "No conditions: this rule always matches.",
+    "@notificationsRuleAlwaysMatches": {
+        "description": "Empty state for a rule without applicability conditions."
+    },
+    "notificationsRuleAlwaysActionsTitle": "Always executed actions",
+    "@notificationsRuleAlwaysActionsTitle": {
+        "description": "Title of actions that always run for a selected notification rule."
+    },
+    "notificationsRuleAlwaysActionsDescription": "Run whenever this rule is selected, before matching conditional actions.",
+    "@notificationsRuleAlwaysActionsDescription": {
+        "description": "Description of the actions that always run for a selected notification rule."
+    },
+    "notificationsRuleConditionalActionsTitle": "Conditional actions",
+    "@notificationsRuleConditionalActionsTitle": {
+        "description": "Title of the conditional action groups section."
+    },
+    "notificationsRuleConditionalActionsDescription": "Every matching group runs from top to bottom. Later values override earlier ones.",
+    "@notificationsRuleConditionalActionsDescription": {
+        "description": "Description of conditional action group ordering and override behavior."
+    },
+    "notificationsRuleNoConditionalActions": "No conditional actions",
+    "@notificationsRuleNoConditionalActions": {
+        "description": "Empty state for a rule without conditional action groups."
+    },
+    "notificationsRuleAddConditionalActions": "Add conditional action",
+    "@notificationsRuleAddConditionalActions": {
+        "description": "Button label for adding a conditional action group."
+    },
+    "notificationsRuleConditionalActionName": "Conditional action name",
+    "@notificationsRuleConditionalActionName": {
+        "description": "Label for the conditional action name field."
+    },
+    "notificationsRuleNameConditionalActionDescription": "Give this conditional action a clear name.",
+    "@notificationsRuleNameConditionalActionDescription": {
+        "description": "Description shown before creating a conditional action."
+    },
+    "notificationsRuleConditionalActionOptions": "Conditional action options",
+    "@notificationsRuleConditionalActionOptions": {
+        "description": "Tooltip for a conditional action options menu."
+    },
+    "notificationsRuleRenameConditionalActionTitle": "Rename conditional action",
+    "@notificationsRuleRenameConditionalActionTitle": {
+        "description": "Title for the rename conditional action dialog."
+    },
+    "notificationsRuleRenameConditionalActionDescription": "Choose a name that describes when these actions run.",
+    "@notificationsRuleRenameConditionalActionDescription": {
+        "description": "Description for the rename conditional action dialog."
+    },
+    "notificationsRuleRemoveConditionalActionTitle": "Remove conditional action?",
+    "@notificationsRuleRemoveConditionalActionTitle": {
+        "description": "Title for the conditional action removal confirmation dialog."
+    },
+    "notificationsRuleRemoveConditionalActionDescription": "\"{name}\" and all of its conditions and actions will be removed.",
+    "@notificationsRuleRemoveConditionalActionDescription": {
+        "description": "Description for the conditional action removal confirmation dialog.",
+        "placeholders": {
+            "name": {
+                "type": "String",
+                "example": "Salary source"
+            }
+        }
+    },
+    "notificationsRuleConditionalGroupWhenTitle": "Applies when",
+    "@notificationsRuleConditionalGroupWhenTitle": {
+        "description": "Title of the conditions section in a conditional action group."
+    },
+    "notificationsRuleConditionalGroupWhenDescription": "This group runs when every condition below matches the notification or extracted values.",
+    "@notificationsRuleConditionalGroupWhenDescription": {
+        "description": "Description of conditions in a conditional action group."
+    },
+    "notificationsRuleConditionalGroupNoConditions": "No conditions defined. This conditional action will not run.",
+    "@notificationsRuleConditionalGroupNoConditions": {
+        "description": "Empty state for a conditional action group without conditions."
+    },
+    "notificationsRuleConditionalGroupNoActions": "No actions defined. This conditional action will not change the transaction.",
+    "@notificationsRuleConditionalGroupNoActions": {
+        "description": "Empty state for a conditional action group without actions."
+    },
+    "notificationsRuleConditionalGroupNeedsConditionsMessage": "Add at least one condition so this conditional action only runs when it should.",
+    "@notificationsRuleConditionalGroupNeedsConditionsMessage": {
+        "description": "Status message shown when a conditional action group has no conditions."
+    },
+    "notificationsRuleConditionalGroupNeedsActionsMessage": "Add at least one action so this conditional action can change the transaction.",
+    "@notificationsRuleConditionalGroupNeedsActionsMessage": {
+        "description": "Status message shown when a conditional action group has no actions."
+    },
+    "notificationsRuleActionsDescription": "Choose which transaction fields this rule sets when its conditions match.",
+    "@notificationsRuleActionsDescription": {
+        "description": "Description of the custom notification rule actions section."
+    },
+    "notificationsRuleActionsTitle": "Actions",
+    "@notificationsRuleActionsTitle": {
+        "description": "Title of the custom notification rule actions section."
+    },
+    "@notificationsRuleDefaultActionsTitle": {
+        "description": "Title of the actions section for an advanced default notification rule."
+    },
+    "notificationsRuleAddCondition": "Add condition",
+    "@notificationsRuleAddCondition": {
+        "description": "Button label for adding a notification rule condition."
+    },
+    "@notificationsRuleReady": {
+        "description": "Status label for a notification rule that is ready to use."
+    },
+    "notificationsRuleConditionCount": "{count, plural, =0{No conditions} =1{1 condition} other{{count} conditions}}",
+    "@notificationsRuleConditionCount": {
+        "description": "Number of conditions configured for a notification rule.",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "2"
+            }
+        }
+    },
+    "notificationsRuleConditionCapture": "Capture: {capture}",
+    "@notificationsRuleConditionCapture": {
+        "description": "Custom extractor capture used by a condition.",
+        "placeholders": {
+            "capture": {
+                "type": "String",
+                "example": "vendor"
+            }
+        }
+    },
+    "notificationsRuleConditionCaptures": "Captures: {captures}",
+    "@notificationsRuleConditionCaptures": {
+        "description": "Custom extractor captures used by a condition.",
+        "placeholders": {
+            "captures": {
+                "type": "String",
+                "example": "vendor, amount"
+            }
+        }
+    },
+    "notificationsRuleMatches": "Matches",
+    "@notificationsRuleMatches": {
+        "description": "Compact test result for a matching condition."
+    },
+    "notificationsRuleDoesNotMatch": "Does not match",
+    "@notificationsRuleDoesNotMatch": {
+        "description": "Compact test result for a non-matching condition."
+    },
+    "notificationsRuleCouldNotEvaluate": "Could not evaluate",
+    "@notificationsRuleCouldNotEvaluate": {
+        "description": "Compact test result when a condition operand could not be resolved."
+    },
+    "notificationsRuleSampleValueLabel": "Sample value: ",
+    "@notificationsRuleSampleValueLabel": {
+        "description": "Label for a resolved condition operand in test mode."
+    },
+    "notificationsRuleLeftSampleValueLabel": "Left value: ",
+    "@notificationsRuleLeftSampleValueLabel": {
+        "description": "Label for the left condition operand in test mode."
+    },
+    "notificationsRuleRightSampleValueLabel": "Right value: ",
+    "@notificationsRuleRightSampleValueLabel": {
+        "description": "Label for the right condition operand in test mode."
+    },
+    "notificationsRuleConditionMatchSummary": "{matched} of {total} match",
+    "@notificationsRuleConditionMatchSummary": {
+        "description": "Test-mode summary of matching child conditions.",
+        "placeholders": {
+            "matched": {
+                "type": "int",
+                "example": "2"
+            },
+            "total": {
+                "type": "int",
+                "example": "3"
+            }
+        }
+    },
+    "notificationsRuleConditionUnresolvedSummary": "{count, plural, =1{1 could not be evaluated} other{{count} could not be evaluated}}",
+    "@notificationsRuleConditionUnresolvedSummary": {
+        "description": "Test-mode summary of child conditions with unresolved operands.",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "1"
+            }
+        }
+    },
+    "notificationsRuleNestedConditionResult": "Nested condition: {result}",
+    "@notificationsRuleNestedConditionResult": {
+        "description": "Test-mode result of the condition nested inside a NOT group.",
+        "placeholders": {
+            "result": {
+                "type": "String",
+                "example": "Does not match"
+            }
+        }
+    },
+    "notificationsRuleConditionsDescription": "This rule runs only when every condition matches.",
+    "@notificationsRuleConditionsDescription": {
+        "description": "Description of the notification rule conditions section."
+    },
+    "notificationsRuleConditionsTitle": "Conditions",
+    "@notificationsRuleConditionsTitle": {
+        "description": "Title of the notification rule conditions section."
+    },
+    "@notificationsRuleCustom": {
+        "description": "Label for a custom notification rule."
+    },
+    "notificationsRuleDelete": "Delete",
+    "@notificationsRuleDelete": {
+        "description": "Button and menu label for deleting a notification rule."
+    },
+    "notificationsRuleDeleteDescription": "This rule, including its conditions and actions, will be removed.",
+    "@notificationsRuleDeleteDescription": {
+        "description": "Description in the notification rule deletion confirmation dialog."
+    },
+    "notificationsRuleDeleteTitle": "Delete rule?",
+    "@notificationsRuleDeleteTitle": {
+        "description": "Title of the notification rule deletion confirmation dialog."
+    },
+    "notificationsRuleEditTestNotification": "Edit test notification",
+    "@notificationsRuleEditTestNotification": {
+        "description": "Tooltip for editing the notification sample in test mode."
+    },
+    "notificationsRuleEnterTestMode": "Enter test mode",
+    "@notificationsRuleEnterTestMode": {
+        "description": "Tooltip for enabling notification rule test mode."
+    },
+    "notificationsRuleExitTestMode": "Exit test mode",
+    "@notificationsRuleExitTestMode": {
+        "description": "Tooltip for disabling notification rule test mode."
+    },
+    "notificationsRuleNeedsSetup": "Needs setup",
+    "@notificationsRuleNeedsSetup": {
+        "description": "Status label for a notification rule requiring additional setup."
+    },
+    "notificationsRuleNeedsSetupMessage": "Complete or fix the rule's actions before it can produce a valid transaction.",
+    "@notificationsRuleNeedsSetupMessage": {
+        "description": "Message explaining that a notification rule is incomplete."
+    },
+    "notificationsRuleNoActions": "No actions defined.",
+    "@notificationsRuleNoActions": {
+        "description": "Empty state for a notification rule without actions."
+    },
+    "notificationsRuleNoConditions": "No conditions: this rule always runs.",
+    "@notificationsRuleNoConditions": {
+        "description": "Empty state for a notification rule without conditions."
+    },
+    "notificationsRuleOptions": "Rule options",
+    "@notificationsRuleOptions": {
+        "description": "Tooltip for the notification rule options menu."
+    },
+    "notificationsRulePredefinedActionsDescription": "Review how notification values fill transaction fields. Firefly-linked fields, such as currency, can use existing Firefly entries.",
+    "@notificationsRulePredefinedActionsDescription": {
+        "description": "Description of the predefined notification rule mappings section."
+    },
+    "notificationsRuleRemove": "Remove",
+    "@notificationsRuleRemove": {
+        "description": "Confirmation button label for removing a notification rule item."
+    },
+    "notificationsRuleRemoveActionDescription": "This action will no longer set a transaction field when \"{name}\" runs.",
+    "@notificationsRuleRemoveActionDescription": {
+        "description": "Description in the notification rule action removal confirmation dialog.",
+        "placeholders": {
+            "name": {
+                "type": "String",
+                "example": "Groceries"
+            }
+        }
+    },
+    "notificationsRuleRemoveActionTitle": "Remove action?",
+    "@notificationsRuleRemoveActionTitle": {
+        "description": "Title of the notification rule action removal confirmation dialog."
+    },
+    "notificationsRuleRemoveConditionDescription": "This condition will no longer control when \"{name}\" runs.",
+    "@notificationsRuleRemoveConditionDescription": {
+        "description": "Description in the notification rule condition removal confirmation dialog.",
+        "placeholders": {
+            "name": {
+                "type": "String",
+                "example": "Groceries"
+            }
+        }
+    },
+    "notificationsRuleRemoveConditionTitle": "Remove condition?",
+    "@notificationsRuleRemoveConditionTitle": {
+        "description": "Title of the notification rule condition removal confirmation dialog."
+    },
+    "notificationsRuleRename": "Rename",
+    "@notificationsRuleRename": {
+        "description": "Menu label for renaming a notification rule."
+    },
+    "notificationsRuleNeedsReview": "Needs review",
+    "@notificationsRuleNeedsReview": {
+        "description": "Status label for a notification rule that needs review."
+    },
+    "notificationsRuleNeedsReviewMessage": "Review the suggested transaction field mappings before using this rule.",
+    "notificationsConditionalActionsNeedReviewMessage": "Review conditional actions marked Needs review and any suggested field mappings before using this rule.",
+    "@notificationsConditionalActionsNeedReviewMessage": {"description": "Warning when a rule contains a conditional action without both conditions and actions."},
+    "@notificationsRuleNeedsReviewMessage": {
+        "description": "Message explaining that predefined rule mappings require review."
+    },
+    "notificationsRuleTestModeMessage": "Values and availability below are evaluated against the current sample notification.",
+    "@notificationsRuleTestModeMessage": {
+        "description": "Informational message displayed while a notification rule is in test mode."
+    },
+    "notificationsRuleSampleNotification": "Sample notification",
+    "@notificationsRuleSampleNotification": {
+        "description": "Heading for the notification rule test sample."
+    },
+    "notificationsRuleSampleDescription": "Fine-tune the sample for this rule while keeping the definition sample available throughout the definition.",
+    "@notificationsRuleSampleDescription": {
+        "description": "Description of why a rule can override the definition sample."
+    },
+    "notificationsConditionalActionSampleDescription": "Fine-tune the sample for this conditional action while keeping the rule sample available to the rest of the rule.",
+    "@notificationsConditionalActionSampleDescription": {
+        "description": "Description of why a conditional action can use a more focused sample."
+    },
+    "notificationsUseDefinitionSample": "Use definition sample",
+    "@notificationsUseDefinitionSample": {
+        "description": "Tooltip for clearing a sample override and returning to the definition sample."
+    },
+    "notificationsUseRuleSample": "Use rule sample",
+    "@notificationsUseRuleSample": {
+        "description": "Tooltip for clearing a conditional action sample override and returning to the rule sample."
+    },
+    "notificationsRuleAddAction": "Add action",
+    "@notificationsRuleAddAction": {
+        "description": "Button label for adding an action to a notification rule."
+    },
+    "notificationsRuleTestMode": "Test mode",
+    "@notificationsRuleTestMode": {
+        "description": "Label indicating that a notification rule is in test mode."
+    },
+    "notificationsRuleTransactionDetails": "Transaction details",
+    "@notificationsRuleTransactionDetails": {
+        "description": "Title of the predefined notification rule mappings section."
+    },
+    "notificationsRuleActionOptions": "Action options",
+    "@notificationsRuleActionOptions": {
+        "description": "Tooltip for a notification rule action options menu."
+    },
+    "notificationsRuleAddOptionalField": "Add optional field",
+    "@notificationsRuleAddOptionalField": {
+        "description": "Button and dialog title for adding an optional predefined field."
+    },
+    "notificationsRuleAddTags": "Add tag(s)",
+    "@notificationsRuleAddTags": {
+        "description": "Tooltip for adding tags to a notification rule action."
+    },
+    "notificationsRuleAdjustableMappings": "Adjustable mappings",
+    "@notificationsRuleAdjustableMappings": {
+        "description": "Heading for editable predefined notification rule mappings."
+    },
+    "notificationsRuleAdjustableMappingsDescription": "Review editable mappings and add optional fields before marking the rule complete.",
+    "@notificationsRuleAdjustableMappingsDescription": {
+        "description": "Description of editable predefined notification rule mappings."
+    },
+    "notificationsRuleAllConditionsMatch": "All conditions match",
+    "@notificationsRuleAllConditionsMatch": {
+        "description": "Label for a group where every notification condition must match."
+    },
+    "notificationsRuleAlreadyAdded": "Already added.",
+    "@notificationsRuleAlreadyAdded": {
+        "description": "Description for an optional predefined field already configured."
+    },
+    "notificationsRuleAnyConditionMatches": "Any condition matches",
+    "@notificationsRuleAnyConditionMatches": {
+        "description": "Label for a group where any notification condition can match."
+    },
+    "notificationsRuleChooseExtractorMatch": "{count, plural, =0{No matches are available from \"{extractor}\".} =1{Choose the match from \"{extractor}\".} other{Choose one of the {count} matches from \"{extractor}\".}}",
+    "@notificationsRuleChooseExtractorMatch": {
+        "description": "Error asking the user to choose one regular expression match for a notification rule action.",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "2"
+            },
+            "extractor": {
+                "type": "String",
+                "example": "Amount"
+            }
+        }
+    },
+    "notificationsRuleChooseMatchingCurrency": "Choose a matching Firefly currency.",
+    "@notificationsRuleChooseMatchingCurrency": {
+        "description": "Error stating that a predefined currency action needs a mapped Firefly currency."
+    },
+    "notificationsRuleChooseMatchingCurrencyBeforeReview": "Choose a matching Firefly currency before marking this mapping as done.",
+    "@notificationsRuleChooseMatchingCurrencyBeforeReview": {
+        "description": "Snackbar shown when a currency mapping cannot be marked as reviewed."
+    },
+    "@notificationsRuleChooseOptionalFieldDescription": {
+        "description": "Description in the add optional predefined field dialog."
+    },
+    "notificationsRuleConditionDoesNotMatch": "Condition does not match",
+    "@notificationsRuleConditionDoesNotMatch": {
+        "description": "Label for a negated notification condition."
+    },
+    "notificationsRuleConditionOptions": "Condition options",
+    "@notificationsRuleConditionOptions": {
+        "description": "Tooltip for a notification rule condition options menu."
+    },
+    "notificationsRuleDeletedCaptureExtractor": "The extractor used by \"{name}\" was deleted.",
+    "@notificationsRuleDeletedCaptureExtractor": {
+        "description": "Error explaining that an action references a deleted extractor.",
+        "placeholders": {
+            "name": {
+                "type": "String",
+                "example": "amount"
+            }
+        }
+    },
+    "notificationsRuleDeletedExtractor": "Deleted extractor",
+    "@notificationsRuleDeletedExtractor": {
+        "description": "Fallback extractor name when an action references a deleted extractor."
+    },
+    "notificationsRuleDeleteCondition": "Delete condition",
+    "@notificationsRuleDeleteCondition": {
+        "description": "Tooltip for deleting a notification condition."
+    },
+    "notificationsRuleEdit": "Edit",
+    "@notificationsRuleEdit": {
+        "description": "Menu label for editing a notification rule item."
+    },
+    "notificationsRuleDuplicate": "Duplicate",
+    "@notificationsRuleDuplicate": {
+        "description": "Menu label for duplicating a notification condition."
+    },
+    "notificationsRuleCopy": "Copy",
+    "@notificationsRuleCopy": {
+        "description": "Menu label for copying a notification condition."
+    },
+    "notificationsRuleCopyingCondition": "Copying condition",
+    "@notificationsRuleCopyingCondition": {
+        "description": "Heading shown while choosing a destination for a copied condition."
+    },
+    "notificationsRuleLeaveCopyingConditionTitle": "Leave while copying a condition?",
+    "@notificationsRuleLeaveCopyingConditionTitle": {
+        "description": "Confirmation title when leaving during a pending condition copy."
+    },
+    "notificationsRuleLeaveCopyingConditionDescription": "The copy hasn't been pasted. Leaving will cancel it.",
+    "@notificationsRuleLeaveCopyingConditionDescription": {
+        "description": "Confirmation text when leaving during a pending condition copy."
+    },
+    "notificationsRuleLeaveCopyingConditionDirty": "The copy hasn't been pasted. Leaving will cancel it and discard your unsaved changes.",
+    "@notificationsRuleLeaveCopyingConditionDirty": {
+        "description": "Confirmation text when leaving during a pending condition copy with unsaved changes."
+    },
+    "notificationsRuleLeaveMovingConditionTitle": "Leave while moving a condition?",
+    "@notificationsRuleLeaveMovingConditionTitle": {
+        "description": "Confirmation title when leaving during a pending condition move."
+    },
+    "notificationsRuleLeaveMovingConditionDescription": "The condition hasn't been moved. Leaving will cancel the move.",
+    "@notificationsRuleLeaveMovingConditionDescription": {
+        "description": "Confirmation text when leaving during a pending condition move."
+    },
+    "notificationsRuleLeaveMovingConditionDirty": "The condition hasn't been moved. Leaving will cancel the move and discard your unsaved changes.",
+    "@notificationsRuleLeaveMovingConditionDirty": {
+        "description": "Confirmation text when leaving during a pending condition move with unsaved changes."
+    },
+    "notificationsRuleLeavePage": "Leave page",
+    "@notificationsRuleLeavePage": {
+        "description": "Button confirming navigation away during a pending condition copy or move."
+    },
+    "notificationsRuleStayHere": "Stay here",
+    "@notificationsRuleStayHere": {
+        "description": "Button retaining the editor and pending condition copy or move."
+    },
+    "notificationsRuleMove": "Move",
+    "@notificationsRuleMove": {
+        "description": "Menu label for moving a notification condition to another condition group."
+    },
+    "notificationsRuleMovingCondition": "Moving condition",
+    "@notificationsRuleMovingCondition": {
+        "description": "Heading shown while choosing a destination for a condition being moved."
+    },
+    "notificationsRuleSelectMoveDestination": "Select a destination.",
+    "@notificationsRuleSelectMoveDestination": {
+        "description": "Instruction shown while choosing where to move a condition."
+    },
+    "notificationsRuleMoveHere": "Move here",
+    "@notificationsRuleMoveHere": {
+        "description": "Button that moves a condition into a selected condition group."
+    },
+    "notificationsRulePaste": "Paste",
+    "@notificationsRulePaste": {
+        "description": "Menu label for pasting a copied notification condition."
+    },
+    "notificationsRulePasteHere": "Paste here",
+    "@notificationsRulePasteHere": {
+        "description": "Button for pasting a copied condition into the rule's top-level condition list."
+    },
+    "notificationsRuleEditCurrencyMapping": "Edit currency mapping",
+    "@notificationsRuleEditCurrencyMapping": {
+        "description": "Tooltip for editing a predefined currency mapping."
+    },
+    "notificationsRuleFixedMappings": "Fixed mappings",
+    "@notificationsRuleFixedMappings": {
+        "description": "Heading for immutable predefined notification rule mappings."
+    },
+    "notificationsRuleFixedMappingsDescription": "These mappings are managed by Basic mode and cannot be edited here.",
+    "@notificationsRuleFixedMappingsDescription": {
+        "description": "Description of immutable predefined notification rule mappings."
+    },
+    "notificationsRuleMarkMappingDone": "Mark mapping as done",
+    "@notificationsRuleMarkMappingDone": {
+        "description": "Tooltip for marking a predefined mapping as reviewed."
+    },
+    "notificationsRuleMarkMappingNeedsReview": "Mark mapping as needing review",
+    "@notificationsRuleMarkMappingNeedsReview": {
+        "description": "Tooltip for marking a predefined mapping as needing review."
+    },
+    "notificationsRuleSampleValueIssuesTitle": "Sample value issues",
+    "@notificationsRuleSampleValueIssuesTitle": {
+        "description": "Title of the section listing unresolved values required by a rule."
+    },
+    "notificationsRuleSampleValueIssuesDescription": "These values are required by this rule or its inherited actions but could not be resolved from the sample notification.",
+    "@notificationsRuleSampleValueIssuesDescription": {
+        "description": "Description of unresolved sample value diagnostics."
+    },
+    "notificationsRuleInheritedFromSharedActions": "Inherited from shared actions",
+    "@notificationsRuleInheritedFromSharedActions": {
+        "description": "Label for a sample value issue introduced by a shared action."
+    },
+    "notificationsRuleMissingRequiredExtractor": "The required extractor no longer exists.",
+    "@notificationsRuleMissingRequiredExtractor": {
+        "description": "Diagnostic shown when a rule references a deleted extractor."
+    },
+    "notificationsRuleMissingExtractorTitle": "Missing extractor",
+    "@notificationsRuleMissingExtractorTitle": {
+        "description": "Title for a sample value issue caused by a deleted extractor."
+    },
+    "notificationsRuleMissingCaptureValues": "No sample value was captured for: {names}.",
+    "@notificationsRuleMissingCaptureValues": {
+        "description": "Diagnostic listing captures that did not resolve from the sample.",
+        "placeholders": {
+            "names": {
+                "type": "String",
+                "example": "amount, currency"
+            }
+        }
+    },
+    "notificationsRuleNoCapturedValue": "No value captured from \"{name}\" in the sample.",
+    "@notificationsRuleNoCapturedValue": {
+        "description": "Error explaining that a capture has no value in the notification test sample.",
+        "placeholders": {
+            "name": {
+                "type": "String",
+                "example": "amount"
+            }
+        }
+    },
+    "@notificationsRuleOptionalCurrencyDescription": {
+        "description": "Description of the optional predefined currency mapping."
+    },
+    "@notificationsRuleOptionalNotesDescription": {
+        "description": "Description of the optional predefined notes mapping."
+    },
+    "@notificationsRuleOptionalTitleDescription": {
+        "description": "Description of the optional predefined title mapping."
+    },
+    "notificationsRuleRemoveOptionalMapping": "Remove optional mapping",
+    "@notificationsRuleRemoveOptionalMapping": {
+        "description": "Tooltip for removing an optional predefined mapping."
+    },
+    "notificationsRuleSelectedTagCount": "{count, plural, =0{No tags selected} =1{1 tag selected} other{{count} tags selected}}",
+    "@notificationsRuleSelectedTagCount": {
+        "description": "Number of tags configured for a notification rule action.",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "2"
+            }
+        }
+    },
+    "notificationsRuleSetTransactionTags": "Set transaction tags",
+    "@notificationsRuleSetTransactionTags": {
+        "description": "Title for an action that sets transaction tags."
+    },
+    "notificationsRuleUnsupportedAction": "Unsupported action.",
+    "@notificationsRuleUnsupportedAction": {
+        "description": "Error shown for an unrecognized notification rule action."
+    },
+    "@notificationsDefinitionAdvancedSetup": {"description": "Label for advanced notification definition setup."},
+    "@notificationsDefinitionStandardSetup": {"description": "Label for standard notification definition setup."},
+    "notificationsDefinitionReady": "Ready",
+    "@notificationsDefinitionReady": {"description": "Status label for a notification definition that is ready to use."},
+    "notificationsDefinitionDeleteFailure": "The application registration could not be deleted.",
+    "@notificationsDefinitionDeleteFailure": {"description": "Snackbar message when deleting a notification definition fails."},
+    "notificationsDefinitionDelete": "Delete",
+    "@notificationsDefinitionDelete": {"description": "Button and menu label for deleting a notification definition."},
+    "@notificationsDefinitionExtractorCount": {"description": "Number of extractors configured for a notification definition.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "notificationsDefinitionFixDanglingActions": "{count, plural, =0{No actions reference deleted extractors.} =1{Fix the action that references a deleted extractor before saving.} other{Fix {count} actions that reference deleted extractors before saving.}}",
+    "@notificationsDefinitionFixDanglingActions": {"description": "Save error for actions referencing deleted extractors.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "notificationsDefinitionNeedsSetup": "Needs setup",
+    "@notificationsDefinitionNeedsSetup": {"description": "Status label for a notification definition requiring additional setup."},
+    "notificationsDefinitionNeedsSetupMessage": "Complete the sample, extractors, rules, and required actions before this application can process notifications.",
+    "@notificationsDefinitionNeedsSetupMessage": {"description": "Message explaining that a notification definition is incomplete."},
+    "notificationsDefinitionNeedsSetupSpecificMessage": "Finish setting up {requirements} before this application can process notifications.",
+    "@notificationsDefinitionNeedsSetupSpecificMessage": {"description": "Context-aware message explaining the specific notification definition setup requirements that are incomplete.", "placeholders": {"requirements": {"type": "String", "example": "a sample notification and at least one rule or shared action"}}},
+    "notificationsDefinitionSetupRequirementSample": "a sample notification",
+    "@notificationsDefinitionSetupRequirementSample": {"description": "Requirement phrase for a notification definition missing a sample notification."},
+    "notificationsDefinitionSetupRequirementExtractors": "at least one extractor",
+    "@notificationsDefinitionSetupRequirementExtractors": {"description": "Requirement phrase for a notification definition missing extractors."},
+    "notificationsDefinitionSetupRequirementRulesOrActions": "at least one rule or shared action",
+    "@notificationsDefinitionSetupRequirementRulesOrActions": {"description": "Requirement phrase for a notification definition missing both rules and shared actions."},
+    "notificationsDefinitionSetupRequirementActionFields": "required transaction fields",
+    "@notificationsDefinitionSetupRequirementActionFields": {"description": "Requirement phrase for notification actions with unresolved required transaction fields."},
+    "notificationsListPair": "{first} and {second}",
+    "@notificationsListPair": {"description": "Formats a two-item inline list.", "placeholders": {"first": {"type": "String", "example": "a sample notification"}, "second": {"type": "String", "example": "at least one extractor"}}},
+    "notificationsListMultiple": "{leading}, and {last}",
+    "@notificationsListMultiple": {"description": "Formats the final item of an inline list with three or more entries.", "placeholders": {"leading": {"type": "String", "example": "a sample notification, at least one extractor"}, "last": {"type": "String", "example": "at least one rule or shared action"}}},
+    "notificationsDefinitionOptions": "Definition options",
+    "@notificationsDefinitionOptions": {"description": "Tooltip for the notification definition options menu."},
+    "notificationsDefinitionNeedsReview": "Needs review",
+    "@notificationsDefinitionNeedsReview": {"description": "Status label for a notification definition that needs review."},
+    "notificationsDefinitionNeedsReviewMessage": "Review the suggested transaction field mappings before using this application.",
+    "notificationsDefinitionConditionalActionsNeedReviewMessage": "Review conditional actions marked Needs review and any suggested field mappings before using this application.",
+    "@notificationsDefinitionConditionalActionsNeedReviewMessage": {"description": "Warning when an application's rules contain conditional actions without both conditions and actions."},
+    "@notificationsDefinitionNeedsReviewMessage": {"description": "Message explaining that predefined notification mappings require review."},
+    "notificationsDefinitionMigrationNeedsAttention": "{count, plural, =1{Imported setup needs attention} other{Imported setup needs attention · {count} issues}}",
+    "@notificationsDefinitionMigrationNeedsAttention": {"description": "Status title on a registered application card with outstanding migration issues.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "notificationsDefinitionMigrationFailedMessage": "Waterfly could not finish importing the previous notification settings.",
+    "@notificationsDefinitionMigrationFailedMessage": {"description": "Fallback registered-application card message for a failed migration without a structured reason."},
+    "notificationsDefinitionMigrationReviewMessage": "Review the imported notification settings before using this application.",
+    "@notificationsDefinitionMigrationReviewMessage": {"description": "Fallback registered-application card message for an older migration alert without a structured reason."},
+    "notificationsDefinitionMigrationOpenSetupHint": "Open this setup to resolve the migration issues.",
+    "@notificationsDefinitionMigrationOpenSetupHint": {"description": "Action hint on a registered application card with outstanding migration issues."},
+    "notificationsDefinitionNotConfiguredMessage": "Choose how Waterfly should read this application's notifications.",
+    "@notificationsDefinitionNotConfiguredMessage": {"description": "Message explaining that notification processing has not been configured."},
+    "@notificationsDefinitionRuleCount": {"description": "Number of rules configured for a notification definition.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "notificationsDefinitionSampleDescription": "Use one representative notification to preview extractors and rules. Individual extractors and rules can use separate test samples.",
+    "@notificationsDefinitionSampleDescription": {"description": "Description of the notification definition sample."},
+    "notificationsSampleTimestamp": "Sample time",
+    "@notificationsSampleTimestamp": {"description": "Label for the editable timestamp of a sample notification."},
+    "notificationsDefinitionSampleNotification": "Sample notification",
+    "@notificationsDefinitionSampleNotification": {"description": "Heading for the notification definition sample."},
+    "notificationsDefinitionSave": "Save definition",
+    "@notificationsDefinitionSave": {"description": "Tooltip for saving a notification definition."},
+    "notificationsDefinitionSaveFailure": "The notification definition could not be saved.",
+    "@notificationsDefinitionSaveFailure": {"description": "Snackbar message when saving a notification definition fails."},
+    "notificationsDiscardChangesTitle": "Discard changes?",
+    "@notificationsDiscardChangesTitle": {"description": "Confirmation dialog title when leaving a notification editor with unsaved changes."},
+    "notificationsDiscardChangesDescription": "Your unsaved changes will be lost.",
+    "@notificationsDiscardChangesDescription": {"description": "Confirmation dialog description when leaving a notification editor with unsaved changes."},
+    "notificationsDiscard": "Discard",
+    "@notificationsDiscard": {"description": "Confirmation button label for discarding unsaved notification editor changes."},
+    "notificationsDefinitionNotConfigured": "Not configured",
+    "@notificationsDefinitionNotConfigured": {"description": "Status label for a notification definition that has not been configured."},
+    "notificationsDefinitionConvert": "Convert",
+    "@notificationsDefinitionConvert": {"description": "Confirmation button label for changing notification definition setup mode."},
+    "notificationsDefinitionConvertToAdvanced": "Convert to advanced",
+    "@notificationsDefinitionConvertToAdvanced": {"description": "Menu label for changing a notification definition to advanced setup."},
+    "notificationsDefinitionConvertToAdvancedDescription": "Your existing extractors and rules will be kept and can be edited in Advanced mode.",
+    "@notificationsDefinitionConvertToAdvancedDescription": {"description": "Description for converting a notification definition to advanced setup."},
+    "notificationsDefinitionConvertToAdvancedTitle": "Convert to advanced?",
+    "@notificationsDefinitionConvertToAdvancedTitle": {"description": "Confirmation dialog title for converting a notification definition to advanced setup."},
+    "notificationsDefinitionConvertToBasic": "Convert to basic",
+    "@notificationsDefinitionConvertToBasic": {"description": "Menu label for changing a notification definition to basic setup."},
+    "notificationsDefinitionConvertToBasicDescription": "Your custom extractors and rules will be replaced with the standard transaction fields and rule used by Basic mode.",
+    "@notificationsDefinitionConvertToBasicDescription": {"description": "Description for converting a notification definition to basic setup."},
+    "notificationsDefinitionConvertToBasicTitle": "Convert to basic?",
+    "@notificationsDefinitionConvertToBasicTitle": {"description": "Confirmation dialog title for converting a notification definition to basic setup."},
+    "@notificationsDefinitionStandardRuleAlreadyAdded": {"description": "Snackbar message when the standard transaction details rule is added twice."},
+    "notificationsDefinitionsAddApplication": "Add application",
+    "@notificationsDefinitionsAddApplication": {"description": "Tooltip for adding a notification application registration."},
+    "notificationsApplicationsRecoverTitle": "Choose application",
+    "@notificationsApplicationsRecoverTitle": {"description": "Title for selecting the installed application that owns an imported notification definition."},
+    "notificationsApplicationsRecoverDescription": "Waterfly could not identify the application associated with these imported settings. Choose the installed application that should use this configuration.",
+    "@notificationsApplicationsRecoverDescription": {"description": "Explanation shown when recovering an imported notification definition with unavailable application identity."},
+    "notificationsDefinitionsDeleteDescription": "{name} will no longer process notifications.",
+    "@notificationsDefinitionsDeleteDescription": {"description": "Description in the notification application registration deletion dialog.", "placeholders": {"name": {"type": "String", "example": "Example Bank"}}},
+    "notificationsDefinitionsDeleteTitle": "Delete application registration?",
+    "@notificationsDefinitionsDeleteTitle": {"description": "Title of the notification application registration deletion dialog."},
+    "notificationsDefinitionsDuplicate": "This application is already registered.",
+    "@notificationsDefinitionsDuplicate": {"description": "Snackbar message when an application registration already exists."},
+    "notificationsDefinitionsEmpty": "No apps are configured to process notifications.",
+    "@notificationsDefinitionsEmpty": {"description": "Empty state for notification application registrations."},
+    "notificationsDefinitionsEmptyTitle": "No registered applications",
+    "@notificationsDefinitionsEmptyTitle": {"description": "Title shown when no notification applications are registered."},
+    "notificationsDefinitionsEmptyDescription": "Add an application to choose which notifications Waterfly should turn into transactions.",
+    "@notificationsDefinitionsEmptyDescription": {"description": "Description shown when no notification applications are registered."},
+    "notificationsDefinitionsEmptyDescriptionAccessNeeded": "Add and configure an application now. Waterfly will begin processing its notifications after notification access is enabled.",
+    "@notificationsDefinitionsEmptyDescriptionAccessNeeded": {"description": "Description shown when no notification applications are registered and notification access is disabled."},
+    "notificationsDefinitionsLoadFailure": "Notification definitions could not be loaded.",
+    "@notificationsDefinitionsLoadFailure": {"description": "Error message when notification definitions cannot be loaded."},
+    "notificationsDefinitionsMigrationAlertsLoadFailure": "Migration review details could not be loaded.",
+    "@notificationsDefinitionsMigrationAlertsLoadFailure": {"description": "Error shown when notification definitions load but their migration alerts cannot be loaded."},
+    "notificationsDefinitionsRegisteredApplications": "Registered applications",
+    "@notificationsDefinitionsRegisteredApplications": {"description": "Heading for notification application registrations."},
+    "notificationsDefinitionsRegisteredApplicationsDescription": "Manage which apps' notifications Waterfly processes. Open an app to configure its extractors, rules, and actions.",
+    "@notificationsDefinitionsRegisteredApplicationsDescription": {"description": "Description below the registered applications heading on the notification definitions page."},
+    "notificationsDefinitionsUnknownApplication": "Unknown application",
+    "@notificationsDefinitionsUnknownApplication": {"description": "Fallback name shown for a notification definition when the application name is unavailable."},
+    "notificationsDefinitionsSaveFailure": "The application registration could not be saved.",
+    "@notificationsDefinitionsSaveFailure": {"description": "Snackbar message when an application registration cannot be saved."},
+    "notificationsAlertsTitle": "Notification alerts",
+    "@notificationsAlertsTitle": {"description": "Title for the notification alerts page."},
+    "notificationsAlertsDescription": "Review notification processing issues that may require attention. Alerts are grouped by application, and repeated occurrences are combined.",
+    "@notificationsAlertsDescription": {"description": "Explanation of the notification alerts page and its alert grouping behavior."},
+    "notificationsAlertsDismissAll": "Dismiss all",
+    "@notificationsAlertsDismissAll": {"description": "Button label for dismissing every visible notification alert."},
+    "notificationsAlertsLoadFailure": "Notification alerts could not be loaded.",
+    "@notificationsAlertsLoadFailure": {"description": "Error state for the notification alerts page."},
+    "notificationsAlertsApplicationNamesLoadFailure": "Application names could not be loaded. Package IDs are shown instead.",
+    "@notificationsAlertsApplicationNamesLoadFailure": {"description": "Snackbar shown when alert application names cannot be loaded and package IDs are used instead."},
+    "notificationsAlertsEmpty": "No notification alerts need your attention.",
+    "@notificationsAlertsEmpty": {"description": "Empty state for notification alerts."},
+    "notificationsAlertsEmptyTitle": "All clear",
+    "@notificationsAlertsEmptyTitle": {"description": "Title shown when there are no notification alerts."},
+    "notificationsHealthActiveTitle": "Notification processing is paused",
+    "@notificationsHealthActiveTitle": {"description": "Title shown while notification definitions cannot be loaded."},
+    "notificationsHealthActiveDescription": "{count, plural, =1{Waterfly could not load your notification setup. One notification may have been skipped.} other{Waterfly could not load your notification setup. {count} notifications may have been skipped.}}",
+    "@notificationsHealthActiveDescription": {"description": "Description of an active notification listener health incident.", "placeholders": {"count": {"type": "int"}}},
+    "notificationsHealthRecoveredTitle": "Notification processing recovered",
+    "@notificationsHealthRecoveredTitle": {"description": "Title shown after notification definition loading recovers."},
+    "notificationsHealthRecoveredDescription": "{count, plural, =1{Processing is working again, but one notification may have been skipped.} other{Processing is working again, but {count} notifications may have been skipped.}}",
+    "@notificationsHealthRecoveredDescription": {"description": "Description of a recovered notification listener health incident.", "placeholders": {"count": {"type": "int"}}},
+    "notificationsHealthRetry": "Retry",
+    "@notificationsHealthRetry": {"description": "Action to retry loading notification definitions."},
+    "notificationsHealthReviewSetup": "Review setup",
+    "@notificationsHealthReviewSetup": {"description": "Action to open notification processing setup from a health incident."},
+    "notificationsHealthDismiss": "Dismiss",
+    "@notificationsHealthDismiss": {"description": "Action to acknowledge and dismiss a recovered notification processing incident."},
+    "notificationsHealthRetryFailure": "Notification processing is still unavailable.",
+    "@notificationsHealthRetryFailure": {"description": "Snackbar shown when retrying notification processing fails."},
+    "notificationsHealthDismissFailure": "The recovered processing notice could not be dismissed.",
+    "@notificationsHealthDismissFailure": {"description": "Snackbar shown when acknowledging a recovered notification processing incident fails."},
+    "notificationsHealthStatusLoadFailure": "Notification processing status could not be loaded.",
+    "@notificationsHealthStatusLoadFailure": {"description": "Message shown when listener health status cannot be loaded."},
+    "notificationsAlertsDismissFailure": "The alert could not be dismissed.",
+    "@notificationsAlertsDismissFailure": {"description": "Snackbar message when dismissing an alert fails."},
+    "notificationsAlertsDismissed": "Alert dismissed.",
+    "@notificationsAlertsDismissed": {"description": "Snackbar message after dismissing one alert."},
+    "notificationsAlertsUndo": "Undo",
+    "@notificationsAlertsUndo": {"description": "Snackbar action that restores dismissed alerts."},
+    "notificationsAlertsDismissAllTitle": "Dismiss all alerts?",
+    "@notificationsAlertsDismissAllTitle": {"description": "Confirmation dialog title for dismissing all notification alerts."},
+    "notificationsAlertsDismissAllDescription": "{count, plural, =0{No alerts will be dismissed.} =1{1 alert will be dismissed.} other{{count} alerts will be dismissed.}}",
+    "@notificationsAlertsDismissAllDescription": {"description": "Confirmation dialog description for dismissing all notification alerts.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "notificationsAlertsDismissedCount": "{count, plural, =0{No alerts dismissed.} =1{1 alert dismissed.} other{{count} alerts dismissed.}}",
+    "@notificationsAlertsDismissedCount": {"description": "Snackbar message after dismissing notification alerts.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "notificationsAlertsPartiallyDismissed": "{dismissed, plural, =0{No alerts dismissed.} =1{1 of {total} alerts dismissed.} other{{dismissed} of {total} alerts dismissed.}}",
+    "@notificationsAlertsPartiallyDismissed": {"description": "Snackbar message after some notification alerts are dismissed.", "placeholders": {"dismissed": {"type": "int", "example": "2"}, "total": {"type": "int", "example": "3"}}},
+    "notificationsAlertsPartiallyRestored": "{restored, plural, =0{No alerts restored.} =1{1 of {total} alerts restored.} other{{restored} of {total} alerts restored.}}",
+    "@notificationsAlertsPartiallyRestored": {"description": "Snackbar message after some notification alerts are restored.", "placeholders": {"restored": {"type": "int", "example": "2"}, "total": {"type": "int", "example": "3"}}},
+    "notificationsAlertsRestoreFailure": "The alert could not be restored.",
+    "@notificationsAlertsRestoreFailure": {"description": "Snackbar message when restoring an alert fails."},
+    "notificationsAlertsRuleUnavailable": "The rule is no longer available.",
+    "@notificationsAlertsRuleUnavailable": {"description": "Snackbar message when an alert's rule no longer exists."},
+    "notificationsAlertsOpenRuleFailure": "The rule could not be opened.",
+    "@notificationsAlertsOpenRuleFailure": {"description": "Snackbar message when an alert's rule cannot be opened."},
+    "notificationsAlertsSetupUnavailable": "The notification setup is no longer available.",
+    "@notificationsAlertsSetupUnavailable": {"description": "Snackbar message when an alert's notification setup no longer exists."},
+    "notificationsAlertsOpenSetupFailure": "The notification setup could not be opened.",
+    "@notificationsAlertsOpenSetupFailure": {"description": "Snackbar message when an alert's notification setup cannot be opened."},
+    "notificationsAlertsRuleSaveFailure": "The rule changes could not be saved.",
+    "@notificationsAlertsRuleSaveFailure": {"description": "Snackbar message when edits made from an alert cannot be saved."},
+    "notificationsAlertsApplicationDetail": "App: {name}",
+    "@notificationsAlertsApplicationDetail": {"description": "Alert detail that identifies the source application.", "placeholders": {"name": {"type": "String", "example": "Example Bank"}}},
+    "notificationsAlertsPackageDetail": "Package: {packageId}",
+    "@notificationsAlertsPackageDetail": {"description": "Alert detail that identifies an application package.", "placeholders": {"packageId": {"type": "String", "example": "com.example.bank"}}},
+    "notificationsAlertsRuleDetail": "Rule: {name}",
+    "@notificationsAlertsRuleDetail": {"description": "Alert detail that identifies the notification rule.", "placeholders": {"name": {"type": "String", "example": "Set amount"}}},
+    "notificationsAlertsActionDetail": "Action: {name}",
+    "@notificationsAlertsActionDetail": {"description": "Alert detail that identifies the notification action.", "placeholders": {"name": {"type": "String", "example": "set amount"}}},
+    "notificationsAlertsDismiss": "Dismiss",
+    "@notificationsAlertsDismiss": {"description": "Button label for dismissing one notification alert."},
+    "notificationsAlertsOpenRule": "Open rule",
+    "@notificationsAlertsOpenRule": {"description": "Button label that opens the rule associated with an alert."},
+    "notificationsAlertsOpenSetup": "Open setup",
+    "@notificationsAlertsOpenSetup": {"description": "Button label that opens the notification setup associated with an alert."},
+    "notificationsAlertsOccurrenceCount": "{count, plural, =0{No occurrences} =1{1 occurrence} other{{count} occurrences}}",
+    "@notificationsAlertsOccurrenceCount": {"description": "Number of times a notification alert has occurred.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "notificationsAlertsIssueCount": "{count, plural, =0{No issues} =1{1 issue} other{{count} issues}}",
+    "@notificationsAlertsIssueCount": {"description": "Number of distinct notification alerts grouped for an application.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "notificationsAlertsMoreIssues": "{count, plural, =1{1 more issue} other{{count} more issues}}",
+    "@notificationsAlertsMoreIssues": {"description": "Number of additional issues hidden in a collapsed application alert card.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "notificationsAlertsDismissIssue": "Dismiss issue",
+    "@notificationsAlertsDismissIssue": {"description": "Tooltip for dismissing one issue from a grouped alert card."},
+    "notificationsAlertsDismissGroup": "Dismiss all issues",
+    "@notificationsAlertsDismissGroup": {"description": "Button label for dismissing every issue for one application."},
+    "notificationsAlertsKindMigrationFailed": "Migration failed",
+    "@notificationsAlertsKindMigrationFailed": {"description": "Label for a failed notification settings migration."},
+    "notificationsAlertsKindMigrationNeedsReview": "Migration needs review",
+    "@notificationsAlertsKindMigrationNeedsReview": {"description": "Label for imported notification settings requiring review."},
+    "notificationsAlertsKindDefinitionInvalid": "Definition invalid",
+    "@notificationsAlertsKindDefinitionInvalid": {"description": "Label for an invalid notification definition."},
+    "notificationsAlertsKindEvaluationFailed": "Rule evaluation failed",
+    "@notificationsAlertsKindEvaluationFailed": {"description": "Label for a notification rule evaluation failure."},
+    "notificationsAlertsKindActionFailed": "Action failed",
+    "@notificationsAlertsKindActionFailed": {"description": "Label for a notification action failure."},
+    "notificationsMigrationAutomaticPausedTitle": "Automatic creation paused",
+    "@notificationsMigrationAutomaticPausedTitle": {"description": "Title for a migrated automatic configuration that was changed to Prompt mode."},
+    "notificationsMigrationAutomaticPausedMessage": "Transactions will use Prompt mode until you review the imported setup.",
+    "@notificationsMigrationAutomaticPausedMessage": {"description": "Guidance for a migrated automatic configuration that was changed to Prompt mode."},
+    "notificationsMigrationMissingAccountTitle": "Account required for automatic creation",
+    "@notificationsMigrationMissingAccountTitle": {"description": "Title for a migrated automatic configuration without an account mapping."},
+    "notificationsMigrationMissingAccountMessage": "Choose an account before enabling automatic transaction creation.",
+    "@notificationsMigrationMissingAccountMessage": {"description": "Guidance for a migrated automatic configuration without an account mapping."},
+    "notificationsMigrationMissingApplicationNameTitle": "Application name unavailable",
+    "@notificationsMigrationMissingApplicationNameTitle": {"description": "Title for imported notification settings without an application name."},
+    "notificationsMigrationMissingApplicationNameMessage": "Waterfly could not identify the application for this imported setup. Open it and choose the installed application that should use this configuration.",
+    "@notificationsMigrationMissingApplicationNameMessage": {"description": "Guidance for imported notification settings without an application name."},
+    "notificationsMigrationMissingSettingsTitle": "Previous settings unavailable",
+    "@notificationsMigrationMissingSettingsTitle": {"description": "Title for a legacy notification registration without saved settings."},
+    "notificationsMigrationMissingSettingsMessage": "No saved configuration was found for this application. Create a new setup manually.",
+    "@notificationsMigrationMissingSettingsMessage": {"description": "Guidance for a legacy notification registration without saved settings."},
+    "notificationsMigrationInvalidRegexTitle": "Imported expression is invalid",
+    "@notificationsMigrationInvalidRegexTitle": {"description": "Title for an invalid imported notification regular expression."},
+    "notificationsMigrationInvalidRegexMessage": "Update or replace the expression before using this setup.",
+    "@notificationsMigrationInvalidRegexMessage": {"description": "Guidance for an invalid imported notification regular expression."},
+    "notificationsMigrationRegexMismatchTitle": "Expression does not match the sample",
+    "@notificationsMigrationRegexMismatchTitle": {"description": "Title for an imported regular expression that does not match its sample."},
+    "notificationsMigrationRegexMismatchMessage": "Update the expression or select another sample notification.",
+    "@notificationsMigrationRegexMismatchMessage": {"description": "Guidance for an imported regular expression that does not match its sample."},
+    "notificationsMigrationAmbiguousAmountTitle": "Choose the transaction amount",
+    "@notificationsMigrationAmbiguousAmountTitle": {"description": "Title for an imported sample containing multiple monetary values."},
+    "notificationsMigrationAmbiguousAmountMessage": "The sample contains more than one monetary value. Select the value that represents the transaction amount.",
+    "@notificationsMigrationAmbiguousAmountMessage": {"description": "Guidance for an imported sample containing multiple monetary values."},
+    "notificationsMigrationAmountNotFoundTitle": "Transaction amount not found",
+    "@notificationsMigrationAmountNotFoundTitle": {"description": "Title for an imported sample without a recognized monetary value."},
+    "notificationsMigrationAmountNotFoundMessage": "Select or configure an extractor for the transaction amount.",
+    "@notificationsMigrationAmountNotFoundMessage": {"description": "Guidance for an imported sample without a recognized monetary value."},
+    "notificationsMigrationSampleMissingTitle": "Sample notification required",
+    "@notificationsMigrationSampleMissingTitle": {"description": "Title for imported notification settings without a usable sample."},
+    "notificationsMigrationSampleMissingMessage": "Capture or enter a sample notification to finish this setup.",
+    "@notificationsMigrationSampleMissingMessage": {"description": "Guidance for imported notification settings without a usable sample."},
+    "notificationsMigrationCurrencyUnresolvedTitle": "Choose the transaction currency",
+    "@notificationsMigrationCurrencyUnresolvedTitle": {"description": "Title for an imported sample whose currency could not be resolved uniquely."},
+    "notificationsMigrationCurrencyUnresolvedMessage": "The sample currency could not be matched uniquely. Select the intended Firefly currency.",
+    "@notificationsMigrationCurrencyUnresolvedMessage": {"description": "Guidance for an imported sample whose currency could not be resolved uniquely."},
+    "notificationsMigrationConversionFailedTitle": "Previous settings could not be imported",
+    "@notificationsMigrationConversionFailedTitle": {"description": "Title for legacy notification settings that could not be converted."},
+    "notificationsMigrationConversionFailedMessage": "Complete this notification setup manually.",
+    "@notificationsMigrationConversionFailedMessage": {"description": "Guidance for legacy notification settings that could not be converted."},
+    "notificationsHistoryTitle": "Recent notifications",
+    "@notificationsHistoryTitle": {"description": "Title for the recent notifications page."},
+    "notificationsHistoryDescription": "Review captured notifications and their processing results. Matched rules and actions reflect what was configured when each notification was processed.",
+    "@notificationsHistoryDescription": {"description": "Explanation that recent notification processing details are historical snapshots."},
+    "notificationsHistoryLoadFailure": "Recent notifications could not be loaded.",
+    "@notificationsHistoryLoadFailure": {"description": "Error state for the recent notifications page."},
+    "notificationsHistoryEmpty": "No notifications have been recorded yet.",
+    "@notificationsHistoryEmpty": {"description": "Empty state for recent notifications."},
+    "notificationsHistoryEmptyTitle": "No recent notifications",
+    "@notificationsHistoryEmptyTitle": {"description": "Title shown when notification history is empty."},
+    "notificationsHistoryEmptyDescription": "Notifications received by Waterfly will appear here.",
+    "@notificationsHistoryEmptyDescription": {"description": "Description shown when notification history is empty."},
+    "notificationsHistoryCreateRule": "Create rule",
+    "@notificationsHistoryCreateRule": {"description": "Button that starts a rule from a recent notification."},
+    "@notificationsHistoryNoRulesApply": {"description": "Recent notification outcome when no rule applies."},
+    "notificationsHistoryNoMatchingRuleTitle": "No matching rule",
+    "@notificationsHistoryNoMatchingRuleTitle": {"description": "Title for a recent notification that does not match any rule."},
+    "notificationsHistoryNoMatchingRuleMessage": "Create a rule so similar notifications can be processed automatically.",
+    "@notificationsHistoryNoMatchingRuleMessage": {"description": "Explanation shown when a recent notification does not match any rule."},
+    "notificationsHistoryProcessingFailureTitle": "Could not process notification",
+    "@notificationsHistoryProcessingFailureTitle": {"description": "Title for a recent notification that failed during processing."},
+    "notificationsHistorySharedActionsTitle": "Transaction fields matched",
+    "@notificationsHistorySharedActionsTitle": {"description": "Title for a recent notification that can create a transaction from shared actions without a specific matching rule."},
+    "notificationsHistorySharedActionsMessage": "Shared actions can create a transaction from this notification.",
+    "@notificationsHistorySharedActionsMessage": {"description": "Explanation for a recent notification that can create a transaction from shared actions without a specific matching rule."},
+    "notificationsHistoryMatchingRuleLabel": "Matched rule",
+    "@notificationsHistoryMatchingRuleLabel": {"description": "Label preceding the name of the matched notification rule."},
+    "notificationsHistoryMatchingConditionalActionsLabel": "Matched actions",
+    "@notificationsHistoryMatchingConditionalActionsLabel": {"description": "Label preceding conditional actions that matched a recent notification."},
+    "@notificationsHistoryNoConditionalActionsMatched": {"description": "Recent notification outcome when the selected rule has no matching conditional actions."},
+    "notificationsHistoryCreateTransaction": "Create transaction",
+    "@notificationsHistoryCreateTransaction": {"description": "Button opening transaction creation from a recent notification."},
+    "notificationsHistoryTransactionCreatedTitle": "Transaction created automatically",
+    "@notificationsHistoryTransactionCreatedTitle": {"description": "Title for notification history that successfully created a Firefly III transaction automatically."},
+    "notificationsHistoryTransactionCreatedByUserTitle": "Transaction created from notification",
+    "@notificationsHistoryTransactionCreatedByUserTitle": {"description": "Title for notification history when the user created a Firefly III transaction from the notification."},
+    "notificationsHistoryTransactionCreated": "Transaction created",
+    "@notificationsHistoryTransactionCreated": {"description": "Neutral title for older notification history with unknown transaction creation provenance."},
+    "notificationsHistoryViewTransaction": "View transaction",
+    "@notificationsHistoryViewTransaction": {"description": "Button opening the Firefly III transaction created from a notification."},
+    "notificationsHistoryOpenTransactionFailure": "The created transaction could not be opened. It may have been deleted.",
+    "@notificationsHistoryOpenTransactionFailure": {"description": "Error shown when an automatically created transaction is no longer available."},
+    "notificationsTransactionAccountUnavailable": "The configured account \"{account}\" is no longer available. Select an account before saving.",
+    "@notificationsTransactionAccountUnavailable": {
+        "description": "Error shown when a transaction account configured by notification processing cannot be resolved.",
+        "placeholders": {
+            "account": {"type": "String"}
+        }
+    },
+    "notificationsHistoryEditRule": "Edit rule",
+    "@notificationsHistoryEditRule": {"description": "Menu action that opens the matched notification rule from a recent notification."},
+    "notificationsHistoryGoToDefinition": "Go to definition",
+    "@notificationsHistoryGoToDefinition": {"description": "Menu action that opens the application notification definition from a recent notification."},
+    "notificationsHistoryOpenDefinitionFailure": "The notification definition could not be opened.",
+    "@notificationsHistoryOpenDefinitionFailure": {"description": "Error opening a recent notification's definition."},
+    "notificationsHistoryDefinitionUnavailable": "The notification definition is no longer available.",
+    "@notificationsHistoryDefinitionUnavailable": {"description": "The definition for a recent notification was deleted before it could be opened."},
+    "notificationsHistoryActions": "Actions",
+    "@notificationsHistoryActions": {"description": "Button label for default-rule notification actions."},
+    "notificationsHistoryRemoveFromHistory": "Remove from recent history",
+    "@notificationsHistoryRemoveFromHistory": {"description": "Menu action that removes one recent notification history entry."},
+    "notificationsHistoryRemoveTitle": "Remove notification from history?",
+    "@notificationsHistoryRemoveTitle": {"description": "Confirmation title for removing one recent notification history entry."},
+    "notificationsHistoryRemoveConfirm": "This removes the notification record from Waterfly. Any Firefly transaction created from it will not be deleted.",
+    "@notificationsHistoryRemoveConfirm": {"description": "Confirmation message for removing one recent notification history entry."},
+    "notificationsHistoryRemoved": "Notification removed from recent history.",
+    "@notificationsHistoryRemoved": {"description": "Snackbar shown after one recent notification history entry is removed."},
+    "notificationsHistoryUndo": "Undo",
+    "@notificationsHistoryUndo": {"description": "Snackbar action that restores a removed recent notification history entry."},
+    "notificationsHistoryRestoreFailure": "The notification could not be restored to recent history.",
+    "@notificationsHistoryRestoreFailure": {"description": "Snackbar shown when a removed recent notification history entry cannot be restored."},
+    "notificationsHistoryRemoveFailure": "The notification could not be removed from recent history.",
+    "@notificationsHistoryRemoveFailure": {"description": "Snackbar shown when one recent notification history entry cannot be removed."},
+    "@notificationsHistoryCreateNewRule": {"description": "Menu action that creates a new rule from a recent notification."},
+    "notificationsHistoryRedactedTitle": "Notification details hidden",
+    "@notificationsHistoryRedactedTitle": {"description": "Title shown for recent notification history entries stored without title or body contents."},
+    "notificationsHistoryRedactedBody": "Only delivery metadata was stored for this notification.",
+    "@notificationsHistoryRedactedBody": {"description": "Body shown for recent notification history entries stored without title or body contents."},
+    "notificationsHistoryTransactionDetailsHidden": "Transaction details hidden",
+    "@notificationsHistoryTransactionDetailsHidden": {"description": "Privacy message shown when metadata-only history stores an outcome without transaction field values."},
+    "notificationsTransactionSummary": "Transaction summary",
+    "@notificationsTransactionSummary": {"description": "Heading for a compact notification transaction summary."},
+    "notificationsTransactionAccounts": "Accounts",
+    "@notificationsTransactionAccounts": {"description": "Heading for account fields in a notification transaction summary."},
+    "notificationsTransactionClassification": "Classification",
+    "@notificationsTransactionClassification": {"description": "Heading for category, currency, subscription, and piggy bank fields in a notification transaction summary."},
+    "notificationsTransactionAdditionalDetails": "Additional details",
+    "@notificationsTransactionAdditionalDetails": {"description": "Heading for date, time, and notes in a notification transaction summary."},
+    "notificationsHistoryRedactedFailureMessage": "Processing failed. Open Alerts for diagnostic details.",
+    "@notificationsHistoryRedactedFailureMessage": {"description": "Privacy-safe failure message shown when metadata-only history does not retain detailed failure text."},
+    "notificationsHistoryViewAlert": "View alert",
+    "@notificationsHistoryViewAlert": {"description": "Button opening the notification alert related to a failed history entry."},
+    "notificationsHistoryViewAlerts": "View alerts",
+    "@notificationsHistoryViewAlerts": {"description": "Button opening notification alerts when a failed history entry has no correlated alert."},
+    "notificationsMenuOptions": "Notification options",
+    "@notificationsMenuOptions": {"description": "Tooltip for the notification feature overflow menu."},
+    "notificationsMenuRuleSaveFailure": "The rule could not be saved.",
+    "@notificationsMenuRuleSaveFailure": {"description": "Snackbar message when a rule created from history cannot be saved."},
+    "notificationsMenuAlerts": "Alerts",
+    "@notificationsMenuAlerts": {"description": "Menu item that opens notification alerts."},
+    "notificationsProcessingSettingsTitle": "Notification processing settings",
+    "@notificationsProcessingSettingsTitle": {"description": "Title for the notification processing settings page and menu item."},
+    "notificationsProcessingSettingsLoadFailure": "Notification processing settings could not be loaded.",
+    "@notificationsProcessingSettingsLoadFailure": {"description": "Error state for the notification processing settings page."},
+    "notificationsProcessingSettingsSaveFailure": "Notification processing settings could not be saved.",
+    "@notificationsProcessingSettingsSaveFailure": {"description": "Snackbar shown when notification processing settings cannot be saved."},
+    "notificationsProcessingConfigurationTitle": "Backup and restore",
+    "@notificationsProcessingConfigurationTitle": {"description": "Section title for notification processing backup and restore options."},
+    "notificationsProcessingConfigurationDescription": "Export or restore your notification setup and processing preferences.",
+    "@notificationsProcessingConfigurationDescription": {"description": "Description for the notification processing configuration section."},
+    "notificationsProcessingCreateBackup": "Create backup",
+    "@notificationsProcessingCreateBackup": {"description": "Action that creates a notification processing backup."},
+    "notificationsProcessingCreateBackupDescription": "Export your notification setup and processing preferences with obfuscated data. Recent history and alerts are not included.",
+    "@notificationsProcessingCreateBackupDescription": {"description": "Description for creating a notification processing backup."},
+    "notificationsProcessingCreateBackupDisabledDescription": "Add at least one application before creating a backup.",
+    "@notificationsProcessingCreateBackupDisabledDescription": {"description": "Description shown when a notification backup cannot be created because no applications are registered."},
+    "notificationsProcessingRestoreBackup": "Restore backup",
+    "@notificationsProcessingRestoreBackup": {"description": "Action that restores a notification processing backup."},
+    "notificationsProcessingRestoreBackupDescription": "Replace your current notification setup and processing preferences with a backup.",
+    "@notificationsProcessingRestoreBackupDescription": {"description": "Description for restoring a notification processing backup."},
+    "notificationsProcessingStoredDataTitle": "History and stored data",
+    "@notificationsProcessingStoredDataTitle": {"description": "Section title for notification history and privacy settings."},
+    "notificationsProcessingStoredDataDescription": "Choose what recent history keeps and how long stored records remain on this device.",
+    "@notificationsProcessingStoredDataDescription": {"description": "Description for notification stored data and privacy settings."},
+    "notificationsProcessingHistoryStorageMode": "Recent notification history",
+    "@notificationsProcessingHistoryStorageMode": {"description": "Setting label for notification history storage mode."},
+    "notificationsProcessingHistoryStorageModeDescription": "Choose whether recent history keeps full notification content, metadata only, or nothing.",
+    "@notificationsProcessingHistoryStorageModeDescription": {"description": "Description for notification history storage mode."},
+    "notificationsProcessingHistoryStorageDisabled": "Disabled",
+    "@notificationsProcessingHistoryStorageDisabled": {"description": "Option that disables notification history storage."},
+    "notificationsProcessingHistoryStorageMetadata": "Metadata only",
+    "@notificationsProcessingHistoryStorageMetadata": {"description": "Option that stores notification history metadata without title or body."},
+    "notificationsProcessingHistoryStorageFull": "Full",
+    "@notificationsProcessingHistoryStorageFull": {"description": "Option that stores full notification history contents."},
+    "notificationsProcessingHistoryRetention": "History retention",
+    "@notificationsProcessingHistoryRetention": {"description": "Setting label for recent notification history retention."},
+    "notificationsProcessingHistoryRetentionDescription": "Automatically remove recent notification records older than this period.",
+    "@notificationsProcessingHistoryRetentionDescription": {"description": "Description for recent notification history retention."},
+    "notificationsProcessingRetentionSevenDays": "7 days",
+    "@notificationsProcessingRetentionSevenDays": {"description": "Retention option for seven days."},
+    "notificationsProcessingRetentionThirtyDays": "30 days",
+    "@notificationsProcessingRetentionThirtyDays": {"description": "Retention option for thirty days."},
+    "notificationsProcessingRetentionNinetyDays": "90 days",
+    "@notificationsProcessingRetentionNinetyDays": {"description": "Retention option for ninety days."},
+    "notificationsProcessingRetentionForever": "Forever",
+    "@notificationsProcessingRetentionForever": {"description": "Retention option that keeps records forever."},
+    "notificationsProcessingClearHistory": "Clear recent history",
+    "@notificationsProcessingClearHistory": {"description": "Action that clears recent notification history."},
+    "notificationsProcessingClearHistoryDescription": "Delete all recent notification records.",
+    "@notificationsProcessingClearHistoryDescription": {"description": "Description for clearing recent notification history."},
+    "notificationsProcessingClearAlerts": "Clear processing alerts",
+    "@notificationsProcessingClearAlerts": {"description": "Action that clears notification processing alerts."},
+    "notificationsProcessingClearAlertsDescription": "Delete all current processing alerts.",
+    "@notificationsProcessingClearAlertsDescription": {"description": "Description for clearing notification processing alerts."},
+    "notificationsProcessingClearStoredDataTitle": "Clear history and alerts",
+    "@notificationsProcessingClearStoredDataTitle": {"description": "Label for a grouped set of destructive notification stored data cleanup actions."},
+    "notificationsProcessingOffboardingTitle": "Notification access and setup",
+    "@notificationsProcessingOffboardingTitle": {"description": "Section title for notification processing offboarding actions."},
+    "notificationsProcessingOffboardingDescription": "Manage Waterfly's Android notification access or remove the saved notification setup.",
+    "@notificationsProcessingOffboardingDescription": {"description": "Description for notification processing offboarding actions."},
+    "notificationsProcessingOpenAccessSettings": "Open notification access settings",
+    "@notificationsProcessingOpenAccessSettings": {"description": "Action that opens Android notification access settings."},
+    "notificationsProcessingOpenAccessSettingsDescription": "Review or revoke Waterfly's notification access in Android settings.",
+    "@notificationsProcessingOpenAccessSettingsDescription": {"description": "Description for opening Android notification access settings."},
+    "notificationsProcessingRemoveSetup": "Remove notification setup",
+    "@notificationsProcessingRemoveSetup": {"description": "Action that removes all notification processing setup and data."},
+    "notificationsProcessingDeleteRegistrations": "Delete all application registrations",
+    "@notificationsProcessingDeleteRegistrations": {"description": "Action that deletes every notification application registration."},
+    "notificationsProcessingDeleteRegistrationsDescription": "Delete every registered application and its rules while keeping notification access and processing preferences.",
+    "@notificationsProcessingDeleteRegistrationsDescription": {"description": "Description for deleting all notification application registrations."},
+    "notificationsProcessingDeleteRegistrationsTitle": "{count, plural, =1{Delete 1 application registration?} other{Delete {count} application registrations?}}",
+    "@notificationsProcessingDeleteRegistrationsTitle": {
+      "description": "Confirmation title for deleting every notification application registration.",
+      "placeholders": {"count": {"type": "int", "example": "3"}}
+    },
+    "notificationsProcessingDeleteRegistrationsConfirm": "Their rules, recent history, and alerts will also be deleted. Processing preferences and notification access will not change.",
+    "@notificationsProcessingDeleteRegistrationsConfirm": {"description": "Confirmation message for deleting every notification application registration."},
+    "notificationsProcessingRegistrationsDeleted": "{count, plural, =1{1 application registration deleted.} other{{count} application registrations deleted.}}",
+    "@notificationsProcessingRegistrationsDeleted": {
+      "description": "Snackbar message after deleting every notification application registration.",
+      "placeholders": {"count": {"type": "int", "example": "3"}}
+    },
+    "notificationsProcessingRegistrationsDeletedCleanupFailure": "{count, plural, =1{1 application registration deleted, but its related history or alerts could not be completely cleared.} other{{count} application registrations deleted, but their related history or alerts could not be completely cleared.}}",
+    "@notificationsProcessingRegistrationsDeletedCleanupFailure": {
+      "description": "Snackbar message after deleting every notification application registration when related-data cleanup is incomplete.",
+      "placeholders": {"count": {"type": "int", "example": "3"}}
+    },
+    "notificationsProcessingRemoveSetupDescription": "Delete saved apps, rules, recent history, and alerts, then reset processing preferences.",
+    "@notificationsProcessingRemoveSetupDescription": {"description": "Description for removing notification setup."},
+    "notificationsProcessingRemoveSetupGroupTitle": "Remove saved setup",
+    "@notificationsProcessingRemoveSetupGroupTitle": {"description": "Label for a grouped destructive notification processing setup removal action."},
+    "notificationsProcessingSaveFileTitle": "Save notification processing file",
+    "@notificationsProcessingSaveFileTitle": {"description": "File picker title for saving notification processing exports."},
+    "notificationsProcessingExportCancelled": "Export cancelled.",
+    "@notificationsProcessingExportCancelled": {"description": "Snackbar shown after export file selection is cancelled."},
+    "notificationsProcessingBackupComplete": "Notification processing backup created.",
+    "@notificationsProcessingBackupComplete": {"description": "Snackbar shown after creating a notification processing backup."},
+    "notificationsProcessingRestoreBackupTitle": "Restore notification processing backup?",
+    "@notificationsProcessingRestoreBackupTitle": {"description": "Confirmation title for restoring a notification processing backup."},
+    "notificationsProcessingRestoreBackupConfirm": "{count, plural, =0{This backup contains no definitions. It will replace your current setup and processing settings.} =1{This backup contains 1 definition. It will replace your current setup and processing settings.} other{This backup contains {count} definitions. It will replace your current setup and processing settings.}}",
+    "@notificationsProcessingRestoreBackupConfirm": {"description": "Confirmation text for restoring a notification processing backup.", "placeholders": {"count": {"type": "int", "example": "3"}}},
+    "notificationsProcessingRestoreBackupComplete": "Notification processing backup restored.",
+    "@notificationsProcessingRestoreBackupComplete": {"description": "Snackbar shown after restoring a notification processing backup."},
+    "notificationsProcessingClearHistoryTitle": "Clear recent notification history?",
+    "@notificationsProcessingClearHistoryTitle": {"description": "Confirmation title for clearing recent notification history."},
+    "notificationsProcessingClearHistoryConfirm": "All stored recent notification records will be deleted.",
+    "@notificationsProcessingClearHistoryConfirm": {"description": "Confirmation text for clearing recent notification history."},
+    "notificationsProcessingHistoryCleared": "Recent notification history cleared.",
+    "@notificationsProcessingHistoryCleared": {"description": "Snackbar shown after clearing recent notification history."},
+    "notificationsProcessingClearAlertsTitle": "Clear notification alerts?",
+    "@notificationsProcessingClearAlertsTitle": {"description": "Confirmation title for clearing notification alerts."},
+    "notificationsProcessingClearAlertsConfirm": "All processing alerts will be deleted.",
+    "@notificationsProcessingClearAlertsConfirm": {"description": "Confirmation text for clearing notification alerts."},
+    "notificationsProcessingAlertsCleared": "Notification alerts cleared.",
+    "@notificationsProcessingAlertsCleared": {"description": "Snackbar shown after clearing notification alerts."},
+    "notificationsProcessingRemoveSetupTitle": "Remove notification setup?",
+    "@notificationsProcessingRemoveSetupTitle": {"description": "Confirmation title for removing notification setup."},
+    "notificationsProcessingRemoveSetupConfirm": "Definitions, recent history, alerts, and processing settings will be removed. Android settings will open next so you can turn off Waterfly's notification access.",
+    "@notificationsProcessingRemoveSetupConfirm": {"description": "Confirmation text for removing notification setup."},
+    "notificationsProcessingRemoveSetupComplete": "Notification setup removed. Turn off Waterfly in Android notification access settings to stop listener access.",
+    "@notificationsProcessingRemoveSetupComplete": {"description": "Snackbar shown after removing notification setup and opening Android notification access settings."},
+    "notificationsProcessingRemoveSetupCompleteNoSettings": "Notification setup removed. Open Android notification access settings to turn off listener access.",
+    "@notificationsProcessingRemoveSetupCompleteNoSettings": {"description": "Snackbar shown after removing notification setup when Android notification access settings cannot be opened."},
+    "notificationsProcessingAccessSettingsOpened": "Notification access settings opened.",
+    "@notificationsProcessingAccessSettingsOpened": {"description": "Snackbar shown after Android notification access settings are opened."},
+    "notificationsProcessingAccessSettingsOpenFailure": "Notification access settings could not be opened.",
+    "@notificationsProcessingAccessSettingsOpenFailure": {"description": "Snackbar shown when Android notification access settings cannot be opened."},
+    "notificationsProcessingActionFailure": "The notification processing action could not be completed.",
+    "@notificationsProcessingActionFailure": {"description": "Snackbar shown when a notification processing settings action fails."},
+    "notificationsExtractorActions": "Extractor actions",
+    "@notificationsExtractorActions": {"description": "Tooltip for an extractor action menu."},
+    "notificationsEditDetails": "Edit details",
+    "@notificationsEditDetails": {"description": "Menu label for editing an item's name and optional description."},
+    "notificationsDescriptionOptional": "Description (optional)",
+    "@notificationsDescriptionOptional": {"description": "Field label for an optional notification configuration description."},
+    "notificationsExtractorDelete": "Delete",
+    "@notificationsExtractorDelete": {"description": "Button and menu label for deleting an extractor."},
+    "@notificationsExtractorPredefined": {"description": "Status label for a built-in extractor."},
+    "@notificationsExtractorCustom": {"description": "Status label for a regular expression extractor."},
+    "@notificationsExtractorMatchesSample": {"description": "Status label for an extractor that matches its sample."},
+    "notificationsExtractorInvalidPattern": "Invalid pattern",
+    "@notificationsExtractorInvalidPattern": {"description": "Status label for an extractor with an invalid regular expression."},
+    "notificationsExtractorInvalidPatternMessage": "Fix the regular expression before this extractor can provide values.",
+    "@notificationsExtractorInvalidPatternMessage": {"description": "Message explaining that an extractor pattern is invalid."},
+    "notificationsExtractorInputTooLong": "Sample is too long",
+    "@notificationsExtractorInputTooLong": {"description": "Status title shown when a custom extractor sample exceeds the safe evaluation limit."},
+    "notificationsExtractorInputTooLongMessage": "Regular expression extractors can safely evaluate up to {maximumLength} characters. Use a shorter sample or simplify the source notification.",
+    "@notificationsExtractorInputTooLongMessage": {"description": "Message explaining that a custom extractor input exceeds the safe evaluation limit.", "placeholders": {"maximumLength": {"type": "int", "example": "16384"}}},
+    "notificationsExtractorPerformanceWarning": "Pattern may be slow",
+    "@notificationsExtractorPerformanceWarning": {"description": "Warning title shown for a regular expression with potentially expensive repetition."},
+    "notificationsExtractorPerformanceWarningMessage": "Nested or repeated broad matching can delay notification processing. Test this pattern with representative notifications before enabling automation.",
+    "@notificationsExtractorPerformanceWarningMessage": {"description": "Warning message shown for a potentially expensive custom regular expression."},
+    "notificationsExtractorNoSampleMatch": "No sample match",
+    "@notificationsExtractorNoSampleMatch": {"description": "Status label for a valid extractor that does not match its sample."},
+    "notificationsExtractorNoSampleMatchMessage": "This extractor does not find a value in the current sample notification.",
+    "@notificationsExtractorNoSampleMatchMessage": {"description": "Message explaining that an extractor does not match its sample."},
+    "notificationsClearText": "Clear text",
+    "@notificationsClearText": {"description": "Tooltip for clearing a rename text field."},
+    "notificationsExtractorSampleNotification": "Sample notification",
+    "@notificationsExtractorSampleNotification": {"description": "Heading for the extractor sample notification."},
+    "notificationsExtractorSampleDescription": "Fine-tune the sample for this extractor while keeping the definition sample available to other extractors and rules.",
+    "@notificationsExtractorSampleDescription": {"description": "Description of why an extractor can override the definition sample."},
+    "notificationsExtractorDeleteTitle": "Delete extractor?",
+    "@notificationsExtractorDeleteTitle": {"description": "Confirmation dialog title for deleting an extractor."},
+    "notificationsExtractorDeleteDescription": "\"{name}\" will be removed. Rules using its captured values may need updating.",
+    "@notificationsExtractorDeleteDescription": {"description": "Confirmation dialog description for deleting an extractor.", "placeholders": {"name": {"type": "String", "example": "Amount"}}},
+    "notificationsExtractorRenameTitle": "Rename extractor",
+    "@notificationsExtractorRenameTitle": {"description": "Title for the rename extractor dialog."},
+    "notificationsExtractorRenameDescription": "Choose a name that identifies this extractor in rules.",
+    "@notificationsExtractorRenameDescription": {"description": "Description for the rename extractor dialog."},
+    "notificationsExtractorEditDetailsTitle": "Edit extractor details",
+    "@notificationsExtractorEditDetailsTitle": {"description": "Title for editing an extractor's name and description."},
+    "notificationsExtractorEditDetailsDescription": "Use a clear name and optionally describe the value this extractor provides.",
+    "@notificationsExtractorEditDetailsDescription": {"description": "Description for editing extractor details."},
+    "notificationsExtractorName": "Extractor name",
+    "@notificationsExtractorName": {"description": "Field label for an extractor name."},
+    "notificationsExtractorSave": "Save",
+    "@notificationsExtractorSave": {"description": "Button label that saves an extractor name."},
+    "notificationsBack": "Back",
+    "@notificationsBack": {"description": "Navigation button label that returns to the previous dialog step."},
+    "notificationsAdd": "Add",
+    "@notificationsAdd": {"description": "Button label that adds a notification configuration item."},
+    "notificationsPredefined": "Predefined",
+    "@notificationsPredefined": {"description": "Label for a built-in notification configuration option."},
+    "@notificationsCustom": {"description": "Label for a custom notification configuration option."},
+    "notificationsDefinitionAddExtractor": "Add extractor",
+    "@notificationsDefinitionAddExtractor": {"description": "Button or dialog title for adding an extractor."},
+    "notificationsDefinitionSelectPredefinedExtractor": "Select predefined extractor",
+    "@notificationsDefinitionSelectPredefinedExtractor": {"description": "Title for selecting a built-in extractor."},
+    "notificationsDefinitionNameCustomExtractor": "Name regular expression extractor",
+    "@notificationsDefinitionNameCustomExtractor": {"description": "Title for naming a regular expression extractor."},
+    "notificationsDefinitionChooseExtractorType": "Choose a built-in extractor or create one with a regular expression.",
+    "@notificationsDefinitionChooseExtractorType": {"description": "Description for extractor type selection."},
+    "notificationsDefinitionSelectNotificationField": "Select the notification field to extract.",
+    "@notificationsDefinitionSelectNotificationField": {"description": "Description for built-in extractor selection."},
+    "notificationsDefinitionNameExtractorDescription": "Name this extractor before entering its regular expression.",
+    "@notificationsDefinitionNameExtractorDescription": {"description": "Description for custom extractor naming."},
+    "notificationsDefinitionPredefinedExtractorDescription": "Use a built-in value such as the notification title, message, or received time.",
+    "@notificationsDefinitionPredefinedExtractorDescription": {"description": "Description for the built-in extractor option."},
+    "notificationsDefinitionRegularExpressionExtractor": "Regular expression",
+    "@notificationsDefinitionRegularExpressionExtractor": {"description": "Label for the regular expression extractor option."},
+    "notificationsDefinitionCustomExtractorDescription": "Capture values from the notification with a regular expression.",
+    "@notificationsDefinitionCustomExtractorDescription": {"description": "Description for the regular expression extractor option."},
+    "notificationsDefinitionAlreadyAdded": "Already added.",
+    "@notificationsDefinitionAlreadyAdded": {"description": "Status for an extractor that is already configured."},
+    "notificationsDefinitionCaptureNotificationTitle": "Captures the notification title.",
+    "@notificationsDefinitionCaptureNotificationTitle": {"description": "Description of the title extractor."},
+    "notificationsDefinitionCaptureNotificationMessage": "Captures the notification message.",
+    "@notificationsDefinitionCaptureNotificationMessage": {"description": "Description of the message extractor."},
+    "notificationsDefinitionCaptureNotificationDate": "Captures the time the notification was received.",
+    "@notificationsDefinitionCaptureNotificationDate": {"description": "Description of the date extractor."},
+    "notificationsDefinitionCaptureAmount": "Captures an amount in the message.",
+    "@notificationsDefinitionCaptureAmount": {"description": "Description of the amount extractor."},
+    "notificationsDefinitionCaptureCurrency": "Captures currency before or after an amount.",
+    "@notificationsDefinitionCaptureCurrency": {"description": "Description of the currency extractor."},
+    "notificationsDefinitionAddRule": "Add rule",
+    "@notificationsDefinitionAddRule": {"description": "Button or dialog title for adding a rule."},
+    "@notificationsDefinitionNameCustomRule": {"description": "Title for naming a custom rule."},
+    "notificationsDefinitionNameRuleDescription": "Name this rule before defining when it runs and which fields it sets.",
+    "@notificationsDefinitionNameRuleDescription": {"description": "Description for custom rule naming."},
+    "@notificationsDefinitionAddRuleDescription": {"description": "Description for adding a rule."},
+    "@notificationsDefinitionPredefinedRuleDescription": {"description": "Description for the built-in rule option."},
+    "@notificationsDefinitionCustomRuleDescription": {"description": "Description for the custom rule option."},
+    "notificationsRuleName": "Rule name",
+    "@notificationsRuleName": {"description": "Field label for a notification rule name."},
+    "notificationsDefinitionOptionsHeading": "Options",
+    "@notificationsDefinitionOptionsHeading": {"description": "Heading for notification definition options."},
+    "notificationsDefinitionOptionsDescription": "Choose whether matching notifications create transactions automatically or wait for review.",
+    "@notificationsDefinitionOptionsDescription": {"description": "Description for notification definition options."},
+    "notificationsDefinitionCreateAutomatically": "Create transaction automatically",
+    "@notificationsDefinitionCreateAutomatically": {"description": "Option to automatically create matching transactions."},
+    "notificationsDefinitionCreateAutomaticallyEnabled": "Create a transaction automatically for each matching notification.",
+    "@notificationsDefinitionCreateAutomaticallyEnabled": {"description": "Description when automatic transaction creation is enabled."},
+    "notificationsDefinitionCreateAutomaticallyDisabled": "Review each matching transaction before it is created.",
+    "@notificationsDefinitionCreateAutomaticallyDisabled": {"description": "Description when automatic transaction creation is disabled."},
+    "notificationsDefinitionAutomaticRequirementTitle": "title",
+    "@notificationsDefinitionAutomaticRequirementTitle": {"description": "Required title field for automatic notification transactions."},
+    "notificationsDefinitionAutomaticRequirementAmount": "positive amount",
+    "@notificationsDefinitionAutomaticRequirementAmount": {"description": "Required positive amount for automatic notification transactions."},
+    "notificationsDefinitionAutomaticRequirementAccount": "source or destination account",
+    "@notificationsDefinitionAutomaticRequirementAccount": {"description": "Required account field for automatic notification transactions."},
+    "notificationsDefinitionAutomaticIncomplete": "Automatic processing is disabled until shared actions provide: {requirements}.",
+    "@notificationsDefinitionAutomaticIncomplete": {
+        "description": "Warning shown when automatic notification transaction creation lacks required shared fields.",
+        "placeholders": {
+            "requirements": {"type": "String"}
+        }
+    },
+    "notificationsDefinitionAutomaticIncompleteTitle": "Automatic creation is incomplete",
+    "@notificationsDefinitionAutomaticIncompleteTitle": {"description": "Title for an incomplete automatic notification transaction warning."},
+    "notificationsDefinitionSampleRequired": "Sample notification required",
+    "@notificationsDefinitionSampleRequired": {"description": "Placeholder text when a definition has no sample notification."},
+    "notificationsDefinitionEditSample": "Edit sample notification",
+    "@notificationsDefinitionEditSample": {"description": "Tooltip for editing a definition sample notification."},
+    "notificationsDefinitionExtractorsHeading": "Extractors",
+    "@notificationsDefinitionExtractorsHeading": {"description": "Heading for notification definition extractors."},
+    "notificationsDefinitionExtractorsDescription": "Extractors turn notification details, such as title, message, or received time, into values rules can use.",
+    "@notificationsDefinitionExtractorsDescription": {"description": "Description for notification definition extractors."},
+    "notificationsDefinitionNoExtractors": "No extractors defined",
+    "@notificationsDefinitionNoExtractors": {"description": "Empty state for custom extractors."},
+    "notificationsDefinitionMatchCount": "{count, plural, =0{No matches} =1{1 match} other{{count} matches}}",
+    "@notificationsDefinitionMatchCount": {"description": "Number of regular expression matches.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "@notificationsDefinitionGroupCount": {"description": "Number of captured regular expression groups.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "notificationsDefinitionRulesHeading": "Rules",
+    "@notificationsDefinitionRulesHeading": {"description": "Heading for notification definition rules."},
+    "notificationsDefinitionRulesOrderDescription": "Rules are checked from top to bottom. The first matching rule handles the notification.",
+    "@notificationsDefinitionRulesOrderDescription": {"description": "Description of ordered first-match rule selection."},
+    "notificationsDefinitionRuleShadowsFollowing": "Always applies · Rules below cannot be reached",
+    "@notificationsDefinitionRuleShadowsFollowing": {"description": "Warning shown when an unconditional rule makes following rules unreachable."},
+    "@notificationsDefinitionAlwaysRuleActionCount": {"description": "Summary of an unconditional rule and its action count.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "notificationsDefinitionSharedActionsTitle": "Shared actions",
+    "@notificationsDefinitionSharedActionsTitle": {"description": "Heading and editor title for actions shared by every selected rule."},
+    "notificationsDefinitionSharedActionsDescription": "Shared actions run before each matching rule. Rule actions can override their values.",
+    "@notificationsDefinitionSharedActionsDescription": {"description": "Description of when shared notification actions run."},
+    "notificationsDefinitionSharedActionsNeedSetupMessage": "Add a shared transaction field here, or go back and create a rule, before this application can process notifications.",
+    "@notificationsDefinitionSharedActionsNeedSetupMessage": {"description": "Status message shown in the shared actions editor when neither shared fields nor rules are configured."},
+    "notificationsDefinitionSharedTransactionFields": "Shared transaction fields",
+    "@notificationsDefinitionSharedTransactionFields": {"description": "Title of the card that opens shared transaction field actions."},
+    "notificationsDefinitionNoSharedFields": "No shared fields configured",
+    "@notificationsDefinitionNoSharedFields": {"description": "Error-style subtitle shown when shared transaction fields are empty and the definition still needs setup."},
+    "notificationsDefinitionSetTransactionFields": "Set transaction fields",
+    "@notificationsDefinitionSetTransactionFields": {"description": "Basic-mode title for configuring transaction field actions."},
+    "notificationsDefinitionNoTransactionFields": "No transaction fields configured",
+    "@notificationsDefinitionNoTransactionFields": {"description": "Error-style subtitle shown when basic transaction fields are empty and the definition still needs setup."},
+    "notificationsDefinitionBasicActionsDescription": "Set transaction fields for every matching notification.",
+    "@notificationsDefinitionBasicActionsDescription": {"description": "Basic-mode description of transaction field actions."},
+    "notificationsDefinitionBasicActionsNeedSetupMessage": "Add at least one transaction field before this application can process notifications.",
+    "@notificationsDefinitionBasicActionsNeedSetupMessage": {"description": "Status message shown in the basic transaction fields editor when no transaction fields are configured."},
+    "notificationsDefinitionPreviewSharedActions": "Shared actions",
+    "@notificationsDefinitionPreviewSharedActions": {"description": "Attribution label for a resolved transaction value set by shared actions."},
+    "@notificationsDefinitionPreviewTransaction": {"description": "Tooltip for previewing a rule's effective transaction."},
+    "@notificationsDefinitionEffectiveTransaction": {"description": "Title for the effective transaction preview dialog."},
+    "notificationsDefinitionResolvedTransaction": "Resolved transaction fields",
+    "@notificationsDefinitionResolvedTransaction": {"description": "Heading for the resolved transaction fields section in a rule editor."},
+    "notificationsDefinitionResolvedTransactionDescription": "Shows the transaction created from shared actions, always-run actions, and matching conditional actions. Later values override earlier ones.",
+    "@notificationsDefinitionResolvedTransactionDescription": {"description": "Description for the resolved transaction values section in a rule editor."},
+    "notificationsConditionalActionResolvedTransactionDescription": "Shows the transaction fields this conditional action resolves from the current sample.",
+    "@notificationsConditionalActionResolvedTransactionDescription": {"description": "Description for the group-scoped resolved transaction fields section in a conditional action editor."},
+    "notificationsDefinitionNoResolvedTransactionFields": "No transaction fields resolve from this rule.",
+    "@notificationsDefinitionNoResolvedTransactionFields": {"description": "Empty state for an effective transaction preview."},
+    "@notificationsDefinitionPreviewDefaultApplied": {"description": "Evaluation trace for an effective transaction preview."},
+    "@notificationsDefinitionPreviewSpecializedApplied": {"description": "Evaluation trace for a specialized rule preview.", "placeholders": {"name": {"type": "String", "example": "Grocery purchases"}}},
+    "notificationsDefinitionPreviewThisRule": "This rule",
+    "@notificationsDefinitionPreviewThisRule": {"description": "Attribution label for a resolved transaction value set by the rule currently being edited."},
+    "notificationsDefinitionPreviewMultipleRules": "Multiple rules",
+    "@notificationsDefinitionPreviewMultipleRules": {"description": "Attribution label for resolved tags contributed by more than one rule."},
+    "notificationsDefinitionPreviewSetBy": "Set by: {rule}",
+    "@notificationsDefinitionPreviewSetBy": {"description": "Attribution label for the rule that set a resolved transaction value.", "placeholders": {"rule": {"type": "String", "example": "This rule"}}},
+    "notificationsDefinitionPreviewOverrides": "Overrides: {sources}",
+    "@notificationsDefinitionPreviewOverrides": {"description": "Attribution label listing earlier action sources overridden by the resolved transaction value.", "placeholders": {"sources": {"type": "String", "example": "Shared actions"}}},
+    "notificationsDefinitionNoRules": "No rules defined.",
+    "@notificationsDefinitionNoRules": {"description": "Empty state for notification definition rules."},
+    "@notificationsDefinitionIncompleteActionCount": {"description": "Status and count of incomplete rule actions.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "@notificationsDefinitionReviewMappingCount": {"description": "Status and count of mappings requiring review.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "@notificationsDefinitionStandardMappingCount": {"description": "Status and count of standard mappings.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "notificationsDefinitionConditionActionCount": "{conditions, plural, =0{No conditions} =1{1 condition} other{{conditions} conditions}} · {actions, plural, =0{No actions} =1{1 action} other{{actions} actions}}",
+    "@notificationsDefinitionConditionActionCount": {"description": "Condition and action counts for a conditional action group or a rule without conditional actions.", "placeholders": {"conditions": {"type": "int", "example": "2"}, "actions": {"type": "int", "example": "3"}}},
+    "notificationsDefinitionRuleConditionActionGroupCount": "{conditions, plural, =0{No conditions} =1{1 condition} other{{conditions} conditions}} · {actions, plural, =0{No always-run actions} =1{1 always-run action} other{{actions} always-run actions}} · {groups, plural, =1{1 conditional action} other{{groups} conditional actions}}",
+    "@notificationsDefinitionRuleConditionActionGroupCount": {"description": "Condition, always-run action, and conditional action counts for a rule with conditional actions.", "placeholders": {"conditions": {"type": "int", "example": "2"}, "actions": {"type": "int", "example": "3"}, "groups": {"type": "int", "example": "2"}}},
+    "notificationsDefinitionSetupHeading": "Set up notification processing",
+    "@notificationsDefinitionSetupHeading": {"description": "Heading for notification definition setup mode."},
+    "notificationsDefinitionSetupDescription": "Choose how Waterfly reads this app's notifications and turns them into transactions.",
+    "@notificationsDefinitionSetupDescription": {"description": "Description for notification definition setup mode."},
+    "notificationsDefinitionSetupSampleRequired": "Add a sample notification before choosing a setup option.",
+    "@notificationsDefinitionSetupSampleRequired": {"description": "Warning shown before a sample notification is provided."},
+    "notificationsDefinitionBasic": "Basic",
+    "@notificationsDefinitionBasic": {"description": "Basic notification processing mode."},
+    "notificationsDefinitionBasicDescription": "Use built-in extractors and standard transaction mappings. Review uncertain values before creating a transaction.",
+    "@notificationsDefinitionBasicDescription": {"description": "Description for basic notification processing mode."},
+    "notificationsDefinitionAdvanced": "Advanced",
+    "@notificationsDefinitionAdvanced": {"description": "Advanced notification processing mode."},
+    "notificationsDefinitionAdvancedDescription": "Create your own extractors and rules for full control over how notifications become transactions.",
+    "@notificationsDefinitionAdvancedDescription": {"description": "Description for advanced notification processing mode."},
+    "notificationsExtractorUsesTitle": "Uses the notification title supplied by the source app.",
+    "@notificationsExtractorUsesTitle": {"description": "Description for the notification title property extractor."},
+    "notificationsExtractorUsesMessage": "Uses the notification message supplied by the source app.",
+    "@notificationsExtractorUsesMessage": {"description": "Description for the notification message property extractor."},
+    "notificationsExtractorUsesReceivedTime": "Uses the time Android recorded when the notification arrived.",
+    "@notificationsExtractorUsesReceivedTime": {"description": "Description for the notification date property extractor."},
+    "notificationsExtractorNotificationTitle": "Notification title",
+    "@notificationsExtractorNotificationTitle": {"description": "Label for a notification title value."},
+    "notificationsExtractorNotificationMessage": "Notification message",
+    "@notificationsExtractorNotificationMessage": {"description": "Label for a notification message value."},
+    "notificationsExtractorDescription": "Description",
+    "@notificationsExtractorDescription": {"description": "Heading for an extractor description."},
+    "notificationsExtractorMatches": "Matches",
+    "@notificationsExtractorMatches": {"description": "Heading for extractor matches."},
+    "notificationsExtractorPropertyMatchesDescription": "Captured values are highlighted in the matching sample field.",
+    "@notificationsExtractorPropertyMatchesDescription": {"description": "Description of property extractor match highlighting."},
+    "notificationsExtractorPattern": "Pattern",
+    "@notificationsExtractorPattern": {"description": "Heading for an extractor pattern."},
+    "notificationsExtractorPatternEditableDescription": "Edit the regular expression and preview matches in the sample notification.",
+    "@notificationsExtractorPatternEditableDescription": {"description": "Description for an editable extractor pattern."},
+    "notificationsExtractorPatternReadOnlyDescription": "This built-in pattern is managed by Basic mode and cannot be edited here.",
+    "@notificationsExtractorPatternReadOnlyDescription": {"description": "Description for a read-only extractor pattern."},
+    "notificationsExtractorRegularExpression": "Regular expression",
+    "@notificationsExtractorRegularExpression": {"description": "Field label for an extractor regular expression."},
+    "notificationsExtractorPasteRegularExpression": "Paste regular expression",
+    "@notificationsExtractorPasteRegularExpression": {"description": "Tooltip for pasting an extractor regular expression."},
+    "@notificationsExtractorEvaluate": {"description": "Button label for evaluating an extractor pattern."},
+    "notificationsExtractorPatternMatchesDescription": "Regular expression matches are highlighted in the sample notification.",
+    "@notificationsExtractorPatternMatchesDescription": {"description": "Description of regular expression match highlighting."},
+    "notificationsExtractorMatch": "Match",
+    "@notificationsExtractorMatch": {"description": "Label for a regular expression match."},
+    "notificationsExtractorMatchNumber": "Match {count}",
+    "@notificationsExtractorMatchNumber": {"description": "Label for a numbered regular expression match.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "notificationsValueTypeText": "Text",
+    "@notificationsValueTypeText": {"description": "Value type label for text."},
+    "notificationsValueTypeNumber": "Number",
+    "@notificationsValueTypeNumber": {"description": "Value type label for a number."},
+    "notificationsValueTypeCurrency": "Currency",
+    "@notificationsValueTypeCurrency": {"description": "Value type label for a currency."},
+    "notificationsValueTypeDate": "Date",
+    "@notificationsValueTypeDate": {"description": "Value type label for a date."},
+    "notificationsValueTypeTime": "Time",
+    "@notificationsValueTypeTime": {"description": "Value type label for a time."},
+    "notificationsValueTypeDateTime": "Date and time",
+    "@notificationsValueTypeDateTime": {"description": "Value type label for a date and time."},
+    "notificationsCaptureEmpty": "No matching extractor captures are available.",
+    "@notificationsCaptureEmpty": {"description": "Empty state in the extractor capture picker."},
+    "notificationsCaptureGroupCount": "{count, plural, =0{No captured groups} =1{1 captured group} other{{count} captured groups}}",
+    "@notificationsCaptureGroupCount": {"description": "Number of captured regular expression groups.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "notificationsCaptureExtractorMatch": "{name} > Match {count}",
+    "@notificationsCaptureExtractorMatch": {"description": "Breadcrumb for an extractor match.", "placeholders": {"name": {"type": "String", "example": "Amount"}, "count": {"type": "int", "example": "2"}}},
+    "notificationsCaptureGroupPrefix": "Group \"",
+    "@notificationsCaptureGroupPrefix": {"description": "Prefix for a quoted capture group name."},
+    "notificationsCaptureMatchGroupPrefix": "Match {count} - Group \"",
+    "@notificationsCaptureMatchGroupPrefix": {"description": "Prefix for a quoted group in a numbered match.", "placeholders": {"count": {"type": "int", "example": "2"}}},
+    "notificationsResolvedValuePrefix": "Resolved value: \"",
+    "@notificationsResolvedValuePrefix": {"description": "Prefix for a quoted resolved value."},
+    "notificationsRuleRenameTitle": "Rename rule",
+    "@notificationsRuleRenameTitle": {"description": "Title for the rename notification rule dialog."},
+    "notificationsRuleRenameDescription": "Choose a name that describes when this rule applies.",
+    "@notificationsRuleRenameDescription": {"description": "Description for the rename notification rule dialog."},
+    "notificationsRuleEditDetailsTitle": "Edit rule details",
+    "@notificationsRuleEditDetailsTitle": {"description": "Title for editing a rule's name and description."},
+    "notificationsRuleEditDetailsDescription": "Use a clear name and optionally describe when this rule should be used.",
+    "@notificationsRuleEditDetailsDescription": {"description": "Description for editing rule details."},
+    "notificationsUnresolved": "unresolved",
+    "@notificationsUnresolved": {"description": "Status text for a value that could not be resolved."},
+    "notificationsResolvedValueLabel": "Resolved value: ",
+    "@notificationsResolvedValueLabel": {"description": "Label before a resolved value."},
+    "notificationsLocalizedValueLabel": "Localized value: ",
+    "@notificationsLocalizedValueLabel": {"description": "Label before a localized representation of a raw extractor value."},
+    "notificationsRuleExtractor": "Extractor ",
+    "@notificationsRuleExtractor": {"description": "Capitalized prefix before an extractor name."},
+    "notificationsRuleExtractorLowercase": "extractor ",
+    "@notificationsRuleExtractorLowercase": {"description": "Lowercase prefix before an extractor name."},
+    "notificationsRuleValueSuffix": " value",
+    "@notificationsRuleValueSuffix": {"description": "Suffix after an extractor name in a condition summary."},
+    "notificationsConditionExists": "exists",
+    "@notificationsConditionExists": {"description": "Condition summary operator."},
+    "notificationsConditionEquals": "equals",
+    "@notificationsConditionEquals": {"description": "Condition summary operator."},
+    "notificationsConditionContains": "contains",
+    "@notificationsConditionContains": {"description": "Condition summary operator."},
+    "notificationsConditionGreaterThan": "is greater than",
+    "@notificationsConditionGreaterThan": {"description": "Condition summary operator."},
+    "notificationsConditionGreaterThanLabel": "Greater than",
+    "@notificationsConditionGreaterThanLabel": {"description": "Condition kind label."},
+    "notificationsConditionAtLeast": "is at least",
+    "@notificationsConditionAtLeast": {"description": "Condition summary operator."},
+    "notificationsConditionAtLeastLabel": "At least",
+    "@notificationsConditionAtLeastLabel": {"description": "Condition kind label."},
+    "notificationsConditionLessThan": "is less than",
+    "@notificationsConditionLessThan": {"description": "Condition summary operator."},
+    "notificationsConditionLessThanLabel": "Less than",
+    "@notificationsConditionLessThanLabel": {"description": "Condition kind label."},
+    "notificationsConditionAtMost": "is at most",
+    "@notificationsConditionAtMost": {"description": "Condition summary operator."},
+    "notificationsConditionAtMostLabel": "At most",
+    "@notificationsConditionAtMostLabel": {"description": "Condition kind label."},
+    "notificationsRuleOptionalFieldPrefix": "Optional field ",
+    "@notificationsRuleOptionalFieldPrefix": {"description": "Prefix for an optional transaction field action."},
+    "notificationsRuleSetFieldPrefix": "Set field ",
+    "@notificationsRuleSetFieldPrefix": {"description": "Prefix for a transaction field action."},
+    "notificationsRuleFromExtractorPrefix": " from extractor ",
+    "@notificationsRuleFromExtractorPrefix": {"description": "Fragment before an extractor in an action summary."},
+    "notificationsRuleToPrefix": " to ",
+    "@notificationsRuleToPrefix": {"description": "Fragment before an action value in an action summary."},
+    "notificationsRuleLiteralValue": "literal value",
+    "@notificationsRuleLiteralValue": {"description": "Value-source label for a literal transaction action."},
+    "notificationsRuleFireflySuppliedValue": "Firefly supplied value",
+    "@notificationsRuleFireflySuppliedValue": {"description": "Value-source label for a Firefly-provided transaction action."},
+    "notificationsSampleAddTitle": "Add sample notification",
+    "@notificationsSampleAddTitle": {"description": "Title for the sample notification dialog."},
+    "notificationsSampleChangeTitle": "Change sample notification",
+    "@notificationsSampleChangeTitle": {"description": "Title for the sample notification dialog when a sample exists."},
+    "notificationsSampleDescription": "Enter a representative notification title, message, and received time to preview your extractors and rules.",
+    "notificationsSampleExtractorDescription": "Enter a notification title, message, and received time to test this extractor. This sample applies only to this extractor.",
+    "@notificationsSampleExtractorDescription": {"description": "Description for the sample notification dialog opened from an extractor."},
+    "notificationsSampleRuleDescription": "Enter a notification title, message, and received time to test this rule. This sample applies to the rule and its conditional actions.",
+    "@notificationsSampleRuleDescription": {"description": "Description for the sample notification dialog opened from a rule."},
+    "notificationsSampleConditionalActionDescription": "Enter a notification title, message, and received time to test this conditional action. This sample applies only to this conditional action.",
+    "@notificationsSampleConditionalActionDescription": {"description": "Description for the sample notification dialog opened from a conditional action."},
+    "notificationsRuleTestSampleDescription": "Use this notification only to test this rule. It does not change the definition's sample notification.",
+    "@notificationsRuleTestSampleDescription": {"description": "Description for the notification used to test a rule."},
+    "@notificationsSampleDescription": {"description": "Description for the sample notification dialog."},
+    "notificationsSampleSource": "Notification source",
+    "@notificationsSampleSource": {"description": "Label identifying a sample notification source application."},
+    "notificationsContinue": "Continue",
+    "@notificationsContinue": {"description": "Button label that advances notification setup."},
+    "notificationsApply": "Apply",
+    "@notificationsApply": {"description": "Button label that applies sample notification changes."},
+    "notificationsApplicationsChooseDescription": "Choose the app whose notifications you want Waterfly to process.",
+    "@notificationsApplicationsChooseDescription": {"description": "Description for application selection."},
+    "notificationsApplicationsLikelySendersDescription": "Suggested apps are shown first. Apps already configured are hidden.",
+    "@notificationsApplicationsLikelySendersDescription": {"description": "Explanation of filtered application candidates."},
+    "notificationsApplicationsSuggestedTitle": "Suggested apps",
+    "@notificationsApplicationsSuggestedTitle": {"description": "Section title for likely notification sender application candidates."},
+    "notificationsApplicationsAllTitle": "All installed apps",
+    "@notificationsApplicationsAllTitle": {"description": "Section title for the complete installed application list."},
+    "notificationsApplicationsSearch": "Search applications",
+    "@notificationsApplicationsSearch": {"description": "Field label for searching installed applications."},
+    "notificationsApplicationsLoadFailure": "Applications could not be loaded.",
+    "@notificationsApplicationsLoadFailure": {"description": "Error state for loading application candidates."},
+    "notificationsApplicationsNoSearchMatches": "No applications match your search.",
+    "@notificationsApplicationsNoSearchMatches": {"description": "Empty state when the application search query has no matches."},
+    "notificationsApplicationsSuggestedRegistered": "All suggested applications are already registered.",
+    "@notificationsApplicationsSuggestedRegistered": {"description": "Empty state when every suggested notification sender has already been registered."},
+    "notificationsApplicationsAllRegistered": "All installed applications are already registered.",
+    "@notificationsApplicationsAllRegistered": {"description": "Empty state when every installed application has already been registered."},
+    "notificationsApplicationsNoneSuggested": "No suggested applications are available. Try viewing all installed apps.",
+    "@notificationsApplicationsNoneSuggested": {"description": "Empty state when no installed application is an eligible suggested notification sender."},
+    "notificationsApplicationsNoneInstalled": "No installed applications are available.",
+    "@notificationsApplicationsNoneInstalled": {"description": "Empty state when the device reports no installed applications."},
+    "@notificationsApplicationsNotFoundPrompt": {"description": "Prompt displayed when an application is absent from likely candidates."},
+    "@notificationsApplicationsShowAll": {"description": "Action that displays all installed applications."},
+    "notificationsFieldTitle": "Title", "@notificationsFieldTitle": {"description": "Transaction field label."},
+    "notificationsFieldAmount": "Amount", "@notificationsFieldAmount": {"description": "Transaction field label."},
+    "notificationsFieldDate": "Date", "@notificationsFieldDate": {"description": "Transaction field label."},
+    "notificationsFieldTime": "Time", "@notificationsFieldTime": {"description": "Transaction field label."},
+    "notificationsFieldSourceAccount": "Source account", "@notificationsFieldSourceAccount": {"description": "Transaction field label."},
+    "notificationsFieldDestinationAccount": "Destination account", "@notificationsFieldDestinationAccount": {"description": "Transaction field label."},
+    "notificationsFieldCategory": "Category", "@notificationsFieldCategory": {"description": "Transaction field label."},
+    "notificationsFieldTags": "Tags", "@notificationsFieldTags": {"description": "Transaction field label."},
+    "notificationsFieldNotes": "Notes", "@notificationsFieldNotes": {"description": "Transaction field label."},
+    "notificationsFieldSubscription": "Subscription", "@notificationsFieldSubscription": {"description": "Transaction field label."},
+    "notificationsFieldCurrency": "Currency", "@notificationsFieldCurrency": {"description": "Transaction field label."},
+    "notificationsFieldPiggyBank": "Piggy bank", "@notificationsFieldPiggyBank": {"description": "Transaction field label."},
+    "notificationsFieldInvalidAmount": "Amount must be a number.", "@notificationsFieldInvalidAmount": {"description": "Transaction field validation error."},
+    "notificationsFieldInvalidDate": "Date must be an ISO-8601 date.", "@notificationsFieldInvalidDate": {"description": "Transaction field validation error."},
+    "notificationsFieldInvalidTime": "Time must use HH:mm or HH:mm:ss.", "@notificationsFieldInvalidTime": {"description": "Transaction field validation error."},
+    "notificationsActionSelectField": "Add action", "@notificationsActionSelectField": {"description": "Transaction action dialog title."},
+    "notificationsActionSetField": "Set {field}", "@notificationsActionSetField": {"description": "Transaction action dialog title.", "placeholders": {"field": {"type": "String", "example": "Amount"}}},
+    "notificationsActionChooseField": "Choose the transaction field this rule should set.", "@notificationsActionChooseField": {"description": "Transaction action dialog description."},
+    "notificationsActionChooseSource": "Choose the value source for this transaction field.", "@notificationsActionChooseSource": {"description": "Transaction action dialog description."},
+    "notificationsActionExtractorCapture": "Extractor capture", "@notificationsActionExtractorCapture": {"description": "Transaction action source label."},
+    "notificationsActionExtractorCaptureDescription": "Use a value captured by an extractor, selected by capture name or match position.", "@notificationsActionExtractorCaptureDescription": {"description": "Transaction action source description."},
+    "notificationsActionLiteralValue": "Literal value", "@notificationsActionLiteralValue": {"description": "Transaction action source label."},
+    "notificationsActionLiteralDescription": "Enter a value to use for every matching notification.", "@notificationsActionLiteralDescription": {"description": "Transaction action source description."},
+    "notificationsActionBuildText": "Build text", "@notificationsActionBuildText": {"description": "Transaction action source label."},
+    "notificationsActionBuildTextDescription": "Combine extractor captures and fixed text in order.", "@notificationsActionBuildTextDescription": {"description": "Transaction action source description."},
+    "notificationsActionBuildTextEmpty": "Add a part to start building the text.", "@notificationsActionBuildTextEmpty": {"description": "Empty state in the build text editor."},
+    "notificationsActionBuildTextAddPart": "Add part", "@notificationsActionBuildTextAddPart": {"description": "Button for adding a build text part."},
+    "notificationsActionBuildTextPreview": "Preview", "@notificationsActionBuildTextPreview": {"description": "Build text preview label."},
+    "notificationsActionBuildTextParts": "Parts", "@notificationsActionBuildTextParts": {"description": "Heading above the ordered parts in the Build Text action editor."},
+    "notificationsActionBuildTextUnresolved": "Preview unavailable because a capture did not resolve.", "@notificationsActionBuildTextUnresolved": {"description": "Build text unresolved preview."},
+    "notificationsActionBuildTextCapturePart": "Extractor capture", "@notificationsActionBuildTextCapturePart": {"description": "Build text part type."},
+    "notificationsActionBuildTextFixedPart": "Fixed text", "@notificationsActionBuildTextFixedPart": {"description": "Build text part type."},
+    "notificationsActionBuildTextFixedPrompt": "Choose fixed text", "@notificationsActionBuildTextFixedPrompt": {"description": "Fixed text editor title."},
+    "notificationsActionBuildTextCustom": "Custom text", "@notificationsActionBuildTextCustom": {"description": "Custom fixed text option."},
+    "notificationsActionBuildTextSpace": "Space", "@notificationsActionBuildTextSpace": {"description": "Fixed text preset."},
+    "notificationsActionBuildTextLineBreak": "Line break", "@notificationsActionBuildTextLineBreak": {"description": "Fixed text preset."},
+    "notificationsActionBuildTextBlankLine": "Blank line", "@notificationsActionBuildTextBlankLine": {"description": "Fixed text preset."},
+    "notificationsActionBuildTextDash": "Dash", "@notificationsActionBuildTextDash": {"description": "Fixed text preset."},
+    "notificationsActionBuildTextColon": "Colon", "@notificationsActionBuildTextColon": {"description": "Fixed text preset."},
+    "notificationsActionBuildTextMoveUp": "Move up", "@notificationsActionBuildTextMoveUp": {"description": "Build text part action."},
+    "notificationsActionBuildTextMoveDown": "Move down", "@notificationsActionBuildTextMoveDown": {"description": "Build text part action."},
+    "notificationsActionSelectFirefly": "Select from Firefly", "@notificationsActionSelectFirefly": {"description": "Transaction action source label."},
+    "notificationsActionFireflyDescription": "Choose a value from your existing Firefly data.", "@notificationsActionFireflyDescription": {"description": "Transaction action source description."},
+    "notificationsActionAlreadySet": "Already set by this rule.", "@notificationsActionAlreadySet": {"description": "Disabled transaction field description."},
+    "notificationsActionSearchFirefly": "Search Firefly", "@notificationsActionSearchFirefly": {"description": "Firefly resource picker field label."},
+    "notificationsTagsRuleDescription": "Choose the tags added to the transaction when this rule runs.", "@notificationsTagsRuleDescription": {"description": "Tag selector description for notification actions."},
+    "notificationsActionTagsLoadFailure": "Tags could not be loaded.", "@notificationsActionTagsLoadFailure": {"description": "Message shown when Firefly tags cannot be loaded for a notification action."},
+    "notificationsConditionChooseCategory": "Choose the kind of condition to add.", "@notificationsConditionChooseCategory": {"description": "Description for choosing a condition category."},
+    "notificationsConditionValueCategory": "Value condition", "@notificationsConditionValueCategory": {"description": "Category for conditions that evaluate notification or extracted values."},
+    "notificationsConditionValueCategoryDescription": "Check whether a value exists, contains text, or compares with another value.", "@notificationsConditionValueCategoryDescription": {"description": "Description of the value condition category."},
+    "notificationsConditionGroupCategory": "Condition group", "@notificationsConditionGroupCategory": {"description": "Category for conditions that contain or modify other conditions."},
+    "notificationsConditionGroupCategoryDescription": "Combine multiple conditions or invert another condition.", "@notificationsConditionGroupCategoryDescription": {"description": "Description of the condition group category."},
+    "notificationsConditionChooseValueKind": "Choose how values should be evaluated.", "@notificationsConditionChooseValueKind": {"description": "Description for choosing a value condition type."},
+    "notificationsConditionChooseGroupKind": "Choose how nested conditions should be combined.", "@notificationsConditionChooseGroupKind": {"description": "Description for choosing a condition group type."},
+    "notificationsConditionMaximumNestingDescription": "The maximum of {maximumDepth} nested condition levels has been reached. Choose an individual condition, or split complex logic across rules or conditional-action groups.", "@notificationsConditionMaximumNestingDescription": {"description": "Explanation shown when nested condition groups can no longer be added.", "placeholders": {"maximumDepth": {"type": "int", "example": "3"}}},
+    "notificationsConditionMergedGroupDescription": "This group is supplied by its parent condition.", "@notificationsConditionMergedGroupDescription": {"description": "Explanation shown for a redundant nested condition group."},
+    "notificationsRuleFlattenedGroups": "Merged nested condition groups.", "@notificationsRuleFlattenedGroups": {"description": "Information shown when matching nested condition groups are flattened."},
+    "notificationsConditionExtractorCapture": "Extractor capture", "@notificationsConditionExtractorCapture": {"description": "Condition source label."},
+    "notificationsConditionLiteralValue": "Literal value", "@notificationsConditionLiteralValue": {"description": "Condition source label."},
+    "notificationsConditionUseCapture": "Use a value captured from the notification.", "@notificationsConditionUseCapture": {"description": "Condition source description."},
+    "notificationsConditionNoCaptures": "No extractor captures are available for this sample.", "@notificationsConditionNoCaptures": {"description": "Condition capture picker empty message."},
+    "notificationsConditionChangeValueType": "Change value type", "@notificationsConditionChangeValueType": {"description": "Condition editor menu tooltip."},
+    "notificationsConditionDeletedExtractor": "Deleted extractor", "@notificationsConditionDeletedExtractor": {"description": "Fallback extractor name."},
+ "@notificationsConditionFromExtractor": {"description": "Condition value source subtitle.", "placeholders": {"name": {"type": "String", "example": "Amount"}}},
+ "@notificationsConditionTextValue": {"description": "Condition literal value type."},
+    "notificationsConditionNumberValue": "Number value", "@notificationsConditionNumberValue": {"description": "Condition literal value type."},
+    "notificationsConditionDateTimeValue": "Date and time value", "@notificationsConditionDateTimeValue": {"description": "Condition literal value type."},
+    "notificationsConditionDateValue": "Date value", "@notificationsConditionDateValue": {"description": "Condition literal value type."},
+    "notificationsConditionTimeValue": "Time value", "@notificationsConditionTimeValue": {"description": "Condition literal value type."},
+    "notificationsConditionTextDescription": "Enter fixed text.", "@notificationsConditionTextDescription": {"description": "Condition literal type description."},
+    "notificationsConditionNumberDescription": "Enter a numeric value.", "@notificationsConditionNumberDescription": {"description": "Condition literal type description."},
+    "notificationsConditionDateTimeDescription": "Choose a date and time.", "@notificationsConditionDateTimeDescription": {"description": "Condition literal type description."},
+    "notificationsConditionDateDescription": "Enter or choose an ISO date.", "@notificationsConditionDateDescription": {"description": "Condition literal type description."},
+    "notificationsConditionTimeDescription": "Enter or choose a time.", "@notificationsConditionTimeDescription": {"description": "Condition literal type description."},
+    "notificationsConditionAny": "Any condition matches", "@notificationsConditionAny": {"description": "Condition kind label."},
+    "notificationsConditionAnyDescription": "Require at least one nested condition to match.", "@notificationsConditionAnyDescription": {"description": "Condition kind description."},
+    "notificationsConditionAll": "All conditions match", "@notificationsConditionAll": {"description": "Condition kind label."},
+    "notificationsConditionAllDescription": "Require every nested condition to match.", "@notificationsConditionAllDescription": {"description": "Condition kind description."},
+    "notificationsConditionNot": "Condition does not match", "@notificationsConditionNot": {"description": "Condition kind label."},
+    "notificationsConditionNotDescription": "Invert a single nested condition.", "@notificationsConditionNotDescription": {"description": "Condition kind description."},
+    "notificationsConditionExistsLabel": "Value exists", "@notificationsConditionExistsLabel": {"description": "Condition kind label."},
+    "notificationsConditionExistsDescription": "Require a value to be available.", "@notificationsConditionExistsDescription": {"description": "Condition kind description."},
+    "notificationsConditionEqualsLabel": "Equals value", "@notificationsConditionEqualsLabel": {"description": "Condition kind label."},
+    "notificationsConditionContainsLabel": "Contains text", "@notificationsConditionContainsLabel": {"description": "Condition kind label."},
+    "notificationsConditionComparisonDescription": "Compare two numeric values.", "@notificationsConditionComparisonDescription": {"description": "Condition kind description."},
+    "notificationsConditionSelectNegated": "Choose condition to negate", "@notificationsConditionSelectNegated": {"description": "Condition builder title."},
+ "@notificationsConditionCompareWith": {"description": "Condition builder title."},
+    "notificationsConditionEdit": "Edit condition", "@notificationsConditionEdit": {"description": "Condition builder title."},
+    "notificationsConditionCompareDescription": "Choose the value to compare with.", "@notificationsConditionCompareDescription": {"description": "Condition builder description."},
+    "notificationsConditionValueDescription": "Choose the value this condition evaluates.", "@notificationsConditionValueDescription": {"description": "Condition builder description."},
+    "notificationsConditionReview": "Review the condition before applying it.", "@notificationsConditionReview": {"description": "Condition builder description."},
+ "@notificationsConditionValueSource": {"description": "Condition source label."},
+    "notificationsConditionChooseDateTime": "Choose date and time", "@notificationsConditionChooseDateTime": {"description": "Condition date time picker prompt."},
+    "notificationsActionBack": "Back", "@notificationsActionBack": {"description": "Action dialog back button."},
+    "notificationsActionSave": "Save", "@notificationsActionSave": {"description": "Action dialog save button."},
+ "@notificationsActionUseLiteral": {"description": "Action dialog confirmation button."},
+ "@notificationsActionUseValue": {"description": "Action dialog confirmation button."},
+ "@notificationsActionUseField": {"description": "Action dialog confirmation button.", "placeholders": {"field": {"type": "String", "example": "amount"}}},
+    "notificationsActionMatchCurrency": "Match extracted currency", "@notificationsActionMatchCurrency": {"description": "Currency capture mapping title."},
+    "notificationsActionChooseCurrency": "Choose the Firefly currency for the captured value.", "@notificationsActionChooseCurrency": {"description": "Currency mapping description."},
+ "@notificationsActionEnterFixedValue": {"description": "Literal value dialog description."},
+    "notificationsActionSearchCurrencies": "Search Firefly currencies", "@notificationsActionSearchCurrencies": {"description": "Currency mapping search field label."},
+    "notificationsActionCurrenciesLoadFailure": "Firefly currencies could not be loaded.", "@notificationsActionCurrenciesLoadFailure": {"description": "Currency mapping load error."},
+    "notificationsActionNoValue": "no value", "@notificationsActionNoValue": {"description": "Fallback captured value label."},
+    "notificationsActionExtractedCurrency": "Extracted value \"{value}\". Select its matching Firefly currency.", "@notificationsActionExtractedCurrency": {"description": "Currency capture mapping description.", "placeholders": {"value": {"type": "String", "example": "USD"}}},
+    "notificationsFieldTitleDescription": "The transaction description shown in Firefly.", "@notificationsFieldTitleDescription": {"description": "Transaction field description."},
+    "notificationsFieldAmountDescription": "A numeric amount, such as 12.50.", "@notificationsFieldAmountDescription": {"description": "Transaction field description."},
+    "notificationsFieldDateDescription": "An ISO date in the form YYYY-MM-DD.", "@notificationsFieldDateDescription": {"description": "Transaction field description."},
+    "notificationsFieldTimeDescription": "A time in the form HH:mm or HH:mm:ss.", "@notificationsFieldTimeDescription": {"description": "Transaction field description."},
+    "notificationsFieldSourceAccountDescription": "The account the money is sent from.", "@notificationsFieldSourceAccountDescription": {"description": "Transaction field description."},
+    "notificationsFieldDestinationAccountDescription": "The account the money is sent to.", "@notificationsFieldDestinationAccountDescription": {"description": "Transaction field description."},
+    "notificationsFieldCategoryDescription": "A Firefly category for the transaction.", "@notificationsFieldCategoryDescription": {"description": "Transaction field description."},
+    "notificationsFieldTagsDescription": "One or more Firefly tags.", "@notificationsFieldTagsDescription": {"description": "Transaction field description."},
+    "notificationsFieldNotesDescription": "Extra information attached to the transaction.", "@notificationsFieldNotesDescription": {"description": "Transaction field description."},
+    "notificationsFieldSubscriptionDescription": "A matching Firefly subscription.", "@notificationsFieldSubscriptionDescription": {"description": "Transaction field description."},
+    "notificationsFieldCurrencyDescription": "The currency used for the transaction.", "@notificationsFieldCurrencyDescription": {"description": "Transaction field description."},
+    "notificationsFieldPiggyBankDescription": "A Firefly piggy bank to associate.", "@notificationsFieldPiggyBankDescription": {"description": "Transaction field description."},
+    "notificationsActionChooseDate": "Choose date", "@notificationsActionChooseDate": {"description": "Date picker tooltip."},
+    "notificationsActionChooseTime": "Choose time", "@notificationsActionChooseTime": {"description": "Time picker tooltip."},
+    "notificationsRuleConditionalGroupActionsDescription": "Run when this group matches. These values override shared and always-run actions, and later groups can override them.",
+    "@notificationsRuleConditionalGroupActionsDescription": {
+        "description": "Description of actions in a conditional action group."
+    },
+    "notificationsActionNoCurrencies": "No matching Firefly currencies found.", "@notificationsActionNoCurrencies": {"description": "Currency mapping empty state."}
 }

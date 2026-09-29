@@ -2,6 +2,13 @@ import com.android.build.gradle.internal.api.ApkVariantOutputImpl
 import java.io.FileInputStream
 import java.util.Properties
 
+val notificationQueryPackages = Regex(
+    """<package\s+android:name="([^"]+)"\s*/>"""
+).findAll(file("src/main/AndroidManifest.xml").readText())
+    .map { it.groupValues[1] }
+    .distinct()
+    .joinToString(",")
+
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
@@ -19,6 +26,10 @@ android {
     compileSdk = 37 // required for flutter_local_notifications
     ndkVersion = flutter.ndkVersion
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -35,6 +46,11 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        buildConfigField(
+            "String",
+            "NOTIFICATION_QUERY_PACKAGES",
+            "\"$notificationQueryPackages\""
+        )
 
         // Added: flutter_local_notifications
         multiDexEnabled = true

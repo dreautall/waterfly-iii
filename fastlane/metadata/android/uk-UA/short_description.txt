@@ -1,1 +1,1 @@
-Unofficial App for Firefly III, an open source personal finance manager.
+Неофіційний додаток для Firefly III – менеджер фінансів з відкритим кодом.

@@ -437,6 +437,10 @@
     "@generalIncome": {
         "description": "(Account) Info"
     },
+    "generalLeft": "Übrig",
+    "@generalLeft": {
+        "description": "Label for the remaining (not yet spent) amount of a budget."
+    },
     "generalLiabilities": "Verbindlichkeiten",
     "@generalLiabilities": {
         "description": "Firefly Translation String: liabilities"
@@ -476,6 +480,10 @@
     "generalUnknown": "Unbekannt",
     "@generalUnknown": {
         "description": "Something is unknown."
+    },
+    "homeMainActionPrivacyMode": "Beträge ein/ausblenden (Datenschutzmodus)",
+    "@homeMainActionPrivacyMode": {
+        "description": "Tooltip label for privacy mode button"
     },
     "homeMainBillsInterval": " ({period, select, weekly{wöchentlich} monthly{monatlich} quarterly{vierteljährlich} halfyear{halbjährlich} yearly{jährlich} other{unbekannt}})",
     "@homeMainBillsInterval": {
@@ -1085,6 +1093,32 @@
     "@settingsServerConnectionUpdated": {
         "description": "Server connection settings have been updated"
     },
+    "settingsTag": "Transaktionen verschlagworten",
+    "@settingsTag": {
+        "description": "Setting to (automatically) tag transactions"
+    },
+    "settingsTagAllHelp": "Schlagwort für alle neuen Transaktionen hinzufügen.",
+    "@settingsTagAllHelp": {
+        "description": "Help text to automatically tag (all!) transactions"
+    },
+    "settingsTagList": "Ausgewählte{count, plural, =1{s Schlagwort: {tags}} other{ Schlagwörter: {tags}}}",
+    "@settingsTagList": {
+        "description": "List of selected tags (for auto-tag feature). If no tags are selected, a help text will be shown instead.",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "2"
+            },
+            "tags": {
+                "type": "String",
+                "example": "tag1, tag2"
+            }
+        }
+    },
+    "settingsTagNLHelp": "Schlagwort für alle Transaktionen aus Benachrichtigungen hinzufügen.",
+    "@settingsTagNLHelp": {
+        "description": "Help text to automatically tag transactions from the notification listener"
+    },
     "settingsTheme": "Erscheinungsbild",
     "@settingsTheme": {
         "description": "App theme (dark or light)"
@@ -1118,6 +1152,10 @@
     "settingsVersionChecking": "Überprüfe…",
     "@settingsVersionChecking": {
         "description": "Shown while checking for app version"
+    },
+    "tagNone": "<kein Schlagwort>",
+    "@tagNone": {
+        "description": "Placeholder when no tag has been set."
     },
     "transactionAttachments": "Anhänge",
     "@transactionAttachments": {

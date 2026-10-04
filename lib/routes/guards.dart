@@ -19,6 +19,7 @@ KaiselGuard<AppRoute> createAuthGuard(
       () =>
           "authGuard: goingToAuthScreen($goingToAuthScreen) || goingToSplashScreen($goingToSplashScreen)",
     );
+    return proposed;
   }
 
   log.finest(() => "authGuard proposed stack: ${proposed.toString()}");

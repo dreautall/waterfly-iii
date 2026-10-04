@@ -1,15 +1,32 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kaisel_core/src/kaisel_guard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/routes/guards.dart';
 import 'package:waterflyiii/routes/routes.dart';
 import 'package:waterflyiii/settings.dart';
 
+class MockSettingsProvider extends SettingsProvider {
+  MockSettingsProvider({bool lock = false, bool isSessionAuthed = true})
+    : _lock = lock,
+      _isAuthed = isSessionAuthed;
+
+  bool _lock;
+  bool _isAuthed;
+
+  @override
+  bool get lock => _lock;
+
+  @override
+  bool get isSessionAuthed => _isAuthed;
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUpAll(() {
+    SharedPreferences.setMockInitialValues(<String, Object>{});
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(
           const MethodChannel('plugins.it_nomads.com/flutter_secure_storage'),
@@ -77,14 +94,12 @@ void main() {
   });
 
   group('LockGuard Tests', () {
-    late SettingsProvider settingsProvider;
-
-    setUp(() {
-      settingsProvider = SettingsProvider();
-    });
-
     test('Allows navigation when lock is disabled', () async {
-      final KaiselGuard<AppRoute> guard = createLockGuard(settingsProvider);
+      final MockSettingsProvider settings = MockSettingsProvider(
+        lock: false,
+        isSessionAuthed: false,
+      );
+      final KaiselGuard<AppRoute> guard = createLockGuard(settings);
 
       final List<AppRoute> result = await Future.value(
         guard(<AppRoute>[], <AppRoute>[const DashboardRoute()]),
@@ -92,8 +107,45 @@ void main() {
       expect(result, equals(<DashboardRoute>[const DashboardRoute()]));
     });
 
+    test(
+      'Redirects to LockRoute when app is locked and session not authed',
+      () async {
+        final MockSettingsProvider settings = MockSettingsProvider(
+          lock: true,
+          isSessionAuthed: false,
+        );
+        final KaiselGuard<AppRoute> guard = createLockGuard(settings);
+
+        final List<AppRoute> result = await Future.value(
+          guard(<AppRoute>[], <AppRoute>[const DashboardRoute()]),
+        );
+        expect(result, isA<List<AppRoute>>());
+        expect(result.any((AppRoute r) => r is LockRoute), isTrue);
+      },
+    );
+
+    test(
+      'Allows navigation when app is locked but session is authed',
+      () async {
+        final MockSettingsProvider settings = MockSettingsProvider(
+          lock: true,
+          isSessionAuthed: true,
+        );
+        final KaiselGuard<AppRoute> guard = createLockGuard(settings);
+
+        final List<AppRoute> result = await Future.value(
+          guard(<AppRoute>[], <AppRoute>[const DashboardRoute()]),
+        );
+        expect(result, equals(<DashboardRoute>[const DashboardRoute()]));
+      },
+    );
+
     test('Allows navigation when going to LockRoute', () async {
-      final KaiselGuard<AppRoute> guard = createLockGuard(settingsProvider);
+      final MockSettingsProvider settings = MockSettingsProvider(
+        lock: true,
+        isSessionAuthed: false,
+      );
+      final KaiselGuard<AppRoute> guard = createLockGuard(settings);
 
       final List<AppRoute> result = await Future.value(
         guard(<AppRoute>[], <AppRoute>[LockRoute(() {})]),

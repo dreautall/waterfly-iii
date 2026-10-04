@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kaisel_core/src/kaisel_guard.dart';
+import 'package:kaisel/kaisel.dart' show KaiselGuard;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/routes/guards.dart';
@@ -12,8 +12,8 @@ class MockSettingsProvider extends SettingsProvider {
     : _lock = lock,
       _isAuthed = isSessionAuthed;
 
-  bool _lock;
-  bool _isAuthed;
+  final bool _lock;
+  final bool _isAuthed;
 
   @override
   bool get lock => _lock;
@@ -61,7 +61,7 @@ void main() {
       () async {
         final KaiselGuard<AppRoute> guard = createAuthGuard(fireflyService);
 
-        final List<AppRoute> result = await Future.value(
+        final List<AppRoute> result = await Future<List<AppRoute>>.value(
           guard(<AppRoute>[], <AppRoute>[const DashboardRoute()]),
         );
         expect(result, equals(<SplashRoute>[const SplashRoute()]));
@@ -72,7 +72,7 @@ void main() {
       final KaiselGuard<AppRoute> guard = createAuthGuard(fireflyService);
       await fireflyService.signOut(); // Sets status to unauthenticated
 
-      final List<AppRoute> result = await Future.value(
+      final List<AppRoute> result = await Future<List<AppRoute>>.value(
         guard(<AppRoute>[], <AppRoute>[const DashboardRoute()]),
       );
       expect(result, equals(<LoginRoute>[const LoginRoute()]));
@@ -81,12 +81,12 @@ void main() {
     test('Allows navigation to LoginRoute or SplashRoute explicitly', () async {
       final KaiselGuard<AppRoute> guard = createAuthGuard(fireflyService);
 
-      final List<AppRoute> loginResult = await Future.value(
+      final List<AppRoute> loginResult = await Future<List<AppRoute>>.value(
         guard(<AppRoute>[], <AppRoute>[const LoginRoute()]),
       );
       expect(loginResult, equals(<LoginRoute>[const LoginRoute()]));
 
-      final List<AppRoute> splashResult = await Future.value(
+      final List<AppRoute> splashResult = await Future<List<AppRoute>>.value(
         guard(<AppRoute>[], <AppRoute>[const SplashRoute()]),
       );
       expect(splashResult, equals(<SplashRoute>[const SplashRoute()]));
@@ -101,7 +101,7 @@ void main() {
       );
       final KaiselGuard<AppRoute> guard = createLockGuard(settings);
 
-      final List<AppRoute> result = await Future.value(
+      final List<AppRoute> result = await Future<List<AppRoute>>.value(
         guard(<AppRoute>[], <AppRoute>[const DashboardRoute()]),
       );
       expect(result, equals(<DashboardRoute>[const DashboardRoute()]));
@@ -116,7 +116,7 @@ void main() {
         );
         final KaiselGuard<AppRoute> guard = createLockGuard(settings);
 
-        final List<AppRoute> result = await Future.value(
+        final List<AppRoute> result = await Future<List<AppRoute>>.value(
           guard(<AppRoute>[], <AppRoute>[const DashboardRoute()]),
         );
         expect(result, isA<List<AppRoute>>());
@@ -133,7 +133,7 @@ void main() {
         );
         final KaiselGuard<AppRoute> guard = createLockGuard(settings);
 
-        final List<AppRoute> result = await Future.value(
+        final List<AppRoute> result = await Future<List<AppRoute>>.value(
           guard(<AppRoute>[], <AppRoute>[const DashboardRoute()]),
         );
         expect(result, equals(<DashboardRoute>[const DashboardRoute()]));
@@ -147,7 +147,7 @@ void main() {
       );
       final KaiselGuard<AppRoute> guard = createLockGuard(settings);
 
-      final List<AppRoute> result = await Future.value(
+      final List<AppRoute> result = await Future<List<AppRoute>>.value(
         guard(<AppRoute>[], <AppRoute>[LockRoute(() {})]),
       );
       expect(result, isA<List<AppRoute>>());

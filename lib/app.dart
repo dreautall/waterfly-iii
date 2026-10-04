@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -27,6 +28,8 @@ final Logger log = Logger("App");
 class WaterflyApp extends StatefulWidget {
   const WaterflyApp({super.key});
 
+  static KaiselRouter<AppRoute>? routerInstance;
+
   @override
   State<WaterflyApp> createState() => _WaterflyAppState();
 }
@@ -35,8 +38,6 @@ class _WaterflyAppState extends State<WaterflyApp> {
   bool _startup = true;
   String? _quickAction;
   NotificationTransaction? _notificationPayload;
-  // Not needed right now, as sharing while the app is open does not work
-  //late StreamSubscription<List<SharedFile>> _intentDataStreamSubscription;
   List<SharedFile>? _filesSharedToApp;
   DateTime? _lcLastOpen;
 
@@ -63,121 +64,151 @@ class _WaterflyAppState extends State<WaterflyApp> {
         _settingsProvider,
       ]),
     );
+    WaterflyApp.routerInstance = _routerConfig.router;
 
-    _fireflyService.signInFromStorage();
-
-    _initializePlatformServices();
+    _handleStartup();
   }
 
-  void _initializePlatformServices() {
-    // App Lifecycle State
-    _initLifecycleListener();
+  Future<void> _handleStartup() async {
+    final List<Future<void>> startup = <Future<void>>[
+      _fireflyService.signInFromStorage(),
+      // App lifecycle listener
+      _initLifecycleListener(),
+      // Quick Actions (Android + iOS)
+      _initQuickActions(),
+      // Share to Waterfly III (Android + iOS)
+      _initSharingIntent(),
+    ];
 
-    return; // :TODO:
     // Notifications (Android only)
     if (Platform.isAndroid) {
-      _initNotifications();
+      startup.add(_initNotifications());
     }
-    // Quick Actions (Android + iOS)
-    _initQuickActions();
-    // Share to Waterfly III
-    _initSharingIntent();
+
+    // Wait for tasks to finish (especially login)
+    await Future.wait(startup);
+    _startup = false;
+
+    if (_fireflyService.status != AuthStatus.authenticated) {
+      log.config("not authed, skipping sharing intents");
+      _notificationPayload = null;
+      _filesSharedToApp = null;
+      _quickAction = null;
+      return;
+    }
+
+    // Handle Transaction Deep Link
+    if (_notificationPayload != null ||
+        _quickAction == "action_transaction_add" ||
+        (_filesSharedToApp?.isNotEmpty ?? false)) {
+      log.config(() => "showing transaction screen");
+      unawaited(
+        _routerConfig.router.set(<AppRoute>[
+          TransactionDetail(
+            notification: _notificationPayload,
+            files: _filesSharedToApp,
+          ),
+        ]),
+      );
+    }
   }
 
-  void _initNotifications() {
-    FlutterLocalNotificationsPlugin().initialize(
+  Future<void> _initNotifications() async {
+    await FlutterLocalNotificationsPlugin().initialize(
       settings: const InitializationSettings(
         android: AndroidInitializationSettings('ic_stat_notification'),
       ),
       onDidReceiveNotificationResponse: nlNotificationTap,
     );
 
-    FlutterLocalNotificationsPlugin().getNotificationAppLaunchDetails().then((
-      NotificationAppLaunchDetails? details,
-    ) {
-      log.config("checking NotificationAppLaunchDetails");
-      if ((details?.didNotificationLaunchApp ?? false) &&
-          (details?.notificationResponse?.payload?.isNotEmpty ?? false)) {
-        log.info("Was launched from notification!");
-        _notificationPayload = .fromJson(
-          jsonDecode(details!.notificationResponse!.payload!),
-        );
+    final NotificationAppLaunchDetails? details =
+        await FlutterLocalNotificationsPlugin()
+            .getNotificationAppLaunchDetails();
+    if (details == null) {
+      return;
+    }
+
+    log.config("checking NotificationAppLaunchDetails");
+    if ((details.didNotificationLaunchApp) &&
+        (details.notificationResponse?.payload?.isNotEmpty ?? false)) {
+      log.info("Was launched from notification!");
+      _notificationPayload = .fromJson(
+        jsonDecode(details.notificationResponse!.payload!),
+      );
+    }
+  }
+
+  Future<void> _initQuickActions() async {
+    const QuickActions quickActions = QuickActions();
+    await quickActions.initialize((String shortcutType) {
+      log.config("QA: Received QuickAction $shortcutType");
+      _quickAction = shortcutType;
+      if (_startup == true) {
+        log.finest(() => "QA: app is still starting, doing nothing");
+        return;
+      }
+
+      if (_fireflyService.status == AuthStatus.authenticated) {
+        log.finest(() => "QA: app already started, pushing route");
+        _routerConfig.router.push(const TransactionDetail());
+      } else {
+        log.warning("QA: user was not authed, not doing anything");
+      }
+    });
+    await quickActions.clearShortcutItems();
+  }
+
+  Future<void> _initSharingIntent() async {
+    final FlutterSharingIntent instance = FlutterSharingIntent.instance;
+
+    // For sharing images coming from outside the app while the app is closed
+    final List<SharedFile> shared = await instance.getInitialSharing();
+    if (shared.isNotEmpty) {
+      log.config("SI: App was opened via file sharing");
+      log.finest(
+        () => "SI: files ${shared.map((SharedFile f) => f.value).join(",")}",
+      );
+      _filesSharedToApp = shared;
+    }
+
+    instance.getMediaStream().listen((List<SharedFile> shared) {
+      if (_startup == true) {
+        return;
+      }
+      log.config("SI: File shared to app while running");
+      log.finest(
+        () =>
+            "SI: getMediaStream ${shared.map((SharedFile f) => f.value).join(",")}",
+      );
+      if (_fireflyService.status == AuthStatus.authenticated) {
+        log.finest(() => "SI: app already started, pushing route");
+        _routerConfig.router.push(TransactionDetail(files: shared));
+      } else {
+        log.warning("SI: user was not authed, not doing anything");
       }
     });
   }
 
-  void _initQuickActions() {
-    const QuickActions quickActions = QuickActions();
-    quickActions.initialize((String shortcutType) {
-      log.info("Was launched from QuickAction $shortcutType");
-      _quickAction = shortcutType;
-      /* :TODO:
-      if (!_startup && navigatorKey.currentState != null) {
-        log.finest(() => "App already started, pushing route");
-        navigatorKey.currentState!.push(
-          MaterialPageRoute<Widget>(
-            builder: (BuildContext context) => const TransactionPage(),
-          ),
-        );
-      }*/
-    });
-    quickActions.clearShortcutItems();
-  }
-
-  void _initSharingIntent() {
-    // While the app is open...
-    /* Sharing while app is open is currently not supported :(
-       The fix from https://github.com/bhagat-techind/flutter_sharing_intent/issues/33
-       does not seem to work, unfortunately.
-
-    _intentDataStreamSubscription = FlutterSharingIntent.instance
-        .getMediaStream()
-        .listen((List<SharedFile> value) {
-      setState(() {
-        list = value;
-      });
-      debugPrint(
-          "Shared: getMediaStream ${value.map((SharedFile f) => f.value).join(",")}");
-    }, onError: (Object err) {
-      debugPrint("getIntentDataStream error: $err");
-    });*/
-
-    // For sharing images coming from outside the app while the app is closed
-    FlutterSharingIntent.instance.getInitialSharing().then((
-      List<SharedFile> value,
-    ) {
-      if (value.isEmpty) return;
-
-      log.config("App was opened via file sharing");
-      log.finest(
-        () => "files: ${value.map((SharedFile f) => f.value).join(",")}",
-      );
-      _filesSharedToApp = value;
-    });
-  }
-
-  void _initLifecycleListener() {
-    AppLifecycleListener(
-      onResume: () {
-        log.finest(() => "Lifecycle: Resume");
-        // If lock is enabled, check if we need to re-authenticate based on timeout (10 mins)
-        if (_settingsProvider.lock &&
-            (_lcLastOpen?.isBefore(
-                  DateTime.now().subtract(const Duration(minutes: 10)),
-                ) ??
-                false)) {
-          log.finest(() => "App resuming, timeout reached. Requiring re-auth.");
-          _settingsProvider.sessionLock();
-        }
-      },
-      onPause: () {
-        log.finest(() => "Lifecycle: Pause");
-        if (_settingsProvider.lock) {
-          _lcLastOpen ??= DateTime.now();
-        }
-      },
-    );
-  }
+  Future<void> _initLifecycleListener() async => AppLifecycleListener(
+    onResume: () {
+      log.finest(() => "Lifecycle: Resume");
+      // If lock is enabled, check if we need to re-authenticate based on timeout (10 mins)
+      if (_settingsProvider.lock &&
+          (_lcLastOpen?.isBefore(
+                DateTime.now().subtract(const Duration(minutes: 10)),
+              ) ??
+              false)) {
+        log.finest(() => "App resuming, timeout reached. Requiring re-auth.");
+        _settingsProvider.sessionLock();
+      }
+    },
+    onPause: () {
+      log.finest(() => "Lifecycle: Pause");
+      if (_settingsProvider.lock) {
+        _lcLastOpen ??= DateTime.now();
+      }
+    },
+  );
 
   @override
   void dispose() {

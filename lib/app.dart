@@ -64,10 +64,15 @@ class _WaterflyAppState extends State<WaterflyApp> {
       ]),
     );
 
+    _fireflyService.signInFromStorage();
+
     _initializePlatformServices();
   }
 
   void _initializePlatformServices() {
+    // App Lifecycle State
+    _initLifecycleListener();
+
     return; // :TODO:
     // Notifications (Android only)
     if (Platform.isAndroid) {
@@ -77,8 +82,6 @@ class _WaterflyAppState extends State<WaterflyApp> {
     _initQuickActions();
     // Share to Waterfly III
     _initSharingIntent();
-    // App Lifecycle State
-    _initLifecycleListener();
   }
 
   void _initNotifications() {
@@ -165,9 +168,6 @@ class _WaterflyAppState extends State<WaterflyApp> {
                 false)) {
           log.finest(() => "App resuming, timeout reached. Requiring re-auth.");
           _settingsProvider.sessionLock();
-          if (mounted) {
-            setState(() => _lcLastOpen = null);
-          }
         }
       },
       onPause: () {
@@ -184,12 +184,14 @@ class _WaterflyAppState extends State<WaterflyApp> {
     _fireflyService.dispose();
     _settingsProvider.dispose();
     _layoutProvider.dispose();
+
     super.dispose();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
     if (mounted) {
       _layoutProvider.updateSize(context);
     }

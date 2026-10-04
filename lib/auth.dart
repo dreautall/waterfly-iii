@@ -28,6 +28,14 @@ final Logger log = Logger("Auth");
 final Version minApiVersion = Version(6, 3, 2);
 final RegExp _httpHeaderNamePattern = RegExp(r"^[!#$%&'*+\-.^_`|~0-9A-Za-z]+$");
 
+enum AuthStatus {
+  uninitialized, // App starting / reading storage
+  authenticating, // Storage sign-in in progress over network
+  authenticated, // Successfully signed in -> proceed to app
+  unauthenticated, // No credentials or user signed out -> go to LoginPage
+  connectionError, // Network/server error during auto-login -> stay on Splash/Retry UI
+}
+
 String _stripWrappingQuotes(String value) {
   if (value.length >= 2 &&
       ((value.startsWith('"') && value.endsWith('"')) ||
@@ -301,21 +309,33 @@ class AuthUser {
 }
 
 class FireflyService with ChangeNotifier {
+  AuthStatus _statusVar = AuthStatus.uninitialized;
+
+  AuthStatus get status => _statusVar;
+
+  set _status(AuthStatus value) {
+    if (value != _statusVar) {
+      _statusVar = value;
+      log.finest(() => "notify FireflyService->_status");
+      notifyListeners();
+    }
+  }
+
   AuthUser? _currentUser;
   AuthUser? get user => _currentUser;
-  bool _signedIn = false;
-  bool get signedIn => _signedIn;
   String? _lastTriedHost;
   String? get lastTriedHost => _lastTriedHost;
-  Object? _storageSignInException;
-  Object? get storageSignInException => _storageSignInException;
+  Object? _signInException;
+
+  Object? get storageSignInException => _signInException;
   Version? _apiVersion;
   Version? get apiVersion => _apiVersion;
 
   TransStock? _transStock;
   TransStock? get transStock => _transStock;
 
-  bool get hasApi => (_currentUser?.api != null) ? true : false;
+  // :TODO: remove and only check status
+  bool get hasApi => status == AuthStatus.authenticated;
   FireflyIii get api {
     if (_currentUser?.api == null) {
       signOut();
@@ -354,7 +374,8 @@ class FireflyService with ChangeNotifier {
   }
 
   Future<bool> signInFromStorage() async {
-    _storageSignInException = null;
+    _signInException = null;
+
     final AuthCredentials storedCredentials = await readStoredCredentials();
     final String? apiHost = storedCredentials.host;
     final String? apiKey = storedCredentials.apiKey;
@@ -366,16 +387,41 @@ class FireflyService with ChangeNotifier {
     );
 
     if (apiHost == null || apiKey == null) {
+      _status = AuthStatus.unauthenticated;
       return false;
     }
 
+    // To avoid two notifies, only update status after the (very fast) check if
+    // we have stored credentials
+    _status = AuthStatus.authenticating;
+
     try {
-      await signIn(apiHost, apiKey, customHeadersRaw: customHeadersRaw);
+      await _signIn(apiHost, apiKey, customHeadersRaw: customHeadersRaw);
+      _status = AuthStatus.authenticated;
       return true;
     } catch (e) {
-      _storageSignInException = e;
-      log.finest(() => "notify FireflyService->signInFromStorage");
-      notifyListeners();
+      _signInException = e;
+      _status = AuthStatus.connectionError;
+      return false;
+    }
+  }
+
+  Future<bool> signIn(
+    String apiHost,
+    String apiKey, {
+    String? customHeadersRaw,
+  }) async {
+    log.config("FireflyService->signIn($apiHost)");
+
+    _status = AuthStatus.authenticating;
+
+    try {
+      await _signIn(apiHost, apiKey, customHeadersRaw: customHeadersRaw);
+      _status = AuthStatus.authenticated;
+      return true;
+    } catch (e) {
+      _signInException = e;
+      _status = AuthStatus.connectionError;
       return false;
     }
   }
@@ -383,22 +429,20 @@ class FireflyService with ChangeNotifier {
   Future<void> signOut() async {
     log.config("FireflyService->signOut()");
     _currentUser = null;
-    _signedIn = false;
-    _storageSignInException = null;
+    _signInException = null;
     await storage.deleteAll();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
 
-    log.finest(() => "notify FireflyService->signOut");
-    notifyListeners();
+    _status = AuthStatus.unauthenticated;
   }
 
-  Future<bool> signIn(
+  Future<bool> _signIn(
     String host,
     String apiKey, {
     String? customHeadersRaw,
   }) async {
-    log.config("FireflyService->signIn($host)");
+    log.config("FireflyService->_signIn($host)");
     host = host.strip().rightStrip('/');
     apiKey = apiKey.strip();
 
@@ -406,7 +450,6 @@ class FireflyService with ChangeNotifier {
     final Map<String, String> customHeaders = parseCustomHeaders(
       customHeadersRaw ?? "",
     );
-
     final AuthUser nextUser = await AuthUser.create(
       host,
       apiKey,
@@ -458,10 +501,7 @@ class FireflyService with ChangeNotifier {
     defaultCurrency = nextDefaultCurrency;
     _apiVersion = nextApiVersion;
     tzHandler = nextTzHandler;
-    _signedIn = true;
     _transStock = TransStock(nextUser.api);
-    log.finest(() => "notify FireflyService->signIn");
-    notifyListeners();
 
     await storage.write(key: 'api_host', value: host);
     await storage.write(key: 'api_key', value: apiKey);

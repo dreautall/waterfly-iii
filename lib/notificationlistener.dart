@@ -8,10 +8,10 @@ import 'package:logging/logging.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:notifications_listener_service/notifications_listener_service.dart';
 import 'package:timezone/data/latest.dart' as tz;
-import 'package:waterflyiii/app.dart';
+import 'package:waterflyiii/app.dart' show WaterflyApp;
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
-import 'package:waterflyiii/pages/transaction.dart';
+import 'package:waterflyiii/routes/routes.dart';
 import 'package:waterflyiii/settings.dart';
 
 final Logger log = Logger("NotificationListener");
@@ -301,9 +301,8 @@ Future<void> nlNotificationTap(
   if (notificationResponse.payload?.isEmpty ?? true) {
     return;
   }
-  await showDialog(
-    context: navigatorKey.currentState!.context,
-    builder: (BuildContext context) => TransactionPage(
+  await WaterflyApp.routerInstance?.push(
+    TransactionDetail(
       notification: .fromJson(jsonDecode(notificationResponse.payload!)),
     ),
   );

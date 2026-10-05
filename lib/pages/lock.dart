@@ -38,30 +38,28 @@ class _LockPageState extends State<LockPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: .center,
-            crossAxisAlignment: .center,
-            children: <Widget>[
-              const AppLogo(size: 256),
-              const SizedBox(height: 48),
-              IconButton(
-                iconSize: 128,
-                icon: Icon(
-                  Icons.fingerprint,
-                  color: Theme.of(context).primaryColor,
-                ),
-                onPressed: () {
-                  _authenticate();
-                },
+  Widget build(BuildContext context) => Scaffold(
+    body: SafeArea(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: .center,
+          crossAxisAlignment: .center,
+          children: <Widget>[
+            const AppLogo(size: 256),
+            const SizedBox(height: 48),
+            IconButton(
+              iconSize: 128,
+              icon: Icon(
+                Icons.fingerprint,
+                color: Theme.of(context).primaryColor,
               ),
-            ],
-          ),
+              onPressed: () {
+                _authenticate();
+              },
+            ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
 }

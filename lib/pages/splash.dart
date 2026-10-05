@@ -9,125 +9,61 @@ import 'package:waterflyiii/widgets/logo.dart';
 
 final Logger log = Logger("Pages.Splash");
 
-class SplashPage extends StatefulWidget {
-  const SplashPage({super.key, this.host, this.apiKey, this.customHeadersRaw});
-
-  final String? host;
-  final String? apiKey;
-  final String? customHeadersRaw;
-
-  @override
-  State<SplashPage> createState() => _SplashPageState();
-}
-
-class _SplashPageState extends State<SplashPage> {
-  final Logger log = Logger("Pages.Splash.Page");
-
-  Object? _loginError;
-
-  Future<void> _login(String? host, String? apiKey) async {
-    log.fine(() => "SplashPage->_login()");
-
-    bool success = false;
-
-    try {
-      if (host == null || apiKey == null) {
-        log.finer(() => "SplashPage->_login() from storage");
-        success = await context.read<FireflyService>().signInFromStorage();
-      } else {
-        log.finer(
-          () =>
-              "SplashPage->_login() with credentials: $host, apiKey ${apiKey.isEmpty ? "unset" : "set"}, "
-              "customHeaders ${widget.customHeadersRaw?.isNotEmpty ?? false ? "set" : "unset"}",
-        );
-        success = await context.read<FireflyService>().signIn(
-          host,
-          apiKey,
-          customHeadersRaw: widget.customHeadersRaw,
-        );
-      }
-    } catch (e, stackTrace) {
-      log.warning(
-        "_login got exception, assigning to _loginError",
-        e,
-        stackTrace,
-      );
-      setState(() {
-        _loginError = e;
-      });
-    }
-
-    log.fine(() => "_login() returning $success");
-
-    return;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    if (widget.host != null && widget.apiKey != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        log.finest(() => "initState() scheduling login");
-        _login(widget.host, widget.apiKey);
-      });
-    }
-  }
+class SplashPage extends StatelessWidget {
+  const SplashPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    log.finest(() => "build(loginError: $_loginError)");
-
-    if (context.read<FireflyService>().signedIn) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(context).popUntil((Route<dynamic> route) => route.isFirst);
-      });
-      return const Scaffold(body: SizedBox.shrink());
-    }
+    final Logger log = Logger("Pages.Splash.Page");
+    final AuthStatus status = context.select((FireflyService f) => f.status);
+    log.finest(() => "build(status: $status)");
 
     Widget page;
 
-    _loginError ??= context.select(
-      (FireflyService f) => f.storageSignInException,
-    );
-
-    if (_loginError == null) {
-      log.finer(() => "_loginError null --> show spinner");
+    if (status == AuthStatus.unauthenticated ||
+        status == AuthStatus.authenticating ||
+        status == AuthStatus.uninitialized ||
+        status == AuthStatus.authenticated) {
+      log.finest(() => "show spinner");
       page = Container(
         alignment: const Alignment(0, 0),
         child: const CircularProgressIndicator.adaptive(),
       );
-      const QuickActions().setShortcutItems(<ShortcutItem>[
-        ShortcutItem(
-          type: "action_transaction_add",
-          localizedTitle: S.of(context).transactionTitleAdd,
-          icon: "action_icon_add",
-        ),
-      ]);
+
+      if (status == AuthStatus.authenticated) {
+        const QuickActions().setShortcutItems(<ShortcutItem>[
+          ShortcutItem(
+            type: "action_transaction_add",
+            localizedTitle: S.of(context).transactionTitleAdd,
+            icon: "action_icon_add",
+          ),
+        ]);
+      }
     } else {
-      log.finer(() => "_loginError available --> show error");
+      log.finer(() => "error available --> show error");
+      final Object? error = context
+          .read<FireflyService>()
+          .storageSignInException;
       String errorDetails =
           "Host: ${context.read<FireflyService>().lastTriedHost}";
       final String errorDescription = () {
-        if (_loginError is AuthErrorStatusCode) {
-          final AuthErrorStatusCode errorType =
-              _loginError as AuthErrorStatusCode;
+        if (error is AuthErrorStatusCode) {
+          final AuthErrorStatusCode errorType = error;
           errorDetails += "\n";
           errorDetails += S.of(context).errorStatusCode(errorType.code);
           return errorType.cause;
-        } else if (_loginError is AuthErrorVersionTooLow) {
-          final AuthErrorVersionTooLow errorType =
-              _loginError as AuthErrorVersionTooLow;
+        } else if (error is AuthErrorVersionTooLow) {
+          final AuthErrorVersionTooLow errorType = error;
           errorDetails += "\n";
           errorDetails += S
               .of(context)
               .errorMinAPIVersion(errorType.requiredVersion.toString());
           return errorType.cause;
-        } else if (_loginError is AuthError) {
-          final AuthError errorType = _loginError as AuthError;
+        } else if (error is AuthError) {
+          final AuthError errorType = error;
           return errorType.cause;
         }
-        errorDetails += "\n$_loginError";
+        errorDetails += "\n$error";
         return S.of(context).errorUnknown;
       }();
       page = SizedBox(
@@ -187,10 +123,7 @@ class _SplashPageState extends State<SplashPage> {
                 ),
                 FilledButton(
                   onPressed: () {
-                    setState(() {
-                      _loginError = null;
-                    });
-                    _login(widget.host, widget.apiKey);
+                    context.read<FireflyService>().signInFromStorage();
                   },
                   child: Text(S.of(context).formButtonTryAgain),
                 ),

@@ -22,21 +22,23 @@ class SplashPage extends StatelessWidget {
 
     if (status == AuthStatus.unauthenticated ||
         status == AuthStatus.authenticating ||
-        status == AuthStatus.uninitialized) {
+        status == AuthStatus.uninitialized ||
+        status == AuthStatus.authenticated) {
       log.finest(() => "show spinner");
       page = Container(
         alignment: const Alignment(0, 0),
         child: const CircularProgressIndicator.adaptive(),
       );
 
-      // :TODO: move to after authentication
-      const QuickActions().setShortcutItems(<ShortcutItem>[
-        ShortcutItem(
-          type: "action_transaction_add",
-          localizedTitle: S.of(context).transactionTitleAdd,
-          icon: "action_icon_add",
-        ),
-      ]);
+      if (status == AuthStatus.authenticated) {
+        const QuickActions().setShortcutItems(<ShortcutItem>[
+          ShortcutItem(
+            type: "action_transaction_add",
+            localizedTitle: S.of(context).transactionTitleAdd,
+            icon: "action_icon_add",
+          ),
+        ]);
+      }
     } else {
       log.finer(() => "error available --> show error");
       final Object? error = context

@@ -62,7 +62,7 @@ void main() {
         final KaiselGuard<AppRoute> guard = createAuthGuard(fireflyService);
 
         final List<AppRoute> result = await Future<List<AppRoute>>.value(
-          guard(<AppRoute>[], <AppRoute>[const DashboardRoute()]),
+          guard(<AppRoute>[], <AppRoute>[const NavigatorRoute()]),
         );
         expect(result, equals(<SplashRoute>[const SplashRoute()]));
       },
@@ -73,23 +73,9 @@ void main() {
       await fireflyService.signOut(); // Sets status to unauthenticated
 
       final List<AppRoute> result = await Future<List<AppRoute>>.value(
-        guard(<AppRoute>[], <AppRoute>[const DashboardRoute()]),
+        guard(<AppRoute>[], <AppRoute>[const NavigatorRoute()]),
       );
       expect(result, equals(<LoginRoute>[const LoginRoute()]));
-    });
-
-    test('Allows navigation to LoginRoute or SplashRoute explicitly', () async {
-      final KaiselGuard<AppRoute> guard = createAuthGuard(fireflyService);
-
-      final List<AppRoute> loginResult = await Future<List<AppRoute>>.value(
-        guard(<AppRoute>[], <AppRoute>[const LoginRoute()]),
-      );
-      expect(loginResult, equals(<LoginRoute>[const LoginRoute()]));
-
-      final List<AppRoute> splashResult = await Future<List<AppRoute>>.value(
-        guard(<AppRoute>[], <AppRoute>[const SplashRoute()]),
-      );
-      expect(splashResult, equals(<SplashRoute>[const SplashRoute()]));
     });
   });
 
@@ -102,9 +88,9 @@ void main() {
       final KaiselGuard<AppRoute> guard = createLockGuard(settings);
 
       final List<AppRoute> result = await Future<List<AppRoute>>.value(
-        guard(<AppRoute>[], <AppRoute>[const DashboardRoute()]),
+        guard(<AppRoute>[], <AppRoute>[const NavigatorRoute()]),
       );
-      expect(result, equals(<DashboardRoute>[const DashboardRoute()]));
+      expect(result, equals(<NavigatorRoute>[const NavigatorRoute()]));
     });
 
     test(
@@ -117,7 +103,7 @@ void main() {
         final KaiselGuard<AppRoute> guard = createLockGuard(settings);
 
         final List<AppRoute> result = await Future<List<AppRoute>>.value(
-          guard(<AppRoute>[], <AppRoute>[const DashboardRoute()]),
+          guard(<AppRoute>[], <AppRoute>[const NavigatorRoute()]),
         );
         expect(result, isA<List<AppRoute>>());
         expect(result.any((AppRoute r) => r is LockRoute), isTrue);
@@ -134,9 +120,9 @@ void main() {
         final KaiselGuard<AppRoute> guard = createLockGuard(settings);
 
         final List<AppRoute> result = await Future<List<AppRoute>>.value(
-          guard(<AppRoute>[], <AppRoute>[const DashboardRoute()]),
+          guard(<AppRoute>[], <AppRoute>[const NavigatorRoute()]),
         );
-        expect(result, equals(<DashboardRoute>[const DashboardRoute()]));
+        expect(result, equals(<NavigatorRoute>[const NavigatorRoute()]));
       },
     );
 

@@ -4,19 +4,18 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.models.
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/lock.dart' show LockPage;
 import 'package:waterflyiii/pages/login.dart' show LoginPage;
-import 'package:waterflyiii/pages/splash.dart';
+import 'package:waterflyiii/pages/navigation.dart' show NavPage;
+import 'package:waterflyiii/pages/splash.dart' show SplashPage;
 import 'package:waterflyiii/pages/transaction.dart' show TransactionPage;
 import 'package:waterflyiii/routes/routes.dart';
 
 Widget buildScreen(BuildContext context, AppRoute route) => switch (route) {
+  // Main app pages
   SplashRoute() => const SplashPage(),
   LoginRoute() => const LoginPage(),
   LockRoute(:final VoidCallback onSuccess) => LockPage(onSuccess: onSuccess),
-  DashboardRoute() => throw UnimplementedError(),
-  AccountsRoute() => throw UnimplementedError(),
-  CategoriesRoute() => throw UnimplementedError(),
-  BillsRoute() => throw UnimplementedError(),
-  SettingsRoute() => throw UnimplementedError(),
+  NavigatorRoute() => const NavPage(),
+  // Detail Views
   TransactionDetail(
     :final TransactionRead? transaction,
     :final NotificationTransaction? notification,

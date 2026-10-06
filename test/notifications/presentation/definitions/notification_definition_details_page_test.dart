@@ -2244,9 +2244,22 @@ void main() {
         .state<ScrollableState>(find.byType(Scrollable).first)
         .position;
     final double offsetBeforeToggle = position.pixels;
+    final double optionTopBeforeToggle = tester.getTopLeft(automaticOption).dy;
     await tester.tap(automaticOption);
     await tester.pump();
     expect(position.pixels, closeTo(offsetBeforeToggle, 0.5));
+    expect(
+      tester.getTopLeft(automaticOption).dy,
+      closeTo(optionTopBeforeToggle, 0.5),
+    );
+    for (int elapsed = 0; elapsed < 200; elapsed += 50) {
+      await tester.pump(const Duration(milliseconds: 50));
+      expect(
+        tester.getTopLeft(automaticOption).dy,
+        closeTo(optionTopBeforeToggle, 1),
+        reason: 'after ${elapsed + 50} ms at offset ${position.pixels}',
+      );
+    }
     await tester.pumpAndSettle();
     expect(find.text('Automatic creation is incomplete'), findsOneWidget);
     final Finder automaticWarning = find.ancestor(

@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter/rendering.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
@@ -65,6 +68,12 @@ class _NotificationDefinitionDetailsPageState
   late final NotificationDefinitionEditorViewModel _viewModel;
   final GlobalKey _automaticWarningKey = GlobalKey();
   final GlobalKey _saveButtonKey = GlobalKey();
+  final _ScrollAnchorCoordinator _automaticAnchorCoordinator =
+      _ScrollAnchorCoordinator();
+  double _automaticAnchorSlack = 0;
+  bool _preservingAutomaticAnchor = false;
+  bool _scrollToAutomaticWarningAfterAnchor = false;
+  int _automaticAnchorGeneration = 0;
 
   List<RegExpDefinition> get _extractors => _viewModel.extractors;
   List<NotificationRule> get _rules => _viewModel.rules;
@@ -216,25 +225,28 @@ class _NotificationDefinitionDetailsPageState
               NotificationPageHeader.bodyBottomInset(context, spacing: 24),
             ),
             children: <Widget>[
-              AnimatedSize(
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.easeInOut,
-                alignment: Alignment.topCenter,
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 140),
-                  switchInCurve: Curves.easeIn,
-                  switchOutCurve: Curves.easeOut,
-                  child: statusCard == null
-                      ? const SizedBox.shrink(
-                          key: Key('definition-status-empty'),
-                        )
-                      : Padding(
-                          key: ValueKey<String>(
-                            'definition-status-${_currentDefinition().status.name}-${_transactionCreationMode.name}',
+              _ScrollAnchorSizeObserver(
+                onHeightChanged: _correctAutomaticAnchorBy,
+                child: AnimatedSize(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                  alignment: Alignment.topCenter,
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 140),
+                    switchInCurve: Curves.easeIn,
+                    switchOutCurve: Curves.easeOut,
+                    child: statusCard == null
+                        ? const SizedBox.shrink(
+                            key: Key('definition-status-empty'),
+                          )
+                        : Padding(
+                            key: ValueKey<String>(
+                              'definition-status-${_currentDefinition().status.name}-${_transactionCreationMode.name}',
+                            ),
+                            padding: const EdgeInsets.only(bottom: 24),
+                            child: statusCard,
                           ),
-                          padding: const EdgeInsets.only(bottom: 24),
-                          child: statusCard,
-                        ),
+                  ),
                 ),
               ),
               Text(
@@ -274,17 +286,20 @@ class _NotificationDefinitionDetailsPageState
                   onAddExtractor: _workflows.addExtractor,
                 ),
                 const SizedBox(height: 24),
-                DefinitionSharedActionsSection(
-                  actions: _viewModel.sharedActions,
-                  isBasicMode:
-                      _extractorMode == NotificationExtractorMode.basic,
-                  needsSetup: _sharedActionsNeedSetup(),
-                  needsReview: _sharedActionsNeedReview(),
-                  automaticReadiness: _automaticReadiness,
-                  createAutomatically:
-                      _transactionCreationMode ==
-                      TransactionCreationMode.automatic,
-                  onEdit: _workflows.editSharedActions,
+                _ScrollAnchorSizeObserver(
+                  onHeightChanged: _correctAutomaticAnchorBy,
+                  child: DefinitionSharedActionsSection(
+                    actions: _viewModel.sharedActions,
+                    isBasicMode:
+                        _extractorMode == NotificationExtractorMode.basic,
+                    needsSetup: _sharedActionsNeedSetup(),
+                    needsReview: _sharedActionsNeedReview(),
+                    automaticReadiness: _automaticReadiness,
+                    createAutomatically:
+                        _transactionCreationMode ==
+                        TransactionCreationMode.automatic,
+                    onEdit: _workflows.editSharedActions,
+                  ),
                 ),
                 if (_extractorMode ==
                     NotificationExtractorMode.advanced) ...<Widget>[
@@ -299,20 +314,24 @@ class _NotificationDefinitionDetailsPageState
                   ),
                 ],
                 const SizedBox(height: 24),
-                DefinitionOptionsSection(
-                  createAutomatically:
-                      _transactionCreationMode ==
-                      TransactionCreationMode.automatic,
-                  onCreateAutomaticallyChanged: _setTransactionCreationMode,
-                  automaticReadiness: _automaticReadiness,
-                  warningKey: _automaticWarningKey,
-                  onWarningRevealed: _keepAutomaticWarningVisible,
+                _ScrollAnchorPaintCompensator(
+                  coordinator: _automaticAnchorCoordinator,
+                  child: DefinitionOptionsSection(
+                    createAutomatically:
+                        _transactionCreationMode ==
+                        TransactionCreationMode.automatic,
+                    onCreateAutomaticallyChanged: _setTransactionCreationMode,
+                    automaticReadiness: _automaticReadiness,
+                    warningKey: _automaticWarningKey,
+                    onWarningRevealed: _keepAutomaticWarningVisible,
+                  ),
                 ),
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   curve: Curves.easeInOut,
                   height: _isDirty ? _floatingSaveButtonSpacing : 0,
                 ),
+                SizedBox(height: _automaticAnchorSlack),
               ],
             ],
           ),
@@ -469,10 +488,63 @@ class _NotificationDefinitionDetailsPageState
   }
 
   void _setTransactionCreationMode(bool automatically) {
+    if (automatically &&
+        !_automaticReadiness.isReady &&
+        _scrollController.hasClients) {
+      unawaited(_enableAutomaticModeWithStableAnchor());
+      return;
+    }
+
+    _automaticAnchorGeneration++;
+    _preservingAutomaticAnchor = false;
+    _scrollToAutomaticWarningAfterAnchor = false;
+    _automaticAnchorSlack = 0;
+    _automaticAnchorCoordinator.reset();
     _viewModel.setTransactionCreationMode(automatically);
   }
 
+  Future<void> _enableAutomaticModeWithStableAnchor() async {
+    final int generation = ++_automaticAnchorGeneration;
+    final ScrollPosition position = _scrollController.position;
+    setState(() {
+      _automaticAnchorSlack = position.viewportDimension;
+      _preservingAutomaticAnchor = true;
+    });
+    await WidgetsBinding.instance.endOfFrame;
+    if (!mounted || generation != _automaticAnchorGeneration) return;
+
+    _viewModel.setTransactionCreationMode(true);
+    await Future<void>.delayed(const Duration(milliseconds: 220));
+    _finishAutomaticAnchorTransition(generation);
+  }
+
+  void _correctAutomaticAnchorBy(double heightDelta) {
+    if (!_preservingAutomaticAnchor || !_scrollController.hasClients) return;
+    _automaticAnchorCoordinator.addPaintCorrection(heightDelta);
+    _scrollController.position.correctBy(heightDelta);
+  }
+
+  void _finishAutomaticAnchorTransition(int generation) {
+    if (!mounted || generation != _automaticAnchorGeneration) return;
+    final bool revealWarning = _scrollToAutomaticWarningAfterAnchor;
+    setState(() {
+      _automaticAnchorSlack = 0;
+      _preservingAutomaticAnchor = false;
+      _scrollToAutomaticWarningAfterAnchor = false;
+    });
+    _automaticAnchorCoordinator.reset();
+    if (revealWarning) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _keepAutomaticWarningVisible(),
+      );
+    }
+  }
+
   void _keepAutomaticWarningVisible() {
+    if (_preservingAutomaticAnchor) {
+      _scrollToAutomaticWarningAfterAnchor = true;
+      return;
+    }
     final BuildContext? warningContext = _automaticWarningKey.currentContext;
     if (warningContext == null || !_scrollController.hasClients) return;
     final RenderBox? warningBox =
@@ -567,5 +639,113 @@ class _NotificationDefinitionDetailsPageState
     final bool discard = await showDiscardChangesDialog(context);
     if (!mounted || !discard) return;
     Navigator.of(context).pop();
+  }
+}
+
+class _ScrollAnchorSizeObserver extends SingleChildRenderObjectWidget {
+  const _ScrollAnchorSizeObserver({
+    required this.onHeightChanged,
+    required super.child,
+  });
+
+  final ValueChanged<double> onHeightChanged;
+
+  @override
+  RenderObject createRenderObject(BuildContext context) =>
+      _RenderScrollAnchorSizeObserver(onHeightChanged);
+
+  @override
+  void updateRenderObject(
+    BuildContext context,
+    _RenderScrollAnchorSizeObserver renderObject,
+  ) {
+    renderObject.onHeightChanged = onHeightChanged;
+  }
+}
+
+class _RenderScrollAnchorSizeObserver extends RenderProxyBox {
+  _RenderScrollAnchorSizeObserver(this.onHeightChanged);
+
+  ValueChanged<double> onHeightChanged;
+  double? _previousHeight;
+
+  @override
+  void performLayout() {
+    super.performLayout();
+    final double? previousHeight = _previousHeight;
+    _previousHeight = size.height;
+    if (previousHeight == null) return;
+
+    final double heightDelta = size.height - previousHeight;
+    if (heightDelta.abs() > 0.01) {
+      onHeightChanged(heightDelta);
+    }
+  }
+}
+
+class _ScrollAnchorCoordinator {
+  double _pendingPaintCorrection = 0;
+
+  void addPaintCorrection(double correction) {
+    _pendingPaintCorrection += correction;
+  }
+
+  double consumePaintCorrection() {
+    final double correction = _pendingPaintCorrection;
+    _pendingPaintCorrection = 0;
+    return correction;
+  }
+
+  void reset() {
+    _pendingPaintCorrection = 0;
+  }
+}
+
+class _ScrollAnchorPaintCompensator extends SingleChildRenderObjectWidget {
+  const _ScrollAnchorPaintCompensator({
+    required this.coordinator,
+    required super.child,
+  });
+
+  final _ScrollAnchorCoordinator coordinator;
+
+  @override
+  RenderObject createRenderObject(BuildContext context) =>
+      _RenderScrollAnchorPaintCompensator(coordinator);
+
+  @override
+  void updateRenderObject(
+    BuildContext context,
+    _RenderScrollAnchorPaintCompensator renderObject,
+  ) {
+    renderObject.coordinator = coordinator;
+  }
+}
+
+class _RenderScrollAnchorPaintCompensator extends RenderProxyBox {
+  _RenderScrollAnchorPaintCompensator(this.coordinator);
+
+  _ScrollAnchorCoordinator coordinator;
+  double _paintCorrection = 0;
+
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    _paintCorrection = coordinator.consumePaintCorrection();
+    super.paint(context, offset.translate(0, -_paintCorrection));
+  }
+
+  @override
+  void applyPaintTransform(RenderBox child, Matrix4 transform) {
+    transform.translateByDouble(0.0, -_paintCorrection, 0.0, 1.0);
+  }
+
+  @override
+  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
+    return result.addWithPaintOffset(
+      offset: Offset(0, -_paintCorrection),
+      position: position,
+      hitTest: (BoxHitTestResult result, Offset transformed) =>
+          child?.hitTest(result, position: transformed) ?? false,
+    );
   }
 }

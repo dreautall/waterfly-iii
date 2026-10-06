@@ -19,6 +19,7 @@ import 'package:waterflyiii/notifications/application/listeners/notification_lis
 import 'package:waterflyiii/notifications/application/processing/notification_definition_processor.dart';
 import 'package:waterflyiii/notifications/application/processing/notification_history_outcome_recorder.dart';
 import 'package:waterflyiii/notifications/application/processing/notification_transaction_intent_adapter.dart';
+import 'package:waterflyiii/notifications/application/processing/local_notification_post_verifier.dart';
 import 'package:waterflyiii/notifications/application/processing/notification_transaction_intent_executor.dart';
 import 'package:waterflyiii/notifications/data/listeners/platform_notification_listener_health_notifier.dart';
 import 'package:waterflyiii/notifications/data/migrations/platform_notification_migration_review_notifier.dart';
@@ -269,32 +270,56 @@ Future<void> _showCreatedTransactionNotification(
 Future<void> _showCreateTransactionPrompt(
   NotificationContext notification,
   TransactionIntent intent,
-) => FlutterLocalNotificationsPlugin().show(
-  id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
-  title: 'Create Transaction?',
-  body:
-      'Click to create a transaction based on the notification ${notification.title}',
-  notificationDetails: const NotificationDetails(
-    android: AndroidNotificationDetails(
-      'extract_transaction',
-      'Create Transaction from Notification',
-      channelDescription:
-          'Notification asking to create a transaction from another notification.',
-      importance: .low,
-      priority: .low,
+) async {
+  final FlutterLocalNotificationsPlugin notifications =
+      FlutterLocalNotificationsPlugin();
+  final int notificationId = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+  log.finer(
+    () =>
+        'nlCallback(${notification.applicationId}): posting manual transaction prompt '
+        'with notification id $notificationId',
+  );
+  await LocalNotificationPostVerifier(
+    loadActiveNotificationIds: () async =>
+        (await notifications.getActiveNotifications())
+            .map((ActiveNotification active) => active.id)
+            .whereType<int>(),
+  ).postAndVerify(
+    id: notificationId,
+    description: 'Manual transaction prompt',
+    post: () => notifications.show(
+      id: notificationId,
+      title: 'Create Transaction?',
+      body:
+          'Click to create a transaction based on the notification ${notification.title}',
+      notificationDetails: const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'extract_transaction',
+          'Create Transaction from Notification',
+          channelDescription:
+              'Notification asking to create a transaction from another notification.',
+          importance: .low,
+          priority: .low,
+        ),
+      ),
+      payload: jsonEncode(
+        NotificationTransaction(
+          notification.applicationId!,
+          notification.title,
+          notification.body,
+          notification.receivedAt,
+          intent: intent,
+          historyEntryId: notification.deliveryId,
+        ),
+      ),
     ),
-  ),
-  payload: jsonEncode(
-    NotificationTransaction(
-      notification.applicationId!,
-      notification.title,
-      notification.body,
-      notification.receivedAt,
-      intent: intent,
-      historyEntryId: notification.deliveryId,
-    ),
-  ),
-);
+  );
+  log.finer(
+    () =>
+        'nlCallback(${notification.applicationId}): verified manual transaction prompt '
+        'with notification id $notificationId',
+  );
+}
 
 Future<bool> linkNotificationTransactionHistory({
   required String historyEntryId,

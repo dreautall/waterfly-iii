@@ -18,8 +18,6 @@ import 'package:waterflyiii/notifications/presentation/shared/message_status_car
 import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_page_header.dart';
 import 'package:waterflyiii/notifications/presentation/settings/widgets/notification_processing_settings_sections.dart';
-import 'package:waterflyiii/pages/transaction/tags.dart';
-import 'package:waterflyiii/settings.dart';
 
 class NotificationProcessingSettingsPage extends StatefulWidget {
   const NotificationProcessingSettingsPage({
@@ -31,7 +29,6 @@ class NotificationProcessingSettingsPage extends StatefulWidget {
     this.accessSettingsLauncher =
         const UnavailableNotificationAccessSettingsLauncher(),
     this.backupFileGateway = const UnavailableNotificationBackupFileGateway(),
-    this.appSettings,
   });
 
   final NotificationDefinitionStore definitionStore;
@@ -40,7 +37,6 @@ class NotificationProcessingSettingsPage extends StatefulWidget {
   final NotificationProcessingSettingsStore settingsStore;
   final NotificationAccessSettingsLauncher accessSettingsLauncher;
   final NotificationBackupFileGateway backupFileGateway;
-  final SettingsProvider? appSettings;
 
   @override
   State<NotificationProcessingSettingsPage> createState() =>
@@ -122,9 +118,7 @@ class _NotificationProcessingSettingsPageState
         ),
       );
     }
-
     final NotificationProcessingSettings settings = _viewModel.settings!;
-    final SettingsProvider? appSettings = widget.appSettings;
     return ListView(
       controller: _scrollController,
       physics: const ClampingScrollPhysics(),
@@ -161,22 +155,6 @@ class _NotificationProcessingSettingsPageState
                   .notificationsProcessingRestoreBackupDescription,
               onTap: _viewModel.isBusy ? null : _restoreBackup,
             ),
-            if (appSettings != null)
-              NotificationSettingsActionCard(
-                icon: appSettings.autoTagNL.isEmpty
-                    ? Icons.bookmarks_outlined
-                    : Icons.bookmarks,
-                title: S.of(context).settingsTag,
-                subtitle: appSettings.autoTagNL.isEmpty
-                    ? S.of(context).settingsTagNLHelp
-                    : S
-                          .of(context)
-                          .settingsTagList(
-                            appSettings.autoTagNL.length,
-                            appSettings.autoTagNL.join(', '),
-                          ),
-                onTap: _viewModel.isBusy ? null : _editNotificationTags,
-              ),
           ],
         ),
         const SizedBox(height: 24),
@@ -331,19 +309,6 @@ class _NotificationProcessingSettingsPageState
         _showSnackBar(S.of(context).notificationsProcessingHistoryCleared);
       }
     });
-  }
-
-  Future<void> _editNotificationTags() async {
-    final SettingsProvider? settings = widget.appSettings;
-    if (settings == null) return;
-    final List<String>? tags = await showDialog<List<String>>(
-      context: context,
-      builder: (BuildContext context) =>
-          TagDialog(selectedTags: settings.autoTagNL, enableAdd: true),
-    );
-    if (tags == null || !mounted) return;
-    await settings.setAutoTagNL(tags);
-    if (mounted) setState(() {});
   }
 
   Future<void> _clearAlerts() async {

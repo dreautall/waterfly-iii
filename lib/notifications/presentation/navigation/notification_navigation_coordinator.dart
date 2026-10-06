@@ -35,7 +35,6 @@ import 'package:waterflyiii/notifications/presentation/rules/pages/notification_
 import 'package:waterflyiii/notifications/presentation/settings/pages/notification_processing_settings_page.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 import 'package:waterflyiii/pages/transaction.dart';
-import 'package:waterflyiii/settings.dart';
 
 class NotificationNavigationCoordinator {
   NotificationNavigationCoordinator({
@@ -120,7 +119,6 @@ class NotificationNavigationCoordinator {
           settingsStore: scope.settingsStore,
           accessSettingsLauncher: scope.accessSettingsLauncher,
           backupFileGateway: scope.backupFileGateway,
-          appSettings: context.read<SettingsProvider>(),
         ),
       ),
     );

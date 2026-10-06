@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 import 'package:waterflyiii/data/database/database_provider.dart';
 import 'package:waterflyiii/notifications/application/settings/notification_processing_settings.dart';
+import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
 import 'package:waterflyiii/notifications/data/repositories/notification_history_repository.dart';
 import 'package:waterflyiii/notifications/data/repositories/sqlcipher_notification_history_store.dart';
 import 'package:waterflyiii/notifications/domain/history/notification_history_entry.dart';
@@ -20,6 +21,8 @@ class _RecordingHistoryStore extends SqlcipherNotificationHistoryStore {
 
   final List<NotificationHistoryEntry> entries = <NotificationHistoryEntry>[];
   DateTime? clearedBefore;
+  NotificationHistoryCursor? requestedCursor;
+  int? requestedLimit;
 
   @override
   Future<void> record(NotificationHistoryEntry entry) async {
@@ -28,6 +31,16 @@ class _RecordingHistoryStore extends SqlcipherNotificationHistoryStore {
 
   @override
   Future<List<NotificationHistoryEntry>> load() async => entries;
+
+  @override
+  Future<NotificationHistoryPage> loadPage({
+    NotificationHistoryCursor? before,
+    required int limit,
+  }) async {
+    requestedCursor = before;
+    requestedLimit = limit;
+    return NotificationHistoryPage(entries: entries, hasMore: false);
+  }
 
   @override
   Future<bool> linkTransaction(
@@ -128,6 +141,34 @@ void main() {
     receivedAt: DateTime(2026, 9, 26),
     processingOutcome: outcome,
   );
+
+  test('prunes retention before loading a cursor page', () async {
+    final _RecordingHistoryStore store = _RecordingHistoryStore()
+      ..entries.add(entry);
+    final NotificationHistoryRepository repository =
+        NotificationHistoryRepository(
+          store,
+          settingsStore: _SettingsStore(
+            const NotificationProcessingSettings(
+              historyRetention: NotificationHistoryRetention.thirtyDays,
+            ),
+          ),
+        );
+    final NotificationHistoryCursor cursor = NotificationHistoryCursor(
+      receivedAt: entry.receivedAt,
+      id: entry.id,
+    );
+
+    final NotificationHistoryPage page = await repository.loadPage(
+      before: cursor,
+      limit: 30,
+    );
+
+    expect(page.entries, <NotificationHistoryEntry>[entry]);
+    expect(store.requestedCursor, same(cursor));
+    expect(store.requestedLimit, 30);
+    expect(store.clearedBefore, isNotNull);
+  });
 
   test(
     'does not retain notification outcomes when history is disabled',

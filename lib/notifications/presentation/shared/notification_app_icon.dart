@@ -22,7 +22,12 @@ class NotificationAppIcon extends StatefulWidget {
 }
 
 class _NotificationAppIconState extends State<NotificationAppIcon> {
+  static final Map<(NotificationAppInfoLoader?, String), AppInfo?>
+  _applicationCache = <(NotificationAppInfoLoader?, String), AppInfo?>{};
+
   Future<AppInfo?>? _application;
+  AppInfo? _cachedApplication;
+  bool _hasCachedApplication = false;
 
   @override
   void initState() {
@@ -41,35 +46,60 @@ class _NotificationAppIconState extends State<NotificationAppIcon> {
 
   void _loadApplication() {
     final NotificationAppInfoLoader? loader = widget.appInfoLoader;
-    _application = loader != null
-        ? loader(widget.applicationId)
-        : Platform.isAndroid
-        ? AppCheck().checkAvailability(widget.applicationId)
-        : null;
+    final (NotificationAppInfoLoader?, String) cacheKey = (
+      loader,
+      widget.applicationId,
+    );
+    if (_applicationCache.containsKey(cacheKey)) {
+      _cachedApplication = _applicationCache[cacheKey];
+      _hasCachedApplication = true;
+      _application = null;
+      return;
+    }
+    _cachedApplication = null;
+    _hasCachedApplication = false;
+    if (loader == null && !Platform.isAndroid) {
+      _application = null;
+      return;
+    }
+    _application = _loadAndCacheApplication(cacheKey, loader);
+  }
+
+  Future<AppInfo?> _loadAndCacheApplication(
+    (NotificationAppInfoLoader?, String) cacheKey,
+    NotificationAppInfoLoader? loader,
+  ) async {
+    final AppInfo? application = await (loader != null
+        ? loader(cacheKey.$2)
+        : AppCheck().checkAvailability(cacheKey.$2));
+    _applicationCache[cacheKey] = application;
+    return application;
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_hasCachedApplication) return _buildIcon(_cachedApplication);
     final Future<AppInfo?>? application = _application;
     if (application == null) return const _FallbackAppIcon();
     return FutureBuilder<AppInfo?>(
       future: application,
-      builder: (BuildContext context, AsyncSnapshot<AppInfo?> snapshot) {
-        final Uint8List? image = snapshot.data?.icon;
-        if (image == null) {
-          return const _FallbackAppIcon();
-        }
-        return CircleAvatar(
-          backgroundColor: Colors.transparent,
-          child: Image.memory(
-            image,
-            width: 40,
-            height: 40,
-            fit: BoxFit.contain,
-            errorBuilder: (_, _, _) => const Icon(Icons.apps_outlined),
-          ),
-        );
-      },
+      builder: (BuildContext context, AsyncSnapshot<AppInfo?> snapshot) =>
+          _buildIcon(snapshot.data),
+    );
+  }
+
+  Widget _buildIcon(AppInfo? application) {
+    final Uint8List? image = application?.icon;
+    if (image == null) return const _FallbackAppIcon();
+    return CircleAvatar(
+      backgroundColor: Colors.transparent,
+      child: Image.memory(
+        image,
+        width: 40,
+        height: 40,
+        fit: BoxFit.contain,
+        errorBuilder: (_, _, _) => const Icon(Icons.apps_outlined),
+      ),
     );
   }
 }

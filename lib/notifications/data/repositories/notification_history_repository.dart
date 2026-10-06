@@ -7,6 +7,7 @@ import 'package:waterflyiii/notifications/domain/history/notification_history_en
 class NotificationHistoryRepository
     implements
         NotificationHistoryStore,
+        NotificationHistoryPageStore,
         NotificationHistoryEntryRemovalStore,
         NotificationHistoryTransactionLinkStore {
   NotificationHistoryRepository(
@@ -47,6 +48,15 @@ class NotificationHistoryRepository
   Future<List<NotificationHistoryEntry>> load() async {
     await _pruneExpiredHistory();
     return _store.load();
+  }
+
+  @override
+  Future<NotificationHistoryPage> loadPage({
+    NotificationHistoryCursor? before,
+    required int limit,
+  }) async {
+    await _pruneExpiredHistory();
+    return _store.loadPage(before: before, limit: limit);
   }
 
   @override

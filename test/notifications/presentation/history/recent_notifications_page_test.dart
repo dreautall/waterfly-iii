@@ -85,6 +85,17 @@ class _TestRecentNotificationHistory extends RecentNotificationHistory {
 
   @override
   Future<List<RecentNotificationHistoryEntry>> load() => result;
+
+  @override
+  Future<RecentNotificationHistoryPage> loadPage({
+    NotificationHistoryCursor? before,
+    required int limit,
+  }) async => RecentNotificationHistoryPage(
+    entries: before == null
+        ? await result
+        : const <RecentNotificationHistoryEntry>[],
+    hasMore: false,
+  );
 }
 
 class _SequentialRecentNotificationHistory extends RecentNotificationHistory {
@@ -104,6 +115,17 @@ class _SequentialRecentNotificationHistory extends RecentNotificationHistory {
     loadCount++;
     return results[index];
   }
+
+  @override
+  Future<RecentNotificationHistoryPage> loadPage({
+    NotificationHistoryCursor? before,
+    required int limit,
+  }) async => RecentNotificationHistoryPage(
+    entries: before == null
+        ? await load()
+        : const <RecentNotificationHistoryEntry>[],
+    hasMore: false,
+  );
 }
 
 class _ControlledRefreshHistory extends RecentNotificationHistory {
@@ -125,6 +147,51 @@ class _ControlledRefreshHistory extends RecentNotificationHistory {
     return loadCount == 1
         ? Future<List<RecentNotificationHistoryEntry>>.value(entries)
         : refresh.future;
+  }
+
+  @override
+  Future<RecentNotificationHistoryPage> loadPage({
+    NotificationHistoryCursor? before,
+    required int limit,
+  }) async => RecentNotificationHistoryPage(
+    entries: before == null
+        ? await load()
+        : const <RecentNotificationHistoryEntry>[],
+    hasMore: false,
+  );
+}
+
+class _PagedRecentNotificationHistory extends RecentNotificationHistory {
+  _PagedRecentNotificationHistory(this.pages)
+    : super(
+        _EmptyDefinitionStore(),
+        _EmptyAlertStore(),
+        historyStore: _EmptyHistoryStore(),
+      );
+
+  final List<RecentNotificationHistoryPage> pages;
+  final List<NotificationHistoryCursor?> requestedCursors =
+      <NotificationHistoryCursor?>[];
+  final List<int> requestedLimits = <int>[];
+  Object? loadMoreError;
+
+  @override
+  Future<List<RecentNotificationHistoryEntry>> load() async =>
+      pages.first.entries;
+
+  @override
+  Future<RecentNotificationHistoryPage> loadPage({
+    NotificationHistoryCursor? before,
+    required int limit,
+  }) async {
+    requestedCursors.add(before);
+    requestedLimits.add(limit);
+    if (before != null && loadMoreError != null) {
+      final Object error = loadMoreError!;
+      loadMoreError = null;
+      throw error;
+    }
+    return pages[before == null ? 0 : 1];
   }
 }
 
@@ -188,6 +255,195 @@ void main() {
       lessThan(initialDescriptionTop - 50),
     );
     expect(tester.getTopLeft(find.text('Entry 0')).dy, lessThan(844));
+  });
+
+  testWidgets('groups notifications under sticky day headings', (
+    WidgetTester tester,
+  ) async {
+    final List<RecentNotificationHistoryEntry> entries =
+        <RecentNotificationHistoryEntry>[
+          RecentNotificationHistoryEntry(
+            notification: NotificationHistoryEntry(
+              id: 'newer',
+              applicationId: 'com.example.bank',
+              title: 'Newer payment',
+              body: 'Paid 12.50 CAD',
+              receivedAt: DateTime(2026, 9, 27, 18),
+            ),
+          ),
+          RecentNotificationHistoryEntry(
+            notification: NotificationHistoryEntry(
+              id: 'older',
+              applicationId: 'com.example.bank',
+              title: 'Older payment',
+              body: 'Paid 8.25 CAD',
+              receivedAt: DateTime(2026, 9, 26, 18),
+            ),
+          ),
+        ];
+
+    await tester.pumpWidget(
+      _page(Future<List<RecentNotificationHistoryEntry>>.value(entries)),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byType(SliverPersistentHeader), findsNWidgets(2));
+    expect(find.byKey(const Key('history-day-2026-9-27')), findsOneWidget);
+    expect(find.byKey(const Key('history-day-2026-9-26')), findsOneWidget);
+  });
+
+  testWidgets('loads an earlier page near the bottom', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final NotificationHistoryCursor cursor = NotificationHistoryCursor(
+      receivedAt: DateTime(2026, 9, 27, 17),
+      id: 'entry-19',
+    );
+    final _PagedRecentNotificationHistory history =
+        _PagedRecentNotificationHistory(<RecentNotificationHistoryPage>[
+          RecentNotificationHistoryPage(
+            entries: List<RecentNotificationHistoryEntry>.generate(
+              20,
+              (int index) => RecentNotificationHistoryEntry(
+                notification: NotificationHistoryEntry(
+                  id: 'entry-$index',
+                  applicationId: 'com.example.bank',
+                  title: 'Entry $index',
+                  body: 'Notification body $index',
+                  receivedAt: DateTime(2026, 9, 27, 18, 19 - index),
+                ),
+              ),
+            ),
+            hasMore: true,
+            nextCursor: cursor,
+          ),
+          RecentNotificationHistoryPage(
+            entries: <RecentNotificationHistoryEntry>[
+              RecentNotificationHistoryEntry(
+                notification: NotificationHistoryEntry(
+                  id: 'earlier',
+                  applicationId: 'com.example.bank',
+                  title: 'Earlier notification',
+                  body: 'Earlier body',
+                  receivedAt: DateTime(2026, 9, 26, 12),
+                ),
+              ),
+            ],
+            hasMore: false,
+          ),
+        ]);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: RecentNotificationsPage(history: history),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Earlier notification'), findsNothing);
+    await tester.fling(
+      find.byType(CustomScrollView),
+      const Offset(0, -4000),
+      3000,
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('Earlier notification'),
+      300,
+      scrollable: find.byType(Scrollable),
+    );
+    expect(find.text('Earlier notification'), findsOneWidget);
+    expect(history.requestedCursors, <NotificationHistoryCursor?>[
+      null,
+      cursor,
+    ]);
+    expect(history.requestedLimits, <int>[30, 30]);
+  });
+
+  testWidgets('keeps loaded history and retries an earlier page failure', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final NotificationHistoryCursor cursor = NotificationHistoryCursor(
+      receivedAt: DateTime(2026, 9, 27, 17),
+      id: 'entry-19',
+    );
+    final _PagedRecentNotificationHistory history =
+        _PagedRecentNotificationHistory(<RecentNotificationHistoryPage>[
+          RecentNotificationHistoryPage(
+            entries: List<RecentNotificationHistoryEntry>.generate(
+              20,
+              (int index) => RecentNotificationHistoryEntry(
+                notification: NotificationHistoryEntry(
+                  id: 'entry-$index',
+                  applicationId: 'com.example.bank',
+                  title: 'Entry $index',
+                  body: 'Notification body $index',
+                  receivedAt: DateTime(2026, 9, 27, 18, 19 - index),
+                ),
+              ),
+            ),
+            hasMore: true,
+            nextCursor: cursor,
+          ),
+          RecentNotificationHistoryPage(
+            entries: <RecentNotificationHistoryEntry>[
+              RecentNotificationHistoryEntry(
+                notification: NotificationHistoryEntry(
+                  id: 'earlier',
+                  applicationId: 'com.example.bank',
+                  title: 'Earlier notification',
+                  body: 'Earlier body',
+                  receivedAt: DateTime(2026, 9, 26, 12),
+                ),
+              ),
+            ],
+            hasMore: false,
+          ),
+        ])..loadMoreError = StateError('Page unavailable');
+
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: RecentNotificationsPage(history: history),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.fling(
+      find.byType(CustomScrollView),
+      const Offset(0, -4000),
+      3000,
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Earlier notifications could not be loaded.'), findsOne);
+    expect(find.text('Entry 19'), findsWidgets);
+
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Retry'));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.text('Earlier notification'),
+      300,
+      scrollable: find.byType(Scrollable),
+    );
+
+    expect(find.text('Earlier notification'), findsOneWidget);
+    expect(history.requestedCursors, <NotificationHistoryCursor?>[
+      null,
+      cursor,
+      cursor,
+    ]);
   });
 
   testWidgets('reveals the last history card after it expands', (
@@ -422,7 +678,7 @@ void main() {
       await tester.tap(find.text('Card payment'));
       await tester.pumpAndSettle();
       expect(find.text(primaryLabel), findsOneWidget);
-      await tester.tap(find.byIcon(Icons.arrow_drop_down));
+      await tester.tap(find.byIcon(Icons.arrow_drop_down).first);
       await tester.pumpAndSettle();
       expect(find.text('Go to definition'), findsOneWidget);
       expect(
@@ -959,7 +1215,7 @@ void main() {
 
       expect(unlinkedHistoryId, 'payment');
       expect(unlinkedTransactionId, 'transaction-42');
-      expect(history.loadCount, 2);
+      expect(history.loadCount, 1);
       expect(find.text('Create transaction'), findsOneWidget);
       expect(find.text('View transaction'), findsNothing);
     },
@@ -1173,18 +1429,30 @@ void main() {
       body: 'Paid 12.50 CAD',
       receivedAt: DateTime(2026, 9, 6),
     );
-    final _SequentialRecentNotificationHistory history =
-        _SequentialRecentNotificationHistory(
-          <List<RecentNotificationHistoryEntry>>[
-            <RecentNotificationHistoryEntry>[
-              RecentNotificationHistoryEntry(notification: notification),
-            ],
-            <RecentNotificationHistoryEntry>[],
-            <RecentNotificationHistoryEntry>[
-              RecentNotificationHistoryEntry(notification: notification),
-            ],
-          ],
+    final NotificationHistoryEntry followingNotification =
+        NotificationHistoryEntry(
+          id: 'coffee',
+          applicationId: 'com.example.bank',
+          title: 'Coffee shop',
+          body: 'Paid 4.25 CAD',
+          receivedAt: DateTime(2026, 9, 6).subtract(const Duration(minutes: 1)),
         );
+    final _SequentialRecentNotificationHistory
+    history = _SequentialRecentNotificationHistory(
+      <List<RecentNotificationHistoryEntry>>[
+        <RecentNotificationHistoryEntry>[
+          RecentNotificationHistoryEntry(notification: notification),
+          RecentNotificationHistoryEntry(notification: followingNotification),
+        ],
+        <RecentNotificationHistoryEntry>[
+          RecentNotificationHistoryEntry(notification: followingNotification),
+        ],
+        <RecentNotificationHistoryEntry>[
+          RecentNotificationHistoryEntry(notification: notification),
+          RecentNotificationHistoryEntry(notification: followingNotification),
+        ],
+      ],
+    );
     String? removedId;
     String? restoredId;
     await tester.pumpWidget(
@@ -1208,7 +1476,7 @@ void main() {
 
     await tester.tap(find.text('Card payment'));
     await tester.pumpAndSettle();
-    await tester.tap(find.byIcon(Icons.arrow_drop_down));
+    await tester.tap(find.byIcon(Icons.arrow_drop_down).first);
     await tester.pumpAndSettle();
     final Finder removeAction = find.text('Remove from recent history');
     expect(removeAction, findsOneWidget);
@@ -1228,12 +1496,47 @@ void main() {
       findsOneWidget,
     );
 
+    final double expandedFollowingTop = tester
+        .getTopLeft(find.text('Coffee shop'))
+        .dy;
+    final Element followingCardElement = tester.element(
+      find.byKey(const ValueKey<String>('coffee')),
+    );
     await tester.tap(find.text('Remove from recent history').last);
+    await tester.pump();
+
+    expect(
+      tester
+          .widget<AnimatedOpacity>(
+            find.byKey(const Key('history-refresh-opacity-payment')),
+          )
+          .opacity,
+      0,
+    );
+    expect(find.text('Card payment'), findsOneWidget);
+    expect(removedId, isNull);
+
+    await tester.pump(const Duration(milliseconds: 225));
+    final double removingFollowingTop = tester
+        .getTopLeft(find.text('Coffee shop'))
+        .dy;
+    expect(removingFollowingTop, lessThan(expandedFollowingTop));
+    expect(removedId, isNull);
+
+    await tester.pump(const Duration(milliseconds: 225));
     await tester.pumpAndSettle();
 
     expect(removedId, 'payment');
     expect(history.loadCount, 2);
-    expect(find.text('No recent notifications'), findsOneWidget);
+    expect(find.text('Card payment'), findsNothing);
+    expect(
+      tester.element(find.byKey(const ValueKey<String>('coffee'))),
+      same(followingCardElement),
+    );
+    final double removedFollowingTop = tester
+        .getTopLeft(find.text('Coffee shop'))
+        .dy;
+    expect(removedFollowingTop, lessThan(removingFollowingTop));
     expect(
       find.text('Notification removed from recent history.'),
       findsOneWidget,
@@ -1246,6 +1549,18 @@ void main() {
     expect(restoredId, 'payment');
     expect(history.loadCount, 3);
     expect(find.text('Card payment'), findsOneWidget);
+    expect(
+      tester.getTopLeft(find.text('Coffee shop')).dy,
+      greaterThan(removedFollowingTop),
+    );
+    expect(
+      tester
+          .widget<AnimatedOpacity>(
+            find.byKey(const Key('history-refresh-opacity-payment')),
+          )
+          .opacity,
+      1,
+    );
   });
 
   testWidgets('places received time immediately after the notification title', (

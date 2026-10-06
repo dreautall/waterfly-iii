@@ -9,6 +9,7 @@ import 'package:waterflyiii/notifications/domain/history/notification_processing
 class SqlcipherNotificationHistoryStore
     implements
         NotificationHistoryStore,
+        NotificationHistoryPageStore,
         NotificationHistoryEntryRemovalStore,
         NotificationHistoryTransactionLinkStore {
   const SqlcipherNotificationHistoryStore(this._databaseProvider);
@@ -46,26 +47,67 @@ class SqlcipherNotificationHistoryStore
       'notification_history',
       orderBy: 'received_at DESC, id DESC',
     );
-    return rows
-        .map(
-          (Map<String, Object?> row) => NotificationHistoryEntry(
-            id: row['id']! as String,
-            applicationId: row['application_id']! as String,
-            title: row['title']! as String,
-            body: row['body']! as String,
-            receivedAt: DateTime.fromMillisecondsSinceEpoch(
-              row['received_at']! as int,
-            ),
-            processingOutcome: row['outcome_json'] == null
-                ? null
-                : NotificationProcessingOutcome.fromJson(
-                    jsonDecode(row['outcome_json']! as String)
-                        as Map<String, dynamic>,
-                  ),
-          ),
-        )
-        .toList();
+    return rows.map(_entryFromRow).toList();
   }
+
+  @override
+  Future<NotificationHistoryPage> loadPage({
+    NotificationHistoryCursor? before,
+    required int limit,
+  }) async {
+    if (limit <= 0) {
+      throw ArgumentError.value(limit, 'limit', 'Must be greater than zero.');
+    }
+    final Database database = await _databaseProvider.database;
+    final List<Map<String, Object?>> rows = await database.query(
+      'notification_history',
+      where: before == null
+          ? null
+          : '(received_at < ?) OR (received_at = ? AND id < ?)',
+      whereArgs: before == null
+          ? null
+          : <Object?>[
+              before.receivedAt.millisecondsSinceEpoch,
+              before.receivedAt.millisecondsSinceEpoch,
+              before.id,
+            ],
+      orderBy: 'received_at DESC, id DESC',
+      limit: limit + 1,
+    );
+    final bool hasMore = rows.length > limit;
+    final List<NotificationHistoryEntry> entries = rows
+        .take(limit)
+        .map(_entryFromRow)
+        .toList();
+    final NotificationHistoryEntry? lastEntry = entries.isEmpty
+        ? null
+        : entries.last;
+    return NotificationHistoryPage(
+      entries: entries,
+      hasMore: hasMore,
+      nextCursor: hasMore && lastEntry != null
+          ? NotificationHistoryCursor(
+              receivedAt: lastEntry.receivedAt,
+              id: lastEntry.id,
+            )
+          : null,
+    );
+  }
+
+  NotificationHistoryEntry _entryFromRow(
+    Map<String, Object?> row,
+  ) => NotificationHistoryEntry(
+    id: row['id']! as String,
+    applicationId: row['application_id']! as String,
+    title: row['title']! as String,
+    body: row['body']! as String,
+    receivedAt: DateTime.fromMillisecondsSinceEpoch(row['received_at']! as int),
+    processingOutcome: row['outcome_json'] == null
+        ? null
+        : NotificationProcessingOutcome.fromJson(
+            jsonDecode(row['outcome_json']! as String) as Map<String, dynamic>,
+          ),
+  );
 
   @override
   Future<bool> linkTransaction(

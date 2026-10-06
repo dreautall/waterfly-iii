@@ -39,4 +39,41 @@ void main() {
     await tester.pumpAndSettle();
     expect(loadCount, 2);
   });
+
+  testWidgets('reuses cached app metadata in a new icon widget', (
+    WidgetTester tester,
+  ) async {
+    int loadCount = 0;
+    bool showIcon = true;
+    late StateSetter rebuild;
+    Future<AppInfo?> loadApplication(String applicationId) async {
+      loadCount++;
+      return AppInfo(packageName: applicationId, appName: 'Example');
+    }
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            rebuild = setState;
+            return showIcon
+                ? NotificationAppIcon(
+                    applicationId: 'com.example.restored',
+                    appInfoLoader: loadApplication,
+                  )
+                : const SizedBox.shrink();
+          },
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(loadCount, 1);
+
+    rebuild(() => showIcon = false);
+    await tester.pump();
+    rebuild(() => showIcon = true);
+    await tester.pump();
+
+    expect(loadCount, 1);
+  });
 }

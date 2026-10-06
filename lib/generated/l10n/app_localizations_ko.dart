@@ -2011,6 +2011,19 @@ class SKo extends S {
       'Recent notifications could not be loaded.';
 
   @override
+  String get notificationsHistoryLoadMoreFailure =>
+      'Earlier notifications could not be loaded.';
+
+  @override
+  String get notificationsHistoryLoadMoreRetry => 'Retry';
+
+  @override
+  String get notificationsHistoryToday => 'Today';
+
+  @override
+  String get notificationsHistoryYesterday => 'Yesterday';
+
+  @override
   String get notificationsHistoryEmpty =>
       'No notifications have been recorded yet.';
 

@@ -12,6 +12,7 @@ import 'package:waterflyiii/notifications/presentation/history/controllers/recen
 import 'package:waterflyiii/notifications/presentation/history/recent_notification_actions.dart';
 import 'package:waterflyiii/notifications/presentation/history/widgets/recent_notification_card.dart';
 import 'package:waterflyiii/notifications/presentation/shared/message_status_card.dart';
+import 'package:waterflyiii/notifications/presentation/shared/notification_date_time_formatter.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_empty_state.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_menu_theme.dart';
@@ -69,6 +70,7 @@ class RecentNotificationsPage extends StatefulWidget {
 
 class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
   static const Duration _removeUndoDuration = Duration(seconds: 6);
+  static const Duration _entryTransitionDuration = Duration(milliseconds: 450);
 
   static final Logger _log = Logger('Notifications.RecentNotifications');
   late final RecentNotificationsViewModel _viewModel;
@@ -77,6 +79,9 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
   bool _ownsViewModel = false;
   bool _isRefreshing = false;
   int _refreshAnimationGeneration = 0;
+  final Map<String, GlobalKey> _entryCellKeys = <String, GlobalKey>{};
+  final Set<String> _removingEntryIds = <String>{};
+  final Set<String> _restoringEntryIds = <String>{};
   String? _expandedEntryId;
   NotificationHistoryTransactionUnlinker? _unlinkTransaction;
 
@@ -135,11 +140,45 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
       _viewModel = scope!.recentNotificationsViewModel;
     }
     _viewModel.addListener(_onViewModelChanged);
+    _scrollController.addListener(_onScroll);
     unawaited(_loadHistory(initial: true));
   }
 
   void _onViewModelChanged() {
-    if (mounted) setState(() {});
+    if (!mounted) return;
+    final Set<String> retainedEntryIds = <String>{
+      ..._viewModel.entries.map(
+        (RecentNotificationHistoryEntry entry) => entry.notification.id,
+      ),
+      ..._removingEntryIds,
+      ..._restoringEntryIds,
+    };
+    _entryCellKeys.removeWhere(
+      (String entryId, _) => !retainedEntryIds.contains(entryId),
+    );
+    setState(() {});
+    WidgetsBinding.instance.addPostFrameCallback((_) => _prefetchIfNeeded());
+  }
+
+  void _onScroll() => _prefetchIfNeeded();
+
+  void _prefetchIfNeeded() {
+    if (!mounted ||
+        !_scrollController.hasClients ||
+        _viewModel.loadMoreError != null ||
+        _scrollController.position.extentAfter > 800) {
+      return;
+    }
+    unawaited(_loadMoreHistory());
+  }
+
+  Future<void> _loadMoreHistory() async {
+    if (_viewModel.isLoadingMore || !_viewModel.hasMore) return;
+    await _viewModel.loadMore();
+    if (!mounted || _viewModel.loadMoreError != null) return;
+    await _removeUnavailableTransactionLinks(
+      _viewModel.mostRecentlyLoadedEntries,
+    );
   }
 
   Future<bool> _createRule(RecentNotificationHistoryEntry entry) async {
@@ -196,15 +235,17 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
         _actions.transactionExists == null) {
       return;
     }
-    final bool linksChanged = await _removeUnavailableTransactionLinks();
-    if (linksChanged && mounted) await _viewModel.refresh();
+    await _removeUnavailableTransactionLinks(
+      _viewModel.mostRecentlyLoadedEntries,
+    );
   }
 
-  Future<bool> _removeUnavailableTransactionLinks() async {
+  Future<bool> _removeUnavailableTransactionLinks(
+    Iterable<RecentNotificationHistoryEntry> entries,
+  ) async {
     const int validationConcurrency = 4;
     bool linksChanged = false;
-    final List<RecentNotificationHistoryEntry> linkedEntries = _viewModel
-        .entries
+    final List<RecentNotificationHistoryEntry> linkedEntries = entries
         .where(
           (RecentNotificationHistoryEntry entry) =>
               entry.processingOutcome?.transactionId != null,
@@ -235,7 +276,14 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
     final String transactionId = entry.processingOutcome!.transactionId!;
     try {
       if (await _actions.transactionExists!(transactionId)) return false;
-      return await _unlinkTransaction!(entry.notification.id, transactionId);
+      final bool unlinked = await _unlinkTransaction!(
+        entry.notification.id,
+        transactionId,
+      );
+      if (unlinked && mounted) {
+        _viewModel.removeTransactionLink(entry.notification.id, transactionId);
+      }
+      return unlinked;
     } catch (error, stackTrace) {
       _log.fine(
         'Could not validate linked transaction $transactionId.',
@@ -275,14 +323,19 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
         ) ??
         false;
     if (!confirmed) return;
+    final String entryId = entry.notification.id;
+    setState(() => _removingEntryIds.add(entryId));
+    await Future<void>.delayed(_entryTransitionDuration);
     try {
       await remove(entry);
       if (!mounted) return;
-      if (_expandedEntryId == entry.notification.id) {
+      if (_expandedEntryId == entryId) {
         _expandedEntryId = null;
       }
       await _viewModel.refresh();
       if (!mounted) return;
+      _removingEntryIds.remove(entryId);
+      _entryCellKeys.remove(entryId);
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
         ..showSnackBar(
@@ -305,6 +358,7 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
         stackTrace,
       );
       if (!mounted) return;
+      setState(() => _removingEntryIds.remove(entryId));
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
         ..showSnackBar(
@@ -319,9 +373,17 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
     RecentNotificationHistoryEntry entry,
     RecentNotificationEntryAction restore,
   ) async {
+    final String entryId = entry.notification.id;
+    if (mounted) setState(() => _restoringEntryIds.add(entryId));
     try {
       await restore(entry);
-      if (mounted) await _viewModel.refresh();
+      if (!mounted) return;
+      await _viewModel.refresh();
+      if (!mounted) return;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        setState(() => _restoringEntryIds.remove(entryId));
+      });
     } catch (error, stackTrace) {
       _log.warning(
         'Could not restore recent notification history entry.',
@@ -329,6 +391,7 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
         stackTrace,
       );
       if (!mounted) return;
+      setState(() => _restoringEntryIds.remove(entryId));
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(S.of(context).notificationsHistoryRestoreFailure),
@@ -346,6 +409,7 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
   @override
   void dispose() {
     _viewModel.removeListener(_onViewModelChanged);
+    _scrollController.removeListener(_onScroll);
     if (_ownsViewModel) _viewModel.dispose();
     _scrollController.dispose();
     super.dispose();
@@ -461,6 +525,22 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
       ];
     }
     final List<RecentNotificationHistoryEntry> entries = _viewModel.entries;
+    if (entries.isEmpty && _viewModel.loadMoreError != null) {
+      return <Widget>[
+        SliverPadding(
+          padding: EdgeInsets.fromLTRB(
+            16,
+            0,
+            16,
+            NotificationPageHeader.bodyBottomInset(context),
+          ),
+          sliver: SliverFillRemaining(
+            hasScrollBody: false,
+            child: Center(child: _loadMoreFailure(context)),
+          ),
+        ),
+      ];
+    }
     if (entries.isEmpty) {
       return <Widget>[
         SliverPadding(
@@ -478,36 +558,155 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
         ),
       ];
     }
-    return <Widget>[
-      SliverPadding(
-        padding: EdgeInsets.fromLTRB(
-          16,
-          0,
-          16,
-          NotificationPageHeader.bodyBottomInset(context),
-        ),
-        sliver: SliverList.builder(
-          itemCount: entries.length * 2 - 1,
-          itemBuilder: (BuildContext context, int index) {
-            if (index.isOdd) return const SizedBox(height: 8);
-            final RecentNotificationHistoryEntry entry = entries[index ~/ 2];
-            return _animatedHistoryCard(entry, cardIndex: index ~/ 2);
-          },
+    final List<_NotificationDayGroup> groups = _groupEntriesByDay(entries);
+    final List<Widget> slivers = <Widget>[];
+    int cardIndex = 0;
+    for (final _NotificationDayGroup group in groups) {
+      final int groupStartIndex = cardIndex;
+      cardIndex += group.entries.length;
+      final Map<Key, int> entryIndices = <Key, int>{
+        for (int index = 0; index < group.entries.length; index++)
+          _entryCellKey(group.entries[index].notification.id): index,
+      };
+      slivers
+        ..add(
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: _NotificationDayHeaderDelegate(
+              child: _dayHeader(context, group),
+            ),
+          ),
+        )
+        ..add(
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+            sliver: SliverList.builder(
+              itemCount: group.entries.length,
+              findChildIndexCallback: (Key key) => entryIndices[key],
+              itemBuilder: (BuildContext context, int index) {
+                final RecentNotificationHistoryEntry entry =
+                    group.entries[index];
+                return _animatedHistoryCard(
+                  entry,
+                  cardIndex: groupStartIndex + index,
+                  bottomSpacing: index == group.entries.length - 1 ? 0 : 8,
+                );
+              },
+            ),
+          ),
+        );
+    }
+    slivers.add(_loadMoreFooter(context));
+    return slivers;
+  }
+
+  List<_NotificationDayGroup> _groupEntriesByDay(
+    List<RecentNotificationHistoryEntry> entries,
+  ) {
+    final List<_NotificationDayGroup> groups = <_NotificationDayGroup>[];
+    for (final RecentNotificationHistoryEntry entry in entries) {
+      final DateTime receivedAt = entry.notification.receivedAt.toLocal();
+      final DateTime day = DateTime(
+        receivedAt.year,
+        receivedAt.month,
+        receivedAt.day,
+      );
+      if (groups.isEmpty || groups.last.day != day) {
+        groups.add(
+          _NotificationDayGroup(
+            day: day,
+            entries: <RecentNotificationHistoryEntry>[entry],
+          ),
+        );
+      } else {
+        groups.last.entries.add(entry);
+      }
+    }
+    return groups;
+  }
+
+  Widget _dayHeader(BuildContext context, _NotificationDayGroup group) {
+    final DateTime now = DateTime.now();
+    final DateTime today = DateTime(now.year, now.month, now.day);
+    final int difference = today.difference(group.day).inDays;
+    final String label = switch (difference) {
+      0 => S.of(context).notificationsHistoryToday,
+      1 => S.of(context).notificationsHistoryYesterday,
+      _ => formatNotificationDate(context, group.day),
+    };
+    return SizedBox.expand(
+      child: ColoredBox(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 10, 16, 6),
+          child: Text(
+            '$label · ${group.entries.length}',
+            key: ValueKey<String>(
+              'history-day-${group.day.year}-${group.day.month}-${group.day.day}',
+            ),
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
       ),
-    ];
+    );
   }
+
+  Widget _loadMoreFooter(BuildContext context) {
+    final double bottomInset = NotificationPageHeader.bodyBottomInset(context);
+    if (_viewModel.loadMoreError != null) {
+      return SliverToBoxAdapter(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(16, 8, 16, bottomInset),
+          child: _loadMoreFailure(context),
+        ),
+      );
+    }
+    if (_viewModel.isLoadingMore) {
+      return SliverToBoxAdapter(
+        child: Padding(
+          padding: EdgeInsets.only(top: 8, bottom: bottomInset),
+          child: const Center(
+            child: SizedBox.square(
+              dimension: 24,
+              child: CircularProgressIndicator(strokeWidth: 2.5),
+            ),
+          ),
+        ),
+      );
+    }
+    return SliverToBoxAdapter(child: SizedBox(height: bottomInset));
+  }
+
+  Widget _loadMoreFailure(BuildContext context) => Column(
+    mainAxisSize: MainAxisSize.min,
+    children: <Widget>[
+      Text(S.of(context).notificationsHistoryLoadMoreFailure),
+      const SizedBox(height: 8),
+      OutlinedButton.icon(
+        onPressed: _loadMoreHistory,
+        icon: const Icon(Icons.refresh),
+        label: Text(S.of(context).notificationsHistoryLoadMoreRetry),
+      ),
+    ],
+  );
 
   Widget _animatedHistoryCard(
     RecentNotificationHistoryEntry entry, {
     required int cardIndex,
+    required double bottomSpacing,
   }) {
+    final String entryId = entry.notification.id;
+    final bool isRemoving = _removingEntryIds.contains(entryId);
+    final bool isRestoring = _restoringEntryIds.contains(entryId);
     Widget card = RecentNotificationCard(
-      key: ValueKey<String>(entry.notification.id),
+      key: ValueKey<String>(entryId),
       entry: entry,
-      expanded: _expandedEntryId == entry.notification.id,
+      expanded: _expandedEntryId == entryId,
       onExpansionChanged: (bool expanded) =>
-          _setExpandedEntry(entry.notification.id, expanded),
+          _setExpandedEntry(entryId, expanded),
       actions: _actions,
     );
     if (_refreshAnimationGeneration > 0) {
@@ -534,12 +733,85 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
         child: card,
       );
     }
-    return AnimatedOpacity(
-      key: Key('history-refresh-opacity-${entry.notification.id}'),
-      opacity: _isRefreshing ? 0.58 : 1,
-      duration: const Duration(milliseconds: 180),
-      curve: Curves.easeInOut,
+    card = Padding(
+      padding: EdgeInsets.only(bottom: bottomSpacing),
       child: card,
     );
+    final bool isHidden = isRemoving || isRestoring;
+    final Widget layoutTransition = AnimatedSwitcher(
+      key: Key('history-entry-layout-$entryId'),
+      duration: _entryTransitionDuration,
+      switchInCurve: Curves.easeOutCubic,
+      switchOutCurve: Curves.easeInOutCubic,
+      transitionBuilder: (Widget child, Animation<double> animation) =>
+          SizeTransition(
+            sizeFactor: animation,
+            alignment: Alignment.topCenter,
+            child: child,
+          ),
+      child: isHidden
+          ? SizedBox(
+              key: Key('history-entry-hidden-$entryId'),
+              width: double.infinity,
+            )
+          : KeyedSubtree(
+              key: Key('history-entry-visible-$entryId'),
+              child: card,
+            ),
+    );
+    return IgnorePointer(
+      key: _entryCellKey(entryId),
+      ignoring: isRemoving,
+      child: AnimatedOpacity(
+        key: Key('history-refresh-opacity-$entryId'),
+        opacity: isHidden
+            ? 0
+            : _isRefreshing
+            ? 0.58
+            : 1,
+        duration: _isRefreshing
+            ? const Duration(milliseconds: 180)
+            : _entryTransitionDuration,
+        curve: Curves.easeInOutCubic,
+        child: layoutTransition,
+      ),
+    );
   }
+
+  GlobalKey _entryCellKey(String entryId) => _entryCellKeys.putIfAbsent(
+    entryId,
+    () => GlobalKey(debugLabel: 'history-entry-cell-$entryId'),
+  );
+}
+
+class _NotificationDayGroup {
+  const _NotificationDayGroup({required this.day, required this.entries});
+
+  final DateTime day;
+  final List<RecentNotificationHistoryEntry> entries;
+}
+
+class _NotificationDayHeaderDelegate extends SliverPersistentHeaderDelegate {
+  const _NotificationDayHeaderDelegate({required this.child});
+
+  static const double height = 42;
+
+  final Widget child;
+
+  @override
+  double get minExtent => height;
+
+  @override
+  double get maxExtent => height;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) => child;
+
+  @override
+  bool shouldRebuild(_NotificationDayHeaderDelegate oldDelegate) =>
+      oldDelegate.child != child;
 }

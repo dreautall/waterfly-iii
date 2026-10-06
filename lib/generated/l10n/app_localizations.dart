@@ -3144,6 +3144,30 @@ abstract class S {
   /// **'Recent notifications could not be loaded.'**
   String get notificationsHistoryLoadFailure;
 
+  /// Error shown below loaded notification history when an earlier page cannot be loaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Earlier notifications could not be loaded.'**
+  String get notificationsHistoryLoadMoreFailure;
+
+  /// Button that retries loading an earlier page of notification history.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get notificationsHistoryLoadMoreRetry;
+
+  /// Heading for notification history entries received today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get notificationsHistoryToday;
+
+  /// Heading for notification history entries received yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get notificationsHistoryYesterday;
+
   /// Empty state for recent notifications.
   ///
   /// In en, this message translates to:

@@ -16,6 +16,25 @@ abstract interface class RecentNotificationHistoryLoader {
   Future<List<RecentNotificationHistoryEntry>> load();
 }
 
+abstract interface class PagedRecentNotificationHistoryLoader {
+  Future<RecentNotificationHistoryPage> loadPage({
+    NotificationHistoryCursor? before,
+    required int limit,
+  });
+}
+
+class RecentNotificationHistoryPage {
+  const RecentNotificationHistoryPage({
+    required this.entries,
+    required this.hasMore,
+    this.nextCursor,
+  });
+
+  final List<RecentNotificationHistoryEntry> entries;
+  final bool hasMore;
+  final NotificationHistoryCursor? nextCursor;
+}
+
 class RecentNotificationHistoryEntry {
   const RecentNotificationHistoryEntry({
     required this.notification,
@@ -51,7 +70,10 @@ class RecentNotificationHistoryEntry {
           .toList();
 }
 
-class RecentNotificationHistory implements RecentNotificationHistoryLoader {
+class RecentNotificationHistory
+    implements
+        RecentNotificationHistoryLoader,
+        PagedRecentNotificationHistoryLoader {
   RecentNotificationHistory(
     this._definitionStore,
     this._alertStore, {
@@ -72,11 +94,46 @@ class RecentNotificationHistory implements RecentNotificationHistoryLoader {
       _definitionStore.load(),
       _alertStore.load(),
     ]);
-    final List<NotificationHistoryEntry> notifications =
-        data[0] as List<NotificationHistoryEntry>;
-    final List<NotificationDefinition> definitions =
-        data[1] as List<NotificationDefinition>;
-    final List<NotificationAlert> alerts = data[2] as List<NotificationAlert>;
+    return _buildEntries(
+      data[0] as List<NotificationHistoryEntry>,
+      data[1] as List<NotificationDefinition>,
+      data[2] as List<NotificationAlert>,
+    );
+  }
+
+  @override
+  Future<RecentNotificationHistoryPage> loadPage({
+    NotificationHistoryCursor? before,
+    required int limit,
+  }) async {
+    final NotificationHistoryPage rawPage;
+    if (_historyStore case final NotificationHistoryPageStore pageStore) {
+      rawPage = await pageStore.loadPage(before: before, limit: limit);
+    } else {
+      final List<NotificationHistoryEntry> entries = before == null
+          ? await _historyStore.load()
+          : const <NotificationHistoryEntry>[];
+      rawPage = NotificationHistoryPage(entries: entries, hasMore: false);
+    }
+    final List<Object> supportingData = await Future.wait<Object>(
+      <Future<Object>>[_definitionStore.load(), _alertStore.load()],
+    );
+    return RecentNotificationHistoryPage(
+      entries: _buildEntries(
+        rawPage.entries,
+        supportingData[0] as List<NotificationDefinition>,
+        supportingData[1] as List<NotificationAlert>,
+      ),
+      hasMore: rawPage.hasMore,
+      nextCursor: rawPage.nextCursor,
+    );
+  }
+
+  List<RecentNotificationHistoryEntry> _buildEntries(
+    List<NotificationHistoryEntry> notifications,
+    List<NotificationDefinition> definitions,
+    List<NotificationAlert> alerts,
+  ) {
     final List<NotificationHistoryEntry> eligibleNotifications = notifications
         .where((NotificationHistoryEntry notification) {
           final bool hasContents =

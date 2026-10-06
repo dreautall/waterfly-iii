@@ -2,7 +2,7 @@ import 'package:sqflite_sqlcipher/sqflite.dart';
 import 'package:waterflyiii/data/database/database_schema.dart';
 
 class NotificationDatabaseSchema {
-  static const int version = 4;
+  static const int version = 5;
 
   static final DatabaseSchema<Database> schema = DatabaseSchema<Database>(
     version: version,
@@ -52,6 +52,7 @@ class NotificationDatabaseSchema {
           where: "fingerprint LIKE 'preview-alert-%'",
         );
       }
+      if (oldVersion < 5) await _createHistoryPaginationIndex(database);
     },
   );
 
@@ -66,9 +67,16 @@ class NotificationDatabaseSchema {
         outcome_json TEXT
       )
     ''');
+    await _createHistoryPaginationIndex(database);
+  }
+
+  static Future<void> _createHistoryPaginationIndex(Database database) async {
+    await database.execute(
+      'DROP INDEX IF EXISTS notification_history_received_at',
+    );
     await database.execute('''
-      CREATE INDEX notification_history_received_at
-      ON notification_history (received_at DESC)
+      CREATE INDEX IF NOT EXISTS notification_history_received_at_id
+      ON notification_history (received_at DESC, id DESC)
     ''');
   }
 }

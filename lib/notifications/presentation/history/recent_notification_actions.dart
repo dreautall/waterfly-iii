@@ -7,6 +7,10 @@ typedef RecentNotificationEntryAction =
     Future<void> Function(RecentNotificationHistoryEntry entry);
 typedef RecentNotificationEntryResultAction =
     Future<bool> Function(RecentNotificationHistoryEntry entry);
+typedef NotificationTransactionAvailabilityLoader =
+    Future<bool> Function(String transactionId);
+typedef NotificationHistoryTransactionUnlinker =
+    Future<bool> Function(String historyEntryId, String expectedTransactionId);
 
 class RecentNotificationActions {
   const RecentNotificationActions({
@@ -17,6 +21,8 @@ class RecentNotificationActions {
     this.openAlerts,
     this.openDefinition,
     this.openTransaction,
+    this.transactionExists,
+    this.unlinkTransaction,
     this.removeFromHistory,
     this.restoreToHistory,
   });
@@ -28,6 +34,8 @@ class RecentNotificationActions {
   final Future<void> Function()? openAlerts;
   final RecentNotificationEntryAction? openDefinition;
   final Future<void> Function(String transactionId)? openTransaction;
+  final NotificationTransactionAvailabilityLoader? transactionExists;
+  final NotificationHistoryTransactionUnlinker? unlinkTransaction;
   final RecentNotificationEntryAction? removeFromHistory;
   final RecentNotificationEntryAction? restoreToHistory;
 }

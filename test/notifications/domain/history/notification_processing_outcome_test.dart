@@ -98,6 +98,29 @@ void main() {
     expect(ambiguous.effectiveTransactionCreationOrigin, isNull);
   });
 
+  test('removes a transaction link without removing its reusable patch', () {
+    const NotificationProcessingOutcome outcome = NotificationProcessingOutcome(
+      status: NotificationProcessingOutcomeStatus.matched,
+      rule: NotificationHistoryReference(id: 'groceries', name: 'Groceries'),
+      transactionCreationMode: TransactionCreationMode.prompt,
+      hasTransactionIntent: true,
+      transactionPatch: TransactionPatch(<TransactionField, String>{
+        TransactionField.amount: '12.50',
+      }),
+      transactionId: 'transaction-1',
+      transactionCreationOrigin: NotificationTransactionCreationOrigin.user,
+    );
+
+    final NotificationProcessingOutcome unlinked = outcome
+        .withoutTransactionLink();
+
+    expect(unlinked.transactionId, isNull);
+    expect(unlinked.transactionCreationOrigin, isNull);
+    expect(unlinked.rule, same(outcome.rule));
+    expect(unlinked.transactionPatch, same(outcome.transactionPatch));
+    expect(unlinked.hasTransactionIntent, isTrue);
+  });
+
   test('metadata-only outcome removes financial values', () {
     const NotificationProcessingOutcome outcome = NotificationProcessingOutcome(
       status: NotificationProcessingOutcomeStatus.matched,

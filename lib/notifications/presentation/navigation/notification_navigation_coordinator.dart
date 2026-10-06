@@ -100,6 +100,8 @@ class NotificationNavigationCoordinator {
                   openDefinitionFromNotification(context, entry),
               openTransaction: (String transactionId) =>
                   openCreatedTransaction(context, transactionId),
+              transactionExists: (String transactionId) =>
+                  transactionExists(context, transactionId),
             ),
           ),
         ),
@@ -638,6 +640,7 @@ class NotificationNavigationCoordinator {
       final FireflyIii api = context.read<FireflyService>().api;
       final Response<TransactionSingle> response = await api
           .v1TransactionsIdGet(id: transactionId);
+      if (response.statusCode == 404) return;
       apiThrowErrorIfEmpty(response, context.mounted ? context : null);
       if (!context.mounted) return;
       await Navigator.of(context).push<void>(
@@ -662,5 +665,18 @@ class NotificationNavigationCoordinator {
         );
       }
     }
+  }
+
+  Future<bool> transactionExists(
+    BuildContext context,
+    String transactionId,
+  ) async {
+    final FireflyIii api = context.read<FireflyService>().api;
+    final Response<TransactionSingle> response = await api.v1TransactionsIdGet(
+      id: transactionId,
+    );
+    if (response.statusCode == 404) return false;
+    apiThrowErrorIfEmpty(response, context.mounted ? context : null);
+    return true;
   }
 }

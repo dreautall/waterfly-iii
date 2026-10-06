@@ -54,6 +54,31 @@ class _RecordingHistoryStore extends SqlcipherNotificationHistoryStore {
   }
 
   @override
+  Future<bool> unlinkTransaction(
+    String historyEntryId,
+    String expectedTransactionId,
+  ) async {
+    final int index = entries.indexWhere(
+      (NotificationHistoryEntry entry) => entry.id == historyEntryId,
+    );
+    if (index == -1 ||
+        entries[index].processingOutcome?.transactionId !=
+            expectedTransactionId) {
+      return false;
+    }
+    final NotificationHistoryEntry entry = entries[index];
+    entries[index] = NotificationHistoryEntry(
+      id: entry.id,
+      applicationId: entry.applicationId,
+      title: entry.title,
+      body: entry.body,
+      receivedAt: entry.receivedAt,
+      processingOutcome: entry.processingOutcome!.withoutTransactionLink(),
+    );
+    return true;
+  }
+
+  @override
   Future<void> clearBefore(DateTime cutoff) async {
     clearedBefore = cutoff;
   }
@@ -200,6 +225,45 @@ void main() {
       store.entries.single.processingOutcome?.transactionCreationOrigin,
       NotificationTransactionCreationOrigin.user,
     );
+    expect(
+      store
+          .entries
+          .single
+          .processingOutcome
+          ?.transactionPatch
+          ?.values[TransactionField.amount],
+      '12.50',
+    );
+  });
+
+  test('only unlinks the expected transaction from its outcome', () async {
+    final _RecordingHistoryStore store = _RecordingHistoryStore();
+    final NotificationHistoryRepository repository =
+        NotificationHistoryRepository(
+          store,
+          settingsStore: _SettingsStore(
+            const NotificationProcessingSettings(
+              historyStorageMode: NotificationHistoryStorageMode.full,
+            ),
+          ),
+        );
+    await repository.record(entry);
+    await repository.linkTransaction('delivery', 'transaction-42');
+
+    expect(
+      await repository.unlinkTransaction('delivery', 'replacement-transaction'),
+      isFalse,
+    );
+    expect(
+      store.entries.single.processingOutcome?.transactionId,
+      'transaction-42',
+    );
+
+    expect(
+      await repository.unlinkTransaction('delivery', 'transaction-42'),
+      isTrue,
+    );
+    expect(store.entries.single.processingOutcome?.transactionId, isNull);
     expect(
       store
           .entries

@@ -74,6 +74,18 @@ class NotificationProcessingOutcome {
     failureMessage: failureMessage,
   );
 
+  NotificationProcessingOutcome withoutTransactionLink() =>
+      NotificationProcessingOutcome(
+        status: status,
+        definition: definition,
+        rule: rule,
+        conditionalActionGroups: conditionalActionGroups,
+        transactionCreationMode: transactionCreationMode,
+        hasTransactionIntent: hasTransactionIntent,
+        transactionPatch: transactionPatch,
+        failureMessage: failureMessage,
+      );
+
   NotificationProcessingOutcome withFailure(String message) =>
       NotificationProcessingOutcome(
         status: NotificationProcessingOutcomeStatus.failed,

@@ -7,7 +7,10 @@ import 'package:waterflyiii/notifications/domain/history/notification_history_en
 import 'package:waterflyiii/notifications/domain/history/notification_processing_outcome.dart';
 
 class SqlcipherNotificationHistoryStore
-    implements NotificationHistoryStore, NotificationHistoryEntryRemovalStore {
+    implements
+        NotificationHistoryStore,
+        NotificationHistoryEntryRemovalStore,
+        NotificationHistoryTransactionLinkStore {
   const SqlcipherNotificationHistoryStore(this._databaseProvider);
 
   final DatabaseProvider<Database> _databaseProvider;
@@ -95,6 +98,39 @@ class SqlcipherNotificationHistoryStore
                 )
                 .toJson(),
           ),
+        },
+        where: 'id = ?',
+        whereArgs: <Object?>[historyEntryId],
+      );
+      return updated == 1;
+    });
+  }
+
+  @override
+  Future<bool> unlinkTransaction(
+    String historyEntryId,
+    String expectedTransactionId,
+  ) async {
+    final Database database = await _databaseProvider.database;
+    return database.transaction((Transaction transaction) async {
+      final List<Map<String, Object?>> rows = await transaction.query(
+        'notification_history',
+        columns: <String>['outcome_json'],
+        where: 'id = ?',
+        whereArgs: <Object?>[historyEntryId],
+        limit: 1,
+      );
+      if (rows.isEmpty || rows.single['outcome_json'] == null) return false;
+      final NotificationProcessingOutcome outcome =
+          NotificationProcessingOutcome.fromJson(
+            jsonDecode(rows.single['outcome_json']! as String)
+                as Map<String, dynamic>,
+          );
+      if (outcome.transactionId != expectedTransactionId) return false;
+      final int updated = await transaction.update(
+        'notification_history',
+        <String, Object?>{
+          'outcome_json': jsonEncode(outcome.withoutTransactionLink().toJson()),
         },
         where: 'id = ?',
         whereArgs: <Object?>[historyEntryId],

@@ -106,6 +106,28 @@ class _SequentialRecentNotificationHistory extends RecentNotificationHistory {
   }
 }
 
+class _ControlledRefreshHistory extends RecentNotificationHistory {
+  _ControlledRefreshHistory(this.entries)
+    : super(
+        _EmptyDefinitionStore(),
+        _EmptyAlertStore(),
+        historyStore: _EmptyHistoryStore(),
+      );
+
+  final List<RecentNotificationHistoryEntry> entries;
+  final Completer<List<RecentNotificationHistoryEntry>> refresh =
+      Completer<List<RecentNotificationHistoryEntry>>();
+  int loadCount = 0;
+
+  @override
+  Future<List<RecentNotificationHistoryEntry>> load() {
+    loadCount += 1;
+    return loadCount == 1
+        ? Future<List<RecentNotificationHistoryEntry>>.value(entries)
+        : refresh.future;
+  }
+}
+
 Widget _page(
   Future<List<RecentNotificationHistoryEntry>> result, {
   double textScale = 1,
@@ -472,7 +494,7 @@ void main() {
     );
     final Finder scrollView = find.byType(CustomScrollView);
     final CustomScrollView widget = tester.widget(scrollView);
-    expect(widget.physics, isA<NeverScrollableScrollPhysics>());
+    expect(widget.physics, isA<AlwaysScrollableScrollPhysics>());
     final Finder emptyState = find.byType(NotificationEmptyState);
     final double expectedCenter = tester
         .getCenter(find.byType(NotificationEmptyStateViewport))
@@ -482,16 +504,6 @@ void main() {
       matching: find.byKey(NotificationEmptyState.textContentKey),
     );
     expect(tester.getCenter(emptyStateText).dy, closeTo(expectedCenter, 1));
-    final ScrollPosition position = tester
-        .state<ScrollableState>(
-          find.descendant(of: scrollView, matching: find.byType(Scrollable)),
-        )
-        .position;
-
-    await tester.drag(scrollView, const Offset(0, -80));
-    await tester.pumpAndSettle();
-
-    expect(position.pixels, 0);
   });
 
   testWidgets('renders notification details and a processing failure', (
@@ -865,6 +877,229 @@ void main() {
     expect(find.text('Transaction created automatically'), findsNothing);
     expect(find.text('View transaction'), findsOneWidget);
     expect(find.text('Create transaction'), findsNothing);
+  });
+
+  testWidgets(
+    'shows create transaction after a linked transaction is unavailable',
+    (WidgetTester tester) async {
+      const NotificationProcessingOutcome
+      linkedOutcome = NotificationProcessingOutcome(
+        status: NotificationProcessingOutcomeStatus.matched,
+        rule: NotificationHistoryReference(id: 'groceries', name: 'Groceries'),
+        transactionCreationMode: TransactionCreationMode.prompt,
+        hasTransactionIntent: true,
+        transactionPatch: TransactionPatch(<TransactionField, String>{
+          TransactionField.amount: '12.50',
+        }),
+        transactionId: 'transaction-42',
+        transactionCreationOrigin: NotificationTransactionCreationOrigin.user,
+      );
+      final NotificationHistoryEntry linkedNotification =
+          NotificationHistoryEntry(
+            id: 'payment',
+            applicationId: 'com.example.bank',
+            title: 'Card payment',
+            body: 'Paid 12.50 CAD',
+            receivedAt: DateTime(2026, 9, 6),
+            processingOutcome: linkedOutcome,
+          );
+      final NotificationHistoryEntry unlinkedNotification =
+          NotificationHistoryEntry(
+            id: linkedNotification.id,
+            applicationId: linkedNotification.applicationId,
+            title: linkedNotification.title,
+            body: linkedNotification.body,
+            receivedAt: linkedNotification.receivedAt,
+            processingOutcome: linkedOutcome.withoutTransactionLink(),
+          );
+      final _SequentialRecentNotificationHistory history =
+          _SequentialRecentNotificationHistory(
+            <List<RecentNotificationHistoryEntry>>[
+              <RecentNotificationHistoryEntry>[
+                RecentNotificationHistoryEntry(
+                  notification: linkedNotification,
+                  processingOutcome: linkedOutcome,
+                  canCreateTransaction: true,
+                ),
+              ],
+              <RecentNotificationHistoryEntry>[
+                RecentNotificationHistoryEntry(
+                  notification: unlinkedNotification,
+                  processingOutcome: unlinkedNotification.processingOutcome,
+                  canCreateTransaction: true,
+                ),
+              ],
+            ],
+          );
+      String? unlinkedHistoryId;
+      String? unlinkedTransactionId;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: S.localizationsDelegates,
+          supportedLocales: S.supportedLocales,
+          home: RecentNotificationsPage(
+            history: history,
+            actions: RecentNotificationActions(
+              createTransaction: (_) async {},
+              transactionExists: (_) async => false,
+              unlinkTransaction:
+                  (String historyEntryId, String expectedTransactionId) async {
+                    unlinkedHistoryId = historyEntryId;
+                    unlinkedTransactionId = expectedTransactionId;
+                    return true;
+                  },
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Card payment'));
+      await tester.pumpAndSettle();
+
+      expect(unlinkedHistoryId, 'payment');
+      expect(unlinkedTransactionId, 'transaction-42');
+      expect(history.loadCount, 2);
+      expect(find.text('Create transaction'), findsOneWidget);
+      expect(find.text('View transaction'), findsNothing);
+    },
+  );
+
+  testWidgets('keeps a transaction link when validation fails transiently', (
+    WidgetTester tester,
+  ) async {
+    const NotificationProcessingOutcome linkedOutcome =
+        NotificationProcessingOutcome(
+          status: NotificationProcessingOutcomeStatus.matched,
+          rule: NotificationHistoryReference(
+            id: 'groceries',
+            name: 'Groceries',
+          ),
+          transactionCreationMode: TransactionCreationMode.prompt,
+          hasTransactionIntent: true,
+          transactionPatch: TransactionPatch(<TransactionField, String>{
+            TransactionField.amount: '12.50',
+          }),
+          transactionId: 'transaction-42',
+          transactionCreationOrigin: NotificationTransactionCreationOrigin.user,
+        );
+    final NotificationHistoryEntry notification = NotificationHistoryEntry(
+      id: 'payment',
+      applicationId: 'com.example.bank',
+      title: 'Card payment',
+      body: 'Paid 12.50 CAD',
+      receivedAt: DateTime(2026, 9, 6),
+      processingOutcome: linkedOutcome,
+    );
+    bool unlinkCalled = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: RecentNotificationsPage(
+          history: _TestRecentNotificationHistory(
+            Future<List<RecentNotificationHistoryEntry>>.value(
+              <RecentNotificationHistoryEntry>[
+                RecentNotificationHistoryEntry(
+                  notification: notification,
+                  processingOutcome: linkedOutcome,
+                ),
+              ],
+            ),
+          ),
+          actions: RecentNotificationActions(
+            openTransaction: (_) async {},
+            transactionExists: (_) =>
+                Future<bool>.error(StateError('Firefly unavailable')),
+            unlinkTransaction: (_, _) async {
+              unlinkCalled = true;
+              return true;
+            },
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Card payment'));
+    await tester.pumpAndSettle();
+
+    expect(unlinkCalled, isFalse);
+    expect(find.text('View transaction'), findsOneWidget);
+  });
+
+  testWidgets('pulls to refresh recent notification history', (
+    WidgetTester tester,
+  ) async {
+    final _SequentialRecentNotificationHistory history =
+        _SequentialRecentNotificationHistory(
+          <List<RecentNotificationHistoryEntry>>[
+            const <RecentNotificationHistoryEntry>[],
+            const <RecentNotificationHistoryEntry>[],
+          ],
+        );
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: RecentNotificationsPage(history: history),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.drag(find.byType(CustomScrollView), const Offset(0, 300));
+    await tester.pumpAndSettle();
+
+    expect(history.loadCount, 2);
+  });
+
+  testWidgets('animates history cards while pull refresh is loading', (
+    WidgetTester tester,
+  ) async {
+    final NotificationHistoryEntry notification = NotificationHistoryEntry(
+      id: 'payment',
+      applicationId: 'com.example.bank',
+      title: 'Card payment',
+      body: 'Paid 12.50 CAD',
+      receivedAt: DateTime(2026, 9, 6),
+    );
+    final _ControlledRefreshHistory history = _ControlledRefreshHistory(
+      <RecentNotificationHistoryEntry>[
+        RecentNotificationHistoryEntry(notification: notification),
+      ],
+    );
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: RecentNotificationsPage(history: history),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final RefreshIndicator indicator = tester.widget<RefreshIndicator>(
+      find.byType(RefreshIndicator),
+    );
+
+    unawaited(indicator.onRefresh());
+    await tester.pump(const Duration(milliseconds: 200));
+
+    expect(history.loadCount, 2);
+    expect(
+      tester
+          .widget<AnimatedOpacity>(
+            find.byKey(const Key('history-refresh-opacity-payment')),
+          )
+          .opacity,
+      0.58,
+    );
+
+    history.refresh.complete(history.entries);
+    await tester.pump();
+
+    expect(find.byKey(const Key('history-refresh-payment-1')), findsOneWidget);
+    await tester.pumpAndSettle();
+    expect(find.text('Card payment'), findsOneWidget);
   });
 
   testWidgets('offers matched rule editing from the split button menu', (

@@ -5,7 +5,10 @@ import 'package:waterflyiii/notifications/data/repositories/sqlcipher_notificati
 import 'package:waterflyiii/notifications/domain/history/notification_history_entry.dart';
 
 class NotificationHistoryRepository
-    implements NotificationHistoryStore, NotificationHistoryEntryRemovalStore {
+    implements
+        NotificationHistoryStore,
+        NotificationHistoryEntryRemovalStore,
+        NotificationHistoryTransactionLinkStore {
   NotificationHistoryRepository(
     this._store, {
     NotificationProcessingSettingsStore? settingsStore,
@@ -53,6 +56,15 @@ class NotificationHistoryRepository
   ) async {
     await _pruneExpiredHistory();
     return _store.linkTransaction(historyEntryId, transactionId);
+  }
+
+  @override
+  Future<bool> unlinkTransaction(
+    String historyEntryId,
+    String expectedTransactionId,
+  ) async {
+    await _pruneExpiredHistory();
+    return _store.unlinkTransaction(historyEntryId, expectedTransactionId);
   }
 
   @override

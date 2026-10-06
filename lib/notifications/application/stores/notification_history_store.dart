@@ -17,3 +17,10 @@ abstract interface class NotificationHistoryEntryRemovalStore {
 
   Future<void> restore(NotificationHistoryEntry entry);
 }
+
+abstract interface class NotificationHistoryTransactionLinkStore {
+  Future<bool> unlinkTransaction(
+    String historyEntryId,
+    String expectedTransactionId,
+  );
+}

@@ -70,4 +70,33 @@ void main() {
 
     expect(await resolver.resolveUnique('USD'), isNull);
   });
+
+  test('resolves a currency by its canonical identifier', () async {
+    final FireflyCurrencyResolver resolver = FireflyCurrencyResolver(
+      _CurrencyGateway(<String, List<FireflyCurrency>>{
+        '': const <FireflyCurrency>[usd, cad],
+      }),
+    );
+
+    expect(await resolver.resolveById('2'), same(cad));
+  });
+
+  test('reports an unavailable currency identifier', () async {
+    final FireflyCurrencyResolver resolver = FireflyCurrencyResolver(
+      _CurrencyGateway(<String, List<FireflyCurrency>>{
+        '': const <FireflyCurrency>[usd],
+      }),
+    );
+
+    await expectLater(
+      resolver.resolveById('9'),
+      throwsA(
+        isA<StateError>().having(
+          (StateError error) => error.message,
+          'message',
+          'Currency 9 is unavailable.',
+        ),
+      ),
+    );
+  });
 }

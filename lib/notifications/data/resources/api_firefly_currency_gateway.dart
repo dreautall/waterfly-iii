@@ -22,6 +22,7 @@ class ApiFireflyCurrencyGateway implements FireflyCurrencyGateway {
             name: currency.name,
             code: currency.code,
             symbol: currency.symbol,
+            decimalPlaces: currency.decimalPlaces,
           ),
         )
         .toList();

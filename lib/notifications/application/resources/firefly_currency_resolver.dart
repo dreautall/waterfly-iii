@@ -4,12 +4,14 @@ class FireflyCurrency {
     required this.name,
     required this.code,
     required this.symbol,
+    this.decimalPlaces = 2,
   });
 
   final String id;
   final String name;
   final String code;
   final String symbol;
+  final int decimalPlaces;
 }
 
 abstract interface class FireflyCurrencyGateway {
@@ -38,6 +40,14 @@ class FireflyCurrencyResolver {
       return null;
     }
     return matches.length == 1 ? matches.single : null;
+  }
+
+  Future<FireflyCurrency> resolveById(String id) async {
+    final List<FireflyCurrency> currencies = await _gateway.search('');
+    for (final FireflyCurrency currency in currencies) {
+      if (currency.id == id) return currency;
+    }
+    throw StateError('Currency $id is unavailable.');
   }
 
   static bool _isIsoCode(String value) =>

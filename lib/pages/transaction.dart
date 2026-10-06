@@ -15,7 +15,10 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/layout.dart';
 import 'package:waterflyiii/notificationlistener.dart';
+import 'package:waterflyiii/notifications/application/processing/prompted_transaction_resource_hydrator.dart';
 import 'package:waterflyiii/notifications/application/processing/notification_transaction_intent_adapter.dart';
+import 'package:waterflyiii/notifications/application/resources/firefly_currency_resolver.dart';
+import 'package:waterflyiii/notifications/application/resources/firefly_resource_label_resolver.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_intent.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_patch.dart';
@@ -152,7 +155,7 @@ class _TransactionPageState extends State<TransactionPage>
             );
           } catch (error, stackTrace) {
             log.severe(
-              "Failed to resolve notification transaction accounts",
+              "Failed to resolve notification transaction resources",
               error,
               stackTrace,
             );
@@ -744,7 +747,13 @@ class _TransactionPageState extends State<TransactionPage>
     TransactionIntent intent,
     DateTime receivedAt,
   ) async {
-    final TransactionPatch patch = intent.patch;
+    final PromptedTransactionResources resources =
+        await PromptedTransactionResourceHydrator(
+          labelResolver: context.read<FireflyResourceLabelResolver>(),
+          currencyResolver: context.read<FireflyCurrencyResolver>(),
+        ).hydrate(intent.patch);
+    if (!mounted) return;
+    final TransactionPatch patch = resources.patch;
     final TransactionSplitState split = _tx.splits.first;
     final String? sourceId = patch.values[TransactionField.sourceAccount];
     final String? destinationId =
@@ -762,7 +771,16 @@ class _TransactionPageState extends State<TransactionPage>
         patch.displayValue(TransactionField.destinationAccount);
     split.titleTC.text = patch.values[TransactionField.title] ?? '';
     split.noteTC.text = patch.values[TransactionField.notes] ?? '';
-    split.categoryTC.text = patch.displayValue(TransactionField.category);
+    final String? categoryId =
+        patch.resourceReferences[TransactionField.category]?.id;
+    if (categoryId == null) {
+      split.categoryTC.text = patch.displayValue(TransactionField.category);
+    } else {
+      split.setCategoryResource(
+        id: categoryId,
+        name: patch.displayValue(TransactionField.category),
+      );
+    }
     split.tags = Tags(<String>[
       ...patch.tags,
       if (patch.displayValue(TransactionField.tag).trim().isNotEmpty)
@@ -850,19 +868,22 @@ class _TransactionPageState extends State<TransactionPage>
 
     final String? currencyId = patch.values[TransactionField.currency];
     if (currencyId != null) {
+      final FireflyCurrency? currency = resources.currency;
       final String code =
-          patch.currencyCodes[TransactionField.currency] ??
-          patch.displayValue(TransactionField.currency);
+          currency?.code ?? patch.displayValue(TransactionField.currency);
       _tx.localCurrency = CurrencyRead(
         type: 'currencies',
         id: currencyId,
         attributes: CurrencyProperties(
           code: code,
-          name: patch.displayValue(TransactionField.currency),
-          symbol: code,
-          decimalPlaces: _tx.localCurrency.attributes.decimalPlaces,
+          name: currency?.name ?? patch.displayValue(TransactionField.currency),
+          symbol: currency?.symbol ?? code,
+          decimalPlaces:
+              currency?.decimalPlaces ??
+              _tx.localCurrency.attributes.decimalPlaces,
         ),
       );
+      _tx.includeCurrencyInStore = true;
       split.localAmountUpdateText();
     }
   }

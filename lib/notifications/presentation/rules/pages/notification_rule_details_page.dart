@@ -249,8 +249,10 @@ class _NotificationRuleDetailsPageState
                   sample: _sampleNotificationContext,
                   hasOverride: _sampleOverride != null,
                   description: strings.notificationsRuleSampleDescription,
-                  onEdit: _editSample,
-                  onClearOverride: _clearSampleOverride,
+                  onEdit: _isBasicSharedActionsEditor ? null : _editSample,
+                  onClearOverride: _isBasicSharedActionsEditor
+                      ? null
+                      : _clearSampleOverride,
                 ),
                 AnimatedRuleSampleIssues(
                   visible: _isTestMode,
@@ -337,6 +339,7 @@ class _NotificationRuleDetailsPageState
                   extractors: widget.extractors,
                   notificationContext: _activeNotificationContext,
                   transactionCreationMode: widget.transactionCreationMode,
+                  showProvenance: !_isBasicSharedActionsEditor,
                 ),
                 if (_isDirty) const SizedBox(height: 56),
               ],
@@ -428,6 +431,10 @@ class _NotificationRuleDetailsPageState
 
   NotificationContext get _activeNotificationContext =>
       _sampleNotificationContext;
+
+  bool get _isBasicSharedActionsEditor =>
+      widget.extractorMode == NotificationExtractorMode.basic &&
+      widget.isSharedActionsEditor;
 
   NotificationContext get _sampleNotificationContext =>
       _viewModel.sampleNotificationContext;

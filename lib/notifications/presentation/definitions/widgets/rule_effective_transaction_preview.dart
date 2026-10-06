@@ -28,6 +28,7 @@ class EffectiveTransactionPreviewCard extends StatelessWidget {
     required this.extractors,
     required this.notificationContext,
     required this.transactionCreationMode,
+    this.showProvenance = true,
   });
 
   final NotificationRule rule;
@@ -36,6 +37,7 @@ class EffectiveTransactionPreviewCard extends StatelessWidget {
   final List<RegExpDefinition> extractors;
   final NotificationContext notificationContext;
   final TransactionCreationMode transactionCreationMode;
+  final bool showProvenance;
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +60,13 @@ class EffectiveTransactionPreviewCard extends StatelessWidget {
             if (value.field != TransactionField.tag) value.field: value.value,
         };
     final Map<TransactionField, TransactionFieldProvenance> fieldProvenance =
-        <TransactionField, TransactionFieldProvenance>{
-          for (final _PreviewValue value in values)
-            if (value.field != TransactionField.tag)
-              value.field: _provenance(value, strings),
-        };
+        showProvenance
+        ? <TransactionField, TransactionFieldProvenance>{
+            for (final _PreviewValue value in values)
+              if (value.field != TransactionField.tag)
+                value.field: _provenance(value, strings),
+          }
+        : const <TransactionField, TransactionFieldProvenance>{};
     final _PreviewValue? tagValue = values
         .where((_PreviewValue value) => value.field == TransactionField.tag)
         .firstOrNull;
@@ -99,7 +103,7 @@ class EffectiveTransactionPreviewCard extends StatelessWidget {
               child: TransactionPatchSummary(
                 patch: displayPatch,
                 fieldProvenance: fieldProvenance,
-                tagProvenance: tagValue == null
+                tagProvenance: !showProvenance || tagValue == null
                     ? null
                     : _provenance(tagValue, strings),
               ),

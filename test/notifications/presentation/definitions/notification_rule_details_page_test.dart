@@ -1503,6 +1503,49 @@ void main() {
     );
   });
 
+  testWidgets(
+    'keeps the basic transaction fields sample read-only and hides provenance',
+    (WidgetTester tester) async {
+      await tester.binding.setSurfaceSize(const Size(800, 1000));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        MaterialApp(
+          home: NotificationRuleDetailsPage(
+            rule: const NotificationRule(
+              id: 'transaction-fields',
+              name: 'Set transaction fields',
+              conditions: <NotificationCondition>[],
+              actions: <NotificationAction>[
+                SetTransactionFieldAction(
+                  target: TransactionField.title,
+                  valueSource: LiteralValueSource('Card payment'),
+                ),
+              ],
+            ),
+            extractors: const <RegExpDefinition>[],
+            notificationContext: NotificationContext(
+              title: 'Card payment',
+              body: 'Paid 12 CAD',
+              receivedAt: DateTime(2026, 9, 7),
+            ),
+            extractorMode: NotificationExtractorMode.basic,
+            isSharedActionsEditor: true,
+          ),
+        ),
+      );
+
+      expect(find.text('Sample notification'), findsOneWidget);
+      expect(find.byTooltip('Edit test notification'), findsNothing);
+      await tester.scrollUntilVisible(
+        find.text('Resolved transaction fields'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      expect(find.text('Card payment'), findsWidgets);
+      expect(find.text('Set by: This rule'), findsNothing);
+    },
+  );
+
   testWidgets('clears basic setup status when a field is added', (
     WidgetTester tester,
   ) async {

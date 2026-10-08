@@ -16,7 +16,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.dreautall.waterflyiii"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 37 // required for flutter_local_notifications
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

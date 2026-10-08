@@ -339,7 +339,7 @@ class _NotificationRuleDetailsPageState
                   extractors: widget.extractors,
                   notificationContext: _activeNotificationContext,
                   transactionCreationMode: widget.transactionCreationMode,
-                  showProvenance: !_isBasicSharedActionsEditor,
+                  showProvenance: !widget.isSharedActionsEditor,
                 ),
                 if (_isDirty) const SizedBox(height: 56),
               ],

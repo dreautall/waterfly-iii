@@ -1379,6 +1379,46 @@ void main() {
     );
   });
 
+  testWidgets('hides provenance in the shared actions preview', (
+    WidgetTester tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1000));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationRuleDetailsPage(
+          rule: const NotificationRule(
+            id: 'shared-actions',
+            name: 'Shared actions',
+            conditions: <NotificationCondition>[],
+            actions: <NotificationAction>[
+              SetTransactionFieldAction(
+                target: TransactionField.sourceAccount,
+                valueSource: LiteralValueSource('Checking'),
+              ),
+            ],
+          ),
+          extractors: const <RegExpDefinition>[],
+          notificationContext: NotificationContext(
+            title: 'Card payment',
+            body: 'Paid 12 CAD',
+            receivedAt: DateTime(2026, 9, 7),
+          ),
+          isSharedActionsEditor: true,
+        ),
+      ),
+    );
+
+    await tester.scrollUntilVisible(
+      find.text('Resolved transaction fields'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+
+    expect(find.text('Checking'), findsWidgets);
+    expect(find.text('Set by: This rule'), findsNothing);
+  });
+
   testWidgets('updates shared setup status as draft actions change', (
     WidgetTester tester,
   ) async {

@@ -2,7 +2,6 @@
 
 import 'dart:io';
 
-import 'package:animations/animations.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:logging/logging.dart';
@@ -17,9 +16,10 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notificationlistener.dart';
+import 'package:waterflyiii/notifications/application/listeners/notification_listener_status.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/pages/notification_definitions_page.dart';
 import 'package:waterflyiii/pages/settings/connection.dart';
 import 'package:waterflyiii/pages/settings/debug.dart';
-import 'package:waterflyiii/pages/settings/notifications.dart';
 import 'package:waterflyiii/pages/transaction/tags.dart';
 import 'package:waterflyiii/settings.dart';
 
@@ -268,26 +268,23 @@ class SettingsPageState extends State<SettingsPage>
                   } else {
                     subtitle = S.of(context).settingsNLServiceChecking;
                   }
-                  return OpenContainer(
-                    openBuilder:
-                        (BuildContext context, Function closedContainer) =>
-                            const SettingsNotifications(),
-                    openColor: Theme.of(context).cardColor,
-                    closedColor: Theme.of(context).cardColor,
-                    closedElevation: 0,
-                    closedBuilder:
-                        (BuildContext context, Function openContainer) =>
-                            ListTile(
-                              title: Text(
-                                S.of(context).settingsNotificationListener,
+                  return ListTile(
+                    title: Text(S.of(context).settingsNotificationListener),
+                    subtitle: Text(subtitle, maxLines: 2),
+                    leading: const CircleAvatar(
+                      child: Icon(Icons.notifications),
+                    ),
+                    onTap: () async {
+                      await Navigator.of(context).push<void>(
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) =>
+                              const NotificationDefinitionsPage(
+                                showAppBar: true,
                               ),
-                              subtitle: Text(subtitle, maxLines: 2),
-                              leading: const CircleAvatar(
-                                child: Icon(Icons.notifications),
-                              ),
-                              onTap: () => openContainer(),
-                            ),
-                    onClosed: (_) => setState(() {}),
+                        ),
+                      );
+                      if (mounted) setState(() {});
+                    },
                   );
                 },
           ),

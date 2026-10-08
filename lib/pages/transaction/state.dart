@@ -27,6 +27,7 @@ class TransactionState extends ChangeNotifier {
   final TextEditingController dateTC = TextEditingController();
   final TextEditingController timeTC = TextEditingController();
   CurrencyRead localCurrency;
+  bool includeCurrencyInStore = false;
   bool reconciled = false;
   bool initiallyReconciled = false;
   final List<TransactionSplitState> splits = <TransactionSplitState>[];
@@ -696,6 +697,8 @@ class TransactionSplitState {
 
   // Always in card view
   final TextEditingController categoryTC = TextEditingController();
+  String? _categoryId;
+  bool _settingCategoryResource = false;
   final FocusNode categoryFN = FocusNode();
   final TextEditingController budgetTC = TextEditingController();
   final FocusNode budgetFN = FocusNode();
@@ -740,6 +743,9 @@ class TransactionSplitState {
   }
 
   TransactionSplitState(this.parent) {
+    categoryTC.addListener(() {
+      if (!_settingCategoryResource) _categoryId = null;
+    });
     sourceAccountFN.addListener(() {
       if (!sourceAccountFN.hasFocus && parent.hasCommonSourceAccount) {
         parent.notify();
@@ -751,6 +757,13 @@ class TransactionSplitState {
         parent.notify();
       }
     });
+  }
+
+  void setCategoryResource({required String id, required String name}) {
+    _settingCategoryResource = true;
+    categoryTC.text = name;
+    _categoryId = id;
+    _settingCategoryResource = false;
   }
 
   void localAmountUpdateText() {
@@ -772,10 +785,12 @@ class TransactionSplitState {
     date: parent.date,
     amount: localAmount.toString(),
     description: titleTC.text,
+    currencyId: parent.includeCurrencyInStore ? parent.localCurrency.id : null,
     billId: bill?.id ?? "0",
     piggyBankId: (piggy?.id != null) ? int.parse(piggy!.id) : null,
     budgetName: parent.type == .withdrawal ? budgetTC.text : "",
-    categoryName: categoryTC.text,
+    categoryId: _categoryId,
+    categoryName: _categoryId == null ? categoryTC.text : null,
     destinationName: destinationAccountTC.text,
     // :HAX: Since nulled fields are not submitted, we set
     // the value to 0 so the foreign currency is gone...
@@ -794,9 +809,11 @@ class TransactionSplitState {
     date: parent.date,
     amount: localAmount.toString(),
     description: titleTC.text,
+    currencyId: parent.includeCurrencyInStore ? parent.localCurrency.id : null,
     billId: bill?.id ?? "0",
     budgetName: parent.type == .withdrawal ? budgetTC.text : "",
-    categoryName: categoryTC.text,
+    categoryId: _categoryId,
+    categoryName: _categoryId == null ? categoryTC.text : null,
     destinationName: destinationAccountTC.text,
     // :HAX: Since nulled fields are not submitted, we set
     // the value to 0 so the foreign currency is gone...

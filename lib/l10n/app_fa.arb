@@ -930,97 +930,13 @@
     "@settingsLockscreenInitial": {
         "description": "Prompt to authenticate once to set up the lockscreen"
     },
-    "settingsNLAppAccount": "حساب پیش فرض",
-    "@settingsNLAppAccount": {
-        "description": "Default account which will be used for the transaction."
-    },
-    "settingsNLAppAccountDynamic": "<Dynamic>",
-    "@settingsNLAppAccountDynamic": {
-        "description": "Account will be selected dynamically by the content of the notification."
-    },
-    "settingsNLAppAdd": "افزودن برنامه\n",
-    "@settingsNLAppAdd": {
-        "description": "Button title to add a new app."
-    },
-    "settingsNLAppAddHelp": "برای افزودن یک برنامه برای گوش دادن کلیک کنید. فقط برنامه های واجد شرایط در لیست نمایش داده می شوند.\n",
-    "@settingsNLAppAddHelp": {
-        "description": "Help text below adding the new app button."
-    },
-    "settingsNLAppAddInfo": "برخی از تراکنش‌ها را در جایی که اعلان‌های تلفن دریافت می‌کنید انجام دهید تا برنامه‌ها را به این فهرست اضافه کنید. اگر برنامه همچنان نمایش داده نشد، لطفاً آن را به app@vogt.pw گزارش دهید.\n",
-    "@settingsNLAppAddInfo": {
-        "description": "Help text when no more app is available to add."
-    },
-    "settingsNLAutoAdd": "ایجاد تراکنش بدون تعامل",
-    "@settingsNLAutoAdd": {
-        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
-    },
     "settingsNLDescription": "این سرویس به شما امکان می‌دهد جزئیات تراکنش را از اعلان‌های فشار دریافتی دریافت کنید. علاوه بر این، می‌توانید یک حساب پیش فرض را انتخاب کنید که تراکنش باید به آن اختصاص یابد - اگر مقداری تنظیم نشده باشد، سعی می‌کند یک حساب از اعلان استخراج کند.\n",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
     },
-    "settingsNLEmptyNote": "فیلد یادداشت را خالی بگذار",
-    "@settingsNLEmptyNote": {
-        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
-    },
-    "settingsNLHistory": "تاریخچه اعلان‌ها",
-    "@settingsNLHistory": {
-        "description": "Label: Notification History view"
-    },
-    "settingsNLHistoryEmpty": "تاکنون اعلانی ثبت نشده است.",
-    "@settingsNLHistoryEmpty": {
-        "description": "Notification history is empty"
-    },
-    "settingsNLHistoryLongDescription": "{notificationHistorySize, plural, =0 {این تاریخچه‌ای از اعلان‌های دریافتی توسط برنامه است.} one {این تاریخچه شامل ۱ اعلان اخیر دریافتی توسط برنامه است. همچنین می‌توانید از اعلان‌های (معتبر) تراکنش ایجاد کنید یا دلیل پردازش نشدن یک اعلان را مشاهده کنید.} other {این تاریخچه شامل {notificationHistorySize} اعلان اخیر دریافتی توسط برنامه است. همچنین می‌توانید از اعلان‌های (معتبر) تراکنش ایجاد کنید یا دلیل پردازش نشدن یک اعلان را مشاهده کنید.}}",
-    "@settingsNLHistoryLongDescription": {
-        "description": "Long description of the notification history feature.",
-        "placeholders": {
-            "notificationHistorySize": {
-                "type": "int",
-                "example": "5"
-            }
-        }
-    },
-    "settingsNLHistoryRejectedReason": "اعلان رد شد: {reason, select, noMoney{مقدار پولی یافت نشد} noCurrency{واحد پولی معتبری یافت نشد} appNotUsed{برنامه در لیست نظارت نیست} other{دلیل نامشخص}}.",
-    "@settingsNLHistoryRejectedReason": {
-        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
-        "placeholders": {
-            "reason": {
-                "type": "String",
-                "example": "noMoney"
-            }
-        }
-    },
-    "settingsNLHistoryShortDescription": "فهرست اعلان‌های قبلی",
-    "@settingsNLHistoryShortDescription": {
-        "description": "Short description of the notification history feature (for the settings navigation)"
-    },
-    "settingsNLPermissionGrant": "برای اعطای مجوز ضربه بزنید.\n",
-    "@settingsNLPermissionGrant": {
-        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
-    },
     "settingsNLPermissionNotGranted": "مجوز داده نشد",
     "@settingsNLPermissionNotGranted": {
         "description": "A requested permission was not granted."
-    },
-    "settingsNLPermissionRemove": "مجوز حذف شود؟\n",
-    "@settingsNLPermissionRemove": {
-        "description": "Dialog title asking if permission should be removed."
-    },
-    "settingsNLPermissionRemoveHelp": "برای غیرفعال کردن این سرویس، روی برنامه کلیک کنید و مجوزها را در صفحه بعدی حذف کنید.\n",
-    "@settingsNLPermissionRemoveHelp": {
-        "description": "Dialog text giving hint how to remove the permission."
-    },
-    "settingsNLPrefillTXTitle": "عنوان تراکنش را با عنوان اعلان از قبل پر کنید\n",
-    "@settingsNLPrefillTXTitle": {
-        "description": "Setting pre-fill transaction title with notification title."
-    },
-    "settingsNLRegularExpression": "عبارت باقاعده (اختیاری)",
-    "@settingsNLRegularExpression": {
-        "description": "Setting to use a custom regular expression (regex)."
-    },
-    "settingsNLRegularExpressionInvalid": "عبارت باقاعده نامعتبر",
-    "@settingsNLRegularExpressionInvalid": {
-        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "در حال بررسی وضعیت...",
     "@settingsNLServiceChecking": {

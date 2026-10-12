@@ -25,7 +25,7 @@ import 'package:waterflyiii/pages/home/main/charts/summary.dart';
 import 'package:waterflyiii/pages/home/main/dashboard.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
-import 'package:waterflyiii/theme.dart';
+import 'package:waterflyiii/themes/transactioncolors.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 import 'package:waterflyiii/widgets/privacybutton.dart';

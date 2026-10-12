@@ -3,7 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/settings.dart';
-import 'package:waterflyiii/theme.dart';
+import 'package:waterflyiii/themes/transactioncolors.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
 class NetWorthChart extends StatelessWidget {

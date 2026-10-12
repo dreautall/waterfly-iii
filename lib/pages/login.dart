@@ -1,9 +1,10 @@
 import 'package:logging/logging.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:waterflyiii/animations.dart';
+import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
-import 'package:waterflyiii/pages/splash.dart';
 import 'package:waterflyiii/widgets/erroricon.dart';
 import 'package:waterflyiii/widgets/logo.dart';
 
@@ -48,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
   String? _keyError;
   ErrorIcon _keyErrorIcon = const ErrorIcon(false);
   bool _showCustomHeadersField = false;
-  //bool _formSubmitted = false;
+  bool _formSubmitted = false;
 
   final FocusNode _hostFocusNode = FocusNode();
 
@@ -131,53 +132,56 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                     selected: <String>{_uriScheme},
-                    onSelectionChanged: /*_formSubmitted
+                    onSelectionChanged: _formSubmitted
                         ? null
-                        : */ (Set<String> newSelection) {
-                      _hostFocusNode.requestFocus();
-                      if (!UriScheme.valid(newSelection.first) ||
-                          _uriScheme == newSelection.first) {
-                        return;
-                      }
-                      final String currentUrl = _hostTextController.text;
-                      String oldScheme, newScheme;
-                      if (UriScheme.isHttp(newSelection.first)) {
-                        oldScheme = UriScheme.https;
-                        newScheme = UriScheme.http;
-                      } else {
-                        oldScheme = UriScheme.http;
-                        newScheme = UriScheme.https;
-                      }
-                      if (currentUrl.isEmpty) {
-                        _hostTextController.text = newScheme;
-                      } else if (currentUrl.startsWith(oldScheme)) {
-                        _hostTextController.text =
-                            "$newScheme${currentUrl.substring(oldScheme.length)}";
-                      } else {
-                        _hostTextController.text = "$newScheme$currentUrl";
-                      }
-                      _hostTextController
-                          .selection = TextSelection.fromPosition(
-                        TextPosition(offset: _hostTextController.text.length),
-                      );
+                        : (Set<String> newSelection) {
+                            _hostFocusNode.requestFocus();
+                            if (!UriScheme.valid(newSelection.first) ||
+                                _uriScheme == newSelection.first) {
+                              return;
+                            }
+                            final String currentUrl = _hostTextController.text;
+                            String oldScheme, newScheme;
+                            if (UriScheme.isHttp(newSelection.first)) {
+                              oldScheme = UriScheme.https;
+                              newScheme = UriScheme.http;
+                            } else {
+                              oldScheme = UriScheme.http;
+                              newScheme = UriScheme.https;
+                            }
+                            if (currentUrl.isEmpty) {
+                              _hostTextController.text = newScheme;
+                            } else if (currentUrl.startsWith(oldScheme)) {
+                              _hostTextController.text =
+                                  "$newScheme${currentUrl.substring(oldScheme.length)}";
+                            } else {
+                              _hostTextController.text =
+                                  "$newScheme$currentUrl";
+                            }
+                            _hostTextController.selection =
+                                TextSelection.fromPosition(
+                                  TextPosition(
+                                    offset: _hostTextController.text.length,
+                                  ),
+                                );
 
-                      final bool error =
-                          _hostTextController.text.isNotEmpty &&
-                          !_hostValid(_hostTextController.text);
-                      setState(() {
-                        _uriScheme = newScheme;
-                        // Needed here because updating the text does not actually cause onChanged to fire
-                        if (error != _hostErrorIcon.isError) {
-                          _hostErrorIcon = ErrorIcon(error);
-                        }
-                      });
-                    },
+                            final bool error =
+                                _hostTextController.text.isNotEmpty &&
+                                !_hostValid(_hostTextController.text);
+                            setState(() {
+                              _uriScheme = newScheme;
+                              // Needed here because updating the text does not actually cause onChanged to fire
+                              if (error != _hostErrorIcon.isError) {
+                                _hostErrorIcon = ErrorIcon(error);
+                              }
+                            });
+                          },
                   ),
                   const SizedBox(height: 12),
                   AnimatedHeight(
                     child: TextFormField(
                       controller: _hostTextController,
-                      //readOnly: _formSubmitted,
+                      readOnly: _formSubmitted,
                       focusNode: _hostFocusNode,
                       decoration: InputDecoration(
                         filled: true,
@@ -238,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
                   AnimatedHeight(
                     child: TextFormField(
                       controller: _keyTextController,
-                      //readOnly: _formSubmitted,
+                      readOnly: _formSubmitted,
                       decoration: InputDecoration(
                         filled: true,
                         labelText: S.of(context).loginFormLabelAPIKey,
@@ -312,11 +316,12 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(S.of(context).formButtonHelp),
                       ),
                       OutlinedButton(
-                        onPressed: () {
-                          setState(() {
-                            _showCustomHeadersField = !_showCustomHeadersField;
-                          });
-                        },
+                        onPressed: _formSubmitted
+                            ? null
+                            : () => setState(() {
+                                _showCustomHeadersField =
+                                    !_showCustomHeadersField;
+                              }),
                         child: Text(
                           _showCustomHeadersField
                               ? S.of(context).loginFormButtonHideHeaders
@@ -324,32 +329,29 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       FilledButton(
-                        onPressed: /*_formSubmitted
+                        onPressed: _formSubmitted
                             ? null
-                            : */ () {
-                          _formKey.currentState!.validate();
-                          if ((_keyError != null && _keyError!.isNotEmpty) ||
-                              (_hostError != null && _hostError!.isNotEmpty)) {
-                            return;
-                          }
-                          if (_showCustomHeadersField == false) {
-                            _customHeadersTextController.text = "";
-                          }
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<Widget>(
-                              builder: (BuildContext context) => SplashPage(
-                                host: _hostTextController.text,
-                                apiKey: _keyTextController.text,
-                                customHeadersRaw:
-                                    _customHeadersTextController.text,
-                              ),
-                            ),
-                          );
-                          /*setState(() {
+                            : () {
+                                _formKey.currentState!.validate();
+                                if ((_keyError != null &&
+                                        _keyError!.isNotEmpty) ||
+                                    (_hostError != null &&
+                                        _hostError!.isNotEmpty)) {
+                                  return;
+                                }
+                                if (_showCustomHeadersField == false) {
+                                  _customHeadersTextController.text = "";
+                                }
+                                setState(() {
                                   _formSubmitted = true;
-                                });*/
-                        },
+                                });
+                                context.read<FireflyService>().signIn(
+                                  _hostTextController.text,
+                                  _keyTextController.text,
+                                  customHeadersRaw:
+                                      _customHeadersTextController.text,
+                                );
+                              },
                         child: Text(S.of(context).formButtonLogin),
                       ),
                     ],

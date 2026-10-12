@@ -18,7 +18,7 @@ import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/pages/transaction/dialogs/delete.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
-import 'package:waterflyiii/theme.dart';
+import 'package:waterflyiii/themes/transactioncolors.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
 import 'package:waterflyiii/widgets/privacybutton.dart';

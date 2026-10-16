@@ -1606,6 +1606,18 @@
     "@notificationsRuleSampleDescription": {
         "description": "Description of why a rule can override the definition sample."
     },
+    "notificationsRuleHistorySampleDescription": "This temporary sample shows the notification selected from history.",
+    "@notificationsRuleHistorySampleDescription": {
+        "description": "Description shown above the read-only sample when editing a rule from notification history."
+    },
+    "notificationsRuleHistoryTestModeTitle": "Testing this notification",
+    "@notificationsRuleHistoryTestModeTitle": {
+        "description": "Heading shown when a rule is opened in locked test mode from notification history."
+    },
+    "notificationsRuleHistoryTestModeMessage": "This rule is open in test mode using the notification selected from history. The sample is read-only and will not be saved. Save the rule to keep only your rule changes.",
+    "@notificationsRuleHistoryTestModeMessage": {
+        "description": "Message explaining locked test mode when editing a rule from notification history."
+    },
     "notificationsConditionalActionSampleDescription": "Fine-tune the sample for this conditional action while keeping the rule sample available to the rest of the rule.",
     "@notificationsConditionalActionSampleDescription": {
         "description": "Description of why a conditional action can use a more focused sample."
@@ -2139,6 +2151,18 @@
     "@notificationsHistoryLoadMoreFailure": {"description": "Error shown below loaded notification history when an earlier page cannot be loaded."},
     "notificationsHistoryLoadMoreRetry": "Retry",
     "@notificationsHistoryLoadMoreRetry": {"description": "Button that retries loading an earlier page of notification history."},
+    "notificationsHistoryScrollToTop": "Scroll to top",
+    "@notificationsHistoryScrollToTop": {"description": "Tooltip for the notification history button that scrolls back to the newest entries."},
+    "notificationsHistoryRecordedAlertCount": "{count, plural, =1{1 recorded alert} other{{count} recorded alerts}}",
+    "@notificationsHistoryRecordedAlertCount": {
+        "description": "Number of notification history entries recorded under a day heading.",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "5"
+            }
+        }
+    },
     "notificationsHistoryToday": "Today",
     "@notificationsHistoryToday": {"description": "Heading for notification history entries received today."},
     "notificationsHistoryYesterday": "Yesterday",

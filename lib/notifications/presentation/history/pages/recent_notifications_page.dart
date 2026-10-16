@@ -71,6 +71,7 @@ class RecentNotificationsPage extends StatefulWidget {
 class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
   static const Duration _removeUndoDuration = Duration(seconds: 6);
   static const Duration _entryTransitionDuration = Duration(milliseconds: 450);
+  static const double _scrollToTopThreshold = 300;
 
   static final Logger _log = Logger('Notifications.RecentNotifications');
   late final RecentNotificationsViewModel _viewModel;
@@ -78,6 +79,7 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
   final ScrollController _scrollController = ScrollController();
   bool _ownsViewModel = false;
   bool _isRefreshing = false;
+  bool _showScrollToTop = false;
   int _refreshAnimationGeneration = 0;
   final Map<String, GlobalKey> _entryCellKeys = <String, GlobalKey>{};
   final Set<String> _removingEntryIds = <String>{};
@@ -160,7 +162,24 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _prefetchIfNeeded());
   }
 
-  void _onScroll() => _prefetchIfNeeded();
+  void _onScroll() {
+    final bool showScrollToTop =
+        _scrollController.hasClients &&
+        _scrollController.position.pixels > _scrollToTopThreshold;
+    if (showScrollToTop != _showScrollToTop && mounted) {
+      setState(() => _showScrollToTop = showScrollToTop);
+    }
+    _prefetchIfNeeded();
+  }
+
+  Future<void> _scrollToTop() async {
+    if (!_scrollController.hasClients) return;
+    await _scrollController.animateTo(
+      _scrollController.position.minScrollExtent,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOutCubic,
+    );
+  }
 
   void _prefetchIfNeeded() {
     if (!mounted ||
@@ -419,12 +438,26 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
   Widget build(BuildContext context) {
     return NotificationMenuTheme(
       child: Scaffold(
-        extendBodyBehindAppBar: true,
         appBar: NotificationPageHeader(
           scrollController: _scrollController,
           title: Text(S.of(context).notificationsHistoryTitle),
+          fadeTitleOnScroll: false,
         ),
         body: _body(context),
+        floatingActionButton: AnimatedScale(
+          scale: _showScrollToTop ? 1 : 0,
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.easeOutCubic,
+          child: IgnorePointer(
+            ignoring: !_showScrollToTop,
+            child: FloatingActionButton(
+              key: const Key('history-scroll-to-top'),
+              tooltip: S.of(context).notificationsHistoryScrollToTop,
+              onPressed: _scrollToTop,
+              child: const Icon(Icons.keyboard_arrow_up),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -437,7 +470,6 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
       child: RefreshIndicator(
-        edgeOffset: NotificationPageHeader.bodyTopInset(context),
         displacement: 48,
         onRefresh: _refreshHistory,
         child: CustomScrollView(
@@ -446,11 +478,6 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
             parent: ClampingScrollPhysics(),
           ),
           slivers: <Widget>[
-            SliverToBoxAdapter(
-              child: SizedBox(
-                height: NotificationPageHeader.bodyTopInset(context),
-              ),
-            ),
             if (showCenteredEmptyState)
               SliverPadding(
                 padding: EdgeInsets.only(
@@ -568,33 +595,34 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
         for (int index = 0; index < group.entries.length; index++)
           _entryCellKey(group.entries[index].notification.id): index,
       };
-      slivers
-        ..add(
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: _NotificationDayHeaderDelegate(
-              child: _dayHeader(context, group),
+      slivers.add(
+        SliverMainAxisGroup(
+          slivers: <Widget>[
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: _NotificationDayHeaderDelegate(
+                child: _dayHeader(context, group),
+              ),
             ),
-          ),
-        )
-        ..add(
-          SliverPadding(
-            padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
-            sliver: SliverList.builder(
-              itemCount: group.entries.length,
-              findChildIndexCallback: (Key key) => entryIndices[key],
-              itemBuilder: (BuildContext context, int index) {
-                final RecentNotificationHistoryEntry entry =
-                    group.entries[index];
-                return _animatedHistoryCard(
-                  entry,
-                  cardIndex: groupStartIndex + index,
-                  bottomSpacing: index == group.entries.length - 1 ? 0 : 8,
-                );
-              },
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+              sliver: SliverList.builder(
+                itemCount: group.entries.length,
+                findChildIndexCallback: (Key key) => entryIndices[key],
+                itemBuilder: (BuildContext context, int index) {
+                  final RecentNotificationHistoryEntry entry =
+                      group.entries[index];
+                  return _animatedHistoryCard(
+                    entry,
+                    cardIndex: groupStartIndex + index,
+                    bottomSpacing: index == group.entries.length - 1 ? 0 : 8,
+                  );
+                },
+              ),
             ),
-          ),
-        );
+          ],
+        ),
+      );
     }
     slivers.add(_loadMoreFooter(context));
     return slivers;
@@ -635,15 +663,15 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
       _ => formatNotificationDate(context, group.day),
     };
     return SizedBox.expand(
+      key: ValueKey<String>(
+        'history-day-${group.day.year}-${group.day.month}-${group.day.day}',
+      ),
       child: ColoredBox(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 10, 16, 6),
           child: Text(
-            '$label · ${group.entries.length}',
-            key: ValueKey<String>(
-              'history-day-${group.day.year}-${group.day.month}-${group.day.day}',
-            ),
+            '$label · ${S.of(context).notificationsHistoryRecordedAlertCount(group.entries.length)}',
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
               color: Theme.of(context).colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.w600,

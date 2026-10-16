@@ -1101,6 +1101,73 @@ void main() {
     expect(find.byTooltip('Back'), findsOneWidget);
   });
 
+  testWidgets('uses a read-only history sample without saving it to the rule', (
+    WidgetTester tester,
+  ) async {
+    final NotificationSample savedSample = NotificationSample(
+      title: 'Saved sample title',
+      body: 'Saved sample body',
+      receivedAt: DateTime(2026, 9, 23),
+    );
+    NotificationRule? savedRule;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationRuleDetailsPage(
+          rule: NotificationRule(
+            id: 'rule',
+            name: 'Payments',
+            conditions: const <NotificationCondition>[],
+            actions: const <NotificationAction>[],
+            sampleOverride: savedSample,
+          ),
+          extractors: const <RegExpDefinition>[],
+          notificationContext: NotificationContext(
+            title: 'History notification title',
+            body: 'History notification body',
+            receivedAt: DateTime(2026, 9, 24),
+          ),
+          isHistoryTestMode: true,
+          onSave: (NotificationRule rule) async {
+            savedRule = rule;
+            return true;
+          },
+        ),
+      ),
+    );
+
+    expect(find.text('Testing this notification'), findsOneWidget);
+    expect(
+      find.text(
+        'This rule is open in test mode using the notification selected '
+        'from history. The sample is read-only and will not be saved. Save '
+        'the rule to keep only your rule changes.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('History notification title'), findsOneWidget);
+    expect(find.text('History notification body'), findsOneWidget);
+    expect(find.text('Saved sample title'), findsNothing);
+    expect(find.byTooltip('Edit sample notification'), findsNothing);
+    expect(find.byTooltip('Use definition sample'), findsNothing);
+    expect(find.byTooltip('Enter test mode'), findsNothing);
+    expect(find.byTooltip('Exit test mode'), findsNothing);
+
+    await tester.tap(find.byTooltip('Rule options'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Edit details'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField).first, 'Updated payments');
+    await tester.tap(find.widgetWithText(FilledButton, 'Save'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+
+    expect(savedRule?.name, 'Updated payments');
+    expect(savedRule?.sampleOverride?.title, savedSample.title);
+    expect(savedRule?.sampleOverride?.body, savedSample.body);
+    expect(savedRule?.sampleOverride?.receivedAt, savedSample.receivedAt);
+  });
+
   testWidgets(
     'only enables conditional action reordering for multiple groups',
     (WidgetTester tester) async {

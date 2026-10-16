@@ -54,6 +54,7 @@ class NotificationRuleDetailsPage extends StatefulWidget {
     this.extractorMode = NotificationExtractorMode.advanced,
     this.initialTestMode = false,
     this.isTestModeLocked = false,
+    this.isHistoryTestMode = false,
     this.definitionSampleContext,
     this.showStatusTag = true,
     this.isSharedActionsEditor = false,
@@ -70,6 +71,7 @@ class NotificationRuleDetailsPage extends StatefulWidget {
   final NotificationExtractorMode extractorMode;
   final bool initialTestMode;
   final bool isTestModeLocked;
+  final bool isHistoryTestMode;
   final NotificationContext? definitionSampleContext;
   final bool showStatusTag;
   final bool isSharedActionsEditor;
@@ -112,8 +114,9 @@ class _NotificationRuleDetailsPageState
     _viewModel = NotificationRuleEditorViewModel(
       rule: widget.rule,
       notificationContext: widget.notificationContext,
-      isTestMode: widget.initialTestMode,
+      isTestMode: widget.initialTestMode || widget.isHistoryTestMode,
       definitionSampleContext: widget.definitionSampleContext,
+      useNotificationContextAsTemporarySample: widget.isHistoryTestMode,
     )..addListener(_render);
   }
 
@@ -148,7 +151,8 @@ class _NotificationRuleDetailsPageState
               actions: <Widget>[
                 if (!widget.isSharedActionsEditor &&
                     !widget.rule.isPredefined &&
-                    !widget.isTestModeLocked)
+                    !widget.isTestModeLocked &&
+                    !widget.isHistoryTestMode)
                   IconButton(
                     tooltip: _isTestMode
                         ? strings.notificationsRuleExitTestMode
@@ -248,9 +252,11 @@ class _NotificationRuleDetailsPageState
                 RuleSampleSection(
                   sample: _sampleNotificationContext,
                   hasOverride: _sampleOverride != null,
-                  description: strings.notificationsRuleSampleDescription,
-                  onEdit: _isBasicSharedActionsEditor ? null : _editSample,
-                  onClearOverride: _isBasicSharedActionsEditor
+                  description: widget.isHistoryTestMode
+                      ? strings.notificationsRuleHistorySampleDescription
+                      : strings.notificationsRuleSampleDescription,
+                  onEdit: _isSampleReadOnly ? null : _editSample,
+                  onClearOverride: _isSampleReadOnly
                       ? null
                       : _clearSampleOverride,
                 ),
@@ -399,6 +405,13 @@ class _NotificationRuleDetailsPageState
             : S.of(context).notificationsDefinitionNeedsReviewMessage,
       );
     }
+    if (widget.isHistoryTestMode) {
+      return MessageStatusCard(
+        status: MessageStatus.informational,
+        title: S.of(context).notificationsRuleHistoryTestModeTitle,
+        message: S.of(context).notificationsRuleHistoryTestModeMessage,
+      );
+    }
     if (_isTestMode) {
       return const RuleTestModeStatusCard();
     }
@@ -436,6 +449,9 @@ class _NotificationRuleDetailsPageState
       widget.extractorMode == NotificationExtractorMode.basic &&
       widget.isSharedActionsEditor;
 
+  bool get _isSampleReadOnly =>
+      _isBasicSharedActionsEditor || widget.isHistoryTestMode;
+
   NotificationContext get _sampleNotificationContext =>
       _viewModel.sampleNotificationContext;
 
@@ -444,7 +460,9 @@ class _NotificationRuleDetailsPageState
   bool get _isDirty => _viewModel.isDirty;
 
   void _toggleTestMode() {
-    if (!widget.isTestModeLocked) _viewModel.toggleTestMode();
+    if (!widget.isTestModeLocked && !widget.isHistoryTestMode) {
+      _viewModel.toggleTestMode();
+    }
   }
 
   void _refresh() {

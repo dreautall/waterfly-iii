@@ -10,6 +10,7 @@ class NotificationPageHeader extends StatelessWidget
     required this.title,
     this.leading,
     this.actions = const <Widget>[],
+    this.fadeTitleOnScroll = true,
   });
 
   static const double _titleFadeDistance = 64;
@@ -32,6 +33,7 @@ class NotificationPageHeader extends StatelessWidget
   final Widget title;
   final Widget? leading;
   final List<Widget> actions;
+  final bool fadeTitleOnScroll;
 
   @override
   Size get preferredSize => const Size.fromHeight(_toolbarHeight);
@@ -45,7 +47,9 @@ class NotificationPageHeader extends StatelessWidget
       final double offset = scrollController.hasClients
           ? scrollController.positions.last.pixels
           : 0;
-      final double titleOpacity = (1 - offset / _titleFadeDistance).clamp(0, 1);
+      final double titleOpacity = fadeTitleOnScroll
+          ? (1 - offset / _titleFadeDistance).clamp(0, 1)
+          : 1;
       final double gradientOpacity = (offset / _gradientFadeDistance).clamp(
         0,
         1,

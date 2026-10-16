@@ -10,7 +10,9 @@ import 'package:waterflyiii/notifications/application/listeners/notification_lis
 import 'package:waterflyiii/notifications/application/rules/notification_rule_operations.dart';
 import 'package:waterflyiii/notifications/application/settings/notification_processing_settings.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
+import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
+import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/history/notification_history_entry.dart';
@@ -117,6 +119,78 @@ void main() {
     expect(page.notificationContext.applicationId, 'com.example.bank');
     expect(page.notificationContext.applicationName, 'Example Bank');
     expect(page.notificationContext.deliveryId, 'delivery');
+    expect(page.notificationContext.title, 'Card payment');
+    expect(page.notificationContext.body, 'Paid 12 CAD');
+
+    Navigator.of(context).pop();
+    await tester.pumpAndSettle();
+    expect(await result, isFalse);
+  });
+
+  testWidgets('coordinator locks history rule editing in test mode', (
+    WidgetTester tester,
+  ) async {
+    final InMemoryNotificationDefinitionStore definitions =
+        InMemoryNotificationDefinitionStore();
+    final InMemoryNotificationAlertStore alerts =
+        InMemoryNotificationAlertStore();
+    final NotificationNavigationCoordinator coordinator =
+        NotificationNavigationCoordinator(
+          alertStore: alerts,
+          definitionStore: definitions,
+          ruleOperations: NotificationRuleOperations(definitions),
+        );
+    const NotificationRule rule = NotificationRule(
+      id: 'payment-rule',
+      name: 'Payments',
+      conditions: <NotificationCondition>[],
+      actions: <NotificationAction>[],
+    );
+    const NotificationDefinition definition = NotificationDefinition(
+      id: 'bank',
+      applicationId: 'com.example.bank',
+      name: 'Example Bank',
+      extractors: <RegExpDefinition>[],
+      rules: <NotificationRule>[rule],
+    );
+    final RecentNotificationHistoryEntry entry = RecentNotificationHistoryEntry(
+      notification: NotificationHistoryEntry(
+        id: 'delivery',
+        applicationId: 'com.example.bank',
+        title: 'Card payment',
+        body: 'Paid 12 CAD',
+        receivedAt: DateTime(2026, 9, 26),
+      ),
+      definition: definition,
+      matchingRule: rule,
+    );
+    late BuildContext context;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: Builder(
+          builder: (BuildContext value) {
+            context = value;
+            return const SizedBox.shrink();
+          },
+        ),
+      ),
+    );
+
+    final Future<bool> result = coordinator.editRuleFromNotification(
+      context,
+      entry,
+    );
+    await tester.pumpAndSettle();
+
+    final NotificationRuleDetailsPage page = tester.widget(
+      find.byType(NotificationRuleDetailsPage),
+    );
+    expect(page.initialTestMode, isTrue);
+    expect(page.isTestModeLocked, isTrue);
+    expect(page.isHistoryTestMode, isTrue);
     expect(page.notificationContext.title, 'Card payment');
     expect(page.notificationContext.body, 'Paid 12 CAD');
 

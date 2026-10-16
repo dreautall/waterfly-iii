@@ -495,6 +495,8 @@ class NotificationNavigationCoordinator {
               notificationContext: notificationContext,
               extractorMode: definition.extractorMode,
               initialTestMode: true,
+              isTestModeLocked: true,
+              isHistoryTestMode: true,
               rules: definition.rules,
               sharedActions: definition.sharedActions,
               transactionCreationMode: definition.transactionCreationMode,

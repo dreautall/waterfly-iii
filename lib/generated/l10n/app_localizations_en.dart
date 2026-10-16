@@ -1247,6 +1247,18 @@ class SEn extends S {
       'Fine-tune the sample for this rule while keeping the definition sample available throughout the definition.';
 
   @override
+  String get notificationsRuleHistorySampleDescription =>
+      'This temporary sample shows the notification selected from history.';
+
+  @override
+  String get notificationsRuleHistoryTestModeTitle =>
+      'Testing this notification';
+
+  @override
+  String get notificationsRuleHistoryTestModeMessage =>
+      'This rule is open in test mode using the notification selected from history. The sample is read-only and will not be saved. Save the rule to keep only your rule changes.';
+
+  @override
   String get notificationsConditionalActionSampleDescription =>
       'Fine-tune the sample for this conditional action while keeping the rule sample available to the rest of the rule.';
 
@@ -2030,6 +2042,20 @@ class SEn extends S {
 
   @override
   String get notificationsHistoryLoadMoreRetry => 'Retry';
+
+  @override
+  String get notificationsHistoryScrollToTop => 'Scroll to top';
+
+  @override
+  String notificationsHistoryRecordedAlertCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count recorded alerts',
+      one: '1 recorded alert',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get notificationsHistoryToday => 'Today';

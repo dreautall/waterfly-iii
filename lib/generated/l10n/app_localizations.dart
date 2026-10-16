@@ -2046,6 +2046,24 @@ abstract class S {
   /// **'Fine-tune the sample for this rule while keeping the definition sample available throughout the definition.'**
   String get notificationsRuleSampleDescription;
 
+  /// Description shown above the read-only sample when editing a rule from notification history.
+  ///
+  /// In en, this message translates to:
+  /// **'This temporary sample shows the notification selected from history.'**
+  String get notificationsRuleHistorySampleDescription;
+
+  /// Heading shown when a rule is opened in locked test mode from notification history.
+  ///
+  /// In en, this message translates to:
+  /// **'Testing this notification'**
+  String get notificationsRuleHistoryTestModeTitle;
+
+  /// Message explaining locked test mode when editing a rule from notification history.
+  ///
+  /// In en, this message translates to:
+  /// **'This rule is open in test mode using the notification selected from history. The sample is read-only and will not be saved. Save the rule to keep only your rule changes.'**
+  String get notificationsRuleHistoryTestModeMessage;
+
   /// Description of why a conditional action can use a more focused sample.
   ///
   /// In en, this message translates to:
@@ -3155,6 +3173,18 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Retry'**
   String get notificationsHistoryLoadMoreRetry;
+
+  /// Tooltip for the notification history button that scrolls back to the newest entries.
+  ///
+  /// In en, this message translates to:
+  /// **'Scroll to top'**
+  String get notificationsHistoryScrollToTop;
+
+  /// Number of notification history entries recorded under a day heading.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 recorded alert} other{{count} recorded alerts}}'**
+  String notificationsHistoryRecordedAlertCount(int count);
 
   /// Heading for notification history entries received today.
   ///

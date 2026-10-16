@@ -260,26 +260,32 @@ void main() {
   testWidgets('groups notifications under sticky day headings', (
     WidgetTester tester,
   ) async {
+    tester.view.physicalSize = const Size(390, 600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
     final List<RecentNotificationHistoryEntry> entries =
         <RecentNotificationHistoryEntry>[
-          RecentNotificationHistoryEntry(
-            notification: NotificationHistoryEntry(
-              id: 'newer',
-              applicationId: 'com.example.bank',
-              title: 'Newer payment',
-              body: 'Paid 12.50 CAD',
-              receivedAt: DateTime(2026, 9, 27, 18),
+          for (int index = 0; index < 4; index++)
+            RecentNotificationHistoryEntry(
+              notification: NotificationHistoryEntry(
+                id: 'newer-$index',
+                applicationId: 'com.example.bank',
+                title: 'Newer payment $index',
+                body: 'Paid 12.50 CAD',
+                receivedAt: DateTime(2026, 9, 27, 18, index),
+              ),
             ),
-          ),
-          RecentNotificationHistoryEntry(
-            notification: NotificationHistoryEntry(
-              id: 'older',
-              applicationId: 'com.example.bank',
-              title: 'Older payment',
-              body: 'Paid 8.25 CAD',
-              receivedAt: DateTime(2026, 9, 26, 18),
+          for (int index = 0; index < 4; index++)
+            RecentNotificationHistoryEntry(
+              notification: NotificationHistoryEntry(
+                id: 'older-$index',
+                applicationId: 'com.example.bank',
+                title: 'Older payment $index',
+                body: 'Paid 8.25 CAD',
+                receivedAt: DateTime(2026, 9, 26, 18, index),
+              ),
             ),
-          ),
         ];
 
     await tester.pumpWidget(
@@ -287,9 +293,139 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.byType(SliverPersistentHeader), findsNWidgets(2));
+    expect(find.byType(SliverPersistentHeader), findsOneWidget);
     expect(find.byKey(const Key('history-day-2026-9-27')), findsOneWidget);
-    expect(find.byKey(const Key('history-day-2026-9-26')), findsOneWidget);
+    expect(find.byKey(const Key('history-day-2026-9-26')), findsNothing);
+    expect(
+      find.descendant(
+        of: find.byKey(const Key('history-day-2026-9-27')),
+        matching: find.textContaining('4 recorded alerts'),
+      ),
+      findsOneWidget,
+    );
+
+    await tester.scrollUntilVisible(
+      find.text('Older payment 0'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+
+    final double backButtonBottom = tester
+        .getBottomLeft(find.byType(BackButton))
+        .dy;
+    expect(
+      tester.getTopLeft(find.byKey(const Key('history-day-2026-9-26'))).dy,
+      inInclusiveRange(backButtonBottom, backButtonBottom + 48),
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(const Key('history-day-2026-9-26')),
+        matching: find.textContaining('4 recorded alerts'),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      tester.getBottomLeft(find.byKey(const Key('history-day-2026-9-27'))).dy,
+      lessThanOrEqualTo(
+        tester.getTopLeft(find.byKey(const Key('history-day-2026-9-26'))).dy,
+      ),
+    );
+  });
+
+  testWidgets('uses a singular recorded alert count in day headings', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      _page(
+        Future<List<RecentNotificationHistoryEntry>>.value(
+          <RecentNotificationHistoryEntry>[
+            RecentNotificationHistoryEntry(
+              notification: NotificationHistoryEntry(
+                id: 'only-entry',
+                applicationId: 'com.example.bank',
+                title: 'Only payment',
+                body: 'Paid 12.50 CAD',
+                receivedAt: DateTime(2026, 9, 27, 18),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('1 recorded alert'), findsOneWidget);
+  });
+
+  testWidgets('shows a scroll-to-top button after scrolling down', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final List<RecentNotificationHistoryEntry> entries =
+        List<RecentNotificationHistoryEntry>.generate(
+          12,
+          (int index) => RecentNotificationHistoryEntry(
+            notification: NotificationHistoryEntry(
+              id: 'entry-$index',
+              applicationId: 'com.example.bank',
+              title: 'Entry $index',
+              body: 'Notification body $index',
+              receivedAt: DateTime(2026, 9, 27, 18, index),
+            ),
+          ),
+        );
+
+    await tester.pumpWidget(
+      _page(Future<List<RecentNotificationHistoryEntry>>.value(entries)),
+    );
+    await tester.pumpAndSettle();
+
+    final Finder button = find.byKey(const Key('history-scroll-to-top'));
+    expect(
+      tester
+          .widget<AnimatedScale>(
+            find.ancestor(of: button, matching: find.byType(AnimatedScale)),
+          )
+          .scale,
+      0,
+    );
+
+    await tester.drag(find.byType(CustomScrollView), const Offset(0, -500));
+    await tester.pumpAndSettle();
+    final ScrollPosition position = tester
+        .state<ScrollableState>(find.byType(Scrollable).first)
+        .position;
+    expect(position.pixels, greaterThan(300));
+    final Finder titleOpacity = find.ancestor(
+      of: find.text('Recent notifications'),
+      matching: find.byType(Opacity),
+    );
+    expect(tester.widget<Opacity>(titleOpacity).opacity, 1);
+    expect(
+      tester
+          .widget<AnimatedScale>(
+            find.ancestor(of: button, matching: find.byType(AnimatedScale)),
+          )
+          .scale,
+      1,
+    );
+
+    await tester.tap(button);
+    await tester.pumpAndSettle();
+
+    expect(position.pixels, position.minScrollExtent);
+    expect(
+      tester
+          .widget<AnimatedScale>(
+            find.ancestor(of: button, matching: find.byType(AnimatedScale)),
+          )
+          .scale,
+      0,
+    );
   });
 
   testWidgets('loads an earlier page near the bottom', (

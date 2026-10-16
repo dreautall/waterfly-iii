@@ -24,6 +24,7 @@ class NotificationRuleEditorViewModel extends ChangeNotifier {
     required NotificationContext notificationContext,
     required this.isTestMode,
     NotificationContext? definitionSampleContext,
+    this.useNotificationContextAsTemporarySample = false,
   }) : _draft = NotificationRuleDraft.fromRule(rule),
        _originalSampleOverride = rule.sampleOverride,
        _sampleOverride = rule.sampleOverride,
@@ -35,6 +36,7 @@ class NotificationRuleEditorViewModel extends ChangeNotifier {
   NotificationSample? _originalSampleOverride;
   final NotificationContext _notificationContext;
   final NotificationContext? _definitionSampleContext;
+  final bool useNotificationContextAsTemporarySample;
   NotificationSample? _sampleOverride;
   bool _usesDefinitionSample = false;
 
@@ -55,6 +57,9 @@ class NotificationRuleEditorViewModel extends ChangeNotifier {
   bool get usesDefinitionSample => _usesDefinitionSample;
 
   NotificationContext get sampleNotificationContext {
+    if (useNotificationContextAsTemporarySample) {
+      return _notificationContext;
+    }
     final NotificationSample? override = _sampleOverride;
     if (override == null) {
       return _usesDefinitionSample

@@ -458,10 +458,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_email_sender
-      sha256: "29eda6e312ddaebf155839a48c1cb0d680079b4986fd466bc24bc927148f0086"
+      sha256: c3c83f4821922479de8bc92aa042b5dc95f28881cfcb5ebbb031b5a35c82ba02
       url: "https://pub.dev"
     source: hosted
-    version: "11.1.0"
+    version: "11.2.0"
   flutter_email_sender_linux:
     dependency: transitive
     description:
@@ -474,10 +474,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_email_sender_method_channel
-      sha256: "83cfea68187f00e929f13e8422758d67bb9b1b82525a5bbe165e57aeada67625"
+      sha256: ea36ee75f0b3da80b735b18c0fee4665dc858a12309af65cb0fbc69fda7618a0
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   flutter_email_sender_platform_interface:
     dependency: transitive
     description:
@@ -494,6 +494,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  flutter_email_sender_windows:
+    dependency: transitive
+    description:
+      name: flutter_email_sender_windows
+      sha256: "6d4dce75946ced5f06f6182cecd52f4d3f875f15623c57436ad8cea1b2e17299"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   flutter_lints:
     dependency: "direct dev"
     description:

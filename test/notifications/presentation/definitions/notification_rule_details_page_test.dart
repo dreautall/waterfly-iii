@@ -4400,6 +4400,11 @@ void main() {
     await tester.tap(
       find.byKey(const ValueKey<String>('condition-edit-right')),
     );
+    await tester.pump(const Duration(milliseconds: 50));
+    expect(
+      find.byKey(const ValueKey<String>('condition-edit-overview')),
+      findsOneWidget,
+    );
     await tester.pumpAndSettle();
     expect(find.text('Equals value'), findsOneWidget);
     expect(find.text('Choose the value to compare with.'), findsOneWidget);

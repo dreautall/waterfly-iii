@@ -315,9 +315,7 @@ class _ConditionBuilderDialogState extends State<_ConditionBuilderDialog> {
       onPickDateTime: _pickDateTime,
     ),
     ConditionBuilderStep.overview => ConditionOverviewStep(
-      key: ValueKey<String>(
-        'condition-overview-${draft.editedValue?.name ?? 'review'}',
-      ),
+      key: const ValueKey<String>('condition-overview'),
       controller: _controller,
       literalController: _literalController,
       onBeginEdit: _beginEdit,

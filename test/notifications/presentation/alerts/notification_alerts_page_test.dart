@@ -56,6 +56,7 @@ class FixedAlertStore implements NotificationAlertStore {
   final String? failedDismissFingerprint;
   String? dismissedFingerprint;
   NotificationAlert? restoredAlert;
+  int loadCount = 0;
   final List<String> dismissedFingerprints = <String>[];
 
   @override
@@ -65,7 +66,10 @@ class FixedAlertStore implements NotificationAlertStore {
   Future<void> clearAll() async {}
 
   @override
-  Future<List<NotificationAlert>> load() async => alerts;
+  Future<List<NotificationAlert>> load() async {
+    loadCount++;
+    return alerts;
+  }
 
   @override
   Future<void> record(NotificationAlert alert) async {}
@@ -86,6 +90,47 @@ class FixedAlertStore implements NotificationAlertStore {
 }
 
 void main() {
+  testWidgets('defers initial alert loading until navigation completes', (
+    WidgetTester tester,
+  ) async {
+    final FixedAlertStore alerts = FixedAlertStore(const <NotificationAlert>[]);
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: Builder(
+          builder: (BuildContext context) => ElevatedButton(
+            onPressed: () => Navigator.of(context).push<void>(
+              MaterialPageRoute<void>(
+                builder: (_) => NotificationAlertsPage(
+                  alertStore: alerts,
+                  definitionStore: InMemoryDefinitionStore(
+                    const <NotificationDefinition>[],
+                  ),
+                ),
+              ),
+            ),
+            child: const Text('Open alerts'),
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Open alerts'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+
+    expect(alerts.loadCount, 0);
+    expect(
+      find.text('No notification alerts need your attention.'),
+      findsNothing,
+    );
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+    await tester.pumpAndSettle();
+    expect(alerts.loadCount, 1);
+  });
+
   testWidgets('coordinator persists an alert rule edit only once', (
     WidgetTester tester,
   ) async {

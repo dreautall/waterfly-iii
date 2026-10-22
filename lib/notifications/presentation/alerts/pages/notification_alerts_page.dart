@@ -21,6 +21,7 @@ import 'package:waterflyiii/notifications/presentation/shared/notification_dialo
 import 'package:waterflyiii/notifications/presentation/shared/notification_empty_state.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_page_header.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_text_styles.dart';
+import 'package:waterflyiii/notifications/presentation/shared/route_transition_load_scheduler.dart';
 import 'package:waterflyiii/notifications/presentation/shared/message_status_card.dart';
 
 class NotificationAlertsPage extends StatefulWidget {
@@ -56,7 +57,10 @@ class _NotificationAlertsPageState extends State<NotificationAlertsPage> {
   NotificationDefinitionStore? _definitionStore;
   NotificationNavigationCoordinator? _navigation;
   bool _ownsViewModel = false;
+  bool _isInitialLoadPending = true;
   bool _reportedApplicationNamesFailure = false;
+  final RouteTransitionLoadScheduler _initialLoadScheduler =
+      RouteTransitionLoadScheduler();
   final Map<String, GlobalKey> _alertKeys = <String, GlobalKey>{};
   final ScrollController _scrollController = ScrollController();
   String? _highlightedGroupKey;
@@ -112,8 +116,23 @@ class _NotificationAlertsPageState extends State<NotificationAlertsPage> {
               ));
     _viewModel.addListener(_onViewModelChanged);
     _healthViewModel?.addListener(_onViewModelChanged);
-    _viewModel.load();
-    _healthViewModel?.load();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _initialLoadScheduler.schedule(context, _loadInitialAlerts);
+  }
+
+  Future<void> _loadInitialAlerts() async {
+    try {
+      await Future.wait<void>(<Future<void>>[
+        _viewModel.load(),
+        if (_healthViewModel != null) _healthViewModel!.load(),
+      ]);
+    } finally {
+      if (mounted) setState(() => _isInitialLoadPending = false);
+    }
   }
 
   void _onViewModelChanged() {
@@ -144,6 +163,7 @@ class _NotificationAlertsPageState extends State<NotificationAlertsPage> {
 
   @override
   void dispose() {
+    _initialLoadScheduler.dispose();
     _viewModel.removeListener(_onViewModelChanged);
     _healthViewModel?.removeListener(_onViewModelChanged);
     if (_ownsViewModel) _viewModel.dispose();
@@ -183,6 +203,7 @@ class _NotificationAlertsPageState extends State<NotificationAlertsPage> {
     final NotificationListenerHealthIssue? healthIssue =
         _healthViewModel?.issue;
     final bool showCenteredEmptyState =
+        !_isInitialLoadPending &&
         !_viewModel.isLoading &&
         _viewModel.error == null &&
         _displayedGroups.isEmpty &&
@@ -284,7 +305,7 @@ class _NotificationAlertsPageState extends State<NotificationAlertsPage> {
   }
 
   List<Widget> _alertsContent(BuildContext context) {
-    if (_viewModel.isLoading) {
+    if (_isInitialLoadPending || _viewModel.isLoading) {
       return const <Widget>[
         SliverFillRemaining(
           hasScrollBody: false,

@@ -17,6 +17,7 @@ import 'package:waterflyiii/notifications/presentation/shared/notification_empty
 import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_menu_theme.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_page_header.dart';
+import 'package:waterflyiii/notifications/presentation/shared/route_transition_load_scheduler.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_text_styles.dart';
 
 export 'package:waterflyiii/notifications/presentation/history/recent_notification_actions.dart';
@@ -78,9 +79,12 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
   late final RecentNotificationActions _actions;
   final ScrollController _scrollController = ScrollController();
   bool _ownsViewModel = false;
+  bool _isInitialLoadPending = true;
   bool _isRefreshing = false;
+  bool _showRefreshLoading = false;
   bool _showScrollToTop = false;
-  int _refreshAnimationGeneration = 0;
+  final RouteTransitionLoadScheduler _initialLoadScheduler =
+      RouteTransitionLoadScheduler();
   final Map<String, GlobalKey> _entryCellKeys = <String, GlobalKey>{};
   final Set<String> _removingEntryIds = <String>{};
   final Set<String> _restoringEntryIds = <String>{};
@@ -143,7 +147,23 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
     }
     _viewModel.addListener(_onViewModelChanged);
     _scrollController.addListener(_onScroll);
-    unawaited(_loadHistory(initial: true));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _initialLoadScheduler.schedule(
+      context,
+      () => unawaited(_loadInitialHistory()),
+    );
+  }
+
+  Future<void> _loadInitialHistory() async {
+    try {
+      await _loadHistory(initial: true);
+    } finally {
+      if (mounted) setState(() => _isInitialLoadPending = false);
+    }
   }
 
   void _onViewModelChanged() {
@@ -227,17 +247,18 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
     if (mounted) await _refreshHistory();
   }
 
-  Future<void> _refreshHistory() async {
+  Future<void> _refreshHistory({bool showLoading = false}) async {
     if (_isRefreshing) return;
-    setState(() => _isRefreshing = true);
+    _isRefreshing = true;
+    if (showLoading && mounted) {
+      setState(() => _showRefreshLoading = true);
+    }
     try {
       await _loadHistory(initial: false);
     } finally {
-      if (mounted) {
-        setState(() {
-          _isRefreshing = false;
-          _refreshAnimationGeneration += 1;
-        });
+      _isRefreshing = false;
+      if (_showRefreshLoading && mounted) {
+        setState(() => _showRefreshLoading = false);
       }
     }
   }
@@ -427,6 +448,7 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
 
   @override
   void dispose() {
+    _initialLoadScheduler.dispose();
     _viewModel.removeListener(_onViewModelChanged);
     _scrollController.removeListener(_onScroll);
     if (_ownsViewModel) _viewModel.dispose();
@@ -452,6 +474,7 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
             ignoring: !_showScrollToTop,
             child: FloatingActionButton(
               key: const Key('history-scroll-to-top'),
+              heroTag: null,
               tooltip: S.of(context).notificationsHistoryScrollToTop,
               onPressed: _scrollToTop,
               child: const Icon(Icons.keyboard_arrow_up),
@@ -464,6 +487,7 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
 
   Widget _body(BuildContext context) {
     final bool showCenteredEmptyState =
+        !_isInitialLoadPending &&
         !_viewModel.isLoading &&
         _viewModel.error == null &&
         _viewModel.entries.isEmpty;
@@ -471,7 +495,7 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
       behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
       child: RefreshIndicator(
         displacement: 48,
-        onRefresh: _refreshHistory,
+        onRefresh: () => _refreshHistory(showLoading: true),
         child: CustomScrollView(
           controller: _scrollController,
           physics: const AlwaysScrollableScrollPhysics(
@@ -521,13 +545,8 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
   }
 
   List<Widget> _historyContent(BuildContext context) {
-    if (_viewModel.isLoading) {
-      return const <Widget>[
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: Center(child: CircularProgressIndicator()),
-        ),
-      ];
+    if (_isInitialLoadPending || _viewModel.isLoading || _showRefreshLoading) {
+      return _historyLoadingSkeleton(context);
     }
     if (_viewModel.error != null) {
       return <Widget>[
@@ -587,10 +606,7 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
     }
     final List<_NotificationDayGroup> groups = _groupEntriesByDay(entries);
     final List<Widget> slivers = <Widget>[];
-    int cardIndex = 0;
     for (final _NotificationDayGroup group in groups) {
-      final int groupStartIndex = cardIndex;
-      cardIndex += group.entries.length;
       final Map<Key, int> entryIndices = <Key, int>{
         for (int index = 0; index < group.entries.length; index++)
           _entryCellKey(group.entries[index].notification.id): index,
@@ -614,7 +630,6 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
                       group.entries[index];
                   return _animatedHistoryCard(
                     entry,
-                    cardIndex: groupStartIndex + index,
                     bottomSpacing: index == group.entries.length - 1 ? 0 : 8,
                   );
                 },
@@ -723,7 +738,6 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
 
   Widget _animatedHistoryCard(
     RecentNotificationHistoryEntry entry, {
-    required int cardIndex,
     required double bottomSpacing,
   }) {
     final String entryId = entry.notification.id;
@@ -737,30 +751,6 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
           _setExpandedEntry(entryId, expanded),
       actions: _actions,
     );
-    if (_refreshAnimationGeneration > 0) {
-      final int staggerIndex = cardIndex < 6 ? cardIndex : 6;
-      final double delay = staggerIndex * 0.08;
-      card = TweenAnimationBuilder<double>(
-        key: ValueKey<String>(
-          'history-refresh-${entry.notification.id}-'
-          '$_refreshAnimationGeneration',
-        ),
-        tween: Tween<double>(begin: 0, end: 1),
-        duration: const Duration(milliseconds: 420),
-        curve: Curves.easeOutCubic,
-        builder: (BuildContext context, double value, Widget? child) {
-          final double progress = ((value - delay) / (1 - delay)).clamp(0, 1);
-          return Opacity(
-            opacity: progress,
-            child: Transform.translate(
-              offset: Offset(0, 8 * (1 - progress)),
-              child: child,
-            ),
-          );
-        },
-        child: card,
-      );
-    }
     card = Padding(
       padding: EdgeInsets.only(bottom: bottomSpacing),
       child: card,
@@ -792,23 +782,154 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
       ignoring: isRemoving,
       child: AnimatedOpacity(
         key: Key('history-refresh-opacity-$entryId'),
-        opacity: isHidden
-            ? 0
-            : _isRefreshing
-            ? 0.58
-            : 1,
-        duration: _isRefreshing
-            ? const Duration(milliseconds: 180)
-            : _entryTransitionDuration,
+        opacity: isHidden ? 0 : 1,
+        duration: _entryTransitionDuration,
         curve: Curves.easeInOutCubic,
         child: layoutTransition,
       ),
     );
   }
 
+  List<Widget> _historyLoadingSkeleton(BuildContext context) {
+    return <Widget>[
+      SliverToBoxAdapter(
+        child: _HistoryLoadingSkeleton(
+          bottomInset: NotificationPageHeader.bodyBottomInset(context),
+        ),
+      ),
+    ];
+  }
+
   GlobalKey _entryCellKey(String entryId) => _entryCellKeys.putIfAbsent(
     entryId,
     () => GlobalKey(debugLabel: 'history-entry-cell-$entryId'),
+  );
+}
+
+class _HistoryLoadingSkeleton extends StatefulWidget {
+  const _HistoryLoadingSkeleton({required this.bottomInset});
+
+  final double bottomInset;
+
+  @override
+  State<_HistoryLoadingSkeleton> createState() =>
+      _HistoryLoadingSkeletonState();
+}
+
+class _HistoryLoadingSkeletonState extends State<_HistoryLoadingSkeleton>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 900),
+  )..repeat(reverse: true);
+  late final Animation<double> _animation = CurvedAnimation(
+    parent: _controller,
+    curve: Curves.easeInOut,
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => ExcludeSemantics(
+    key: const Key('history-loading-skeleton'),
+    child: AnimatedBuilder(
+      animation: _animation,
+      builder: (BuildContext context, Widget? _) {
+        final Color placeholderColor = Theme.of(context)
+            .colorScheme
+            .onSurfaceVariant
+            .withValues(alpha: 0.08 + (0.08 * _animation.value));
+        Widget placeholder({
+          required double width,
+          required double height,
+          BorderRadius? borderRadius,
+        }) => SizedBox(
+          width: width,
+          height: height,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: placeholderColor,
+              borderRadius: borderRadius ?? BorderRadius.circular(height / 2),
+            ),
+          ),
+        );
+
+        return Column(
+          children: <Widget>[
+            SizedBox(
+              height: _NotificationDayHeaderDelegate.height,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: placeholder(width: 150, height: 12),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(16, 4, 16, widget.bottomInset),
+              child: Column(
+                children: <Widget>[
+                  for (int index = 0; index < 3; index++) ...<Widget>[
+                    Card(
+                      key: ValueKey<String>('history-loading-card-$index'),
+                      margin: EdgeInsets.zero,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                          children: <Widget>[
+                            placeholder(
+                              width: 48,
+                              height: 48,
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  FractionallySizedBox(
+                                    widthFactor: index == 1 ? 0.48 : 0.62,
+                                    alignment: Alignment.centerLeft,
+                                    child: placeholder(
+                                      width: double.infinity,
+                                      height: 14,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  FractionallySizedBox(
+                                    widthFactor: index == 2 ? 0.72 : 0.9,
+                                    alignment: Alignment.centerLeft,
+                                    child: placeholder(
+                                      width: double.infinity,
+                                      height: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 24),
+                          ],
+                        ),
+                      ),
+                    ),
+                    if (index < 2) const SizedBox(height: 8),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    ),
   );
 }
 

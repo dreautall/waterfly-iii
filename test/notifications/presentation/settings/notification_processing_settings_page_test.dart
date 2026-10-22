@@ -19,6 +19,7 @@ class _HistoryStore implements NotificationHistoryStore {
 
   List<NotificationHistoryEntry> entries;
   bool cleared = false;
+  int loadCount = 0;
   final List<String> clearedApplicationIds = <String>[];
 
   @override
@@ -45,7 +46,10 @@ class _HistoryStore implements NotificationHistoryStore {
   }
 
   @override
-  Future<List<NotificationHistoryEntry>> load() async => entries;
+  Future<List<NotificationHistoryEntry>> load() async {
+    loadCount++;
+    return entries;
+  }
 
   @override
   Future<void> record(NotificationHistoryEntry entry) async {}
@@ -82,6 +86,43 @@ class _AccessSettingsLauncher implements NotificationAccessSettingsLauncher {
 }
 
 void main() {
+  testWidgets('defers initial storage loading until navigation completes', (
+    WidgetTester tester,
+  ) async {
+    final _HistoryStore historyStore = _HistoryStore();
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: Builder(
+          builder: (BuildContext context) => ElevatedButton(
+            onPressed: () => Navigator.of(context).push<void>(
+              MaterialPageRoute<void>(
+                builder: (_) => NotificationProcessingSettingsPage(
+                  definitionStore: InMemoryNotificationDefinitionStore(),
+                  historyStore: historyStore,
+                  alertStore: InMemoryNotificationAlertStore(),
+                  settingsStore: _SettingsStore(),
+                ),
+              ),
+            ),
+            child: const Text('Open settings'),
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Open settings'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+
+    expect(historyStore.loadCount, 0);
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+    await tester.pumpAndSettle();
+    expect(historyStore.loadCount, 1);
+  });
+
   testWidgets('disables actions that have no data to act on', (
     WidgetTester tester,
   ) async {

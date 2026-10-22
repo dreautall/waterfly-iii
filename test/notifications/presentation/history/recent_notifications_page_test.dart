@@ -385,6 +385,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final Finder button = find.byKey(const Key('history-scroll-to-top'));
+    expect(tester.widget<FloatingActionButton>(button).heroTag, isNull);
     expect(
       tester
           .widget<AnimatedScale>(
@@ -832,7 +833,7 @@ void main() {
     });
   }
 
-  testWidgets('shows progress while recent notifications are loading', (
+  testWidgets('shows structured placeholders while notifications are loading', (
     WidgetTester tester,
   ) async {
     final Completer<List<RecentNotificationHistoryEntry>> completer =
@@ -845,10 +846,66 @@ void main() {
       ),
       findsOneWidget,
     );
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.byKey(const Key('history-loading-skeleton')), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(const Key('history-loading-skeleton')),
+        matching: find.byType(AnimatedBuilder),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.byWidgetPredicate(
+        (Widget widget) =>
+            widget.key is ValueKey<String> &&
+            (widget.key! as ValueKey<String>).value.startsWith(
+              'history-loading-card-',
+            ),
+      ),
+      findsNWidgets(3),
+    );
+    expect(find.byType(CircularProgressIndicator), findsNothing);
 
     completer.complete(const <RecentNotificationHistoryEntry>[]);
     await tester.pumpAndSettle();
+    expect(find.byKey(const Key('history-loading-skeleton')), findsNothing);
+  });
+
+  testWidgets('defers the first history load until navigation completes', (
+    WidgetTester tester,
+  ) async {
+    final _SequentialRecentNotificationHistory history =
+        _SequentialRecentNotificationHistory(
+          <List<RecentNotificationHistoryEntry>>[
+            const <RecentNotificationHistoryEntry>[],
+          ],
+        );
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: Builder(
+          builder: (BuildContext context) => ElevatedButton(
+            onPressed: () => Navigator.of(context).push<void>(
+              MaterialPageRoute<void>(
+                builder: (_) => RecentNotificationsPage(history: history),
+              ),
+            ),
+            child: const Text('Open history'),
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Open history'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+
+    expect(history.loadCount, 0);
+    expect(find.byKey(const Key('history-loading-skeleton')), findsOneWidget);
+
+    await tester.pumpAndSettle();
+    expect(history.loadCount, 1);
   });
 
   testWidgets('shows an error when recent notifications cannot load', (
@@ -1420,6 +1477,71 @@ void main() {
     expect(find.text('View transaction'), findsOneWidget);
   });
 
+  testWidgets('keeps history cards visible after viewing a transaction', (
+    WidgetTester tester,
+  ) async {
+    const NotificationProcessingOutcome linkedOutcome =
+        NotificationProcessingOutcome(
+          status: NotificationProcessingOutcomeStatus.matched,
+          rule: NotificationHistoryReference(
+            id: 'groceries',
+            name: 'Groceries',
+          ),
+          transactionCreationMode: TransactionCreationMode.prompt,
+          hasTransactionIntent: true,
+          transactionPatch: TransactionPatch(<TransactionField, String>{
+            TransactionField.amount: '12.50',
+          }),
+          transactionId: 'transaction-42',
+          transactionCreationOrigin: NotificationTransactionCreationOrigin.user,
+        );
+    final RecentNotificationHistoryEntry entry = RecentNotificationHistoryEntry(
+      notification: NotificationHistoryEntry(
+        id: 'payment',
+        applicationId: 'com.example.bank',
+        title: 'Card payment',
+        body: 'Paid 12.50 CAD',
+        receivedAt: DateTime(2026, 9, 6),
+        processingOutcome: linkedOutcome,
+      ),
+      processingOutcome: linkedOutcome,
+    );
+    final _ControlledRefreshHistory history = _ControlledRefreshHistory(
+      <RecentNotificationHistoryEntry>[entry],
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: RecentNotificationsPage(
+          history: history,
+          actions: RecentNotificationActions(openTransaction: (_) async {}),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Card payment'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('View transaction'));
+    await tester.pump(const Duration(milliseconds: 200));
+
+    expect(history.loadCount, 2);
+    expect(
+      tester
+          .widget<AnimatedOpacity>(
+            find.byKey(const Key('history-refresh-opacity-payment')),
+          )
+          .opacity,
+      1,
+    );
+    expect(find.byKey(const Key('history-refresh-payment-1')), findsNothing);
+
+    history.refresh.complete(history.entries);
+    await tester.pumpAndSettle();
+    expect(find.text('Card payment'), findsOneWidget);
+  });
+
   testWidgets('pulls to refresh recent notification history', (
     WidgetTester tester,
   ) async {
@@ -1445,7 +1567,7 @@ void main() {
     expect(history.loadCount, 2);
   });
 
-  testWidgets('animates history cards while pull refresh is loading', (
+  testWidgets('replaces history cards with loading placeholders on refresh', (
     WidgetTester tester,
   ) async {
     final NotificationHistoryEntry notification = NotificationHistoryEntry(
@@ -1477,19 +1599,17 @@ void main() {
     await tester.pump(const Duration(milliseconds: 200));
 
     expect(history.loadCount, 2);
+    expect(find.byKey(const Key('history-loading-skeleton')), findsOneWidget);
+    expect(find.text('Card payment'), findsNothing);
     expect(
-      tester
-          .widget<AnimatedOpacity>(
-            find.byKey(const Key('history-refresh-opacity-payment')),
-          )
-          .opacity,
-      0.58,
+      find.byKey(const Key('history-refresh-opacity-payment')),
+      findsNothing,
     );
 
     history.refresh.complete(history.entries);
     await tester.pump();
 
-    expect(find.byKey(const Key('history-refresh-payment-1')), findsOneWidget);
+    expect(find.byKey(const Key('history-loading-skeleton')), findsNothing);
     await tester.pumpAndSettle();
     expect(find.text('Card payment'), findsOneWidget);
   });

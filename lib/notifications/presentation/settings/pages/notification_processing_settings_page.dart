@@ -17,6 +17,7 @@ import 'package:waterflyiii/notifications/presentation/settings/controllers/noti
 import 'package:waterflyiii/notifications/presentation/shared/message_status_card.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_page_header.dart';
+import 'package:waterflyiii/notifications/presentation/shared/route_transition_load_scheduler.dart';
 import 'package:waterflyiii/notifications/presentation/settings/widgets/notification_processing_settings_sections.dart';
 
 class NotificationProcessingSettingsPage extends StatefulWidget {
@@ -47,7 +48,10 @@ class _NotificationProcessingSettingsPageState
     extends State<NotificationProcessingSettingsPage> {
   static final Logger _log = Logger('Notifications.ProcessingSettings');
   final ScrollController _scrollController = ScrollController();
+  final RouteTransitionLoadScheduler _initialLoadScheduler =
+      RouteTransitionLoadScheduler();
   late final NotificationProcessingSettingsViewModel _viewModel;
+  bool _isInitialLoadPending = true;
 
   @override
   void initState() {
@@ -59,11 +63,25 @@ class _NotificationProcessingSettingsPageState
       settingsStore: widget.settingsStore,
     );
     _viewModel.addListener(_onViewModelChanged);
-    _viewModel.load();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _initialLoadScheduler.schedule(context, _loadInitialSettings);
+  }
+
+  Future<void> _loadInitialSettings() async {
+    try {
+      await _viewModel.load();
+    } finally {
+      if (mounted) setState(() => _isInitialLoadPending = false);
+    }
   }
 
   @override
   void dispose() {
+    _initialLoadScheduler.dispose();
     _viewModel.removeListener(_onViewModelChanged);
     _viewModel.dispose();
     _scrollController.dispose();
@@ -92,7 +110,7 @@ class _NotificationProcessingSettingsPageState
   );
 
   Widget _body(BuildContext context) {
-    if (_viewModel.isLoading) {
+    if (_isInitialLoadPending || _viewModel.isLoading) {
       return Padding(
         padding: EdgeInsets.only(
           top: NotificationPageHeader.bodyTopInset(context),

@@ -20,6 +20,7 @@ import 'package:waterflyiii/notifications/application/processing/notification_de
 import 'package:waterflyiii/notifications/application/processing/notification_history_outcome_recorder.dart';
 import 'package:waterflyiii/notifications/application/processing/notification_transaction_intent_adapter.dart';
 import 'package:waterflyiii/notifications/application/processing/local_notification_post_verifier.dart';
+import 'package:waterflyiii/notifications/application/processing/local_notification_id_generator.dart';
 import 'package:waterflyiii/notifications/application/processing/notification_transaction_intent_executor.dart';
 import 'package:waterflyiii/notifications/data/listeners/platform_notification_listener_health_notifier.dart';
 import 'package:waterflyiii/notifications/data/migrations/platform_notification_migration_review_notifier.dart';
@@ -50,6 +51,8 @@ import 'package:waterflyiii/settings.dart';
 final Logger log = Logger("NotificationListener");
 final DatabaseProvider<Database> _notificationDatabase =
     NotificationDatabaseProvider.create();
+final LocalNotificationIdGenerator _localNotificationIds =
+    LocalNotificationIdGenerator();
 
 class NotificationTransaction {
   NotificationTransaction(
@@ -251,7 +254,7 @@ Future<void> _recordIntentExecutionFailure(
 Future<void> _showCreatedTransactionNotification(
   NotificationContext notification,
 ) => FlutterLocalNotificationsPlugin().show(
-  id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+  id: _localNotificationIds.next(),
   title: 'Transaction created',
   body: 'Transaction created based on notification ${notification.title}',
   notificationDetails: const NotificationDetails(
@@ -273,7 +276,7 @@ Future<void> _showCreateTransactionPrompt(
 ) async {
   final FlutterLocalNotificationsPlugin notifications =
       FlutterLocalNotificationsPlugin();
-  final int notificationId = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+  final int notificationId = _localNotificationIds.next();
   log.finer(
     () =>
         'nlCallback(${notification.applicationId}): posting manual transaction prompt '

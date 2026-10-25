@@ -640,16 +640,16 @@
         "description": "How much money already was saved",
         "placeholders": {
             "amount": {
-                "type": "String",
-                "example": "€12.34"
+              "type": "String",
+              "example": "€12.34"
             }
         }
     },
-    "homePiggySavePerMonth": "Bespaar per maand: {amount}",
-    "@homePiggySavePerMonth": {
-        "description": "How much should be saved per month to reach the target",
-        "placeholders": {
-            "amount": {
+  "homePiggySavePerMonth": "Bespaar per maand: {amount}",
+  "@homePiggySavePerMonth": {
+    "description": "How much should be saved per month to reach the target",
+    "placeholders": {
+      "amount": {
                 "type": "String",
                 "example": "€12.34"
             }
@@ -697,13 +697,13 @@
             }
         }
     },
-    "homePiggyTotal": "Totaal: {amount}",
-    "@homePiggyTotal": {
-        "description": "Total balance of an account in the Piggy bank",
-        "placeholders": {
-            "amount": {
-                "type": "String",
-                "example": "€12.34"
+  "homePiggyTotal": "Totaal: {amount}",
+  "@homePiggyTotal": {
+    "description": "Total balance of an account in the Piggy bank",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€12.34"
             }
         }
     },
@@ -861,10 +861,10 @@
     "@navigationCategories": {
         "description": "Navigation Label: Categories"
     },
-    "navigationMain": "Dashboard",
-    "@navigationMain": {
-        "description": "Navigation Label: Dashboard"
-    },
+  "navigationMain": "Dashboard",
+  "@navigationMain": {
+    "description": "Navigation Label: Dashboard"
+  },
     "generalSettings": "Instellingen",
     "@generalSettings": {
         "description": "Label: Settings"

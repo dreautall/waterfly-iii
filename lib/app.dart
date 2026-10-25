@@ -20,6 +20,7 @@ import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/splash.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/settings.dart';
+import 'package:waterflyiii/theme.dart';
 
 final Logger log = Logger("App");
 
@@ -291,6 +292,14 @@ class _WaterflyAppState extends State<WaterflyApp> {
                         PredictiveBackPageTransitionsBuilder(),
                   },
                 ),
+                extensions: <ThemeExtension<dynamic>>[
+                  const TransactionColors(
+                    positiveColor: Colors.green,
+                    negativeColor: Colors.red,
+                    transferColor: Colors.blue,
+                    neutralColor: Colors.grey,
+                  ),
+                ],
               ),
               darkTheme: ThemeData(
                 brightness: .dark,
@@ -298,9 +307,20 @@ class _WaterflyAppState extends State<WaterflyApp> {
                     ? cSchemeDynamicDark?.harmonized() ?? cSchemeDark
                     : cSchemeDark,
                 useMaterial3: true,
+                extensions: <ThemeExtension<dynamic>>[
+                  TransactionColors(
+                    positiveColor: Colors.green,
+                    negativeColor: Colors.red.shade300,
+                    transferColor: Colors.blue,
+                    neutralColor: Colors.grey,
+                  ),
+                ],
               ),
               themeMode: settings.theme,
-              localizationsDelegates: S.localizationsDelegates,
+              localizationsDelegates: <LocalizationsDelegate<dynamic>>[
+                S.delegate,
+                ...GlobalMaterialLocalizations.delegates,
+              ],
               supportedLocales: S.supportedLocales,
               locale: settings.locale,
               navigatorKey: navigatorKey,

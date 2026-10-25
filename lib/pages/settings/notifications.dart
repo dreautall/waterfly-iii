@@ -11,6 +11,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/settings/notifications/history.dart';
+import 'package:waterflyiii/pages/transaction/tags.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/widgets/erroricon.dart';
 
@@ -194,6 +195,45 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                     onTap: () => openContainer(),
                   ),
             ),
+            // Auto Tag
+            SwitchListTile.adaptive(
+              title: Text(S.of(context).settingsTag),
+              subtitle: context.watch<SettingsProvider>().autoTagNL.isEmpty
+                  ? Text(S.of(context).settingsTagNLHelp)
+                  : Text(
+                      S
+                          .of(context)
+                          .settingsTagList(
+                            context.read<SettingsProvider>().autoTagNL.length,
+                            context.read<SettingsProvider>().autoTagNL.join(
+                              ", ",
+                            ),
+                          ),
+                    ),
+              value: context.watch<SettingsProvider>().autoTagNL.isNotEmpty,
+              secondary: CircleAvatar(
+                child: Icon(
+                  context.watch<SettingsProvider>().autoTagNL.isNotEmpty
+                      ? Icons.bookmarks
+                      : Icons.bookmarks_outlined,
+                ),
+              ),
+              onChanged: (bool value) =>
+                  showDialog<List<String>>(
+                    context: context,
+                    builder: (BuildContext context) => TagDialog(
+                      selectedTags: context.read<SettingsProvider>().autoTagNL,
+                      enableAdd: true,
+                    ),
+                  ).then((List<String>? tags) {
+                    if (tags == null) {
+                      return;
+                    }
+                    if (context.mounted) {
+                      context.read<SettingsProvider>().setAutoTagNL(tags);
+                    }
+                  }),
+            ),
             const Divider(),
             ListTile(
               title: Text(S.of(context).settingsNLAppAdd),
@@ -216,6 +256,7 @@ class _SettingsNotificationsState extends State<SettingsNotifications> {
                   app.packageName,
                   NotificationAppSettings(app.appName!),
                 );
+
                 setState(() {});
               },
             ),

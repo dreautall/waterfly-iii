@@ -13,9 +13,12 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/piggybank/chart.dart';
+import 'package:waterflyiii/settings.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/widgets/input_number.dart';
 import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
 import 'package:waterflyiii/widgets/materialiconbutton.dart';
+import 'package:waterflyiii/widgets/privacybutton.dart';
 
 class AccountStatusData {
   const AccountStatusData({
@@ -63,6 +66,7 @@ class _HomePiggybankState extends State<HomePiggybank>
           tooltip: S.of(context).homePiggyAvailableAmounts,
           onPressed: _showAvailableAmountsSheet,
         ),
+        const PrivacyButton(),
       ]);
     });
   }
@@ -209,6 +213,9 @@ class _HomePiggybankState extends State<HomePiggybank>
     super.build(context);
     log.finest(() => "build()");
 
+    // For privacy mode
+    context.watch<SettingsProvider>().privacyMode;
+
     int lastGroupId = -1;
 
     return RefreshIndicator.adaptive(
@@ -328,9 +335,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                           text: currency.fmt(currentAmount),
                           style: Theme.of(context).textTheme.titleMedium!
                               .copyWith(
-                                color: (currentAmount < 0)
-                                    ? Colors.red
-                                    : Colors.green,
+                                color: context.balanceColor(currentAmount),
                                 fontWeight: .bold,
                                 fontFeatures: const <FontFeature>[
                                   .tabularFigures(),
@@ -478,9 +483,7 @@ class _HomePiggybankState extends State<HomePiggybank>
                   statusData.currency.fmt(statusData.availableBalance),
                   textAlign: .end,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: (statusData.availableBalance < 0)
-                        ? Colors.red
-                        : Colors.green,
+                    color: context.balanceColor(statusData.availableBalance),
                     fontWeight: .bold,
                     fontFeatures: const <FontFeature>[.tabularFigures()],
                   ),
@@ -794,7 +797,7 @@ class _PiggyAdjustBalanceState extends State<PiggyAdjustBalance> {
                   MaterialIconButton(
                     icon: _transactionType.icon,
                     foregroundColor: Colors.white,
-                    backgroundColor: _transactionType.color,
+                    backgroundColor: context.transactionColor(_transactionType),
                     onPressed: () {
                       setState(() {
                         if (_transactionType == .deposit) {

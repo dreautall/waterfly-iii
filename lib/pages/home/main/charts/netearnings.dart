@@ -9,6 +9,8 @@ import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/settings.dart' show SettingsProvider;
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
 class NetEarningsChart extends StatelessWidget {
@@ -54,14 +56,18 @@ class NetEarningsChart extends StatelessWidget {
             domainFn: (LabelAmountChart entry, _) => entry.label,
             measureFn: (LabelAmountChart entry, _) => entry.amount.abs(),
             data: incomeChartData,
-            colorFn: (_, _) => charts.MaterialPalette.green.shadeDefault,
+            colorFn: (_, _) => charts.ColorUtil.fromDartColor(
+              Theme.of(context).extension<TransactionColors>()!.positiveColor!,
+            ),
           ),
           charts.Series<LabelAmountChart, String>(
             id: 'Expense',
             domainFn: (LabelAmountChart entry, _) => entry.label,
             measureFn: (LabelAmountChart entry, _) => entry.amount.abs(),
             data: expenseChartData,
-            colorFn: (_, _) => charts.MaterialPalette.red.shadeDefault,
+            colorFn: (_, _) => charts.ColorUtil.fromDartColor(
+              Theme.of(context).extension<TransactionColors>()!.negativeColor!,
+            ),
           ),
         ],
         animate: true,
@@ -72,6 +78,8 @@ class NetEarningsChart extends StatelessWidget {
           ),
           renderSpec: charts.SmallTickRendererSpec<num>(
             labelStyle: charts.TextStyleSpec(
+              fontSize: SettingsProvider.isPrivacyMode ? 0 : null,
+              lineHeight: SettingsProvider.isPrivacyMode ? 0 : null,
               color: charts.ColorUtil.fromDartColor(
                 Theme.of(context).colorScheme.onSurfaceVariant,
               ),
@@ -253,9 +261,11 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                               axisLabelFormatter:
                                   (AxisLabelRenderDetails args) =>
                                       ChartAxisLabel(
-                                        NumberFormat().format(
-                                          double.parse(args.text),
-                                        ),
+                                        SettingsProvider.isPrivacyMode
+                                            ? " "
+                                            : NumberFormat().format(
+                                                double.parse(args.text),
+                                              ),
                                         args.textStyle,
                                       ),
                               minimum: min,
@@ -265,10 +275,14 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                             series: <CartesianSeries<WFChartData, String>>[
                               WaterfallSeries<WFChartData, String>(
                                 dataSource: chartData,
-                                negativePointsColor: Colors.red,
+                                negativePointsColor: Theme.of(
+                                  context,
+                                ).extension<TransactionColors>()!.negativeColor,
                                 intermediateSumColor: Colors.orange,
                                 totalSumColor: Colors.black,
-                                color: Colors.green,
+                                color: Theme.of(
+                                  context,
+                                ).extension<TransactionColors>()!.positiveColor,
                                 xValueMapper: (WFChartData data, _) =>
                                     data.label,
                                 yValueMapper: (WFChartData data, _) =>
@@ -282,7 +296,7 @@ class _NetEarningsChartPopupState extends State<NetEarningsChartPopup> {
                                 dataLabelMapper: (WFChartData data, _) =>
                                     data.value!.abs().toStringAsFixed(0),
                                 dataLabelSettings: DataLabelSettings(
-                                  isVisible: true,
+                                  isVisible: !SettingsProvider.isPrivacyMode,
                                   angle: 90,
                                   alignment: .center,
                                   labelAlignment: .outer,

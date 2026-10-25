@@ -8,6 +8,7 @@ import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
@@ -70,8 +71,16 @@ class LastDaysChart extends StatelessWidget {
           measureFn: (LabelAmountChart entry, _) => entry.amount.abs(),
           data: chartData,
           colorFn: (LabelAmountChart entry, _) => (entry.amount > 0)
-              ? charts.MaterialPalette.green.shadeDefault
-              : charts.MaterialPalette.red.shadeDefault,
+              ? charts.ColorUtil.fromDartColor(
+                  Theme.of(
+                    context,
+                  ).extension<TransactionColors>()!.positiveColor!,
+                )
+              : charts.ColorUtil.fromDartColor(
+                  Theme.of(
+                    context,
+                  ).extension<TransactionColors>()!.negativeColor!,
+                ),
           labelAccessorFn: (LabelAmountChart entry, _) => showCurrency
               ? defaultCurrency.fmt(entry.amount.abs(), decimalDigits: 0)
               // Use compact number formatting for numbers over 10.000

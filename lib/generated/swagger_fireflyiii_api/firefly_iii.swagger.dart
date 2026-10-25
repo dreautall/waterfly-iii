@@ -5,16 +5,21 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:json_annotation/json_annotation.dart' as json;
 import 'package:collection/collection.dart';
+
 import 'dart:convert';
 
 import 'firefly_iii.models.swagger.dart';
+
 import 'package:chopper/chopper.dart';
 
 import 'client_mapping.dart';
+
 import 'dart:async';
+
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;
+
 import 'firefly_iii.enums.swagger.dart' as enums;
 import 'firefly_iii.metadata.swagger.dart';
 export 'firefly_iii.enums.swagger.dart';
@@ -8937,6 +8942,31 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
 ''',
       summary: 'Currently authenticated user endpoint.',
       operationId: 'getCurrentUser',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["about"],
+      deprecated: false,
+    ),
+  });
+
+  ///Finish a batch of unprocessed transactions.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  Future<chopper.Response> v1BatchFinishPost({String? xTraceId}) {
+    return _v1BatchFinishPost(xTraceId: xTraceId?.toString());
+  }
+
+  ///Finish a batch of unprocessed transactions.
+  ///@param X-Trace-Id Unique identifier associated with this request.
+  @POST(path: '/v1/batch/finish', optionalBody: true)
+  Future<chopper.Response> _v1BatchFinishPost({
+    @Header('X-Trace-Id') String? xTraceId,
+    @chopper.Tag()
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '''summary: Finish a batch of unprocessed transactions.
+''',
+      summary: 'Finish a batch of unprocessed transactions.',
+      operationId: 'finishBatch',
       consumes: [],
       produces: [],
       security: [],

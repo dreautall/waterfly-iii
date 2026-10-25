@@ -720,6 +720,12 @@ abstract class S {
   /// **'Unknown'**
   String get generalUnknown;
 
+  /// Tooltip label for privacy mode button
+  ///
+  /// In en, this message translates to:
+  /// **'Show/Hide all amounts (Privacy Mode)'**
+  String get homeMainActionPrivacyMode;
+
   /// subscription interval type
   ///
   /// In en, this message translates to:
@@ -1397,6 +1403,30 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Connection settings updated.'**
   String get settingsServerConnectionUpdated;
+
+  /// Setting to (automatically) tag transactions
+  ///
+  /// In en, this message translates to:
+  /// **'Tag Transactions'**
+  String get settingsTag;
+
+  /// Help text to automatically tag (all!) transactions
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically add a tag for all new transactions.'**
+  String get settingsTagAllHelp;
+
+  /// List of selected tags (for auto-tag feature). If no tags are selected, a help text will be shown instead.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected {count, plural, =1{tag: {tags}} other{tags: {tags}}}'**
+  String settingsTagList(int count, String tags);
+
+  /// Help text to automatically tag transactions from the notification listener
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically add a tag for transactions created from the listener.'**
+  String get settingsTagNLHelp;
 
   /// App theme (dark or light)
   ///

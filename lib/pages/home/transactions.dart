@@ -15,11 +15,13 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/pages/transaction.dart';
-import 'package:waterflyiii/pages/transaction/delete.dart';
+import 'package:waterflyiii/pages/transaction/dialogs/delete.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
+import 'package:waterflyiii/widgets/privacybutton.dart';
 
 class TransactionSum {
   double withdrawals = 0;
@@ -165,6 +167,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
               },
             ),
           ),
+          const PrivacyButton(),
         ]);
       });
     }
@@ -476,7 +479,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             defaultCurrency.fmt(_txSum.deposits),
                             style: Theme.of(context).textTheme.bodyMedium!
                                 .copyWith(
-                                  color: Colors.green,
+                                  color: Theme.of(context)
+                                      .extension<TransactionColors>()!
+                                      .positiveColor,
                                   fontWeight: .bold,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
@@ -487,7 +492,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             defaultCurrency.fmt(_txSum.withdrawals),
                             style: Theme.of(context).textTheme.bodyMedium!
                                 .copyWith(
-                                  color: Colors.red,
+                                  color: Theme.of(context)
+                                      .extension<TransactionColors>()!
+                                      .negativeColor,
                                   fontWeight: .bold,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
@@ -498,7 +505,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             defaultCurrency.fmt(_txSum.transfers),
                             style: Theme.of(context).textTheme.bodyMedium!
                                 .copyWith(
-                                  color: Colors.blue,
+                                  color: Theme.of(context)
+                                      .extension<TransactionColors>()!
+                                      .transferColor,
                                   fontWeight: .bold,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
@@ -529,9 +538,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             defaultCurrency.fmt(_txSum.total),
                             style: Theme.of(context).textTheme.bodyLarge!
                                 .copyWith(
-                                  color: _txSum.total < 0
-                                      ? Colors.red
-                                      : Colors.green,
+                                  color: context.balanceColor(_txSum.total),
                                   fontWeight: .bold,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
@@ -715,7 +722,18 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
     // Account balance
     late double balance;
+    CurrencyRead accountCurrency = currency;
     if (_filters.account != null) {
+      accountCurrency = CurrencyRead(
+        id: _filters.account!.attributes.currencyId ?? "0",
+        type: "currencies",
+        attributes: CurrencyProperties(
+          code: _filters.account!.attributes.currencyCode ?? "",
+          name: _filters.account!.attributes.currencyName ?? "",
+          symbol: _filters.account!.attributes.currencySymbol ?? "",
+          decimalPlaces: _filters.account!.attributes.currencyDecimalPlaces,
+        ),
+      );
       if (item.attributes.transactions.first.sourceBalanceAfter != null) {
         balance =
             double.tryParse(
@@ -837,7 +855,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
             child: ListTile(
               leading: CircleAvatar(
                 foregroundColor: Colors.white,
-                backgroundColor: transactions.first.type.color,
+                backgroundColor: context.transactionColor(
+                  transactions.first.type,
+                ),
                 child: Icon(transactions.first.type.icon),
               ),
               title: Row(
@@ -860,7 +880,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             text: foreignText,
                             style: Theme.of(context).textTheme.bodySmall!
                                 .copyWith(
-                                  color: Colors.blue,
+                                  color: Theme.of(context)
+                                      .extension<TransactionColors>()!
+                                      .transferColor,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
                                   ],
@@ -872,11 +894,17 @@ class _HomeTransactionsState extends State<HomeTransactions>
                               .copyWith(
                                 color:
                                     transactions.first.type != .reconciliation
-                                    ? transactions.first.type.color
+                                    ? context.transactionColor(
+                                        transactions.first.type,
+                                      )
                                     : (transactions.first.sourceType ==
                                           .reconciliationAccount)
-                                    ? Colors.green
-                                    : Colors.red,
+                                    ? Theme.of(context)
+                                          .extension<TransactionColors>()!
+                                          .positiveColor
+                                    : Theme.of(context)
+                                          .extension<TransactionColors>()!
+                                          .negativeColor,
                                 fontFeatures: const <FontFeature>[
                                   .tabularFigures(),
                                 ],
@@ -927,7 +955,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                                 ),
                               if (_filters.account != null)
                                 TextSpan(
-                                  text: currency.fmt(balance),
+                                  text: accountCurrency.fmt(balance),
                                   style: Theme.of(context).textTheme.bodyMedium!
                                       .copyWith(
                                         fontFeatures: const <FontFeature>[

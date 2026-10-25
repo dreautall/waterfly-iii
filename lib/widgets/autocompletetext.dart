@@ -58,11 +58,13 @@ class _AutoCompleteTextState<T extends Object>
 
   void _handleTextChanges() {
     log.finest(() => "_handleTextChanges: ${widget.textController.text}");
-    setState(() {
-      if (widget.textController.text.isEmpty && widget.onChanged != null) {
-        widget.onChanged!("");
-      }
-    });
+    if (mounted) {
+      setState(() {
+        if (widget.textController.text.isEmpty && widget.onChanged != null) {
+          widget.onChanged!("");
+        }
+      });
+    }
   }
 
   @override

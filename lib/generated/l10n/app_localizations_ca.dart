@@ -403,6 +403,10 @@ class SCa extends S {
   String get generalUnknown => 'Desconegut';
 
   @override
+  String get homeMainActionPrivacyMode =>
+      'Show/Hide all amounts (Privacy Mode)';
+
+  @override
   String homeMainBillsInterval(String period) {
     String _temp0 = intl.Intl.selectLogic(period, {
       'weekly': 'setmanalment',
@@ -859,6 +863,28 @@ class SCa extends S {
   @override
   String get settingsServerConnectionUpdated =>
       'S\'ha actualitzat la configuració de connexió.';
+
+  @override
+  String get settingsTag => 'Tag Transactions';
+
+  @override
+  String get settingsTagAllHelp =>
+      'Automatically add a tag for all new transactions.';
+
+  @override
+  String settingsTagList(int count, String tags) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'tags: $tags',
+      one: 'tag: $tags',
+    );
+    return 'Selected $_temp0';
+  }
+
+  @override
+  String get settingsTagNLHelp =>
+      'Automatically add a tag for transactions created from the listener.';
 
   @override
   String get settingsTheme => 'Tema de l\'aplicació';

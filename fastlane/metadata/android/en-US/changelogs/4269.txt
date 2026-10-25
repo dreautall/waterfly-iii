@@ -1,0 +1,7 @@
+- Feature: Transaction Screen logic overhaul
+- Feature: Show budget stats
+- Feature: Show uncategorized/untagged transactions in charts
+- Feature: Privacy Mode
+- Feature: Auto-Tag Transaction
+- Fix: Net Worth chart sum in primary currency
+- Various other fixes

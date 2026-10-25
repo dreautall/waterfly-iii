@@ -376,7 +376,7 @@ class SUk extends S {
   String get generalIncome => 'Дохід';
 
   @override
-  String get generalLeft => 'Left';
+  String get generalLeft => 'Залишок';
 
   @override
   String get generalLiabilities => 'Зобов’язання';
@@ -527,7 +527,7 @@ class SUk extends S {
 
   @override
   String homePiggySavePerMonth(String amount) {
-    return 'Save per month: $amount';
+    return 'Заощадження на місяць: $amount';
   }
 
   @override
@@ -556,7 +556,7 @@ class SUk extends S {
 
   @override
   String homePiggyTotal(String amount) {
-    return 'Total: $amount';
+    return 'Разом: $amount';
   }
 
   @override
@@ -746,7 +746,7 @@ class SUk extends S {
   String get settingsDialogThemeTitle => 'Вибрати тему';
 
   @override
-  String get settingsFAQ => 'FAQ';
+  String get settingsFAQ => 'ЧАП';
 
   @override
   String get settingsFAQHelp =>
@@ -759,7 +759,8 @@ class SUk extends S {
   String get settingsLockscreen => 'Екран блокування';
 
   @override
-  String get settingsLockscreenHelp => 'Require authentication on app startup';
+  String get settingsLockscreenHelp =>
+      'Вимагає аутентифікації при запуску програми';
 
   @override
   String get settingsLockscreenInitial =>

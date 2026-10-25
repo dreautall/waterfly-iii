@@ -1,6 +1,6 @@
 import 'package:chopper/chopper.dart' show Response;
-import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
@@ -17,7 +17,7 @@ class BillDialog extends StatefulWidget {
 }
 
 class _BillDialogState extends State<BillDialog> {
-  final Logger log = Logger("Pages.Transaction.Bill");
+  final Logger log = Logger("Pages.Transaction.Dialogs.Bill");
 
   final TextEditingController _billTextController = TextEditingController();
   final FocusNode _billFocusNode = FocusNode();
@@ -42,6 +42,8 @@ class _BillDialogState extends State<BillDialog> {
 
   @override
   Widget build(BuildContext context) {
+    log.finest(() => "build()");
+
     return AlertDialog(
       icon: const Icon(Icons.calendar_today),
       title: Text(S.of(context).transactionDialogBillTitle),

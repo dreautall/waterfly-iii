@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:animations/animations.dart';
 import 'package:chopper/chopper.dart' show Response;
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -12,6 +12,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/widgets/fabs.dart';
 
 Widget accountRowBuilder(
@@ -145,7 +146,7 @@ Widget accountRowBuilder(
             TextSpan(
               text: currency.fmt(currentAmount),
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: (currentAmount < 0) ? Colors.red : Colors.green,
+                color: context.balanceColor(currentAmount),
                 fontWeight: .bold,
                 fontFeatures: const <FontFeature>[.tabularFigures()],
               ),

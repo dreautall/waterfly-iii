@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';

@@ -364,6 +364,9 @@ class SFa extends S {
   String get generalIncome => 'درآمد';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'بدهی ها';
 
   @override
@@ -392,6 +395,10 @@ class SFa extends S {
 
   @override
   String get generalUnknown => 'ناشناخته';
+
+  @override
+  String get homeMainActionPrivacyMode =>
+      'Show/Hide all amounts (Privacy Mode)';
 
   @override
   String homeMainBillsInterval(String period) {
@@ -844,6 +851,28 @@ class SFa extends S {
   String get settingsServerConnectionUpdated => 'تنظیمات اتصال به‌روزرسانی شد.';
 
   @override
+  String get settingsTag => 'Tag Transactions';
+
+  @override
+  String get settingsTagAllHelp =>
+      'Automatically add a tag for all new transactions.';
+
+  @override
+  String settingsTagList(int count, String tags) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'tags: $tags',
+      one: 'tag: $tags',
+    );
+    return 'Selected $_temp0';
+  }
+
+  @override
+  String get settingsTagNLHelp =>
+      'Automatically add a tag for transactions created from the listener.';
+
+  @override
   String get settingsTheme => 'تم برنامه\n';
 
   @override
@@ -871,6 +900,9 @@ class SFa extends S {
 
   @override
   String get settingsVersionChecking => 'چک کردن…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'پیوست ها';

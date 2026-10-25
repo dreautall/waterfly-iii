@@ -376,6 +376,9 @@ class SUk extends S {
   String get generalIncome => 'Дохід';
 
   @override
+  String get generalLeft => 'Залишок';
+
+  @override
   String get generalLiabilities => 'Зобов’язання';
 
   @override
@@ -404,6 +407,10 @@ class SUk extends S {
 
   @override
   String get generalUnknown => 'Невідомо';
+
+  @override
+  String get homeMainActionPrivacyMode =>
+      'Show/Hide all amounts (Privacy Mode)';
 
   @override
   String homeMainBillsInterval(String period) {
@@ -520,7 +527,7 @@ class SUk extends S {
 
   @override
   String homePiggySavePerMonth(String amount) {
-    return 'Save per month: $amount';
+    return 'Заощадження на місяць: $amount';
   }
 
   @override
@@ -549,7 +556,7 @@ class SUk extends S {
 
   @override
   String homePiggyTotal(String amount) {
-    return 'Total: $amount';
+    return 'Разом: $amount';
   }
 
   @override
@@ -739,7 +746,7 @@ class SUk extends S {
   String get settingsDialogThemeTitle => 'Вибрати тему';
 
   @override
-  String get settingsFAQ => 'FAQ';
+  String get settingsFAQ => 'ЧАП';
 
   @override
   String get settingsFAQHelp =>
@@ -752,7 +759,8 @@ class SUk extends S {
   String get settingsLockscreen => 'Екран блокування';
 
   @override
-  String get settingsLockscreenHelp => 'Require authentication on app startup';
+  String get settingsLockscreenHelp =>
+      'Вимагає аутентифікації при запуску програми';
 
   @override
   String get settingsLockscreenInitial =>
@@ -874,6 +882,28 @@ class SUk extends S {
       'Налаштування підключення оновлено.';
 
   @override
+  String get settingsTag => 'Tag Transactions';
+
+  @override
+  String get settingsTagAllHelp =>
+      'Automatically add a tag for all new transactions.';
+
+  @override
+  String settingsTagList(int count, String tags) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'tags: $tags',
+      one: 'tag: $tags',
+    );
+    return 'Selected $_temp0';
+  }
+
+  @override
+  String get settingsTagNLHelp =>
+      'Automatically add a tag for transactions created from the listener.';
+
+  @override
   String get settingsTheme => 'Тема додатку';
 
   @override
@@ -902,6 +932,9 @@ class SUk extends S {
 
   @override
   String get settingsVersionChecking => 'перевірка…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Вкладення';

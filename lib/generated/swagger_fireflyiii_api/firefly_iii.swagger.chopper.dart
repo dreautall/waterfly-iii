@@ -7216,6 +7216,35 @@ So, if you recurring transaction that occurs every Monday, you can trigger the c
   }
 
   @override
+  Future<Response<dynamic>> _v1BatchFinishPost({
+    String? xTraceId,
+    SwaggerMetaData swaggerMetaData = const SwaggerMetaData(
+      description: '''summary: Finish a batch of unprocessed transactions.
+''',
+      summary: 'Finish a batch of unprocessed transactions.',
+      operationId: 'finishBatch',
+      consumes: [],
+      produces: [],
+      security: [],
+      tags: ["about"],
+      deprecated: false,
+    ),
+  }) {
+    final Uri $url = Uri.parse('/v1/batch/finish');
+    final Map<String, String> $headers = {
+      if (xTraceId != null) 'X-Trace-Id': xTraceId,
+    };
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      headers: $headers,
+      tag: swaggerMetaData,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<List<Configuration>>> _v1ConfigurationGet({
     String? xTraceId,
     SwaggerMetaData swaggerMetaData = const SwaggerMetaData(

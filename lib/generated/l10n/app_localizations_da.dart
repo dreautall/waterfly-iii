@@ -367,6 +367,9 @@ class SDa extends S {
   String get generalIncome => 'Indtægter';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Gældsforpligtelser';
 
   @override
@@ -395,6 +398,10 @@ class SDa extends S {
 
   @override
   String get generalUnknown => 'Ukendt';
+
+  @override
+  String get homeMainActionPrivacyMode =>
+      'Show/Hide all amounts (Privacy Mode)';
 
   @override
   String homeMainBillsInterval(String period) {
@@ -848,6 +855,28 @@ class SDa extends S {
       'Forbindelsesindstillinger opdateret.';
 
   @override
+  String get settingsTag => 'Tag Transactions';
+
+  @override
+  String get settingsTagAllHelp =>
+      'Automatically add a tag for all new transactions.';
+
+  @override
+  String settingsTagList(int count, String tags) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'tags: $tags',
+      one: 'tag: $tags',
+    );
+    return 'Selected $_temp0';
+  }
+
+  @override
+  String get settingsTagNLHelp =>
+      'Automatically add a tag for transactions created from the listener.';
+
+  @override
   String get settingsTheme => 'App tema';
 
   @override
@@ -875,6 +904,9 @@ class SDa extends S {
 
   @override
   String get settingsVersionChecking => 'tjekker…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Bilag';

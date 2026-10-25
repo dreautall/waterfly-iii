@@ -1,16 +1,20 @@
 import 'package:animations/animations.dart';
 import 'package:chopper/chopper.dart' show Response;
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
+import 'package:waterflyiii/settings.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/widgets/fabs.dart';
+import 'package:waterflyiii/widgets/privacybutton.dart';
 
 class HomeBalance extends StatefulWidget {
   const HomeBalance({super.key});
@@ -42,6 +46,17 @@ class _HomeBalanceState extends State<HomeBalance>
   bool get wantKeepAlive => true;
 
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<PageActions>().set(widget.key!, <Widget>[
+        const PrivacyButton(),
+      ]);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
     log.finest(() => "build()");
@@ -52,6 +67,8 @@ class _HomeBalanceState extends State<HomeBalance>
         future: _fetchAccounts(),
         builder: (BuildContext context, AsyncSnapshot<AccountArray> snapshot) {
           if (snapshot.connectionState == .done && snapshot.hasData) {
+            // For privacy mode
+            context.watch<SettingsProvider>().privacyMode;
             return ListView(
               scrollCacheExtent: const .pixels(1000),
               padding: const .all(8),
@@ -129,9 +146,7 @@ class _HomeBalanceState extends State<HomeBalance>
                                       .textTheme
                                       .titleMedium!
                                       .copyWith(
-                                        color: (balance < 0)
-                                            ? Colors.red
-                                            : Colors.green,
+                                        color: context.balanceColor(balance),
                                         fontWeight: .bold,
                                         fontFeatures: const <FontFeature>[
                                           .tabularFigures(),

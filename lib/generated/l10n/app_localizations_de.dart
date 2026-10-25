@@ -367,6 +367,9 @@ class SDe extends S {
   String get generalIncome => 'Einnahmen';
 
   @override
+  String get generalLeft => 'Übrig';
+
+  @override
   String get generalLiabilities => 'Verbindlichkeiten';
 
   @override
@@ -395,6 +398,10 @@ class SDe extends S {
 
   @override
   String get generalUnknown => 'Unbekannt';
+
+  @override
+  String get homeMainActionPrivacyMode =>
+      'Beträge ein/ausblenden (Datenschutzmodus)';
 
   @override
   String homeMainBillsInterval(String period) {
@@ -843,6 +850,28 @@ class SDe extends S {
       'Verbindungseinstellungen aktualisiert.';
 
   @override
+  String get settingsTag => 'Transaktionen verschlagworten';
+
+  @override
+  String get settingsTagAllHelp =>
+      'Schlagwort für alle neuen Transaktionen hinzufügen.';
+
+  @override
+  String settingsTagList(int count, String tags) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: ' Schlagwörter: $tags',
+      one: 's Schlagwort: $tags',
+    );
+    return 'Ausgewählte$_temp0';
+  }
+
+  @override
+  String get settingsTagNLHelp =>
+      'Schlagwort für alle Transaktionen aus Benachrichtigungen hinzufügen.';
+
+  @override
   String get settingsTheme => 'Erscheinungsbild';
 
   @override
@@ -870,6 +899,9 @@ class SDe extends S {
 
   @override
   String get settingsVersionChecking => 'Überprüfe…';
+
+  @override
+  String get tagNone => '<kein Schlagwort>';
 
   @override
   String get transactionAttachments => 'Anhänge';

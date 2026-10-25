@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/settings.dart' show SettingsProvider;
 import 'package:waterflyiii/widgets/charts.dart';
 
 class PiggyChart extends StatefulWidget {
@@ -129,7 +130,9 @@ class _PiggyChartState extends State<PiggyChart> {
         plotBands: targetAnnotation,
         maximum: targetAmount != 0 ? targetAmount : null,
         axisLabelFormatter: (AxisLabelRenderDetails args) => ChartAxisLabel(
-          NumberFormat().format(double.parse(args.text)),
+          SettingsProvider.isPrivacyMode
+              ? " "
+              : NumberFormat().format(double.parse(args.text)),
           args.textStyle,
         ),
       ),

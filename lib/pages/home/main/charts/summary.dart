@@ -1,7 +1,7 @@
 import 'package:chopper/chopper.dart' show Response;
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waterflyiii/animations.dart';
@@ -9,6 +9,8 @@ import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
+import 'package:waterflyiii/settings.dart' show SettingsProvider;
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
 class SummaryChart extends StatelessWidget {
@@ -53,7 +55,9 @@ class SummaryChart extends StatelessWidget {
           color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
         axisLabelFormatter: (AxisLabelRenderDetails args) => ChartAxisLabel(
-          NumberFormat().format(double.parse(args.text)),
+          SettingsProvider.isPrivacyMode
+              ? " "
+              : NumberFormat().format(double.parse(args.text)),
           args.textStyle,
         ),
       ),
@@ -79,6 +83,9 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
 
   Future<List<ChartDataSet>> _fetchData(BuildContext context) async {
     final FireflyIii api = context.read<FireflyService>().api;
+    final CurrencyRead defaultCurrency = context
+        .read<FireflyService>()
+        .defaultCurrency;
     final DateTime now = DateTime.now().toLocal().clearTime();
 
     final Response<ChartLine> respChartData = await api
@@ -102,18 +109,21 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
         latestDate = e.endDate;
       }
       currencies.add(
-        CurrencyRead(
-          id: e.currencyId ?? "0",
-          type: "currencies",
-          attributes: CurrencyProperties(
-            code: e.currencyCode ?? "",
-            name: "",
-            symbol: e.currencySymbol ?? "",
-            decimalPlaces: e.currencyDecimalPlaces,
-          ),
-        ),
+        e.usePrimary
+            ? defaultCurrency
+            : CurrencyRead(
+                id: e.currencyId ?? "0",
+                type: "currencies",
+                attributes: CurrencyProperties(
+                  code: e.currencyCode ?? "",
+                  name: "",
+                  symbol: e.currencySymbol ?? "",
+                  decimalPlaces: e.currencyDecimalPlaces,
+                ),
+              ),
       );
-      final Map<String, dynamic> entries = e.entries as Map<String, dynamic>;
+      final Map<String, dynamic> entries =
+          (e.usePrimary ? e.pcEntries : e.entries) as Map<String, dynamic>;
       balances.add(double.tryParse(entries.entries.last.value) ?? 0);
       accounts.add(e.label!);
     }
@@ -214,9 +224,11 @@ class _SummaryChartPopupState extends State<SummaryChartPopup> {
                               axisLabelFormatter:
                                   (AxisLabelRenderDetails args) =>
                                       ChartAxisLabel(
-                                        NumberFormat().format(
-                                          double.parse(args.text),
-                                        ),
+                                        SettingsProvider.isPrivacyMode
+                                            ? " "
+                                            : NumberFormat().format(
+                                                double.parse(args.text),
+                                              ),
                                         args.textStyle,
                                       ),
                             ),
@@ -342,7 +354,7 @@ class SummaryTable extends StatelessWidget {
                     child: Text(
                       currency.fmt(balance, locale: S.of(context).localeName),
                       style: TextStyle(
-                        color: (balance < 0) ? Colors.red : Colors.green,
+                        color: context.balanceColor(balance),
                         fontWeight: .bold,
                         fontFeatures: const <FontFeature>[.tabularFigures()],
                       ),

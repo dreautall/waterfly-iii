@@ -1,8 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:chopper/chopper.dart' show Response;
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart' show SortingOrder;
 import 'package:waterflyiii/auth.dart';
@@ -12,7 +12,9 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/bills/billdetails.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/settings.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/timezonehandler.dart';
+import 'package:waterflyiii/widgets/privacybutton.dart';
 
 class BillsPage extends StatefulWidget {
   const BillsPage({super.key});
@@ -88,6 +90,7 @@ class _BillsPageState extends State<BillsPage>
           tooltip: S.of(context).billsChangeLayoutTooltip,
           onPressed: _showLayoutPickerDialog,
         ),
+        const PrivacyButton(),
       ];
     });
 
@@ -122,6 +125,10 @@ class _BillsPageState extends State<BillsPage>
                   ),
                 );
               }
+
+              // For privacy mode
+              context.watch<SettingsProvider>().privacyMode;
+
               return Padding(
                 padding: const .fromLTRB(8, 0, 8, 8),
                 child: _billsLayout == .list
@@ -268,7 +275,9 @@ class _BillsPageState extends State<BillsPage>
               TextSpan(
                 text: _getAverageBillAmount(bill),
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: Colors.red,
+                  color: Theme.of(
+                    context,
+                  ).extension<TransactionColors>()!.negativeColor,
                   fontFeatures: const <FontFeature>[.tabularFigures()],
                 ),
               ),

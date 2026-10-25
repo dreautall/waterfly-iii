@@ -362,6 +362,9 @@ class SZh extends S {
   String get generalIncome => '收入';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => '负债';
 
   @override
@@ -390,6 +393,10 @@ class SZh extends S {
 
   @override
   String get generalUnknown => '未知';
+
+  @override
+  String get homeMainActionPrivacyMode =>
+      'Show/Hide all amounts (Privacy Mode)';
 
   @override
   String homeMainBillsInterval(String period) {
@@ -830,6 +837,28 @@ class SZh extends S {
   String get settingsServerConnectionUpdated => '连接设置已更新。';
 
   @override
+  String get settingsTag => 'Tag Transactions';
+
+  @override
+  String get settingsTagAllHelp =>
+      'Automatically add a tag for all new transactions.';
+
+  @override
+  String settingsTagList(int count, String tags) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'tags: $tags',
+      one: 'tag: $tags',
+    );
+    return 'Selected $_temp0';
+  }
+
+  @override
+  String get settingsTagNLHelp =>
+      'Automatically add a tag for transactions created from the listener.';
+
+  @override
   String get settingsTheme => '应用主题';
 
   @override
@@ -856,6 +885,9 @@ class SZh extends S {
 
   @override
   String get settingsVersionChecking => '正在检查…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => '附件';

@@ -437,6 +437,10 @@
     "@generalIncome": {
         "description": "(Account) Info"
     },
+    "generalLeft": "Left",
+    "@generalLeft": {
+        "description": "Label for the remaining (not yet spent) amount of a budget."
+    },
     "generalLiabilities": "Liabilities",
     "@generalLiabilities": {
         "description": "Firefly Translation String: liabilities"
@@ -476,6 +480,10 @@
     "generalUnknown": "Unknown",
     "@generalUnknown": {
         "description": "Something is unknown."
+    },
+    "homeMainActionPrivacyMode": "Show/Hide all amounts (Privacy Mode)",
+    "@homeMainActionPrivacyMode": {
+        "description": "Tooltip label for privacy mode button"
     },
     "homeMainBillsInterval": " ({period, select, weekly{weekly} monthly{monthly} quarterly{quarterly} halfyear{half-year} yearly{yearly} other{unknown}})",
     "@homeMainBillsInterval": {
@@ -1085,6 +1093,32 @@
     "@settingsServerConnectionUpdated": {
         "description": "Server connection settings have been updated"
     },
+    "settingsTag": "Tag Transactions",
+    "@settingsTag": {
+        "description": "Setting to (automatically) tag transactions"
+    },
+    "settingsTagAllHelp": "Automatically add a tag for all new transactions.",
+    "@settingsTagAllHelp": {
+        "description": "Help text to automatically tag (all!) transactions"
+    },
+    "settingsTagList": "Selected {count, plural, =1{tag: {tags}} other{tags: {tags}}}",
+    "@settingsTagList": {
+        "description": "List of selected tags (for auto-tag feature). If no tags are selected, a help text will be shown instead.",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "2"
+            },
+            "tags": {
+                "type": "String",
+                "example": "tag1, tag2"
+            }
+        }
+    },
+    "settingsTagNLHelp": "Automatically add a tag for transactions created from the listener.",
+    "@settingsTagNLHelp": {
+        "description": "Help text to automatically tag transactions from the notification listener"
+    },
     "settingsTheme": "App Theme",
     "@settingsTheme": {
         "description": "App theme (dark or light)"
@@ -1118,6 +1152,10 @@
     "settingsVersionChecking": "checking…",
     "@settingsVersionChecking": {
         "description": "Shown while checking for app version"
+    },
+    "tagNone": "<no tag>",
+    "@tagNone": {
+        "description": "Placeholder when no tag has been set."
     },
     "transactionAttachments": "Attachments",
     "@transactionAttachments": {

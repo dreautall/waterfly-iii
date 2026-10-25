@@ -367,6 +367,9 @@ class SSl extends S {
   String get generalIncome => 'Prihodek';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Obveznosti';
 
   @override
@@ -395,6 +398,10 @@ class SSl extends S {
 
   @override
   String get generalUnknown => 'Neznano';
+
+  @override
+  String get homeMainActionPrivacyMode =>
+      'Show/Hide all amounts (Privacy Mode)';
 
   @override
   String homeMainBillsInterval(String period) {
@@ -849,6 +856,28 @@ class SSl extends S {
       'Nastavitve povezave posodobljene.';
 
   @override
+  String get settingsTag => 'Tag Transactions';
+
+  @override
+  String get settingsTagAllHelp =>
+      'Automatically add a tag for all new transactions.';
+
+  @override
+  String settingsTagList(int count, String tags) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'tags: $tags',
+      one: 'tag: $tags',
+    );
+    return 'Selected $_temp0';
+  }
+
+  @override
+  String get settingsTagNLHelp =>
+      'Automatically add a tag for transactions created from the listener.';
+
+  @override
   String get settingsTheme => 'Tema aplikacije';
 
   @override
@@ -876,6 +905,9 @@ class SSl extends S {
 
   @override
   String get settingsVersionChecking => 'preverjam…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Priponke';

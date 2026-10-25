@@ -1,9 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:chopper/chopper.dart' show Response;
-import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
@@ -12,6 +12,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/pages/bills/billchart.dart';
 import 'package:waterflyiii/pages/transaction.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
 
@@ -238,7 +239,9 @@ class _BillDetailsState extends State<BillDetails> {
           text: TextSpan(
             text: _getTransactionAmount(transaction),
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: Colors.red,
+              color: Theme.of(
+                context,
+              ).extension<TransactionColors>()!.negativeColor,
               fontFeatures: const <FontFeature>[.tabularFigures()],
             ),
             children: <InlineSpan>[

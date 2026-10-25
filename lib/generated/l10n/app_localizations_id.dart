@@ -367,6 +367,9 @@ class SId extends S {
   String get generalIncome => 'Pendapatan';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => 'Kewajiban';
 
   @override
@@ -395,6 +398,10 @@ class SId extends S {
 
   @override
   String get generalUnknown => 'Tidak Diketahui';
+
+  @override
+  String get homeMainActionPrivacyMode =>
+      'Show/Hide all amounts (Privacy Mode)';
 
   @override
   String homeMainBillsInterval(String period) {
@@ -844,6 +851,28 @@ class SId extends S {
       'Pengaturan koneksi telah diperbarui.';
 
   @override
+  String get settingsTag => 'Tag Transactions';
+
+  @override
+  String get settingsTagAllHelp =>
+      'Automatically add a tag for all new transactions.';
+
+  @override
+  String settingsTagList(int count, String tags) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'tags: $tags',
+      one: 'tag: $tags',
+    );
+    return 'Selected $_temp0';
+  }
+
+  @override
+  String get settingsTagNLHelp =>
+      'Automatically add a tag for transactions created from the listener.';
+
+  @override
   String get settingsTheme => 'Tema Aplikasi';
 
   @override
@@ -871,6 +900,9 @@ class SId extends S {
 
   @override
   String get settingsVersionChecking => 'memeriksa…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => 'Lampiran';

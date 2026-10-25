@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:animations/animations.dart';
 import 'package:chopper/chopper.dart' show Response;
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -15,11 +15,13 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/home.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/pages/transaction.dart';
-import 'package:waterflyiii/pages/transaction/delete.dart';
+import 'package:waterflyiii/pages/transaction/dialogs/delete.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
+import 'package:waterflyiii/theme.dart';
 import 'package:waterflyiii/timezonehandler.dart';
 import 'package:waterflyiii/widgets/listview_pagedchildbuilder.dart';
+import 'package:waterflyiii/widgets/privacybutton.dart';
 
 class TransactionSum {
   double withdrawals = 0;
@@ -165,6 +167,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
               },
             ),
           ),
+          const PrivacyButton(),
         ]);
       });
     }
@@ -476,7 +479,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             defaultCurrency.fmt(_txSum.deposits),
                             style: Theme.of(context).textTheme.bodyMedium!
                                 .copyWith(
-                                  color: Colors.green,
+                                  color: Theme.of(context)
+                                      .extension<TransactionColors>()!
+                                      .positiveColor,
                                   fontWeight: .bold,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
@@ -487,7 +492,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             defaultCurrency.fmt(_txSum.withdrawals),
                             style: Theme.of(context).textTheme.bodyMedium!
                                 .copyWith(
-                                  color: Colors.red,
+                                  color: Theme.of(context)
+                                      .extension<TransactionColors>()!
+                                      .negativeColor,
                                   fontWeight: .bold,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
@@ -498,7 +505,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             defaultCurrency.fmt(_txSum.transfers),
                             style: Theme.of(context).textTheme.bodyMedium!
                                 .copyWith(
-                                  color: Colors.blue,
+                                  color: Theme.of(context)
+                                      .extension<TransactionColors>()!
+                                      .transferColor,
                                   fontWeight: .bold,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
@@ -529,9 +538,7 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             defaultCurrency.fmt(_txSum.total),
                             style: Theme.of(context).textTheme.bodyLarge!
                                 .copyWith(
-                                  color: _txSum.total < 0
-                                      ? Colors.red
-                                      : Colors.green,
+                                  color: context.balanceColor(_txSum.total),
                                   fontWeight: .bold,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
@@ -715,7 +722,18 @@ class _HomeTransactionsState extends State<HomeTransactions>
 
     // Account balance
     late double balance;
+    CurrencyRead accountCurrency = currency;
     if (_filters.account != null) {
+      accountCurrency = CurrencyRead(
+        id: _filters.account!.attributes.currencyId ?? "0",
+        type: "currencies",
+        attributes: CurrencyProperties(
+          code: _filters.account!.attributes.currencyCode ?? "",
+          name: _filters.account!.attributes.currencyName ?? "",
+          symbol: _filters.account!.attributes.currencySymbol ?? "",
+          decimalPlaces: _filters.account!.attributes.currencyDecimalPlaces,
+        ),
+      );
       if (item.attributes.transactions.first.sourceBalanceAfter != null) {
         balance =
             double.tryParse(
@@ -837,7 +855,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
             child: ListTile(
               leading: CircleAvatar(
                 foregroundColor: Colors.white,
-                backgroundColor: transactions.first.type.color,
+                backgroundColor: context.transactionColor(
+                  transactions.first.type,
+                ),
                 child: Icon(transactions.first.type.icon),
               ),
               title: Row(
@@ -860,7 +880,9 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             text: foreignText,
                             style: Theme.of(context).textTheme.bodySmall!
                                 .copyWith(
-                                  color: Colors.blue,
+                                  color: Theme.of(context)
+                                      .extension<TransactionColors>()!
+                                      .transferColor,
                                   fontFeatures: const <FontFeature>[
                                     .tabularFigures(),
                                   ],
@@ -872,11 +894,17 @@ class _HomeTransactionsState extends State<HomeTransactions>
                               .copyWith(
                                 color:
                                     transactions.first.type != .reconciliation
-                                    ? transactions.first.type.color
+                                    ? context.transactionColor(
+                                        transactions.first.type,
+                                      )
                                     : (transactions.first.sourceType ==
                                           .reconciliationAccount)
-                                    ? Colors.green
-                                    : Colors.red,
+                                    ? Theme.of(context)
+                                          .extension<TransactionColors>()!
+                                          .positiveColor
+                                    : Theme.of(context)
+                                          .extension<TransactionColors>()!
+                                          .negativeColor,
                                 fontFeatures: const <FontFeature>[
                                   .tabularFigures(),
                                 ],
@@ -887,15 +915,15 @@ class _HomeTransactionsState extends State<HomeTransactions>
                   ),
                 ],
               ),
-              subtitle: Row(
+              subtitle: Column(
                 crossAxisAlignment: .start,
                 children: <Widget>[
-                  // Front part
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: .start,
-                      children: <Widget>[
-                        RichText(
+                  Row(
+                    crossAxisAlignment: .start,
+                    children: <Widget>[
+                      // Front part
+                      Expanded(
+                        child: RichText(
                           overflow: .ellipsis,
                           maxLines: 2,
                           text: TextSpan(
@@ -903,82 +931,85 @@ class _HomeTransactionsState extends State<HomeTransactions>
                             children: subtitle,
                           ),
                         ),
-                        if (!context.watch<SettingsProvider>().hideTags &&
-                            tags.isNotEmpty) ...<Widget>[
-                          Wrap(
-                            children: tags
-                                .map(
-                                  (String tag) => Card(
-                                    child: Padding(
-                                      padding: const .all(6.0),
-                                      child: Row(
-                                        mainAxisSize: .min,
-                                        children: <Widget>[
-                                          const Icon(
-                                            Icons.label_outline,
-                                            size: 16,
-                                          ),
-                                          const SizedBox(width: 5),
-                                          Flexible(
-                                            child: RichText(
-                                              overflow: .fade,
-                                              text: TextSpan(
-                                                style: Theme.of(
-                                                  context,
-                                                ).textTheme.bodyMedium,
-                                                text: tag,
-                                              ),
-                                            ),
-                                          ),
+                      ),
+                      // Trailing part
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width * 0.4,
+                        ),
+                        child: RichText(
+                          textAlign: .end,
+                          maxLines: 1,
+                          overflow: .ellipsis,
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            children: <InlineSpan>[
+                              if (reconciled)
+                                const WidgetSpan(
+                                  baseline: .ideographic,
+                                  alignment: .middle,
+                                  child: Padding(
+                                    padding: .only(right: 2),
+                                    child: Icon(Icons.check),
+                                  ),
+                                ),
+                              if (_filters.account != null)
+                                TextSpan(
+                                  text: accountCurrency.fmt(balance),
+                                  style: Theme.of(context).textTheme.bodyMedium!
+                                      .copyWith(
+                                        fontFeatures: const <FontFeature>[
+                                          .tabularFigures(),
                                         ],
                                       ),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
+                                ),
+                              if (_filters.account == null)
+                                TextSpan(
+                                  text: switch (transactions.first.type) {
+                                    .deposit => destinationName,
+                                    .openingBalance => "",
+                                    .reconciliation => "",
+                                    _ => sourceName,
+                                  },
+                                ),
+                            ],
                           ),
-                        ],
-                      ],
-                    ),
+                        ),
+                      ),
+                    ],
                   ),
-                  // Trailing part
-                  RichText(
-                    textAlign: .end,
-                    maxLines: 1,
-                    text: TextSpan(
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      children: <InlineSpan>[
-                        if (reconciled)
-                          const WidgetSpan(
-                            baseline: .ideographic,
-                            alignment: .middle,
-                            child: Padding(
-                              padding: .only(right: 2),
-                              child: Icon(Icons.check),
-                            ),
-                          ),
-                        if (_filters.account != null)
-                          TextSpan(
-                            text: currency.fmt(balance),
-                            style: Theme.of(context).textTheme.bodyMedium!
-                                .copyWith(
-                                  fontFeatures: const <FontFeature>[
-                                    .tabularFigures(),
+                  if (!context.watch<SettingsProvider>().hideTags &&
+                      tags.isNotEmpty) ...<Widget>[
+                    Wrap(
+                      children: tags
+                          .map(
+                            (String tag) => Card(
+                              child: Padding(
+                                padding: const .all(6.0),
+                                child: Row(
+                                  mainAxisSize: .min,
+                                  children: <Widget>[
+                                    const Icon(Icons.label_outline, size: 16),
+                                    const SizedBox(width: 5),
+                                    Flexible(
+                                      child: RichText(
+                                        overflow: .fade,
+                                        text: TextSpan(
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium,
+                                          text: tag,
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
-                          ),
-                        if (_filters.account == null)
-                          TextSpan(
-                            text: switch (transactions.first.type) {
-                              .deposit => destinationName,
-                              .openingBalance => "",
-                              .reconciliation => "",
-                              _ => sourceName,
-                            },
-                          ),
-                      ],
+                              ),
+                            ),
+                          )
+                          .toList(),
                     ),
-                  ),
+                  ],
                 ],
               ),
               isThreeLine: true,

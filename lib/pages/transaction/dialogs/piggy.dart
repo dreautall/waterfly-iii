@@ -1,6 +1,6 @@
 import 'package:chopper/chopper.dart' show Response;
-import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
@@ -19,7 +19,7 @@ class PiggyDialog extends StatefulWidget {
 }
 
 class _PiggyDialogState extends State<PiggyDialog> {
-  final Logger log = Logger("Pages.Transaction.Piggy");
+  final Logger log = Logger("Pages.Transaction.Dialogs.Piggy");
 
   final TextEditingController _piggyTextController = TextEditingController();
   final FocusNode _piggyFocusNode = FocusNode();
@@ -44,6 +44,8 @@ class _PiggyDialogState extends State<PiggyDialog> {
 
   @override
   Widget build(BuildContext context) {
+    log.finest(() => "build()");
+
     return AlertDialog(
       icon: const Icon(Icons.savings_outlined),
       title: Text(S.of(context).transactionDialogPiggyTitle),

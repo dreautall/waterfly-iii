@@ -364,6 +364,9 @@ class SKo extends S {
   String get generalIncome => '수입';
 
   @override
+  String get generalLeft => 'Left';
+
+  @override
   String get generalLiabilities => '부채';
 
   @override
@@ -392,6 +395,10 @@ class SKo extends S {
 
   @override
   String get generalUnknown => '알 수 없는';
+
+  @override
+  String get homeMainActionPrivacyMode =>
+      'Show/Hide all amounts (Privacy Mode)';
 
   @override
   String homeMainBillsInterval(String period) {
@@ -827,6 +834,28 @@ class SKo extends S {
   String get settingsServerConnectionUpdated => '연결 설정이 업데이트되었습니다.';
 
   @override
+  String get settingsTag => 'Tag Transactions';
+
+  @override
+  String get settingsTagAllHelp =>
+      'Automatically add a tag for all new transactions.';
+
+  @override
+  String settingsTagList(int count, String tags) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'tags: $tags',
+      one: 'tag: $tags',
+    );
+    return 'Selected $_temp0';
+  }
+
+  @override
+  String get settingsTagNLHelp =>
+      'Automatically add a tag for transactions created from the listener.';
+
+  @override
   String get settingsTheme => '테마변경';
 
   @override
@@ -854,6 +883,9 @@ class SKo extends S {
 
   @override
   String get settingsVersionChecking => '확인 중…';
+
+  @override
+  String get tagNone => '<no tag>';
 
   @override
   String get transactionAttachments => '첨부 파일';

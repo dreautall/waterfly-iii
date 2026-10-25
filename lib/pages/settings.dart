@@ -4,11 +4,11 @@ import 'dart:io';
 
 import 'package:animations/animations.dart';
 import 'package:dynamic_color/dynamic_color.dart';
-import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:logging/logging.dart';
 import 'package:material_color_utilities/material_color_utilities.dart'
     show CorePalette;
+import 'package:material_ui/material_ui.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_actions/quick_actions.dart';
@@ -20,6 +20,7 @@ import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/settings/connection.dart';
 import 'package:waterflyiii/pages/settings/debug.dart';
 import 'package:waterflyiii/pages/settings/notifications.dart';
+import 'package:waterflyiii/pages/transaction/tags.dart';
 import 'package:waterflyiii/settings.dart';
 
 final Logger log = Logger("Pages.Settings");
@@ -39,12 +40,13 @@ class SettingsPageState extends State<SettingsPage>
   Widget build(BuildContext context) {
     log.finest(() => "build()");
 
-    final SettingsProvider settings = context.read<SettingsProvider>();
+    final SettingsProvider settings = context.watch<SettingsProvider>();
 
     return ListView(
       padding: const .symmetric(horizontal: 24),
       primary: false,
       children: <Widget>[
+        // Language
         ListTile(
           title: Text(S.of(context).settingsLanguage),
           subtitle: Text(S.of(context).localeName),
@@ -70,6 +72,7 @@ class SettingsPageState extends State<SettingsPage>
             });
           },
         ),
+        // App Theme
         FutureBuilder<CorePalette?>(
           future: DynamicColorPlugin.getCorePalette(),
           builder: (BuildContext context, AsyncSnapshot<CorePalette?> snapshot) {
@@ -80,14 +83,14 @@ class SettingsPageState extends State<SettingsPage>
                 snapshot.data != null) {
               // Dynamic color support available
               dynamicColorAvailable = true;
-              if (context.select((SettingsProvider s) => s.dynamicColors)) {
+              if (settings.dynamicColors) {
                 dynamicColor = " - ${S.of(context).settingsThemeDynamicColors}";
               }
             }
             return ListTile(
               title: Text(S.of(context).settingsTheme),
               subtitle: Text(
-                "${S.of(context).settingsThemeValue(context.select((SettingsProvider s) => s.theme).toString().split('.').last)}$dynamicColor",
+                "${S.of(context).settingsThemeValue(settings.theme.toString().split('.').last)}$dynamicColor",
               ),
               leading: const CircleAvatar(child: Icon(Icons.format_paint)),
               onTap: () {
@@ -105,60 +108,14 @@ class SettingsPageState extends State<SettingsPage>
             );
           },
         ),
-        const Divider(),
-        ListTile(
-          title: Text(S.of(context).settingsServerConnection),
-          subtitle: Text(
-            context.select((FireflyService f) {
-              final Uri? host = f.user?.host;
-              if (host == null) {
-                return "";
-              }
-              final List<String> segments = <String>[...host.pathSegments];
-              if (segments.isNotEmpty && segments.last == "api") {
-                segments.removeLast();
-              }
-              return host.replace(pathSegments: segments).toString();
-            }),
-            maxLines: 2,
-          ),
-          leading: const CircleAvatar(child: Icon(Icons.cloud_outlined)),
-          onTap: () {
-            showDialog<void>(
-              context: context,
-              builder: (BuildContext context) => const ConnectionDialog(),
-            );
-          },
-        ),
-        SwitchListTile.adaptive(
-          title: Text(S.of(context).settingsUseServerTimezone),
-          subtitle: Text(S.of(context).settingsUseServerTimezoneHelp),
-          value: context.select((SettingsProvider s) => s.useServerTime),
-          secondary: CircleAvatar(
-            child: Icon(
-              context.select((SettingsProvider s) => s.useServerTime)
-                  ? Icons.schedule
-                  : Icons.schedule_outlined,
-            ),
-          ),
-          onChanged: (bool value) async {
-            await context.read<FireflyService>().tzHandler.setUseServerTime(
-              value,
-            );
-            settings.useServerTime = value;
-          },
-        ),
-        const Divider(),
+
+        // Lockscreen
         SwitchListTile.adaptive(
           title: Text(S.of(context).settingsLockscreen),
           subtitle: Text(S.of(context).settingsLockscreenHelp),
-          value: context.select((SettingsProvider s) => s.lock),
+          value: settings.lock,
           secondary: CircleAvatar(
-            child: Icon(
-              context.select((SettingsProvider s) => s.lock)
-                  ? Icons.lock
-                  : Icons.lock_outline,
-            ),
+            child: Icon(settings.lock ? Icons.lock : Icons.lock_outline),
           ),
           onChanged: (bool value) async {
             final S l10n = S.of(context);
@@ -198,6 +155,85 @@ class SettingsPageState extends State<SettingsPage>
           },
         ),
         const Divider(),
+        // Server Connection
+        ListTile(
+          title: Text(S.of(context).settingsServerConnection),
+          subtitle: Text(
+            context.select((FireflyService f) {
+              final Uri? host = f.user?.host;
+              if (host == null) {
+                return "";
+              }
+              final List<String> segments = <String>[...host.pathSegments];
+              if (segments.isNotEmpty && segments.last == "api") {
+                segments.removeLast();
+              }
+              return host.replace(pathSegments: segments).toString();
+            }),
+            maxLines: 2,
+          ),
+          leading: const CircleAvatar(child: Icon(Icons.cloud_outlined)),
+          onTap: () {
+            showDialog<void>(
+              context: context,
+              builder: (BuildContext context) => const ConnectionDialog(),
+            );
+          },
+        ),
+        // Server Timezone
+        SwitchListTile.adaptive(
+          title: Text(S.of(context).settingsUseServerTimezone),
+          subtitle: Text(S.of(context).settingsUseServerTimezoneHelp),
+          value: settings.useServerTime,
+          secondary: CircleAvatar(
+            child: Icon(
+              settings.useServerTime ? Icons.schedule : Icons.schedule_outlined,
+            ),
+          ),
+          onChanged: (bool value) async {
+            await context.read<FireflyService>().tzHandler.setUseServerTime(
+              value,
+            );
+            settings.useServerTime = value;
+          },
+        ),
+        // Auto Tag
+        SwitchListTile.adaptive(
+          title: Text(S.of(context).settingsTag),
+          subtitle: settings.autoTagAll.isEmpty
+              ? Text(S.of(context).settingsTagAllHelp)
+              : Text(
+                  S
+                      .of(context)
+                      .settingsTagList(
+                        settings.autoTagAll.length,
+                        settings.autoTagAll.join(", "),
+                      ),
+                ),
+          value: settings.autoTagAll.isNotEmpty,
+          secondary: CircleAvatar(
+            child: Icon(
+              settings.autoTagAll.isNotEmpty
+                  ? Icons.bookmarks
+                  : Icons.bookmarks_outlined,
+            ),
+          ),
+          onChanged: (bool value) =>
+              showDialog<List<String>>(
+                context: context,
+                builder: (BuildContext context) => TagDialog(
+                  selectedTags: settings.autoTagAll,
+                  enableAdd: true,
+                ),
+              ).then((List<String>? tags) {
+                if (tags == null) {
+                  return;
+                }
+                settings.setAutoTagAll(tags);
+              }),
+        ),
+        const Divider(),
+        // Notification Listener
         if (Platform.isAndroid)
           FutureBuilder<NotificationListenerStatus>(
             future: nlStatus(),
@@ -256,6 +292,7 @@ class SettingsPageState extends State<SettingsPage>
                 },
           ),
         if (Platform.isAndroid) const Divider(),
+        // FAQ
         ListTile(
           title: Text(S.of(context).settingsFAQ),
           subtitle: Text(S.of(context).settingsFAQHelp),
@@ -271,6 +308,7 @@ class SettingsPageState extends State<SettingsPage>
             }
           },
         ),
+        // Version
         FutureBuilder<PackageInfo>(
           future: PackageInfo.fromPlatform(),
           builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
@@ -340,7 +378,7 @@ class ThemeDialog extends StatelessWidget {
         dynamicColorAvailable
             ? SwitchListTile.adaptive(
                 title: Text(S.of(context).settingsThemeDynamicColors),
-                value: context.select((SettingsProvider s) => s.dynamicColors),
+                value: settings.dynamicColors,
                 isThreeLine: false,
                 onChanged: (bool value) => settings.dynamicColors = value,
               )

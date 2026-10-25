@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:animations/animations.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -16,6 +16,8 @@ import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
+import 'package:waterflyiii/theme.dart';
+import 'package:waterflyiii/widgets/privacybutton.dart';
 
 final Logger log = Logger("Pages.Categories");
 
@@ -103,12 +105,13 @@ class _CategoriesPageState extends State<CategoriesPage>
                 });
               },
       ),
+      const PrivacyButton(),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    log.fine(() => "build");
+    log.fine(() => "build()");
 
     late DateTime stockDate;
     if (selectedMonth.year == now.year && selectedMonth.month == now.month) {
@@ -141,6 +144,10 @@ class _CategoriesPageState extends State<CategoriesPage>
             ),
           );
         }
+
+        // For privacy mode
+        context.watch<SettingsProvider>().privacyMode;
+
         final List<Widget> childs = <Widget>[];
         childs.add(
           Padding(
@@ -302,11 +309,7 @@ class SumLine extends StatelessWidget {
             defaultCurrency.fmt(totalSpent),
             textAlign: .end,
             style: TextStyle(
-              color: totalSpent < 0
-                  ? Colors.red
-                  : totalSpent > 0
-                  ? Colors.green
-                  : Colors.grey,
+              color: context.balanceColor(totalSpent),
               fontWeight: .bold,
               fontFeatures: const <FontFeature>[.tabularFigures()],
             ),
@@ -317,11 +320,7 @@ class SumLine extends StatelessWidget {
             defaultCurrency.fmt(totalEarned),
             textAlign: .end,
             style: TextStyle(
-              color: totalEarned < 0
-                  ? Colors.red
-                  : totalEarned > 0
-                  ? Colors.green
-                  : Colors.grey,
+              color: context.balanceColor(totalEarned),
               fontWeight: .bold,
               fontFeatures: const <FontFeature>[.tabularFigures()],
             ),
@@ -332,11 +331,7 @@ class SumLine extends StatelessWidget {
             defaultCurrency.fmt(totalSpent + totalEarned),
             textAlign: .end,
             style: TextStyle(
-              color: (totalSpent + totalEarned) < 0
-                  ? Colors.red
-                  : (totalSpent + totalEarned) > 0
-                  ? Colors.green
-                  : Colors.grey,
+              color: context.balanceColor(totalSpent + totalEarned),
               fontWeight: .bold,
               fontFeatures: const <FontFeature>[.tabularFigures()],
             ),
@@ -515,11 +510,7 @@ class CategoryLine extends StatelessWidget {
                                 vertical: -4,
                               ),
                               side: BorderSide(
-                                color: totalBalance < 0
-                                    ? Colors.red
-                                    : totalBalance > 0
-                                    ? Colors.green
-                                    : Colors.grey,
+                                color: context.balanceColor(totalBalance),
                               ),
                             ),
                           // Completely separate due to different paddings
@@ -550,11 +541,7 @@ class CategoryLine extends StatelessWidget {
                               defaultCurrency.fmt(cs.sumSpent),
                               textAlign: .end,
                               style: TextStyle(
-                                color: cs.sumSpent < 0
-                                    ? Colors.red
-                                    : cs.sumSpent > 0
-                                    ? Colors.green
-                                    : Colors.grey,
+                                color: context.balanceColor(cs.sumSpent),
                                 fontWeight: .bold,
                                 fontFeatures: const <FontFeature>[
                                   .tabularFigures(),
@@ -567,11 +554,7 @@ class CategoryLine extends StatelessWidget {
                               defaultCurrency.fmt(cs.sumEarned),
                               textAlign: .end,
                               style: TextStyle(
-                                color: cs.sumEarned < 0
-                                    ? Colors.red
-                                    : cs.sumEarned > 0
-                                    ? Colors.green
-                                    : Colors.grey,
+                                color: context.balanceColor(cs.sumEarned),
                                 fontWeight: .bold,
                                 fontFeatures: const <FontFeature>[
                                   .tabularFigures(),
@@ -584,11 +567,7 @@ class CategoryLine extends StatelessWidget {
                               defaultCurrency.fmt(cs.sumSpent + cs.sumEarned),
                               textAlign: .end,
                               style: TextStyle(
-                                color: totalBalance < 0
-                                    ? Colors.red
-                                    : totalBalance > 0
-                                    ? Colors.green
-                                    : Colors.grey,
+                                color: context.balanceColor(totalBalance),
                                 fontWeight: .bold,
                                 fontFeatures: const <FontFeature>[
                                   .tabularFigures(),

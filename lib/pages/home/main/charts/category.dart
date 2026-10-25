@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'dart:math';
+
+import 'package:material_ui/material_ui.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
@@ -6,6 +8,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/pages/home/transactions.dart';
 import 'package:waterflyiii/pages/home/transactions/filter.dart';
 import 'package:waterflyiii/pages/transaction/tags.dart';
+import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/widgets/charts.dart';
 
 class CategoryChart extends StatelessWidget {
@@ -18,11 +21,18 @@ class CategoryChart extends StatelessWidget {
   Widget build(BuildContext context) {
     List<LabelAmountChart> chartData = <LabelAmountChart>[];
 
+    final int maxLabelLength =
+        max(S.of(context).catNone.length, S.of(context).tagNone.length) + 2;
+
     for (InsightGroupEntry e in data) {
       if ((e.name?.isEmpty ?? true) || e.differenceFloat == 0) {
         continue;
       }
-      chartData.add(LabelAmountChart(e.name!, e.differenceFloat ?? 0));
+      String name = e.name!;
+      if (name.length > maxLabelLength) {
+        name = "${name.substring(0, maxLabelLength)}…";
+      }
+      chartData.add(LabelAmountChart(name, e.differenceFloat ?? 0));
     }
 
     chartData.sort(
@@ -53,6 +63,7 @@ class CategoryChart extends StatelessWidget {
           textStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
             fontWeight: .normal,
             color: Theme.of(context).colorScheme.onSurfaceVariant,
+            overflow: TextOverflow.ellipsis,
           ),
           alignment: .center,
           isResponsive: false,
@@ -65,7 +76,7 @@ class CategoryChart extends StatelessWidget {
             dataLabelMapper: (LabelAmountChart data, _) =>
                 data.amount.abs().toStringAsFixed(0),
             dataLabelSettings: DataLabelSettings(
-              isVisible: true,
+              isVisible: !SettingsProvider.isPrivacyMode,
               textStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
                 fontWeight: .normal,
                 color: Theme.of(context).colorScheme.onSurfaceVariant,

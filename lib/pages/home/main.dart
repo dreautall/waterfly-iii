@@ -531,53 +531,24 @@ class _HomeMainState extends State<HomeMain>
       });
     }
 
-    if (lastMonthsEarned.length < 3) {
-      final DateTime lastDate = now.copyWith(day: 1);
-      for (int i = 0; i < 3; i++) {
-        final DateTime newDate = lastDate.copyWith(month: lastDate.month - i);
-        lastMonthsEarned[newDate] = lastMonthsEarned[newDate] ?? 0;
+    Map<DateTime, double> fillUpMonths(Map<DateTime, double> map, int months) {
+      if (map.length < months) {
+        final DateTime lastDate = now.copyWith(day: 1);
+        for (int i = 0; i < months; i++) {
+          final DateTime newDate = lastDate.copyWith(month: lastDate.month - i);
+          map[newDate] = map[newDate] ?? 0;
+        }
       }
-    }
-    lastMonthsEarned = Map<DateTime, double>.fromEntries(
-      lastMonthsEarned.entries.toList()
-        ..sortBy((MapEntry<DateTime, double> e) => e.key),
-    );
 
-    if (lastMonthsSpent.length < 3) {
-      final DateTime lastDate = now.copyWith(day: 1);
-      for (int i = 0; i < 3; i++) {
-        final DateTime newDate = lastDate.copyWith(month: lastDate.month - i);
-        lastMonthsSpent[newDate] = lastMonthsSpent[newDate] ?? 0;
-      }
+      return Map<DateTime, double>.fromEntries(
+        map.entries.toList()..sortBy((MapEntry<DateTime, double> e) => e.key),
+      );
     }
-    lastMonthsSpent = Map<DateTime, double>.fromEntries(
-      lastMonthsSpent.entries.toList()
-        ..sortBy((MapEntry<DateTime, double> e) => e.key),
-    );
 
-    if (lastMonthsAssets.length < 12) {
-      final DateTime lastDate = now.copyWith(day: 1);
-      for (int i = 0; i < 12; i++) {
-        final DateTime newDate = lastDate.copyWith(month: lastDate.month - i);
-        lastMonthsAssets[newDate] = lastMonthsAssets[newDate] ?? 0;
-      }
-    }
-    lastMonthsAssets = Map<DateTime, double>.fromEntries(
-      lastMonthsAssets.entries.toList()
-        ..sortBy((MapEntry<DateTime, double> e) => e.key),
-    );
-
-    if (lastMonthsLiabilities.length < 12) {
-      final DateTime lastDate = now.copyWith(day: 1);
-      for (int i = 0; i < 12; i++) {
-        final DateTime newDate = lastDate.copyWith(month: lastDate.month - i);
-        lastMonthsLiabilities[newDate] = lastMonthsLiabilities[newDate] ?? 0;
-      }
-    }
-    lastMonthsLiabilities = Map<DateTime, double>.fromEntries(
-      lastMonthsLiabilities.entries.toList()
-        ..sortBy((MapEntry<DateTime, double> e) => e.key),
-    );
+    lastMonthsEarned = fillUpMonths(lastMonthsEarned, 3);
+    lastMonthsSpent = fillUpMonths(lastMonthsSpent, 3);
+    lastMonthsAssets = fillUpMonths(lastMonthsAssets, 12);
+    lastMonthsLiabilities = fillUpMonths(lastMonthsLiabilities, 12);
 
     return true;
   }

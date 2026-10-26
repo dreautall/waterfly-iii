@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:appcheck/appcheck.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
@@ -48,6 +50,14 @@ class PageDefinitionStore implements NotificationDefinitionStore {
   }
 }
 
+class DelayedPageDefinitionStore extends PageDefinitionStore {
+  final Completer<List<NotificationDefinition>> completer =
+      Completer<List<NotificationDefinition>>();
+
+  @override
+  Future<List<NotificationDefinition>> load() => completer.future;
+}
+
 class FailingUndoDefinitionStore extends PageDefinitionStore {
   @override
   Future<void> save(List<NotificationDefinition> definitions) async {
@@ -74,6 +84,15 @@ class FakeNotificationListenerStatusLoader
     loadCount++;
     return status;
   }
+}
+
+class DelayedNotificationListenerStatusLoader
+    implements NotificationListenerStatusLoader {
+  final Completer<NotificationListenerStatus> completer =
+      Completer<NotificationListenerStatus>();
+
+  @override
+  Future<NotificationListenerStatus> load() => completer.future;
 }
 
 class FakeNotificationAccessSettingsLauncher
@@ -632,7 +651,7 @@ void main() {
     expect(find.text('Set up notification processing'), findsOneWidget);
     expect(
       find.text(
-        'Allow Waterfly to read notifications so it can recognize transactions and apply the automation rules you configure.\n\nAndroid grants notification access to Waterfly, but Waterfly only processes applications you register. You can disable access at any time in Android settings.',
+        'Turn supported push notifications into transactions. Add apps, configure how Waterfly reads their notifications, and review created transactions before enabling automation.\n\nAndroid grants notification access to Waterfly, but Waterfly only processes applications you register. You can disable access at any time in Android settings.',
       ),
       findsOneWidget,
     );
@@ -657,6 +676,104 @@ void main() {
     expect(launcher.openCount, 2);
     expect(
       find.text('Notification access settings could not be opened.'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('animates from status loading into first-time onboarding', (
+    WidgetTester tester,
+  ) async {
+    final DelayedNotificationListenerStatusLoader statusLoader =
+        DelayedNotificationListenerStatusLoader();
+
+    await tester.pumpWidget(
+      notificationPage(PageDefinitionStore(), statusLoader: statusLoader),
+    );
+    await tester.pump();
+
+    expect(
+      find.byKey(const Key('notification-access-status-loading')),
+      findsOneWidget,
+    );
+    expect(find.text('Checking notification access'), findsNothing);
+    expect(find.text('Checking status…'), findsNothing);
+
+    statusLoader.completer.complete(
+      const NotificationListenerStatus(false, false, false),
+    );
+    await tester.pump();
+
+    expect(
+      find.byKey(const Key('notification-access-status-loading')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const Key('notification-access-onboarding')),
+      findsOneWidget,
+    );
+    expect(
+      tester
+          .widget<AnimatedSwitcher>(
+            find.byKey(const Key('notification-access-status-switcher')),
+          )
+          .duration,
+      const Duration(milliseconds: 180),
+    );
+
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const Key('notification-access-status-loading')),
+      findsNothing,
+    );
+    expect(
+      find.byKey(const Key('notification-access-onboarding')),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('keeps initial definition loading behind onboarding spinner', (
+    WidgetTester tester,
+  ) async {
+    final DelayedPageDefinitionStore store = DelayedPageDefinitionStore();
+
+    await tester.pumpWidget(
+      notificationPage(
+        store,
+        statusLoader: FakeNotificationListenerStatusLoader(
+          const NotificationListenerStatus(false, false, false),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    expect(
+      find.byKey(const Key('notification-access-status-loading')),
+      findsOneWidget,
+    );
+    expect(find.text('Notification access needed'), findsNothing);
+    expect(find.text('Registered applications'), findsNothing);
+
+    store.completer.complete(const <NotificationDefinition>[]);
+    await tester.pump();
+
+    expect(
+      find.byKey(const Key('notification-access-status-loading')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const Key('notification-access-onboarding')),
+      findsOneWidget,
+    );
+
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const Key('notification-access-status-loading')),
+      findsNothing,
+    );
+    expect(
+      find.byKey(const Key('notification-access-onboarding')),
       findsOneWidget,
     );
   });

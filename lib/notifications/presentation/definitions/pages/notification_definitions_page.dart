@@ -175,11 +175,14 @@ class _NotificationDefinitionsPageState
         !_viewModel.isLoading &&
         _viewModel.error == null &&
         _viewModel.definitions.isEmpty;
+    final bool isInitialDefinitionLoad =
+        _viewModel.isLoading && _viewModel.definitions.isEmpty;
     final bool showAccessOnboarding =
-        showEmptyState &&
-        (_listenerStatus == null ||
-            !_listenerStatus!.servicePermission ||
-            !_listenerStatus!.notificationPermission);
+        isInitialDefinitionLoad ||
+        (showEmptyState &&
+            (_listenerStatus == null ||
+                !_listenerStatus!.servicePermission ||
+                !_listenerStatus!.notificationPermission));
     final double topInset = widget.showAppBar
         ? NotificationPageHeader.bodyTopInset(context)
         : 0;
@@ -300,6 +303,7 @@ class _NotificationDefinitionsPageState
                   hasScrollBody: false,
                   child: _NotificationAccessOnboarding(
                     status: _status,
+                    isDefinitionLoading: isInitialDefinitionLoad,
                     onOpenSettings: _openNotificationAccessSettings,
                     onRequestNotificationPermission:
                         _requestNotificationPermission,
@@ -614,11 +618,13 @@ class _NotificationDefinitionsPageState
 class _NotificationAccessOnboarding extends StatelessWidget {
   const _NotificationAccessOnboarding({
     required this.status,
+    required this.isDefinitionLoading,
     required this.onOpenSettings,
     required this.onRequestNotificationPermission,
   });
 
   final Future<NotificationListenerStatus> status;
+  final bool isDefinitionLoading;
   final Future<void> Function() onOpenSettings;
   final Future<void> Function() onRequestNotificationPermission;
 
@@ -631,15 +637,17 @@ class _NotificationAccessOnboarding extends StatelessWidget {
             BuildContext context,
             AsyncSnapshot<NotificationListenerStatus> snapshot,
           ) {
-            if (snapshot.connectionState != ConnectionState.done) {
-              return NotificationEmptyState(
-                icon: Icons.pending_outlined,
-                title: S.of(context).settingsNLServiceCheckingTitle,
-                description: S.of(context).settingsNLServiceChecking,
+            final Widget child;
+            if (isDefinitionLoading ||
+                snapshot.connectionState != ConnectionState.done) {
+              child = const Align(
+                key: Key('notification-access-status-loading'),
+                alignment: Alignment(0, -0.35),
+                child: CircularProgressIndicator(),
               );
-            }
-            if (snapshot.hasError) {
-              return NotificationEmptyState(
+            } else if (snapshot.hasError) {
+              child = NotificationEmptyState(
+                key: const Key('notification-access-status-error'),
                 icon: Icons.error_outline,
                 title: S.of(context).settingsNLServiceUnavailableTitle,
                 description: S
@@ -653,10 +661,9 @@ class _NotificationAccessOnboarding extends StatelessWidget {
                   ),
                 ),
               );
-            }
-            if (snapshot.data!.servicePermission &&
+            } else if (snapshot.data!.servicePermission &&
                 !snapshot.data!.notificationPermission) {
-              return NotificationEmptyState(
+              child = NotificationEmptyState(
                 key: const Key('notification-post-permission-onboarding'),
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 contentAlignment: const Alignment(0, -0.35),
@@ -670,20 +677,30 @@ class _NotificationAccessOnboarding extends StatelessWidget {
                   label: Text(S.of(context).settingsNLPostPermissionAction),
                 ),
               );
+            } else {
+              child = NotificationEmptyState(
+                key: const Key('notification-access-onboarding'),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                contentAlignment: const Alignment(0, -0.35),
+                icon: Icons.notifications_active_outlined,
+                title: S.of(context).settingsNLOnboardingTitle,
+                description:
+                    '${S.of(context).settingsNLDescription}\n\n'
+                    '${S.of(context).settingsNLOnboardingDescription}',
+                action: FilledButton.icon(
+                  key: const Key('enable-notification-access'),
+                  onPressed: onOpenSettings,
+                  icon: const Icon(Icons.notifications_active_outlined),
+                  label: Text(S.of(context).settingsNLOnboardingAction),
+                ),
+              );
             }
-            return NotificationEmptyState(
-              key: const Key('notification-access-onboarding'),
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              contentAlignment: const Alignment(0, -0.35),
-              icon: Icons.notifications_active_outlined,
-              title: S.of(context).settingsNLOnboardingTitle,
-              description: S.of(context).settingsNLOnboardingDescription,
-              action: FilledButton.icon(
-                key: const Key('enable-notification-access'),
-                onPressed: onOpenSettings,
-                icon: const Icon(Icons.notifications_active_outlined),
-                label: Text(S.of(context).settingsNLOnboardingAction),
-              ),
+            return AnimatedSwitcher(
+              key: const Key('notification-access-status-switcher'),
+              duration: const Duration(milliseconds: 180),
+              switchInCurve: Curves.easeIn,
+              switchOutCurve: Curves.easeOut,
+              child: child,
             );
           },
     );

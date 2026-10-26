@@ -1009,9 +1009,9 @@
     "@settingsNLOnboardingTitle": {
         "description": "Title shown when notification processing needs notification access before first-time setup."
     },
-    "settingsNLOnboardingDescription": "Allow Waterfly to read notifications so it can recognize transactions and apply the automation rules you configure.\n\nAndroid grants notification access to Waterfly, but Waterfly only processes applications you register. You can disable access at any time in Android settings.",
+    "settingsNLOnboardingDescription": "Android grants notification access to Waterfly, but Waterfly only processes applications you register. You can disable access at any time in Android settings.",
     "@settingsNLOnboardingDescription": {
-        "description": "First-time explanation of notification access and Waterfly's registered-application processing boundary."
+        "description": "First-time explanation of Waterfly's registered-application processing boundary."
     },
     "settingsNLOnboardingAction": "Enable notification access",
     "@settingsNLOnboardingAction": {

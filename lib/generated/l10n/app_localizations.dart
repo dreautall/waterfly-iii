@@ -1296,10 +1296,10 @@ abstract class S {
   /// **'Set up notification processing'**
   String get settingsNLOnboardingTitle;
 
-  /// First-time explanation of notification access and Waterfly's registered-application processing boundary.
+  /// First-time explanation of Waterfly's registered-application processing boundary.
   ///
   /// In en, this message translates to:
-  /// **'Allow Waterfly to read notifications so it can recognize transactions and apply the automation rules you configure.\n\nAndroid grants notification access to Waterfly, but Waterfly only processes applications you register. You can disable access at any time in Android settings.'**
+  /// **'Android grants notification access to Waterfly, but Waterfly only processes applications you register. You can disable access at any time in Android settings.'**
   String get settingsNLOnboardingDescription;
 
   /// Button that opens Android notification access settings during first-time setup.

@@ -10,11 +10,13 @@ void main() {
     'waterflyiii/notification_settings_test',
   );
   late bool supportsRuntimePermission;
+  late bool runtimePermissionPermanentlyDenied;
   late bool opensSettings;
   late List<String> methodCalls;
 
   setUp(() {
     supportsRuntimePermission = true;
+    runtimePermissionPermanentlyDenied = false;
     opensSettings = true;
     methodCalls = <String>[];
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
@@ -23,6 +25,9 @@ void main() {
           return switch (call.method) {
             'supportsRuntimeNotificationPermission' =>
               supportsRuntimePermission,
+            'isRuntimeNotificationPermissionPermanentlyDenied' =>
+              runtimePermissionPermanentlyDenied,
+            'markRuntimeNotificationPermissionRequested' => null,
             'openAppNotificationSettings' => opensSettings,
             _ => null,
           };
@@ -53,7 +58,11 @@ void main() {
 
       expect(result, NotificationPostPermissionRequestResult.granted);
       expect(requestCount, 1);
-      expect(methodCalls, <String>['supportsRuntimeNotificationPermission']);
+      expect(methodCalls, <String>[
+        'supportsRuntimeNotificationPermission',
+        'isRuntimeNotificationPermissionPermanentlyDenied',
+        'markRuntimeNotificationPermissionRequested',
+      ]);
     },
   );
 
@@ -69,8 +78,52 @@ void main() {
       await requester.requestPermission(),
       NotificationPostPermissionRequestResult.denied,
     );
-    expect(methodCalls, <String>['supportsRuntimeNotificationPermission']);
+    expect(methodCalls, <String>[
+      'supportsRuntimeNotificationPermission',
+      'isRuntimeNotificationPermissionPermanentlyDenied',
+      'markRuntimeNotificationPermissionRequested',
+    ]);
   });
+
+  test(
+    'opens app settings when runtime permission is permanently denied',
+    () async {
+      runtimePermissionPermanentlyDenied = true;
+      int requestCount = 0;
+      final PlatformNotificationPostPermissionRequester requester =
+          PlatformNotificationPostPermissionRequester(
+            channel: channel,
+            isAndroid: true,
+            requestRuntimePermission: () async {
+              requestCount++;
+              return true;
+            },
+          );
+
+      expect(
+        await requester.requestPermission(),
+        NotificationPostPermissionRequestResult.settingsOpened,
+      );
+      expect(requestCount, 0);
+      expect(methodCalls, <String>[
+        'supportsRuntimeNotificationPermission',
+        'isRuntimeNotificationPermissionPermanentlyDenied',
+        'openAppNotificationSettings',
+      ]);
+
+      methodCalls.clear();
+      opensSettings = false;
+      expect(
+        await requester.requestPermission(),
+        NotificationPostPermissionRequestResult.failed,
+      );
+      expect(methodCalls, <String>[
+        'supportsRuntimeNotificationPermission',
+        'isRuntimeNotificationPermissionPermanentlyDenied',
+        'openAppNotificationSettings',
+      ]);
+    },
+  );
 
   test(
     'opens app notification settings without runtime permission support',

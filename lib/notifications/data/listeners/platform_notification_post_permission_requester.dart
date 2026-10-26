@@ -32,17 +32,32 @@ class PlatformNotificationPostPermissionRequester
         ) ??
         false;
     if (!supportsRuntimePermission) {
-      final bool opened =
-          await _channel.invokeMethod<bool>('openAppNotificationSettings') ??
-          false;
-      return opened
-          ? NotificationPostPermissionRequestResult.settingsOpened
-          : NotificationPostPermissionRequestResult.failed;
+      return _openSettings();
+    }
+    final bool permanentlyDenied =
+        await _channel.invokeMethod<bool>(
+          'isRuntimeNotificationPermissionPermanentlyDenied',
+        ) ??
+        false;
+    if (permanentlyDenied) {
+      return _openSettings();
     }
     final bool granted = await _requestRuntimePermission() ?? false;
+    await _channel.invokeMethod<void>(
+      'markRuntimeNotificationPermissionRequested',
+    );
     return granted
         ? NotificationPostPermissionRequestResult.granted
         : NotificationPostPermissionRequestResult.denied;
+  }
+
+  Future<NotificationPostPermissionRequestResult> _openSettings() async {
+    final bool opened =
+        await _channel.invokeMethod<bool>('openAppNotificationSettings') ??
+        false;
+    return opened
+        ? NotificationPostPermissionRequestResult.settingsOpened
+        : NotificationPostPermissionRequestResult.failed;
   }
 
   static Future<bool?> _requestNotificationsPermission() async =>

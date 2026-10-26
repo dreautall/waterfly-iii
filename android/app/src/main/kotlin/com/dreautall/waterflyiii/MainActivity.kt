@@ -1,7 +1,9 @@
 package com.dreautall.waterflyiii
 
+import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
@@ -38,6 +40,30 @@ class MainActivity: FlutterFragmentActivity() {
 				}
 				"supportsRuntimeNotificationPermission" -> {
 					result.success(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+				}
+				"isRuntimeNotificationPermissionPermanentlyDenied" -> {
+					if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+						result.success(false)
+					} else {
+						result.success(
+							checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) !=
+								PackageManager.PERMISSION_GRANTED &&
+								getPreferences(MODE_PRIVATE).getBoolean(
+									"requestedPostNotifications",
+									false
+								) &&
+								!shouldShowRequestPermissionRationale(
+									Manifest.permission.POST_NOTIFICATIONS
+								)
+						)
+					}
+				}
+				"markRuntimeNotificationPermissionRequested" -> {
+					getPreferences(MODE_PRIVATE)
+						.edit()
+						.putBoolean("requestedPostNotifications", true)
+						.apply()
+					result.success(null)
 				}
 				"openAppNotificationSettings" -> {
 					val notificationSettings = Intent(

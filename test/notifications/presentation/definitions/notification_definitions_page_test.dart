@@ -318,12 +318,7 @@ void main() {
                 )
                 .decoration
             as BoxDecoration;
-    expect(
-      dynamicHeaderDecoration.color,
-      dynamicSurface.withValues(
-        alpha: NotificationPageHeader.controlBackgroundOpacity,
-      ),
-    );
+    expect(dynamicHeaderDecoration.color, dynamicSurface.withValues(alpha: 0));
   });
 
   testWidgets('preserves static surfaces for access status and add button', (
@@ -362,9 +357,7 @@ void main() {
             as BoxDecoration;
     expect(
       staticHeaderDecoration.color,
-      scopedTheme.colorScheme.surfaceContainerHighest.withValues(
-        alpha: NotificationPageHeader.controlBackgroundOpacity,
-      ),
+      scopedTheme.colorScheme.surfaceContainerHighest.withValues(alpha: 0),
     );
   });
 

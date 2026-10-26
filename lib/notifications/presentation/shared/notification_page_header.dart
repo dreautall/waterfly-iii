@@ -50,6 +50,9 @@ class NotificationPageHeader extends StatelessWidget
       final double titleOpacity = fadeTitleOnScroll
           ? (1 - offset / _titleFadeDistance).clamp(0, 1)
           : 1;
+      final double controlBackgroundOpacity = fadeTitleOnScroll
+          ? NotificationPageHeader.controlBackgroundOpacity * (1 - titleOpacity)
+          : NotificationPageHeader.controlBackgroundOpacity;
       final double gradientOpacity = (offset / _gradientFadeDistance).clamp(
         0,
         1,
@@ -101,6 +104,7 @@ class NotificationPageHeader extends StatelessWidget
               left: _horizontalInset,
               top: toolbarTop + (_toolbarHeight - _controlSize) / 2,
               child: NotificationPageHeaderControl(
+                backgroundOpacity: controlBackgroundOpacity,
                 child:
                     leading ??
                     BackButton(
@@ -143,7 +147,10 @@ class NotificationPageHeader extends StatelessWidget
                 spacing: _controlSpacing,
                 children: <Widget>[
                   for (final Widget action in actions)
-                    NotificationPageHeaderControl(child: action),
+                    NotificationPageHeaderControl(
+                      backgroundOpacity: controlBackgroundOpacity,
+                      child: action,
+                    ),
                 ],
               ),
             ),
@@ -155,9 +162,14 @@ class NotificationPageHeader extends StatelessWidget
 }
 
 class NotificationPageHeaderControl extends StatelessWidget {
-  const NotificationPageHeaderControl({super.key, required this.child});
+  const NotificationPageHeaderControl({
+    super.key,
+    required this.child,
+    this.backgroundOpacity = NotificationPageHeader.controlBackgroundOpacity,
+  });
 
   final Widget child;
+  final double backgroundOpacity;
 
   @override
   Widget build(BuildContext context) {
@@ -177,9 +189,7 @@ class NotificationPageHeaderControl extends StatelessWidget {
         dimension: NotificationPageHeader._controlSize,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: background.withValues(
-              alpha: NotificationPageHeader.controlBackgroundOpacity,
-            ),
+            color: background.withValues(alpha: backgroundOpacity),
             shape: BoxShape.circle,
           ),
           child: child,

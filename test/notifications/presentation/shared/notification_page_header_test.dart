@@ -85,12 +85,12 @@ void main() {
       _circularControl(),
     );
     final Color lightColor = (lightControl.decoration as BoxDecoration).color!;
+    expect(lightColor.a, 0);
     expect(
-      lightColor,
-      Theme.of(tester.element(find.byType(NotificationPageHeader)))
-          .colorScheme
-          .surfaceContainerHighest
-          .withValues(alpha: NotificationPageHeader.controlBackgroundOpacity),
+      lightColor.withValues(alpha: 1),
+      Theme.of(
+        tester.element(find.byType(NotificationPageHeader)),
+      ).colorScheme.surfaceContainerHighest.withValues(alpha: 1),
     );
 
     await pump(Brightness.dark);
@@ -98,13 +98,71 @@ void main() {
       _circularControl(),
     );
     final Color darkColor = (darkControl.decoration as BoxDecoration).color!;
+    expect(darkColor.a, 0);
     expect(
-      darkColor,
-      Theme.of(tester.element(find.byType(NotificationPageHeader)))
-          .colorScheme
-          .surfaceContainerLowest
-          .withValues(alpha: NotificationPageHeader.controlBackgroundOpacity),
+      darkColor.withValues(alpha: 1),
+      Theme.of(
+        tester.element(find.byType(NotificationPageHeader)),
+      ).colorScheme.surfaceContainerLowest.withValues(alpha: 1),
     );
+  });
+
+  testWidgets('fades control surfaces in as the title fades out', (
+    WidgetTester tester,
+  ) async {
+    final ScrollController controller = ScrollController();
+    addTearDown(controller.dispose);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: NotificationPageHeader(
+            scrollController: controller,
+            title: const Text('Notifications'),
+          ),
+          body: ListView(
+            controller: controller,
+            children: const <Widget>[SizedBox(height: 2000)],
+          ),
+        ),
+      ),
+    );
+
+    double controlAlpha() =>
+        ((tester.widget<DecoratedBox>(_circularControl()).decoration
+                    as BoxDecoration)
+                .color!)
+            .a;
+    double titleAlpha() => tester
+        .widget<Opacity>(
+          find.ancestor(
+            of: find.text('Notifications'),
+            matching: find.byType(Opacity),
+          ),
+        )
+        .opacity;
+
+    expect(controlAlpha(), 0);
+    expect(titleAlpha(), 1);
+
+    controller.jumpTo(32);
+    await tester.pump();
+
+    expect(
+      controlAlpha(),
+      closeTo(NotificationPageHeader.controlBackgroundOpacity / 2, 0.001),
+    );
+    expect(titleAlpha(), 0.5);
+
+    controller.jumpTo(64);
+    await tester.pump();
+
+    expect(
+      controlAlpha(),
+      closeTo(NotificationPageHeader.controlBackgroundOpacity, 0.001),
+    );
+    expect(titleAlpha(), 0);
   });
 
   testWidgets('positions toolbar controls below the system status bar', (

@@ -69,7 +69,9 @@ class RecentNotificationsPage extends StatefulWidget {
       _RecentNotificationsPageState();
 }
 
-class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
+class _RecentNotificationsPageState extends State<RecentNotificationsPage>
+    with WidgetsBindingObserver {
+  static const Duration _emptyHistoryRefreshInterval = Duration(seconds: 3);
   static const Duration _removeUndoDuration = Duration(seconds: 6);
   static const Duration _entryTransitionDuration = Duration(milliseconds: 450);
   static const double _scrollToTopThreshold = 300;
@@ -81,6 +83,7 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
   bool _ownsViewModel = false;
   bool _isInitialLoadPending = true;
   bool _isRefreshing = false;
+  bool _isAppResumed = true;
   bool _showRefreshLoading = false;
   bool _showScrollToTop = false;
   final RouteTransitionLoadScheduler _initialLoadScheduler =
@@ -90,10 +93,12 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
   final Set<String> _restoringEntryIds = <String>{};
   String? _expandedEntryId;
   NotificationHistoryTransactionUnlinker? _unlinkTransaction;
+  Timer? _emptyHistoryRefreshTimer;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     final NotificationFeatureScope? scope = context
         .read<NotificationFeatureScope?>();
     final RecentNotificationActions actions = widget.resolvedActions;
@@ -162,7 +167,10 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
     try {
       await _loadHistory(initial: true);
     } finally {
-      if (mounted) setState(() => _isInitialLoadPending = false);
+      if (mounted) {
+        setState(() => _isInitialLoadPending = false);
+        _syncEmptyHistoryRefreshTimer();
+      }
     }
   }
 
@@ -178,7 +186,45 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
     _entryCellKeys.removeWhere(
       (String entryId, _) => !retainedEntryIds.contains(entryId),
     );
+    _syncEmptyHistoryRefreshTimer();
     setState(() {});
+  }
+
+  void _syncEmptyHistoryRefreshTimer() {
+    final bool shouldRefreshEmptyHistory =
+        !_isInitialLoadPending &&
+        !_viewModel.isLoading &&
+        _viewModel.error == null &&
+        _viewModel.entries.isEmpty;
+    if (!shouldRefreshEmptyHistory) {
+      _emptyHistoryRefreshTimer?.cancel();
+      _emptyHistoryRefreshTimer = null;
+      return;
+    }
+    _emptyHistoryRefreshTimer ??= Timer.periodic(
+      _emptyHistoryRefreshInterval,
+      (_) => _refreshEmptyHistory(),
+    );
+  }
+
+  void _refreshEmptyHistory() {
+    if (!mounted ||
+        ModalRoute.of(context)?.isCurrent != true ||
+        !_isAppResumed ||
+        _isRefreshing) {
+      return;
+    }
+    unawaited(_refreshHistory());
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    _isAppResumed = state == AppLifecycleState.resumed;
+    if (state == AppLifecycleState.resumed &&
+        _viewModel.entries.isEmpty &&
+        _viewModel.error == null) {
+      _refreshEmptyHistory();
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) => _prefetchIfNeeded());
   }
 
@@ -448,6 +494,8 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _emptyHistoryRefreshTimer?.cancel();
     _initialLoadScheduler.dispose();
     _viewModel.removeListener(_onViewModelChanged);
     _scrollController.removeListener(_onScroll);

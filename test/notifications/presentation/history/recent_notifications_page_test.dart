@@ -955,6 +955,84 @@ void main() {
     expect(tester.getCenter(emptyStateText).dy, closeTo(expectedCenter, 1));
   });
 
+  testWidgets('discovers history recorded while the empty page is visible', (
+    WidgetTester tester,
+  ) async {
+    final RecentNotificationHistoryEntry entry = RecentNotificationHistoryEntry(
+      notification: NotificationHistoryEntry(
+        id: 'payment',
+        applicationId: 'com.example.bank',
+        title: 'Card payment',
+        body: 'Paid 12.50 CAD',
+        receivedAt: DateTime(2026, 10, 26),
+      ),
+    );
+    final _SequentialRecentNotificationHistory history =
+        _SequentialRecentNotificationHistory(
+          <List<RecentNotificationHistoryEntry>>[
+            const <RecentNotificationHistoryEntry>[],
+            <RecentNotificationHistoryEntry>[entry],
+          ],
+        );
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: RecentNotificationsPage(history: history),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(history.loadCount, 1);
+    expect(find.byType(CustomScrollView), findsNothing);
+
+    await tester.pump(const Duration(seconds: 2));
+    expect(history.loadCount, 1);
+
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+
+    expect(history.loadCount, 2);
+    expect(find.text('Card payment'), findsOneWidget);
+    expect(find.byType(CustomScrollView), findsOneWidget);
+  });
+
+  testWidgets('refreshes empty history when the app resumes', (
+    WidgetTester tester,
+  ) async {
+    final RecentNotificationHistoryEntry entry = RecentNotificationHistoryEntry(
+      notification: NotificationHistoryEntry(
+        id: 'payment',
+        applicationId: 'com.example.bank',
+        title: 'Card payment',
+        body: 'Paid 12.50 CAD',
+        receivedAt: DateTime(2026, 10, 26),
+      ),
+    );
+    final _SequentialRecentNotificationHistory history =
+        _SequentialRecentNotificationHistory(
+          <List<RecentNotificationHistoryEntry>>[
+            const <RecentNotificationHistoryEntry>[],
+            <RecentNotificationHistoryEntry>[entry],
+          ],
+        );
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: RecentNotificationsPage(history: history),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pumpAndSettle();
+
+    expect(history.loadCount, 2);
+    expect(find.text('Card payment'), findsOneWidget);
+  });
+
   testWidgets('renders notification details and a processing failure', (
     WidgetTester tester,
   ) async {

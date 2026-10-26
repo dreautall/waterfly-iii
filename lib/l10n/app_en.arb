@@ -2490,6 +2490,20 @@
     "@notificationsDefinitionCustomExtractorDescription": {"description": "Description for the regular expression extractor option."},
     "notificationsDefinitionAlreadyAdded": "Already added.",
     "@notificationsDefinitionAlreadyAdded": {"description": "Status for an extractor that is already configured."},
+    "notificationsDefinitionApplicationAdded": "{applicationName} is now registered.",
+    "@notificationsDefinitionApplicationAdded": {
+      "description": "Snackbar shown after registering an application for notification processing.",
+      "placeholders": {
+        "applicationName": {
+          "type": "String",
+          "example": "Example Bank"
+        }
+      }
+    },
+    "notificationsUndo": "Undo",
+    "@notificationsUndo": {
+      "description": "Action that reverses a recent notification feature change."
+    },
     "notificationsDefinitionCaptureNotificationTitle": "Captures the notification title.",
     "@notificationsDefinitionCaptureNotificationTitle": {"description": "Description of the title extractor."},
     "notificationsDefinitionCaptureNotificationMessage": "Captures the notification message.",

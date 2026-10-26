@@ -15,8 +15,10 @@ import 'package:waterflyiii/notifications/domain/listeners/notification_listener
 import 'package:waterflyiii/notifications/presentation/health/controllers/notification_listener_health_view_model.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/pages/notification_definitions_page.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/pages/notification_definition_details_page.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/widgets/notification_definition_card.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/applications/notification_application_selector_dialog.dart';
+import 'package:waterflyiii/notifications/presentation/dialogs/samples/sample_notification_editor_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_card_theme.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_empty_state.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_page_header.dart';
@@ -43,6 +45,16 @@ class PageDefinitionStore implements NotificationDefinitionStore {
   @override
   Future<void> save(List<NotificationDefinition> definitions) async {
     this.definitions = List<NotificationDefinition>.of(definitions);
+  }
+}
+
+class FailingUndoDefinitionStore extends PageDefinitionStore {
+  @override
+  Future<void> save(List<NotificationDefinition> definitions) async {
+    if (definitions.isEmpty) {
+      throw StateError('delete failed');
+    }
+    await super.save(definitions);
   }
 }
 
@@ -118,6 +130,112 @@ Widget notificationPage(
 }
 
 void main() {
+  testWidgets('opens a new application with a reversible creation message', (
+    WidgetTester tester,
+  ) async {
+    final PageDefinitionStore store = PageDefinitionStore();
+    await tester.pumpWidget(
+      notificationPage(
+        store,
+        applicationSelector:
+            (
+              BuildContext context,
+              Set<String> excluded,
+              NotificationApplicationSelectionMode mode,
+            ) async => AppInfo(
+              packageName: 'com.example.bank',
+              appName: 'Example Bank',
+            ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('add-notification-application')));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(NotificationDefinitionDetailsPage), findsOneWidget);
+    expect(find.byType(SampleNotificationEditorDialog), findsNothing);
+    expect(find.text('Example Bank is now registered.'), findsOneWidget);
+    expect(
+      tester.widget<SnackBar>(find.byType(SnackBar)).duration,
+      const Duration(seconds: 6),
+    );
+    expect(tester.widget<SnackBar>(find.byType(SnackBar)).persist, isFalse);
+    expect(store.definitions, hasLength(1));
+
+    await tester.tap(find.text('Undo'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(NotificationDefinitionDetailsPage), findsNothing);
+    expect(store.definitions, isEmpty);
+  });
+
+  testWidgets('times out the new application message after six seconds', (
+    WidgetTester tester,
+  ) async {
+    final PageDefinitionStore store = PageDefinitionStore();
+    await tester.pumpWidget(
+      notificationPage(
+        store,
+        applicationSelector:
+            (
+              BuildContext context,
+              Set<String> excluded,
+              NotificationApplicationSelectionMode mode,
+            ) async => AppInfo(
+              packageName: 'com.example.bank',
+              appName: 'Example Bank',
+            ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('add-notification-application')));
+    await tester.pumpAndSettle();
+
+    await tester.pump(const Duration(seconds: 5));
+    expect(find.text('Example Bank is now registered.'), findsOneWidget);
+
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+    expect(find.text('Example Bank is now registered.'), findsNothing);
+    expect(find.byType(NotificationDefinitionDetailsPage), findsOneWidget);
+    expect(store.definitions, hasLength(1));
+  });
+
+  testWidgets('keeps a new application open when undo fails', (
+    WidgetTester tester,
+  ) async {
+    final FailingUndoDefinitionStore store = FailingUndoDefinitionStore();
+    await tester.pumpWidget(
+      notificationPage(
+        store,
+        applicationSelector:
+            (
+              BuildContext context,
+              Set<String> excluded,
+              NotificationApplicationSelectionMode mode,
+            ) async => AppInfo(
+              packageName: 'com.example.bank',
+              appName: 'Example Bank',
+            ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('add-notification-application')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Undo'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(NotificationDefinitionDetailsPage), findsOneWidget);
+    expect(store.definitions, hasLength(1));
+    expect(
+      find.text('The application registration could not be deleted.'),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('does not expose pull to refresh', (WidgetTester tester) async {
     await tester.pumpWidget(notificationPage(PageDefinitionStore()));
     await tester.pumpAndSettle();

@@ -410,7 +410,7 @@ class _NotificationDefinitionsPageState
       }
       return;
     }
-    await _editDefinition(result.definition!);
+    await _editDefinition(result.definition!, showCreationUndo: true);
   }
 
   Future<void> _openDefinition(NotificationDefinition definition) async {
@@ -514,6 +514,10 @@ class _NotificationDefinitionsPageState
     if (isConfirmed != true) {
       return false;
     }
+    return _deleteDefinition(definition);
+  }
+
+  Future<bool> _deleteDefinition(NotificationDefinition definition) async {
     final SaveNotificationDefinitionResult result = await _viewModel.delete(
       definition.id,
     );
@@ -530,7 +534,10 @@ class _NotificationDefinitionsPageState
     return false;
   }
 
-  Future<void> _editDefinition(NotificationDefinition definition) async {
+  Future<void> _editDefinition(
+    NotificationDefinition definition, {
+    bool showCreationUndo = false,
+  }) async {
     await Navigator.of(context).push<void>(
       MaterialPageRoute<void>(
         builder: (BuildContext context) => NotificationDefinitionDetailsPage(
@@ -539,6 +546,9 @@ class _NotificationDefinitionsPageState
           onSave: (NotificationDefinition updated) async =>
               (await _viewModel.update(updated)).succeeded,
           onDelete: () => _confirmDeleteDefinition(definition),
+          onUndoCreation: showCreationUndo
+              ? () => _deleteDefinition(definition)
+              : null,
         ),
       ),
     );

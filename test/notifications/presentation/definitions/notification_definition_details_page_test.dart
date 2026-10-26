@@ -649,6 +649,15 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    expect(find.byKey(const Key('sample-notification-body')), findsNothing);
+    expect(
+      find.text('Add a sample notification before choosing a setup option.'),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.byType(SampleNotificationCard));
+    await tester.pumpAndSettle();
+
     final FilledButton continueButton = tester.widget<FilledButton>(
       find.widgetWithText(FilledButton, 'Continue'),
     );
@@ -925,6 +934,9 @@ void main() {
       ),
     );
     await tester.pump();
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(SampleNotificationCard));
     await tester.pumpAndSettle();
 
     await tester.enterText(

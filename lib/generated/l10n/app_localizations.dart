@@ -4068,6 +4068,18 @@ abstract class S {
   /// **'Already added.'**
   String get notificationsDefinitionAlreadyAdded;
 
+  /// Snackbar shown after registering an application for notification processing.
+  ///
+  /// In en, this message translates to:
+  /// **'{applicationName} is now registered.'**
+  String notificationsDefinitionApplicationAdded(String applicationName);
+
+  /// Action that reverses a recent notification feature change.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get notificationsUndo;
+
   /// Description of the title extractor.
   ///
   /// In en, this message translates to:

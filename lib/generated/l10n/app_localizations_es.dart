@@ -2631,6 +2631,14 @@ class SEs extends S {
   String get notificationsDefinitionAlreadyAdded => 'Already added.';
 
   @override
+  String notificationsDefinitionApplicationAdded(String applicationName) {
+    return '$applicationName is now registered.';
+  }
+
+  @override
+  String get notificationsUndo => 'Undo';
+
+  @override
   String get notificationsDefinitionCaptureNotificationTitle =>
       'Captures the notification title.';
 

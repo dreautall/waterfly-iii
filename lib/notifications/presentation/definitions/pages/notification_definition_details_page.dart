@@ -34,6 +34,7 @@ class NotificationDefinitionDetailsPage extends StatefulWidget {
     required this.definition,
     required this.onSave,
     this.onDelete,
+    this.onUndoCreation,
     this.initialRuleId,
     this.initialDraftRule,
     this.initialRuleNotificationContext,
@@ -43,6 +44,7 @@ class NotificationDefinitionDetailsPage extends StatefulWidget {
   final NotificationDefinition definition;
   final Future<bool> Function(NotificationDefinition definition) onSave;
   final Future<bool> Function()? onDelete;
+  final Future<bool> Function()? onUndoCreation;
   final String? initialRuleId;
   final NotificationRule? initialDraftRule;
   final NotificationContext? initialRuleNotificationContext;
@@ -125,10 +127,10 @@ class _NotificationDefinitionDetailsPageState
             );
         if (rule != null && mounted) await _workflows.editRule(rule);
       });
-    } else if (_sampleTitleController.text.isEmpty ||
-        _sampleBodyController.text.isEmpty) {
+    }
+    if (widget.onUndoCreation != null) {
       WidgetsBinding.instance.addPostFrameCallback(
-        (_) => _workflows.editSample(),
+        (_) => _showCreationSnackBar(),
       );
     }
   }
@@ -343,6 +345,30 @@ class _NotificationDefinitionDetailsPageState
                   child: const Icon(Icons.save_outlined),
                 )
               : null,
+        ),
+      ),
+    );
+  }
+
+  void _showCreationSnackBar() {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 6),
+        persist: false,
+        content: Text(
+          S
+              .of(context)
+              .notificationsDefinitionApplicationAdded(widget.definition.name),
+        ),
+        action: SnackBarAction(
+          label: S.of(context).notificationsUndo,
+          onPressed: () => unawaited(
+            _workflows.handleMenuAction(
+              DefinitionEditorMenuAction.delete,
+              delete: widget.onUndoCreation,
+            ),
+          ),
         ),
       ),
     );

@@ -50,21 +50,30 @@ class NotificationDefinitionEditorViewModel extends ChangeNotifier {
     _draft.extractorMode = value;
   }
 
+  NotificationBasicView get basicView => _draft.basicView;
+
   TransactionCreationMode get transactionCreationMode =>
       _draft.transactionCreationMode;
 
   bool get isDirty => _draft.isDirty;
   bool get hasUnsavedOptions => _draft.hasUnsavedOptions;
 
-  void configure(NotificationExtractorMode mode) {
+  void configure(
+    NotificationExtractorMode mode, {
+    NotificationBasicView basicView = NotificationBasicView.detailed,
+  }) {
     final List<RegExpDefinition> configuredExtractors =
         mode == NotificationExtractorMode.basic
         ? _presetFactory.basicExtractors()
         : _presetFactory.advancedDefaultExtractors();
     final NotificationRule transactionRule = _presetFactory
-        .standardTransactionRule(configuredExtractors);
+        .standardTransactionRule(
+          configuredExtractors,
+          includeNotificationText: mode == NotificationExtractorMode.basic,
+        );
     applySetup(
       mode: mode,
+      basicView: basicView,
       extractors: configuredExtractors,
       sharedActions: mode == NotificationExtractorMode.basic
           ? transactionRule.actions
@@ -129,11 +138,13 @@ class NotificationDefinitionEditorViewModel extends ChangeNotifier {
 
   void applySetup({
     required NotificationExtractorMode mode,
+    NotificationBasicView basicView = NotificationBasicView.detailed,
     required List<RegExpDefinition> extractors,
     List<NotificationAction> sharedActions = const <NotificationAction>[],
     required List<NotificationRule> rules,
   }) {
     _draft.extractorMode = mode;
+    _draft.basicView = basicView;
     _draft.extractors = List<RegExpDefinition>.from(extractors);
     _draft.sharedActions = List<NotificationAction>.from(sharedActions);
     _draft.reviewedSharedActionFields = <TransactionField>{};
@@ -143,6 +154,7 @@ class NotificationDefinitionEditorViewModel extends ChangeNotifier {
 
   void convertToAdvanced() {
     _draft.extractorMode = NotificationExtractorMode.advanced;
+    _draft.basicView = NotificationBasicView.detailed;
     _draft.rules = _draft.rules
         .where((NotificationRule rule) => !_isEmptyPredefinedRule(rule))
         .map(
@@ -154,6 +166,15 @@ class NotificationDefinitionEditorViewModel extends ChangeNotifier {
               : rule,
         )
         .toList();
+    notifyListeners();
+  }
+
+  void setBasicView(NotificationBasicView view) {
+    if (_draft.extractorMode != NotificationExtractorMode.basic ||
+        _draft.basicView == view) {
+      return;
+    }
+    _draft.basicView = view;
     notifyListeners();
   }
 

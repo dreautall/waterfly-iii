@@ -2817,6 +2817,42 @@ class SHu extends S {
       'Shows the transaction created from shared actions, always-run actions, and matching conditional actions. Later values override earlier ones.';
 
   @override
+  String get notificationsDefinitionExampleResult => 'Example transaction';
+
+  @override
+  String get notificationsDefinitionExampleResultDescription =>
+      'This is the transaction Waterfly will create from the sample notification.';
+
+  @override
+  String get notificationsDefinitionAdjustSetup => 'Adjust setup';
+
+  @override
+  String get notificationsDefinitionShowSimpleView => 'Show simple view';
+
+  @override
+  String get notificationsDefinitionSimpleMoreOptionsTitle =>
+      'More options are available';
+
+  @override
+  String get notificationsDefinitionSimpleMoreOptionsMessage =>
+      'Basic mode lets you adjust extraction, field mappings, and other transaction details.';
+
+  @override
+  String get notificationsDefinitionSimpleReviewTitle =>
+      'This notification needs attention';
+
+  @override
+  String get notificationsDefinitionSimpleReviewGuidance =>
+      'Waterfly cannot reliably interpret every required value in this sample. Open Basic mode to review the suggested mappings.';
+
+  @override
+  String get notificationsDefinitionSwitchToBasicMode => 'Switch to Basic mode';
+
+  @override
+  String get notificationsDefinitionSimpleNeedsReviewMessage =>
+      'Waterfly needs help interpreting this sample. Review the suggested values in Basic mode before using this application.';
+
+  @override
   String get notificationsConditionalActionResolvedTransactionDescription =>
       'Shows the transaction fields this conditional action resolves from the current sample.';
 
@@ -2912,6 +2948,13 @@ class SHu extends S {
   @override
   String get notificationsDefinitionBasicDescription =>
       'Use built-in extractors and standard transaction mappings. Review uncertain values before creating a transaction.';
+
+  @override
+  String get notificationsDefinitionSimple => 'Simple';
+
+  @override
+  String get notificationsDefinitionSimpleDescription =>
+      'Show the transaction produced from the sample and hide the extraction details.';
 
   @override
   String get notificationsDefinitionAdvanced => 'Advanced';

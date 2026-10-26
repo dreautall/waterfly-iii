@@ -6,6 +6,7 @@ import 'package:waterflyiii/notifications/domain/notification_id.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/date_time_capture_value_source.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 
 class NotificationDefinitionPresetFactory {
@@ -27,7 +28,10 @@ class NotificationDefinitionPresetFactory {
     createPredefinedExtractor(PredefinedRegExpDefinition.amount),
   ];
 
-  NotificationRule standardTransactionRule(List<RegExpDefinition> extractors) {
+  NotificationRule standardTransactionRule(
+    List<RegExpDefinition> extractors, {
+    bool includeNotificationText = false,
+  }) {
     RegExpDefinition extractorFor(PredefinedRegExpDefinition type) =>
         extractors.firstWhere(
           (RegExpDefinition extractor) => extractor.predefinedType == type,
@@ -47,6 +51,13 @@ class NotificationDefinitionPresetFactory {
       conditions: const <NotificationCondition>[],
       isPredefined: true,
       actions: <NotificationAction>[
+        if (includeNotificationText)
+          const SetTransactionFieldAction(
+            target: TransactionField.title,
+            valueSource: NotificationPropertyValueSource(
+              NotificationProperty.title,
+            ),
+          ),
         SetTransactionFieldAction(
           target: TransactionField.amount,
           valueSource: capture(PredefinedRegExpDefinition.amount, 'amount'),
@@ -75,6 +86,13 @@ class NotificationDefinitionPresetFactory {
             deriveFromCapture: true,
           ),
         ),
+        if (includeNotificationText)
+          const SetTransactionFieldAction(
+            target: TransactionField.notes,
+            valueSource: NotificationPropertyValueSource(
+              NotificationProperty.body,
+            ),
+          ),
       ],
     );
   }

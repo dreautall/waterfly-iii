@@ -40,6 +40,13 @@ class MaterialApp extends material_ui.MaterialApp {
       );
 }
 
+Future<void> selectDefinitionOption(WidgetTester tester, String option) async {
+  await tester.tap(find.byTooltip('Definition options'));
+  await tester.pumpAndSettle();
+  await tester.tap(find.text(option));
+  await tester.pumpAndSettle();
+}
+
 class _HistoryStore
     implements NotificationHistoryStore, NotificationHistoryApplicationStore {
   _HistoryStore(this.entries);
@@ -1077,6 +1084,8 @@ void main() {
   testWidgets('shows setup choices before extractors and rules', (
     WidgetTester tester,
   ) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
     const NotificationRule rule = NotificationRule(
       id: 'existing-rule',
       name: 'Existing rule',
@@ -1109,6 +1118,12 @@ void main() {
     );
     expect(
       find.text(
+        'Show the transaction produced from the sample and hide the extraction details.',
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.text(
         'Use built-in extractors and standard transaction mappings. Review uncertain values before creating a transaction.',
       ),
       findsOneWidget,
@@ -1123,6 +1138,7 @@ void main() {
     expect(find.text('Rules'), findsNothing);
     expect(find.text('Existing rule'), findsNothing);
 
+    await tester.ensureVisible(find.text('Advanced'));
     await tester.tap(find.text('Advanced'));
     await tester.pumpAndSettle();
 
@@ -1133,6 +1149,42 @@ void main() {
       find.text('Finds a transaction amount in the notification message.'),
       findsOneWidget,
     );
+  });
+
+  testWidgets('persists an explicitly selected Simple experience', (
+    WidgetTester tester,
+  ) async {
+    NotificationDefinition? savedDefinition;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationDefinitionDetailsPage(
+          definition: const NotificationDefinition(
+            id: 'bank',
+            applicationId: 'com.example.bank',
+            name: 'Example Bank',
+            sampleTitle: 'Card payment',
+            sampleBody: 'Paid 12 CAD',
+            extractors: <RegExpDefinition>[],
+            rules: <NotificationRule>[],
+          ),
+          onSave: (NotificationDefinition definition) async {
+            savedDefinition = definition;
+            return true;
+          },
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Simple'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Example transaction'), findsOneWidget);
+    expect(find.text('Extractors'), findsNothing);
+    await tester.tap(find.byTooltip('Save definition'));
+    await tester.pumpAndSettle();
+
+    expect(savedDefinition?.extractorMode, NotificationExtractorMode.basic);
+    expect(savedDefinition?.basicView, NotificationBasicView.simple);
   });
 
   testWidgets('shows extractor descriptions instead of match counts', (
@@ -1346,15 +1398,17 @@ void main() {
       predefinedRegExp,
     );
     expect(savedDefinition?.rules, isEmpty);
-    expect(savedDefinition!.sharedActions, hasLength(3));
+    expect(savedDefinition!.sharedActions, hasLength(5));
     expect(
       savedDefinition!.sharedActions.whereType<SetTransactionFieldAction>().map(
         (SetTransactionFieldAction action) => action.target,
       ),
       <TransactionField>[
+        TransactionField.title,
         TransactionField.amount,
         TransactionField.date,
         TransactionField.time,
+        TransactionField.notes,
       ],
     );
     expect(
@@ -1841,6 +1895,79 @@ void main() {
     );
   });
 
+  testWidgets('shows a simple Basic result before detailed setup', (
+    WidgetTester tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationDefinitionDetailsPage(
+          definition: const NotificationDefinition(
+            id: 'bank',
+            applicationId: 'com.example.bank',
+            name: 'Example Bank',
+            sampleTitle: 'Card payment',
+            sampleBody: 'Paid 12.50 CAD',
+            extractors: <RegExpDefinition>[],
+            rules: <NotificationRule>[],
+            sharedActions: <NotificationAction>[
+              SetTransactionFieldAction(
+                target: TransactionField.title,
+                valueSource: LiteralValueSource('Groceries'),
+              ),
+              SetTransactionFieldAction(
+                target: TransactionField.amount,
+                valueSource: LiteralValueSource('12.50'),
+              ),
+            ],
+            extractorMode: NotificationExtractorMode.basic,
+            basicView: NotificationBasicView.simple,
+          ),
+          onSave: (NotificationDefinition definition) async => true,
+        ),
+      ),
+    );
+
+    expect(find.text('Example transaction'), findsOneWidget);
+    expect(find.text('Groceries'), findsOneWidget);
+    expect(find.text('12.50'), findsOneWidget);
+    expect(find.text('Extractors'), findsNothing);
+    expect(find.text('Actions'), findsNothing);
+    expect(
+      tester.getTopLeft(find.text('More options are available')).dy,
+      lessThan(tester.getTopLeft(find.text('Example transaction')).dy),
+    );
+    expect(find.text('Adjust setup'), findsNothing);
+    expect(find.text('More options are available'), findsOneWidget);
+    expect(find.text('Switch to Basic mode'), findsOneWidget);
+    expect(
+      tester.getTopLeft(find.text('Switch to Basic mode')).dy,
+      greaterThan(
+        tester
+            .getBottomLeft(
+              find.text(
+                'Basic mode lets you adjust extraction, field mappings, and other transaction details.',
+              ),
+            )
+            .dy,
+      ),
+    );
+
+    await tester.tap(find.text('Switch to Basic mode'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Example transaction'), findsNothing);
+    expect(find.text('Extractors'), findsOneWidget);
+    expect(find.text('Actions'), findsOneWidget);
+    expect(find.text('Options'), findsOneWidget);
+
+    await selectDefinitionOption(tester, 'Show simple view');
+
+    expect(find.text('Example transaction'), findsOneWidget);
+    expect(find.text('Extractors'), findsNothing);
+  });
+
   testWidgets('shows basic mappings and unlocks them in advanced setup', (
     WidgetTester tester,
   ) async {
@@ -1950,6 +2077,7 @@ void main() {
               ),
             ],
             extractorMode: NotificationExtractorMode.basic,
+            basicView: NotificationBasicView.simple,
           ),
           onSave: (NotificationDefinition definition) async => true,
         ),
@@ -1959,10 +2087,21 @@ void main() {
     expect(find.text('Needs review'), findsOneWidget);
     expect(
       find.text(
-        'Review the suggested transaction field mappings before using this application.',
+        'Waterfly needs help interpreting this sample. Review the suggested values in Basic mode before using this application.',
       ),
       findsOneWidget,
     );
+    expect(find.text('This notification needs attention'), findsOneWidget);
+    expect(
+      find.text(
+        'Waterfly cannot reliably interpret every required value in this sample. Open Basic mode to review the suggested mappings.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('Switch to Basic mode'), findsOneWidget);
+    expect(find.byIcon(Icons.error_outline), findsNWidgets(2));
+    await tester.tap(find.text('Switch to Basic mode'));
+    await tester.pumpAndSettle();
     expect(find.byIcon(Icons.error_outline), findsAtLeastNWidgets(2));
   });
 

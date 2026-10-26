@@ -6,7 +6,7 @@ import 'package:waterflyiii/notifications/domain/planning/automatic_transaction_
 import 'package:waterflyiii/notifications/presentation/definitions/widgets/automatic_transaction_readiness_display.dart';
 import 'package:waterflyiii/notifications/presentation/shared/message_status_card.dart';
 
-class DefinitionOptionsSection extends StatefulWidget {
+class DefinitionOptionsSection extends StatelessWidget {
   const DefinitionOptionsSection({
     super.key,
     required this.createAutomatically,
@@ -23,11 +23,53 @@ class DefinitionOptionsSection extends StatefulWidget {
   final VoidCallback? onWarningRevealed;
 
   @override
-  State<DefinitionOptionsSection> createState() =>
-      _DefinitionOptionsSectionState();
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      Text(
+        S.of(context).notificationsDefinitionOptionsHeading,
+        style: context.notificationSectionTitle,
+      ),
+      const SizedBox(height: 4),
+      Text(
+        S.of(context).notificationsDefinitionOptionsDescription,
+        style: context.notificationSectionDescription,
+      ),
+      const SizedBox(height: 12),
+      AutomaticTransactionOptionCard(
+        createAutomatically: createAutomatically,
+        onCreateAutomaticallyChanged: onCreateAutomaticallyChanged,
+        automaticReadiness: automaticReadiness,
+        warningKey: warningKey,
+        onWarningRevealed: onWarningRevealed,
+      ),
+    ],
+  );
 }
 
-class _DefinitionOptionsSectionState extends State<DefinitionOptionsSection> {
+class AutomaticTransactionOptionCard extends StatefulWidget {
+  const AutomaticTransactionOptionCard({
+    super.key,
+    required this.createAutomatically,
+    required this.onCreateAutomaticallyChanged,
+    required this.automaticReadiness,
+    this.warningKey,
+    this.onWarningRevealed,
+  });
+
+  final bool createAutomatically;
+  final ValueChanged<bool> onCreateAutomaticallyChanged;
+  final AutomaticTransactionReadiness automaticReadiness;
+  final Key? warningKey;
+  final VoidCallback? onWarningRevealed;
+
+  @override
+  State<AutomaticTransactionOptionCard> createState() =>
+      _AutomaticTransactionOptionCardState();
+}
+
+class _AutomaticTransactionOptionCardState
+    extends State<AutomaticTransactionOptionCard> {
   static const Duration _warningDuration = Duration(milliseconds: 200);
   static const Duration _fadeDuration = Duration(milliseconds: 140);
 
@@ -38,7 +80,7 @@ class _DefinitionOptionsSectionState extends State<DefinitionOptionsSection> {
   late bool _revealWarning = _shouldShowWarning;
 
   @override
-  void didUpdateWidget(covariant DefinitionOptionsSection oldWidget) {
+  void didUpdateWidget(covariant AutomaticTransactionOptionCard oldWidget) {
     super.didUpdateWidget(oldWidget);
     final bool previouslyShowedWarning =
         oldWidget.createAutomatically && !oldWidget.automaticReadiness.isReady;
@@ -58,25 +100,15 @@ class _DefinitionOptionsSectionState extends State<DefinitionOptionsSection> {
   void _handleWarningAnimationEnd() {
     if (_revealWarning && _shouldShowWarning) {
       widget.onWarningRevealed?.call();
-    } else if (!_shouldShowWarning && _showWarning) {
+    } else if (!_revealWarning && _showWarning) {
       setState(() => _showWarning = false);
     }
   }
 
   @override
   Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.stretch,
     children: <Widget>[
-      Text(
-        S.of(context).notificationsDefinitionOptionsHeading,
-        style: context.notificationSectionTitle,
-      ),
-      const SizedBox(height: 4),
-      Text(
-        S.of(context).notificationsDefinitionOptionsDescription,
-        style: context.notificationSectionDescription,
-      ),
-      const SizedBox(height: 12),
       DefinitionDetailCard(
         leading: const Icon(Icons.bolt_outlined),
         title: Text(S.of(context).notificationsDefinitionCreateAutomatically),

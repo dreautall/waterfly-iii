@@ -29,6 +29,8 @@ class EffectiveTransactionPreviewCard extends StatelessWidget {
     required this.notificationContext,
     required this.transactionCreationMode,
     this.showProvenance = true,
+    this.title,
+    this.description,
   });
 
   final NotificationRule rule;
@@ -38,6 +40,8 @@ class EffectiveTransactionPreviewCard extends StatelessWidget {
   final NotificationContext notificationContext;
   final TransactionCreationMode transactionCreationMode;
   final bool showProvenance;
+  final String? title;
+  final String? description;
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +85,13 @@ class EffectiveTransactionPreviewCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          strings.notificationsDefinitionResolvedTransaction,
+          title ?? strings.notificationsDefinitionResolvedTransaction,
           style: context.notificationSectionTitle,
         ),
         const SizedBox(height: 4),
         Text(
-          strings.notificationsDefinitionResolvedTransactionDescription,
+          description ??
+              strings.notificationsDefinitionResolvedTransactionDescription,
           style: context.notificationSectionDescription,
         ),
         const SizedBox(height: 12),

@@ -187,12 +187,41 @@ void main() {
       PredefinedRegExpDefinition.values.length,
     );
     expect(viewModel.rules, isEmpty);
-    expect(viewModel.sharedActions, hasLength(3));
+    expect(viewModel.sharedActions, hasLength(5));
+    expect(viewModel.basicView, NotificationBasicView.detailed);
+    expect(
+      viewModel.sharedActions.whereType<SetTransactionFieldAction>().map(
+        (SetTransactionFieldAction action) => action.target,
+      ),
+      <TransactionField>[
+        TransactionField.title,
+        TransactionField.amount,
+        TransactionField.date,
+        TransactionField.time,
+        TransactionField.notes,
+      ],
+    );
 
     viewModel.configure(NotificationExtractorMode.advanced);
     expect(viewModel.extractors, hasLength(4));
     expect(viewModel.rules, isEmpty);
     expect(viewModel.sharedActions, isEmpty);
+  });
+
+  test('persists Simple as a Basic presentation choice', () {
+    final NotificationDefinitionEditorViewModel viewModel =
+        NotificationDefinitionEditorViewModel(definition)..configure(
+          NotificationExtractorMode.basic,
+          basicView: NotificationBasicView.simple,
+        );
+
+    expect(viewModel.extractorMode, NotificationExtractorMode.basic);
+    expect(viewModel.basicView, NotificationBasicView.simple);
+
+    viewModel.setBasicView(NotificationBasicView.detailed);
+
+    expect(viewModel.basicView, NotificationBasicView.detailed);
+    expect(viewModel.extractorMode, NotificationExtractorMode.basic);
   });
 
   test('reorders uniform rules', () {

@@ -86,6 +86,8 @@ class _RecentNotificationCardState extends State<RecentNotificationCard> {
   Widget build(BuildContext context) {
     final RecentNotificationHistoryEntry entry = widget.entry;
     final NotificationHistoryEntry notification = entry.notification;
+    final TextStyle titleStyle = Theme.of(context).textTheme.titleMedium!;
+    final double headerBaseline = _textBaseline(context, titleStyle);
     final bool isRedacted =
         notification.title.trim().isEmpty && notification.body.trim().isEmpty;
     return Card(
@@ -114,25 +116,33 @@ class _RecentNotificationCardState extends State<RecentNotificationCard> {
                         Wrap(
                           spacing: 8,
                           runSpacing: 2,
-                          crossAxisAlignment: WrapCrossAlignment.end,
+                          crossAxisAlignment: WrapCrossAlignment.start,
                           children: <Widget>[
-                            Text(
-                              isRedacted
-                                  ? S
-                                        .of(context)
-                                        .notificationsHistoryRedactedTitle
-                                  : notification.title,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            Text(
-                              formatNotificationDateTime(
-                                context,
-                                notification.receivedAt,
+                            Baseline(
+                              baseline: headerBaseline,
+                              baselineType: TextBaseline.alphabetic,
+                              child: Text(
+                                isRedacted
+                                    ? S
+                                          .of(context)
+                                          .notificationsHistoryRedactedTitle
+                                    : notification.title,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: titleStyle,
                               ),
-                              maxLines: 1,
-                              style: context.notificationMetadataText,
+                            ),
+                            Baseline(
+                              baseline: headerBaseline,
+                              baselineType: TextBaseline.alphabetic,
+                              child: Text(
+                                formatNotificationDateTime(
+                                  context,
+                                  notification.receivedAt,
+                                ),
+                                maxLines: 1,
+                                style: context.notificationMetadataText,
+                              ),
                             ),
                           ],
                         ),
@@ -194,6 +204,16 @@ class _RecentNotificationCardState extends State<RecentNotificationCard> {
         ),
       ),
     );
+  }
+
+  double _textBaseline(BuildContext context, TextStyle style) {
+    final TextPainter painter = TextPainter(
+      text: TextSpan(text: 'Ag', style: style),
+      maxLines: 1,
+      textDirection: Directionality.of(context),
+      textScaler: MediaQuery.textScalerOf(context),
+    )..layout();
+    return painter.computeDistanceToActualBaseline(TextBaseline.alphabetic);
   }
 
   Widget _controls(RecentNotificationHistoryEntry entry) {

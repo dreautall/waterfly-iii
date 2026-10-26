@@ -127,6 +127,7 @@ void main() {
     expect(copied.extractors, definition.extractors);
     expect(copied.rules, definition.rules);
     expect(copied.extractorMode, definition.extractorMode);
+    expect(copied.basicView, definition.basicView);
     expect(copied.transactionCreationMode, definition.transactionCreationMode);
   });
 
@@ -286,6 +287,7 @@ void main() {
     );
 
     expect(restored.extractorMode, NotificationExtractorMode.advanced);
+    expect(restored.basicView, NotificationBasicView.detailed);
     expect(restored.extractors.single.definitionName, 'Legacy amount');
   });
 
@@ -301,6 +303,25 @@ void main() {
         });
 
     expect(restored.extractorMode, NotificationExtractorMode.notConfigured);
+    expect(restored.basicView, NotificationBasicView.detailed);
+  });
+
+  test('round-trips an explicitly selected Simple experience', () {
+    const NotificationDefinition definition = NotificationDefinition(
+      id: 'simple',
+      applicationId: 'com.example.bank',
+      name: 'Example Bank',
+      extractors: <RegExpDefinition>[],
+      rules: <NotificationRule>[],
+      extractorMode: NotificationExtractorMode.basic,
+      basicView: NotificationBasicView.simple,
+    );
+
+    final NotificationDefinition restored = NotificationDefinition.fromJson(
+      definition.toJson(),
+    );
+
+    expect(restored.basicView, NotificationBasicView.simple);
   });
 
   // Verifies the persisted definition contract and app scoping together so a

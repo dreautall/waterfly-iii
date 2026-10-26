@@ -6,8 +6,10 @@ import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/history/recent_notification_samples.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
+import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
+import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_sample.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
@@ -24,6 +26,7 @@ import 'package:waterflyiii/notifications/presentation/definitions/widgets/defin
 import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_options_section.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/widgets/automatic_transaction_readiness_display.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/widgets/notification_definition_status_display.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/widgets/rule_effective_transaction_preview.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/controllers/notification_definition_editor_view_model.dart';
 import 'package:waterflyiii/notifications/presentation/shared/message_status_card.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_menu_theme.dart';
@@ -88,6 +91,8 @@ class _NotificationDefinitionDetailsPageState
   List<RegExpDefinition> get _extractors => _viewModel.extractors;
   List<NotificationRule> get _rules => _viewModel.rules;
   NotificationExtractorMode get _extractorMode => _viewModel.extractorMode;
+  bool get _showBasicDetails =>
+      _viewModel.basicView == NotificationBasicView.detailed;
   TransactionCreationMode get _transactionCreationMode =>
       _viewModel.transactionCreationMode;
   bool get _isSaving => _viewModel.isSaving;
@@ -194,11 +199,38 @@ class _NotificationDefinitionDetailsPageState
                   tooltip: strings.notificationsDefinitionOptions,
                   position: PopupMenuPosition.under,
                   iconSize: NotificationPageHeader.controlIconSize,
-                  onSelected: (DefinitionEditorMenuAction action) => _workflows
-                      .handleMenuAction(action, delete: widget.onDelete),
+                  onSelected: _handleDefinitionMenuAction,
                   itemBuilder: (BuildContext context) =>
                       <PopupMenuEntry<DefinitionEditorMenuAction>>[
-                        if (_extractorMode == NotificationExtractorMode.basic)
+                        if (_extractorMode ==
+                            NotificationExtractorMode.basic) ...<
+                          PopupMenuEntry<DefinitionEditorMenuAction>
+                        >[
+                          PopupMenuItem<DefinitionEditorMenuAction>(
+                            value: _showBasicDetails
+                                ? DefinitionEditorMenuAction.showSimpleBasic
+                                : DefinitionEditorMenuAction.showDetailedBasic,
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  _showBasicDetails
+                                      ? Icons.visibility_outlined
+                                      : Icons.tune,
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    _showBasicDetails
+                                        ? strings
+                                              .notificationsDefinitionShowSimpleView
+                                        : strings
+                                              .notificationsDefinitionAdjustSetup,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const NotificationMenuDivider(),
                           PopupMenuItem<DefinitionEditorMenuAction>(
                             value: DefinitionEditorMenuAction.convertToAdvanced,
                             child: Row(
@@ -214,6 +246,7 @@ class _NotificationDefinitionDetailsPageState
                               ],
                             ),
                           ),
+                        ],
                         if (_extractorMode ==
                             NotificationExtractorMode.advanced)
                           PopupMenuItem<DefinitionEditorMenuAction>(
@@ -309,12 +342,36 @@ class _NotificationDefinitionDetailsPageState
                   NotificationExtractorMode.notConfigured) ...<Widget>[
                 const SizedBox(height: 24),
                 DefinitionSetupModeSection(
-                  mode: _extractorMode,
                   hasSample:
                       _sampleTitleController.text.trim().isNotEmpty &&
                       _sampleBodyController.text.trim().isNotEmpty,
                   onModeSelected: _selectExtractorMode,
                 ),
+              ] else if (_extractorMode == NotificationExtractorMode.basic &&
+                  !_showBasicDetails) ...<Widget>[
+                const SizedBox(height: 24),
+                _simpleBasicGuidance(strings),
+                const SizedBox(height: 24),
+                EffectiveTransactionPreviewCard(
+                  rule: _rules.isEmpty
+                      ? _emptyBasicPreviewRule()
+                      : _rules.first,
+                  rules: _rules,
+                  sharedActions: _viewModel.sharedActions,
+                  extractors: _extractors,
+                  notificationContext: _workflows.sampleContext(),
+                  transactionCreationMode: _transactionCreationMode,
+                  showProvenance: false,
+                  title: strings.notificationsDefinitionExampleResult,
+                  description:
+                      strings.notificationsDefinitionExampleResultDescription,
+                ),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                  height: _isDirty ? _floatingSaveButtonSpacing : 0,
+                ),
+                SizedBox(height: _automaticAnchorSlack),
               ] else ...<Widget>[
                 const SizedBox(height: 24),
                 DefinitionExtractorsSection(
@@ -378,6 +435,59 @@ class _NotificationDefinitionDetailsPageState
         ),
       ),
     );
+  }
+
+  NotificationRule _emptyBasicPreviewRule() => const NotificationRule(
+    id: 'basic-preview',
+    name: '',
+    conditions: <NotificationCondition>[],
+    actions: <NotificationAction>[],
+  );
+
+  Widget _simpleBasicGuidance(S strings) {
+    final bool needsReview = _basicMappingsNeedReview();
+    return MessageStatusCard(
+      key: const Key('basic-simple-guidance'),
+      status: needsReview ? MessageStatus.review : MessageStatus.informational,
+      title: needsReview
+          ? strings.notificationsDefinitionSimpleReviewTitle
+          : strings.notificationsDefinitionSimpleMoreOptionsTitle,
+      message: needsReview
+          ? strings.notificationsDefinitionSimpleReviewGuidance
+          : strings.notificationsDefinitionSimpleMoreOptionsMessage,
+      actionsBuilder: (BuildContext context, Color foreground) => SizedBox(
+        width: double.infinity,
+        child: FilledButton.tonal(
+          onPressed: _showDetailedBasicSetup,
+          child: Text(strings.notificationsDefinitionSwitchToBasicMode),
+        ),
+      ),
+    );
+  }
+
+  void _showDetailedBasicSetup() {
+    _automaticAnchorSlack = 0;
+    _viewModel.setBasicView(NotificationBasicView.detailed);
+  }
+
+  void _showSimpleBasicSetup() {
+    _automaticAnchorSlack = 0;
+    _viewModel.setBasicView(NotificationBasicView.simple);
+  }
+
+  Future<void> _handleDefinitionMenuAction(
+    DefinitionEditorMenuAction action,
+  ) async {
+    switch (action) {
+      case DefinitionEditorMenuAction.showDetailedBasic:
+        _showDetailedBasicSetup();
+      case DefinitionEditorMenuAction.showSimpleBasic:
+        _showSimpleBasicSetup();
+      case DefinitionEditorMenuAction.convertToAdvanced ||
+          DefinitionEditorMenuAction.convertToBasic ||
+          DefinitionEditorMenuAction.delete:
+        await _workflows.handleMenuAction(action, delete: widget.onDelete);
+    }
   }
 
   void _showCreationSnackBar() {
@@ -472,6 +582,12 @@ class _NotificationDefinitionDetailsPageState
     NotificationDefinitionStatus status,
   ) {
     if (status != NotificationDefinitionStatus.needsSetup) {
+      if (!_showBasicDetails &&
+          _extractorMode == NotificationExtractorMode.basic &&
+          status == NotificationDefinitionStatus.needsReview &&
+          _basicMappingsNeedReview()) {
+        return S.of(context).notificationsDefinitionSimpleNeedsReviewMessage;
+      }
       if (_transactionCreationMode == TransactionCreationMode.automatic &&
           !definition.automaticTransactionReadiness.isReady) {
         return definition.automaticTransactionReadiness.message(context);
@@ -528,19 +644,38 @@ class _NotificationDefinitionDetailsPageState
         !_automaticReadiness.isReady) {
       return true;
     }
-    if (_extractorMode != NotificationExtractorMode.basic) return false;
-    final NotificationRule rule = _viewModel.createSharedActionsRule('');
-    final NotificationContext sample = _workflows.sampleContext();
-    final NotificationRuleDiagnostics diagnostics = rule.diagnostics(
-      extractors: _extractors,
-      notificationContext: sample,
-    );
-    return diagnostics.incompleteFields.isNotEmpty ||
-        diagnostics.unreviewedPredefinedFields.isNotEmpty;
+    return _basicMappingsNeedReview();
   }
 
-  void _selectExtractorMode(NotificationExtractorMode mode) {
-    _viewModel.configure(mode);
+  bool _basicMappingsNeedReview() {
+    if (_extractorMode != NotificationExtractorMode.basic) return false;
+    final NotificationContext sample = _workflows.sampleContext();
+    final List<NotificationRule> basicMappings = <NotificationRule>[
+      _viewModel.createSharedActionsRule(''),
+      ..._rules.where((NotificationRule rule) => rule.isPredefined),
+    ];
+    return basicMappings.any((NotificationRule rule) {
+      final NotificationRuleDiagnostics diagnostics = rule.diagnostics(
+        extractors: _extractors,
+        notificationContext: sample,
+      );
+      return diagnostics.incompleteFields.isNotEmpty ||
+          diagnostics.unreviewedPredefinedFields.isNotEmpty;
+    });
+  }
+
+  void _selectExtractorMode(NotificationSetupExperience experience) {
+    switch (experience) {
+      case NotificationSetupExperience.simple:
+        _viewModel.configure(
+          NotificationExtractorMode.basic,
+          basicView: NotificationBasicView.simple,
+        );
+      case NotificationSetupExperience.basic:
+        _viewModel.configure(NotificationExtractorMode.basic);
+      case NotificationSetupExperience.advanced:
+        _viewModel.configure(NotificationExtractorMode.advanced);
+    }
   }
 
   void _setTransactionCreationMode(bool automatically) {

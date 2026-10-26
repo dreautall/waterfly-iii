@@ -15,7 +15,13 @@ import 'package:waterflyiii/notifications/presentation/shared/notification_dialo
 import 'package:waterflyiii/notifications/presentation/extractors/pages/notification_extractor_details_page.dart';
 import 'package:waterflyiii/notifications/presentation/rules/pages/notification_rule_details_page.dart';
 
-enum DefinitionEditorMenuAction { convertToAdvanced, convertToBasic, delete }
+enum DefinitionEditorMenuAction {
+  showDetailedBasic,
+  showSimpleBasic,
+  convertToAdvanced,
+  convertToBasic,
+  delete,
+}
 
 class NotificationDefinitionEditorWorkflows {
   const NotificationDefinitionEditorWorkflows({
@@ -231,6 +237,10 @@ class NotificationDefinitionEditorWorkflows {
     DefinitionEditorMenuAction action, {
     Future<bool> Function()? delete,
   }) async {
+    if (action == DefinitionEditorMenuAction.showDetailedBasic ||
+        action == DefinitionEditorMenuAction.showSimpleBasic) {
+      return;
+    }
     if (action == DefinitionEditorMenuAction.delete) {
       if (delete == null) return;
       try {

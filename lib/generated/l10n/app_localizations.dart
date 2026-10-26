@@ -4344,6 +4344,66 @@ abstract class S {
   /// **'Shows the transaction created from shared actions, always-run actions, and matching conditional actions. Later values override earlier ones.'**
   String get notificationsDefinitionResolvedTransactionDescription;
 
+  /// Heading for the simple Basic-mode transaction preview.
+  ///
+  /// In en, this message translates to:
+  /// **'Example transaction'**
+  String get notificationsDefinitionExampleResult;
+
+  /// Description for the simple Basic-mode transaction preview.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the transaction Waterfly will create from the sample notification.'**
+  String get notificationsDefinitionExampleResultDescription;
+
+  /// Button that reveals the detailed Basic notification setup.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust setup'**
+  String get notificationsDefinitionAdjustSetup;
+
+  /// Button that collapses the detailed Basic notification setup back to its result preview.
+  ///
+  /// In en, this message translates to:
+  /// **'Show simple view'**
+  String get notificationsDefinitionShowSimpleView;
+
+  /// Title for the informational detailed-setup guidance in simple Basic mode.
+  ///
+  /// In en, this message translates to:
+  /// **'More options are available'**
+  String get notificationsDefinitionSimpleMoreOptionsTitle;
+
+  /// Explains that detailed notification setup is available from simple Basic mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic mode lets you adjust extraction, field mappings, and other transaction details.'**
+  String get notificationsDefinitionSimpleMoreOptionsMessage;
+
+  /// Title for simple Basic-mode guidance when the sample cannot be resolved without intervention.
+  ///
+  /// In en, this message translates to:
+  /// **'This notification needs attention'**
+  String get notificationsDefinitionSimpleReviewTitle;
+
+  /// Simple Basic-mode guidance when the sample has unresolved or ambiguous mappings.
+  ///
+  /// In en, this message translates to:
+  /// **'Waterfly cannot reliably interpret every required value in this sample. Open Basic mode to review the suggested mappings.'**
+  String get notificationsDefinitionSimpleReviewGuidance;
+
+  /// Action that opens the detailed Basic notification editor from simple mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to Basic mode'**
+  String get notificationsDefinitionSwitchToBasicMode;
+
+  /// Definition status message for unresolved or ambiguous mappings while simple Basic mode is visible.
+  ///
+  /// In en, this message translates to:
+  /// **'Waterfly needs help interpreting this sample. Review the suggested values in Basic mode before using this application.'**
+  String get notificationsDefinitionSimpleNeedsReviewMessage;
+
   /// Description for the group-scoped resolved transaction fields section in a conditional action editor.
   ///
   /// In en, this message translates to:
@@ -4434,6 +4494,18 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Use built-in extractors and standard transaction mappings. Review uncertain values before creating a transaction.'**
   String get notificationsDefinitionBasicDescription;
+
+  /// Simple notification processing setup experience.
+  ///
+  /// In en, this message translates to:
+  /// **'Simple'**
+  String get notificationsDefinitionSimple;
+
+  /// Description for the simple notification processing setup experience.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the transaction produced from the sample and hide the extraction details.'**
+  String get notificationsDefinitionSimpleDescription;
 
   /// Advanced notification processing mode.
   ///

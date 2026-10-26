@@ -1976,9 +1976,21 @@ void main() {
       tester.getTopLeft(body).dy,
       greaterThan(tester.getBottomLeft(title).dy),
     );
+    final Finder titleBaseline = find.ancestor(
+      of: title,
+      matching: find.byType(Baseline),
+    );
+    final Finder dateTimeBaseline = find.ancestor(
+      of: dateTime,
+      matching: find.byType(Baseline),
+    );
     expect(
-      tester.getCenter(dateTime).dy,
-      closeTo(tester.getCenter(title).dy, 4),
+      tester.widget<Baseline>(dateTimeBaseline).baseline,
+      tester.widget<Baseline>(titleBaseline).baseline,
+    );
+    expect(
+      tester.getTopLeft(dateTimeBaseline).dy,
+      closeTo(tester.getTopLeft(titleBaseline).dy, 0.5),
     );
   });
 

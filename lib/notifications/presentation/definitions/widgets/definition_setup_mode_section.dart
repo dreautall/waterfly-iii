@@ -1,19 +1,18 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
-import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_text_styles.dart';
+
+enum NotificationSetupExperience { simple, basic, advanced }
 
 class DefinitionSetupModeSection extends StatelessWidget {
   const DefinitionSetupModeSection({
     super.key,
-    required this.mode,
     required this.hasSample,
     required this.onModeSelected,
   });
 
-  final NotificationExtractorMode mode;
   final bool hasSample;
-  final ValueChanged<NotificationExtractorMode> onModeSelected;
+  final ValueChanged<NotificationSetupExperience> onModeSelected;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -37,7 +36,16 @@ class DefinitionSetupModeSection extends StatelessWidget {
         const SizedBox(height: 12),
       ],
       _SetupModeOption(
-        mode: NotificationExtractorMode.basic,
+        experience: NotificationSetupExperience.simple,
+        icon: Icons.receipt_long_outlined,
+        title: S.of(context).notificationsDefinitionSimple,
+        subtitle: S.of(context).notificationsDefinitionSimpleDescription,
+        enabled: hasSample,
+        onSelected: onModeSelected,
+      ),
+      const SizedBox(height: 8),
+      _SetupModeOption(
+        experience: NotificationSetupExperience.basic,
         icon: Icons.auto_awesome,
         title: S.of(context).notificationsDefinitionBasic,
         subtitle: S.of(context).notificationsDefinitionBasicDescription,
@@ -46,7 +54,7 @@ class DefinitionSetupModeSection extends StatelessWidget {
       ),
       const SizedBox(height: 8),
       _SetupModeOption(
-        mode: NotificationExtractorMode.advanced,
+        experience: NotificationSetupExperience.advanced,
         icon: Icons.tune,
         title: S.of(context).notificationsDefinitionAdvanced,
         subtitle: S.of(context).notificationsDefinitionAdvancedDescription,
@@ -59,7 +67,7 @@ class DefinitionSetupModeSection extends StatelessWidget {
 
 class _SetupModeOption extends StatelessWidget {
   const _SetupModeOption({
-    required this.mode,
+    required this.experience,
     required this.icon,
     required this.title,
     required this.subtitle,
@@ -67,12 +75,12 @@ class _SetupModeOption extends StatelessWidget {
     required this.onSelected,
   });
 
-  final NotificationExtractorMode mode;
+  final NotificationSetupExperience experience;
   final IconData icon;
   final String title;
   final String subtitle;
   final bool enabled;
-  final ValueChanged<NotificationExtractorMode> onSelected;
+  final ValueChanged<NotificationSetupExperience> onSelected;
 
   @override
   Widget build(BuildContext context) => Card(
@@ -88,7 +96,7 @@ class _SetupModeOption extends StatelessWidget {
         child: Center(child: Icon(Icons.chevron_right)),
       ),
       enabled: enabled,
-      onTap: enabled ? () => onSelected(mode) : null,
+      onTap: enabled ? () => onSelected(experience) : null,
     ),
   );
 }

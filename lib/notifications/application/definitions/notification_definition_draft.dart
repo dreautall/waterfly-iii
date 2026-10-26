@@ -17,6 +17,7 @@ class NotificationDefinitionDraft {
       sampleTitle = _original.sampleTitle ?? '',
       sampleBody = _original.sampleBody ?? '',
       extractorMode = _original.extractorMode,
+      basicView = _original.basicView,
       transactionCreationMode = _original.transactionCreationMode;
 
   NotificationDefinition _original;
@@ -27,6 +28,7 @@ class NotificationDefinitionDraft {
   String sampleTitle;
   String sampleBody;
   NotificationExtractorMode extractorMode;
+  NotificationBasicView basicView;
   TransactionCreationMode transactionCreationMode;
 
   NotificationDefinition build() => _original.copyWith(
@@ -39,6 +41,7 @@ class NotificationDefinitionDraft {
     sampleTitle: _emptyToNull(sampleTitle),
     sampleBody: _emptyToNull(sampleBody),
     extractorMode: extractorMode,
+    basicView: basicView,
     transactionCreationMode: transactionCreationMode,
   );
 

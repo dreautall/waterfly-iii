@@ -16,6 +16,8 @@ import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.d
 
 enum NotificationExtractorMode { notConfigured, basic, advanced }
 
+enum NotificationBasicView { simple, detailed }
+
 enum NotificationDefinitionStatus {
   notConfigured,
   needsSetup,
@@ -36,6 +38,7 @@ class NotificationDefinition {
     this.sampleBody,
     this.createdAt,
     this.extractorMode = NotificationExtractorMode.notConfigured,
+    this.basicView = NotificationBasicView.detailed,
     this.transactionCreationMode = TransactionCreationMode.prompt,
     this.requiresMigrationReview = false,
     this.migrationReviewIssues = const <NotificationMigrationIssue>{},
@@ -52,6 +55,7 @@ class NotificationDefinition {
   final String? sampleBody;
   final DateTime? createdAt;
   final NotificationExtractorMode extractorMode;
+  final NotificationBasicView basicView;
   final TransactionCreationMode transactionCreationMode;
   final bool requiresMigrationReview;
   final Set<NotificationMigrationIssue> migrationReviewIssues;
@@ -71,6 +75,7 @@ class NotificationDefinition {
     String? sampleBody,
     DateTime? createdAt,
     NotificationExtractorMode? extractorMode,
+    NotificationBasicView? basicView,
     TransactionCreationMode? transactionCreationMode,
     bool? requiresMigrationReview,
     Set<NotificationMigrationIssue>? migrationReviewIssues,
@@ -87,6 +92,7 @@ class NotificationDefinition {
     sampleBody: sampleBody ?? this.sampleBody,
     createdAt: createdAt ?? this.createdAt,
     extractorMode: extractorMode ?? this.extractorMode,
+    basicView: basicView ?? this.basicView,
     transactionCreationMode:
         transactionCreationMode ?? this.transactionCreationMode,
     requiresMigrationReview:
@@ -249,6 +255,7 @@ class NotificationDefinition {
     'sampleBody': sampleBody,
     'createdAt': createdAt?.toIso8601String(),
     'extractorMode': extractorMode.name,
+    'basicView': basicView.name,
     'transactionCreationMode': transactionCreationMode.name,
     if (requiresMigrationReview) 'requiresMigrationReview': true,
     if (migrationReviewIssues.isNotEmpty)
@@ -292,6 +299,13 @@ class NotificationDefinition {
         json['extractorMode'] as String?,
         hasExtractors: extractors.isNotEmpty,
       ),
+      basicView:
+          NotificationBasicView.values
+              .where(
+                (NotificationBasicView view) => view.name == json['basicView'],
+              )
+              .firstOrNull ??
+          NotificationBasicView.detailed,
       extractors: extractors,
       rules: rules,
       sharedActions: (json['sharedActions'] as List<dynamic>? ?? <dynamic>[])

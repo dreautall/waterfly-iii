@@ -437,6 +437,10 @@
     "@generalIncome": {
         "description": "(Account) Info"
     },
+    "generalLeft": "Залишок",
+    "@generalLeft": {
+        "description": "Label for the remaining (not yet spent) amount of a budget."
+    },
     "generalLiabilities": "Зобов’язання",
     "@generalLiabilities": {
         "description": "Firefly Translation String: liabilities"
@@ -645,6 +649,16 @@
             }
         }
     },
+    "homePiggySavePerMonth": "Заощадження на місяць: {amount}",
+    "@homePiggySavePerMonth": {
+        "description": "How much should be saved per month to reach the target",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
     "homePiggySavedMultiple": "Накопичено:",
     "@homePiggySavedMultiple": {
         "description": "Title for a list of multiple accounts with the amount of money saved so far"
@@ -680,6 +694,16 @@
     "homePiggyInPiggyBanks": "У скарбничках: {amount}",
     "@homePiggyInPiggyBanks": {
         "description": "Amount currently in piggy banks for this account",
+        "placeholders": {
+            "amount": {
+                "type": "String",
+                "example": "€12.34"
+            }
+        }
+    },
+    "homePiggyTotal": "Разом: {amount}",
+    "@homePiggyTotal": {
+        "description": "Total balance of an account in the Piggy bank",
         "placeholders": {
             "amount": {
                 "type": "String",
@@ -853,6 +877,19 @@
     "@no": {
         "description": "The word no"
     },
+    "numPercent": "{num}",
+    "@numPercent": {
+        "description": "Number formatted as percentage",
+        "placeholders": {
+            "num": {
+                "type": "double",
+                "format": "decimalPercentPattern",
+                "optionalParameters": {
+                    "decimalDigits": 0
+                }
+            }
+        }
+    },
     "numPercentOf": "{perc} з {of}",
     "@numPercentOf": {
         "description": "Number formatted as percentage, with total amount provided",
@@ -897,6 +934,10 @@
     "@settingsDialogThemeTitle": {
         "description": "Dialog title: Select theme"
     },
+    "settingsFAQ": "ЧАП",
+    "@settingsFAQ": {
+        "description": "FAQ title"
+    },
     "settingsFAQHelp": "Відкривається у браузері. Доступно лише англійською мовою.",
     "@settingsFAQHelp": {
         "description": "FAQ help text that explains that it opens up in a browser and is only available in English"
@@ -908,6 +949,10 @@
     "settingsLockscreen": "Екран блокування",
     "@settingsLockscreen": {
         "description": "Setting if a lockscreen is shown (authentication is required on startup)"
+    },
+    "settingsLockscreenHelp": "Вимагає аутентифікації при запуску програми",
+    "@settingsLockscreenHelp": {
+        "description": "Description for lockscreen setting"
     },
     "settingsLockscreenInitial": "Будь ласка, пройдіть автентифікацію, щоб увімкнути екран блокування.",
     "@settingsLockscreenInitial": {

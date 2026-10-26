@@ -367,7 +367,7 @@ class SDe extends S {
   String get generalIncome => 'Einnahmen';
 
   @override
-  String get generalLeft => 'Left';
+  String get generalLeft => 'Übrig';
 
   @override
   String get generalLiabilities => 'Verbindlichkeiten';
@@ -401,7 +401,7 @@ class SDe extends S {
 
   @override
   String get homeMainActionPrivacyMode =>
-      'Show/Hide all amounts (Privacy Mode)';
+      'Beträge ein/ausblenden (Datenschutzmodus)';
 
   @override
   String homeMainBillsInterval(String period) {
@@ -830,26 +830,26 @@ class SDe extends S {
       'Verbindungseinstellungen aktualisiert.';
 
   @override
-  String get settingsTag => 'Tag Transactions';
+  String get settingsTag => 'Transaktionen verschlagworten';
 
   @override
   String get settingsTagAllHelp =>
-      'Automatically add a tag for all new transactions.';
+      'Schlagwort für alle neuen Transaktionen hinzufügen.';
 
   @override
   String settingsTagList(int count, String tags) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'tags: $tags',
-      one: 'tag: $tags',
+      other: ' Schlagwörter: $tags',
+      one: 's Schlagwort: $tags',
     );
-    return 'Selected $_temp0';
+    return 'Ausgewählte$_temp0';
   }
 
   @override
   String get settingsTagNLHelp =>
-      'Automatically add a tag for transactions created from the listener.';
+      'Schlagwort für alle Transaktionen aus Benachrichtigungen hinzufügen.';
 
   @override
   String get settingsTheme => 'Erscheinungsbild';
@@ -881,7 +881,7 @@ class SDe extends S {
   String get settingsVersionChecking => 'Überprüfe…';
 
   @override
-  String get tagNone => '<no tag>';
+  String get tagNone => '<kein Schlagwort>';
 
   @override
   String get transactionAttachments => 'Anhänge';

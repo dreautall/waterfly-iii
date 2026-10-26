@@ -1,0 +1,1 @@
+New version without specific changes (only dependency updates)

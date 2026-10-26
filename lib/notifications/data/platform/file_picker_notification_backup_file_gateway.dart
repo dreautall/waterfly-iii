@@ -26,8 +26,6 @@ class FilePickerNotificationBackupFileGateway
     final Uri? uri = await file_picker.FilePicker.saveFile(
       dialogTitle: dialogTitle,
       fileName: suggestedName,
-      type: file_picker.FileType.custom,
-      allowedExtensions: <String>['zip'],
       mimeType: 'application/zip',
       bytes: bytes,
     );

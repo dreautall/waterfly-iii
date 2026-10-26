@@ -14,6 +14,7 @@ class AutoCompleteText<T extends Object> extends StatefulWidget {
     required this.focusNode,
     required this.labelText,
     required this.optionsBuilder,
+    this.fieldKey,
     this.labelIcon,
     this.displayStringForOption = defaultStringForOption,
     this.disabled = false,
@@ -22,12 +23,14 @@ class AutoCompleteText<T extends Object> extends StatefulWidget {
     this.style,
     this.errorText,
     this.errorIconOnly = false,
+    this.optionsViewOffset = Offset.zero,
   });
 
   final TextEditingController textController;
   final FocusNode focusNode;
   final String labelText;
   final FutureOr<Iterable<T>> Function(TextEditingValue) optionsBuilder;
+  final Key? fieldKey;
   final IconData? labelIcon;
   final String Function(T) displayStringForOption;
   final bool disabled;
@@ -36,6 +39,7 @@ class AutoCompleteText<T extends Object> extends StatefulWidget {
   final TextStyle? style;
   final String? errorText;
   final bool errorIconOnly;
+  final Offset optionsViewOffset;
 
   static String defaultStringForOption(dynamic option) {
     return option.toString();
@@ -88,6 +92,7 @@ class _AutoCompleteTextState<T extends Object>
                   FocusNode focusNode,
                   void onFieldSubmitted,
                 ) => TextFormField(
+                  key: widget.fieldKey,
                   controller: textEditingController,
                   focusNode: focusNode,
                   onChanged: (String value) {
@@ -140,56 +145,59 @@ class _AutoCompleteTextState<T extends Object>
                   BuildContext context,
                   void Function(T) onOptionSelected,
                   Iterable<T> options,
-                ) => Align(
-                  alignment: .topLeft,
-                  child: Padding(
-                    padding: .only(left: widget.labelIcon == null ? 0 : 40),
-                    child: Material(
-                      elevation: 4.0,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: 200,
-                          maxWidth:
-                              constraints.biggest.width -
-                              (widget.labelIcon == null ? 0 : 40),
-                        ),
-                        child: ListView.builder(
-                          padding: .zero,
-                          itemCount: options.length,
-                          shrinkWrap: true,
-                          itemBuilder: (BuildContext context, int index) {
-                            final T option = options.elementAt(index);
-                            return InkWell(
-                              onTap: () => onOptionSelected(option),
-                              child: Builder(
-                                builder: (BuildContext context) {
-                                  final bool highlight =
-                                      AutocompleteHighlightedOption.of(
-                                        context,
-                                      ) ==
-                                      index;
-                                  if (highlight) {
-                                    SchedulerBinding.instance
-                                        .addPostFrameCallback((_) {
-                                          Scrollable.ensureVisible(
-                                            context,
-                                            alignment: 0.5,
-                                          );
-                                        });
-                                  }
-                                  return Container(
-                                    color: highlight
-                                        ? Theme.of(context).focusColor
-                                        : null,
-                                    padding: const .all(16.0),
-                                    child: Text(
-                                      widget.displayStringForOption(option),
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
-                          },
+                ) => Transform.translate(
+                  offset: widget.optionsViewOffset,
+                  child: Align(
+                    alignment: .topLeft,
+                    child: Padding(
+                      padding: .only(left: widget.labelIcon == null ? 0 : 40),
+                      child: Material(
+                        elevation: 4.0,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: 200,
+                            maxWidth:
+                                constraints.biggest.width -
+                                (widget.labelIcon == null ? 0 : 40),
+                          ),
+                          child: ListView.builder(
+                            padding: .zero,
+                            itemCount: options.length,
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              final T option = options.elementAt(index);
+                              return InkWell(
+                                onTap: () => onOptionSelected(option),
+                                child: Builder(
+                                  builder: (BuildContext context) {
+                                    final bool highlight =
+                                        AutocompleteHighlightedOption.of(
+                                          context,
+                                        ) ==
+                                        index;
+                                    if (highlight) {
+                                      SchedulerBinding.instance
+                                          .addPostFrameCallback((_) {
+                                            Scrollable.ensureVisible(
+                                              context,
+                                              alignment: 0.5,
+                                            );
+                                          });
+                                    }
+                                    return Container(
+                                      color: highlight
+                                          ? Theme.of(context).focusColor
+                                          : null,
+                                      padding: const .all(16.0),
+                                      child: Text(
+                                        widget.displayStringForOption(option),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),

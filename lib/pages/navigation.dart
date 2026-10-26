@@ -6,6 +6,7 @@ import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/layout.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/pages/notification_definitions_page.dart';
 import 'package:waterflyiii/pages/accounts.dart';
 import 'package:waterflyiii/pages/bills.dart';
 import 'package:waterflyiii/pages/categories.dart';
@@ -19,14 +20,66 @@ class NavDestination {
     this.label,
     this.pageHandler,
     this.icon,
-    this.selectedIcon,
-  );
+    this.selectedIcon, {
+    this.pushedPageBuilder,
+    this.startsNewGroup = false,
+  });
 
   final String label;
   final Widget pageHandler;
   final Widget icon;
   final Widget selectedIcon;
+  final WidgetBuilder? pushedPageBuilder;
+  final bool startsNewGroup;
 }
+
+@visibleForTesting
+List<NavDestination> buildNavigationDestinations(BuildContext context) =>
+    <NavDestination>[
+      NavDestination(
+        S.of(context).navigationMain,
+        const HomePage(),
+        const Icon(Icons.dashboard_outlined),
+        const Icon(Icons.dashboard),
+      ),
+      NavDestination(
+        S.of(context).navigationAccounts,
+        const AccountsPage(),
+        const Icon(Icons.account_balance_outlined),
+        const Icon(Icons.account_balance),
+      ),
+      NavDestination(
+        S.of(context).navigationCategories,
+        const CategoriesPage(),
+        const Icon(Icons.assignment_outlined),
+        const Icon(Icons.assignment),
+      ),
+      NavDestination(
+        S.of(context).navigationBills,
+        const BillsPage(),
+        const Icon(Icons.receipt_outlined),
+        const Icon(Icons.receipt),
+      ),
+      NavDestination(
+        S.of(context).generalSettings,
+        const SettingsPage(),
+        const Icon(Icons.settings_outlined),
+        const Icon(Icons.settings),
+        startsNewGroup: true,
+        pushedPageBuilder: (BuildContext context) => Scaffold(
+          appBar: AppBar(title: Text(S.of(context).generalSettings)),
+          body: const SettingsPage(),
+        ),
+      ),
+      NavDestination(
+        S.of(context).settingsNotificationListener,
+        const NotificationDefinitionsPage(showAppBar: true),
+        const Icon(Icons.notifications_outlined),
+        const Icon(Icons.notifications),
+        pushedPageBuilder: (BuildContext context) =>
+            const NotificationDefinitionsPage(showAppBar: true),
+      ),
+    ];
 
 class NavPageElements with ChangeNotifier {
   NavPageElements(this.defaultTitle);
@@ -99,38 +152,7 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    navDestinations = <NavDestination>[
-      NavDestination(
-        S.of(context).navigationMain,
-        const HomePage(),
-        const Icon(Icons.dashboard_outlined),
-        const Icon(Icons.dashboard),
-      ),
-      NavDestination(
-        S.of(context).navigationAccounts,
-        const AccountsPage(),
-        const Icon(Icons.account_balance_outlined),
-        const Icon(Icons.account_balance),
-      ),
-      NavDestination(
-        S.of(context).navigationCategories,
-        const CategoriesPage(),
-        const Icon(Icons.assignment_outlined),
-        const Icon(Icons.assignment),
-      ),
-      NavDestination(
-        S.of(context).navigationBills,
-        const BillsPage(),
-        const Icon(Icons.receipt_outlined),
-        const Icon(Icons.receipt),
-      ),
-      NavDestination(
-        S.of(context).generalSettings,
-        const SettingsPage(),
-        const Icon(Icons.settings_outlined),
-        const Icon(Icons.settings),
-      ),
-    ];
+    navDestinations = buildNavigationDestinations(context);
 
     _tabController = TabController(vsync: this, length: navDestinations.length);
   }
@@ -146,15 +168,12 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
     if (screenIndex == index) {
       return;
     }
-    if (navDestinations[index].pageHandler is SettingsPage) {
-      Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) => Scaffold(
-            appBar: AppBar(title: Text(navDestinations[index].label)),
-            body: const SettingsPage(),
-          ),
-        ),
-      );
+    final WidgetBuilder? pushedPageBuilder =
+        navDestinations[index].pushedPageBuilder;
+    if (pushedPageBuilder != null) {
+      Navigator.of(
+        context,
+      ).push(MaterialPageRoute<void>(builder: pushedPageBuilder));
     } else {
       context.read<NavPageElements>().appBarActions = null;
       context.read<NavPageElements>().appBarBottom = null;
@@ -196,13 +215,20 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ),
-                  ...navDestinations.map((NavDestination destination) {
-                    return NavigationDrawerDestination(
+                  for (final NavDestination destination
+                      in navDestinations) ...<Widget>[
+                    if (destination.startsNewGroup)
+                      const Divider(
+                        key: Key('main-navigation-utility-divider'),
+                        indent: 28,
+                        endIndent: 28,
+                      ),
+                    NavigationDrawerDestination(
                       label: Text(destination.label),
                       icon: destination.icon,
                       selectedIcon: destination.selectedIcon,
-                    );
-                  }),
+                    ),
+                  ],
                   const Divider(indent: 28, endIndent: 28),
                   Padding(
                     padding: const .symmetric(horizontal: 28, vertical: 16),
@@ -256,10 +282,18 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
                     ? 0
                     : -1,
                 destinations: navDestinations.map((NavDestination destination) {
+                  final Widget icon = destination.startsNewGroup
+                      ? _NavigationRailGroupedIcon(child: destination.icon)
+                      : destination.icon;
+                  final Widget selectedIcon = destination.startsNewGroup
+                      ? _NavigationRailGroupedIcon(
+                          child: destination.selectedIcon,
+                        )
+                      : destination.selectedIcon;
                   return NavigationRailDestination(
                     label: Text(destination.label),
-                    icon: destination.icon,
-                    selectedIcon: destination.selectedIcon,
+                    icon: icon,
+                    selectedIcon: selectedIcon,
                   );
                 }).toList(),
                 trailingAtBottom: true,
@@ -315,6 +349,25 @@ class NavPageState extends State<NavPage> with TickerProviderStateMixin {
       ),
     );
   }
+}
+
+class _NavigationRailGroupedIcon extends StatelessWidget {
+  const _NavigationRailGroupedIcon({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    mainAxisSize: MainAxisSize.min,
+    children: <Widget>[
+      const SizedBox(
+        key: Key('main-navigation-utility-divider'),
+        width: 48,
+        child: Divider(height: 8),
+      ),
+      child,
+    ],
+  );
 }
 
 class LogoutConfirmDialog extends StatelessWidget {

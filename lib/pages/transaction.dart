@@ -15,11 +15,19 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/layout.dart';
 import 'package:waterflyiii/notificationlistener.dart';
+import 'package:waterflyiii/notifications/application/processing/prompted_transaction_resource_hydrator.dart';
+import 'package:waterflyiii/notifications/application/processing/notification_transaction_intent_adapter.dart';
+import 'package:waterflyiii/notifications/application/resources/firefly_currency_resolver.dart';
+import 'package:waterflyiii/notifications/application/resources/firefly_resource_label_resolver.dart';
+import 'package:waterflyiii/notifications/domain/planning/transaction_intent.dart';
+import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
+import 'package:waterflyiii/notifications/domain/transactions/transaction_patch.dart';
 import 'package:waterflyiii/pages/navigation.dart';
 import 'package:waterflyiii/pages/transaction/dialogs/delete.dart';
 import 'package:waterflyiii/pages/transaction/headersection.dart';
 import 'package:waterflyiii/pages/transaction/splitcard.dart';
 import 'package:waterflyiii/pages/transaction/state.dart';
+import 'package:waterflyiii/pages/transaction/tags.dart';
 import 'package:waterflyiii/settings.dart';
 import 'package:waterflyiii/stock.dart';
 import 'package:waterflyiii/theme.dart';
@@ -29,6 +37,15 @@ import 'package:waterflyiii/widgets/autocompletetext.dart';
 final Logger log = Logger("Pages.Transaction");
 
 bool _savingInProgress = false;
+
+class _NotificationAccountResolutionException implements Exception {
+  const _NotificationAccountResolutionException(this.message);
+
+  final String message;
+
+  @override
+  String toString() => message;
+}
 
 class TransactionPage extends StatefulWidget {
   const TransactionPage({
@@ -130,95 +147,24 @@ class _TransactionPageState extends State<TransactionPage>
 
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         _tx.splits.first.titleFN.requestFocus();
-        // Extract notification
         if (widget.notification != null) {
-          final FireflyIii api = context.read<FireflyService>().api;
-          final SettingsProvider settings = context.read<SettingsProvider>();
-
-          log.info("Got notification ${widget.notification?.title}");
-          _tx.type = .withdrawal;
-
-          // Amount & Currency
-          final CurrencyRead defaultCurrency = context
-              .read<FireflyService>()
-              .defaultCurrency;
-          final NotificationAppSettings appSettings = await settings
-              .notificationGetAppSettings(widget.notification!.appName);
-          late CurrencyRead? currency;
-          late double amount;
-          (currency, amount) = await parseNotificationText(
-            api,
-            widget.notification!.body,
-            _tx.localCurrency,
-            userRegex: appSettings.regex,
-          );
-          currency ??= defaultCurrency; // Fallback solution
-
-          // Set date
-          _tx.date = _tzHandler
-              .notificationTXTime(widget.notification!.date)
-              .toLocal();
-
-          // Title & Note
-          if (!appSettings.emptyNote) {
-            _tx.splits.first.noteTC.text = widget.notification!.body;
-          }
-
-          if (appSettings.includeTitle) {
-            _tx.splits.first.titleTC.text = widget.notification!.title;
-          } else {
-            _tx.splits.first.titleTC.text = "";
-            _tx.splits.first.noteTC.text =
-                "${widget.notification!.title} - ${_tx.splits.first.noteTC.text}";
-          }
-
-          // Check account
-          final Response<AccountArray> response = await api.v1AccountsGet(
-            type: .assetAccount,
-          );
-          if (!response.isSuccessful || response.body == null) {
-            log.warning("api account fetch failed");
-            return;
-          }
-          final String settingAppId = appSettings.defaultAccountId ?? "0";
-          for (AccountRead acc in response.body!.data) {
-            if (acc.id == settingAppId ||
-                widget.notification!.body.containsIgnoreCase(
-                  acc.attributes.name,
-                )) {
-              _tx.splits.first.sourceAccountTC.text = acc.attributes.name;
-              _tx.ownAccountID = acc.id;
-              _tx.sourceAccountType = .assetAccount;
-              if (currency.id == acc.attributes.currencyId) {
-                _tx.localCurrency = currency;
-              } else {
-                _tx.localCurrency = CurrencyRead(
-                  type: "currencies",
-                  id: acc.attributes.currencyId!,
-                  attributes: CurrencyProperties(
-                    code: acc.attributes.currencyCode!,
-                    name: "",
-                    symbol: acc.attributes.currencySymbol!,
-                    decimalPlaces: acc.attributes.currencyDecimalPlaces,
-                  ),
-                );
-                _tx.splits.first.foreignCurrency = currency;
-              }
-              break;
+          try {
+            await _applyNotificationIntent(
+              widget.notification!.intent,
+              widget.notification!.date,
+            );
+          } catch (error, stackTrace) {
+            log.severe(
+              "Failed to resolve notification transaction resources",
+              error,
+              stackTrace,
+            );
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(error.toString()), behavior: .floating),
+              );
             }
           }
-
-          // Check currency
-          if (currency.id == _tx.localCurrency.id) {
-            _tx.splits.first.localAmount = amount;
-            _tx.splits.first.localAmountUpdateText();
-          } else {
-            _tx.splits.first.foreignCurrency = currency;
-            _tx.splits.first.foreignAmount = amount;
-            _tx.splits.first.foreignAmountUpdateText();
-          }
-
-          // Tag
           if (mounted) {
             final List<String> autoTagsNL = context
                 .read<SettingsProvider>()
@@ -453,6 +399,29 @@ class _TransactionPageState extends State<TransactionPage>
                     _savingInProgress = false;
                   });
                   return;
+                }
+
+                final String? historyEntryId =
+                    widget.notification?.historyEntryId;
+                if (historyEntryId != null) {
+                  try {
+                    final bool linked =
+                        await linkNotificationTransactionHistory(
+                          historyEntryId: historyEntryId,
+                          transactionId: newTX.id,
+                        );
+                    if (!linked) {
+                      log.warning(
+                        'Could not link transaction ${newTX.id} to notification history $historyEntryId because the history entry is unavailable.',
+                      );
+                    }
+                  } catch (error, stackTrace) {
+                    log.warning(
+                      'Could not link transaction ${newTX.id} to notification history $historyEntryId.',
+                      error,
+                      stackTrace,
+                    );
+                  }
                 }
 
                 // Update stock
@@ -772,6 +741,180 @@ class _TransactionPageState extends State<TransactionPage>
         }),
       );
     }
+  }
+
+  Future<void> _applyNotificationIntent(
+    TransactionIntent intent,
+    DateTime receivedAt,
+  ) async {
+    final PromptedTransactionResources resources =
+        await PromptedTransactionResourceHydrator(
+          labelResolver: context.read<FireflyResourceLabelResolver>(),
+          currencyResolver: context.read<FireflyCurrencyResolver>(),
+        ).hydrate(intent.patch);
+    if (!mounted) return;
+    final TransactionPatch patch = resources.patch;
+    final TransactionSplitState split = _tx.splits.first;
+    final String? sourceId = patch.values[TransactionField.sourceAccount];
+    final String? destinationId =
+        patch.values[TransactionField.destinationAccount];
+
+    _tx.type = TransactionTypeProperty.swaggerGeneratedUnknown;
+    _tx.sourceAccountType = AccountTypeProperty.swaggerGeneratedUnknown;
+    _tx.destinationAccountType = AccountTypeProperty.swaggerGeneratedUnknown;
+    _tx.ownAccountID = null;
+    split.sourceAccountTC.text =
+        patch.resourceReferences[TransactionField.sourceAccount]?.id ??
+        patch.displayValue(TransactionField.sourceAccount);
+    split.destinationAccountTC.text =
+        patch.resourceReferences[TransactionField.destinationAccount]?.id ??
+        patch.displayValue(TransactionField.destinationAccount);
+    split.titleTC.text = patch.values[TransactionField.title] ?? '';
+    split.noteTC.text = patch.values[TransactionField.notes] ?? '';
+    final String? categoryId =
+        patch.resourceReferences[TransactionField.category]?.id;
+    if (categoryId == null) {
+      split.categoryTC.text = patch.displayValue(TransactionField.category);
+    } else {
+      split.setCategoryResource(
+        id: categoryId,
+        name: patch.displayValue(TransactionField.category),
+      );
+    }
+    split.tags = Tags(<String>[
+      ...patch.tags,
+      if (patch.displayValue(TransactionField.tag).trim().isNotEmpty)
+        patch.displayValue(TransactionField.tag).trim(),
+    ]);
+
+    final double? amount = double.tryParse(
+      (patch.values[TransactionField.amount] ?? '').replaceAll(',', '.'),
+    );
+    if (amount != null) {
+      split.localAmount = amount;
+      split.localAmountUpdateText();
+    }
+
+    final DateTime date = NotificationTransactionIntentAdapter.transactionDate(
+      patch,
+      fallbackDate: receivedAt,
+    );
+    _tx.date = _tzHandler.notificationTXTime(date).toLocal();
+
+    final String? billId = patch.values[TransactionField.subscription];
+    if (billId != null) {
+      split.bill = BillRead(
+        type: 'bill',
+        id: billId,
+        attributes: BillProperties(
+          name: patch.displayValue(TransactionField.subscription),
+          amountMin: '',
+          amountMax: '',
+          date: receivedAt,
+          repeatFreq: BillRepeatFrequency.swaggerGeneratedUnknown,
+        ),
+      );
+    }
+
+    final String? piggyBankId = patch.values[TransactionField.piggyBank];
+    if (piggyBankId != null) {
+      split.piggy = PiggyBankRead(
+        type: 'piggybank',
+        id: piggyBankId,
+        attributes: PiggyBankProperties(
+          name: patch.displayValue(TransactionField.piggyBank),
+        ),
+        links: const ObjectLink(),
+      );
+    }
+
+    final FireflyIii api = context.read<FireflyService>().api;
+    if (sourceId != null) {
+      _tx.selectSourceAccount(
+        await _resolveNotificationAccount(
+          api,
+          value: sourceId,
+          displayName:
+              patch.resourceReferences[TransactionField.sourceAccount]?.id ??
+              patch.displayValue(TransactionField.sourceAccount),
+          isResourceReference:
+              patch.resourceReferences.containsKey(
+                TransactionField.sourceAccount,
+              ) ||
+              patch.displayValues.containsKey(TransactionField.sourceAccount),
+        ),
+      );
+    }
+    if (destinationId != null) {
+      _tx.selectDestinationAccount(
+        await _resolveNotificationAccount(
+          api,
+          value: destinationId,
+          displayName:
+              patch
+                  .resourceReferences[TransactionField.destinationAccount]
+                  ?.id ??
+              patch.displayValue(TransactionField.destinationAccount),
+          isResourceReference:
+              patch.resourceReferences.containsKey(
+                TransactionField.destinationAccount,
+              ) ||
+              patch.displayValues.containsKey(
+                TransactionField.destinationAccount,
+              ),
+        ),
+      );
+    }
+
+    final String? currencyId = patch.values[TransactionField.currency];
+    if (currencyId != null) {
+      final FireflyCurrency? currency = resources.currency;
+      final String code =
+          currency?.code ?? patch.displayValue(TransactionField.currency);
+      _tx.localCurrency = CurrencyRead(
+        type: 'currencies',
+        id: currencyId,
+        attributes: CurrencyProperties(
+          code: code,
+          name: currency?.name ?? patch.displayValue(TransactionField.currency),
+          symbol: currency?.symbol ?? code,
+          decimalPlaces:
+              currency?.decimalPlaces ??
+              _tx.localCurrency.attributes.decimalPlaces,
+        ),
+      );
+      _tx.includeCurrencyInStore = true;
+      split.localAmountUpdateText();
+    }
+  }
+
+  Future<AutocompleteAccount> _resolveNotificationAccount(
+    FireflyIii api, {
+    required String value,
+    required String displayName,
+    required bool isResourceReference,
+  }) async {
+    final String unavailableMessage = S
+        .of(context)
+        .notificationsTransactionAccountUnavailable(displayName);
+    String query = displayName;
+    if (isResourceReference) {
+      final Response<AccountSingle> accountResponse = await api.v1AccountsIdGet(
+        id: value,
+      );
+      apiThrowErrorIfEmpty(accountResponse, mounted ? context : null);
+      query = accountResponse.body!.data.attributes.name;
+    }
+    final Response<AutocompleteAccountArray> response = await api
+        .v1AutocompleteAccountsGet(query: query);
+    apiThrowErrorIfEmpty(response, mounted ? context : null);
+    for (final AutocompleteAccount account in response.body!) {
+      final bool matches = isResourceReference
+          ? account.id == value
+          : account.name.toLowerCase() == value.toLowerCase();
+      if (matches) return account;
+    }
+    throw _NotificationAccountResolutionException(unavailableMessage);
   }
 
   Widget _buildSplitWidget(BuildContext context, int i) {

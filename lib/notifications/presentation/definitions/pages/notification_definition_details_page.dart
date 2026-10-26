@@ -1,0 +1,993 @@
+import 'dart:async';
+
+import 'package:flutter/rendering.dart';
+import 'package:logging/logging.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/generated/l10n/app_localizations.dart';
+import 'package:waterflyiii/notifications/application/history/recent_notification_samples.dart';
+import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
+import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
+import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
+import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
+import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
+import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
+import 'package:waterflyiii/notifications/domain/definitions/notification_sample.dart';
+import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
+import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
+import 'package:waterflyiii/notifications/domain/rules/notification_rule_diagnostics.dart';
+import 'package:waterflyiii/notifications/domain/planning/transaction_creation_mode.dart';
+import 'package:waterflyiii/notifications/domain/planning/automatic_transaction_readiness.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_editor_workflows.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_setup_mode_section.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_sample_card.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_rules_section.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_shared_actions_section.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_extractors_section.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_options_section.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/widgets/automatic_transaction_readiness_display.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/widgets/notification_definition_status_display.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/widgets/rule_effective_transaction_preview.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/controllers/notification_definition_editor_view_model.dart';
+import 'package:waterflyiii/notifications/presentation/shared/message_status_card.dart';
+import 'package:waterflyiii/notifications/presentation/shared/notification_menu_theme.dart';
+import 'package:waterflyiii/notifications/presentation/shared/notification_page_header.dart';
+import 'package:waterflyiii/notifications/presentation/shared/notification_text_styles.dart';
+import 'package:waterflyiii/notifications/presentation/shared/notification_editor_dialogs.dart';
+import 'package:waterflyiii/notifications/presentation/alerts/notification_alert_display.dart';
+
+class NotificationDefinitionDetailsPage extends StatefulWidget {
+  const NotificationDefinitionDetailsPage({
+    super.key,
+    required this.definition,
+    required this.onSave,
+    this.historyStore,
+    this.onDelete,
+    this.onUndoCreation,
+    this.initialRuleId,
+    this.initialDraftRule,
+    this.initialRuleNotificationContext,
+    this.migrationAlerts = const <NotificationAlert>[],
+  });
+
+  final NotificationDefinition definition;
+  final Future<bool> Function(NotificationDefinition definition) onSave;
+  final NotificationHistoryStore? historyStore;
+  final Future<bool> Function()? onDelete;
+  final Future<bool> Function()? onUndoCreation;
+  final String? initialRuleId;
+  final NotificationRule? initialDraftRule;
+  final NotificationContext? initialRuleNotificationContext;
+  final List<NotificationAlert> migrationAlerts;
+
+  @override
+  State<NotificationDefinitionDetailsPage> createState() =>
+      _NotificationDefinitionDetailsPageState();
+}
+
+class _NotificationDefinitionDetailsPageState
+    extends State<NotificationDefinitionDetailsPage> {
+  static final Logger _log = Logger('Notifications.DefinitionDetails');
+  static const double _floatingSaveButtonSize = 56;
+  static const double _floatingSaveButtonMargin = 16;
+  static const double _floatingSaveButtonGap = 12;
+  static const double _floatingSaveButtonSpacing =
+      _floatingSaveButtonSize +
+      _floatingSaveButtonMargin +
+      _floatingSaveButtonGap;
+  late final TextEditingController _sampleTitleController;
+  late final TextEditingController _sampleBodyController;
+  late final ScrollController _scrollController;
+  late final NotificationDefinitionEditorViewModel _viewModel;
+  final GlobalKey _automaticWarningKey = GlobalKey();
+  GlobalKey? _saveButtonKey;
+  final _ScrollAnchorCoordinator _automaticAnchorCoordinator =
+      _ScrollAnchorCoordinator();
+  double _automaticAnchorSlack = 0;
+  bool _preservingAutomaticAnchor = false;
+  bool _scrollToAutomaticWarningAfterAnchor = false;
+  List<NotificationSample> _recentSamples = <NotificationSample>[];
+  int _automaticAnchorGeneration = 0;
+
+  List<RegExpDefinition> get _extractors => _viewModel.extractors;
+  List<NotificationRule> get _rules => _viewModel.rules;
+  NotificationExtractorMode get _extractorMode => _viewModel.extractorMode;
+  bool get _showBasicDetails =>
+      _viewModel.basicView == NotificationBasicView.detailed;
+  TransactionCreationMode get _transactionCreationMode =>
+      _viewModel.transactionCreationMode;
+  bool get _isSaving => _viewModel.isSaving;
+  bool get _hasSample =>
+      _sampleTitleController.text.trim().isNotEmpty &&
+      _sampleBodyController.text.trim().isNotEmpty;
+  AutomaticTransactionReadiness get _automaticReadiness =>
+      _currentDefinition().automaticTransactionReadiness;
+  NotificationDefinitionEditorWorkflows get _workflows =>
+      NotificationDefinitionEditorWorkflows(
+        context: context,
+        definition: widget.definition,
+        viewModel: _viewModel,
+        sampleTitleController: _sampleTitleController,
+        sampleBodyController: _sampleBodyController,
+        save: _save,
+        refresh: _refresh,
+        recentSamplesLoader: widget.historyStore == null
+            ? null
+            : _loadRecentNotificationSamples,
+      );
+
+  @override
+  void initState() {
+    super.initState();
+    _sampleTitleController = TextEditingController(
+      text: widget.definition.sampleTitle ?? '',
+    );
+    _sampleBodyController = TextEditingController(
+      text: widget.definition.sampleBody ?? '',
+    );
+    _scrollController = ScrollController();
+    _viewModel = NotificationDefinitionEditorViewModel(widget.definition)
+      ..addListener(_refresh);
+    if (widget.historyStore != null && !_hasSample) {
+      unawaited(_refreshRecentSamples());
+    }
+    final NotificationRule? initialDraftRule = widget.initialDraftRule;
+    final String? initialRuleId = widget.initialRuleId;
+    if (initialDraftRule != null) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _workflows.editInitialDraftRule(
+          initialDraftRule,
+          widget.initialRuleNotificationContext,
+        ),
+      );
+    } else if (initialRuleId != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        final NotificationRule? rule = _rules
+            .cast<NotificationRule?>()
+            .firstWhere(
+              (NotificationRule? candidate) => candidate?.id == initialRuleId,
+              orElse: () => null,
+            );
+        if (rule != null && mounted) await _workflows.editRule(rule);
+      });
+    }
+    if (widget.onUndoCreation != null) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _showCreationSnackBar(),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _sampleTitleController.dispose();
+    _sampleBodyController.dispose();
+    _scrollController.dispose();
+    _viewModel.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final S strings = S.of(context);
+    final Widget? statusCard = _definitionStatusCard();
+    return PopScope(
+      canPop: !_isDirty,
+      onPopInvokedWithResult: _confirmDiscard,
+      child: NotificationMenuTheme(
+        child: Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: NotificationPageHeader(
+            scrollController: _scrollController,
+            title: Text(widget.definition.name),
+            actions: <Widget>[
+              if (_extractorMode == NotificationExtractorMode.notConfigured &&
+                  widget.onDelete != null)
+                IconButton(
+                  key: const Key('delete-notification-definition'),
+                  tooltip: strings.notificationsDefinitionDelete,
+                  iconSize: NotificationPageHeader.controlIconSize,
+                  onPressed: () => _workflows.handleMenuAction(
+                    DefinitionEditorMenuAction.delete,
+                    delete: widget.onDelete,
+                  ),
+                  icon: const Icon(Icons.delete_outline),
+                )
+              else if (_extractorMode !=
+                      NotificationExtractorMode.notConfigured ||
+                  widget.onDelete != null)
+                PopupMenuButton<DefinitionEditorMenuAction>(
+                  tooltip: strings.notificationsDefinitionOptions,
+                  position: PopupMenuPosition.under,
+                  iconSize: NotificationPageHeader.controlIconSize,
+                  onSelected: _handleDefinitionMenuAction,
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<DefinitionEditorMenuAction>>[
+                        if (_extractorMode ==
+                            NotificationExtractorMode.basic) ...<
+                          PopupMenuEntry<DefinitionEditorMenuAction>
+                        >[
+                          PopupMenuItem<DefinitionEditorMenuAction>(
+                            value: _showBasicDetails
+                                ? DefinitionEditorMenuAction.showSimpleBasic
+                                : DefinitionEditorMenuAction.showDetailedBasic,
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  _showBasicDetails
+                                      ? Icons.visibility_outlined
+                                      : Icons.tune,
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    _showBasicDetails
+                                        ? strings
+                                              .notificationsDefinitionShowSimpleView
+                                        : strings
+                                              .notificationsDefinitionAdjustSetup,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const NotificationMenuDivider(),
+                          PopupMenuItem<DefinitionEditorMenuAction>(
+                            value: DefinitionEditorMenuAction.convertToAdvanced,
+                            child: Row(
+                              children: <Widget>[
+                                const Icon(Icons.tune),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    strings
+                                        .notificationsDefinitionConvertToAdvanced,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                        if (_extractorMode ==
+                            NotificationExtractorMode.advanced)
+                          PopupMenuItem<DefinitionEditorMenuAction>(
+                            value: DefinitionEditorMenuAction.convertToBasic,
+                            child: Row(
+                              children: <Widget>[
+                                const Icon(Icons.auto_awesome),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    strings
+                                        .notificationsDefinitionConvertToBasic,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        if (widget.onDelete != null) ...<
+                          PopupMenuEntry<DefinitionEditorMenuAction>
+                        >[
+                          if (_extractorMode !=
+                              NotificationExtractorMode.notConfigured)
+                            const NotificationMenuDivider(),
+                          PopupMenuItem<DefinitionEditorMenuAction>(
+                            value: DefinitionEditorMenuAction.delete,
+                            child: Row(
+                              children: <Widget>[
+                                const Icon(Icons.delete_outline),
+                                const SizedBox(width: 12),
+                                Text(strings.notificationsDefinitionDelete),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ],
+                ),
+            ],
+          ),
+          body: ListView(
+            controller: _scrollController,
+            physics: const ClampingScrollPhysics(),
+            padding: EdgeInsets.fromLTRB(
+              16,
+              NotificationPageHeader.bodyTopInset(context),
+              16,
+              NotificationPageHeader.bodyBottomInset(context, spacing: 24),
+            ),
+            children: <Widget>[
+              _ScrollAnchorSizeObserver(
+                onHeightChanged: _correctAutomaticAnchorBy,
+                child: AnimatedSize(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                  alignment: Alignment.topCenter,
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 140),
+                    switchInCurve: Curves.easeIn,
+                    switchOutCurve: Curves.easeOut,
+                    child: statusCard == null
+                        ? const SizedBox.shrink(
+                            key: Key('definition-status-empty'),
+                          )
+                        : Padding(
+                            key: ValueKey<String>(
+                              'definition-status-${_currentDefinition().status.name}-${_transactionCreationMode.name}',
+                            ),
+                            padding: const EdgeInsets.only(bottom: 24),
+                            child: statusCard,
+                          ),
+                  ),
+                ),
+              ),
+              Text(
+                strings.notificationsDefinitionSampleNotification,
+                style: context.notificationSectionTitle,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                strings.notificationsDefinitionSampleDescription,
+                style: context.notificationSectionDescription,
+              ),
+              const SizedBox(height: 12),
+              DefinitionSampleCard(
+                applicationId: widget.definition.applicationId,
+                title: _sampleTitleController.text,
+                body: _sampleBodyController.text,
+                receivedAt: widget.definition.createdAt,
+                onEdit: _workflows.editSample,
+                showLatestSampleAction: _recentSamples.isNotEmpty,
+                onUseLatestSample: _useLatestNotificationAsSample,
+              ),
+              if (_extractorMode ==
+                  NotificationExtractorMode.notConfigured) ...<Widget>[
+                const SizedBox(height: 24),
+                DefinitionSetupModeSection(
+                  hasSample:
+                      _sampleTitleController.text.trim().isNotEmpty &&
+                      _sampleBodyController.text.trim().isNotEmpty,
+                  onModeSelected: _selectExtractorMode,
+                ),
+              ] else if (_extractorMode == NotificationExtractorMode.basic &&
+                  !_showBasicDetails) ...<Widget>[
+                const SizedBox(height: 24),
+                _simpleBasicGuidance(strings),
+                const SizedBox(height: 24),
+                EffectiveTransactionPreviewCard(
+                  rule: _rules.isEmpty
+                      ? _emptyBasicPreviewRule()
+                      : _rules.first,
+                  rules: _rules,
+                  sharedActions: _viewModel.sharedActions,
+                  extractors: _extractors,
+                  notificationContext: _workflows.sampleContext(),
+                  transactionCreationMode: _transactionCreationMode,
+                  showProvenance: false,
+                  title: strings.notificationsDefinitionExampleResult,
+                  description:
+                      strings.notificationsDefinitionExampleResultDescription,
+                ),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                  height: _isDirty ? _floatingSaveButtonSpacing : 0,
+                ),
+                SizedBox(height: _automaticAnchorSlack),
+              ] else ...<Widget>[
+                const SizedBox(height: 24),
+                DefinitionExtractorsSection(
+                  extractors: _extractors,
+                  extractorMode: _extractorMode,
+                  notificationContext: _workflows.sampleContext(),
+                  onEditExtractor: _workflows.editExtractor,
+                  onAddExtractor: _workflows.addExtractor,
+                ),
+                const SizedBox(height: 24),
+                _ScrollAnchorSizeObserver(
+                  onHeightChanged: _correctAutomaticAnchorBy,
+                  child: DefinitionSharedActionsSection(
+                    actions: _viewModel.sharedActions,
+                    isBasicMode:
+                        _extractorMode == NotificationExtractorMode.basic,
+                    needsSetup: _sharedActionsNeedSetup(),
+                    needsReview: _sharedActionsNeedReview(),
+                    automaticReadiness: _automaticReadiness,
+                    createAutomatically:
+                        _transactionCreationMode ==
+                        TransactionCreationMode.automatic,
+                    onEdit: _workflows.editSharedActions,
+                  ),
+                ),
+                if (_extractorMode ==
+                    NotificationExtractorMode.advanced) ...<Widget>[
+                  const SizedBox(height: 24),
+                  DefinitionRulesSection(
+                    rules: _rules,
+                    extractors: _extractors,
+                    notificationContext: _workflows.sampleContext(),
+                    onEditRule: _workflows.editRule,
+                    onAddRule: _workflows.addRule,
+                    onMoveRule: _viewModel.moveRule,
+                  ),
+                ],
+                const SizedBox(height: 24),
+                _ScrollAnchorPaintCompensator(
+                  coordinator: _automaticAnchorCoordinator,
+                  child: DefinitionOptionsSection(
+                    createAutomatically:
+                        _transactionCreationMode ==
+                        TransactionCreationMode.automatic,
+                    onCreateAutomaticallyChanged: _setTransactionCreationMode,
+                    automaticReadiness: _automaticReadiness,
+                    warningKey: _automaticWarningKey,
+                    onWarningRevealed: _keepAutomaticWarningVisible,
+                  ),
+                ),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                  height: _isDirty ? _floatingSaveButtonSpacing : 0,
+                ),
+                SizedBox(height: _automaticAnchorSlack),
+              ],
+            ],
+          ),
+          floatingActionButton: _buildSaveButton(strings),
+        ),
+      ),
+    );
+  }
+
+  NotificationRule _emptyBasicPreviewRule() => const NotificationRule(
+    id: 'basic-preview',
+    name: '',
+    conditions: <NotificationCondition>[],
+    actions: <NotificationAction>[],
+  );
+
+  Widget _simpleBasicGuidance(S strings) {
+    final bool needsReview = _basicMappingsNeedReview();
+    return MessageStatusCard(
+      key: const Key('basic-simple-guidance'),
+      status: needsReview ? MessageStatus.review : MessageStatus.informational,
+      title: needsReview
+          ? strings.notificationsDefinitionSimpleReviewTitle
+          : strings.notificationsDefinitionSimpleMoreOptionsTitle,
+      message: needsReview
+          ? strings.notificationsDefinitionSimpleReviewGuidance
+          : strings.notificationsDefinitionSimpleMoreOptionsMessage,
+      actionsBuilder: (BuildContext context, Color foreground) => SizedBox(
+        width: double.infinity,
+        child: FilledButton.tonal(
+          onPressed: _showDetailedBasicSetup,
+          child: Text(strings.notificationsDefinitionSwitchToBasicMode),
+        ),
+      ),
+    );
+  }
+
+  void _showDetailedBasicSetup() {
+    _automaticAnchorSlack = 0;
+    _viewModel.setBasicView(NotificationBasicView.detailed);
+  }
+
+  void _showSimpleBasicSetup() {
+    _automaticAnchorSlack = 0;
+    _viewModel.setBasicView(NotificationBasicView.simple);
+  }
+
+  Future<void> _handleDefinitionMenuAction(
+    DefinitionEditorMenuAction action,
+  ) async {
+    switch (action) {
+      case DefinitionEditorMenuAction.showDetailedBasic:
+        _showDetailedBasicSetup();
+      case DefinitionEditorMenuAction.showSimpleBasic:
+        _showSimpleBasicSetup();
+      case DefinitionEditorMenuAction.convertToAdvanced ||
+          DefinitionEditorMenuAction.convertToBasic ||
+          DefinitionEditorMenuAction.delete:
+        await _workflows.handleMenuAction(action, delete: widget.onDelete);
+    }
+  }
+
+  void _showCreationSnackBar() {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 6),
+        persist: false,
+        content: Text(
+          S
+              .of(context)
+              .notificationsDefinitionApplicationAdded(widget.definition.name),
+        ),
+        action: SnackBarAction(
+          label: S.of(context).notificationsUndo,
+          onPressed: () => unawaited(
+            _workflows.handleMenuAction(
+              DefinitionEditorMenuAction.delete,
+              delete: widget.onUndoCreation,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget? _definitionStatusCard() {
+    final List<Widget> cards = <Widget>[];
+    final NotificationDefinition definition = _currentDefinition();
+    final NotificationDefinitionStatus status = definition.status;
+    if (widget.migrationAlerts.isNotEmpty ||
+        definition.migrationReviewIssues.isNotEmpty) {
+      final List<String> messages = widget.migrationAlerts.isNotEmpty
+          ? widget.migrationAlerts
+                .map((NotificationAlert alert) {
+                  final NotificationMigrationIssue? issue =
+                      alert.migrationIssue;
+                  if (issue != null) return issue.message(context);
+                  return alert.kind == NotificationAlertKind.migrationFailed
+                      ? S
+                            .of(context)
+                            .notificationsDefinitionMigrationFailedMessage
+                      : S
+                            .of(context)
+                            .notificationsDefinitionMigrationReviewMessage;
+                })
+                .toList(growable: false)
+          : definition.migrationReviewIssues
+                .map(
+                  (NotificationMigrationIssue issue) => issue.message(context),
+                )
+                .toList(growable: false);
+      cards.add(
+        MessageStatusCard(
+          status: MessageStatus.review,
+          title: S
+              .of(context)
+              .notificationsDefinitionMigrationNeedsAttention(
+                widget.migrationAlerts.isNotEmpty
+                    ? widget.migrationAlerts.length
+                    : definition.migrationReviewIssues.length,
+              ),
+          message: messages.join(' '),
+        ),
+      );
+    }
+    if (status != NotificationDefinitionStatus.ready &&
+        widget.migrationAlerts.isEmpty &&
+        !definition.requiresMigrationReview) {
+      cards.add(
+        MessageStatusCard(
+          status: status.messageStatus,
+          title: status.label(context),
+          message: _definitionStatusMessage(definition, status),
+        ),
+      );
+    }
+    if (cards.isEmpty) return null;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        for (final (int index, Widget card) in cards.indexed) ...<Widget>[
+          if (index > 0) const SizedBox(height: 12),
+          card,
+        ],
+      ],
+    );
+  }
+
+  String _definitionStatusMessage(
+    NotificationDefinition definition,
+    NotificationDefinitionStatus status,
+  ) {
+    if (status != NotificationDefinitionStatus.needsSetup) {
+      if (!_showBasicDetails &&
+          _extractorMode == NotificationExtractorMode.basic &&
+          status == NotificationDefinitionStatus.needsReview &&
+          _basicMappingsNeedReview()) {
+        return S.of(context).notificationsDefinitionSimpleNeedsReviewMessage;
+      }
+      if (_transactionCreationMode == TransactionCreationMode.automatic &&
+          !definition.automaticTransactionReadiness.isReady) {
+        return definition.automaticTransactionReadiness.message(context);
+      }
+      if (status == NotificationDefinitionStatus.needsReview &&
+          definition.hasUnconfiguredConditionalActions) {
+        return S
+            .of(context)
+            .notificationsDefinitionConditionalActionsNeedReviewMessage;
+      }
+      return status.message(context);
+    }
+    final List<String> missingRequirements = <String>[
+      if ((definition.sampleTitle?.trim().isNotEmpty ?? false) == false ||
+          (definition.sampleBody?.trim().isNotEmpty ?? false) == false)
+        S.of(context).notificationsDefinitionSetupRequirementSample,
+      if (definition.extractors.isEmpty)
+        S.of(context).notificationsDefinitionSetupRequirementExtractors,
+      if (definition.rules.isEmpty && definition.sharedActions.isEmpty)
+        S.of(context).notificationsDefinitionSetupRequirementRulesOrActions,
+      if (definition.extractorMode == NotificationExtractorMode.advanced &&
+          definition.hasIncompleteActions)
+        S.of(context).notificationsDefinitionSetupRequirementActionFields,
+    ];
+    if (missingRequirements.isEmpty) {
+      return status.message(context);
+    }
+    return S
+        .of(context)
+        .notificationsDefinitionNeedsSetupSpecificMessage(
+          _localizedList(missingRequirements),
+        );
+  }
+
+  String _localizedList(List<String> values) {
+    if (values.length <= 1) return values.single;
+    if (values.length == 2) {
+      return S.of(context).notificationsListPair(values.first, values.last);
+    }
+    return S
+        .of(context)
+        .notificationsListMultiple(
+          values.sublist(0, values.length - 1).join(', '),
+          values.last,
+        );
+  }
+
+  bool _sharedActionsNeedSetup() =>
+      _viewModel.sharedActions.isEmpty &&
+      (_extractorMode == NotificationExtractorMode.basic || _rules.isEmpty);
+
+  bool _sharedActionsNeedReview() {
+    if (_transactionCreationMode == TransactionCreationMode.automatic &&
+        !_automaticReadiness.isReady) {
+      return true;
+    }
+    return _basicMappingsNeedReview();
+  }
+
+  bool _basicMappingsNeedReview() {
+    if (_extractorMode != NotificationExtractorMode.basic) return false;
+    final NotificationContext sample = _workflows.sampleContext();
+    final List<NotificationRule> basicMappings = <NotificationRule>[
+      _viewModel.createSharedActionsRule(''),
+      ..._rules.where((NotificationRule rule) => rule.isPredefined),
+    ];
+    return basicMappings.any((NotificationRule rule) {
+      final NotificationRuleDiagnostics diagnostics = rule.diagnostics(
+        extractors: _extractors,
+        notificationContext: sample,
+      );
+      return diagnostics.incompleteFields.isNotEmpty ||
+          diagnostics.unreviewedPredefinedFields.isNotEmpty;
+    });
+  }
+
+  void _selectExtractorMode(NotificationSetupExperience experience) {
+    switch (experience) {
+      case NotificationSetupExperience.simple:
+        _viewModel.configure(
+          NotificationExtractorMode.basic,
+          basicView: NotificationBasicView.simple,
+        );
+      case NotificationSetupExperience.basic:
+        _viewModel.configure(NotificationExtractorMode.basic);
+      case NotificationSetupExperience.advanced:
+        _viewModel.configure(NotificationExtractorMode.advanced);
+    }
+  }
+
+  void _setTransactionCreationMode(bool automatically) {
+    if (automatically &&
+        !_automaticReadiness.isReady &&
+        _scrollController.hasClients) {
+      unawaited(_enableAutomaticModeWithStableAnchor());
+      return;
+    }
+
+    _automaticAnchorGeneration++;
+    _preservingAutomaticAnchor = false;
+    _scrollToAutomaticWarningAfterAnchor = false;
+    _automaticAnchorSlack = 0;
+    _automaticAnchorCoordinator.reset();
+    _viewModel.setTransactionCreationMode(automatically);
+  }
+
+  Future<void> _enableAutomaticModeWithStableAnchor() async {
+    final int generation = ++_automaticAnchorGeneration;
+    final ScrollPosition position = _scrollController.position;
+    setState(() {
+      _automaticAnchorSlack = position.viewportDimension;
+      _preservingAutomaticAnchor = true;
+    });
+    await WidgetsBinding.instance.endOfFrame;
+    if (!mounted || generation != _automaticAnchorGeneration) return;
+
+    _viewModel.setTransactionCreationMode(true);
+    await Future<void>.delayed(const Duration(milliseconds: 220));
+    _finishAutomaticAnchorTransition(generation);
+  }
+
+  void _correctAutomaticAnchorBy(double heightDelta) {
+    if (!_preservingAutomaticAnchor || !_scrollController.hasClients) return;
+    _automaticAnchorCoordinator.addPaintCorrection(heightDelta);
+    _scrollController.position.correctBy(heightDelta);
+  }
+
+  void _finishAutomaticAnchorTransition(int generation) {
+    if (!mounted || generation != _automaticAnchorGeneration) return;
+    final bool revealWarning = _scrollToAutomaticWarningAfterAnchor;
+    setState(() {
+      _automaticAnchorSlack = 0;
+      _preservingAutomaticAnchor = false;
+      _scrollToAutomaticWarningAfterAnchor = false;
+    });
+    _automaticAnchorCoordinator.reset();
+    if (revealWarning) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _keepAutomaticWarningVisible(),
+      );
+    }
+  }
+
+  void _keepAutomaticWarningVisible() {
+    if (_preservingAutomaticAnchor) {
+      _scrollToAutomaticWarningAfterAnchor = true;
+      return;
+    }
+    final BuildContext? warningContext = _automaticWarningKey.currentContext;
+    if (warningContext == null || !_scrollController.hasClients) return;
+    final RenderBox? warningBox =
+        warningContext.findRenderObject() as RenderBox?;
+    final RenderBox? viewportBox =
+        Scrollable.maybeOf(warningContext)?.context.findRenderObject()
+            as RenderBox?;
+    if (warningBox == null ||
+        viewportBox == null ||
+        !warningBox.attached ||
+        !viewportBox.attached) {
+      return;
+    }
+
+    final Offset viewportOrigin = viewportBox.localToGlobal(Offset.zero);
+    final Rect warningRect =
+        warningBox.localToGlobal(Offset.zero) & warningBox.size;
+    final EdgeInsets safePadding = MediaQuery.paddingOf(context);
+    double safeBottom =
+        viewportOrigin.dy + viewportBox.size.height - safePadding.bottom - 16;
+    final RenderBox? saveButtonBox =
+        _saveButtonKey?.currentContext?.findRenderObject() as RenderBox?;
+    if (saveButtonBox != null && saveButtonBox.attached) {
+      safeBottom =
+          saveButtonBox.localToGlobal(Offset.zero).dy - _floatingSaveButtonGap;
+    }
+    final double delta = warningRect.bottom - safeBottom;
+    if (delta <= 0.5) return;
+
+    final ScrollPosition position = _scrollController.position;
+    _scrollController.animateTo(
+      (position.pixels + delta).clamp(
+        position.minScrollExtent,
+        position.maxScrollExtent,
+      ),
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeOut,
+    );
+  }
+
+  Future<bool> _save() async {
+    final NotificationDefinitionSaveResult result = await _viewModel.save(
+      sampleTitle: _sampleTitleController.text,
+      sampleBody: _sampleBodyController.text,
+      persist: widget.onSave,
+    );
+    if (!mounted) return false;
+    if (result.hasDanglingActions) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            S
+                .of(context)
+                .notificationsDefinitionFixDanglingActions(
+                  result.danglingActionCount,
+                ),
+          ),
+        ),
+      );
+      return false;
+    }
+
+    if (result.failed && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(S.of(context).notificationsDefinitionSaveFailure),
+        ),
+      );
+    }
+    return result.succeeded;
+  }
+
+  Widget? _buildSaveButton(S strings) {
+    if (!_isDirty) {
+      _saveButtonKey = null;
+      return null;
+    }
+    return FloatingActionButton(
+      key: _saveButtonKey ??= GlobalKey(),
+      tooltip: strings.notificationsDefinitionSave,
+      onPressed: _isSaving ? null : _save,
+      child: const Icon(Icons.save_outlined),
+    );
+  }
+
+  void _useLatestNotificationAsSample() {
+    if (_hasSample || _recentSamples.isEmpty) return;
+    _workflows.applySample(_recentSamples.first);
+  }
+
+  Future<void> _refreshRecentSamples() async {
+    try {
+      final List<NotificationSample> samples =
+          await _loadRecentNotificationSamples();
+      if (mounted) setState(() => _recentSamples = samples);
+    } catch (error, stackTrace) {
+      _log.warning(
+        'Could not load recent notification samples.',
+        error,
+        stackTrace,
+      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              S.of(context).notificationsDefinitionLatestSampleLoadFailure,
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  Future<List<NotificationSample>> _loadRecentNotificationSamples() async {
+    final NotificationHistoryStore? historyStore = widget.historyStore;
+    if (historyStore == null) return const <NotificationSample>[];
+    return loadRecentNotificationSamples(
+      historyStore: historyStore,
+      applicationId: widget.definition.applicationId,
+    );
+  }
+
+  NotificationDefinition _currentDefinition() {
+    return _viewModel.currentDefinition(
+      sampleTitle: _sampleTitleController.text,
+      sampleBody: _sampleBodyController.text,
+    );
+  }
+
+  bool get _isDirty {
+    _currentDefinition();
+    return _viewModel.isDirty;
+  }
+
+  void _refresh() {
+    if (mounted) setState(() {});
+  }
+
+  Future<void> _confirmDiscard(bool didPop, Object? _) async {
+    if (didPop || !_isDirty) {
+      return;
+    }
+    final bool discard = await showDiscardChangesDialog(context);
+    if (!mounted || !discard) return;
+    Navigator.of(context).pop();
+  }
+}
+
+class _ScrollAnchorSizeObserver extends SingleChildRenderObjectWidget {
+  const _ScrollAnchorSizeObserver({
+    required this.onHeightChanged,
+    required super.child,
+  });
+
+  final ValueChanged<double> onHeightChanged;
+
+  @override
+  RenderObject createRenderObject(BuildContext context) =>
+      _RenderScrollAnchorSizeObserver(onHeightChanged);
+
+  @override
+  void updateRenderObject(
+    BuildContext context,
+    _RenderScrollAnchorSizeObserver renderObject,
+  ) {
+    renderObject.onHeightChanged = onHeightChanged;
+  }
+}
+
+class _RenderScrollAnchorSizeObserver extends RenderProxyBox {
+  _RenderScrollAnchorSizeObserver(this.onHeightChanged);
+
+  ValueChanged<double> onHeightChanged;
+  double? _previousHeight;
+
+  @override
+  void performLayout() {
+    super.performLayout();
+    final double? previousHeight = _previousHeight;
+    _previousHeight = size.height;
+    if (previousHeight == null) return;
+
+    final double heightDelta = size.height - previousHeight;
+    if (heightDelta.abs() > 0.01) {
+      onHeightChanged(heightDelta);
+    }
+  }
+}
+
+class _ScrollAnchorCoordinator {
+  double _pendingPaintCorrection = 0;
+
+  void addPaintCorrection(double correction) {
+    _pendingPaintCorrection += correction;
+  }
+
+  double consumePaintCorrection() {
+    final double correction = _pendingPaintCorrection;
+    _pendingPaintCorrection = 0;
+    return correction;
+  }
+
+  void reset() {
+    _pendingPaintCorrection = 0;
+  }
+}
+
+class _ScrollAnchorPaintCompensator extends SingleChildRenderObjectWidget {
+  const _ScrollAnchorPaintCompensator({
+    required this.coordinator,
+    required super.child,
+  });
+
+  final _ScrollAnchorCoordinator coordinator;
+
+  @override
+  RenderObject createRenderObject(BuildContext context) =>
+      _RenderScrollAnchorPaintCompensator(coordinator);
+
+  @override
+  void updateRenderObject(
+    BuildContext context,
+    _RenderScrollAnchorPaintCompensator renderObject,
+  ) {
+    renderObject.coordinator = coordinator;
+  }
+}
+
+class _RenderScrollAnchorPaintCompensator extends RenderProxyBox {
+  _RenderScrollAnchorPaintCompensator(this.coordinator);
+
+  _ScrollAnchorCoordinator coordinator;
+  double _paintCorrection = 0;
+
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    _paintCorrection = coordinator.consumePaintCorrection();
+    super.paint(context, offset.translate(0, -_paintCorrection));
+  }
+
+  @override
+  void applyPaintTransform(RenderBox child, Matrix4 transform) {
+    transform.translateByDouble(0.0, -_paintCorrection, 0.0, 1.0);
+  }
+
+  @override
+  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
+    return result.addWithPaintOffset(
+      offset: Offset(0, -_paintCorrection),
+      position: position,
+      hitTest: (BoxHitTestResult result, Offset transformed) =>
+          child?.hitTest(result, position: transformed) ?? false,
+    );
+  }
+}

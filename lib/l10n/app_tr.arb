@@ -917,97 +917,13 @@
     "@settingsLockscreenInitial": {
         "description": "Prompt to authenticate once to set up the lockscreen"
     },
-    "settingsNLAppAccount": "Varsayılan Hesap",
-    "@settingsNLAppAccount": {
-        "description": "Default account which will be used for the transaction."
-    },
-    "settingsNLAppAccountDynamic": "<Dinamik>",
-    "@settingsNLAppAccountDynamic": {
-        "description": "Account will be selected dynamically by the content of the notification."
-    },
-    "settingsNLAppAdd": "Uygulama Ekle",
-    "@settingsNLAppAdd": {
-        "description": "Button title to add a new app."
-    },
-    "settingsNLAppAddHelp": "Dinlenecek bir uygulama eklemek için tıklayın. Sadece uygun uygulamalar listede görünecektir.",
-    "@settingsNLAppAddHelp": {
-        "description": "Help text below adding the new app button."
-    },
-    "settingsNLAppAddInfo": "Listeye uygulama eklemek için telefonunuza bildirim gelen bazı işlemler yapın. Uygulama hala görünmüyorsa, lütfen app@vogt.pw adresine bildirin.",
-    "@settingsNLAppAddInfo": {
-        "description": "Help text when no more app is available to add."
-    },
-    "settingsNLAutoAdd": "İşlemi etkileşim olmadan oluştur",
-    "@settingsNLAutoAdd": {
-        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
-    },
     "settingsNLDescription": "Bu servis, gelen bildirimlerden işlem detaylarını almanızı sağlar. Ek olarak, işleme atanacak varsayılan bir hesap seçebilirsiniz - eğer hiçbir değer ayarlanmazsa, bildirimden bir hesap çıkarmaya çalışır.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
     },
-    "settingsNLEmptyNote": "Not alanını boş bırak",
-    "@settingsNLEmptyNote": {
-        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
-    },
-    "settingsNLHistory": "Bildirim Geçmişi",
-    "@settingsNLHistory": {
-        "description": "Label: Notification History view"
-    },
-    "settingsNLHistoryEmpty": "Henüz hiçbir bildirim kaydedilmedi.",
-    "@settingsNLHistoryEmpty": {
-        "description": "Notification history is empty"
-    },
-    "settingsNLHistoryLongDescription": "Bu, uygulama tarafından alınan son {notificationHistorySize} bildirimin geçmişidir. Ayrıca (geçerli) bildirimlerden işlemler oluşturabilir veya bir bildirimin neden işlenemediğini görebilirsiniz.",
-    "@settingsNLHistoryLongDescription": {
-        "description": "Long description of the notification history feature.",
-        "placeholders": {
-            "notificationHistorySize": {
-                "type": "int",
-                "example": "5"
-            }
-        }
-    },
-    "settingsNLHistoryRejectedReason": "Bildirim atlandı: {reason, select, noMoney{Parasal değer bulunamadı} noCurrency{Para birimi bulunamadı} appNotUsed{Uygulama dinlenmiyor} other{Bilinmeyen neden}}.",
-    "@settingsNLHistoryRejectedReason": {
-        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
-        "placeholders": {
-            "reason": {
-                "type": "String",
-                "example": "noMoney"
-            }
-        }
-    },
-    "settingsNLHistoryShortDescription": "Önceki bildirimleri listele",
-    "@settingsNLHistoryShortDescription": {
-        "description": "Short description of the notification history feature (for the settings navigation)"
-    },
-    "settingsNLPermissionGrant": "İzin vermek için dokunun.",
-    "@settingsNLPermissionGrant": {
-        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
-    },
     "settingsNLPermissionNotGranted": "İzin verilmedi.",
     "@settingsNLPermissionNotGranted": {
         "description": "A requested permission was not granted."
-    },
-    "settingsNLPermissionRemove": "İzin kaldırılsın mı?",
-    "@settingsNLPermissionRemove": {
-        "description": "Dialog title asking if permission should be removed."
-    },
-    "settingsNLPermissionRemoveHelp": "Bu hizmeti devre dışı bırakmak için uygulamaya tıklayın ve bir sonraki ekranda izinleri kaldırın.",
-    "@settingsNLPermissionRemoveHelp": {
-        "description": "Dialog text giving hint how to remove the permission."
-    },
-    "settingsNLPrefillTXTitle": "İşlem başlığını bildirim başlığı ile önceden doldur",
-    "@settingsNLPrefillTXTitle": {
-        "description": "Setting pre-fill transaction title with notification title."
-    },
-    "settingsNLRegularExpression": "Düzenli İfade (isteğe bağlı)",
-    "@settingsNLRegularExpression": {
-        "description": "Setting to use a custom regular expression (regex)."
-    },
-    "settingsNLRegularExpressionInvalid": "Geçersiz Düzenli İfade",
-    "@settingsNLRegularExpressionInvalid": {
-        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Durum kontrol ediliyor…",
     "@settingsNLServiceChecking": {

@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
         android:name="${applicationName}"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -87,6 +88,7 @@
         <package android:name="by.alfabank.insync"/>
         <package android:name="by.belinvestbank"/>
         <package android:name="ca.tangerine.clients.banking.app"/>
+        <package android:name="com.wealthsimple.trade"/>
         <package android:name="capitec.acuity.mobile.prod"/>
         <package android:name="ch.bekb.twint"/>
         <package android:name="ch.cembra.cmf"/>

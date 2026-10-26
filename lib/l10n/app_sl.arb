@@ -930,97 +930,13 @@
     "@settingsLockscreenInitial": {
         "description": "Prompt to authenticate once to set up the lockscreen"
     },
-    "settingsNLAppAccount": "Privzeti račun",
-    "@settingsNLAppAccount": {
-        "description": "Default account which will be used for the transaction."
-    },
-    "settingsNLAppAccountDynamic": "<Dinamično>",
-    "@settingsNLAppAccountDynamic": {
-        "description": "Account will be selected dynamically by the content of the notification."
-    },
-    "settingsNLAppAdd": "Dodaj aplikacijo",
-    "@settingsNLAppAdd": {
-        "description": "Button title to add a new app."
-    },
-    "settingsNLAppAddHelp": "Kliknite, če želite dodati aplikacijo za poslušanje. Na seznamu bodo prikazane samo primerne aplikacije.",
-    "@settingsNLAppAddHelp": {
-        "description": "Help text below adding the new app button."
-    },
-    "settingsNLAppAddInfo": "Izvedite nekaj transakcij, pri katerih prejmete telefonska obvestila za dodajanje aplikacij na ta seznam. Če se aplikacija še vedno ne prikaže, mi prijavite na app@vogt.pw.",
-    "@settingsNLAppAddInfo": {
-        "description": "Help text when no more app is available to add."
-    },
-    "settingsNLAutoAdd": "Ustvari transakcijo brez interakcije",
-    "@settingsNLAutoAdd": {
-        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
-    },
     "settingsNLDescription": "Ta storitev vam omogoča pridobivanje podrobnosti transakcije iz dohodnih potisnih obvestil. Poleg tega lahko izberete privzeti račun, ki naj mu bo dodeljena transakcija - če vrednost ni nastavljena, poskuša iz obvestila izvleči račun.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
     },
-    "settingsNLEmptyNote": "Polje za opombo naj bo prazno",
-    "@settingsNLEmptyNote": {
-        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
-    },
-    "settingsNLHistory": "Zgodovina obvestil",
-    "@settingsNLHistory": {
-        "description": "Label: Notification History view"
-    },
-    "settingsNLHistoryEmpty": "Do sedaj ni zabeleženih obvestil.",
-    "@settingsNLHistoryEmpty": {
-        "description": "Notification history is empty"
-    },
-    "settingsNLHistoryLongDescription": "To je zgodovina zadnjih {notificationHistorySize, plural, one{obvestila, ki ga je} few{obvestil, ki jih je} other{obvestil, ki jih je}} prejela aplikacija. Poleg tega lahko ustvarite transakcije iz (veljavnih) obvestil ali si ogledate razlog, zakaj obvestilo ni bilo obdelano.",
-    "@settingsNLHistoryLongDescription": {
-        "description": "Long description of the notification history feature.",
-        "placeholders": {
-            "notificationHistorySize": {
-                "type": "int",
-                "example": "5"
-            }
-        }
-    },
-    "settingsNLHistoryRejectedReason": "Obvestilo preskočeno: {reason, select, noMoney{Ni najdene nobene denarne vrednosti} noCurrency{Ni najdene nobene valute} appNotUsed{Aplikacija ni na seznamu} other{Neznan razlog}}.",
-    "@settingsNLHistoryRejectedReason": {
-        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
-        "placeholders": {
-            "reason": {
-                "type": "String",
-                "example": "noMoney"
-            }
-        }
-    },
-    "settingsNLHistoryShortDescription": "Seznam prejšnjih obvestil",
-    "@settingsNLHistoryShortDescription": {
-        "description": "Short description of the notification history feature (for the settings navigation)"
-    },
-    "settingsNLPermissionGrant": "Pritisnite za odobritev dovoljenja.",
-    "@settingsNLPermissionGrant": {
-        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
-    },
     "settingsNLPermissionNotGranted": "Dovoljenje ni odobreno.",
     "@settingsNLPermissionNotGranted": {
         "description": "A requested permission was not granted."
-    },
-    "settingsNLPermissionRemove": "Odstrani dovoljenje?",
-    "@settingsNLPermissionRemove": {
-        "description": "Dialog title asking if permission should be removed."
-    },
-    "settingsNLPermissionRemoveHelp": "Če želite onemogočiti to storitev, kliknite aplikacijo in na naslednjem zaslonu odstranite dovoljenja.",
-    "@settingsNLPermissionRemoveHelp": {
-        "description": "Dialog text giving hint how to remove the permission."
-    },
-    "settingsNLPrefillTXTitle": "Vnaprej izpolnite naslov transakcije z naslovom obvestila",
-    "@settingsNLPrefillTXTitle": {
-        "description": "Setting pre-fill transaction title with notification title."
-    },
-    "settingsNLRegularExpression": "Logični izraz (izbirno)",
-    "@settingsNLRegularExpression": {
-        "description": "Setting to use a custom regular expression (regex)."
-    },
-    "settingsNLRegularExpressionInvalid": "Neveljaven logični izraz",
-    "@settingsNLRegularExpressionInvalid": {
-        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Preverjanje stanja…",
     "@settingsNLServiceChecking": {

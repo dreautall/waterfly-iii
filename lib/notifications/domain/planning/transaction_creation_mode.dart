@@ -1,0 +1,1 @@
+enum TransactionCreationMode { automatic, prompt }

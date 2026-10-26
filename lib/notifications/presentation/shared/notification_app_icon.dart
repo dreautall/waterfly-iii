@@ -1,0 +1,114 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:appcheck/appcheck.dart';
+import 'package:material_ui/material_ui.dart';
+
+typedef NotificationAppInfoLoader =
+    Future<AppInfo?> Function(String applicationId);
+
+class NotificationAppIcon extends StatefulWidget {
+  const NotificationAppIcon({
+    super.key,
+    required this.applicationId,
+    this.appInfoLoader,
+  });
+
+  final String applicationId;
+  final NotificationAppInfoLoader? appInfoLoader;
+
+  @override
+  State<NotificationAppIcon> createState() => _NotificationAppIconState();
+}
+
+class _NotificationAppIconState extends State<NotificationAppIcon> {
+  static final Map<(NotificationAppInfoLoader?, String), AppInfo?>
+  _applicationCache = <(NotificationAppInfoLoader?, String), AppInfo?>{};
+
+  Future<AppInfo?>? _application;
+  AppInfo? _cachedApplication;
+  bool _hasCachedApplication = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadApplication();
+  }
+
+  @override
+  void didUpdateWidget(covariant NotificationAppIcon oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.applicationId != widget.applicationId ||
+        oldWidget.appInfoLoader != widget.appInfoLoader) {
+      _loadApplication();
+    }
+  }
+
+  void _loadApplication() {
+    final NotificationAppInfoLoader? loader = widget.appInfoLoader;
+    final (NotificationAppInfoLoader?, String) cacheKey = (
+      loader,
+      widget.applicationId,
+    );
+    if (_applicationCache.containsKey(cacheKey)) {
+      _cachedApplication = _applicationCache[cacheKey];
+      _hasCachedApplication = true;
+      _application = null;
+      return;
+    }
+    _cachedApplication = null;
+    _hasCachedApplication = false;
+    if (loader == null && !Platform.isAndroid) {
+      _application = null;
+      return;
+    }
+    _application = _loadAndCacheApplication(cacheKey, loader);
+  }
+
+  Future<AppInfo?> _loadAndCacheApplication(
+    (NotificationAppInfoLoader?, String) cacheKey,
+    NotificationAppInfoLoader? loader,
+  ) async {
+    final AppInfo? application = await (loader != null
+        ? loader(cacheKey.$2)
+        : AppCheck().checkAvailability(cacheKey.$2));
+    _applicationCache[cacheKey] = application;
+    return application;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_hasCachedApplication) return _buildIcon(_cachedApplication);
+    final Future<AppInfo?>? application = _application;
+    if (application == null) return const _FallbackAppIcon();
+    return FutureBuilder<AppInfo?>(
+      future: application,
+      builder: (BuildContext context, AsyncSnapshot<AppInfo?> snapshot) =>
+          _buildIcon(snapshot.data),
+    );
+  }
+
+  Widget _buildIcon(AppInfo? application) {
+    final Uint8List? image = application?.icon;
+    if (image == null) return const _FallbackAppIcon();
+    return CircleAvatar(
+      backgroundColor: Colors.transparent,
+      child: Image.memory(
+        image,
+        width: 40,
+        height: 40,
+        fit: BoxFit.contain,
+        errorBuilder: (_, _, _) => const Icon(Icons.apps_outlined),
+      ),
+    );
+  }
+}
+
+class _FallbackAppIcon extends StatelessWidget {
+  const _FallbackAppIcon();
+
+  @override
+  Widget build(BuildContext context) {
+    return const CircleAvatar(child: Icon(Icons.apps_outlined));
+  }
+}

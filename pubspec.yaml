@@ -13,6 +13,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   # dart.dev
+  archive: ^4.2.0
   async: ^2.13.1
   intl: ^0.20.3
   collection: ^1.19.0
@@ -24,6 +25,8 @@ dependencies:
   # flutter.dev
   path_provider: ^2.1.6
   shared_preferences: ^2.3.4
+  sqflite_sqlcipher: ^3.3.0
+  cryptography: ^2.9.0
   flutter_svg: ^2.2.4
   url_launcher: ^6.3.2
   animations: ^3.0.0

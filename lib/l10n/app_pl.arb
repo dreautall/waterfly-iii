@@ -930,97 +930,13 @@
     "@settingsLockscreenInitial": {
         "description": "Prompt to authenticate once to set up the lockscreen"
     },
-    "settingsNLAppAccount": "Konto domyślne",
-    "@settingsNLAppAccount": {
-        "description": "Default account which will be used for the transaction."
-    },
-    "settingsNLAppAccountDynamic": "<Dynamicznie>",
-    "@settingsNLAppAccountDynamic": {
-        "description": "Account will be selected dynamically by the content of the notification."
-    },
-    "settingsNLAppAdd": "Dodaj aplikację",
-    "@settingsNLAppAdd": {
-        "description": "Button title to add a new app."
-    },
-    "settingsNLAppAddHelp": "Kliknij, aby dodać aplikację do nasłuchiwania. Tylko kwalifikujące się aplikacje pojawią się na liście.",
-    "@settingsNLAppAddHelp": {
-        "description": "Help text below adding the new app button."
-    },
-    "settingsNLAppAddInfo": "Wykonaj transakcje, w których otrzymujesz powiadomienia telefoniczne, aby dodać aplikacje do tej listy. Jeśli aplikacja nadal się nie pojawia, zgłoś to do app@vogt.pw.",
-    "@settingsNLAppAddInfo": {
-        "description": "Help text when no more app is available to add."
-    },
-    "settingsNLAutoAdd": "Utwórz transakcję bez interakcji",
-    "@settingsNLAutoAdd": {
-        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
-    },
     "settingsNLDescription": "Ta usługa pozwala na pobranie szczegółów transakcji z przychodzących powiadomień. Dodatkowo możesz wybrać domyślne konto, do którego transakcja powinna być przypisana — jeśli wartość nie jest ustawiona, spróbuje dopisać konto z powiadomienia.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
     },
-    "settingsNLEmptyNote": "Pozostaw pole notatki puste",
-    "@settingsNLEmptyNote": {
-        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
-    },
-    "settingsNLHistory": "Historia powiadomień",
-    "@settingsNLHistory": {
-        "description": "Label: Notification History view"
-    },
-    "settingsNLHistoryEmpty": "Brak zarejestrowanych powiadomień.",
-    "@settingsNLHistoryEmpty": {
-        "description": "Notification history is empty"
-    },
-    "settingsNLHistoryLongDescription": "{notificationHistorySize, plural, one {To jest historia 1 ostatniego powiadomienia odebranego przez aplikację. Dodatkowo możesz tworzyć transakcje z (prawidłowych) powiadomień lub sprawdzić powód, dla którego powiadomienie nie mogło zostać przetworzone.} few {To jest historia {notificationHistorySize} ostatnich powiadomień odebranych przez aplikację. Dodatkowo możesz tworzyć transakcje z (prawidłowych) powiadomień lub sprawdzić powód, dla którego powiadomienie nie mogło zostać przetworzone.} other {To jest historia {notificationHistorySize} ostatnich powiadomień odebranych przez aplikację. Dodatkowo możesz tworzyć transakcje z (prawidłowych) powiadomień lub sprawdzić powód, dla którego powiadomienie nie mogło zostać przetworzone.}}",
-    "@settingsNLHistoryLongDescription": {
-        "description": "Long description of the notification history feature.",
-        "placeholders": {
-            "notificationHistorySize": {
-                "type": "int",
-                "example": "5"
-            }
-        }
-    },
-    "settingsNLHistoryRejectedReason": "Powiadomienie pominięte: {reason, select, noMoney{Nie znaleziono wartości pieniężnej} noCurrency{Nie znaleziono waluty} appNotUsed{Aplikacja nie jest monitorowana} other{Nieznany powód}}.",
-    "@settingsNLHistoryRejectedReason": {
-        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
-        "placeholders": {
-            "reason": {
-                "type": "String",
-                "example": "noMoney"
-            }
-        }
-    },
-    "settingsNLHistoryShortDescription": "Lista poprzednich powiadomień",
-    "@settingsNLHistoryShortDescription": {
-        "description": "Short description of the notification history feature (for the settings navigation)"
-    },
-    "settingsNLPermissionGrant": "Dotknij, aby udzielić uprawnień.",
-    "@settingsNLPermissionGrant": {
-        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
-    },
     "settingsNLPermissionNotGranted": "Nie przyznano uprawnień.",
     "@settingsNLPermissionNotGranted": {
         "description": "A requested permission was not granted."
-    },
-    "settingsNLPermissionRemove": "Usunąć uprawnienia?",
-    "@settingsNLPermissionRemove": {
-        "description": "Dialog title asking if permission should be removed."
-    },
-    "settingsNLPermissionRemoveHelp": "Aby wyłączyć tę usługę, kliknij w aplikację i usuń uprawnienia na następnym ekranie.",
-    "@settingsNLPermissionRemoveHelp": {
-        "description": "Dialog text giving hint how to remove the permission."
-    },
-    "settingsNLPrefillTXTitle": "Uzupełnij tytuł transakcji tytułem powiadomienia",
-    "@settingsNLPrefillTXTitle": {
-        "description": "Setting pre-fill transaction title with notification title."
-    },
-    "settingsNLRegularExpression": "Wyrażenie regularne (opcjonalnie)",
-    "@settingsNLRegularExpression": {
-        "description": "Setting to use a custom regular expression (regex)."
-    },
-    "settingsNLRegularExpressionInvalid": "Nieprawidłowe wyrażenie regularne",
-    "@settingsNLRegularExpressionInvalid": {
-        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Sprawdzam stan…",
     "@settingsNLServiceChecking": {

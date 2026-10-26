@@ -77,6 +77,7 @@ class _NotificationDefinitionsPageState
   NotificationListenerHealthViewModel? _healthViewModel;
   NotificationHistoryStore? _historyStore;
   late final ScrollController _scrollController;
+  bool _wasBackgrounded = false;
 
   @override
   void initState() {
@@ -133,7 +134,12 @@ class _NotificationDefinitionsPageState
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.hidden ||
+        state == AppLifecycleState.detached) {
+      _wasBackgrounded = true;
+    } else if (state == AppLifecycleState.resumed && _wasBackgrounded) {
+      _wasBackgrounded = false;
       _refreshStatus();
     }
   }
@@ -546,6 +552,7 @@ class _NotificationDefinitionsPageState
       MaterialPageRoute<void>(
         builder: (BuildContext context) => NotificationDefinitionDetailsPage(
           definition: definition,
+          historyStore: _historyStore,
           migrationAlerts: _viewModel.migrationAlertsFor(definition),
           onSave: (NotificationDefinition updated) async =>
               (await _viewModel.update(updated)).succeeded,

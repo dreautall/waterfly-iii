@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
+import 'package:waterflyiii/notifications/domain/definitions/notification_sample.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/presentation/extractors/pages/notification_extractor_details_page.dart';
 import 'package:waterflyiii/notifications/presentation/shared/message_status_card.dart';
@@ -22,6 +23,7 @@ Widget extractorPage(
   String sampleBody = 'Paid 12.50 CAD',
   bool alwaysUse24HourFormat = false,
   Future<bool> Function(RegExpDefinition extractor)? onSave,
+  Future<List<NotificationSample>> Function()? recentSamplesLoader,
 }) => MaterialApp(
   localizationsDelegates: S.localizationsDelegates,
   supportedLocales: S.supportedLocales,
@@ -38,11 +40,38 @@ Widget extractorPage(
       canEdit: isAdvancedMode,
       canDelete: isAdvancedMode,
       onSave: onSave,
+      recentSamplesLoader: recentSamplesLoader,
     ),
   ),
 );
 
 void main() {
+  testWidgets('offers recent notifications when changing the sample', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      extractorPage(
+        RegExpDefinition.createCustomRegExpDefinition('Amount', r'\d+'),
+        isAdvancedMode: true,
+        recentSamplesLoader: () async => <NotificationSample>[
+          NotificationSample(
+            title: 'Recent payment',
+            body: 'Paid 25 CAD',
+            receivedAt: DateTime(2026, 10, 26),
+          ),
+        ],
+      ),
+    );
+
+    await tester.tap(find.byType(SampleNotificationCard));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const Key('pick-recent-notification-sample')),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('saves extractor changes without navigating back', (
     WidgetTester tester,
   ) async {

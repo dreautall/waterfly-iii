@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/notifications/application/definitions/save_notification_definition.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_definition_store.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
+import 'package:waterflyiii/notifications/domain/definitions/notification_sample.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/presentation/extractors/pages/notification_extractor_details_page.dart';
 
@@ -10,6 +11,7 @@ Future<SaveNotificationDefinitionResult?> editNotificationDefinitionExtractor({
   required NotificationDefinition definition,
   required RegExpDefinition extractor,
   required NotificationDefinitionStore store,
+  Future<List<NotificationSample>> Function()? recentSamplesLoader,
 }) async {
   final bool removable =
       definition.extractorMode == NotificationExtractorMode.advanced;
@@ -27,6 +29,7 @@ Future<SaveNotificationDefinitionResult?> editNotificationDefinitionExtractor({
             isAdvancedMode: removable,
             canEdit: removable,
             canDelete: removable,
+            recentSamplesLoader: recentSamplesLoader,
             onSave: (RegExpDefinition updated) =>
                 _saveExtractorChange(
                   definition: definition,

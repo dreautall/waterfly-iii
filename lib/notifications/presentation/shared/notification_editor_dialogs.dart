@@ -80,6 +80,8 @@ Future<NotificationSample?> showSampleNotificationEditor({
   required BuildContext context,
   required NotificationSample sample,
   required SampleNotificationEditorContext editorContext,
+  bool? hasExistingSample,
+  Future<List<NotificationSample>> Function()? recentSamplesLoader,
 }) async {
   final SampleNotificationInput? result =
       await showNotificationDialog<SampleNotificationInput>(
@@ -89,6 +91,8 @@ Future<NotificationSample?> showSampleNotificationEditor({
           body: sample.body,
           receivedAt: sample.receivedAt,
           editorContext: editorContext,
+          hasExistingSample: hasExistingSample,
+          recentSamplesLoader: recentSamplesLoader,
         ),
       );
   if (result == null) return null;

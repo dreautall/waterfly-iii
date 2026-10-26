@@ -38,6 +38,7 @@ class NotificationExtractorDetailsPage extends StatefulWidget {
     required this.canEdit,
     required this.canDelete,
     this.onSave,
+    this.recentSamplesLoader,
   });
 
   final RegExpDefinition extractor;
@@ -51,6 +52,7 @@ class NotificationExtractorDetailsPage extends StatefulWidget {
   final bool canEdit;
   final bool canDelete;
   final Future<bool> Function(RegExpDefinition extractor)? onSave;
+  final Future<List<NotificationSample>> Function()? recentSamplesLoader;
 
   @override
   State<NotificationExtractorDetailsPage> createState() =>
@@ -238,6 +240,7 @@ class _NotificationExtractorDetailsPageState
       context: context,
       editorContext: SampleNotificationEditorContext.extractor,
       sample: _viewModel.sample,
+      recentSamplesLoader: widget.recentSamplesLoader,
     );
     if (sample == null || !mounted) return;
     _viewModel.updateSample(sample);

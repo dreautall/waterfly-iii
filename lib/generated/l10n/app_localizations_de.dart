@@ -1599,7 +1599,34 @@ class SDe extends S {
 
   @override
   String get notificationsDefinitionSampleDescription =>
-      'Use one representative notification to preview extractors and rules. Individual extractors and rules can use separate test samples.';
+      'Use one representative notification to preview extractors and rules. Enter one manually or use the latest notification received from this application.';
+
+  @override
+  String get notificationsDefinitionUseLatestSample =>
+      'Use latest recorded notification';
+
+  @override
+  String get notificationsDefinitionPickRecentSamples =>
+      'Choose from recent notifications';
+
+  @override
+  String get notificationsDefinitionRecentSamplesTitle =>
+      'Recent notifications';
+
+  @override
+  String get notificationsDefinitionRecentSamplesDescription =>
+      'Select a notification to prefill the sample fields. You can review and edit it before applying.';
+
+  @override
+  String get notificationsDefinitionRecentSamplesRetry => 'Retry';
+
+  @override
+  String get notificationsDefinitionLatestSampleUnavailable =>
+      'No notification from this application is available yet.';
+
+  @override
+  String get notificationsDefinitionLatestSampleLoadFailure =>
+      'The latest notification could not be loaded.';
 
   @override
   String get notificationsSampleTimestamp => 'Sample time';

@@ -10,17 +10,20 @@ import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/notifications/application/definitions/save_notification_definition.dart';
 import 'package:waterflyiii/notifications/application/definitions/resolve_notification_alert_definition.dart';
 import 'package:waterflyiii/notifications/application/history/recent_notification_history.dart';
+import 'package:waterflyiii/notifications/application/history/recent_notification_samples.dart';
 import 'package:waterflyiii/notifications/application/rules/notification_rule_operations.dart';
 import 'package:waterflyiii/notifications/application/rules/resolve_notification_alert_rule.dart';
 import 'package:waterflyiii/notifications/application/rules/save_rule_in_definition.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_alert_store.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_definition_store.dart';
+import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
 import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context_factories.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
+import 'package:waterflyiii/notifications/domain/definitions/notification_sample.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/notification_id.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_intent.dart';
@@ -62,6 +65,17 @@ class NotificationNavigationCoordinator {
   final NotificationDefinitionStore _definitionStore;
   final NotificationRuleOperations _ruleOperations;
   final NotificationFeatureScope? _scope;
+
+  Future<List<NotificationSample>> Function()? _recentSamplesLoader(
+    NotificationDefinition definition,
+  ) {
+    final NotificationHistoryStore? historyStore = _scope?.historyStore;
+    if (historyStore == null) return null;
+    return () => loadRecentNotificationSamples(
+      historyStore: historyStore,
+      applicationId: definition.applicationId,
+    );
+  }
 
   Future<void> openAlerts(
     BuildContext context, {
@@ -156,54 +170,55 @@ class NotificationNavigationCoordinator {
     }
     final NotificationRule selectedRule = resolution.rule!;
     bool hasSaved = false;
-    final NotificationRuleDetailsResult? result = await Navigator.of(context)
-        .push<NotificationRuleDetailsResult>(
-          MaterialPageRoute<NotificationRuleDetailsResult>(
-            builder: (BuildContext context) => NotificationRuleDetailsPage(
-              rule: selectedRule,
-              extractors: selectedDefinition.extractors,
-              notificationContext:
-                  alert.notification ?? selectedDefinition.toSampleContext(),
-              definitionSampleContext: selectedDefinition.toSampleContext(),
-              extractorMode: selectedDefinition.extractorMode,
-              initialTestMode: true,
-              isTestModeLocked: true,
-              showStatusTag: false,
-              rules: selectedDefinition.rules,
-              sharedActions: selectedDefinition.sharedActions,
-              transactionCreationMode:
-                  selectedDefinition.transactionCreationMode,
-              onEditExtractor: (RegExpDefinition extractor) async {
-                final SaveNotificationDefinitionResult? result =
-                    await editNotificationDefinitionExtractor(
-                      context: context,
-                      definition: selectedDefinition,
-                      extractor: extractor,
-                      store: _definitionStore,
-                    );
-                if (result != null && !result.succeeded && context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        S.of(context).notificationsDefinitionSaveFailure,
-                      ),
-                    ),
-                  );
-                }
-              },
-              onSave: (NotificationRule updated) async {
-                final SaveRuleInDefinitionResult saveResult =
-                    await _ruleOperations.update(
-                      definitionId: selectedDefinition.id,
-                      originalRuleId: selectedRule.id,
-                      rule: updated,
-                    );
-                if (saveResult.succeeded) hasSaved = true;
-                return saveResult.succeeded;
-              },
-            ),
-          ),
-        );
+    final NotificationRuleDetailsResult?
+    result = await Navigator.of(context).push<NotificationRuleDetailsResult>(
+      MaterialPageRoute<NotificationRuleDetailsResult>(
+        builder: (BuildContext context) => NotificationRuleDetailsPage(
+          rule: selectedRule,
+          extractors: selectedDefinition.extractors,
+          notificationContext:
+              alert.notification ?? selectedDefinition.toSampleContext(),
+          definitionSampleContext: selectedDefinition.toSampleContext(),
+          extractorMode: selectedDefinition.extractorMode,
+          initialTestMode: true,
+          isTestModeLocked: true,
+          showStatusTag: false,
+          rules: selectedDefinition.rules,
+          sharedActions: selectedDefinition.sharedActions,
+          transactionCreationMode: selectedDefinition.transactionCreationMode,
+          recentSamplesLoader: _recentSamplesLoader(selectedDefinition),
+          onEditExtractor: (RegExpDefinition extractor) async {
+            final SaveNotificationDefinitionResult? result =
+                await editNotificationDefinitionExtractor(
+                  context: context,
+                  definition: selectedDefinition,
+                  extractor: extractor,
+                  store: _definitionStore,
+                  recentSamplesLoader: _recentSamplesLoader(selectedDefinition),
+                );
+            if (result != null && !result.succeeded && context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    S.of(context).notificationsDefinitionSaveFailure,
+                  ),
+                ),
+              );
+            }
+          },
+          onSave: (NotificationRule updated) async {
+            final SaveRuleInDefinitionResult saveResult = await _ruleOperations
+                .update(
+                  definitionId: selectedDefinition.id,
+                  originalRuleId: selectedRule.id,
+                  rule: updated,
+                );
+            if (saveResult.succeeded) hasSaved = true;
+            return saveResult.succeeded;
+          },
+        ),
+      ),
+    );
     if (result == null) return;
     final SaveRuleInDefinitionResult? saveResult = result.delete
         ? await _ruleOperations.delete(
@@ -409,6 +424,7 @@ class NotificationNavigationCoordinator {
               rules: definition.rules,
               sharedActions: definition.sharedActions,
               transactionCreationMode: definition.transactionCreationMode,
+              recentSamplesLoader: _recentSamplesLoader(definition),
               onEditExtractor: (RegExpDefinition extractor) async {
                 final SaveNotificationDefinitionResult? result =
                     await editNotificationDefinitionExtractor(
@@ -416,6 +432,7 @@ class NotificationNavigationCoordinator {
                       definition: definition,
                       extractor: extractor,
                       store: _definitionStore,
+                      recentSamplesLoader: _recentSamplesLoader(definition),
                     );
                 if (result != null && !result.succeeded && context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -500,6 +517,7 @@ class NotificationNavigationCoordinator {
               rules: definition.rules,
               sharedActions: definition.sharedActions,
               transactionCreationMode: definition.transactionCreationMode,
+              recentSamplesLoader: _recentSamplesLoader(definition),
               onEditExtractor: (RegExpDefinition extractor) async {
                 final SaveNotificationDefinitionResult? result =
                     await editNotificationDefinitionExtractor(
@@ -507,6 +525,7 @@ class NotificationNavigationCoordinator {
                       definition: definition,
                       extractor: extractor,
                       store: _definitionStore,
+                      recentSamplesLoader: _recentSamplesLoader(definition),
                     );
                 if (result != null && !result.succeeded && context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(

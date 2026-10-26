@@ -2577,8 +2577,50 @@ abstract class S {
   /// Description of the notification definition sample.
   ///
   /// In en, this message translates to:
-  /// **'Use one representative notification to preview extractors and rules. Individual extractors and rules can use separate test samples.'**
+  /// **'Use one representative notification to preview extractors and rules. Enter one manually or use the latest notification received from this application.'**
   String get notificationsDefinitionSampleDescription;
+
+  /// Button that loads the latest notification Waterfly recorded for an application as its definition sample.
+  ///
+  /// In en, this message translates to:
+  /// **'Use latest recorded notification'**
+  String get notificationsDefinitionUseLatestSample;
+
+  /// Button that opens recent notifications in the sample editor.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from recent notifications'**
+  String get notificationsDefinitionPickRecentSamples;
+
+  /// Title for the recent-notification sample picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent notifications'**
+  String get notificationsDefinitionRecentSamplesTitle;
+
+  /// Description shown above recent notifications in the sample picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a notification to prefill the sample fields. You can review and edit it before applying.'**
+  String get notificationsDefinitionRecentSamplesDescription;
+
+  /// Button that retries loading recent notifications in the sample editor.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get notificationsDefinitionRecentSamplesRetry;
+
+  /// Message shown when no notification is available to use as a definition sample.
+  ///
+  /// In en, this message translates to:
+  /// **'No notification from this application is available yet.'**
+  String get notificationsDefinitionLatestSampleUnavailable;
+
+  /// Error shown when loading the latest notification as a definition sample fails.
+  ///
+  /// In en, this message translates to:
+  /// **'The latest notification could not be loaded.'**
+  String get notificationsDefinitionLatestSampleLoadFailure;
 
   /// Label for the editable timestamp of a sample notification.
   ///

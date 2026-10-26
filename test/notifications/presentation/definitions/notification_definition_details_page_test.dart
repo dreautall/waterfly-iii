@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart' hide MaterialApp;
 import 'package:material_ui/material_ui.dart' as material_ui;
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
+import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
@@ -12,6 +13,7 @@ import 'package:waterflyiii/notifications/domain/definitions/notification_contex
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_creation_mode.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
+import 'package:waterflyiii/notifications/domain/history/notification_history_entry.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_action_group.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/literal_value_source.dart';
@@ -19,6 +21,7 @@ import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_v
 import 'package:waterflyiii/notifications/presentation/definitions/pages/notification_definition_details_page.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_extractors_section.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_rules_section.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_sample_card.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/widgets/notification_definition_card.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/actions/transaction_action_steps.dart';
 import 'package:waterflyiii/notifications/presentation/extractors/pages/notification_extractor_details_page.dart';
@@ -35,6 +38,62 @@ class MaterialApp extends material_ui.MaterialApp {
         localizationsDelegates: S.localizationsDelegates,
         supportedLocales: S.supportedLocales,
       );
+}
+
+class _HistoryStore
+    implements NotificationHistoryStore, NotificationHistoryApplicationStore {
+  _HistoryStore(this.entries);
+
+  List<NotificationHistoryEntry> entries;
+  String? recentApplicationId;
+  int? recentLimit;
+
+  @override
+  Future<void> clearAll() async => entries = <NotificationHistoryEntry>[];
+
+  @override
+  Future<void> clearForApplication(String applicationId) async {
+    entries = entries
+        .where(
+          (NotificationHistoryEntry entry) =>
+              entry.applicationId != applicationId,
+        )
+        .toList();
+  }
+
+  @override
+  Future<bool> linkTransaction(
+    String historyEntryId,
+    String transactionId,
+  ) async => false;
+
+  @override
+  Future<List<NotificationHistoryEntry>> load() async => entries;
+
+  @override
+  Future<List<NotificationHistoryEntry>> loadRecentForApplication({
+    required String applicationId,
+    required int limit,
+  }) async {
+    recentApplicationId = applicationId;
+    recentLimit = limit;
+    final List<NotificationHistoryEntry> matching =
+        entries
+            .where(
+              (NotificationHistoryEntry entry) =>
+                  entry.applicationId == applicationId,
+            )
+            .toList()
+          ..sort(
+            (NotificationHistoryEntry left, NotificationHistoryEntry right) =>
+                right.receivedAt.compareTo(left.receivedAt),
+          );
+    return matching.take(limit).toList();
+  }
+
+  @override
+  Future<void> record(NotificationHistoryEntry entry) async =>
+      entries = <NotificationHistoryEntry>[...entries, entry];
 }
 
 Finder richText(String text) => find.byWidgetPredicate(
@@ -693,6 +752,326 @@ void main() {
 
     expect(find.text('Set up notification processing'), findsOneWidget);
     expect(find.text('Extractors'), findsNothing);
+  });
+
+  testWidgets('uses the latest application notification as a sample', (
+    WidgetTester tester,
+  ) async {
+    final DateTime now = DateTime(2026, 10, 26, 12);
+    final _HistoryStore historyStore = _HistoryStore(<NotificationHistoryEntry>[
+      NotificationHistoryEntry(
+        id: 'older',
+        applicationId: 'com.example.bank',
+        title: 'Older payment',
+        body: 'Paid 10 CAD',
+        receivedAt: now.subtract(const Duration(minutes: 2)),
+      ),
+      NotificationHistoryEntry(
+        id: 'other-app',
+        applicationId: 'com.example.wallet',
+        title: 'Wallet payment',
+        body: 'Paid 50 CAD',
+        receivedAt: now.add(const Duration(minutes: 1)),
+      ),
+      NotificationHistoryEntry(
+        id: 'metadata-only',
+        applicationId: 'com.example.bank',
+        title: '',
+        body: '',
+        receivedAt: now.add(const Duration(minutes: 2)),
+      ),
+      NotificationHistoryEntry(
+        id: 'latest',
+        applicationId: 'com.example.bank',
+        title: 'Latest payment',
+        body: 'Paid 25 CAD',
+        receivedAt: now,
+      ),
+    ]);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationDefinitionDetailsPage(
+          definition: const NotificationDefinition(
+            id: 'bank',
+            applicationId: 'com.example.bank',
+            name: 'Example Bank',
+            extractors: <RegExpDefinition>[],
+            rules: <NotificationRule>[],
+          ),
+          historyStore: historyStore,
+          onSave: (NotificationDefinition definition) async => true,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text(
+        'Use one representative notification to preview extractors and rules. Enter one manually or use the latest notification received from this application.',
+      ),
+      findsOneWidget,
+    );
+    final Finder sampleCard = find.byType(DefinitionSampleCard);
+    final Finder sampleNotificationCard = find.descendant(
+      of: sampleCard,
+      matching: find.byType(SampleNotificationCard),
+    );
+    final Finder quickAction = find.byKey(
+      const Key('use-latest-notification-sample'),
+    );
+    final double expandedHeight = tester.getSize(sampleCard).height;
+    expect(
+      tester.getSize(quickAction).width,
+      tester.getSize(sampleNotificationCard).width - 12,
+    );
+    final FilledButton button = tester.widget<FilledButton>(quickAction);
+    expect(
+      button.style?.shape?.resolve(<WidgetState>{}),
+      isA<RoundedRectangleBorder>().having(
+        (RoundedRectangleBorder shape) => shape.borderRadius,
+        'border radius',
+        const BorderRadius.vertical(bottom: Radius.circular(8)),
+      ),
+    );
+
+    await tester.tap(quickAction);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 110));
+
+    final double sampleBottom = tester.getBottomLeft(sampleNotificationCard).dy;
+    expect(tester.getTopLeft(quickAction).dy, lessThan(sampleBottom));
+    expect(tester.getBottomLeft(quickAction).dy, greaterThan(sampleBottom));
+
+    await tester.pumpAndSettle();
+
+    expect(tester.getSize(sampleCard).height, lessThan(expandedHeight));
+    expect(find.text('Latest payment'), findsOneWidget);
+    expect(find.text('Paid 25 CAD'), findsOneWidget);
+    expect(historyStore.recentApplicationId, 'com.example.bank');
+    expect(historyStore.recentLimit, 24);
+  });
+
+  testWidgets('slides the latest notification action out on first render', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: DefinitionSampleCard(
+            applicationId: 'com.example.bank',
+            title: '',
+            body: '',
+            receivedAt: null,
+            onEdit: () {},
+            showLatestSampleAction: true,
+            onUseLatestSample: () {},
+          ),
+        ),
+      ),
+    );
+
+    final Finder sampleCard = find.byType(SampleNotificationCard);
+    final Finder quickAction = find.byKey(
+      const Key('use-latest-notification-sample'),
+    );
+    final double sampleBottom = tester.getBottomLeft(sampleCard).dy;
+    expect(tester.getBottomLeft(quickAction).dy, sampleBottom);
+
+    await tester.pump(const Duration(milliseconds: 110));
+
+    expect(tester.getTopLeft(quickAction).dy, lessThan(sampleBottom));
+    expect(tester.getBottomLeft(quickAction).dy, greaterThan(sampleBottom));
+
+    await tester.pumpAndSettle();
+
+    expect(tester.getTopLeft(quickAction).dy, sampleBottom);
+  });
+
+  testWidgets('reports empty recent history from the sample editor', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationDefinitionDetailsPage(
+          definition: const NotificationDefinition(
+            id: 'bank',
+            applicationId: 'com.example.bank',
+            name: 'Example Bank',
+            extractors: <RegExpDefinition>[],
+            rules: <NotificationRule>[],
+          ),
+          historyStore: _HistoryStore(<NotificationHistoryEntry>[]),
+          onSave: (NotificationDefinition definition) async => true,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final Finder quickAction = find.byKey(
+      const Key('use-latest-notification-sample'),
+    );
+    expect(
+      tester
+          .widgetList<IgnorePointer>(
+            find.ancestor(
+              of: quickAction,
+              matching: find.byType(IgnorePointer),
+            ),
+          )
+          .any((IgnorePointer widget) => widget.ignoring),
+      isTrue,
+    );
+    expect(
+      tester.getBottomLeft(quickAction).dy,
+      tester.getBottomLeft(find.byType(SampleNotificationCard)).dy,
+    );
+
+    await tester.tap(find.byType(SampleNotificationCard));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('pick-recent-notification-sample')));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('No notification from this application is available yet.'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('picks from the eight most recent notifications', (
+    WidgetTester tester,
+  ) async {
+    final DateTime now = DateTime(2026, 10, 26, 12);
+    final _HistoryStore historyStore = _HistoryStore(
+      List<NotificationHistoryEntry>.generate(
+        10,
+        (int index) => NotificationHistoryEntry(
+          id: 'notification-$index',
+          applicationId: 'com.example.bank',
+          title: 'Payment $index',
+          body: 'Paid $index CAD',
+          receivedAt: now.add(Duration(minutes: index)),
+        ),
+      ),
+    );
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationDefinitionDetailsPage(
+          definition: const NotificationDefinition(
+            id: 'bank',
+            applicationId: 'com.example.bank',
+            name: 'Example Bank',
+            sampleTitle: 'Existing payment',
+            sampleBody: 'Paid 1 CAD',
+            extractors: <RegExpDefinition>[],
+            rules: <NotificationRule>[],
+          ),
+          historyStore: historyStore,
+          onSave: (NotificationDefinition definition) async => true,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(SampleNotificationCard));
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey<String>('sample-editor-pane')),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const Key('pick-recent-notification-sample')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 110));
+
+    final Finder transitioningEditor = find.byKey(
+      const ValueKey<String>('sample-editor-pane'),
+    );
+    final Finder transitioningRecent = find.byKey(
+      const ValueKey<String>('recent-samples-pane'),
+    );
+    expect(tester.getTopLeft(transitioningEditor).dx, lessThan(0));
+    expect(
+      tester.getTopLeft(transitioningRecent).dx,
+      greaterThan(tester.getTopLeft(transitioningEditor).dx),
+    );
+
+    await tester.pumpAndSettle();
+
+    expect(find.text('Recent notifications'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey<String>('recent-samples-pane')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey<String>('sample-editor-pane')),
+      findsNothing,
+    );
+    expect(find.byKey(const Key('sample-notification-title')), findsNothing);
+    expect(find.byKey(const Key('back-to-sample-fields')), findsOneWidget);
+    expect(find.byKey(const Key('recent-samples-list')), findsOneWidget);
+    final Finder recentSurface = find.byKey(const Key('recent-samples-list'));
+    final Finder recentCards = find.descendant(
+      of: recentSurface,
+      matching: find.byType(SampleNotificationCard),
+    );
+    expect(recentCards, findsWidgets);
+    expect(
+      tester
+          .widgetList<SampleNotificationCard>(recentCards)
+          .every((SampleNotificationCard card) => !card.showApplicationIcon),
+      isTrue,
+    );
+    final Card renderedCard = tester.widget<Card>(
+      find.descendant(of: recentCards.first, matching: find.byType(Card)),
+    );
+    expect(
+      renderedCard.color,
+      Theme.of(tester.element(recentSurface)).colorScheme.surfaceContainerLow,
+    );
+    expect(
+      renderedCard.shape,
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+        side: BorderSide(
+          color: Theme.of(
+            tester.element(recentSurface),
+          ).colorScheme.outlineVariant,
+        ),
+      ),
+    );
+    final ListView recentSamples = tester.widget<ListView>(recentSurface);
+    expect(
+      (recentSamples.childrenDelegate as SliverChildBuilderDelegate).childCount,
+      15,
+    );
+
+    await tester.tap(find.text('Payment 9'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('recent-samples-list')), findsNothing);
+    expect(
+      find.byKey(const ValueKey<String>('sample-editor-pane')),
+      findsOneWidget,
+    );
+    expect(
+      tester
+          .widget<TextField>(find.byKey(const Key('sample-notification-title')))
+          .controller
+          ?.text,
+      'Payment 9',
+    );
+    expect(
+      tester
+          .widget<TextField>(find.byKey(const Key('sample-notification-body')))
+          .controller
+          ?.text,
+      'Paid 9 CAD',
+    );
+
+    await tester.tap(find.text('Apply'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Payment 9'), findsOneWidget);
+    expect(find.text('Paid 9 CAD'), findsOneWidget);
   });
 
   testWidgets('shows setup choices before extractors and rules', (

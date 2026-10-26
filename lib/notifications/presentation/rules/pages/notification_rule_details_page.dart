@@ -63,6 +63,7 @@ class NotificationRuleDetailsPage extends StatefulWidget {
     this.transactionCreationMode = TransactionCreationMode.prompt,
     this.onEditExtractor,
     this.onSave,
+    this.recentSamplesLoader,
   });
 
   final NotificationRule rule;
@@ -80,6 +81,7 @@ class NotificationRuleDetailsPage extends StatefulWidget {
   final TransactionCreationMode transactionCreationMode;
   final Future<void> Function(RegExpDefinition extractor)? onEditExtractor;
   final Future<bool> Function(NotificationRule rule)? onSave;
+  final Future<List<NotificationSample>> Function()? recentSamplesLoader;
 
   @override
   State<NotificationRuleDetailsPage> createState() =>
@@ -554,6 +556,7 @@ class _NotificationRuleDetailsPageState
         body: _sampleNotificationContext.body,
         receivedAt: _sampleNotificationContext.receivedAt,
       ),
+      recentSamplesLoader: widget.recentSamplesLoader,
     );
     if (sample == null || !mounted) return;
     _viewModel.updateSampleOverride(sample);
@@ -603,6 +606,7 @@ class _NotificationRuleDetailsPageState
                       ? null
                       : _toggleTestMode,
                   onEditExtractor: widget.onEditExtractor,
+                  recentSamplesLoader: widget.recentSamplesLoader,
                   onSave: (NotificationActionGroup updated) async {
                     _viewModel.replaceConditionalActionGroup(updated);
                     final bool saved = await _persistChanges(
@@ -632,6 +636,7 @@ class _NotificationRuleDetailsPageState
           isTestMode: _isTestMode,
           onToggleTestMode: widget.isTestModeLocked ? null : _toggleTestMode,
           onEditExtractor: widget.onEditExtractor,
+          recentSamplesLoader: widget.recentSamplesLoader,
           isNew: true,
           onSave: (NotificationActionGroup updated) async {
             final bool alreadyAdded = _conditionalActionGroups.any(

@@ -26,6 +26,7 @@ class NotificationDefinitionEditorWorkflows {
     required this.sampleBodyController,
     required this.save,
     required this.refresh,
+    this.recentSamplesLoader,
   });
 
   final BuildContext context;
@@ -35,20 +36,46 @@ class NotificationDefinitionEditorWorkflows {
   final TextEditingController sampleBodyController;
   final Future<bool> Function() save;
   final VoidCallback refresh;
+  final Future<List<NotificationSample>> Function()? recentSamplesLoader;
 
   static final Logger _log = Logger('Notifications.DefinitionEditor');
 
   Future<void> editSample() async {
-    final NotificationSample? sample = await showSampleNotificationEditor(
-      context: context,
-      editorContext: SampleNotificationEditorContext.definition,
-      sample: NotificationSample(
+    await _editSample(
+      NotificationSample(
         title: sampleTitleController.text,
         body: sampleBodyController.text,
         receivedAt: definition.sampleReceivedAt,
       ),
+      hasExistingSample:
+          sampleTitleController.text.trim().isNotEmpty &&
+          sampleBodyController.text.trim().isNotEmpty,
+    );
+  }
+
+  Future<void> editSampleFrom(NotificationSample sample) => _editSample(
+    sample,
+    hasExistingSample:
+        sampleTitleController.text.trim().isNotEmpty &&
+        sampleBodyController.text.trim().isNotEmpty,
+  );
+
+  Future<void> _editSample(
+    NotificationSample initialSample, {
+    required bool hasExistingSample,
+  }) async {
+    final NotificationSample? sample = await showSampleNotificationEditor(
+      context: context,
+      editorContext: SampleNotificationEditorContext.definition,
+      sample: initialSample,
+      hasExistingSample: hasExistingSample,
+      recentSamplesLoader: recentSamplesLoader,
     );
     if (sample == null || !context.mounted) return;
+    applySample(sample);
+  }
+
+  void applySample(NotificationSample sample) {
     final bool changed =
         sample.title != sampleTitleController.text ||
         sample.body != sampleBodyController.text;
@@ -103,6 +130,7 @@ class NotificationDefinitionEditorWorkflows {
                 );
                 return save();
               },
+              recentSamplesLoader: recentSamplesLoader,
             ),
           ),
         );
@@ -144,6 +172,7 @@ class NotificationDefinitionEditorWorkflows {
                 );
             return _saveAfterChildChange(change);
           },
+          recentSamplesLoader: recentSamplesLoader,
         ),
       ),
     );
@@ -189,6 +218,7 @@ class NotificationDefinitionEditorWorkflows {
                 }
                 return save();
               },
+              recentSamplesLoader: recentSamplesLoader,
             ),
           ),
         );
@@ -365,6 +395,7 @@ class NotificationDefinitionEditorWorkflows {
         canEdit: canEdit,
         canDelete: removable,
         onSave: onSave,
+        recentSamplesLoader: recentSamplesLoader,
       ),
     ),
   );

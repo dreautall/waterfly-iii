@@ -16,6 +16,10 @@ class SampleNotificationCard extends StatelessWidget {
     this.timestampContent,
     this.trailing,
     this.onTap,
+    this.showApplicationIcon = true,
+    this.surfaceColor,
+    this.shape,
+    this.contentPadding = const EdgeInsets.only(left: 16),
   });
 
   final String applicationId;
@@ -27,18 +31,27 @@ class SampleNotificationCard extends StatelessWidget {
   final Widget? timestampContent;
   final Widget? trailing;
   final VoidCallback? onTap;
+  final bool showApplicationIcon;
+  final Color? surfaceColor;
+  final ShapeBorder? shape;
+  final EdgeInsetsGeometry contentPadding;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.zero,
       color:
+          surfaceColor ??
           Theme.of(context).extension<NotificationCardTheme>()?.surfaceColor ??
           Theme.of(context).colorScheme.surfaceContainerLow,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      shape:
+          shape ??
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: ListTile(
-        contentPadding: const EdgeInsets.only(left: 16),
-        leading: NotificationAppIcon(applicationId: applicationId),
+        contentPadding: contentPadding,
+        leading: showApplicationIcon
+            ? NotificationAppIcon(applicationId: applicationId)
+            : null,
         title: _title(context),
         subtitle:
             bodyContent ??

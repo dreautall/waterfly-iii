@@ -34,6 +34,7 @@ import 'package:waterflyiii/notifications/presentation/rules/pages/notification_
 import 'package:waterflyiii/notifications/presentation/shared/message_status_card.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_date_time_formatter.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_menu_theme.dart';
+import 'package:waterflyiii/notifications/presentation/shared/sample_notification_card.dart';
 
 class _LabelGateway implements FireflyResourceLabelGateway {
   @override
@@ -1904,6 +1905,13 @@ void main() {
             body: 'Paid 12 CAD',
             receivedAt: DateTime(2026, 9, 7),
           ),
+          recentSamplesLoader: () async => <NotificationSample>[
+            NotificationSample(
+              title: 'Recent payment',
+              body: 'Paid 25 CAD',
+              receivedAt: DateTime(2026, 10, 26),
+            ),
+          ],
         ),
       ),
     );
@@ -1913,6 +1921,10 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Edit test notification'));
     await tester.pumpAndSettle();
+    expect(
+      find.byKey(const Key('pick-recent-notification-sample')),
+      findsOneWidget,
+    );
     await tester.enterText(find.byType(TextField).last, 'Paid 25 CAD');
     await tester.tap(find.widgetWithText(FilledButton, 'Apply'));
     await tester.pumpAndSettle();
@@ -1926,6 +1938,63 @@ void main() {
 
     expect(find.text('Paid 25 CAD'), findsOneWidget);
     expect(richText('Resolved value: "25"'), findsOneWidget);
+  });
+
+  testWidgets('offers recent notifications for a conditional action sample', (
+    WidgetTester tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1000));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationRuleDetailsPage(
+          rule: const NotificationRule(
+            id: 'rule',
+            name: 'Deposits',
+            conditions: <NotificationCondition>[],
+            actions: <NotificationAction>[],
+            conditionalActionGroups: <NotificationActionGroup>[
+              NotificationActionGroup(
+                id: 'salary',
+                name: 'Salary source',
+                conditions: <NotificationCondition>[
+                  ValueExistsCondition(LiteralValueSource('salary')),
+                ],
+                actions: <NotificationAction>[],
+              ),
+            ],
+          ),
+          extractors: const <RegExpDefinition>[],
+          notificationContext: NotificationContext(
+            title: 'Deposit received',
+            body: 'Salary deposit received',
+            receivedAt: DateTime(2026, 9, 24),
+          ),
+          recentSamplesLoader: () async => <NotificationSample>[
+            NotificationSample(
+              title: 'Recent deposit',
+              body: 'Deposit received',
+              receivedAt: DateTime(2026, 10, 26),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    await tester.scrollUntilVisible(
+      find.text('Salary source'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.text('Salary source').first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(SampleNotificationCard));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const Key('pick-recent-notification-sample')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('marks clearing a rule sample override as unsaved', (

@@ -1,11 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/rendering.dart';
+import 'package:logging/logging.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
+import 'package:waterflyiii/notifications/application/history/recent_notification_samples.dart';
+import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
+import 'package:waterflyiii/notifications/domain/definitions/notification_sample.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule_diagnostics.dart';
@@ -33,6 +37,7 @@ class NotificationDefinitionDetailsPage extends StatefulWidget {
     super.key,
     required this.definition,
     required this.onSave,
+    this.historyStore,
     this.onDelete,
     this.onUndoCreation,
     this.initialRuleId,
@@ -43,6 +48,7 @@ class NotificationDefinitionDetailsPage extends StatefulWidget {
 
   final NotificationDefinition definition;
   final Future<bool> Function(NotificationDefinition definition) onSave;
+  final NotificationHistoryStore? historyStore;
   final Future<bool> Function()? onDelete;
   final Future<bool> Function()? onUndoCreation;
   final String? initialRuleId;
@@ -57,6 +63,7 @@ class NotificationDefinitionDetailsPage extends StatefulWidget {
 
 class _NotificationDefinitionDetailsPageState
     extends State<NotificationDefinitionDetailsPage> {
+  static final Logger _log = Logger('Notifications.DefinitionDetails');
   static const double _floatingSaveButtonSize = 56;
   static const double _floatingSaveButtonMargin = 16;
   static const double _floatingSaveButtonGap = 12;
@@ -75,6 +82,7 @@ class _NotificationDefinitionDetailsPageState
   double _automaticAnchorSlack = 0;
   bool _preservingAutomaticAnchor = false;
   bool _scrollToAutomaticWarningAfterAnchor = false;
+  List<NotificationSample> _recentSamples = <NotificationSample>[];
   int _automaticAnchorGeneration = 0;
 
   List<RegExpDefinition> get _extractors => _viewModel.extractors;
@@ -83,6 +91,9 @@ class _NotificationDefinitionDetailsPageState
   TransactionCreationMode get _transactionCreationMode =>
       _viewModel.transactionCreationMode;
   bool get _isSaving => _viewModel.isSaving;
+  bool get _hasSample =>
+      _sampleTitleController.text.trim().isNotEmpty &&
+      _sampleBodyController.text.trim().isNotEmpty;
   AutomaticTransactionReadiness get _automaticReadiness =>
       _currentDefinition().automaticTransactionReadiness;
   NotificationDefinitionEditorWorkflows get _workflows =>
@@ -94,6 +105,9 @@ class _NotificationDefinitionDetailsPageState
         sampleBodyController: _sampleBodyController,
         save: _save,
         refresh: _refresh,
+        recentSamplesLoader: widget.historyStore == null
+            ? null
+            : _loadRecentNotificationSamples,
       );
 
   @override
@@ -108,6 +122,9 @@ class _NotificationDefinitionDetailsPageState
     _scrollController = ScrollController();
     _viewModel = NotificationDefinitionEditorViewModel(widget.definition)
       ..addListener(_refresh);
+    if (widget.historyStore != null && !_hasSample) {
+      unawaited(_refreshRecentSamples());
+    }
     final NotificationRule? initialDraftRule = widget.initialDraftRule;
     final String? initialRuleId = widget.initialRuleId;
     if (initialDraftRule != null) {
@@ -267,6 +284,8 @@ class _NotificationDefinitionDetailsPageState
                 body: _sampleBodyController.text,
                 receivedAt: widget.definition.createdAt,
                 onEdit: _workflows.editSample,
+                showLatestSampleAction: _recentSamples.isNotEmpty,
+                onUseLatestSample: _useLatestNotificationAsSample,
               ),
               if (_extractorMode ==
                   NotificationExtractorMode.notConfigured) ...<Widget>[
@@ -640,6 +659,43 @@ class _NotificationDefinitionDetailsPageState
       );
     }
     return result.succeeded;
+  }
+
+  void _useLatestNotificationAsSample() {
+    if (_hasSample || _recentSamples.isEmpty) return;
+    _workflows.applySample(_recentSamples.first);
+  }
+
+  Future<void> _refreshRecentSamples() async {
+    try {
+      final List<NotificationSample> samples =
+          await _loadRecentNotificationSamples();
+      if (mounted) setState(() => _recentSamples = samples);
+    } catch (error, stackTrace) {
+      _log.warning(
+        'Could not load recent notification samples.',
+        error,
+        stackTrace,
+      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              S.of(context).notificationsDefinitionLatestSampleLoadFailure,
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  Future<List<NotificationSample>> _loadRecentNotificationSamples() async {
+    final NotificationHistoryStore? historyStore = widget.historyStore;
+    if (historyStore == null) return const <NotificationSample>[];
+    return loadRecentNotificationSamples(
+      historyStore: historyStore,
+      applicationId: widget.definition.applicationId,
+    );
   }
 
   NotificationDefinition _currentDefinition() {

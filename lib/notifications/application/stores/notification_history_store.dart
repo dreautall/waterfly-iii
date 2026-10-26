@@ -38,6 +38,13 @@ abstract interface class NotificationHistoryPageStore {
   });
 }
 
+abstract interface class NotificationHistoryApplicationStore {
+  Future<List<NotificationHistoryEntry>> loadRecentForApplication({
+    required String applicationId,
+    required int limit,
+  });
+}
+
 abstract interface class NotificationHistoryEntryRemovalStore {
   Future<void> remove(String id);
 

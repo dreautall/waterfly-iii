@@ -10,6 +10,7 @@ class SqlcipherNotificationHistoryStore
     implements
         NotificationHistoryStore,
         NotificationHistoryPageStore,
+        NotificationHistoryApplicationStore,
         NotificationHistoryEntryRemovalStore,
         NotificationHistoryTransactionLinkStore {
   const SqlcipherNotificationHistoryStore(this._databaseProvider);
@@ -92,6 +93,25 @@ class SqlcipherNotificationHistoryStore
             )
           : null,
     );
+  }
+
+  @override
+  Future<List<NotificationHistoryEntry>> loadRecentForApplication({
+    required String applicationId,
+    required int limit,
+  }) async {
+    if (limit <= 0) {
+      throw ArgumentError.value(limit, 'limit', 'Must be greater than zero.');
+    }
+    final Database database = await _databaseProvider.database;
+    final List<Map<String, Object?>> rows = await database.query(
+      'notification_history',
+      where: 'application_id = ? AND TRIM(title) <> ? AND TRIM(body) <> ?',
+      whereArgs: <Object?>[applicationId, '', ''],
+      orderBy: 'received_at DESC, id DESC',
+      limit: limit,
+    );
+    return rows.map(_entryFromRow).toList();
   }
 
   NotificationHistoryEntry _entryFromRow(

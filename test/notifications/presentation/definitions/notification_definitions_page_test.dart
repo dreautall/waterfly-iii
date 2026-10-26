@@ -619,6 +619,26 @@ void main() {
     expect(find.text('Notification access enabled'), findsNothing);
   });
 
+  testWidgets('keeps notification access stable after a transient focus loss', (
+    WidgetTester tester,
+  ) async {
+    final FakeNotificationListenerStatusLoader statusLoader =
+        FakeNotificationListenerStatusLoader();
+    await tester.pumpWidget(
+      notificationPage(PageDefinitionStore(), statusLoader: statusLoader),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Notification access enabled'), findsOneWidget);
+
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pump();
+
+    expect(statusLoader.loadCount, 1);
+    expect(find.text('Notification access enabled'), findsOneWidget);
+    expect(find.text('Checking notification access'), findsNothing);
+  });
+
   testWidgets('shows focused onboarding when first-time access is missing', (
     WidgetTester tester,
   ) async {

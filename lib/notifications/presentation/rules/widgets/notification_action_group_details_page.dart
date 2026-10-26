@@ -52,6 +52,7 @@ class NotificationActionGroupDetailsPage extends StatefulWidget {
     required this.onEditExtractor,
     required this.onSave,
     this.isNew = false,
+    this.recentSamplesLoader,
   });
 
   final NotificationActionGroup group;
@@ -64,6 +65,7 @@ class NotificationActionGroupDetailsPage extends StatefulWidget {
   final Future<void> Function(RegExpDefinition extractor)? onEditExtractor;
   final Future<bool> Function(NotificationActionGroup group) onSave;
   final bool isNew;
+  final Future<List<NotificationSample>> Function()? recentSamplesLoader;
 
   @override
   State<NotificationActionGroupDetailsPage> createState() =>
@@ -331,6 +333,7 @@ class _NotificationActionGroupDetailsPageState
         body: _sampleNotificationContext.body,
         receivedAt: _sampleNotificationContext.receivedAt,
       ),
+      recentSamplesLoader: widget.recentSamplesLoader,
     );
     if (sample == null || !mounted) return;
     _viewModel.updateSampleOverride(sample);

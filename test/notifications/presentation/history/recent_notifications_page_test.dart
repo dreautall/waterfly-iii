@@ -941,9 +941,9 @@ void main() {
       find.text('Notifications received by Waterfly will appear here.'),
       findsOneWidget,
     );
-    final Finder scrollView = find.byType(CustomScrollView);
-    final CustomScrollView widget = tester.widget(scrollView);
-    expect(widget.physics, isA<AlwaysScrollableScrollPhysics>());
+    expect(find.byType(CustomScrollView), findsNothing);
+    expect(find.byType(RefreshIndicator), findsNothing);
+    expect(find.widgetWithText(OutlinedButton, 'Refresh'), findsNothing);
     final Finder emptyState = find.byType(NotificationEmptyState);
     final double expectedCenter = tester
         .getCenter(find.byType(NotificationEmptyStateViewport))
@@ -986,6 +986,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    expect(
+      tester.widget<CustomScrollView>(find.byType(CustomScrollView)).physics,
+      isA<AlwaysScrollableScrollPhysics>(),
+    );
     expect(find.text('Card payment'), findsOneWidget);
     expect(find.text('Paid 12.50 CAD'), findsOneWidget);
     final BuildContext cardContext = tester.element(
@@ -1540,31 +1544,6 @@ void main() {
     history.refresh.complete(history.entries);
     await tester.pumpAndSettle();
     expect(find.text('Card payment'), findsOneWidget);
-  });
-
-  testWidgets('pulls to refresh recent notification history', (
-    WidgetTester tester,
-  ) async {
-    final _SequentialRecentNotificationHistory history =
-        _SequentialRecentNotificationHistory(
-          <List<RecentNotificationHistoryEntry>>[
-            const <RecentNotificationHistoryEntry>[],
-            const <RecentNotificationHistoryEntry>[],
-          ],
-        );
-    await tester.pumpWidget(
-      MaterialApp(
-        localizationsDelegates: S.localizationsDelegates,
-        supportedLocales: S.supportedLocales,
-        home: RecentNotificationsPage(history: history),
-      ),
-    );
-    await tester.pumpAndSettle();
-
-    await tester.drag(find.byType(CustomScrollView), const Offset(0, 300));
-    await tester.pumpAndSettle();
-
-    expect(history.loadCount, 2);
   });
 
   testWidgets('replaces history cards with loading placeholders on refresh', (

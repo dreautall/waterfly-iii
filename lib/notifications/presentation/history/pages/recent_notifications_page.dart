@@ -491,6 +491,25 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
         !_viewModel.isLoading &&
         _viewModel.error == null &&
         _viewModel.entries.isEmpty;
+    if (showCenteredEmptyState) {
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: NotificationPageHeader.bodyBottomInset(context),
+        ),
+        child: NotificationEmptyStateViewport(
+          header: Text(
+            S.of(context).notificationsHistoryDescription,
+            style: context.notificationSectionDescription,
+          ),
+          emptyState: NotificationEmptyState(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            icon: Icons.history_outlined,
+            title: S.of(context).notificationsHistoryEmptyTitle,
+            description: S.of(context).notificationsHistoryEmptyDescription,
+          ),
+        ),
+      );
+    }
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
       child: RefreshIndicator(
@@ -502,42 +521,17 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage> {
             parent: ClampingScrollPhysics(),
           ),
           slivers: <Widget>[
-            if (showCenteredEmptyState)
-              SliverPadding(
-                padding: EdgeInsets.only(
-                  bottom: NotificationPageHeader.bodyBottomInset(context),
-                ),
-                sliver: SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: NotificationEmptyStateViewport(
-                    header: Text(
-                      S.of(context).notificationsHistoryDescription,
-                      style: context.notificationSectionDescription,
-                    ),
-                    emptyState: NotificationEmptyState(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      icon: Icons.history_outlined,
-                      title: S.of(context).notificationsHistoryEmptyTitle,
-                      description: S
-                          .of(context)
-                          .notificationsHistoryEmptyDescription,
-                    ),
-                  ),
-                ),
-              )
-            else ...<Widget>[
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                sliver: SliverToBoxAdapter(
-                  child: Text(
-                    S.of(context).notificationsHistoryDescription,
-                    style: context.notificationSectionDescription,
-                  ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              sliver: SliverToBoxAdapter(
+                child: Text(
+                  S.of(context).notificationsHistoryDescription,
+                  style: context.notificationSectionDescription,
                 ),
               ),
-              const SliverToBoxAdapter(child: SizedBox(height: 16)),
-              ..._historyContent(context),
-            ],
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+            ..._historyContent(context),
           ],
         ),
       ),

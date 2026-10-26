@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart' as material_ui;
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/samples/sample_notification_editor_context.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/samples/sample_notification_editor_dialog.dart';
+import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 
 class MaterialApp extends material_ui.MaterialApp {
   const MaterialApp({super.key, required super.home})
@@ -56,6 +57,7 @@ void main() {
 
     expect(find.text('Add sample notification'), findsNothing);
     expect(find.text('Change sample notification'), findsOneWidget);
+    expect(find.byType(NotificationDialogTitle), findsOneWidget);
     expect(find.widgetWithText(FilledButton, 'Continue'), findsNothing);
     expect(find.widgetWithText(FilledButton, 'Apply'), findsOneWidget);
     expect(find.text('Example Bank'), findsNothing);

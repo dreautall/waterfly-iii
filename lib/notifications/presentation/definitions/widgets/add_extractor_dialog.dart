@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
+import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/dialog_selector_card.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_input_decoration.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_text_styles.dart';
@@ -43,20 +44,13 @@ class _AddExtractorDialogState extends State<AddExtractorDialog> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-    title: Row(
-      children: <Widget>[
-        Icon(_type == null ? Icons.add_circle_outline : Icons.tune_outlined),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            _type == null
-                ? S.of(context).notificationsDefinitionAddExtractor
-                : _type == RegExpDefinitionType.predefined
-                ? S.of(context).notificationsDefinitionSelectPredefinedExtractor
-                : S.of(context).notificationsDefinitionNameCustomExtractor,
-          ),
-        ),
-      ],
+    title: NotificationDialogTitle(
+      icon: _type == null ? Icons.add_circle_outline : Icons.tune_outlined,
+      title: _type == null
+          ? S.of(context).notificationsDefinitionAddExtractor
+          : _type == RegExpDefinitionType.predefined
+          ? S.of(context).notificationsDefinitionSelectPredefinedExtractor
+          : S.of(context).notificationsDefinitionNameCustomExtractor,
     ),
     content: SizedBox(
       width: 420,

@@ -148,17 +148,13 @@ class _ConditionBuilderDialogState extends State<_ConditionBuilderDialog> {
     final Widget step = _step(draft);
     return NotificationMenuTheme(
       child: AlertDialog(
-        title: Row(
-          children: <Widget>[
-            Icon(
+        title: NotificationDialogTitle(
+          icon:
               draft.step == ConditionBuilderStep.category ||
-                      draft.step == ConditionBuilderStep.kind
-                  ? Icons.account_tree_outlined
-                  : Icons.tune_outlined,
-            ),
-            const SizedBox(width: 12),
-            Expanded(child: Text(_title(context, draft))),
-          ],
+                  draft.step == ConditionBuilderStep.kind
+              ? Icons.account_tree_outlined
+              : Icons.tune_outlined,
+          title: _title(context, draft),
         ),
         content: SizedBox(
           width: 440,

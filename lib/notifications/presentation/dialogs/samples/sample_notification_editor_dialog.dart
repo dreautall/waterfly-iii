@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/samples/sample_notification_editor_context.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_date_time_formatter.dart';
+import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_input_decoration.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_text_styles.dart';
 
@@ -62,16 +63,11 @@ class _SampleNotificationEditorDialogState
         _titleController.text.trim().isNotEmpty &&
         _bodyController.text.trim().isNotEmpty;
     return AlertDialog(
-      title: Row(
-        children: <Widget>[
-          const Icon(Icons.notifications_outlined),
-          const SizedBox(width: 12),
-          Text(
-            hasExistingSample
-                ? S.of(context).notificationsSampleChangeTitle
-                : S.of(context).notificationsSampleAddTitle,
-          ),
-        ],
+      title: NotificationDialogTitle(
+        icon: Icons.notifications_outlined,
+        title: hasExistingSample
+            ? S.of(context).notificationsSampleChangeTitle
+            : S.of(context).notificationsSampleAddTitle,
       ),
       content: SizedBox(
         width: 420,

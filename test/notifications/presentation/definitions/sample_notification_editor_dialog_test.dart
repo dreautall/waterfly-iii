@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/samples/sample_notification_editor_context.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/samples/rule_test_sample_dialog.dart';
+import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/samples/sample_notification_editor_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_input_decoration.dart';
 
@@ -26,6 +27,7 @@ void main() {
             ),
           ),
         );
+        expect(find.byType(NotificationDialogTitle), findsOneWidget);
 
         final BuildContext context = tester.element(
           find.byType(TextField).first,

@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/applications/notification_application_selector_dialog.dart';
+import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 
 void main() {
   testWidgets('animates from loading to application results', (
@@ -19,6 +20,7 @@ void main() {
       find.byKey(const ValueKey<String>('applications-loading')),
       findsOneWidget,
     );
+    expect(find.byType(NotificationDialogTitle), findsOneWidget);
     expect(find.byType(AnimatedSize), findsOneWidget);
 
     await tester.pump(const Duration(milliseconds: 1));

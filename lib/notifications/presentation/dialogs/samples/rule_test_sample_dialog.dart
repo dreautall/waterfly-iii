@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_app_icon.dart';
+import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_input_decoration.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_text_styles.dart';
 
@@ -48,12 +49,9 @@ class _RuleTestSampleDialogState extends State<RuleTestSampleDialog> {
   Widget build(BuildContext context) {
     final S strings = S.of(context);
     return AlertDialog(
-      title: Row(
-        children: <Widget>[
-          const Icon(Icons.notifications_outlined),
-          const SizedBox(width: 12),
-          Text(strings.notificationsRuleEditTestNotification),
-        ],
+      title: NotificationDialogTitle(
+        icon: Icons.notifications_outlined,
+        title: strings.notificationsRuleEditTestNotification,
       ),
       content: SizedBox(
         width: 420,

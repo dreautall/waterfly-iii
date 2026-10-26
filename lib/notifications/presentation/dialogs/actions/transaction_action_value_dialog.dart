@@ -351,12 +351,9 @@ class _ActionValueSourceDialogState extends State<_ActionValueSourceDialog> {
     final TransactionActionDraft draft = _controller.draft;
     final Widget step = _step(draft);
     return AlertDialog(
-      title: Row(
-        children: <Widget>[
-          Icon(actionStepIcon(draft.step, draft.field)),
-          const SizedBox(width: 12),
-          Expanded(child: Text(_title(draft))),
-        ],
+      title: NotificationDialogTitle(
+        icon: actionStepIcon(draft.step, draft.field),
+        title: _title(draft),
       ),
       content: SizedBox(
         width: 440,

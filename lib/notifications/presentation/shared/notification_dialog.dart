@@ -1,5 +1,25 @@
 import 'package:material_ui/material_ui.dart';
 
+class NotificationDialogTitle extends StatelessWidget {
+  const NotificationDialogTitle({
+    super.key,
+    required this.icon,
+    required this.title,
+  });
+
+  final IconData icon;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) => Row(
+    children: <Widget>[
+      Icon(icon),
+      const SizedBox(width: 12),
+      Expanded(child: Text(title)),
+    ],
+  );
+}
+
 Future<T?> showNotificationDialog<T>({
   required BuildContext context,
   required WidgetBuilder builder,

@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
+import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_input_decoration.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_text_styles.dart';
 
@@ -41,16 +42,9 @@ class _AddRuleDialogState extends State<AddRuleDialog> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-    title: Row(
-      children: <Widget>[
-        const Icon(Icons.tune_outlined),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            widget.title ?? S.of(context).notificationsDefinitionAddRule,
-          ),
-        ),
-      ],
+    title: NotificationDialogTitle(
+      icon: Icons.tune_outlined,
+      title: widget.title ?? S.of(context).notificationsDefinitionAddRule,
     ),
     content: SizedBox(
       width: 420,

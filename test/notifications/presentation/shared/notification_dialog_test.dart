@@ -3,6 +3,38 @@ import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 
 void main() {
+  testWidgets('wraps dialog titles within narrow layouts', (
+    WidgetTester tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(320, 640));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: SizedBox(
+              width: 240,
+              child: MediaQuery(
+                data: MediaQueryData(textScaler: TextScaler.linear(1.5)),
+                child: NotificationDialogTitle(
+                  icon: Icons.notifications_outlined,
+                  title: 'Change sample notification with a long title',
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    expect(tester.takeException(), isNull);
+    expect(
+      find.text('Change sample notification with a long title'),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('animates dialogs with a contained fade scale and rise', (
     WidgetTester tester,
   ) async {

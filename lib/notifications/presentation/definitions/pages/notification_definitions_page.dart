@@ -485,14 +485,9 @@ class _NotificationDefinitionsPageState
     final bool? isConfirmed = await showNotificationDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Row(
-          children: <Widget>[
-            const Icon(Icons.delete_outline),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(S.of(context).notificationsDefinitionsDeleteTitle),
-            ),
-          ],
+        title: NotificationDialogTitle(
+          icon: Icons.delete_outline,
+          title: S.of(context).notificationsDefinitionsDeleteTitle,
         ),
         content: Text(
           S

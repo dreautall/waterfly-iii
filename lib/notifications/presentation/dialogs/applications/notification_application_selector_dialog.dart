@@ -7,6 +7,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/definitions/notification_application_candidates.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/applications/notification_application_candidate_sources.dart';
+import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_card_theme.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_empty_state.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_input_decoration.dart';
@@ -91,16 +92,11 @@ class _NotificationApplicationSelectorDialogState
         MediaQuery.viewInsetsOf(context).bottom -
         160;
     return AlertDialog(
-      title: Row(
-        children: <Widget>[
-          const Icon(Icons.apps_outlined),
-          const SizedBox(width: 12),
-          Text(
-            widget.mode == NotificationApplicationSelectionMode.recover
-                ? S.of(context).notificationsApplicationsRecoverTitle
-                : S.of(context).notificationsDefinitionsAddApplication,
-          ),
-        ],
+      title: NotificationDialogTitle(
+        icon: Icons.apps_outlined,
+        title: widget.mode == NotificationApplicationSelectionMode.recover
+            ? S.of(context).notificationsApplicationsRecoverTitle
+            : S.of(context).notificationsDefinitionsAddApplication,
       ),
       content: ConstrainedBox(
         constraints: BoxConstraints(maxHeight: availableHeight.clamp(240, 560)),

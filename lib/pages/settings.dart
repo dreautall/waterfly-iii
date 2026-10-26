@@ -1,7 +1,5 @@
 // ignore_for_file: deprecated_member_use
 
-import 'dart:io';
-
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:logging/logging.dart';
@@ -15,9 +13,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
-import 'package:waterflyiii/notificationlistener.dart';
-import 'package:waterflyiii/notifications/application/listeners/notification_listener_status.dart';
-import 'package:waterflyiii/notifications/presentation/definitions/pages/notification_definitions_page.dart';
 import 'package:waterflyiii/pages/settings/connection.dart';
 import 'package:waterflyiii/pages/settings/debug.dart';
 import 'package:waterflyiii/pages/transaction/tags.dart';
@@ -233,62 +228,6 @@ class SettingsPageState extends State<SettingsPage>
               }),
         ),
         const Divider(),
-        // Notification Listener
-        if (Platform.isAndroid)
-          FutureBuilder<NotificationListenerStatus>(
-            future: nlStatus(),
-            builder:
-                (
-                  BuildContext context,
-                  AsyncSnapshot<NotificationListenerStatus> snapshot,
-                ) {
-                  final S l10n = S.of(context);
-
-                  late String subtitle;
-                  if (snapshot.connectionState == .done && snapshot.hasData) {
-                    if (!snapshot.data!.servicePermission ||
-                        !snapshot.data!.notificationPermission) {
-                      subtitle = l10n.settingsNLPermissionNotGranted;
-                    } else if (!snapshot.data!.serviceRunning) {
-                      subtitle = l10n.settingsNLServiceStopped;
-                    } else {
-                      subtitle = l10n.settingsNLServiceRunning;
-                    }
-                  } else if (snapshot.hasError) {
-                    log.severe(
-                      "error getting nlStatus",
-                      snapshot.error,
-                      snapshot.stackTrace,
-                    );
-                    subtitle = S
-                        .of(context)
-                        .settingsNLServiceCheckingError(
-                          snapshot.error.toString(),
-                        );
-                  } else {
-                    subtitle = S.of(context).settingsNLServiceChecking;
-                  }
-                  return ListTile(
-                    title: Text(S.of(context).settingsNotificationListener),
-                    subtitle: Text(subtitle, maxLines: 2),
-                    leading: const CircleAvatar(
-                      child: Icon(Icons.notifications),
-                    ),
-                    onTap: () async {
-                      await Navigator.of(context).push<void>(
-                        MaterialPageRoute<void>(
-                          builder: (BuildContext context) =>
-                              const NotificationDefinitionsPage(
-                                showAppBar: true,
-                              ),
-                        ),
-                      );
-                      if (mounted) setState(() {});
-                    },
-                  );
-                },
-          ),
-        if (Platform.isAndroid) const Divider(),
         // FAQ
         ListTile(
           title: Text(S.of(context).settingsFAQ),

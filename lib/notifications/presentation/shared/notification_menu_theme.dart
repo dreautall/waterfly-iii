@@ -16,6 +16,11 @@ class NotificationMenuTheme extends StatelessWidget {
     final Color? surfaceColor = theme
         .extension<NotificationCardTheme>()
         ?.surfaceColor;
+    ThemeData notificationTheme = theme.copyWith(
+      snackBarTheme: theme.snackBarTheme.copyWith(
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
     final Widget menuTheme = PopupMenuTheme(
       data: const PopupMenuThemeData(
         elevation: 3,
@@ -27,26 +32,22 @@ class NotificationMenuTheme extends StatelessWidget {
       ),
       child: child,
     );
-    if (surfaceColor == null) {
-      return menuTheme;
-    }
-
-    final ButtonStyle elevatedButtonStyle =
-        (theme.elevatedButtonTheme.style ?? const ButtonStyle()).copyWith(
-          backgroundColor: WidgetStateProperty.resolveWith<Color>(
-            (Set<WidgetState> states) => states.contains(WidgetState.disabled)
-                ? surfaceColor.withValues(alpha: 0.38)
-                : surfaceColor,
-          ),
-        );
-    return Theme(
-      data: theme.copyWith(
+    if (surfaceColor != null) {
+      final ButtonStyle elevatedButtonStyle =
+          (theme.elevatedButtonTheme.style ?? const ButtonStyle()).copyWith(
+            backgroundColor: WidgetStateProperty.resolveWith<Color>(
+              (Set<WidgetState> states) => states.contains(WidgetState.disabled)
+                  ? surfaceColor.withValues(alpha: 0.38)
+                  : surfaceColor,
+            ),
+          );
+      notificationTheme = notificationTheme.copyWith(
         cardTheme: theme.cardTheme.copyWith(color: surfaceColor),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: elevatedButtonStyle,
         ),
-      ),
-      child: menuTheme,
-    );
+      );
+    }
+    return Theme(data: notificationTheme, child: menuTheme);
   }
 }

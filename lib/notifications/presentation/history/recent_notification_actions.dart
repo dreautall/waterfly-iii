@@ -71,6 +71,11 @@ class RecentNotificationActionsButton extends StatelessWidget {
     final Color foreground = enabled
         ? colors.onPrimary
         : colors.onSurface.withValues(alpha: 0.38);
+    final int secondaryActionCount = <VoidCallback?>[
+      onEditRule,
+      onOpenDefinition,
+      onRemoveFromHistory,
+    ].whereType<VoidCallback>().length;
     if (onEditRule == null &&
         onOpenDefinition == null &&
         onRemoveFromHistory == null) {
@@ -123,72 +128,93 @@ class RecentNotificationActionsButton extends StatelessWidget {
               color: foreground.withValues(alpha: 0.24),
             ),
           ),
-          PopupMenuButton<_HistoryAction>(
-            tooltip: S.of(context).notificationsHistoryActions,
-            position: PopupMenuPosition.under,
-            color: colors.surfaceContainerHigh,
-            icon: Icon(Icons.arrow_drop_down, color: foreground),
-            onSelected: (_HistoryAction action) {
-              switch (action) {
-                case _HistoryAction.editRule:
-                  onEditRule!();
-                case _HistoryAction.openDefinition:
-                  onOpenDefinition!();
-                case _HistoryAction.removeFromHistory:
-                  onRemoveFromHistory!();
-              }
-            },
-            itemBuilder: (BuildContext context) =>
-                <PopupMenuEntry<_HistoryAction>>[
-                  if (onEditRule != null)
-                    PopupMenuItem<_HistoryAction>(
-                      value: _HistoryAction.editRule,
-                      child: Row(
-                        children: <Widget>[
-                          const Icon(Icons.edit_outlined),
-                          const SizedBox(width: 12),
-                          Text(S.of(context).notificationsHistoryEditRule),
-                        ],
+          if (secondaryActionCount == 1)
+            IconButton(
+              key: const Key('single-recent-notification-action'),
+              tooltip: onEditRule != null
+                  ? S.of(context).notificationsHistoryEditRule
+                  : onOpenDefinition != null
+                  ? S.of(context).notificationsHistoryGoToDefinition
+                  : S.of(context).notificationsHistoryRemoveFromHistory,
+              onPressed: onEditRule ?? onOpenDefinition ?? onRemoveFromHistory,
+              icon: Icon(
+                onEditRule != null
+                    ? Icons.edit_outlined
+                    : onOpenDefinition != null
+                    ? Icons.rule_folder_outlined
+                    : Icons.delete_outline,
+                color: foreground,
+              ),
+            )
+          else
+            PopupMenuButton<_HistoryAction>(
+              tooltip: S.of(context).notificationsHistoryActions,
+              position: PopupMenuPosition.under,
+              color: colors.surfaceContainerHigh,
+              icon: Icon(Icons.arrow_drop_down, color: foreground),
+              onSelected: (_HistoryAction action) {
+                switch (action) {
+                  case _HistoryAction.editRule:
+                    onEditRule!();
+                  case _HistoryAction.openDefinition:
+                    onOpenDefinition!();
+                  case _HistoryAction.removeFromHistory:
+                    onRemoveFromHistory!();
+                }
+              },
+              itemBuilder: (BuildContext context) =>
+                  <PopupMenuEntry<_HistoryAction>>[
+                    if (onEditRule != null)
+                      PopupMenuItem<_HistoryAction>(
+                        value: _HistoryAction.editRule,
+                        child: Row(
+                          children: <Widget>[
+                            const Icon(Icons.edit_outlined),
+                            const SizedBox(width: 12),
+                            Text(S.of(context).notificationsHistoryEditRule),
+                          ],
+                        ),
                       ),
-                    ),
-                  if (onOpenDefinition != null)
-                    PopupMenuItem<_HistoryAction>(
-                      value: _HistoryAction.openDefinition,
-                      child: Row(
-                        children: <Widget>[
-                          const Icon(Icons.rule_folder_outlined),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              S.of(context).notificationsHistoryGoToDefinition,
+                    if (onOpenDefinition != null)
+                      PopupMenuItem<_HistoryAction>(
+                        value: _HistoryAction.openDefinition,
+                        child: Row(
+                          children: <Widget>[
+                            const Icon(Icons.rule_folder_outlined),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                S
+                                    .of(context)
+                                    .notificationsHistoryGoToDefinition,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  if (onRemoveFromHistory !=
-                      null) ...<PopupMenuEntry<_HistoryAction>>[
-                    const PopupMenuDivider(),
-                    PopupMenuItem<_HistoryAction>(
-                      value: _HistoryAction.removeFromHistory,
-                      child: Row(
-                        children: <Widget>[
-                          Icon(Icons.delete_outline, color: colors.error),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              S
-                                  .of(context)
-                                  .notificationsHistoryRemoveFromHistory,
-                              style: TextStyle(color: colors.error),
+                    if (onRemoveFromHistory !=
+                        null) ...<PopupMenuEntry<_HistoryAction>>[
+                      const PopupMenuDivider(),
+                      PopupMenuItem<_HistoryAction>(
+                        value: _HistoryAction.removeFromHistory,
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.delete_outline, color: colors.error),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                S
+                                    .of(context)
+                                    .notificationsHistoryRemoveFromHistory,
+                                style: TextStyle(color: colors.error),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
+                    ],
                   ],
-                ],
-          ),
+            ),
         ],
       ),
     );

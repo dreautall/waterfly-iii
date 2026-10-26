@@ -175,63 +175,81 @@ class _NotificationDefinitionDetailsPageState
             scrollController: _scrollController,
             title: Text(widget.definition.name),
             actions: <Widget>[
-              PopupMenuButton<DefinitionEditorMenuAction>(
-                tooltip: strings.notificationsDefinitionOptions,
-                position: PopupMenuPosition.under,
-                iconSize: NotificationPageHeader.controlIconSize,
-                onSelected: (DefinitionEditorMenuAction action) => _workflows
-                    .handleMenuAction(action, delete: widget.onDelete),
-                itemBuilder: (BuildContext context) =>
-                    <PopupMenuEntry<DefinitionEditorMenuAction>>[
-                      if (_extractorMode == NotificationExtractorMode.basic)
-                        PopupMenuItem<DefinitionEditorMenuAction>(
-                          value: DefinitionEditorMenuAction.convertToAdvanced,
-                          child: Row(
-                            children: <Widget>[
-                              const Icon(Icons.tune),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Text(
-                                  strings
-                                      .notificationsDefinitionConvertToAdvanced,
+              if (_extractorMode == NotificationExtractorMode.notConfigured &&
+                  widget.onDelete != null)
+                IconButton(
+                  key: const Key('delete-notification-definition'),
+                  tooltip: strings.notificationsDefinitionDelete,
+                  iconSize: NotificationPageHeader.controlIconSize,
+                  onPressed: () => _workflows.handleMenuAction(
+                    DefinitionEditorMenuAction.delete,
+                    delete: widget.onDelete,
+                  ),
+                  icon: const Icon(Icons.delete_outline),
+                )
+              else if (_extractorMode !=
+                      NotificationExtractorMode.notConfigured ||
+                  widget.onDelete != null)
+                PopupMenuButton<DefinitionEditorMenuAction>(
+                  tooltip: strings.notificationsDefinitionOptions,
+                  position: PopupMenuPosition.under,
+                  iconSize: NotificationPageHeader.controlIconSize,
+                  onSelected: (DefinitionEditorMenuAction action) => _workflows
+                      .handleMenuAction(action, delete: widget.onDelete),
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<DefinitionEditorMenuAction>>[
+                        if (_extractorMode == NotificationExtractorMode.basic)
+                          PopupMenuItem<DefinitionEditorMenuAction>(
+                            value: DefinitionEditorMenuAction.convertToAdvanced,
+                            child: Row(
+                              children: <Widget>[
+                                const Icon(Icons.tune),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    strings
+                                        .notificationsDefinitionConvertToAdvanced,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      if (_extractorMode == NotificationExtractorMode.advanced)
-                        PopupMenuItem<DefinitionEditorMenuAction>(
-                          value: DefinitionEditorMenuAction.convertToBasic,
-                          child: Row(
-                            children: <Widget>[
-                              const Icon(Icons.auto_awesome),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Text(
-                                  strings.notificationsDefinitionConvertToBasic,
+                        if (_extractorMode ==
+                            NotificationExtractorMode.advanced)
+                          PopupMenuItem<DefinitionEditorMenuAction>(
+                            value: DefinitionEditorMenuAction.convertToBasic,
+                            child: Row(
+                              children: <Widget>[
+                                const Icon(Icons.auto_awesome),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    strings
+                                        .notificationsDefinitionConvertToBasic,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      if (widget.onDelete !=
-                          null) ...<PopupMenuEntry<DefinitionEditorMenuAction>>[
-                        if (_extractorMode !=
-                            NotificationExtractorMode.notConfigured)
-                          const NotificationMenuDivider(),
-                        PopupMenuItem<DefinitionEditorMenuAction>(
-                          value: DefinitionEditorMenuAction.delete,
-                          child: Row(
-                            children: <Widget>[
-                              const Icon(Icons.delete_outline),
-                              const SizedBox(width: 12),
-                              Text(strings.notificationsDefinitionDelete),
-                            ],
+                        if (widget.onDelete != null) ...<
+                          PopupMenuEntry<DefinitionEditorMenuAction>
+                        >[
+                          if (_extractorMode !=
+                              NotificationExtractorMode.notConfigured)
+                            const NotificationMenuDivider(),
+                          PopupMenuItem<DefinitionEditorMenuAction>(
+                            value: DefinitionEditorMenuAction.delete,
+                            child: Row(
+                              children: <Widget>[
+                                const Icon(Icons.delete_outline),
+                                const SizedBox(width: 12),
+                                Text(strings.notificationsDefinitionDelete),
+                              ],
+                            ),
                           ),
-                        ),
+                        ],
                       ],
-                    ],
-              ),
+                ),
             ],
           ),
           body: ListView(

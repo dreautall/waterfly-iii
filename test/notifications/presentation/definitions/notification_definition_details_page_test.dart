@@ -1246,9 +1246,8 @@ void main() {
       ),
     );
 
-    await tester.tap(find.byTooltip('Definition options'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Delete'));
+    expect(find.byTooltip('Definition options'), findsNothing);
+    await tester.tap(find.byKey(const Key('delete-notification-definition')));
     await tester.pumpAndSettle();
 
     expect(wasDeleted, isTrue);
@@ -1273,9 +1272,7 @@ void main() {
       ),
     );
 
-    await tester.tap(find.byTooltip('Definition options'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Delete'));
+    await tester.tap(find.byKey(const Key('delete-notification-definition')));
     await tester.pumpAndSettle();
 
     expect(

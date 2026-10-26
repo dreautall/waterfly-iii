@@ -81,24 +81,10 @@ extension RuleConditionClipboard on RuleConditionsSectionState {
     );
   }
 
-  Widget notOverflowMenu() => PopupMenuButton<GroupConditionAction>(
-    tooltip: S.of(context).notificationsRuleConditionOptions,
-    position: PopupMenuPosition.under,
-    icon: const Icon(Icons.more_vert),
-    itemBuilder: (BuildContext context) =>
-        <PopupMenuEntry<GroupConditionAction>>[
-          PopupMenuItem<GroupConditionAction>(
-            enabled: false,
-            value: GroupConditionAction.paste,
-            child: Row(
-              children: <Widget>[
-                const Icon(Icons.content_paste_outlined),
-                const SizedBox(width: 8),
-                Text(S.of(context).notificationsRulePaste),
-              ],
-            ),
-          ),
-        ],
+  Widget notOverflowMenu() => IconButton(
+    tooltip: S.of(context).notificationsRulePaste,
+    onPressed: null,
+    icon: const Icon(Icons.content_paste_outlined),
   );
 
   void copyCondition(NotificationCondition condition) {

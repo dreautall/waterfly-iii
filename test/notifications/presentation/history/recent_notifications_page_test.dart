@@ -721,7 +721,7 @@ void main() {
     'no matching rule',
     'processing failure',
   ]) {
-    testWidgets('opens the definition from the $outcome action menu', (
+    testWidgets('opens the definition from the $outcome secondary action', (
       WidgetTester tester,
     ) async {
       tester.view.physicalSize = const Size(390, 844);
@@ -815,14 +815,18 @@ void main() {
       await tester.tap(find.text('Card payment'));
       await tester.pumpAndSettle();
       expect(find.text(primaryLabel), findsOneWidget);
-      await tester.tap(find.byIcon(Icons.arrow_drop_down).first);
-      await tester.pumpAndSettle();
-      expect(find.text('Go to definition'), findsOneWidget);
-      expect(
-        find.text('Edit rule'),
-        outcome == 'matched rule' ? findsOneWidget : findsNothing,
-      );
-      await tester.tap(find.text('Go to definition'));
+      if (outcome == 'matched rule') {
+        await tester.tap(find.byIcon(Icons.arrow_drop_down).first);
+        await tester.pumpAndSettle();
+        expect(find.text('Go to definition'), findsOneWidget);
+        expect(find.text('Edit rule'), findsOneWidget);
+        await tester.tap(find.text('Go to definition'));
+      } else {
+        expect(find.byIcon(Icons.arrow_drop_down), findsNothing);
+        await tester.tap(
+          find.byKey(const Key('single-recent-notification-action')),
+        );
+      }
       await tester.pumpAndSettle();
       expect(find.text('Definition editor'), findsOneWidget);
       expect(definitionCalls, 1);
@@ -1671,7 +1675,7 @@ void main() {
     expect(find.text('Card payment'), findsOneWidget);
   });
 
-  testWidgets('offers matched rule editing from the split button menu', (
+  testWidgets('offers matched rule editing as a direct split button action', (
     WidgetTester tester,
   ) async {
     final NotificationHistoryEntry notification = NotificationHistoryEntry(
@@ -1717,22 +1721,15 @@ void main() {
     expect(createdTransaction, isTrue);
     expect(editedRule, isFalse);
 
-    await tester.tap(find.byIcon(Icons.arrow_drop_down));
-    await tester.pumpAndSettle();
-    final Rect dropdownIconRect = tester.getRect(
-      find.byIcon(Icons.arrow_drop_down),
+    expect(find.byIcon(Icons.arrow_drop_down), findsNothing);
+    await tester.tap(
+      find.byKey(const Key('single-recent-notification-action')),
     );
-    final Rect editRuleMenuItemRect = tester.getRect(find.text('Edit rule'));
-    expect(
-      editRuleMenuItemRect.top,
-      greaterThanOrEqualTo(dropdownIconRect.bottom),
-    );
-    await tester.tap(find.text('Edit rule'));
     await tester.pumpAndSettle();
     expect(editedRule, isTrue);
   });
 
-  testWidgets('removes one entry from the split button menu', (
+  testWidgets('removes one entry from a direct split button action', (
     WidgetTester tester,
   ) async {
     final NotificationHistoryEntry notification = NotificationHistoryEntry(
@@ -1789,17 +1786,13 @@ void main() {
 
     await tester.tap(find.text('Card payment'));
     await tester.pumpAndSettle();
-    await tester.tap(find.byIcon(Icons.arrow_drop_down).first);
-    await tester.pumpAndSettle();
-    final Finder removeAction = find.text('Remove from recent history');
-    expect(removeAction, findsOneWidget);
-    final Text removeLabel = tester.widget<Text>(removeAction);
-    expect(
-      removeLabel.style?.color,
-      Theme.of(tester.element(removeAction)).colorScheme.error,
+    expect(find.byIcon(Icons.arrow_drop_down), findsNothing);
+    await tester.tap(
+      find.descendant(
+        of: find.byKey(const ValueKey<String>('payment')),
+        matching: find.byKey(const Key('single-recent-notification-action')),
+      ),
     );
-
-    await tester.tap(find.text('Remove from recent history'));
     await tester.pumpAndSettle();
     expect(find.text('Remove notification from history?'), findsOneWidget);
     expect(

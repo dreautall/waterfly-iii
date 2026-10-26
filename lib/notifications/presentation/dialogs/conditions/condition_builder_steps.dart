@@ -287,27 +287,19 @@ class ConditionOverviewStep extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           if (value == ConditionEditedValue.right) ...<Widget>[
-            PopupMenuButton<ConditionSourceMode>(
-              tooltip: S.of(context).notificationsConditionChangeValueType,
-              position: PopupMenuPosition.under,
-              icon: const Icon(Icons.more_vert),
-              onSelected: (ConditionSourceMode mode) =>
-                  onBeginEdit(value, source, mode),
-              itemBuilder: (BuildContext context) =>
-                  <PopupMenuEntry<ConditionSourceMode>>[
-                    PopupMenuItem<ConditionSourceMode>(
-                      value: current == ConditionSourceMode.literal
-                          ? ConditionSourceMode.extractor
-                          : ConditionSourceMode.literal,
-                      child: Text(
-                        current == ConditionSourceMode.literal
-                            ? S
-                                  .of(context)
-                                  .notificationsConditionExtractorCapture
-                            : S.of(context).notificationsConditionLiteralValue,
-                      ),
-                    ),
-                  ],
+            IconButton(
+              key: const Key('change-condition-value-type'),
+              tooltip: current == ConditionSourceMode.literal
+                  ? S.of(context).notificationsConditionExtractorCapture
+                  : S.of(context).notificationsConditionLiteralValue,
+              icon: const Icon(Icons.swap_horiz),
+              onPressed: () => onBeginEdit(
+                value,
+                source,
+                current == ConditionSourceMode.literal
+                    ? ConditionSourceMode.extractor
+                    : ConditionSourceMode.literal,
+              ),
             ),
             const SizedBox(width: 8),
           ],

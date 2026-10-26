@@ -154,24 +154,32 @@ class _NotificationActionGroupDetailsPageState
                     _isTestMode ? Icons.science : Icons.science_outlined,
                   ),
                 ),
-              PopupMenuButton<_RuleAction>(
-                tooltip: S.of(context).notificationsRuleOptions,
-                position: PopupMenuPosition.under,
-                iconSize: NotificationPageHeader.controlIconSize,
-                onSelected: _onActionSelected,
-                itemBuilder: (BuildContext context) =>
-                    <PopupMenuEntry<_RuleAction>>[
-                      PopupMenuItem<_RuleAction>(
-                        value: _RuleAction.rename,
-                        child: Row(
-                          children: <Widget>[
-                            const Icon(Icons.edit_outlined),
-                            const SizedBox(width: 8),
-                            Text(S.of(context).notificationsRuleRename),
-                          ],
+              if (_isNew)
+                IconButton(
+                  key: const Key('rename-new-conditional-action'),
+                  tooltip: S.of(context).notificationsRuleRename,
+                  iconSize: NotificationPageHeader.controlIconSize,
+                  onPressed: () => _onActionSelected(_RuleAction.rename),
+                  icon: const Icon(Icons.drive_file_rename_outline),
+                )
+              else
+                PopupMenuButton<_RuleAction>(
+                  tooltip: S.of(context).notificationsRuleOptions,
+                  position: PopupMenuPosition.under,
+                  iconSize: NotificationPageHeader.controlIconSize,
+                  onSelected: _onActionSelected,
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<_RuleAction>>[
+                        PopupMenuItem<_RuleAction>(
+                          value: _RuleAction.rename,
+                          child: Row(
+                            children: <Widget>[
+                              const Icon(Icons.edit_outlined),
+                              const SizedBox(width: 8),
+                              Text(S.of(context).notificationsRuleRename),
+                            ],
+                          ),
                         ),
-                      ),
-                      if (!widget.isNew) ...<PopupMenuEntry<_RuleAction>>[
                         const NotificationMenuDivider(),
                         PopupMenuItem<_RuleAction>(
                           value: _RuleAction.delete,
@@ -184,8 +192,7 @@ class _NotificationActionGroupDetailsPageState
                           ),
                         ),
                       ],
-                    ],
-              ),
+                ),
             ],
           ),
           floatingActionButton: _isDirty

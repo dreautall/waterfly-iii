@@ -31,6 +31,7 @@ import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_v
 import 'package:waterflyiii/notifications/presentation/shared/dialog_expander_card.dart';
 import 'package:waterflyiii/notifications/presentation/shared/definition_expandable_detail_card.dart';
 import 'package:waterflyiii/notifications/presentation/rules/pages/notification_rule_details_page.dart';
+import 'package:waterflyiii/notifications/presentation/rules/widgets/notification_action_group_details_page.dart';
 import 'package:waterflyiii/notifications/presentation/shared/message_status_card.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_date_time_formatter.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_menu_theme.dart';
@@ -60,6 +61,42 @@ void main() {
   );
 
   Finder conditionTitle(String text) => richText(text);
+
+  testWidgets('shows a direct rename action for a new conditional action', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationActionGroupDetailsPage(
+          group: const NotificationActionGroup(
+            id: 'group',
+            name: 'Merchant',
+            conditions: <NotificationCondition>[],
+            actions: <NotificationAction>[],
+          ),
+          extractors: const <RegExpDefinition>[],
+          notificationContext: NotificationContext(
+            title: 'Card payment',
+            body: 'Paid 12 CAD',
+            receivedAt: DateTime(2026, 9, 7),
+          ),
+          extractorMode: NotificationExtractorMode.advanced,
+          ruleName: 'Payment rule',
+          isTestMode: false,
+          onToggleTestMode: null,
+          onEditExtractor: null,
+          onSave: (NotificationActionGroup group) async => true,
+          isNew: true,
+        ),
+      ),
+    );
+
+    expect(find.byTooltip('Rule options'), findsNothing);
+    await tester.tap(find.byKey(const Key('rename-new-conditional-action')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Rename rule'), findsOneWidget);
+  });
 
   Future<void> openRuleForTransfer(WidgetTester tester) async {
     await tester.binding.setSurfaceSize(const Size(800, 1000));
@@ -4530,16 +4567,19 @@ void main() {
           .onPressed,
       isNull,
     );
-    await tester.tap(
+    final Finder changeValueType = find.descendant(
+      of: find.byKey(const ValueKey<String>('condition-edit-right')),
+      matching: find.byKey(const Key('change-condition-value-type')),
+    );
+    expect(changeValueType, findsOneWidget);
+    expect(
       find.descendant(
         of: find.byKey(const ValueKey<String>('condition-edit-right')),
         matching: find.byIcon(Icons.more_vert),
       ),
+      findsNothing,
     );
-    await tester.pumpAndSettle();
-    expect(find.text('Change type'), findsNothing);
-    expect(find.text('Extractor capture'), findsNWidgets(2));
-    await tester.tap(find.text('Extractor capture').last);
+    await tester.tap(changeValueType);
     await tester.pumpAndSettle();
     expect(
       find.descendant(
@@ -4610,6 +4650,57 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byTooltip('Delete condition'), findsOneWidget);
+  });
+
+  testWidgets('shows disabled paste directly for a not condition', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationRuleDetailsPage(
+          rule: const NotificationRule(
+            id: 'rule',
+            name: 'Card payment',
+            conditions: <NotificationCondition>[
+              NotCondition(
+                ValueExistsCondition(LiteralValueSource('merchant')),
+              ),
+            ],
+            actions: <NotificationAction>[],
+          ),
+          extractors: const <RegExpDefinition>[],
+          notificationContext: NotificationContext(
+            title: 'Card payment',
+            body: 'Paid 12 CAD',
+            receivedAt: DateTime(2026, 9, 1),
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Condition does not match'));
+    await tester.pumpAndSettle();
+
+    final Finder groupHeader = find
+        .ancestor(
+          of: find.text('Condition does not match'),
+          matching: find.byType(DefinitionExpandableDetailCard),
+        )
+        .first;
+    final Finder chevron = find.descendant(
+      of: groupHeader,
+      matching: find.byIcon(Icons.expand_more),
+    );
+    final Finder disabledPaste = find.ancestor(
+      of: find.byTooltip('Paste'),
+      matching: find.byType(material_ui.IconButton),
+    );
+    expect(chevron, findsOneWidget);
+    expect(disabledPaste, findsOneWidget);
+    expect(
+      tester.widget<material_ui.IconButton>(disabledPaste).onPressed,
+      isNull,
+    );
   });
 
   testWidgets('aligns the condition group chevron with nested card actions', (

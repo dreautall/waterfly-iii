@@ -115,7 +115,15 @@ class _NotificationExtractorDetailsPageState
             ),
             title: Text(_nameController.text),
             actions: <Widget>[
-              if (widget.canEdit)
+              if (widget.canEdit && !widget.canDelete)
+                IconButton(
+                  key: const Key('edit-extractor-details'),
+                  tooltip: S.of(context).notificationsEditDetails,
+                  iconSize: NotificationPageHeader.controlIconSize,
+                  onPressed: () => _onActionSelected(_ExtractorAction.rename),
+                  icon: const Icon(Icons.edit_outlined),
+                )
+              else if (widget.canEdit)
                 PopupMenuButton<_ExtractorAction>(
                   tooltip: S.of(context).notificationsExtractorActions,
                   position: PopupMenuPosition.under,

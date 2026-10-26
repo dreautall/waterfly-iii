@@ -26,8 +26,6 @@ enum ConditionCardAction { edit, duplicate, copy, move, remove }
 
 enum ConditionClipboardOperation { copy, move }
 
-enum GroupConditionAction { paste }
-
 class RuleConditionsSection extends StatefulWidget {
   const RuleConditionsSection({
     super.key,

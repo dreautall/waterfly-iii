@@ -22,6 +22,8 @@ Widget extractorPage(
   DateTime? sampleReceivedAt,
   String sampleBody = 'Paid 12.50 CAD',
   bool alwaysUse24HourFormat = false,
+  bool? canEdit,
+  bool? canDelete,
   Future<bool> Function(RegExpDefinition extractor)? onSave,
   Future<List<NotificationSample>> Function()? recentSamplesLoader,
 }) => MaterialApp(
@@ -37,8 +39,8 @@ Widget extractorPage(
       sampleBody: sampleBody,
       sampleReceivedAt: sampleReceivedAt ?? DateTime(2026, 9, 6, 14, 58),
       isAdvancedMode: isAdvancedMode,
-      canEdit: isAdvancedMode,
-      canDelete: isAdvancedMode,
+      canEdit: canEdit ?? isAdvancedMode,
+      canDelete: canDelete ?? isAdvancedMode,
       onSave: onSave,
       recentSamplesLoader: recentSamplesLoader,
     ),
@@ -46,6 +48,24 @@ Widget extractorPage(
 );
 
 void main() {
+  testWidgets('shows a direct edit action when it is the only option', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      extractorPage(
+        RegExpDefinition.createCustomRegExpDefinition('Amount', r'\d+'),
+        isAdvancedMode: true,
+        canDelete: false,
+      ),
+    );
+
+    expect(find.byTooltip('Extractor actions'), findsNothing);
+    await tester.tap(find.byKey(const Key('edit-extractor-details')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Edit extractor details'), findsOneWidget);
+  });
+
   testWidgets('offers recent notifications when changing the sample', (
     WidgetTester tester,
   ) async {

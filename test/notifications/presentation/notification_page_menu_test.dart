@@ -401,9 +401,10 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Card payment'));
     await tester.pumpAndSettle();
-    await tester.tap(find.byIcon(Icons.arrow_drop_down));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Go to definition'));
+    expect(find.byIcon(Icons.arrow_drop_down), findsNothing);
+    await tester.tap(
+      find.byKey(const Key('single-recent-notification-action')),
+    );
     await tester.pumpAndSettle();
 
     expect(find.byType(NotificationDefinitionDetailsPage), findsOneWidget);

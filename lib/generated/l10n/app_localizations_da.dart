@@ -752,6 +752,10 @@ class SDa extends S {
   String get settingsNLPermissionNotGranted => 'Tilladelse ikke givet.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Tjekker status…';
 
   @override

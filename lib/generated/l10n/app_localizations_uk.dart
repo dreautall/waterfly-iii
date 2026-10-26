@@ -773,6 +773,10 @@ class SUk extends S {
   String get settingsNLPermissionNotGranted => 'Дозвіл не надано.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Перевірка стану…';
 
   @override

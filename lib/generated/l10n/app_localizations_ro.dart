@@ -754,6 +754,10 @@ class SRo extends S {
       'Permisiunea nu a fost acordată.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Verificare stare…';
 
   @override

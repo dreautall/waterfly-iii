@@ -751,6 +751,10 @@ class SSv extends S {
   String get settingsNLPermissionNotGranted => 'Behörighet inte beviljad.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Kontrollerar status…';
 
   @override

@@ -753,6 +753,10 @@ class SIt extends S {
   String get settingsNLPermissionNotGranted => 'Permesso non concesso.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Controllo dello stato…';
 
   @override

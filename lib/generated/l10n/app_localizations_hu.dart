@@ -759,6 +759,10 @@ class SHu extends S {
   String get settingsNLPermissionNotGranted => 'Hozzáférés megtagadva.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Állapot ellenőrzése…';
 
   @override

@@ -740,6 +740,10 @@ class SZh extends S {
   String get settingsNLPermissionNotGranted => '未授予权限';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => '正在检查状态...';
 
   @override

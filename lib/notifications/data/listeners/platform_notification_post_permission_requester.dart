@@ -1,20 +1,54 @@
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_post_permission_requester.dart';
 
+typedef RuntimeNotificationPermissionRequester = Future<bool?> Function();
+
 class PlatformNotificationPostPermissionRequester
     implements NotificationPostPermissionRequester {
-  const PlatformNotificationPostPermissionRequester();
+  PlatformNotificationPostPermissionRequester({
+    MethodChannel channel = const MethodChannel(
+      'waterflyiii/notification_settings',
+    ),
+    bool? isAndroid,
+    RuntimeNotificationPermissionRequester? requestRuntimePermission,
+  }) : _channel = channel,
+       _isAndroid = isAndroid ?? Platform.isAndroid,
+       _requestRuntimePermission =
+           requestRuntimePermission ?? _requestNotificationsPermission;
+
+  final MethodChannel _channel;
+  final bool _isAndroid;
+  final RuntimeNotificationPermissionRequester _requestRuntimePermission;
 
   @override
-  Future<bool> requestPermission() async {
-    if (!Platform.isAndroid) return false;
-    return await FlutterLocalNotificationsPlugin()
-            .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin
-            >()
-            ?.requestNotificationsPermission() ??
+  Future<NotificationPostPermissionRequestResult> requestPermission() async {
+    if (!_isAndroid) return NotificationPostPermissionRequestResult.failed;
+    final bool supportsRuntimePermission =
+        await _channel.invokeMethod<bool>(
+          'supportsRuntimeNotificationPermission',
+        ) ??
         false;
+    if (!supportsRuntimePermission) {
+      final bool opened =
+          await _channel.invokeMethod<bool>('openAppNotificationSettings') ??
+          false;
+      return opened
+          ? NotificationPostPermissionRequestResult.settingsOpened
+          : NotificationPostPermissionRequestResult.failed;
+    }
+    final bool granted = await _requestRuntimePermission() ?? false;
+    return granted
+        ? NotificationPostPermissionRequestResult.granted
+        : NotificationPostPermissionRequestResult.denied;
   }
+
+  static Future<bool?> _requestNotificationsPermission() async =>
+      await FlutterLocalNotificationsPlugin()
+          .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin
+          >()
+          ?.requestNotificationsPermission();
 }

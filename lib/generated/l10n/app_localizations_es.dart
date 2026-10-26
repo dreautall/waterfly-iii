@@ -756,6 +756,10 @@ class SEs extends S {
   String get settingsNLPermissionNotGranted => 'Permiso no concedido.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Comprobando estado…';
 
   @override

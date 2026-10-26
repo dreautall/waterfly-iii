@@ -761,6 +761,10 @@ class SPt extends S {
   String get settingsNLPermissionNotGranted => 'Permissão não concedida.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'A verificar estado…';
 
   @override

@@ -755,6 +755,10 @@ class SCs extends S {
   String get settingsNLPermissionNotGranted => 'Oprávnění nebylo uděleno.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Kontroluji stav…';
 
   @override

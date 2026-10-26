@@ -970,6 +970,10 @@
     "@settingsNLPermissionNotGranted": {
         "description": "A requested permission was not granted."
     },
+    "settingsNLPermissionRequestFailure": "Notification permission settings could not be opened.",
+    "@settingsNLPermissionRequestFailure": {
+        "description": "Error shown when Waterfly cannot request notification permission or open the relevant Android settings."
+    },
     "settingsNLServiceChecking": "Checking status…",
     "@settingsNLServiceChecking": {
         "description": "Checking the status of the background service"

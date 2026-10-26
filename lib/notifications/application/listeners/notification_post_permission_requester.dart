@@ -1,5 +1,12 @@
+enum NotificationPostPermissionRequestResult {
+  granted,
+  settingsOpened,
+  denied,
+  failed,
+}
+
 abstract interface class NotificationPostPermissionRequester {
-  Future<bool> requestPermission();
+  Future<NotificationPostPermissionRequestResult> requestPermission();
 }
 
 class UnavailableNotificationPostPermissionRequester
@@ -7,5 +14,6 @@ class UnavailableNotificationPostPermissionRequester
   const UnavailableNotificationPostPermissionRequester();
 
   @override
-  Future<bool> requestPermission() async => false;
+  Future<NotificationPostPermissionRequestResult> requestPermission() async =>
+      NotificationPostPermissionRequestResult.failed;
 }

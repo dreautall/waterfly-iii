@@ -760,6 +760,10 @@ class SFr extends S {
   String get settingsNLPermissionNotGranted => 'Permission non accordée.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Vérification de l\'état…';
 
   @override

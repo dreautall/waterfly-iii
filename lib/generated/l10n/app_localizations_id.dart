@@ -754,6 +754,10 @@ class SId extends S {
   String get settingsNLPermissionNotGranted => 'Izin tidak diberikan.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Memeriksa status…';
 
   @override

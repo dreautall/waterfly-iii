@@ -2,6 +2,8 @@ package com.dreautall.waterflyiii
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -28,16 +30,41 @@ class MainActivity: FlutterFragmentActivity() {
 			flutterEngine.dartExecutor.binaryMessenger,
 			"waterflyiii/notification_settings"
 		).setMethodCallHandler { call, result ->
-			if (call.method == "openNotificationListenerSettings") {
-				try {
-					startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
-					result.success(true)
-				} catch (_: ActivityNotFoundException) {
-					result.success(false)
+			when (call.method) {
+				"openNotificationListenerSettings" -> {
+					result.success(startSettingsActivity(
+						Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
+					))
 				}
-			} else {
-				result.notImplemented()
+				"supportsRuntimeNotificationPermission" -> {
+					result.success(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+				}
+				"openAppNotificationSettings" -> {
+					val notificationSettings = Intent(
+						Settings.ACTION_APP_NOTIFICATION_SETTINGS
+					).putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+					if (startSettingsActivity(notificationSettings)) {
+						result.success(true)
+					} else {
+						result.success(startSettingsActivity(
+							Intent(
+								Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+								Uri.parse("package:$packageName")
+							)
+						))
+					}
+				}
+				else -> result.notImplemented()
 			}
+		}
+	}
+
+	private fun startSettingsActivity(intent: Intent): Boolean {
+		return try {
+			startActivity(intent)
+			true
+		} catch (_: ActivityNotFoundException) {
+			false
 		}
 	}
 }

@@ -90,8 +90,7 @@ class NotificationFeatureScope {
       listenerStatusLoader: const PlatformNotificationListenerStatusLoader(),
       accessSettingsLauncher:
           const PlatformNotificationAccessSettingsLauncher(),
-      postPermissionRequester:
-          const PlatformNotificationPostPermissionRequester(),
+      postPermissionRequester: PlatformNotificationPostPermissionRequester(),
       backupFileGateway: const FilePickerNotificationBackupFileGateway(),
     );
   }

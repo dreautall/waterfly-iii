@@ -742,6 +742,10 @@ class SKo extends S {
   String get settingsNLPermissionNotGranted => '권한이 부여되지 않음.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => '상태 확인 중…';
 
   @override

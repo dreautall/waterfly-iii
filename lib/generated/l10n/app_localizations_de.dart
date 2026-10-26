@@ -751,6 +751,10 @@ class SDe extends S {
   String get settingsNLPermissionNotGranted => 'Berechtigung nicht erteilt.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Status wird geprüft…';
 
   @override

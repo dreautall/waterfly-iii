@@ -761,6 +761,10 @@ class SRu extends S {
   String get settingsNLPermissionNotGranted => 'Разрешение не было получено.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Проверка статуса…';
 
   @override

@@ -757,6 +757,10 @@ class SPl extends S {
   String get settingsNLPermissionNotGranted => 'Nie przyznano uprawnień.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Sprawdzam stan…';
 
   @override

@@ -760,6 +760,10 @@ class SCa extends S {
   String get settingsNLPermissionNotGranted => 'Permís no concedit.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Comprovant l\'estat…';
 
   @override

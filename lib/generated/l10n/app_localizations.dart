@@ -1248,6 +1248,12 @@ abstract class S {
   /// **'Permission not granted.'**
   String get settingsNLPermissionNotGranted;
 
+  /// Error shown when Waterfly cannot request notification permission or open the relevant Android settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification permission settings could not be opened.'**
+  String get settingsNLPermissionRequestFailure;
+
   /// Checking the status of the background service
   ///
   /// In en, this message translates to:

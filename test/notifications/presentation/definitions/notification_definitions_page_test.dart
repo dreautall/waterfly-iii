@@ -92,16 +92,20 @@ class FakeNotificationAccessSettingsLauncher
 
 class FakeNotificationPostPermissionRequester
     implements NotificationPostPermissionRequester {
-  FakeNotificationPostPermissionRequester({this.onRequest});
+  FakeNotificationPostPermissionRequester({
+    this.onRequest,
+    this.result = NotificationPostPermissionRequestResult.granted,
+  });
 
   final void Function()? onRequest;
+  NotificationPostPermissionRequestResult result;
   int requestCount = 0;
 
   @override
-  Future<bool> requestPermission() async {
+  Future<NotificationPostPermissionRequestResult> requestPermission() async {
     requestCount++;
     onRequest?.call();
-    return true;
+    return result;
   }
 }
 
@@ -743,6 +747,46 @@ void main() {
 
     expect(requester.requestCount, 1);
     expect(launcher.openCount, 0);
+  });
+
+  testWidgets('handles notification permission settings outcomes', (
+    WidgetTester tester,
+  ) async {
+    final FakeNotificationPostPermissionRequester requester =
+        FakeNotificationPostPermissionRequester(
+          result: NotificationPostPermissionRequestResult.settingsOpened,
+        );
+    await tester.pumpWidget(
+      notificationPage(
+        PageDefinitionStore(),
+        statusLoader: FakeNotificationListenerStatusLoader(
+          const NotificationListenerStatus(true, true, false),
+        ),
+        postPermissionRequester: requester,
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final Finder allowNotifications = find.byKey(
+      const Key('allow-notifications'),
+    );
+    await tester.tap(allowNotifications);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Permission not granted.'), findsNothing);
+    expect(
+      find.text('Notification permission settings could not be opened.'),
+      findsNothing,
+    );
+
+    requester.result = NotificationPostPermissionRequestResult.failed;
+    await tester.tap(allowNotifications);
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('Notification permission settings could not be opened.'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('keeps configured applications visible when access is revoked', (

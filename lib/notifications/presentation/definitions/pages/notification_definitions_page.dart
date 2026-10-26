@@ -572,14 +572,26 @@ class _NotificationDefinitionsPageState
   }
 
   Future<void> _requestNotificationPermission() async {
-    final bool granted = await _postPermissionRequester.requestPermission();
+    final NotificationPostPermissionRequestResult result =
+        await _postPermissionRequester.requestPermission();
     if (!mounted) return;
-    if (!granted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(S.of(context).settingsNLPermissionNotGranted)),
-      );
+    switch (result) {
+      case NotificationPostPermissionRequestResult.granted:
+        _refreshStatus();
+      case NotificationPostPermissionRequestResult.settingsOpened:
+        return;
+      case NotificationPostPermissionRequestResult.denied:
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(S.of(context).settingsNLPermissionNotGranted)),
+        );
+        _refreshStatus();
+      case NotificationPostPermissionRequestResult.failed:
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(S.of(context).settingsNLPermissionRequestFailure),
+          ),
+        );
     }
-    _refreshStatus();
   }
 
   Future<void> _retryNotificationProcessing() async {

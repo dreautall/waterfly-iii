@@ -753,6 +753,10 @@ class SNl extends S {
   String get settingsNLPermissionNotGranted => 'Toestemming niet verleend.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Status controleren…';
 
   @override

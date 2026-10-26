@@ -759,6 +759,10 @@ class STr extends S {
   String get settingsNLPermissionNotGranted => 'İzin verilmedi.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Durum kontrol ediliyor…';
 
   @override

@@ -748,6 +748,10 @@ class SFa extends S {
   String get settingsNLPermissionNotGranted => 'مجوز داده نشد';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'در حال بررسی وضعیت...';
 
   @override

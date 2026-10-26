@@ -754,6 +754,10 @@ class SSl extends S {
   String get settingsNLPermissionNotGranted => 'Dovoljenje ni odobreno.';
 
   @override
+  String get settingsNLPermissionRequestFailure =>
+      'Notification permission settings could not be opened.';
+
+  @override
   String get settingsNLServiceChecking => 'Preverjanje stanja…';
 
   @override

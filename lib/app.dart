@@ -216,7 +216,12 @@ class _WaterflyAppState extends State<WaterflyApp> {
     await _ensureNotificationListenerRegistered();
 
     log.finer(() => "Load Step 2: Sign in");
-    await _fireflyService.signInFromStorage();
+    final bool signedIn = await _fireflyService.signInFromStorage();
+    if (signedIn) {
+      await _fireflyService.tzHandler.setUseServerTime(
+        _settingsProvider.useServerTime,
+      );
+    }
     await _initializeNotificationMigration();
 
     log.finer(() => "Loading done.");

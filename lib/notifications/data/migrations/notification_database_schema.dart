@@ -6,9 +6,6 @@ class NotificationDatabaseSchema {
 
   static final DatabaseSchema<Database> schema = DatabaseSchema<Database>(
     version: version,
-    onConfigure: (Database database) async {
-      await database.execute('PRAGMA cipher_memory_security = ON');
-    },
     onCreate: (Database database, int _) async {
       await database.execute('''
         CREATE TABLE notification_metadata (

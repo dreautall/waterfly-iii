@@ -177,24 +177,29 @@ class SettingsProvider with ChangeNotifier {
     Future<bool?> Function(String key)? getLegacyBool,
   }) async {
     SharedPreferencesAsync? preferences;
-    SharedPreferencesAsync getPreferences() =>
-        preferences ??= SharedPreferencesAsync();
-    final Future<bool> Function(String) readContainsKey =
-        containsKey ?? (String key) => getPreferences().containsKey(key);
-    final Future<int?> Function(String) readInt =
-        getInt ?? (String key) => getPreferences().getInt(key);
-    if (await readContainsKey(settingsBitmask)) {
-      final SettingsBitmask settings = SettingsBitmask(
-        await readInt(settingsBitmask) ?? 0,
-      );
+    final bool hasSettingsBitmask;
+    if (containsKey != null) {
+      hasSettingsBitmask = await containsKey(settingsBitmask);
+    } else {
+      preferences = SharedPreferencesAsync();
+      hasSettingsBitmask = await preferences.containsKey(settingsBitmask);
+    }
+    if (hasSettingsBitmask) {
+      final int? value = getInt != null
+          ? await getInt(settingsBitmask)
+          : await (preferences ??= SharedPreferencesAsync()).getInt(
+              settingsBitmask,
+            );
+      final SettingsBitmask settings = SettingsBitmask(value ?? 0);
       return settings[.useServerTime];
     }
 
-    final Future<bool?> Function(String) readLegacyBool =
-        getLegacyBool ??
-        (String key) async =>
-            (await SharedPreferences.getInstance()).getBool(key);
-    return await readLegacyBool(settingUseServerTime) ?? true;
+    if (getLegacyBool != null) {
+      return await getLegacyBool(settingUseServerTime) ?? true;
+    }
+    final SharedPreferences legacyPreferences =
+        await SharedPreferences.getInstance();
+    return legacyPreferences.getBool(settingUseServerTime) ?? true;
   }
 
   Future<void> migrateLegacy(SharedPreferencesAsync prefs) async {

@@ -870,9 +870,50 @@ void main() {
     );
     expect(find.byType(CircularProgressIndicator), findsNothing);
 
-    completer.complete(const <RecentNotificationHistoryEntry>[]);
-    await tester.pumpAndSettle();
+    completer.complete(<RecentNotificationHistoryEntry>[
+      RecentNotificationHistoryEntry(
+        notification: NotificationHistoryEntry(
+          id: 'payment',
+          applicationId: 'com.example.bank',
+          title: 'Card payment',
+          body: 'Paid 12.50 CAD',
+          receivedAt: DateTime(2026, 9, 6),
+        ),
+      ),
+    ]);
+    await tester.pump();
+    await tester.pump();
     expect(find.byKey(const Key('history-loading-skeleton')), findsNothing);
+    expect(
+      tester
+          .widget<SliverFadeTransition>(
+            find.byKey(const Key('history-content-fade')),
+          )
+          .opacity
+          .value,
+      0,
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 110));
+    expect(
+      tester
+          .widget<SliverFadeTransition>(
+            find.byKey(const Key('history-content-fade')),
+          )
+          .opacity
+          .value,
+      inExclusiveRange(0, 1),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      tester
+          .widget<SliverFadeTransition>(
+            find.byKey(const Key('history-content-fade')),
+          )
+          .opacity
+          .value,
+      1,
+    );
   });
 
   testWidgets('defers the first history load until navigation completes', (
@@ -1671,7 +1712,36 @@ void main() {
     await tester.pump();
 
     expect(find.byKey(const Key('history-loading-skeleton')), findsNothing);
+    expect(
+      tester
+          .widget<SliverFadeTransition>(
+            find.byKey(const Key('history-content-fade')),
+          )
+          .opacity
+          .value,
+      0,
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 110));
+    expect(
+      tester
+          .widget<SliverFadeTransition>(
+            find.byKey(const Key('history-content-fade')),
+          )
+          .opacity
+          .value,
+      inExclusiveRange(0, 1),
+    );
     await tester.pumpAndSettle();
+    expect(
+      tester
+          .widget<SliverFadeTransition>(
+            find.byKey(const Key('history-content-fade')),
+          )
+          .opacity
+          .value,
+      1,
+    );
     expect(find.text('Card payment'), findsOneWidget);
   });
 
@@ -2064,6 +2134,14 @@ void main() {
       body: 'Paid 12.50 CAD',
       receivedAt: DateTime(2026, 9, 6),
     );
+    const NotificationDefinition definition = NotificationDefinition(
+      id: 'bank',
+      applicationId: 'com.example.bank',
+      name: 'Example Bank',
+      extractors: <RegExpDefinition>[],
+      rules: <NotificationRule>[],
+      extractorMode: NotificationExtractorMode.advanced,
+    );
     await tester.pumpWidget(
       MaterialApp(
         localizationsDelegates: S.localizationsDelegates,
@@ -2072,7 +2150,10 @@ void main() {
           history: _TestRecentNotificationHistory(
             Future<List<RecentNotificationHistoryEntry>>.value(
               <RecentNotificationHistoryEntry>[
-                RecentNotificationHistoryEntry(notification: notification),
+                RecentNotificationHistoryEntry(
+                  notification: notification,
+                  definition: definition,
+                ),
               ],
             ),
           ),
@@ -2156,6 +2237,74 @@ void main() {
 
     expect(requestedRule, isTrue);
   });
+
+  for (final NotificationExtractorMode mode in <NotificationExtractorMode>[
+    NotificationExtractorMode.notConfigured,
+    NotificationExtractorMode.basic,
+  ]) {
+    testWidgets('hides rule creation for ${mode.name} registrations', (
+      WidgetTester tester,
+    ) async {
+      bool requestedRule = false;
+      bool openedDefinition = false;
+      final NotificationHistoryEntry notification = NotificationHistoryEntry(
+        id: 'payment',
+        applicationId: 'com.example.bank',
+        title: 'Card payment',
+        body: 'Paid 12.50 CAD',
+        receivedAt: DateTime(2026, 9, 7),
+      );
+      final NotificationDefinition definition = NotificationDefinition(
+        id: 'bank',
+        applicationId: 'com.example.bank',
+        name: 'Example Bank',
+        extractors: const <RegExpDefinition>[],
+        rules: const <NotificationRule>[],
+        extractorMode: mode,
+      );
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: S.localizationsDelegates,
+          supportedLocales: S.supportedLocales,
+          home: RecentNotificationsPage(
+            history: _TestRecentNotificationHistory(
+              Future<List<RecentNotificationHistoryEntry>>.value(
+                <RecentNotificationHistoryEntry>[
+                  RecentNotificationHistoryEntry(
+                    notification: notification,
+                    definition: definition,
+                  ),
+                ],
+              ),
+            ),
+            onCreateRule: (_) async {
+              requestedRule = true;
+              return true;
+            },
+            onOpenDefinition: (_) async => openedDefinition = true,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Card payment'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Create rule'), findsNothing);
+      expect(
+        find.text(
+          'Create a rule so similar notifications can be processed automatically.',
+        ),
+        findsNothing,
+      );
+      expect(find.text('Go to definition'), findsOneWidget);
+      await tester.tap(find.text('Go to definition'));
+      await tester.pumpAndSettle();
+
+      expect(requestedRule, isFalse);
+      expect(openedDefinition, isTrue);
+    });
+  }
 
   testWidgets('reevaluates matching rules after creating a rule', (
     WidgetTester tester,

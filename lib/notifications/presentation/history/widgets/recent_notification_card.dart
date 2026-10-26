@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/history/recent_notification_history.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
+import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 import 'package:waterflyiii/notifications/domain/history/notification_history_entry.dart';
 import 'package:waterflyiii/notifications/domain/history/notification_processing_outcome.dart';
 import 'package:waterflyiii/notifications/presentation/history/recent_notification_actions.dart';
@@ -300,20 +301,46 @@ class _RecentNotificationCardState extends State<RecentNotificationCard> {
         ),
       );
     }
+    final VoidCallback? openDefinition = _definitionAction(entry);
+    final NotificationExtractorMode extractorMode =
+        entry.definition?.extractorMode ??
+        NotificationExtractorMode.notConfigured;
+    final bool canCreateRule =
+        extractorMode == NotificationExtractorMode.advanced;
     return _promptControls(
       RecentNotificationOutcome(
         status: MessageStatus.informational,
         icon: Icons.rule_outlined,
-        title: S.of(context).notificationsHistoryNoMatchingRuleTitle,
-        message: S.of(context).notificationsHistoryNoMatchingRuleMessage,
+        title: switch (extractorMode) {
+          NotificationExtractorMode.notConfigured =>
+            S.of(context).notificationsDefinitionNotConfigured,
+          NotificationExtractorMode.basic =>
+            S.of(context).notificationsDefinitionBasic,
+          NotificationExtractorMode.advanced =>
+            S.of(context).notificationsHistoryNoMatchingRuleTitle,
+        },
+        message: switch (extractorMode) {
+          NotificationExtractorMode.notConfigured =>
+            S.of(context).notificationsDefinitionNotConfiguredMessage,
+          NotificationExtractorMode.basic =>
+            S.of(context).notificationsDefinitionBasicDescription,
+          NotificationExtractorMode.advanced =>
+            S.of(context).notificationsHistoryNoMatchingRuleMessage,
+        },
       ),
       RecentNotificationActionsButton(
-        label: S.of(context).notificationsHistoryCreateRule,
-        primaryIcon: Icons.rule_outlined,
-        onPrimaryAction: actions.createRule == null
-            ? null
-            : () => actions.createRule!(entry),
-        onOpenDefinition: _definitionAction(entry),
+        label: canCreateRule
+            ? S.of(context).notificationsHistoryCreateRule
+            : S.of(context).notificationsHistoryGoToDefinition,
+        primaryIcon: canCreateRule
+            ? Icons.rule_outlined
+            : Icons.rule_folder_outlined,
+        onPrimaryAction: canCreateRule
+            ? actions.createRule == null
+                  ? null
+                  : () => actions.createRule!(entry)
+            : openDefinition,
+        onOpenDefinition: canCreateRule ? openDefinition : null,
         onRemoveFromHistory: _removeAction(entry),
       ),
     );

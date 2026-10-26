@@ -70,22 +70,32 @@ class RecentNotificationsPage extends StatefulWidget {
 }
 
 class _RecentNotificationsPageState extends State<RecentNotificationsPage>
-    with WidgetsBindingObserver {
+    with WidgetsBindingObserver, SingleTickerProviderStateMixin {
   static const Duration _emptyHistoryRefreshInterval = Duration(seconds: 3);
   static const Duration _removeUndoDuration = Duration(seconds: 6);
   static const Duration _entryTransitionDuration = Duration(milliseconds: 450);
+  static const Duration _historyFadeDuration = Duration(milliseconds: 320);
   static const double _scrollToTopThreshold = 300;
 
   static final Logger _log = Logger('Notifications.RecentNotifications');
   late final RecentNotificationsViewModel _viewModel;
   late final RecentNotificationActions _actions;
   final ScrollController _scrollController = ScrollController();
+  late final AnimationController _historyFadeController = AnimationController(
+    vsync: this,
+    duration: _historyFadeDuration,
+  );
+  late final Animation<double> _historyFadeAnimation = CurvedAnimation(
+    parent: _historyFadeController,
+    curve: Curves.easeInOut,
+  );
   bool _ownsViewModel = false;
   bool _isInitialLoadPending = true;
   bool _isRefreshing = false;
   bool _isAppResumed = true;
   bool _showRefreshLoading = false;
   bool _showScrollToTop = false;
+  int _historyFadeGeneration = 0;
   final RouteTransitionLoadScheduler _initialLoadScheduler =
       RouteTransitionLoadScheduler();
   final Map<String, GlobalKey> _entryCellKeys = <String, GlobalKey>{};
@@ -169,6 +179,7 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage>
     } finally {
       if (mounted) {
         setState(() => _isInitialLoadPending = false);
+        _fadeInLoadedHistory();
         _syncEmptyHistoryRefreshTimer();
       }
     }
@@ -296,7 +307,9 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage>
   Future<void> _refreshHistory({bool showLoading = false}) async {
     if (_isRefreshing) return;
     _isRefreshing = true;
+    final bool fadeInLoadedHistory = showLoading || _viewModel.entries.isEmpty;
     if (showLoading && mounted) {
+      _historyFadeController.value = 0;
       setState(() => _showRefreshLoading = true);
     }
     try {
@@ -306,7 +319,26 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage>
       if (_showRefreshLoading && mounted) {
         setState(() => _showRefreshLoading = false);
       }
+      if (mounted && fadeInLoadedHistory) _fadeInLoadedHistory();
     }
+  }
+
+  void _fadeInLoadedHistory() {
+    if (_viewModel.error != null || _viewModel.entries.isEmpty) return;
+    final int generation = ++_historyFadeGeneration;
+    _historyFadeController.value = 0;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted ||
+          generation != _historyFadeGeneration ||
+          _isInitialLoadPending ||
+          _viewModel.isLoading ||
+          _showRefreshLoading ||
+          _viewModel.error != null ||
+          _viewModel.entries.isEmpty) {
+        return;
+      }
+      _historyFadeController.forward();
+    });
   }
 
   Future<void> _loadHistory({required bool initial}) async {
@@ -500,6 +532,7 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage>
     _viewModel.removeListener(_onViewModelChanged);
     _scrollController.removeListener(_onScroll);
     if (_ownsViewModel) _viewModel.dispose();
+    _historyFadeController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
@@ -682,7 +715,13 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage>
       );
     }
     slivers.add(_loadMoreFooter(context));
-    return slivers;
+    return <Widget>[
+      SliverFadeTransition(
+        key: const Key('history-content-fade'),
+        opacity: _historyFadeAnimation,
+        sliver: SliverMainAxisGroup(slivers: slivers),
+      ),
+    ];
   }
 
   List<_NotificationDayGroup> _groupEntriesByDay(

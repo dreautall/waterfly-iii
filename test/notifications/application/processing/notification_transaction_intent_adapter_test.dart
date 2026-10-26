@@ -43,7 +43,7 @@ void main() {
       expect(split.type, TransactionTypeProperty.withdrawal);
       expect(split.description, 'Coffee');
       expect(split.amount, '4.5');
-      expect(split.date, DateTime(2026, 4, 10, 8, 15, 30));
+      expect(split.date, DateTime(2026, 4, 10, 8, 15));
       expect(split.sourceId, 'account-1');
       expect(split.categoryId, 'category-2');
       expect(split.currencyId, 'currency-3');
@@ -70,7 +70,7 @@ void main() {
       );
     });
 
-    test('uses the notification date when no date fields are configured', () {
+    test('uses the notification date at minute precision by default', () {
       const TransactionPatch patch = TransactionPatch(
         <TransactionField, String>{},
       );
@@ -81,7 +81,7 @@ void main() {
           patch,
           fallbackDate: fallback,
         ),
-        fallback,
+        DateTime(2026, 5, 6, 7, 8),
       );
     });
 
@@ -105,7 +105,7 @@ void main() {
                 date.add(const Duration(hours: 3)),
           );
 
-      expect(store.transactions.single.date, DateTime(2026, 4, 10, 11, 15, 30));
+      expect(store.transactions.single.date, DateTime(2026, 4, 10, 11, 15));
     });
 
     test('transforms the notification fallback date', () {
@@ -126,7 +126,7 @@ void main() {
                 date.subtract(const Duration(hours: 2)),
           );
 
-      expect(store.transactions.single.date, DateTime(2026, 1, 2, 1, 4, 5));
+      expect(store.transactions.single.date, DateTime(2026, 1, 2, 1, 4));
     });
 
     test('rejects missing automatic fields', () {

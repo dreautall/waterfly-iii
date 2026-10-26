@@ -93,7 +93,6 @@ class NotificationTransactionIntentAdapter {
         baseDate.day,
         fallbackDate.hour,
         fallbackDate.minute,
-        fallbackDate.second,
       );
     }
     final RegExpMatch? match = RegExp(
@@ -110,7 +109,6 @@ class NotificationTransactionIntentAdapter {
       baseDate.day,
       int.parse(match.group(1)!),
       int.parse(match.group(2)!),
-      int.parse(match.group(3) ?? '0'),
     );
   }
 

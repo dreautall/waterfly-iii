@@ -1284,6 +1284,42 @@ abstract class S {
   /// **'Grant notification access so Waterfly can read supported notifications.'**
   String get settingsNLAccessNeededDescription;
 
+  /// Title shown when notification processing needs notification access before first-time setup.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up notification processing'**
+  String get settingsNLOnboardingTitle;
+
+  /// First-time explanation of notification access and Waterfly's registered-application processing boundary.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow Waterfly to read notifications so it can recognize transactions and apply the automation rules you configure.\n\nAndroid grants notification access to Waterfly, but Waterfly only processes applications you register. You can disable access at any time in Android settings.'**
+  String get settingsNLOnboardingDescription;
+
+  /// Button that opens Android notification access settings during first-time setup.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable notification access'**
+  String get settingsNLOnboardingAction;
+
+  /// Title shown when Android permission to post Waterfly notifications is missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow Waterfly notifications'**
+  String get settingsNLPostPermissionTitle;
+
+  /// Explanation shown when Android permission to post Waterfly notifications is missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow Waterfly to show transaction prompts and notify you when automatic processing needs attention.'**
+  String get settingsNLPostPermissionDescription;
+
+  /// Button that requests Android permission to post Waterfly notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow notifications'**
+  String get settingsNLPostPermissionAction;
+
   /// Title shown when notification listener access is enabled and running.
   ///
   /// In en, this message translates to:

@@ -7,12 +7,14 @@ import 'package:waterflyiii/notifications/application/settings/notification_back
 import 'package:waterflyiii/notifications/application/history/recent_notification_history.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_access_settings_launcher.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_listener_status.dart';
+import 'package:waterflyiii/notifications/application/listeners/notification_post_permission_requester.dart';
 import 'package:waterflyiii/notifications/application/definitions/save_notification_definition.dart';
 import 'package:waterflyiii/notifications/application/rules/notification_rule_operations.dart';
 import 'package:waterflyiii/notifications/application/resources/firefly_currency_resolver.dart';
 import 'package:waterflyiii/notifications/data/listeners/platform_notification_access_settings_launcher.dart';
 import 'package:waterflyiii/notifications/data/listeners/notification_listener_status_loader.dart';
 import 'package:waterflyiii/notifications/data/listeners/platform_notification_listener_health_notifier.dart';
+import 'package:waterflyiii/notifications/data/listeners/platform_notification_post_permission_requester.dart';
 import 'package:waterflyiii/notifications/data/notification_store_bundle.dart';
 import 'package:waterflyiii/notifications/data/platform/file_picker_notification_backup_file_gateway.dart';
 import 'package:waterflyiii/notifications/data/platform/platform_notification_formatting_preferences.dart';
@@ -34,6 +36,8 @@ class NotificationFeatureScope {
     required this.ruleOperations,
     required this.listenerStatusLoader,
     required this.accessSettingsLauncher,
+    this.postPermissionRequester =
+        const UnavailableNotificationPostPermissionRequester(),
     this.backupFileGateway = const UnavailableNotificationBackupFileGateway(),
   });
 
@@ -86,6 +90,8 @@ class NotificationFeatureScope {
       listenerStatusLoader: const PlatformNotificationListenerStatusLoader(),
       accessSettingsLauncher:
           const PlatformNotificationAccessSettingsLauncher(),
+      postPermissionRequester:
+          const PlatformNotificationPostPermissionRequester(),
       backupFileGateway: const FilePickerNotificationBackupFileGateway(),
     );
   }
@@ -101,5 +107,6 @@ class NotificationFeatureScope {
   final NotificationRuleOperations ruleOperations;
   final NotificationListenerStatusLoader listenerStatusLoader;
   final NotificationAccessSettingsLauncher accessSettingsLauncher;
+  final NotificationPostPermissionRequester postPermissionRequester;
   final NotificationBackupFileGateway backupFileGateway;
 }

@@ -8,6 +8,7 @@ import 'package:waterflyiii/notifications/application/definitions/save_notificat
 import 'package:waterflyiii/notifications/application/stores/notification_definition_store.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_listener_status.dart';
+import 'package:waterflyiii/notifications/application/listeners/notification_post_permission_requester.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 import 'package:waterflyiii/notifications/domain/listeners/notification_listener_health_issue.dart';
 import 'package:waterflyiii/notifications/notification_feature_scope.dart';
@@ -42,6 +43,7 @@ class NotificationDefinitionsPage extends StatefulWidget {
     this.historyStore,
     this.statusLoader,
     this.accessSettingsLauncher,
+    this.postPermissionRequester,
     this.healthViewModel,
     this.applicationSelector,
     this.showAppBar = false,
@@ -52,6 +54,7 @@ class NotificationDefinitionsPage extends StatefulWidget {
   final NotificationHistoryStore? historyStore;
   final NotificationListenerStatusLoader? statusLoader;
   final NotificationAccessSettingsLauncher? accessSettingsLauncher;
+  final NotificationPostPermissionRequester? postPermissionRequester;
   final NotificationListenerHealthViewModel? healthViewModel;
   final NotificationApplicationSelector? applicationSelector;
   final bool showAppBar;
@@ -68,8 +71,9 @@ class _NotificationDefinitionsPageState
   bool _ownsViewModel = false;
   late final NotificationListenerStatusLoader _statusLoader;
   late Future<NotificationListenerStatus> _status;
-  bool? _hasNotificationAccess;
+  NotificationListenerStatus? _listenerStatus;
   late final NotificationAccessSettingsLauncher _accessSettingsLauncher;
+  late final NotificationPostPermissionRequester _postPermissionRequester;
   NotificationListenerHealthViewModel? _healthViewModel;
   NotificationHistoryStore? _historyStore;
   late final ScrollController _scrollController;
@@ -109,6 +113,10 @@ class _NotificationDefinitionsPageState
         widget.accessSettingsLauncher ??
         scope?.accessSettingsLauncher ??
         const UnavailableNotificationAccessSettingsLauncher();
+    _postPermissionRequester =
+        widget.postPermissionRequester ??
+        scope?.postPermissionRequester ??
+        const UnavailableNotificationPostPermissionRequester();
     _load();
     _healthViewModel?.load();
   }
@@ -139,11 +147,9 @@ class _NotificationDefinitionsPageState
 
   Future<NotificationListenerStatus> _loadStatus() async {
     final NotificationListenerStatus status = await _statusLoader.load();
-    final bool hasNotificationAccess =
-        status.servicePermission && status.notificationPermission;
-    if (mounted && _hasNotificationAccess != hasNotificationAccess) {
+    if (mounted && _listenerStatus != status) {
       setState(() {
-        _hasNotificationAccess = hasNotificationAccess;
+        _listenerStatus = status;
       });
     }
     return status;
@@ -169,6 +175,11 @@ class _NotificationDefinitionsPageState
         !_viewModel.isLoading &&
         _viewModel.error == null &&
         _viewModel.definitions.isEmpty;
+    final bool showAccessOnboarding =
+        showEmptyState &&
+        (_listenerStatus == null ||
+            !_listenerStatus!.servicePermission ||
+            !_listenerStatus!.notificationPermission);
     final double topInset = widget.showAppBar
         ? NotificationPageHeader.bodyTopInset(context)
         : 0;
@@ -176,7 +187,7 @@ class _NotificationDefinitionsPageState
       context,
       spacing: 24,
     );
-    final Widget content = SafeArea(
+    final Widget normalContent = SafeArea(
       top: !widget.showAppBar,
       bottom: false,
       child: ScrollConfiguration(
@@ -194,6 +205,8 @@ class _NotificationDefinitionsPageState
                   _NotificationServiceStatus(
                     status: _status,
                     onOpenSettings: _openNotificationAccessSettings,
+                    onRequestNotificationPermission:
+                        _requestNotificationPermission,
                   ),
                   if (_healthViewModel?.issue != null ||
                       _healthViewModel?.error != null) ...<Widget>[
@@ -274,6 +287,28 @@ class _NotificationDefinitionsPageState
         ),
       ),
     );
+    final Widget content = showAccessOnboarding
+        ? SafeArea(
+            top: !widget.showAppBar,
+            bottom: false,
+            child: CustomScrollView(
+              controller: _scrollController,
+              physics: const ClampingScrollPhysics(),
+              slivers: <Widget>[
+                SliverToBoxAdapter(child: SizedBox(height: topInset)),
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: _NotificationAccessOnboarding(
+                    status: _status,
+                    onOpenSettings: _openNotificationAccessSettings,
+                    onRequestNotificationPermission:
+                        _requestNotificationPermission,
+                  ),
+                ),
+              ],
+            ),
+          )
+        : normalContent;
     if (!widget.showAppBar) {
       return NotificationMenuTheme(child: content);
     }
@@ -330,7 +365,7 @@ class _NotificationDefinitionsPageState
     contentAlignment: const Alignment(0, -0.5),
     icon: Icons.notifications_none_outlined,
     title: S.of(context).notificationsDefinitionsEmptyTitle,
-    description: _hasNotificationAccess == false
+    description: _listenerStatus?.servicePermission == false
         ? S.of(context).notificationsDefinitionsEmptyDescriptionAccessNeeded
         : S.of(context).notificationsDefinitionsEmptyDescription,
     action: FilledButton.tonalIcon(
@@ -532,6 +567,17 @@ class _NotificationDefinitionsPageState
     );
   }
 
+  Future<void> _requestNotificationPermission() async {
+    final bool granted = await _postPermissionRequester.requestPermission();
+    if (!mounted) return;
+    if (!granted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(S.of(context).settingsNLPermissionNotGranted)),
+      );
+    }
+    _refreshStatus();
+  }
+
   Future<void> _retryNotificationProcessing() async {
     await runNotificationListenerHealthAction(
       context: context,
@@ -549,14 +595,95 @@ class _NotificationDefinitionsPageState
   }
 }
 
-class _NotificationServiceStatus extends StatelessWidget {
-  const _NotificationServiceStatus({
+class _NotificationAccessOnboarding extends StatelessWidget {
+  const _NotificationAccessOnboarding({
     required this.status,
     required this.onOpenSettings,
+    required this.onRequestNotificationPermission,
   });
 
   final Future<NotificationListenerStatus> status;
   final Future<void> Function() onOpenSettings;
+  final Future<void> Function() onRequestNotificationPermission;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<NotificationListenerStatus>(
+      future: status,
+      builder:
+          (
+            BuildContext context,
+            AsyncSnapshot<NotificationListenerStatus> snapshot,
+          ) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return NotificationEmptyState(
+                icon: Icons.pending_outlined,
+                title: S.of(context).settingsNLServiceCheckingTitle,
+                description: S.of(context).settingsNLServiceChecking,
+              );
+            }
+            if (snapshot.hasError) {
+              return NotificationEmptyState(
+                icon: Icons.error_outline,
+                title: S.of(context).settingsNLServiceUnavailableTitle,
+                description: S
+                    .of(context)
+                    .settingsNLServiceCheckingError(snapshot.error.toString()),
+                action: FilledButton.tonalIcon(
+                  onPressed: onOpenSettings,
+                  icon: const Icon(Icons.open_in_new),
+                  label: Text(
+                    S.of(context).notificationsProcessingOpenAccessSettings,
+                  ),
+                ),
+              );
+            }
+            if (snapshot.data!.servicePermission &&
+                !snapshot.data!.notificationPermission) {
+              return NotificationEmptyState(
+                key: const Key('notification-post-permission-onboarding'),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                contentAlignment: const Alignment(0, -0.35),
+                icon: Icons.notification_add_outlined,
+                title: S.of(context).settingsNLPostPermissionTitle,
+                description: S.of(context).settingsNLPostPermissionDescription,
+                action: FilledButton.icon(
+                  key: const Key('allow-notifications'),
+                  onPressed: onRequestNotificationPermission,
+                  icon: const Icon(Icons.notification_add_outlined),
+                  label: Text(S.of(context).settingsNLPostPermissionAction),
+                ),
+              );
+            }
+            return NotificationEmptyState(
+              key: const Key('notification-access-onboarding'),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              contentAlignment: const Alignment(0, -0.35),
+              icon: Icons.notifications_active_outlined,
+              title: S.of(context).settingsNLOnboardingTitle,
+              description: S.of(context).settingsNLOnboardingDescription,
+              action: FilledButton.icon(
+                key: const Key('enable-notification-access'),
+                onPressed: onOpenSettings,
+                icon: const Icon(Icons.notifications_active_outlined),
+                label: Text(S.of(context).settingsNLOnboardingAction),
+              ),
+            );
+          },
+    );
+  }
+}
+
+class _NotificationServiceStatus extends StatelessWidget {
+  const _NotificationServiceStatus({
+    required this.status,
+    required this.onOpenSettings,
+    required this.onRequestNotificationPermission,
+  });
+
+  final Future<NotificationListenerStatus> status;
+  final Future<void> Function() onOpenSettings;
+  final Future<void> Function() onRequestNotificationPermission;
 
   @override
   Widget build(BuildContext context) {
@@ -592,8 +719,7 @@ class _NotificationServiceStatus extends StatelessWidget {
                     .notificationsProcessingOpenAccessSettings,
                 onAction: onOpenSettings,
               );
-            } else if (!snapshot.data!.servicePermission ||
-                !snapshot.data!.notificationPermission) {
+            } else if (!snapshot.data!.servicePermission) {
               visual = _ServiceStatusVisual(
                 icon: Icons.notifications_off_outlined,
                 iconColor: Theme.of(context).colorScheme.onErrorContainer,
@@ -604,6 +730,16 @@ class _NotificationServiceStatus extends StatelessWidget {
                     .of(context)
                     .notificationsProcessingOpenAccessSettings,
                 onAction: onOpenSettings,
+              );
+            } else if (!snapshot.data!.notificationPermission) {
+              visual = _ServiceStatusVisual(
+                icon: Icons.notification_add_outlined,
+                iconColor: Theme.of(context).colorScheme.onTertiaryContainer,
+                iconBackground: Theme.of(context).colorScheme.tertiaryContainer,
+                title: S.of(context).settingsNLPostPermissionTitle,
+                subtitle: S.of(context).settingsNLPostPermissionDescription,
+                actionLabel: S.of(context).settingsNLPostPermissionAction,
+                onAction: onRequestNotificationPermission,
               );
             } else if (!snapshot.data!.serviceRunning) {
               visual = _ServiceStatusVisual(
@@ -626,6 +762,7 @@ class _NotificationServiceStatus extends StatelessWidget {
                 subtitle: S.of(context).settingsNLAccessEnabledDescription,
               );
             }
+
             final Widget cardContent = Padding(
               padding: const EdgeInsets.all(16),
               child: Row(

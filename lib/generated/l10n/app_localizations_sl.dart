@@ -775,6 +775,26 @@ class SSl extends S {
       'Grant notification access so Waterfly can read supported notifications.';
 
   @override
+  String get settingsNLOnboardingTitle => 'Set up notification processing';
+
+  @override
+  String get settingsNLOnboardingDescription =>
+      'Allow Waterfly to read notifications so it can recognize transactions and apply the automation rules you configure.\n\nAndroid grants notification access to Waterfly, but Waterfly only processes applications you register. You can disable access at any time in Android settings.';
+
+  @override
+  String get settingsNLOnboardingAction => 'Enable notification access';
+
+  @override
+  String get settingsNLPostPermissionTitle => 'Allow Waterfly notifications';
+
+  @override
+  String get settingsNLPostPermissionDescription =>
+      'Allow Waterfly to show transaction prompts and notify you when automatic processing needs attention.';
+
+  @override
+  String get settingsNLPostPermissionAction => 'Allow notifications';
+
+  @override
   String get settingsNLAccessEnabledTitle => 'Notification access enabled';
 
   @override

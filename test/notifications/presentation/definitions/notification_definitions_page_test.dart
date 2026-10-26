@@ -5,6 +5,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_access_settings_launcher.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_listener_status.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_listener_health_service.dart';
+import 'package:waterflyiii/notifications/application/listeners/notification_post_permission_requester.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_alert_store.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_definition_store.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
@@ -74,10 +75,26 @@ class FakeNotificationAccessSettingsLauncher
   }
 }
 
+class FakeNotificationPostPermissionRequester
+    implements NotificationPostPermissionRequester {
+  FakeNotificationPostPermissionRequester({this.onRequest});
+
+  final void Function()? onRequest;
+  int requestCount = 0;
+
+  @override
+  Future<bool> requestPermission() async {
+    requestCount++;
+    onRequest?.call();
+    return true;
+  }
+}
+
 Widget notificationPage(
   NotificationDefinitionStore store, {
   NotificationListenerStatusLoader? statusLoader,
   NotificationAccessSettingsLauncher? accessSettingsLauncher,
+  NotificationPostPermissionRequester? postPermissionRequester,
   NotificationListenerHealthViewModel? healthViewModel,
   NotificationAlertStore? alertStore,
   NotificationApplicationSelector? applicationSelector,
@@ -90,8 +107,9 @@ Widget notificationPage(
     home: NotificationDefinitionsPage(
       store: store,
       alertStore: alertStore,
-      statusLoader: statusLoader,
+      statusLoader: statusLoader ?? FakeNotificationListenerStatusLoader(),
       accessSettingsLauncher: accessSettingsLauncher,
+      postPermissionRequester: postPermissionRequester,
       healthViewModel: healthViewModel,
       applicationSelector: applicationSelector,
       showAppBar: true,
@@ -264,7 +282,7 @@ void main() {
     );
     expect(
       find.text(
-        'Add and configure an application now. Waterfly will begin processing its notifications after notification access is enabled.',
+        'Add an application to choose which notifications Waterfly should turn into transactions.',
       ),
       findsOneWidget,
     );
@@ -453,42 +471,180 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(statusLoader.loadCount, 2);
-    expect(find.text('Notification access needed'), findsOneWidget);
+    expect(find.text('Set up notification processing'), findsOneWidget);
     expect(find.text('Notification access enabled'), findsNothing);
   });
 
-  testWidgets(
-    'offers notification access settings when permission is missing',
-    (WidgetTester tester) async {
-      final FakeNotificationAccessSettingsLauncher launcher =
-          FakeNotificationAccessSettingsLauncher();
+  testWidgets('shows focused onboarding when first-time access is missing', (
+    WidgetTester tester,
+  ) async {
+    final FakeNotificationAccessSettingsLauncher launcher =
+        FakeNotificationAccessSettingsLauncher();
 
-      await tester.pumpWidget(
-        notificationPage(
-          PageDefinitionStore(),
-          statusLoader: FakeNotificationListenerStatusLoader(
-            const NotificationListenerStatus(false, false, false),
-          ),
-          accessSettingsLauncher: launcher,
+    await tester.pumpWidget(
+      notificationPage(
+        PageDefinitionStore(),
+        statusLoader: FakeNotificationListenerStatusLoader(
+          const NotificationListenerStatus(false, false, false),
         ),
-      );
-      await tester.pumpAndSettle();
+        accessSettingsLauncher: launcher,
+      ),
+    );
+    await tester.pumpAndSettle();
 
-      expect(find.text('Notification access needed'), findsOneWidget);
-      expect(find.text('Open notification access settings'), findsNothing);
-      expect(find.byIcon(Icons.open_in_new), findsOneWidget);
-      final Finder accessCardAction = find.byKey(
-        const Key('notification-access-settings-card-action'),
-      );
-      expect(accessCardAction, findsOneWidget);
+    expect(
+      find.byKey(const Key('notification-access-onboarding')),
+      findsOneWidget,
+    );
+    expect(
+      tester
+          .widget<NotificationEmptyState>(
+            find.byKey(const Key('notification-access-onboarding')),
+          )
+          .contentAlignment,
+      const Alignment(0, -0.35),
+    );
+    expect(find.text('Set up notification processing'), findsOneWidget);
+    expect(
+      find.text(
+        'Allow Waterfly to read notifications so it can recognize transactions and apply the automation rules you configure.\n\nAndroid grants notification access to Waterfly, but Waterfly only processes applications you register. You can disable access at any time in Android settings.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('Registered applications'), findsNothing);
+    expect(find.text('No registered applications'), findsNothing);
+    expect(find.byKey(const Key('add-notification-application')), findsNothing);
+    final Finder enableAccess = find.byKey(
+      const Key('enable-notification-access'),
+    );
+    expect(enableAccess, findsOneWidget);
 
-      await tester.tap(accessCardAction);
-      await tester.pumpAndSettle();
+    await tester.tap(enableAccess);
+    await tester.pumpAndSettle();
 
-      expect(launcher.openCount, 1);
-      expect(find.text('Notification access settings opened.'), findsOneWidget);
-    },
-  );
+    expect(launcher.openCount, 1);
+    expect(find.text('Notification access settings opened.'), findsOneWidget);
+  });
+
+  testWidgets('advances from post permission to application setup', (
+    WidgetTester tester,
+  ) async {
+    final FakeNotificationListenerStatusLoader statusLoader =
+        FakeNotificationListenerStatusLoader(
+          const NotificationListenerStatus(true, true, false),
+        );
+    final FakeNotificationPostPermissionRequester requester =
+        FakeNotificationPostPermissionRequester(
+          onRequest: () {
+            statusLoader.status = const NotificationListenerStatus(
+              true,
+              true,
+              true,
+            );
+          },
+        );
+
+    await tester.pumpWidget(
+      notificationPage(
+        PageDefinitionStore(),
+        statusLoader: statusLoader,
+        postPermissionRequester: requester,
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const Key('notification-access-onboarding')),
+      findsNothing,
+    );
+    expect(
+      find.byKey(const Key('notification-post-permission-onboarding')),
+      findsOneWidget,
+    );
+    expect(find.text('Allow Waterfly notifications'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('allow-notifications')));
+    await tester.pumpAndSettle();
+
+    expect(requester.requestCount, 1);
+    expect(statusLoader.loadCount, 2);
+    expect(
+      find.byKey(const Key('notification-post-permission-onboarding')),
+      findsNothing,
+    );
+    expect(find.text('No registered applications'), findsOneWidget);
+  });
+
+  testWidgets('requests post permission without opening listener settings', (
+    WidgetTester tester,
+  ) async {
+    const NotificationDefinition definition = NotificationDefinition(
+      id: 'bank',
+      applicationId: 'com.example.bank',
+      name: 'Example Bank',
+      extractors: <RegExpDefinition>[],
+      rules: <NotificationRule>[],
+    );
+    final FakeNotificationAccessSettingsLauncher launcher =
+        FakeNotificationAccessSettingsLauncher();
+    final FakeNotificationPostPermissionRequester requester =
+        FakeNotificationPostPermissionRequester();
+
+    await tester.pumpWidget(
+      notificationPage(
+        PageDefinitionStore(
+          definitions: const <NotificationDefinition>[definition],
+        ),
+        statusLoader: FakeNotificationListenerStatusLoader(
+          const NotificationListenerStatus(true, true, false),
+        ),
+        accessSettingsLauncher: launcher,
+        postPermissionRequester: requester,
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Allow Waterfly notifications'), findsOneWidget);
+    await tester.tap(
+      find.byKey(const Key('notification-access-settings-card-action')),
+    );
+    await tester.pumpAndSettle();
+
+    expect(requester.requestCount, 1);
+    expect(launcher.openCount, 0);
+  });
+
+  testWidgets('keeps configured applications visible when access is revoked', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      notificationPage(
+        PageDefinitionStore(
+          definitions: const <NotificationDefinition>[
+            NotificationDefinition(
+              id: 'bank',
+              applicationId: 'com.example.bank',
+              name: 'Example Bank',
+              extractors: <RegExpDefinition>[],
+              rules: <NotificationRule>[],
+            ),
+          ],
+        ),
+        statusLoader: FakeNotificationListenerStatusLoader(
+          const NotificationListenerStatus(false, false, false),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const Key('notification-access-onboarding')),
+      findsNothing,
+    );
+    expect(find.text('Notification access needed'), findsOneWidget);
+    expect(find.text('Registered applications'), findsOneWidget);
+    expect(find.text('Example Bank'), findsOneWidget);
+  });
 
   testWidgets('displays registered applications in alphabetical order', (
     WidgetTester tester,

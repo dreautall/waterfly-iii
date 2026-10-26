@@ -272,17 +272,7 @@ void main() {
 
     await tester.tap(find.text('Recent notification history'));
     await tester.pumpAndSettle();
-    final Divider choiceDivider = tester.widget<Divider>(
-      find.byType(Divider).first,
-    );
-    expect(choiceDivider.indent, 16);
-    expect(choiceDivider.endIndent, 16);
-    expect(
-      choiceDivider.color,
-      Theme.of(
-        tester.element(find.byType(Divider).first),
-      ).colorScheme.outlineVariant,
-    );
+    expect(find.byType(Divider), findsNothing);
     await tester.tap(find.text('Metadata only').last);
     await tester.pumpAndSettle();
 

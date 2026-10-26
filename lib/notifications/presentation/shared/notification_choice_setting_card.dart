@@ -105,8 +105,7 @@ class _NotificationChoiceDialog<T> extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            for (final (int index, NotificationChoiceOption<T> option)
-                in options.indexed) ...<Widget>[
+            for (final NotificationChoiceOption<T> option in options)
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: Text(
@@ -123,15 +122,6 @@ class _NotificationChoiceDialog<T> extends StatelessWidget {
                     : null,
                 onTap: () => Navigator.of(context).pop(option.value),
               ),
-              if (index != options.length - 1)
-                Divider(
-                  height: 1,
-                  thickness: 1,
-                  indent: 16,
-                  endIndent: 16,
-                  color: colors.outlineVariant,
-                ),
-            ],
           ],
         ),
       ),

@@ -46,7 +46,7 @@ void main() {
     );
   });
 
-  testWidgets('animates between suggested and all installed applications', (
+  testWidgets('animates between suggested and available applications', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(
@@ -58,7 +58,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('All installed apps'));
+    await tester.tap(find.text('Available apps'));
     await tester.pump(const Duration(milliseconds: 1));
 
     expect(
@@ -97,17 +97,21 @@ void main() {
     expect(
       find.text(
         'No suggested applications are available. '
-        'Try viewing all installed apps.',
+        'Try viewing available apps.',
       ),
       findsOneWidget,
     );
 
-    await tester.tap(find.text('All installed apps'));
+    await tester.tap(find.text('Available apps'));
     await tester.pumpAndSettle();
     expect(
-      find.text('No installed applications are available.'),
+      find.text(
+        'Apps Waterfly can discover on this device. '
+        'Registered apps are hidden.',
+      ),
       findsOneWidget,
     );
+    expect(find.text('No applications are available.'), findsOneWidget);
 
     await tester.enterText(find.byType(TextField), 'bank');
     await tester.pumpAndSettle();

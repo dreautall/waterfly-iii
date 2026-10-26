@@ -248,7 +248,7 @@ class _NotificationApplicationSelectorDialogState
               ? S.of(context).notificationsApplicationsAllTitle
               : S.of(context).notificationsApplicationsSuggestedTitle,
           subtitle: _showAllInstalledApps
-              ? null
+              ? S.of(context).notificationsApplicationsAvailableDescription
               : S.of(context).notificationsApplicationsLikelySendersDescription,
         ),
         const SizedBox(height: 8),

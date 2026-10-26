@@ -4825,11 +4825,17 @@ abstract class S {
   /// **'Suggested apps'**
   String get notificationsApplicationsSuggestedTitle;
 
-  /// Section title for the complete installed application list.
+  /// Section title for installed applications visible to Waterfly under Android package visibility rules.
   ///
   /// In en, this message translates to:
-  /// **'All installed apps'**
+  /// **'Available apps'**
   String get notificationsApplicationsAllTitle;
+
+  /// Explanation of the application list constrained by Android package visibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Waterfly can discover on this device. Registered apps are hidden.'**
+  String get notificationsApplicationsAvailableDescription;
 
   /// Field label for searching installed applications.
   ///
@@ -4855,22 +4861,22 @@ abstract class S {
   /// **'All suggested applications are already registered.'**
   String get notificationsApplicationsSuggestedRegistered;
 
-  /// Empty state when every installed application has already been registered.
+  /// Empty state when every application visible to Waterfly has already been registered.
   ///
   /// In en, this message translates to:
-  /// **'All installed applications are already registered.'**
+  /// **'All available applications are already registered.'**
   String get notificationsApplicationsAllRegistered;
 
   /// Empty state when no installed application is an eligible suggested notification sender.
   ///
   /// In en, this message translates to:
-  /// **'No suggested applications are available. Try viewing all installed apps.'**
+  /// **'No suggested applications are available. Try viewing available apps.'**
   String get notificationsApplicationsNoneSuggested;
 
-  /// Empty state when the device reports no installed applications.
+  /// Empty state when Android reports no applications visible to Waterfly.
   ///
   /// In en, this message translates to:
-  /// **'No installed applications are available.'**
+  /// **'No applications are available.'**
   String get notificationsApplicationsNoneInstalled;
 
   /// Transaction field label.

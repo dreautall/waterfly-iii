@@ -3137,7 +3137,11 @@ class STr extends S {
   String get notificationsApplicationsSuggestedTitle => 'Suggested apps';
 
   @override
-  String get notificationsApplicationsAllTitle => 'All installed apps';
+  String get notificationsApplicationsAllTitle => 'Available apps';
+
+  @override
+  String get notificationsApplicationsAvailableDescription =>
+      'Apps Waterfly can discover on this device. Registered apps are hidden.';
 
   @override
   String get notificationsApplicationsSearch => 'Search applications';
@@ -3156,15 +3160,15 @@ class STr extends S {
 
   @override
   String get notificationsApplicationsAllRegistered =>
-      'All installed applications are already registered.';
+      'All available applications are already registered.';
 
   @override
   String get notificationsApplicationsNoneSuggested =>
-      'No suggested applications are available. Try viewing all installed apps.';
+      'No suggested applications are available. Try viewing available apps.';
 
   @override
   String get notificationsApplicationsNoneInstalled =>
-      'No installed applications are available.';
+      'No applications are available.';
 
   @override
   String get notificationsFieldTitle => 'Title';

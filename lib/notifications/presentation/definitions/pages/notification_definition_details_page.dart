@@ -76,7 +76,7 @@ class _NotificationDefinitionDetailsPageState
   late final ScrollController _scrollController;
   late final NotificationDefinitionEditorViewModel _viewModel;
   final GlobalKey _automaticWarningKey = GlobalKey();
-  final GlobalKey _saveButtonKey = GlobalKey();
+  GlobalKey? _saveButtonKey;
   final _ScrollAnchorCoordinator _automaticAnchorCoordinator =
       _ScrollAnchorCoordinator();
   double _automaticAnchorSlack = 0;
@@ -374,14 +374,7 @@ class _NotificationDefinitionDetailsPageState
               ],
             ],
           ),
-          floatingActionButton: _isDirty
-              ? FloatingActionButton(
-                  key: _saveButtonKey,
-                  tooltip: strings.notificationsDefinitionSave,
-                  onPressed: _isSaving ? null : _save,
-                  child: const Icon(Icons.save_outlined),
-                )
-              : null,
+          floatingActionButton: _buildSaveButton(strings),
         ),
       ),
     );
@@ -629,7 +622,7 @@ class _NotificationDefinitionDetailsPageState
     double safeBottom =
         viewportOrigin.dy + viewportBox.size.height - safePadding.bottom - 16;
     final RenderBox? saveButtonBox =
-        _saveButtonKey.currentContext?.findRenderObject() as RenderBox?;
+        _saveButtonKey?.currentContext?.findRenderObject() as RenderBox?;
     if (saveButtonBox != null && saveButtonBox.attached) {
       safeBottom =
           saveButtonBox.localToGlobal(Offset.zero).dy - _floatingSaveButtonGap;
@@ -669,6 +662,7 @@ class _NotificationDefinitionDetailsPageState
       );
       return false;
     }
+
     if (result.failed && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -677,6 +671,19 @@ class _NotificationDefinitionDetailsPageState
       );
     }
     return result.succeeded;
+  }
+
+  Widget? _buildSaveButton(S strings) {
+    if (!_isDirty) {
+      _saveButtonKey = null;
+      return null;
+    }
+    return FloatingActionButton(
+      key: _saveButtonKey ??= GlobalKey(),
+      tooltip: strings.notificationsDefinitionSave,
+      onPressed: _isSaving ? null : _save,
+      child: const Icon(Icons.save_outlined),
+    );
   }
 
   void _useLatestNotificationAsSample() {

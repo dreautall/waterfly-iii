@@ -2248,6 +2248,7 @@ void main() {
             extractorMode: NotificationExtractorMode.basic,
           ),
           onSave: (NotificationDefinition definition) async => true,
+          onUndoCreation: () async => true,
         ),
       ),
     );
@@ -2278,7 +2279,7 @@ void main() {
     expect(find.text('Adjustable mappings'), findsOneWidget);
     expect(
       find.text(
-        'Review editable mappings and add optional fields before marking the rule complete.',
+        'Select each suggested mapping to review it, and add any optional fields you need.',
       ),
       findsOneWidget,
     );
@@ -2295,71 +2296,26 @@ void main() {
     expect(titleMapping.onTap, isNull);
     expect(find.byTooltip('Remove optional mapping'), findsOneWidget);
     expect(find.text('Needs review'), findsWidgets);
-    await tester.tap(find.byTooltip('Mark mapping as done'));
+    expect(find.byTooltip('Mark mapping as done'), findsNothing);
+    final Finder amountMapping = find
+        .ancestor(
+          of: find.text('Needs review'),
+          matching: find.byType(DefinitionDetailCard),
+        )
+        .first;
+    await tester.tap(amountMapping);
     await tester.pumpAndSettle();
-    expect(find.byTooltip('Mark mapping as needing review'), findsOneWidget);
-  });
-
-  testWidgets('clears the shared-actions warning after mappings are reviewed', (
-    WidgetTester tester,
-  ) async {
-    await tester.binding.setSurfaceSize(const Size(800, 1000));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
-    final RegExpDefinition amount =
-        RegExpDefinition.createCustomRegExpDefinition(
-          'Amount and currency',
-          r'(?<amount>\d+) (?<currency>[A-Z]{3})',
-        );
-    await tester.pumpWidget(
-      MaterialApp(
-        home: NotificationDefinitionDetailsPage(
-          definition: NotificationDefinition(
-            id: 'bank',
-            applicationId: 'com.example.bank',
-            name: 'Example Bank',
-            sampleTitle: 'Card payment',
-            sampleBody: 'Paid 12 CAD',
-            extractors: <RegExpDefinition>[amount],
-            rules: const <NotificationRule>[
-              NotificationRule(
-                id: 'all',
-                name: 'Any notification',
-                conditions: <NotificationCondition>[],
-                actions: <NotificationAction>[],
-              ),
-            ],
-            sharedActions: <NotificationAction>[
-              SetTransactionFieldAction(
-                target: TransactionField.amount,
-                valueSource: RegExpCaptureValueSource(
-                  extractorId: amount.id,
-                  captureName: 'amount',
-                ),
-              ),
-            ],
-            extractorMode: NotificationExtractorMode.basic,
-          ),
-          onSave: (NotificationDefinition definition) async => true,
-        ),
-      ),
-    );
-
-    Finder sharedActionsCard() => find.ancestor(
-      of: find.text('Set transaction fields'),
-      matching: find.byType(DefinitionDetailCard),
-    );
-
-    expect(
-      find.descendant(
-        of: sharedActionsCard(),
-        matching: find.text('Needs review'),
-      ),
-      findsOneWidget,
-    );
-    await tester.tap(find.text('Set transaction fields'));
+    await tester.tap(find.text('Extractor capture'));
     await tester.pumpAndSettle();
-    await tester.tap(find.byTooltip('Mark mapping as done'));
+    await tester.tap(find.byType(DialogSelectorCard).last);
     await tester.pumpAndSettle();
+    expect(richText('Match 1 - Group "amount"'), findsOneWidget);
+    expect(richText('Match 2 - Group "amount"'), findsOneWidget);
+    await tester.tap(richText('Match 2 - Group "amount"'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Needs review'), findsNothing);
+    expect(find.byTooltip('Mark mapping as needing review'), findsNothing);
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Back'));
@@ -2372,10 +2328,68 @@ void main() {
       ),
       findsNothing,
     );
-    expect(
-      find.descendant(of: sharedActionsCard(), matching: find.text('1 action')),
-      findsOneWidget,
+  });
+
+  testWidgets('uses a fresh save FAB key when editing resumes after save', (
+    WidgetTester tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1000));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final RegExpDefinition amount =
+        RegExpDefinition.createCustomRegExpDefinition(
+          'Amount',
+          r'(?<amount>\d+)',
+        );
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationDefinitionDetailsPage(
+          definition: NotificationDefinition(
+            id: 'bank',
+            applicationId: 'com.example.bank',
+            name: 'Example Bank',
+            sampleTitle: 'Card payment',
+            sampleBody: 'Paid 12 CAD',
+            extractors: <RegExpDefinition>[amount],
+            rules: const <NotificationRule>[],
+            sharedActions: <NotificationAction>[
+              SetTransactionFieldAction(
+                target: TransactionField.amount,
+                valueSource: RegExpCaptureValueSource(
+                  extractorId: amount.id,
+                  captureName: 'amount',
+                ),
+              ),
+            ],
+            reviewedSharedActionFields: const <TransactionField>{
+              TransactionField.amount,
+            },
+            extractorMode: NotificationExtractorMode.basic,
+          ),
+          onSave: (NotificationDefinition definition) async => true,
+        ),
+      ),
     );
+
+    await tester.scrollUntilVisible(
+      find.text('Create transaction automatically'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    final Finder automaticOption = find.ancestor(
+      of: find.text('Create transaction automatically'),
+      matching: find.byType(DefinitionDetailCard),
+    );
+    await tester.tap(automaticOption);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Save definition'));
+    await tester.pump();
+    await tester.tap(automaticOption);
+    await tester.pump();
+
+    expect(tester.takeException(), isNull);
+    expect(find.byTooltip('Save definition'), findsNWidgets(2));
+    await tester.pumpAndSettle();
+    expect(find.byTooltip('Save definition'), findsOneWidget);
   });
 
   testWidgets('shows unresolved migrated currency in transaction fields', (

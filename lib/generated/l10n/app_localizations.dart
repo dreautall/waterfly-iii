@@ -2169,7 +2169,7 @@ abstract class S {
   /// Description of editable predefined notification rule mappings.
   ///
   /// In en, this message translates to:
-  /// **'Review editable mappings and add optional fields before marking the rule complete.'**
+  /// **'Select each suggested mapping to review it, and add any optional fields you need.'**
   String get notificationsRuleAdjustableMappingsDescription;
 
   /// Label for a group where every notification condition must match.
@@ -2363,18 +2363,6 @@ abstract class S {
   /// In en, this message translates to:
   /// **'These mappings are managed by Basic mode and cannot be edited here.'**
   String get notificationsRuleFixedMappingsDescription;
-
-  /// Tooltip for marking a predefined mapping as reviewed.
-  ///
-  /// In en, this message translates to:
-  /// **'Mark mapping as done'**
-  String get notificationsRuleMarkMappingDone;
-
-  /// Tooltip for marking a predefined mapping as needing review.
-  ///
-  /// In en, this message translates to:
-  /// **'Mark mapping as needing review'**
-  String get notificationsRuleMarkMappingNeedsReview;
 
   /// Title of the section listing unresolved values required by a rule.
   ///

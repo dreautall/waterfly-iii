@@ -1322,7 +1322,7 @@ class SRo extends S {
 
   @override
   String get notificationsRuleAdjustableMappingsDescription =>
-      'Review editable mappings and add optional fields before marking the rule complete.';
+      'Select each suggested mapping to review it, and add any optional fields you need.';
 
   @override
   String get notificationsRuleAllConditionsMatch => 'All conditions match';
@@ -1440,13 +1440,6 @@ class SRo extends S {
   @override
   String get notificationsRuleFixedMappingsDescription =>
       'These mappings are managed by Basic mode and cannot be edited here.';
-
-  @override
-  String get notificationsRuleMarkMappingDone => 'Mark mapping as done';
-
-  @override
-  String get notificationsRuleMarkMappingNeedsReview =>
-      'Mark mapping as needing review';
 
   @override
   String get notificationsRuleSampleValueIssuesTitle => 'Sample value issues';

@@ -8,12 +8,9 @@ import 'package:waterflyiii/notifications/domain/actions/set_transaction_tags_ac
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
-import 'package:waterflyiii/notifications/domain/value_sources/currency_capture_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/actions/transaction_action_value_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_text_styles.dart';
-
-import 'package:waterflyiii/notifications/presentation/rules/widgets/rule_editor_shared.dart';
 
 import 'package:waterflyiii/notifications/presentation/rules/widgets/rule_action_editor.dart';
 
@@ -95,20 +92,6 @@ extension RulePredefinedActionEditor on RuleActionsSectionState {
           icon: const Icon(Icons.delete_outline),
         ),
       );
-    } else if (editable) {
-      controls.add(
-        IconButton(
-          tooltip: reviewedPredefinedFields.contains(target)
-              ? S.of(context).notificationsRuleMarkMappingNeedsReview
-              : S.of(context).notificationsRuleMarkMappingDone,
-          onPressed: () => togglePredefinedReview(action, target),
-          icon: Icon(
-            reviewedPredefinedFields.contains(target)
-                ? Icons.check_circle
-                : Icons.check_circle_outline,
-          ),
-        ),
-      );
     }
     if (target != TransactionField.currency &&
         optionalPredefinedFields.contains(target)) {
@@ -120,7 +103,9 @@ extension RulePredefinedActionEditor on RuleActionsSectionState {
         ),
       );
     }
-    return Row(mainAxisSize: MainAxisSize.min, children: controls);
+    return controls.isEmpty
+        ? null
+        : Row(mainAxisSize: MainAxisSize.min, children: controls);
   }
 
   TransactionField? targetFor(NotificationAction action) => switch (action) {
@@ -128,29 +113,6 @@ extension RulePredefinedActionEditor on RuleActionsSectionState {
     SetTransactionTagsAction() => TransactionField.tag,
     _ => null,
   };
-
-  void togglePredefinedReview(
-    NotificationAction action,
-    TransactionField target,
-  ) {
-    if (target == TransactionField.currency &&
-        (action as SetTransactionFieldAction).valueSource
-            is! CurrencyCaptureValueSource) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            S.of(context).notificationsRuleChooseMatchingCurrencyBeforeReview,
-          ),
-        ),
-        snackBarAnimationStyle: ruleEditorMessageAnimation,
-      );
-      return;
-    }
-    widget.onSetPredefinedFieldReviewed(
-      target,
-      !reviewedPredefinedFields.contains(target),
-    );
-  }
 
   bool canAdjustPredefinedAction(NotificationAction action) {
     if (action is! SetTransactionFieldAction) return false;

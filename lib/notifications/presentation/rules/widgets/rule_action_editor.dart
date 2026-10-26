@@ -681,10 +681,7 @@ extension RuleActionWorkflows on RuleActionsSectionState {
     );
     if (action is SetTransactionFieldAction && mounted) {
       widget.onReplaceAt(index, action);
-      if (current.target == TransactionField.currency &&
-          action.valueSource is CurrencyCaptureValueSource) {
-        widget.onSetPredefinedFieldReviewed(current.target, true);
-      }
+      widget.onSetPredefinedFieldReviewed(current.target, true);
     }
   }
 }

@@ -213,18 +213,7 @@ class _TagDialogState extends State<TagDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(S.of(context).transactionDialogTagsTitle),
-          const SizedBox(height: 4),
-          Text(
-            S.of(context).notificationsTagsRuleDescription,
-            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-          ),
-        ],
-      ),
+      title: Text(S.of(context).transactionDialogTagsTitle),
       clipBehavior: .hardEdge,
       actions: <Widget>[
         TextButton(

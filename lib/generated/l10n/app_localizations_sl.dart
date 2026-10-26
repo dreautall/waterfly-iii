@@ -2487,10 +2487,6 @@ class SSl extends S {
       'Notification setup removed. Open Android notification access settings to turn off listener access.';
 
   @override
-  String get notificationsProcessingAccessSettingsOpened =>
-      'Notification access settings opened.';
-
-  @override
   String get notificationsProcessingAccessSettingsOpenFailure =>
       'Notification access settings could not be opened.';
 

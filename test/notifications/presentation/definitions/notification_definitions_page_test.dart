@@ -78,12 +78,15 @@ class FakeNotificationListenerStatusLoader
 
 class FakeNotificationAccessSettingsLauncher
     implements NotificationAccessSettingsLauncher {
+  FakeNotificationAccessSettingsLauncher({this.opened = true});
+
+  bool opened;
   int openCount = 0;
 
   @override
   Future<bool> openNotificationAccessSettings() async {
     openCount++;
-    return true;
+    return opened;
   }
 }
 
@@ -641,7 +644,17 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(launcher.openCount, 1);
-    expect(find.text('Notification access settings opened.'), findsOneWidget);
+    expect(find.text('Notification access settings opened.'), findsNothing);
+
+    launcher.opened = false;
+    await tester.tap(enableAccess);
+    await tester.pumpAndSettle();
+
+    expect(launcher.openCount, 2);
+    expect(
+      find.text('Notification access settings could not be opened.'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('advances from post permission to application setup', (

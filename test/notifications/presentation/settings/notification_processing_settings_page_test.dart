@@ -76,12 +76,13 @@ class _SettingsStore implements NotificationProcessingSettingsStore {
 }
 
 class _AccessSettingsLauncher implements NotificationAccessSettingsLauncher {
+  bool opened = true;
   int openCount = 0;
 
   @override
   Future<bool> openNotificationAccessSettings() async {
     openCount++;
-    return true;
+    return opened;
   }
 }
 
@@ -288,6 +289,57 @@ void main() {
     expect(
       settingsStore.settings.historyStorageMode,
       NotificationHistoryStorageMode.metadataOnly,
+    );
+  });
+
+  testWidgets('only reports notification access settings launch failures', (
+    WidgetTester tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final _AccessSettingsLauncher launcher = _AccessSettingsLauncher();
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: NotificationProcessingSettingsPage(
+          definitionStore: InMemoryNotificationDefinitionStore(),
+          historyStore: _HistoryStore(),
+          alertStore: InMemoryNotificationAlertStore(),
+          settingsStore: _SettingsStore(),
+          accessSettingsLauncher: launcher,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final Finder openAccessSettings = find.ancestor(
+      of: find.text('Open notification access settings'),
+      matching: find.byType(ElevatedButton),
+    );
+    await tester.dragUntilVisible(
+      openAccessSettings,
+      find.byType(ListView),
+      const Offset(0, -300),
+    );
+
+    await tester.tap(openAccessSettings);
+    await tester.pumpAndSettle();
+
+    expect(launcher.openCount, 1);
+    expect(find.text('Notification access settings opened.'), findsNothing);
+    expect(
+      find.text('Notification access settings could not be opened.'),
+      findsNothing,
+    );
+
+    launcher.opened = false;
+    await tester.tap(openAccessSettings);
+    await tester.pumpAndSettle();
+
+    expect(launcher.openCount, 2);
+    expect(
+      find.text('Notification access settings could not be opened.'),
+      findsOneWidget,
     );
   });
 

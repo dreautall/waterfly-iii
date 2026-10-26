@@ -2408,8 +2408,6 @@
     "@notificationsProcessingRemoveSetupComplete": {"description": "Snackbar shown after removing notification setup and opening Android notification access settings."},
     "notificationsProcessingRemoveSetupCompleteNoSettings": "Notification setup removed. Open Android notification access settings to turn off listener access.",
     "@notificationsProcessingRemoveSetupCompleteNoSettings": {"description": "Snackbar shown after removing notification setup when Android notification access settings cannot be opened."},
-    "notificationsProcessingAccessSettingsOpened": "Notification access settings opened.",
-    "@notificationsProcessingAccessSettingsOpened": {"description": "Snackbar shown after Android notification access settings are opened."},
     "notificationsProcessingAccessSettingsOpenFailure": "Notification access settings could not be opened.",
     "@notificationsProcessingAccessSettingsOpenFailure": {"description": "Snackbar shown when Android notification access settings cannot be opened."},
     "notificationsProcessingActionFailure": "The notification processing action could not be completed.",

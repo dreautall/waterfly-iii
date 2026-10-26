@@ -560,16 +560,15 @@ class _NotificationDefinitionsPageState
   Future<void> _openNotificationAccessSettings() async {
     final bool opened = await _accessSettingsLauncher
         .openNotificationAccessSettings();
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          opened
-              ? S.of(context).notificationsProcessingAccessSettingsOpened
-              : S.of(context).notificationsProcessingAccessSettingsOpenFailure,
+    if (!opened && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            S.of(context).notificationsProcessingAccessSettingsOpenFailure,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   Future<void> _requestNotificationPermission() async {

@@ -3834,12 +3834,6 @@ abstract class S {
   /// **'Notification setup removed. Open Android notification access settings to turn off listener access.'**
   String get notificationsProcessingRemoveSetupCompleteNoSettings;
 
-  /// Snackbar shown after Android notification access settings are opened.
-  ///
-  /// In en, this message translates to:
-  /// **'Notification access settings opened.'**
-  String get notificationsProcessingAccessSettingsOpened;
-
   /// Snackbar shown when Android notification access settings cannot be opened.
   ///
   /// In en, this message translates to:

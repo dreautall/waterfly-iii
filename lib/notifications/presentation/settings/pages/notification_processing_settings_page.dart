@@ -348,12 +348,11 @@ class _NotificationProcessingSettingsPageState
     await _performAction(() async {
       final bool opened = await widget.accessSettingsLauncher
           .openNotificationAccessSettings();
-      if (!mounted) return;
-      _showSnackBar(
-        opened
-            ? S.of(context).notificationsProcessingAccessSettingsOpened
-            : S.of(context).notificationsProcessingAccessSettingsOpenFailure,
-      );
+      if (!opened && mounted) {
+        _showSnackBar(
+          S.of(context).notificationsProcessingAccessSettingsOpenFailure,
+        );
+      }
     });
   }
 

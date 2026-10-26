@@ -301,7 +301,9 @@ class _ActionValueSourceDialogState extends State<_ActionValueSourceDialog> {
       .search(_currencyController.text.trim());
 
   void _searchCurrency(String _) {
-    setState(() => _currencyMatches = _searchCurrencies());
+    setState(() {
+      _currencyMatches = _searchCurrencies();
+    });
   }
 
   void _selectCurrency(FireflyCurrency currency) {

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart' hide MaterialApp;
 import 'package:material_ui/material_ui.dart' as material_ui;
+import 'package:provider/provider.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/resources/firefly_currency_resolver.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
@@ -16,6 +17,7 @@ import 'package:waterflyiii/notifications/domain/value_sources/literal_value_sou
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/value_source.dart';
 import 'package:waterflyiii/notifications/presentation/shared/dialog_expander_card.dart';
+import 'package:waterflyiii/notifications/presentation/shared/dialog_selector_card.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/actions/transaction_action_value_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_card_theme.dart';
 
@@ -454,6 +456,58 @@ void main() {
     expect(find.text('Resolved value: "CAD"'), findsOneWidget);
     expect(find.text('Match 2 - Group "postCurrency"'), findsOneWidget);
     expect(find.text('Resolved value: "USD"'), findsOneWidget);
+  });
+
+  testWidgets('searches currencies with a synchronous setState callback', (
+    WidgetTester tester,
+  ) async {
+    final RegExpDefinition extractor =
+        RegExpDefinition.createPredefinedRegExpDefinition(
+          PredefinedRegExpDefinition.currency,
+        );
+    final _CurrencyGateway gateway = _CurrencyGateway();
+    await tester.pumpWidget(
+      Provider<FireflyCurrencyResolver>.value(
+        value: FireflyCurrencyResolver(gateway),
+        child: MaterialApp(
+          home: Scaffold(
+            body: Builder(
+              builder: (BuildContext context) => ElevatedButton(
+                onPressed: () => selectTransactionAction(
+                  context,
+                  extractors: <RegExpDefinition>[extractor],
+                  notificationContext: NotificationContext(
+                    title: 'Card payment',
+                    body: 'Paid 12 CAD',
+                    receivedAt: DateTime(2026, 9, 7),
+                  ),
+                  fixedField: TransactionField.currency,
+                  captureExtractorId: extractor.id,
+                  captureOnly: true,
+                ),
+                child: const Text('Edit currency'),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Edit currency'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(DialogSelectorCard));
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey<String>('action-currency-match')),
+      findsOneWidget,
+    );
+
+    await tester.enterText(find.byType(TextField), 'usd');
+    await tester.pump();
+
+    expect(tester.takeException(), isNull);
+    await tester.pumpAndSettle();
+    expect(gateway.queries, contains('usd'));
   });
 
   testWidgets('omits an action\'s current extractor when editing its value', (
@@ -1128,4 +1182,16 @@ void main() {
 
     expect(find.text('Test - 12/31/1969 16:00'), findsOneWidget);
   });
+}
+
+class _CurrencyGateway implements FireflyCurrencyGateway {
+  final List<String> queries = <String>[];
+
+  @override
+  Future<List<FireflyCurrency>> search(String query) async {
+    queries.add(query);
+    return const <FireflyCurrency>[
+      FireflyCurrency(id: 'usd', name: 'US dollar', code: 'USD', symbol: r'$'),
+    ];
+  }
 }

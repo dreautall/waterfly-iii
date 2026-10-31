@@ -4591,12 +4591,6 @@ abstract class S {
   /// **'Regular expression'**
   String get notificationsExtractorRegularExpression;
 
-  /// Tooltip for pasting an extractor regular expression.
-  ///
-  /// In en, this message translates to:
-  /// **'Paste regular expression'**
-  String get notificationsExtractorPasteRegularExpression;
-
   /// Description of regular expression match highlighting.
   ///
   /// In en, this message translates to:

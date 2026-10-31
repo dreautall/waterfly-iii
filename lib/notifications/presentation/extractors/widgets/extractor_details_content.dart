@@ -27,7 +27,6 @@ class ExtractorDetailsContent extends StatefulWidget {
     required this.hasSampleOverride,
     required this.onEditSample,
     required this.onClearSampleOverride,
-    required this.onPasteSource,
   });
 
   final RegExpDefinition extractor;
@@ -42,7 +41,6 @@ class ExtractorDetailsContent extends StatefulWidget {
   final bool hasSampleOverride;
   final VoidCallback onEditSample;
   final VoidCallback onClearSampleOverride;
-  final VoidCallback onPasteSource;
 
   @override
   State<ExtractorDetailsContent> createState() =>
@@ -235,16 +233,6 @@ class _ExtractorDetailsContentState extends State<ExtractorDetailsContent> {
         context,
         labelText: S.of(context).notificationsExtractorRegularExpression,
         contentPadding: const EdgeInsets.fromLTRB(12, 20, 12, 12),
-        suffixIcon: widget.isAdvancedMode
-            ? IconButton(
-                tooltip: S
-                    .of(context)
-                    .notificationsExtractorPasteRegularExpression,
-                onPressed: widget.onPasteSource,
-                icon: const Icon(Icons.content_paste_outlined),
-                iconSize: 18,
-              )
-            : null,
       ),
     ),
     if (_validationError != null) ...<Widget>[

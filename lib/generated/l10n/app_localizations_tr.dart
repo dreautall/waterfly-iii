@@ -3005,10 +3005,6 @@ class STr extends S {
   String get notificationsExtractorRegularExpression => 'Regular expression';
 
   @override
-  String get notificationsExtractorPasteRegularExpression =>
-      'Paste regular expression';
-
-  @override
   String get notificationsExtractorPatternMatchesDescription =>
       'Regular expression matches are highlighted in the sample notification.';
 

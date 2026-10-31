@@ -394,14 +394,9 @@ void main() {
       find.byKey(const Key('extractor-source')),
     );
     expect(pattern.readOnly, isFalse);
-    final IconButton pasteButton = tester.widget<IconButton>(
-      find.ancestor(
-        of: find.byTooltip('Paste regular expression'),
-        matching: find.byType(IconButton),
-      ),
-    );
-    expect(pasteButton.iconSize, 18);
-    expect(pattern.decoration!.suffixIcon, isA<IconButton>());
+    expect(pattern.contextMenuBuilder, isNotNull);
+    expect(pattern.decoration!.suffixIcon, isNull);
+    expect(find.byIcon(Icons.content_paste_outlined), findsNothing);
     expect(find.text('Matches'), findsOneWidget);
     expect(
       find.text(

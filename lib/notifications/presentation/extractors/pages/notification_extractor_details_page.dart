@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
@@ -193,7 +192,6 @@ class _NotificationExtractorDetailsPageState
                   hasSampleOverride: _viewModel.sampleOverride != null,
                   onEditSample: _editSample,
                   onClearSampleOverride: _viewModel.clearSampleOverride,
-                  onPasteSource: _pasteSource,
                 ),
               ],
             ),
@@ -217,15 +215,6 @@ class _NotificationExtractorDetailsPageState
     name: _nameController.text,
     source: _sourceController.text,
   );
-
-  Future<void> _pasteSource() async {
-    final ClipboardData? clipboard = await Clipboard.getData(
-      Clipboard.kTextPlain,
-    );
-    if (clipboard?.text != null) {
-      _sourceController.text = clipboard!.text!;
-    }
-  }
 
   Future<void> _apply() async {
     final RegExpDefinition? extractor = _viewModel.save();

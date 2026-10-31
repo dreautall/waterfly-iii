@@ -2688,8 +2688,6 @@
     "@notificationsExtractorPatternReadOnlyDescription": {"description": "Description for a read-only extractor pattern."},
     "notificationsExtractorRegularExpression": "Regular expression",
     "@notificationsExtractorRegularExpression": {"description": "Field label for an extractor regular expression."},
-    "notificationsExtractorPasteRegularExpression": "Paste regular expression",
-    "@notificationsExtractorPasteRegularExpression": {"description": "Tooltip for pasting an extractor regular expression."},
     "@notificationsExtractorEvaluate": {"description": "Button label for evaluating an extractor pattern."},
     "notificationsExtractorPatternMatchesDescription": "Regular expression matches are highlighted in the sample notification.",
     "@notificationsExtractorPatternMatchesDescription": {"description": "Description of regular expression match highlighting."},

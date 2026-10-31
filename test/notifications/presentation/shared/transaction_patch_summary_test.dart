@@ -91,8 +91,8 @@ void main() {
     expect(find.text('Card purchase'), findsOneWidget);
     expect(find.text('Amount'), findsOneWidget);
     expect(find.text('12.50'), findsOneWidget);
-    expect(find.byIcon(Icons.title_outlined), findsOneWidget);
-    expect(find.byIcon(Icons.payments_outlined), findsOneWidget);
+    expect(find.byIcon(Icons.receipt_long), findsOneWidget);
+    expect(find.byIcon(Icons.monetization_on), findsOneWidget);
     expect(
       tester.getTopLeft(find.text('Card purchase')).dy,
       closeTo(tester.getTopLeft(find.text('Title')).dy, 4),

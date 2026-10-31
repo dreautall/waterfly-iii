@@ -174,7 +174,7 @@ class _TransactionSummaryDetails extends StatelessWidget {
           children: patch.tags
               .map(
                 (String tag) => Chip(
-                  avatar: const Icon(Icons.sell_outlined, size: 16),
+                  avatar: Icon(fieldIcon(TransactionField.tag), size: 16),
                   label: Text(tag),
                   visualDensity: VisualDensity.compact,
                 ),

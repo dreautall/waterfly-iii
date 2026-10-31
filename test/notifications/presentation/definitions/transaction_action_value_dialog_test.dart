@@ -19,6 +19,7 @@ import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_v
 import 'package:waterflyiii/notifications/domain/value_sources/value_source.dart';
 import 'package:waterflyiii/notifications/presentation/shared/dialog_expander_card.dart';
 import 'package:waterflyiii/notifications/presentation/shared/dialog_selector_card.dart';
+import 'package:waterflyiii/notifications/presentation/dialogs/actions/transaction_action_steps.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/actions/transaction_action_value_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_card_theme.dart';
 
@@ -36,6 +37,29 @@ void main() {
     body: 'Paid 12 CAD',
     receivedAt: DateTime(2026, 9, 7),
   );
+
+  test('uses the transaction form icons for transaction fields', () {
+    expect(
+      <TransactionField, IconData>{
+        for (final TransactionField field in TransactionField.values)
+          field: fieldIcon(field),
+      },
+      <TransactionField, IconData>{
+        TransactionField.title: Icons.receipt_long,
+        TransactionField.amount: Icons.monetization_on,
+        TransactionField.date: Icons.calendar_today,
+        TransactionField.time: Icons.schedule,
+        TransactionField.sourceAccount: Icons.logout,
+        TransactionField.destinationAccount: Icons.login,
+        TransactionField.category: Icons.assignment,
+        TransactionField.tag: Icons.bookmarks,
+        TransactionField.notes: Icons.description,
+        TransactionField.subscription: Icons.calendar_today,
+        TransactionField.currency: Icons.currency_exchange,
+        TransactionField.piggyBank: Icons.savings_outlined,
+      },
+    );
+  });
 
   testWidgets('uses S for transaction field labels', (
     WidgetTester tester,

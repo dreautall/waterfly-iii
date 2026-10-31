@@ -363,7 +363,7 @@ IconData actionStepIcon(TransactionActionStep step, TransactionField? field) =>
       TransactionActionStep.currencyMatch => Icons.currency_exchange_outlined,
       TransactionActionStep.source => Icons.tune_outlined,
       TransactionActionStep.buildText => Icons.segment_outlined,
-      TransactionActionStep.tags => Icons.sell_outlined,
+      TransactionActionStep.tags => fieldIcon(TransactionField.tag),
     };
 
 String actionTransactionFieldLabel(
@@ -387,17 +387,18 @@ String actionTransactionFieldLabel(
 };
 
 IconData fieldIcon(TransactionField field) => switch (field) {
-  TransactionField.amount => Icons.payments_outlined,
-  TransactionField.date || TransactionField.time => Icons.schedule_outlined,
-  TransactionField.sourceAccount ||
-  TransactionField.destinationAccount => Icons.account_balance_outlined,
-  TransactionField.category => Icons.category_outlined,
-  TransactionField.tag => Icons.sell_outlined,
-  TransactionField.notes => Icons.notes_outlined,
-  TransactionField.subscription => Icons.repeat_outlined,
-  TransactionField.currency => Icons.currency_exchange_outlined,
+  TransactionField.title => Icons.receipt_long,
+  TransactionField.amount => Icons.monetization_on,
+  TransactionField.date => Icons.calendar_today,
+  TransactionField.time => Icons.schedule,
+  TransactionField.sourceAccount => Icons.logout,
+  TransactionField.destinationAccount => Icons.login,
+  TransactionField.category => Icons.assignment,
+  TransactionField.tag => Icons.bookmarks,
+  TransactionField.notes => Icons.description,
+  TransactionField.subscription => Icons.calendar_today,
+  TransactionField.currency => Icons.currency_exchange,
   TransactionField.piggyBank => Icons.savings_outlined,
-  TransactionField.title => Icons.title_outlined,
 };
 
 String fieldDescription(

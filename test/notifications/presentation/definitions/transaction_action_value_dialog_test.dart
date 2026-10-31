@@ -14,6 +14,7 @@ import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.d
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/composed_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/literal_value_source.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/value_source.dart';
 import 'package:waterflyiii/notifications/presentation/shared/dialog_expander_card.dart';
@@ -1078,6 +1079,39 @@ void main() {
     expect(find.byKey(const Key('build-text-part-0')), findsOneWidget);
     expect(find.byKey(const Key('build-text-part-1')), findsOneWidget);
     expect(find.text('Existing title'), findsOneWidget);
+  });
+
+  testWidgets('safely shows an unsupported persisted built text part', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Builder(
+            builder: (BuildContext context) => ElevatedButton(
+              onPressed: () => selectTransactionAction(
+                context,
+                extractors: const <RegExpDefinition>[],
+                notificationContext: notificationContext(),
+                fixedField: TransactionField.title,
+                initialSource: ComposedValueSource(const <ValueSource>[
+                  NotificationPropertyValueSource(NotificationProperty.title),
+                ]),
+              ),
+              child: const Text('Edit unsupported built title'),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Edit unsupported built title'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Unsupported action.'), findsOneWidget);
+    expect(find.byIcon(Icons.error_outline), findsOneWidget);
+    expect(find.byKey(const Key('build-text-delete-0')), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('adds extractor captures through the shared capture picker', (

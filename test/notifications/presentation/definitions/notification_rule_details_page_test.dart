@@ -26,6 +26,7 @@ import 'package:waterflyiii/notifications/domain/value_sources/currency_capture_
 import 'package:waterflyiii/notifications/domain/value_sources/date_time_capture_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/firefly_resource_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/literal_value_source.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/normalized_amount_capture_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 import 'package:waterflyiii/notifications/presentation/shared/dialog_expander_card.dart';
@@ -94,6 +95,88 @@ void main() {
 
     expect(richText('Resolved value: "Card payment"'), findsOneWidget);
     expect(richText('Resolved value: "title"'), findsNothing);
+  });
+
+  testWidgets('reports runtime failures for invalid captured mappings', (
+    WidgetTester tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final RegExpDefinition currencyExtractor =
+        RegExpDefinition.createCustomRegExpDefinition(
+          'Currency',
+          r'Currency (?<currency>[A-Z]{3})',
+        );
+    final RegExpDefinition dateExtractor =
+        RegExpDefinition.createCustomRegExpDefinition(
+          'Date',
+          r'Date (?<date>[A-Za-z]+)',
+        );
+    final RegExpDefinition amountExtractor =
+        RegExpDefinition.createCustomRegExpDefinition(
+          'Amount',
+          r'Amount (?<amount>[A-Za-z]+)',
+        );
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationRuleDetailsPage(
+          rule: NotificationRule(
+            id: 'rule',
+            name: 'Changed sample',
+            conditions: const <NotificationCondition>[],
+            actions: <NotificationAction>[
+              SetTransactionFieldAction(
+                target: TransactionField.currency,
+                valueSource: CurrencyCaptureValueSource(
+                  capture: RegExpCaptureValueSource(
+                    extractorId: currencyExtractor.id,
+                    captureName: 'currency',
+                  ),
+                  resourceId: '10',
+                  expectedValue: 'CAD',
+                ),
+              ),
+              SetTransactionFieldAction(
+                target: TransactionField.date,
+                valueSource: DateTimeCaptureValueSource(
+                  capture: RegExpCaptureValueSource(
+                    extractorId: dateExtractor.id,
+                    captureName: 'date',
+                  ),
+                  field: TransactionField.date,
+                  normalizedValue: '',
+                  deriveFromCapture: true,
+                ),
+              ),
+              SetTransactionFieldAction(
+                target: TransactionField.amount,
+                valueSource: NormalizedAmountCaptureValueSource(
+                  capture: RegExpCaptureValueSource(
+                    extractorId: amountExtractor.id,
+                    captureName: 'amount',
+                  ),
+                ),
+              ),
+            ],
+          ),
+          extractors: <RegExpDefinition>[
+            currencyExtractor,
+            dateExtractor,
+            amountExtractor,
+          ],
+          notificationContext: NotificationContext(
+            title: 'Card payment',
+            body: 'Currency USD Date tomorrow Amount many',
+            receivedAt: DateTime(2026, 10, 31),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('unresolved'), findsNWidgets(3));
+    expect(find.byIcon(Icons.cancel_outlined), findsNWidgets(3));
+    expect(find.textContaining('Resolved value:'), findsNothing);
   });
 
   testWidgets('shows a direct rename action for a new conditional action', (

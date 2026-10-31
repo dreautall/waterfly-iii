@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
+import 'package:waterflyiii/notifications/domain/actions/action_evaluation_result.dart';
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_tags_action.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
@@ -452,110 +453,99 @@ extension RuleActionEditor on RuleActionsSectionState {
         S.of(context).notificationsRuleChooseMatchingCurrency,
       );
     }
-    final RegExpCaptureValueSource? capture = captureFor(source);
-    if (capture != null && extractorFor(capture) == null) {
+    final List<RegExpCaptureValueSource> captures = capturesFor(
+      source,
+    ).toList();
+    final RegExpCaptureValueSource? deletedCapture = captures
+        .where(
+          (RegExpCaptureValueSource capture) => extractorFor(capture) == null,
+        )
+        .firstOrNull;
+    if (deletedCapture != null) {
       return ActionCardStatus.error(
         S
             .of(context)
-            .notificationsRuleDeletedCaptureExtractor(capture.captureName),
+            .notificationsRuleDeletedCaptureExtractor(
+              deletedCapture.captureName,
+            ),
       );
     }
-    if (!widget.rule.isPredefined &&
-        capture != null &&
-        capture.matchIndex == null) {
-      final int matchCount =
-          extractorFor(
-            capture,
-          )?.evaluate(activeNotificationContext).matches.length ??
-          0;
-      if (matchCount > 1) {
+    if (!widget.rule.isPredefined) {
+      final RegExpCaptureValueSource? ambiguousCapture = captures.where((
+        RegExpCaptureValueSource capture,
+      ) {
+        if (capture.matchIndex != null) return false;
+        return extractorFor(
+              capture,
+            )?.evaluate(activeNotificationContext).matches.length !=
+            1;
+      }).firstOrNull;
+      final int matchCount = ambiguousCapture == null
+          ? 0
+          : extractorFor(
+                  ambiguousCapture,
+                )?.evaluate(activeNotificationContext).matches.length ??
+                0;
+      if (ambiguousCapture != null && matchCount > 1) {
         return ActionCardStatus.error(
           S
               .of(context)
               .notificationsRuleChooseExtractorMatch(
                 matchCount,
-                extractorName(capture),
+                extractorName(ambiguousCapture),
               ),
         );
       }
     }
-    if (source is CurrencyCaptureValueSource) {
-      final String? value = capturedValue(source.capture);
-      return value == null
-          ? ActionCardStatus.error(
-              S
-                  .of(context)
-                  .notificationsRuleNoCapturedValue(source.capture.captureName),
-            )
-          : ActionCardStatus.resolved(value);
-    }
-    if (source is DateTimeCaptureValueSource) {
-      final String? value = capturedValue(source.capture);
-      return value == null
-          ? ActionCardStatus.error(
-              S
-                  .of(context)
-                  .notificationsRuleNoCapturedValue(source.capture.captureName),
-            )
-          : ActionCardStatus.resolved(
-              value,
-              mappedValue: source.deriveFromCapture
-                  ? source.normalizeCapturedValue(value)
-                  : source.normalizedValue,
-            );
-    }
-    if (source is NormalizedAmountCaptureValueSource) {
-      final String? value = capturedValue(source.capture);
-      return value == null
-          ? ActionCardStatus.error(
-              S
-                  .of(context)
-                  .notificationsRuleNoCapturedValue(source.capture.captureName),
-            )
-          : ActionCardStatus.resolved(
-              value,
-              mappedValue: NormalizedAmountCaptureValueSource.normalize(value),
-            );
-    }
-    if (source is RegExpCaptureValueSource) {
-      final bool isDateTimeTextCapture =
-          TransactionFieldSpec.values[action.target]!.valueType ==
-              TransactionFieldValueType.text &&
-          extractorFor(source)?.predefinedType ==
-              PredefinedRegExpDefinition.notificationDate;
-      final String? value = isDateTimeTextCapture
-          ? source.withDateTimeTextFormat().resolve(actionEvaluationContext)
-          : capturedValue(source);
-      return value == null
-          ? ActionCardStatus.error(
-              S
-                  .of(context)
-                  .notificationsRuleNoCapturedValue(source.captureName),
-            )
-          : ActionCardStatus.resolved(value);
-    }
-    if (source is ComposedValueSource) {
-      final String? value = source.resolve(actionEvaluationContext);
-      if (value != null) return ActionCardStatus.resolved(value);
-      final RegExpCaptureValueSource? missingCapture = source.parts
-          .whereType<RegExpCaptureValueSource>()
+    final ActionEvaluationResult evaluation = action.evaluate(
+      actionEvaluationContext,
+    );
+    if (!evaluation.succeeded) {
+      final RegExpCaptureValueSource? unresolvedCapture = captures
           .where(
             (RegExpCaptureValueSource capture) =>
-                capture.resolve(actionEvaluationContext) == null,
+                capturedValue(capture) == null,
           )
           .firstOrNull;
+      if (unresolvedCapture != null) {
+        return ActionCardStatus.error(
+          S
+              .of(context)
+              .notificationsRuleNoCapturedValue(unresolvedCapture.captureName),
+        );
+      }
+      final TransactionFieldValidationError? validationError =
+          TransactionFieldValidationError.values
+              .where(
+                (TransactionFieldValidationError error) =>
+                    error.name == evaluation.failureReason,
+              )
+              .firstOrNull;
       return ActionCardStatus.error(
-        S
-            .of(context)
-            .notificationsRuleNoCapturedValue(
-              missingCapture?.captureName ?? '',
-            ),
+        validationError == null
+            ? S.of(context).notificationsUnresolved
+            : transactionFieldValidationError(context, validationError),
       );
     }
-    final String? value = source.resolve(actionEvaluationContext);
-    return value == null
-        ? ActionCardStatus.error(S.of(context).notificationsUnresolved)
-        : ActionCardStatus.resolved(value);
+    final String resolvedValue = evaluation.patch!.values[action.target]!;
+    if (source is CurrencyCaptureValueSource) {
+      return ActionCardStatus.resolved(capturedValue(source.capture));
+    }
+    if (source is DateTimeCaptureValueSource) {
+      final String captured = capturedValue(source.capture)!;
+      return ActionCardStatus.resolved(
+        captured,
+        mappedValue: resolvedValue == captured ? null : resolvedValue,
+      );
+    }
+    if (source is NormalizedAmountCaptureValueSource) {
+      final String captured = capturedValue(source.capture)!;
+      return ActionCardStatus.resolved(
+        captured,
+        mappedValue: resolvedValue == captured ? null : resolvedValue,
+      );
+    }
+    return ActionCardStatus.resolved(resolvedValue);
   }
 
   RegExpDefinition? extractorFor(RegExpCaptureValueSource source) =>
@@ -574,6 +564,17 @@ extension RuleActionEditor on RuleActionsSectionState {
     if (source is NormalizedAmountCaptureValueSource) return source.capture;
     if (source is RegExpCaptureValueSource) return source;
     return null;
+  }
+
+  Iterable<RegExpCaptureValueSource> capturesFor(ValueSource source) sync* {
+    final RegExpCaptureValueSource? capture = captureFor(source);
+    if (capture != null) {
+      yield capture;
+      return;
+    }
+    if (source is ComposedValueSource) {
+      yield* source.parts.whereType<RegExpCaptureValueSource>();
+    }
   }
 
   String? capturedValue(RegExpCaptureValueSource source) {

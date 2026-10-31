@@ -143,7 +143,8 @@ class _BuildTextStepState extends State<BuildTextStep> {
           ? extractor.definitionName
           : '${extractor.definitionName} · ${source.captureName}';
     }
-    final String value = (source as LiteralValueSource).value;
+    if (source is! LiteralValueSource) return source.runtimeType.toString();
+    final String value = source.value;
     return switch (value) {
       ' ' => S.of(context).notificationsActionBuildTextSpace,
       '\n' => S.of(context).notificationsActionBuildTextLineBreak,
@@ -305,22 +306,24 @@ class _BuildTextStepState extends State<BuildTextStep> {
       leading: Icon(
         source is RegExpCaptureValueSource
             ? Icons.text_fields_outlined
-            : Icons.text_snippet_outlined,
+            : source is LiteralValueSource
+            ? Icons.text_snippet_outlined
+            : Icons.error_outline,
       ),
       title: Text(_partTitle(source)),
       subtitle: Text(
         source is RegExpCaptureValueSource
             ? S.of(context).notificationsActionBuildTextCapturePart
-            : S.of(context).notificationsActionBuildTextFixedPart,
+            : source is LiteralValueSource
+            ? S.of(context).notificationsActionBuildTextFixedPart
+            : S.of(context).notificationsRuleUnsupportedAction,
         style: context.notificationSupportingText,
       ),
-      onTap: () {
-        if (source is RegExpCaptureValueSource) {
-          _editCapture(index);
-        } else {
-          _editFixed(index, source as LiteralValueSource);
-        }
-      },
+      onTap: source is RegExpCaptureValueSource
+          ? () => _editCapture(index)
+          : source is LiteralValueSource
+          ? () => _editFixed(index, source)
+          : null,
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[

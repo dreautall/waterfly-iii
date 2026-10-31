@@ -1032,6 +1032,10 @@ void main() {
     final SnackBar snackBar = tester.widget<SnackBar>(find.byType(SnackBar));
     expect(snackBar.duration, const Duration(seconds: 6));
     expect(snackBar.persist, isFalse);
+    expect(
+      Theme.of(tester.element(find.byType(SnackBar))).snackBarTheme.behavior,
+      SnackBarBehavior.floating,
+    );
 
     await tester.pump(const Duration(seconds: 6));
     await tester.pumpAndSettle();

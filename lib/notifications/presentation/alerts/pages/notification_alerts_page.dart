@@ -19,6 +19,7 @@ import 'package:waterflyiii/notifications/presentation/definitions/pages/notific
 import 'package:waterflyiii/notifications/presentation/navigation/notification_navigation_coordinator.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_empty_state.dart';
+import 'package:waterflyiii/notifications/presentation/shared/notification_menu_theme.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_page_header.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_text_styles.dart';
 import 'package:waterflyiii/notifications/presentation/shared/route_transition_load_scheduler.dart';
@@ -177,25 +178,27 @@ class _NotificationAlertsPageState extends State<NotificationAlertsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: NotificationPageHeader(
-        scrollController: _scrollController,
-        title: Text(S.of(context).notificationsAlertsTitle),
-        actions: <Widget>[
-          IconButton(
-            tooltip: S.of(context).notificationsAlertsDismissAll,
-            iconSize: NotificationPageHeader.controlIconSize,
-            onPressed:
-                _viewModel.visibleAlerts.isNotEmpty &&
-                    !_viewModel.isDismissingAll
-                ? () => _dismissAll(_viewModel.visibleAlerts)
-                : null,
-            icon: const Icon(Icons.delete_sweep_outlined),
-          ),
-        ],
+    return NotificationMenuTheme(
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: NotificationPageHeader(
+          scrollController: _scrollController,
+          title: Text(S.of(context).notificationsAlertsTitle),
+          actions: <Widget>[
+            IconButton(
+              tooltip: S.of(context).notificationsAlertsDismissAll,
+              iconSize: NotificationPageHeader.controlIconSize,
+              onPressed:
+                  _viewModel.visibleAlerts.isNotEmpty &&
+                      !_viewModel.isDismissingAll
+                  ? () => _dismissAll(_viewModel.visibleAlerts)
+                  : null,
+              icon: const Icon(Icons.delete_sweep_outlined),
+            ),
+          ],
+        ),
+        body: _body(context),
       ),
-      body: _body(context),
     );
   }
 

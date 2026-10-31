@@ -1,7 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_access_settings_launcher.dart';
+import 'package:waterflyiii/notifications/application/settings/notification_backup_file_gateway.dart';
 import 'package:waterflyiii/notifications/application/settings/notification_processing_settings.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
@@ -84,6 +87,18 @@ class _AccessSettingsLauncher implements NotificationAccessSettingsLauncher {
     openCount++;
     return opened;
   }
+}
+
+class _BackupFileGateway implements NotificationBackupFileGateway {
+  @override
+  Future<Uint8List?> pickArchive() async => null;
+
+  @override
+  Future<bool> saveArchive({
+    required String dialogTitle,
+    required String suggestedName,
+    required Uint8List bytes,
+  }) async => true;
 }
 
 void main() {
@@ -245,6 +260,47 @@ void main() {
         findsOneWidget,
       );
     }
+  });
+
+  testWidgets('shows backup feedback in a floating snackbar', (
+    WidgetTester tester,
+  ) async {
+    const NotificationDefinition definition = NotificationDefinition(
+      id: 'bank',
+      applicationId: 'com.example.bank',
+      name: 'Example Bank',
+      extractors: <RegExpDefinition>[],
+      rules: <NotificationRule>[],
+    );
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: NotificationProcessingSettingsPage(
+          definitionStore: InMemoryNotificationDefinitionStore(
+            const <NotificationDefinition>[definition],
+          ),
+          historyStore: _HistoryStore(),
+          alertStore: InMemoryNotificationAlertStore(),
+          settingsStore: _SettingsStore(),
+          backupFileGateway: _BackupFileGateway(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Create backup'));
+    await tester.pumpAndSettle();
+
+    final Finder snackBar = find.byType(SnackBar);
+    expect(
+      find.text('Notification processing backup created.'),
+      findsOneWidget,
+    );
+    expect(
+      Theme.of(tester.element(snackBar)).snackBarTheme.behavior,
+      SnackBarBehavior.floating,
+    );
   });
 
   testWidgets('renders settings sections and saves history storage mode', (

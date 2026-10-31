@@ -16,6 +16,7 @@ import 'package:waterflyiii/notifications/application/stores/notification_histor
 import 'package:waterflyiii/notifications/presentation/settings/controllers/notification_processing_settings_view_model.dart';
 import 'package:waterflyiii/notifications/presentation/shared/message_status_card.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
+import 'package:waterflyiii/notifications/presentation/shared/notification_menu_theme.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_page_header.dart';
 import 'package:waterflyiii/notifications/presentation/shared/route_transition_load_scheduler.dart';
 import 'package:waterflyiii/notifications/presentation/settings/widgets/notification_processing_settings_sections.dart';
@@ -100,13 +101,15 @@ class _NotificationProcessingSettingsPageState
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    extendBodyBehindAppBar: true,
-    appBar: NotificationPageHeader(
-      scrollController: _scrollController,
-      title: Text(S.of(context).notificationsProcessingSettingsTitle),
+  Widget build(BuildContext context) => NotificationMenuTheme(
+    child: Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: NotificationPageHeader(
+        scrollController: _scrollController,
+        title: Text(S.of(context).notificationsProcessingSettingsTitle),
+      ),
+      body: _body(context),
     ),
-    body: _body(context),
   );
 
   Widget _body(BuildContext context) {

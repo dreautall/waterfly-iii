@@ -9,6 +9,7 @@ import 'package:logging/logging.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart';
+import 'package:version/version.dart';
 import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
@@ -499,6 +500,26 @@ class _HomeMainState extends State<HomeMain>
       for (AccountRead e in respLiabilityAccounts.body!.data)
         e.attributes.name: e.attributes.includeNetWorth ?? true,
     });
+    final Map<String, double> virtualBalances = <String, double>{
+      for (AccountRead e in respAssetAccounts.body!.data)
+        e.attributes.name:
+            double.tryParse(
+              e.attributes.pcVirtualBalance ??
+                  e.attributes.virtualBalance ??
+                  "0",
+            ) ??
+            0,
+    };
+    virtualBalances.addAll(<String, double>{
+      for (AccountRead e in respLiabilityAccounts.body!.data)
+        e.attributes.name:
+            double.tryParse(
+              e.attributes.pcVirtualBalance ??
+                  e.attributes.virtualBalance ??
+                  "0",
+            ) ??
+            0,
+    });
     for (ChartDataSet e in respBalanceData.body!) {
       if (includeInNetWorth.containsKey(e.label) &&
           includeInNetWorth[e.label] != true) {
@@ -506,6 +527,7 @@ class _HomeMainState extends State<HomeMain>
       }
       final Map<String, dynamic> entries =
           (e.usePrimary ? e.pcEntries : e.entries) as Map<String, dynamic>;
+      final double virtualBalance = virtualBalances[e.label] ?? 0;
       entries.forEach((String dateStr, dynamic valueStr) {
         DateTime date = tzHandler.sTime(DateTime.parse(dateStr)).toLocal();
         if (
@@ -516,7 +538,15 @@ class _HomeMainState extends State<HomeMain>
             // Other month: take last day of month
             (date.month != now.month &&
                 date.copyWith(day: date.day + 1).month != date.month)) {
-          final double value = double.tryParse(valueStr) ?? 0;
+          late final double value;
+          // virtual balance is added to the api since v6.6.0
+          // see https://github.com/dreautall/waterfly-iii/issues/864#issuecomment-6537620475
+          if (context.read<FireflyService>().apiVersion! >= Version(6, 6, 0)) {
+            value = (double.tryParse(valueStr) ?? 0) - virtualBalance;
+          } else {
+            value = double.tryParse(valueStr) ?? 0;
+          }
+
           // We don't really care about the exact date. Always using the first
           // ensures the loops below to fill up gaps work properly.
           date = date.copyWith(day: 1);

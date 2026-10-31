@@ -202,7 +202,6 @@ class _TransactionSummaryHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colors = Theme.of(context).colorScheme;
-    final bool amountOnly = title == null && amount != null;
     return DecoratedBox(
       decoration: BoxDecoration(
         color: colors.primaryContainer.withValues(alpha: 0.35),
@@ -210,63 +209,106 @@ class _TransactionSummaryHeader extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const Icon(Icons.receipt_long_outlined),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    amountOnly
-                        ? transactionFieldLabel(
-                            context,
-                            TransactionField.amount,
-                          )
-                        : S.of(context).notificationsTransactionSummary,
-                    style: context.notificationMetadataText,
-                  ),
-                  if (title != null) ...<Widget>[
-                    const SizedBox(height: 2),
-                    Text(
-                      title!,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    if (titleProvenance != null) ...<Widget>[
-                      const SizedBox(height: 2),
-                      _TransactionProvenance(provenance: titleProvenance!),
-                    ],
-                  ],
-                ],
-              ),
+            if (title != null)
+              _TitleSummary(title: title!, provenance: titleProvenance),
+            if (title != null && amount != null)
+              Divider(height: 25, indent: 36, color: colors.outlineVariant),
+            if (amount != null)
+              _AmountSummary(amount: amount!, provenance: amountProvenance),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TitleSummary extends StatelessWidget {
+  const _TitleSummary({required this.title, this.provenance});
+
+  final String title;
+  final TransactionFieldProvenance? provenance;
+
+  @override
+  Widget build(BuildContext context) => Row(
+    key: const Key('transaction-summary-title'),
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      Icon(fieldIcon(TransactionField.title), size: 20),
+      const SizedBox(width: 16),
+      Text(
+        transactionFieldLabel(context, TransactionField.title),
+        style: context.notificationMetadataText,
+      ),
+      const SizedBox(width: 12),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Text(
+              title,
+              textAlign: TextAlign.end,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
-            if (amount != null) ...<Widget>[
-              const SizedBox(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Text(
-                    amount!,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: colors.primary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  if (amountProvenance != null) ...<Widget>[
-                    const SizedBox(height: 2),
-                    _TransactionProvenance(
-                      provenance: amountProvenance!,
-                      textAlign: TextAlign.end,
-                    ),
-                  ],
-                ],
+            if (provenance != null) ...<Widget>[
+              const SizedBox(height: 2),
+              _TransactionProvenance(
+                provenance: provenance!,
+                textAlign: TextAlign.end,
               ),
             ],
           ],
         ),
       ),
+    ],
+  );
+}
+
+class _AmountSummary extends StatelessWidget {
+  const _AmountSummary({required this.amount, this.provenance});
+
+  final String amount;
+  final TransactionFieldProvenance? provenance;
+
+  @override
+  Widget build(BuildContext context) {
+    final ColorScheme colors = Theme.of(context).colorScheme;
+    return Row(
+      key: const Key('transaction-summary-amount'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Icon(fieldIcon(TransactionField.amount), size: 20),
+        const SizedBox(width: 16),
+        Text(
+          transactionFieldLabel(context, TransactionField.amount),
+          style: context.notificationMetadataText,
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Text(
+                amount,
+                textAlign: TextAlign.end,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: colors.primary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              if (provenance != null) ...<Widget>[
+                const SizedBox(height: 2),
+                _TransactionProvenance(
+                  provenance: provenance!,
+                  textAlign: TextAlign.end,
+                ),
+              ],
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

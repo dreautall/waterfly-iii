@@ -48,7 +48,8 @@ void main() {
     expect(find.text('Not configured'), findsOneWidget);
     expect(
       find.text(
-        "Choose how Waterfly should read this application's notifications.",
+        'Waterfly is now listening for notifications from this application. '
+        'Choose how it should read them.',
       ),
       findsOneWidget,
     );

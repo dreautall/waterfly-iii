@@ -2556,10 +2556,10 @@ abstract class S {
   /// **'Open this setup to resolve the migration issues.'**
   String get notificationsDefinitionMigrationOpenSetupHint;
 
-  /// Message explaining that notification processing has not been configured.
+  /// Message confirming that a newly registered application is being listened to while its processing remains unconfigured.
   ///
   /// In en, this message translates to:
-  /// **'Choose how Waterfly should read this application\'s notifications.'**
+  /// **'Waterfly is now listening for notifications from this application. Choose how it should read them.'**
   String get notificationsDefinitionNotConfiguredMessage;
 
   /// Description of the notification definition sample.

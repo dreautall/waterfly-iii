@@ -1598,7 +1598,7 @@ class SFr extends S {
 
   @override
   String get notificationsDefinitionNotConfiguredMessage =>
-      'Choose how Waterfly should read this application\'s notifications.';
+      'Waterfly is now listening for notifications from this application. Choose how it should read them.';
 
   @override
   String get notificationsDefinitionSampleDescription =>

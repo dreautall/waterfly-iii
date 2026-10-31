@@ -141,14 +141,6 @@ extension RuleActionSummary on RuleActionsSectionState {
     );
   }
 
-  String actionValueText(ValueSource source, TransactionField field) {
-    if (source is LiteralValueSource) {
-      return formatTransactionFieldValue(context, field, source.value);
-    }
-    if (source is FireflyResourceValueSource) return source.resourceId;
-    return sourceText(source);
-  }
-
   Widget actionStatusWidget(
     ActionCardStatus status,
     ValueSource? source,

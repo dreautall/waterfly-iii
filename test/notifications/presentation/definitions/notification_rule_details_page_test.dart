@@ -62,6 +62,40 @@ void main() {
 
   Finder conditionTitle(String text) => richText(text);
 
+  testWidgets('resolves notification properties from the active sample', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationRuleDetailsPage(
+          rule: const NotificationRule(
+            id: 'rule',
+            name: 'Notification text',
+            conditions: <NotificationCondition>[],
+            actions: <NotificationAction>[
+              SetTransactionFieldAction(
+                target: TransactionField.title,
+                valueSource: NotificationPropertyValueSource(
+                  NotificationProperty.title,
+                ),
+              ),
+            ],
+          ),
+          extractors: const <RegExpDefinition>[],
+          notificationContext: NotificationContext(
+            title: 'Card payment',
+            body: 'Paid 12 CAD',
+            receivedAt: DateTime(2026, 9, 7),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(richText('Resolved value: "Card payment"'), findsOneWidget);
+    expect(richText('Resolved value: "title"'), findsNothing);
+  });
+
   testWidgets('shows a direct rename action for a new conditional action', (
     WidgetTester tester,
   ) async {

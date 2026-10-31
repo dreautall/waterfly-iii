@@ -4,7 +4,7 @@ import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_a
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
-import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 
 void main() {
   const NotificationDefinitionPresetFactory factory =
@@ -34,9 +34,46 @@ void main() {
         TransactionField.notes,
       ],
     );
+    final List<SetTransactionFieldAction> actions = rule.actions
+        .whereType<SetTransactionFieldAction>()
+        .toList();
+    final RegExpDefinition titleExtractor = extractors.firstWhere(
+      (RegExpDefinition extractor) =>
+          extractor.predefinedType ==
+          PredefinedRegExpDefinition.notificationTitle,
+    );
+    final RegExpDefinition messageExtractor = extractors.firstWhere(
+      (RegExpDefinition extractor) =>
+          extractor.predefinedType ==
+          PredefinedRegExpDefinition.notificationMessage,
+    );
     expect(
-      rule.actions.whereType<SetTransactionFieldAction>().first.valueSource,
-      isA<NotificationPropertyValueSource>(),
+      actions.first.valueSource,
+      isA<RegExpCaptureValueSource>()
+          .having(
+            (RegExpCaptureValueSource source) => source.extractorId,
+            'extractorId',
+            titleExtractor.id,
+          )
+          .having(
+            (RegExpCaptureValueSource source) => source.captureName,
+            'captureName',
+            'title',
+          ),
+    );
+    expect(
+      actions.last.valueSource,
+      isA<RegExpCaptureValueSource>()
+          .having(
+            (RegExpCaptureValueSource source) => source.extractorId,
+            'extractorId',
+            messageExtractor.id,
+          )
+          .having(
+            (RegExpCaptureValueSource source) => source.captureName,
+            'captureName',
+            'message',
+          ),
     );
   });
 }

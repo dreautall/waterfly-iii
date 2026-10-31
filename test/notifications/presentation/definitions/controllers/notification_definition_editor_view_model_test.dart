@@ -8,6 +8,7 @@ import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.d
 import 'package:waterflyiii/notifications/domain/planning/transaction_creation_mode.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/controllers/notification_definition_editor_view_model.dart';
 
@@ -206,6 +207,71 @@ void main() {
     expect(viewModel.extractors, hasLength(4));
     expect(viewModel.rules, isEmpty);
     expect(viewModel.sharedActions, isEmpty);
+  });
+
+  test('normalizes earlier Basic notification-property mappings', () {
+    final RegExpDefinition titleExtractor =
+        RegExpDefinition.createPredefinedRegExpDefinition(
+          PredefinedRegExpDefinition.notificationTitle,
+        );
+    final RegExpDefinition messageExtractor =
+        RegExpDefinition.createPredefinedRegExpDefinition(
+          PredefinedRegExpDefinition.notificationMessage,
+        );
+    final NotificationDefinitionEditorViewModel viewModel =
+        NotificationDefinitionEditorViewModel(
+          definition.copyWith(
+            extractorMode: NotificationExtractorMode.basic,
+            extractors: <RegExpDefinition>[titleExtractor, messageExtractor],
+            sharedActions: const <NotificationAction>[
+              SetTransactionFieldAction(
+                target: TransactionField.title,
+                valueSource: NotificationPropertyValueSource(
+                  NotificationProperty.title,
+                ),
+              ),
+              SetTransactionFieldAction(
+                target: TransactionField.notes,
+                valueSource: NotificationPropertyValueSource(
+                  NotificationProperty.body,
+                ),
+              ),
+            ],
+          ),
+        );
+
+    final List<SetTransactionFieldAction> actions = viewModel.sharedActions
+        .whereType<SetTransactionFieldAction>()
+        .toList();
+    expect(
+      actions.first.valueSource,
+      isA<RegExpCaptureValueSource>()
+          .having(
+            (RegExpCaptureValueSource source) => source.extractorId,
+            'extractorId',
+            titleExtractor.id,
+          )
+          .having(
+            (RegExpCaptureValueSource source) => source.captureName,
+            'captureName',
+            'title',
+          ),
+    );
+    expect(
+      actions.last.valueSource,
+      isA<RegExpCaptureValueSource>()
+          .having(
+            (RegExpCaptureValueSource source) => source.extractorId,
+            'extractorId',
+            messageExtractor.id,
+          )
+          .having(
+            (RegExpCaptureValueSource source) => source.captureName,
+            'captureName',
+            'message',
+          ),
+    );
+    expect(viewModel.isDirty, isFalse);
   });
 
   test('persists Simple as a Basic presentation choice', () {

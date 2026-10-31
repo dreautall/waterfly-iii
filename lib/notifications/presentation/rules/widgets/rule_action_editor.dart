@@ -552,7 +552,10 @@ extension RuleActionEditor on RuleActionsSectionState {
             ),
       );
     }
-    return ActionCardStatus.resolved(actionValueText(source, action.target));
+    final String? value = source.resolve(actionEvaluationContext);
+    return value == null
+        ? ActionCardStatus.error(S.of(context).notificationsUnresolved)
+        : ActionCardStatus.resolved(value);
   }
 
   RegExpDefinition? extractorFor(RegExpCaptureValueSource source) =>

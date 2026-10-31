@@ -4,6 +4,7 @@ import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart'
 import 'package:waterflyiii/notifications/application/definitions/notification_definition_preset_factory.dart';
 import 'package:waterflyiii/notifications/application/definitions/notification_definition_validator.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
+import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
 import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
@@ -11,6 +12,8 @@ import 'package:waterflyiii/notifications/domain/notification_id.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_creation_mode.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 
 class NotificationDefinitionEditorViewModel extends ChangeNotifier {
   NotificationDefinitionEditorViewModel(
@@ -19,7 +22,9 @@ class NotificationDefinitionEditorViewModel extends ChangeNotifier {
         const NotificationDefinitionPresetFactory(),
     NotificationDefinitionValidator validator =
         const NotificationDefinitionValidator(),
-  }) : _draft = NotificationDefinitionDraft.fromDefinition(definition),
+  }) : _draft = NotificationDefinitionDraft.fromDefinition(
+         _normalizeBasicNotificationTextSources(definition),
+       ),
        _presetFactory = presetFactory,
        _validator = validator;
 
@@ -27,6 +32,72 @@ class NotificationDefinitionEditorViewModel extends ChangeNotifier {
   final NotificationDefinitionPresetFactory _presetFactory;
   final NotificationDefinitionValidator _validator;
   bool isSaving = false;
+
+  static NotificationDefinition _normalizeBasicNotificationTextSources(
+    NotificationDefinition definition,
+  ) {
+    if (definition.extractorMode != NotificationExtractorMode.basic) {
+      return definition;
+    }
+    RegExpDefinition? extractorFor(PredefinedRegExpDefinition type) {
+      for (final RegExpDefinition extractor in definition.extractors) {
+        if (extractor.predefinedType == type) return extractor;
+      }
+      return null;
+    }
+
+    final RegExpDefinition? titleExtractor = extractorFor(
+      PredefinedRegExpDefinition.notificationTitle,
+    );
+    final RegExpDefinition? messageExtractor = extractorFor(
+      PredefinedRegExpDefinition.notificationMessage,
+    );
+    NotificationAction normalize(NotificationAction action) {
+      if (action is! SetTransactionFieldAction) return action;
+      final NotificationPropertyValueSource? property =
+          action.valueSource is NotificationPropertyValueSource
+          ? action.valueSource as NotificationPropertyValueSource
+          : null;
+      final (RegExpDefinition?, String)? replacement = switch ((
+        action.target,
+        property?.property,
+      )) {
+        (TransactionField.title, NotificationProperty.title) => (
+          titleExtractor,
+          'title',
+        ),
+        (TransactionField.notes, NotificationProperty.body) => (
+          messageExtractor,
+          'message',
+        ),
+        _ => null,
+      };
+      final RegExpDefinition? extractor = replacement?.$1;
+      if (extractor == null) return action;
+      return SetTransactionFieldAction(
+        target: action.target,
+        valueSource: RegExpCaptureValueSource(
+          extractorId: extractor.id,
+          captureName: replacement!.$2,
+        ),
+      );
+    }
+
+    List<NotificationAction> normalizeActions(
+      List<NotificationAction> actions,
+    ) => actions.map(normalize).toList();
+
+    return definition.copyWith(
+      sharedActions: normalizeActions(definition.sharedActions),
+      rules: definition.rules
+          .map(
+            (NotificationRule rule) => rule.isPredefined
+                ? rule.copyWith(actions: normalizeActions(rule.actions))
+                : rule,
+          )
+          .toList(),
+    );
+  }
 
   List<RegExpDefinition> get extractors =>
       List<RegExpDefinition>.unmodifiable(_draft.extractors);

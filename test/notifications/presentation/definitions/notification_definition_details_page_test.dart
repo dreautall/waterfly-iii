@@ -1418,6 +1418,53 @@ void main() {
     expect(find.text('Add rule'), findsNothing);
   });
 
+  testWidgets('resolves initial Basic text mappings from sample extractors', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationDefinitionDetailsPage(
+          definition: const NotificationDefinition(
+            id: 'bank',
+            applicationId: 'com.example.bank',
+            name: 'Example Bank',
+            sampleTitle: 'Card payment',
+            sampleBody: 'Paid 12.50 CAD',
+            extractors: <RegExpDefinition>[],
+            rules: <NotificationRule>[],
+          ),
+          onSave: (NotificationDefinition definition) async => true,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Basic'));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.text('Set transaction fields'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.ensureVisible(find.text('Set transaction fields'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Set transaction fields'));
+    await tester.pumpAndSettle();
+
+    expect(
+      richText('Set field "title" from extractor "Notification title"'),
+      findsOneWidget,
+    );
+    expect(
+      richText('Set field "notes" from extractor "Notification message"'),
+      findsOneWidget,
+    );
+    expect(richText('Resolved value: "Card payment"'), findsOneWidget);
+    expect(richText('Resolved value: "Paid 12.50 CAD"'), findsOneWidget);
+    expect(richText('Resolved value: "title"'), findsNothing);
+    expect(richText('Resolved value: "body"'), findsNothing);
+  });
+
   // Ensures an extractor can be edited in its dedicated view without changing
   // its ID, which preserves references from rules added in a later workflow.
   testWidgets('updates an advanced extractor through its details page', (

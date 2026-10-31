@@ -644,10 +644,18 @@ void main() {
       isNull,
     );
 
-    await tester.enterText(
-      find.byKey(const Key('action-tags-search')),
-      'Weekend',
+    final Finder tagSearch = find.byKey(const Key('action-tags-search'));
+    await tester.tap(tagSearch);
+    await tester.pumpAndSettle();
+    final Finder clippedStep = find
+        .ancestor(of: tagSearch, matching: find.byType(ClipRect))
+        .first;
+    expect(
+      tester.getTopLeft(find.text('Search/Add Tag')).dy,
+      greaterThan(tester.getTopLeft(clippedStep).dy),
     );
+
+    await tester.enterText(tagSearch, 'Weekend');
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('action-tags-add')));
     await tester.pump();

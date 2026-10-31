@@ -141,23 +141,26 @@ class _TransactionActionTagsStepState extends State<TransactionActionTagsStep> {
           key: const Key('action-tags-step'),
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            TextField(
-              key: const Key('action-tags-search'),
-              controller: _searchController,
-              onChanged: (_) => setState(() {}),
-              onSubmitted: (_) => _submitTag(),
-              decoration: notificationInputDecoration(
-                context,
-                labelText: S.of(context).transactionDialogTagsHint,
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: canAdd
-                    ? IconButton(
-                        key: const Key('action-tags-add'),
-                        onPressed: _submitTag,
-                        tooltip: S.of(context).transactionDialogTagsAdd,
-                        icon: const Icon(Icons.add),
-                      )
-                    : null,
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: TextField(
+                key: const Key('action-tags-search'),
+                controller: _searchController,
+                onChanged: (_) => setState(() {}),
+                onSubmitted: (_) => _submitTag(),
+                decoration: notificationInputDecoration(
+                  context,
+                  labelText: S.of(context).transactionDialogTagsHint,
+                  prefixIcon: const Icon(Icons.search),
+                  suffixIcon: canAdd
+                      ? IconButton(
+                          key: const Key('action-tags-add'),
+                          onPressed: _submitTag,
+                          tooltip: S.of(context).transactionDialogTagsAdd,
+                          icon: const Icon(Icons.add),
+                        )
+                      : null,
+                ),
               ),
             ),
             const SizedBox(height: 8),

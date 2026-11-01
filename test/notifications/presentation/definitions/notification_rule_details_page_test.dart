@@ -4461,6 +4461,75 @@ void main() {
     expect(find.text('Alternate extractor'), findsOneWidget);
   });
 
+  testWidgets('keeps the current currency extractor available while editing', (
+    WidgetTester tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1000));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final RegExpDefinition extractor =
+        RegExpDefinition.createCustomRegExpDefinition(
+          'Currency extractor',
+          r'(?<currency>CAD)',
+        );
+    await tester.pumpWidget(
+      Provider<FireflyCurrencyResolver>.value(
+        value: FireflyCurrencyResolver(_CurrencyGateway()),
+        child: MaterialApp(
+          home: NotificationRuleDetailsPage(
+            rule: NotificationRule(
+              id: 'rule',
+              name: 'Card payment',
+              conditions: const <NotificationCondition>[],
+              actions: <NotificationAction>[
+                SetTransactionFieldAction(
+                  target: TransactionField.currency,
+                  valueSource: CurrencyCaptureValueSource(
+                    capture: RegExpCaptureValueSource(
+                      extractorId: extractor.id,
+                      captureName: 'currency',
+                    ),
+                    resolutionMode: CurrencyResolutionMode.dynamic,
+                  ),
+                ),
+              ],
+            ),
+            extractors: <RegExpDefinition>[extractor],
+            notificationContext: NotificationContext(
+              title: 'Card payment',
+              body: 'Paid 10 CAD',
+              receivedAt: DateTime(2026, 9, 6),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final Finder actionCard = find
+        .ancestor(
+          of: richText(
+            'Set field "currency" from extractor "Currency extractor"',
+          ),
+          matching: find.byType(ElevatedButton),
+        )
+        .first;
+    await tester.ensureVisible(actionCard);
+    await tester.pumpAndSettle();
+    await tester.tap(actionCard);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Match dynamically'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Currency extractor'), findsOneWidget);
+    expect(
+      tester
+          .widget<DialogExpanderCard>(
+            find.widgetWithText(DialogExpanderCard, 'Extractor capture'),
+          )
+          .expanded,
+      isTrue,
+    );
+  });
+
   testWidgets('describes literal action sources without repeating values', (
     WidgetTester tester,
   ) async {

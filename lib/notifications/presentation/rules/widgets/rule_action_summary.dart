@@ -1,5 +1,7 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:provider/provider.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
+import 'package:waterflyiii/notifications/application/resources/firefly_currency_resolver.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
@@ -156,6 +158,48 @@ extension RuleActionSummary on RuleActionsSectionState {
       );
     }
     if (source is FireflyResourceValueSource) {
+      if (source.resourceKind == FireflyResourceKind.currency) {
+        return FutureBuilder<FireflyCurrency>(
+          future: fixedCurrencyResolutions.putIfAbsent(
+            source.resourceId,
+            () => context.read<FireflyCurrencyResolver>().resolveById(
+              source.resourceId,
+            ),
+          ),
+          builder:
+              (BuildContext context, AsyncSnapshot<FireflyCurrency> snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return resolvedValueStatusWidget(
+                    S.of(context).notificationsCurrencyFixedCardChecking,
+                    resolvedValueColor: colors.outline,
+                    quoteResolvedValue: false,
+                  );
+                }
+                final FireflyCurrency? currency = snapshot.data;
+                if (!snapshot.hasError && currency != null) {
+                  return resolvedValueStatusWidget(
+                    S
+                        .of(context)
+                        .notificationsCurrencyDynamicOutcomeSuccess(
+                          currency.code,
+                          currency.name,
+                        ),
+                    quoteResolvedValue: false,
+                  );
+                }
+                return resolvedValueStatusWidget(
+                  snapshot.error is FireflyCurrencyUnavailableException
+                      ? S.of(context).notificationsCurrencyFixedCardUnavailable
+                      : S
+                            .of(context)
+                            .notificationsCurrencyFixedCardLookupFailure,
+                  resolvedValueColor: colors.tertiary,
+                  quoteResolvedValue: false,
+                  maxLines: 2,
+                );
+              },
+        );
+      }
       return FireflyResourceLabel(
         kind: source.resourceKind,
         id: source.resourceId,
@@ -163,9 +207,60 @@ extension RuleActionSummary on RuleActionsSectionState {
       );
     }
     if (source is CurrencyCaptureValueSource) {
+      if (source.resolutionMode == CurrencyResolutionMode.dynamic) {
+        final String captured = status.resolvedValue!;
+        return FutureBuilder<FireflyCurrencyResolution>(
+          future: dynamicCurrencyResolutions.putIfAbsent(
+            captured,
+            () => context.read<FireflyCurrencyResolver>().inspect(captured),
+          ),
+          builder:
+              (
+                BuildContext context,
+                AsyncSnapshot<FireflyCurrencyResolution> snapshot,
+              ) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return resolvedValueStatusWidget(
+                    captured,
+                    outcome: S
+                        .of(context)
+                        .notificationsCurrencyDynamicOutcomeChecking,
+                    outcomeColor: colors.outline,
+                  );
+                }
+                final FireflyCurrencyResolution? resolution = snapshot.data;
+                final FireflyCurrency? currency = resolution?.currency;
+                final bool resolved = !snapshot.hasError && currency != null;
+                return resolvedValueStatusWidget(
+                  captured,
+                  outcome: snapshot.hasError
+                      ? S
+                            .of(context)
+                            .notificationsCurrencyDynamicOutcomeLookupFailure
+                      : resolved
+                      ? S
+                            .of(context)
+                            .notificationsCurrencyDynamicOutcomeSuccess(
+                              currency.code,
+                              currency.name,
+                            )
+                      : resolution?.status ==
+                            FireflyCurrencyResolutionStatus.ambiguous
+                      ? S
+                            .of(context)
+                            .notificationsCurrencyDynamicOutcomeAmbiguous
+                      : S
+                            .of(context)
+                            .notificationsCurrencyDynamicOutcomeUnavailable,
+                  outcomeColor: resolved ? colors.onSurface : colors.tertiary,
+                  maxLines: 2,
+                );
+              },
+        );
+      }
       return FireflyResourceLabel(
         kind: FireflyResourceKind.currency,
-        id: source.resourceId,
+        id: source.resourceId!,
         style: TextStyle(color: colors.outline),
       );
     }
@@ -177,32 +272,47 @@ extension RuleActionSummary on RuleActionsSectionState {
               ? resolvedValue
               : resolvedValueText(resolvedValue, source)
         : formatTransactionFieldValue(context, field, resolvedValue);
+    return resolvedValueStatusWidget(
+      displayValue,
+      outcome: status.mappedValue == null
+          ? null
+          : field == null
+          ? status.mappedValue
+          : formatTransactionFieldValue(context, field, status.mappedValue!),
+    );
+  }
+
+  Widget resolvedValueStatusWidget(
+    String resolvedValue, {
+    String? outcome,
+    Color? outcomeColor,
+    Color? resolvedValueColor,
+    bool quoteResolvedValue = true,
+    int maxLines = 1,
+  }) {
+    final ColorScheme colors = Theme.of(context).colorScheme;
     return Text.rich(
       TextSpan(
         style: TextStyle(color: colors.outline),
         children: <InlineSpan>[
           TextSpan(text: S.of(context).notificationsResolvedValueLabel),
-          const TextSpan(text: '"'),
+          if (quoteResolvedValue) const TextSpan(text: '"'),
           TextSpan(
-            text: displayValue,
-            style: TextStyle(color: colors.onSurface),
+            text: resolvedValue,
+            style: TextStyle(color: resolvedValueColor ?? colors.onSurface),
           ),
-          const TextSpan(text: '"'),
-          if (status.mappedValue != null) ...<InlineSpan>[
+          if (quoteResolvedValue) const TextSpan(text: '"'),
+          if (outcome != null) ...<InlineSpan>[
             const TextSpan(text: ' → '),
             TextSpan(
-              text: field == null
-                  ? status.mappedValue
-                  : formatTransactionFieldValue(
-                      context,
-                      field,
-                      status.mappedValue!,
-                    ),
-              style: TextStyle(color: colors.onSurface),
+              text: outcome,
+              style: TextStyle(color: outcomeColor ?? colors.onSurface),
             ),
           ],
         ],
       ),
+      maxLines: maxLines,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:material_ui/material_ui.dart' as material_ui;
 import 'package:provider/provider.dart';
 import 'package:waterflyiii/notifications/application/resources/firefly_resource_label_resolver.dart';
+import 'package:waterflyiii/notifications/application/resources/firefly_currency_resolver.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_tags_action.dart';
@@ -45,6 +46,29 @@ class _LabelGateway implements FireflyResourceLabelGateway {
       kind == FireflyResourceKind.currency && id == '10'
       ? 'Canadian dollar'
       : '${kind.name} $id';
+}
+
+class _CurrencyGateway implements FireflyCurrencyGateway {
+  @override
+  Future<List<FireflyCurrency>> search(String query) async {
+    const List<FireflyCurrency> currencies = <FireflyCurrency>[
+      FireflyCurrency(
+        id: 'cad',
+        name: 'Canadian dollar',
+        code: 'CAD',
+        symbol: r'$',
+      ),
+      FireflyCurrency(id: 'usd', name: 'US dollar', code: 'USD', symbol: r'$'),
+    ];
+    return currencies
+        .where(
+          (FireflyCurrency currency) =>
+              query.isEmpty ||
+              currency.code.toLowerCase() == query.toLowerCase() ||
+              currency.symbol == query,
+        )
+        .toList();
+  }
 }
 
 class MaterialApp extends material_ui.MaterialApp {
@@ -631,6 +655,165 @@ void main() {
     expect(find.text('Resolved transaction fields'), findsOneWidget);
     expect(find.text('Canadian dollar'), findsWidgets);
     expect(find.text('10'), findsNothing);
+  });
+
+  testWidgets(
+    'shows successful dynamic currency resolution on the action card',
+    (WidgetTester tester) async {
+      await tester.binding.setSurfaceSize(const Size(800, 1200));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      final RegExpDefinition extractor =
+          RegExpDefinition.createCustomRegExpDefinition(
+            'Currency',
+            r'(?<currency>CAD)',
+          );
+
+      await tester.pumpWidget(
+        Provider<FireflyCurrencyResolver>.value(
+          value: FireflyCurrencyResolver(_CurrencyGateway()),
+          child: MaterialApp(
+            home: NotificationRuleDetailsPage(
+              rule: NotificationRule(
+                id: 'rule',
+                name: 'Card payment',
+                conditions: const <NotificationCondition>[],
+                actions: <NotificationAction>[
+                  SetTransactionFieldAction(
+                    target: TransactionField.currency,
+                    valueSource: CurrencyCaptureValueSource(
+                      capture: RegExpCaptureValueSource(
+                        extractorId: extractor.id,
+                        captureName: 'currency',
+                      ),
+                      resolutionMode: CurrencyResolutionMode.dynamic,
+                    ),
+                  ),
+                ],
+              ),
+              extractors: <RegExpDefinition>[extractor],
+              notificationContext: NotificationContext(
+                title: 'Card payment',
+                body: 'Paid 10 CAD',
+                receivedAt: DateTime(2026, 9, 7),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      final Finder status = find.text(
+        'Resolved value: "CAD" → CAD — Canadian dollar',
+      );
+      expect(status, findsOneWidget);
+      final TextSpan span = tester.widget<Text>(status).textSpan! as TextSpan;
+      final ColorScheme colors = Theme.of(tester.element(status)).colorScheme;
+      expect(span.style?.color, colors.outline);
+      expect((span.children![2] as TextSpan).style?.color, colors.onSurface);
+      expect((span.children![5] as TextSpan).style?.color, colors.onSurface);
+    },
+  );
+
+  testWidgets('shows fixed currency code and name on the action card', (
+    WidgetTester tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      Provider<FireflyCurrencyResolver>.value(
+        value: FireflyCurrencyResolver(_CurrencyGateway()),
+        child: MaterialApp(
+          home: NotificationRuleDetailsPage(
+            rule: const NotificationRule(
+              id: 'rule',
+              name: 'Card payment',
+              conditions: <NotificationCondition>[],
+              actions: <NotificationAction>[
+                SetTransactionFieldAction(
+                  target: TransactionField.currency,
+                  valueSource: FireflyResourceValueSource(
+                    resourceKind: FireflyResourceKind.currency,
+                    resourceId: 'cad',
+                  ),
+                ),
+              ],
+            ),
+            extractors: const <RegExpDefinition>[],
+            notificationContext: NotificationContext(
+              title: 'Card payment',
+              body: 'Paid 10 CAD',
+              receivedAt: DateTime(2026, 9, 7),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    final Finder status = find.text('Resolved value: CAD — Canadian dollar');
+    expect(status, findsOneWidget);
+    final TextSpan span = tester.widget<Text>(status).textSpan! as TextSpan;
+    final ColorScheme colors = Theme.of(tester.element(status)).colorScheme;
+    expect(span.style?.color, colors.outline);
+    expect((span.children![1] as TextSpan).style?.color, colors.onSurface);
+  });
+
+  testWidgets('shows ambiguous dynamic currency warning on the action card', (
+    WidgetTester tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final RegExpDefinition extractor =
+        RegExpDefinition.createCustomRegExpDefinition(
+          'Currency',
+          r'(?<currency>\$)',
+        );
+    await tester.pumpWidget(
+      Provider<FireflyCurrencyResolver>.value(
+        value: FireflyCurrencyResolver(_CurrencyGateway()),
+        child: MaterialApp(
+          home: NotificationRuleDetailsPage(
+            rule: NotificationRule(
+              id: 'rule',
+              name: 'Card payment',
+              conditions: const <NotificationCondition>[],
+              actions: <NotificationAction>[
+                SetTransactionFieldAction(
+                  target: TransactionField.currency,
+                  valueSource: CurrencyCaptureValueSource(
+                    capture: RegExpCaptureValueSource(
+                      extractorId: extractor.id,
+                      captureName: 'currency',
+                    ),
+                    resolutionMode: CurrencyResolutionMode.dynamic,
+                  ),
+                ),
+              ],
+            ),
+            extractors: <RegExpDefinition>[extractor],
+            notificationContext: NotificationContext(
+              title: 'Card payment',
+              body: r'Paid 10 $',
+              receivedAt: DateTime(2026, 9, 7),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    final Finder status = find.text(
+      r'Resolved value: "$" → Ambiguous currency; cannot resolve',
+    );
+    expect(status, findsOneWidget);
+    final TextSpan span = tester.widget<Text>(status).textSpan! as TextSpan;
+    final ColorScheme colors = Theme.of(tester.element(status)).colorScheme;
+    expect(span.style?.color, colors.outline);
+    expect((span.children![2] as TextSpan).style?.color, colors.onSurface);
+    expect((span.children![5] as TextSpan).style?.color, colors.tertiary);
   });
 
   testWidgets('shows a draft rule action without shared actions', (
@@ -3243,10 +3426,11 @@ void main() {
     await tester.tap(find.text('Currency'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Extractor capture'), findsOneWidget);
+    expect(find.text('Use a selected currency'), findsOneWidget);
+    expect(find.text('Match dynamically'), findsOneWidget);
   });
 
-  testWidgets('does not offer Firefly currency selection in Basic mode', (
+  testWidgets('offers selected or dynamic currency in Basic mode', (
     WidgetTester tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(800, 1000));
@@ -3286,7 +3470,8 @@ void main() {
     await tester.tap(find.text('Currency'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Extractor capture'), findsOneWidget);
+    expect(find.text('Use a selected currency'), findsOneWidget);
+    expect(find.text('Match dynamically'), findsOneWidget);
     expect(find.text('Select from Firefly'), findsNothing);
   });
 

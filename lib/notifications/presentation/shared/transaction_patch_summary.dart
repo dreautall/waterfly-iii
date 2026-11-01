@@ -234,7 +234,7 @@ class _TitleSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(
     key: const Key('transaction-summary-title'),
-    crossAxisAlignment: CrossAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.center,
     children: <Widget>[
       Icon(fieldIcon(TransactionField.title), size: 20),
       const SizedBox(width: 16),
@@ -245,6 +245,7 @@ class _TitleSummary extends StatelessWidget {
       const SizedBox(width: 12),
       Expanded(
         child: Column(
+          key: const Key('transaction-summary-title-value'),
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             Text(
@@ -277,7 +278,7 @@ class _AmountSummary extends StatelessWidget {
     final ColorScheme colors = Theme.of(context).colorScheme;
     return Row(
       key: const Key('transaction-summary-amount'),
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Icon(fieldIcon(TransactionField.amount), size: 20),
         const SizedBox(width: 16),
@@ -288,6 +289,7 @@ class _AmountSummary extends StatelessWidget {
         const SizedBox(width: 12),
         Expanded(
           child: Column(
+            key: const Key('transaction-summary-amount-value'),
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               Text(

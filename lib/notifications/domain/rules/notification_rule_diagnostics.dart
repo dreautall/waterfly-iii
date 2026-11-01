@@ -24,7 +24,7 @@ class NotificationRuleDiagnostics {
       .whereType<SetTransactionFieldAction>()
       .where((SetTransactionFieldAction action) {
         if (action.target == TransactionField.currency &&
-            action.valueSource is! CurrencyCaptureValueSource) {
+            !isConfiguredCurrencyValueSource(action.valueSource)) {
           return true;
         }
 

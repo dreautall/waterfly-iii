@@ -107,6 +107,48 @@ void main() {
     expect(result, same(outcome));
   });
 
+  test('prepares an intent and records its resolved patch', () async {
+    final NotificationTransactionIntentExecutor
+    executor = NotificationTransactionIntentExecutor(
+      intentPreparer: (TransactionIntent intent) async => intent.withPatch(
+        const TransactionPatch(<TransactionField, String>{
+          TransactionField.currency: '4',
+        }),
+      ),
+      automaticHandler:
+          (NotificationContext notification, TransactionIntent intent) =>
+              Future<String>.error(
+                StateError('automatic handler should not run'),
+              ),
+      manualHandler:
+          (NotificationContext notification, TransactionIntent intent) async {
+            expect(intent.patch.values[TransactionField.currency], '4');
+          },
+      automaticCompletedHandler: (NotificationContext notification) =>
+          Future<void>.error(StateError('completion handler should not run')),
+      failureHandler:
+          (
+            NotificationContext notification,
+            NotificationProcessingOutcome outcome,
+            Object error,
+            StackTrace stackTrace,
+          ) => Future<void>.error(StateError('failure handler should not run')),
+    );
+
+    final NotificationProcessingOutcome result = await executor.execute(
+      notification: notification,
+      intent: const TransactionIntent(
+        mode: TransactionCreationMode.prompt,
+        patch: TransactionPatch(<TransactionField, String>{
+          TransactionField.currency: 'CAD',
+        }),
+      ),
+      outcome: outcome,
+    );
+
+    expect(result.transactionPatch?.values[TransactionField.currency], '4');
+  });
+
   test('records execution failure and returns a failed outcome', () async {
     NotificationProcessingOutcome? recordedOutcome;
     Object? recordedError;

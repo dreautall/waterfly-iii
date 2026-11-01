@@ -9,7 +9,15 @@ import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_v
 
 enum TransactionActionSourceMode { capture, literal, firefly }
 
-enum TransactionActionStep { field, source, buildText, tags, currencyMatch }
+enum TransactionActionStep {
+  field,
+  source,
+  buildText,
+  tags,
+  currencyResolution,
+  currencyMatch,
+  currencyDynamicPreview,
+}
 
 @immutable
 class TransactionActionDraft {
@@ -59,11 +67,10 @@ class TransactionActionController extends ChangeNotifier {
          step: switch (fixedField) {
            null => TransactionActionStep.field,
            TransactionField.tag => TransactionActionStep.tags,
+           TransactionField.currency =>
+             TransactionActionStep.currencyResolution,
            _ => TransactionActionStep.source,
          },
-         sourceMode: fixedField == TransactionField.currency && captureOnly
-             ? TransactionActionSourceMode.capture
-             : null,
        );
 
   final TransactionField? fixedField;
@@ -80,9 +87,11 @@ class TransactionActionController extends ChangeNotifier {
   void selectField(TransactionField field) => _set(
     _draft.copyWith(
       field: field,
-      step: field == TransactionField.tag
-          ? TransactionActionStep.tags
-          : TransactionActionStep.source,
+      step: switch (field) {
+        TransactionField.tag => TransactionActionStep.tags,
+        TransactionField.currency => TransactionActionStep.currencyResolution,
+        _ => TransactionActionStep.source,
+      },
       isAdvancing: true,
       clearSourceMode: true,
     ),
@@ -97,11 +106,26 @@ class TransactionActionController extends ChangeNotifier {
       _draft.copyWith(
         capture: capture,
         extractedValue: value,
-        step: TransactionActionStep.currencyMatch,
+        step: TransactionActionStep.currencyDynamicPreview,
         isAdvancing: true,
       ),
     );
   }
+
+  void selectFixedCurrencyResolution() => _set(
+    _draft.copyWith(
+      step: TransactionActionStep.currencyMatch,
+      isAdvancing: true,
+    ),
+  );
+
+  void selectDynamicCurrencyResolution() => _set(
+    _draft.copyWith(
+      sourceMode: TransactionActionSourceMode.capture,
+      step: TransactionActionStep.source,
+      isAdvancing: true,
+    ),
+  );
 
   void selectBuildText() => _set(
     _draft.copyWith(
@@ -116,8 +140,26 @@ class TransactionActionController extends ChangeNotifier {
       case TransactionActionStep.currencyMatch:
         _set(
           _draft.copyWith(
+            step: TransactionActionStep.currencyResolution,
+            isAdvancing: false,
+          ),
+        );
+      case TransactionActionStep.currencyDynamicPreview:
+        _set(
+          _draft.copyWith(
             step: TransactionActionStep.source,
             isAdvancing: false,
+            clearCapture: true,
+          ),
+        );
+      case TransactionActionStep.currencyResolution:
+        if (fixedField != null) return;
+        _set(
+          _draft.copyWith(
+            step: TransactionActionStep.field,
+            isAdvancing: false,
+            clearField: true,
+            clearSourceMode: true,
             clearCapture: true,
           ),
         );
@@ -139,12 +181,33 @@ class TransactionActionController extends ChangeNotifier {
           ),
         );
       case TransactionActionStep.source when fixedField == null:
+        if (_draft.field == TransactionField.currency) {
+          _set(
+            _draft.copyWith(
+              step: TransactionActionStep.currencyResolution,
+              isAdvancing: false,
+              clearSourceMode: true,
+              clearCapture: true,
+            ),
+          );
+          return;
+        }
         _set(
           _draft.copyWith(
             step: TransactionActionStep.field,
             isAdvancing: false,
             clearField: true,
             clearSourceMode: true,
+          ),
+        );
+      case TransactionActionStep.source
+          when _draft.field == TransactionField.currency:
+        _set(
+          _draft.copyWith(
+            step: TransactionActionStep.currencyResolution,
+            isAdvancing: false,
+            clearSourceMode: true,
+            clearCapture: true,
           ),
         );
       case TransactionActionStep.field ||

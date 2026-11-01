@@ -13,6 +13,7 @@ import 'package:waterflyiii/notifications/domain/actions/set_transaction_tags_ac
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/composed_value_source.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/currency_capture_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/literal_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
@@ -22,6 +23,7 @@ import 'package:waterflyiii/notifications/presentation/shared/dialog_selector_ca
 import 'package:waterflyiii/notifications/presentation/dialogs/actions/transaction_action_steps.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/actions/transaction_action_value_dialog.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_card_theme.dart';
+import 'package:waterflyiii/notifications/presentation/shared/message_status_card.dart';
 
 class MaterialApp extends material_ui.MaterialApp {
   const MaterialApp({super.key, required super.home, super.theme})
@@ -148,11 +150,14 @@ void main() {
 
     await tester.tap(find.text('Edit currency'));
     await tester.pumpAndSettle();
+    await tester.tap(find.text('Match dynamically'));
+    await tester.pumpAndSettle();
 
     final DialogExpanderCard captureOption = tester.widget(
       find.widgetWithText(DialogExpanderCard, 'Extractor capture'),
     );
     expect(captureOption.expanded, isTrue);
+    expect(find.text('Select from Firefly'), findsNothing);
   });
 
   testWidgets('focuses a literal value only after its expander opens', (
@@ -462,6 +467,8 @@ void main() {
 
     await tester.tap(find.text('Edit currency'));
     await tester.pumpAndSettle();
+    await tester.tap(find.text('Match dynamically'));
+    await tester.pumpAndSettle();
     expect(find.text('2 matches'), findsOneWidget);
 
     await tester.tap(find.text('2 matches'));
@@ -520,7 +527,7 @@ void main() {
 
     await tester.tap(find.text('Edit currency'));
     await tester.pumpAndSettle();
-    await tester.tap(find.byType(DialogSelectorCard));
+    await tester.tap(find.text('Use a selected currency'));
     await tester.pumpAndSettle();
     expect(
       find.byKey(const ValueKey<String>('action-currency-match')),
@@ -533,6 +540,121 @@ void main() {
     expect(tester.takeException(), isNull);
     await tester.pumpAndSettle();
     expect(gateway.queries, contains('usd'));
+  });
+
+  testWidgets(
+    'allows a dynamic currency mapping when the sample does not match',
+    (WidgetTester tester) async {
+      final RegExpDefinition extractor =
+          RegExpDefinition.createPredefinedRegExpDefinition(
+            PredefinedRegExpDefinition.currency,
+          );
+      NotificationAction? selected;
+      await tester.pumpWidget(
+        Provider<FireflyCurrencyResolver>.value(
+          value: FireflyCurrencyResolver(_CurrencyGateway()),
+          child: MaterialApp(
+            home: Scaffold(
+              body: Builder(
+                builder: (BuildContext context) => ElevatedButton(
+                  onPressed: () async {
+                    selected = await selectTransactionAction(
+                      context,
+                      extractors: <RegExpDefinition>[extractor],
+                      notificationContext: NotificationContext(
+                        title: 'Card payment',
+                        body: 'Paid 12 CAD',
+                        receivedAt: DateTime(2026, 9, 7),
+                      ),
+                      fixedField: TransactionField.currency,
+                      captureExtractorId: extractor.id,
+                      captureOnly: true,
+                    );
+                  },
+                  child: const Text('Edit currency'),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await tester.tap(find.text('Edit currency'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Match dynamically'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(DialogSelectorCard));
+      await tester.pumpAndSettle();
+      expect(
+        tester
+            .getTopLeft(
+              find.text(
+                'Review how the current sample resolves. This preview does not '
+                'prevent saving the action.',
+              ),
+            )
+            .dx,
+        tester.getTopLeft(find.text('Extracted value: "CAD"')).dx,
+      );
+      expect(find.byType(MessageStatusCard), findsOneWidget);
+      expect(
+        find.text(
+          '"CAD" does not match an enabled Firefly currency. Waterfly cannot '
+          'create or substitute a currency mapping locally. Add or enable the '
+          'matching currency in Firefly III to resolve this value dynamically. '
+          'You can still save this configuration for other or future values.',
+        ),
+        findsOneWidget,
+      );
+      await tester.tap(find.byKey(const Key('dynamic-currency-save')));
+      await tester.pumpAndSettle();
+
+      final CurrencyCaptureValueSource source =
+          (selected! as SetTransactionFieldAction).valueSource
+              as CurrencyCaptureValueSource;
+      expect(source.resolutionMode, CurrencyResolutionMode.dynamic);
+      expect(source.resourceId, isNull);
+    },
+  );
+
+  testWidgets('disables dynamic matching without an eligible extractor', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      Provider<FireflyCurrencyResolver>.value(
+        value: FireflyCurrencyResolver(_CurrencyGateway()),
+        child: MaterialApp(
+          home: Scaffold(
+            body: Builder(
+              builder: (BuildContext context) => ElevatedButton(
+                onPressed: () => selectTransactionAction(
+                  context,
+                  extractors: const <RegExpDefinition>[],
+                  notificationContext: notificationContext(),
+                  fixedField: TransactionField.currency,
+                ),
+                child: const Text('Edit currency'),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Edit currency'));
+    await tester.pumpAndSettle();
+
+    final DialogSelectorCard dynamicOption = tester.widget(
+      find.widgetWithText(DialogSelectorCard, 'Match dynamically'),
+    );
+    expect(dynamicOption.onTap, isNull);
+    expect(
+      find.text(
+        'Add a currency or custom extractor before configuring dynamic '
+        'matching.',
+      ),
+      findsOneWidget,
+    );
   });
 
   testWidgets('omits an action\'s current extractor when editing its value', (

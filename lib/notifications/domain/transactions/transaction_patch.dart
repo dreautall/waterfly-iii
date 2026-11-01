@@ -9,6 +9,7 @@ class TransactionPatch {
     this.currencyCodes = const <TransactionField, String>{},
     this.resourceReferences =
         const <TransactionField, FireflyResourceReference>{},
+    this.dynamicCurrencyValues = const <TransactionField, String>{},
   });
 
   final Map<TransactionField, String> values;
@@ -16,6 +17,7 @@ class TransactionPatch {
   final Map<TransactionField, String> displayValues;
   final Map<TransactionField, String> currencyCodes;
   final Map<TransactionField, FireflyResourceReference> resourceReferences;
+  final Map<TransactionField, String> dynamicCurrencyValues;
 
   factory TransactionPatch.fromJson(
     Map<String, dynamic> json,
@@ -55,6 +57,15 @@ class TransactionPatch {
                     ),
                   ),
             ),
+    dynamicCurrencyValues:
+        (json['dynamicCurrencyValues'] as Map<String, dynamic>? ??
+                <String, dynamic>{})
+            .map(
+              (String key, dynamic value) => MapEntry<TransactionField, String>(
+                TransactionField.values.byName(key),
+                value as String,
+              ),
+            ),
   );
 
   bool get isEmpty => values.isEmpty && tags.isEmpty;
@@ -70,6 +81,8 @@ class TransactionPatch {
         <TransactionField, String>{};
     final Map<TransactionField, FireflyResourceReference> resourceReferences =
         <TransactionField, FireflyResourceReference>{};
+    final Map<TransactionField, String> dynamicCurrencyValues =
+        <TransactionField, String>{};
     final List<String> tags = <String>[];
     for (final TransactionPatch? patch in patches) {
       if (patch == null) continue;
@@ -77,11 +90,13 @@ class TransactionPatch {
         displayValues.remove(field);
         currencyCodes.remove(field);
         resourceReferences.remove(field);
+        dynamicCurrencyValues.remove(field);
       }
       values.addAll(patch.values);
       displayValues.addAll(patch.displayValues);
       currencyCodes.addAll(patch.currencyCodes);
       resourceReferences.addAll(patch.resourceReferences);
+      dynamicCurrencyValues.addAll(patch.dynamicCurrencyValues);
       for (final String tag in patch.tags) {
         if (!tags.any(
           (String existing) => existing.toLowerCase() == tag.toLowerCase(),
@@ -96,6 +111,7 @@ class TransactionPatch {
       displayValues: displayValues,
       currencyCodes: currencyCodes,
       resourceReferences: resourceReferences,
+      dynamicCurrencyValues: dynamicCurrencyValues,
     );
   }
 
@@ -119,6 +135,10 @@ class TransactionPatch {
             field.name,
             reference.toJson(),
           ),
+    ),
+    'dynamicCurrencyValues': dynamicCurrencyValues.map(
+      (TransactionField field, String value) =>
+          MapEntry<String, String>(field.name, value),
     ),
   };
 }

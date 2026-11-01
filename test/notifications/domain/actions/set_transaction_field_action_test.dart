@@ -9,6 +9,7 @@ import 'package:waterflyiii/notifications/domain/evaluation/notification_formatt
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_evaluation_result.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
+import 'package:waterflyiii/notifications/domain/transactions/firefly_resource_reference.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/firefly_resource_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/composed_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/currency_capture_value_source.dart';
@@ -281,6 +282,71 @@ void main() {
         ),
         isNull,
       );
+    });
+
+    test('sets a selected currency without requiring an extractor', () {
+      const SetTransactionFieldAction action = SetTransactionFieldAction(
+        target: TransactionField.currency,
+        valueSource: FireflyResourceValueSource(
+          resourceKind: FireflyResourceKind.currency,
+          resourceId: '4',
+        ),
+      );
+
+      final ActionEvaluationResult result = action.evaluate(context);
+
+      expect(result.succeeded, isTrue);
+      expect(result.patch?.values[TransactionField.currency], '4');
+      expect(
+        result.patch?.resourceReferences[TransactionField.currency],
+        const FireflyResourceReference(
+          kind: FireflyResourceKind.currency,
+          id: '4',
+        ),
+      );
+    });
+
+    test('preserves a dynamic currency token for runtime resolution', () {
+      final EvaluationContext currencyContext = EvaluationContext(
+        notification: context.notification,
+        extractionResults: const <String, RegExpEvaluationResult>{
+          'currency': RegExpEvaluationResult(
+            hasMatches: true,
+            namedCaptures: <String, List<String>>{
+              'currency': <String>['CAD'],
+            },
+          ),
+        },
+      );
+      const SetTransactionFieldAction action = SetTransactionFieldAction(
+        target: TransactionField.currency,
+        valueSource: CurrencyCaptureValueSource(
+          capture: RegExpCaptureValueSource(
+            extractorId: 'currency',
+            captureName: 'currency',
+          ),
+          resolutionMode: CurrencyResolutionMode.dynamic,
+        ),
+      );
+
+      final ActionEvaluationResult result = action.evaluate(currencyContext);
+
+      expect(result.patch?.values[TransactionField.currency], 'CAD');
+      expect(
+        result.patch?.dynamicCurrencyValues[TransactionField.currency],
+        'CAD',
+      );
+      expect(result.patch?.resourceReferences, isEmpty);
+
+      final CurrencyCaptureValueSource restored =
+          (NotificationAction.fromJson(
+                        jsonDecode(jsonEncode(action)) as Map<String, dynamic>,
+                      )
+                      as SetTransactionFieldAction)
+                  .valueSource
+              as CurrencyCaptureValueSource;
+      expect(restored.resolutionMode, CurrencyResolutionMode.dynamic);
+      expect(restored.resourceId, isNull);
     });
 
     test(

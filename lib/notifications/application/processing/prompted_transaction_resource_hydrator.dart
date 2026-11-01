@@ -1,5 +1,6 @@
 import 'package:waterflyiii/notifications/application/resources/firefly_currency_resolver.dart';
 import 'package:waterflyiii/notifications/application/resources/firefly_resource_label_resolver.dart';
+import 'package:waterflyiii/notifications/application/processing/dynamic_currency_patch_resolver.dart';
 import 'package:waterflyiii/notifications/domain/transactions/firefly_resource_reference.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_patch.dart';
@@ -25,14 +26,17 @@ class PromptedTransactionResourceHydrator {
   final FireflyCurrencyResolver _currencyResolver;
 
   Future<PromptedTransactionResources> hydrate(TransactionPatch patch) async {
+    final TransactionPatch resolvedPatch = await DynamicCurrencyPatchResolver(
+      _currencyResolver,
+    ).resolve(patch);
     final Map<TransactionField, String> displayValues =
-        <TransactionField, String>{...patch.displayValues};
+        <TransactionField, String>{...resolvedPatch.displayValues};
     final Map<TransactionField, String> currencyCodes =
-        <TransactionField, String>{...patch.currencyCodes};
+        <TransactionField, String>{...resolvedPatch.currencyCodes};
     FireflyCurrency? currency;
 
     for (final MapEntry<TransactionField, FireflyResourceReference> entry
-        in patch.resourceReferences.entries) {
+        in resolvedPatch.resourceReferences.entries) {
       switch (entry.value.kind) {
         case FireflyResourceKind.account:
           continue;
@@ -53,11 +57,12 @@ class PromptedTransactionResourceHydrator {
 
     return PromptedTransactionResources(
       patch: TransactionPatch(
-        patch.values,
-        tags: patch.tags,
+        resolvedPatch.values,
+        tags: resolvedPatch.tags,
         displayValues: displayValues,
         currencyCodes: currencyCodes,
-        resourceReferences: patch.resourceReferences,
+        resourceReferences: resolvedPatch.resourceReferences,
+        dynamicCurrencyValues: resolvedPatch.dynamicCurrencyValues,
       ),
       currency: currency,
     );

@@ -3648,11 +3648,11 @@ class SDa extends S {
   String get notificationsActionSave => 'Save';
 
   @override
-  String get notificationsActionMatchCurrency => 'Match extracted currency';
+  String get notificationsActionMatchCurrency => 'Select currency';
 
   @override
   String get notificationsActionChooseCurrency =>
-      'Choose the Firefly currency for the captured value.';
+      'Choose the Firefly currency to use whenever this rule runs.';
 
   @override
   String get notificationsActionSearchCurrencies => 'Search Firefly currencies';
@@ -3666,7 +3666,7 @@ class SDa extends S {
 
   @override
   String notificationsActionExtractedCurrency(String value) {
-    return 'Extracted value \"$value\". Select its matching Firefly currency.';
+    return 'Extracted value: \"$value\"';
   }
 
   @override
@@ -3729,4 +3729,133 @@ class SDa extends S {
   @override
   String get notificationsActionNoCurrencies =>
       'No matching Firefly currencies found.';
+
+  @override
+  String get notificationsCurrencyResolutionTitle => 'Choose currency matching';
+
+  @override
+  String get notificationsCurrencyResolutionDescription =>
+      'Choose how Waterfly should match the extracted currency.';
+
+  @override
+  String get notificationsCurrencyResolutionFixed => 'Use a selected currency';
+
+  @override
+  String get notificationsCurrencyResolutionFixedDescription =>
+      'Always use one selected Firefly currency when this rule runs. No extractor is required.';
+
+  @override
+  String get notificationsCurrencyResolutionDynamic => 'Match dynamically';
+
+  @override
+  String get notificationsCurrencyResolutionDynamicDescription =>
+      'Choose an extractor capture, then match its code or symbol against enabled Firefly currencies when the rule runs.';
+
+  @override
+  String get notificationsCurrencyResolutionChecking =>
+      'Checking this sample value...';
+
+  @override
+  String notificationsCurrencyResolutionDynamicMatch(String name, String code) {
+    return 'This sample uniquely matches $name ($code).';
+  }
+
+  @override
+  String get notificationsCurrencyResolutionDynamicUnavailable =>
+      'This sample is missing or ambiguous. You can still save the action, but this value would fail during processing.';
+
+  @override
+  String get notificationsCurrencyDynamicPreviewTitle =>
+      'Review dynamic matching';
+
+  @override
+  String get notificationsCurrencyDynamicPreviewDescription =>
+      'Review how the current sample resolves. This preview does not prevent saving the action.';
+
+  @override
+  String get notificationsCurrencyResolutionDynamicNeedsExtractor =>
+      'Add a currency or custom extractor before configuring dynamic matching.';
+
+  @override
+  String get notificationsCurrencyDynamicPreviewSuccess => 'Sample resolves';
+
+  @override
+  String get notificationsCurrencyDynamicPreviewWarning =>
+      'Sample needs attention';
+
+  @override
+  String notificationsCurrencyDynamicCardSuccess(
+    String captured,
+    String code,
+    String name,
+  ) {
+    return '\"$captured\" → $code — $name';
+  }
+
+  @override
+  String notificationsCurrencyDynamicCardAmbiguous(String captured) {
+    return '\"$captured\" → Ambiguous currency; cannot resolve';
+  }
+
+  @override
+  String notificationsCurrencyDynamicCardUnavailable(String captured) {
+    return '\"$captured\" → No enabled currency found';
+  }
+
+  @override
+  String notificationsCurrencyDynamicCardChecking(String captured) {
+    return '\"$captured\" → Checking currency...';
+  }
+
+  @override
+  String notificationsCurrencyDynamicCardLookupFailure(String captured) {
+    return '\"$captured\" → Currency lookup failed; try again';
+  }
+
+  @override
+  String notificationsCurrencyDynamicOutcomeSuccess(String code, String name) {
+    return '$code — $name';
+  }
+
+  @override
+  String get notificationsCurrencyDynamicOutcomeAmbiguous =>
+      'Ambiguous currency; cannot resolve';
+
+  @override
+  String get notificationsCurrencyDynamicOutcomeUnavailable =>
+      'No enabled currency found';
+
+  @override
+  String get notificationsCurrencyDynamicOutcomeChecking =>
+      'Checking currency...';
+
+  @override
+  String get notificationsCurrencyDynamicOutcomeLookupFailure =>
+      'Currency lookup failed; try again';
+
+  @override
+  String get notificationsCurrencyFixedCardChecking => 'Checking currency...';
+
+  @override
+  String get notificationsCurrencyFixedCardUnavailable =>
+      'Configured currency is no longer available in Firefly III';
+
+  @override
+  String get notificationsCurrencyFixedCardLookupFailure =>
+      'Currency lookup failed; try again';
+
+  @override
+  String notificationsCurrencyDynamicPreviewAmbiguous(String captured) {
+    return '\"$captured\" matches more than one enabled Firefly currency. Waterfly cannot safely choose between them. To resolve this dynamically, update the enabled currencies in Firefly III so this value has one unique match. You can still save this configuration despite the warning.';
+  }
+
+  @override
+  String notificationsCurrencyDynamicPreviewUnavailable(String captured) {
+    return '\"$captured\" does not match an enabled Firefly currency. Waterfly cannot create or substitute a currency mapping locally. Add or enable the matching currency in Firefly III to resolve this value dynamically. You can still save this configuration for other or future values.';
+  }
+
+  @override
+  String notificationsCurrencyDynamicPreviewLookupFailure(String captured) {
+    return 'Waterfly could not check \"$captured\" against Firefly currencies right now. Verify that Firefly III is available and its currencies can be loaded. You can still save this configuration; Waterfly will try the lookup again when a notification is processed.';
+  }
 }

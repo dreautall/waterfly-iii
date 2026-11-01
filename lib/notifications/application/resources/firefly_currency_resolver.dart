@@ -14,6 +14,36 @@ class FireflyCurrency {
   final int decimalPlaces;
 }
 
+enum FireflyCurrencyResolutionStatus { resolved, unavailable, ambiguous }
+
+class FireflyCurrencyResolution {
+  const FireflyCurrencyResolution._({required this.status, this.currency});
+
+  const FireflyCurrencyResolution.resolved(FireflyCurrency currency)
+    : this._(
+        status: FireflyCurrencyResolutionStatus.resolved,
+        currency: currency,
+      );
+
+  const FireflyCurrencyResolution.unavailable()
+    : this._(status: FireflyCurrencyResolutionStatus.unavailable);
+
+  const FireflyCurrencyResolution.ambiguous()
+    : this._(status: FireflyCurrencyResolutionStatus.ambiguous);
+
+  final FireflyCurrencyResolutionStatus status;
+  final FireflyCurrency? currency;
+}
+
+class FireflyCurrencyUnavailableException implements Exception {
+  const FireflyCurrencyUnavailableException(this.id);
+
+  final String id;
+
+  @override
+  String toString() => 'Currency $id is unavailable.';
+}
+
 abstract interface class FireflyCurrencyGateway {
   Future<List<FireflyCurrency>> search(String query);
 }
@@ -30,16 +60,25 @@ class FireflyCurrencyResolver {
   }
 
   Future<FireflyCurrency?> resolveUnique(String token) async {
+    return (await inspect(token)).currency;
+  }
+
+  Future<FireflyCurrencyResolution> inspect(String token) async {
     final List<FireflyCurrency> matches = await _gateway.search(token);
+    late final List<FireflyCurrency> candidates;
     if (_isIsoCode(token)) {
-      final List<FireflyCurrency> exactMatches = filterCurrenciesByCode(
+      candidates = filterCurrenciesByCode(
         matches.isEmpty ? await _gateway.search('') : matches,
         token,
       ).toList();
-      if (exactMatches.length == 1) return exactMatches.single;
-      return null;
+    } else {
+      candidates = matches;
     }
-    return matches.length == 1 ? matches.single : null;
+    return switch (candidates.length) {
+      0 => const FireflyCurrencyResolution.unavailable(),
+      1 => FireflyCurrencyResolution.resolved(candidates.single),
+      _ => const FireflyCurrencyResolution.ambiguous(),
+    };
   }
 
   Future<FireflyCurrency> resolveById(String id) async {
@@ -47,7 +86,7 @@ class FireflyCurrencyResolver {
     for (final FireflyCurrency currency in currencies) {
       if (currency.id == id) return currency;
     }
-    throw StateError('Currency $id is unavailable.');
+    throw FireflyCurrencyUnavailableException(id);
   }
 
   static bool _isIsoCode(String value) =>

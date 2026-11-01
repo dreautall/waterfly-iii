@@ -14,6 +14,7 @@ import 'package:waterflyiii/notifications/presentation/shared/notification_input
 import 'package:waterflyiii/notifications/presentation/shared/dialog_selector_card.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_empty_state.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_text_styles.dart';
+import 'package:waterflyiii/notifications/presentation/shared/message_status_card.dart';
 import 'package:waterflyiii/widgets/firefly_transaction_title_autocomplete.dart';
 
 class ActionFieldStep extends StatelessWidget {
@@ -231,14 +232,12 @@ class ActionSourceStep extends StatelessWidget {
 class ActionCurrencyMatchStep extends StatelessWidget {
   const ActionCurrencyMatchStep({
     super.key,
-    required this.extractedValue,
     required this.searchController,
     required this.matches,
     required this.onSearchChanged,
     required this.onSelected,
   });
 
-  final String? extractedValue;
   final TextEditingController searchController;
   final Future<Iterable<FireflyCurrency>>? matches;
   final ValueChanged<String> onSearchChanged;
@@ -251,15 +250,6 @@ class ActionCurrencyMatchStep extends StatelessWidget {
     physics: const ClampingScrollPhysics(),
     padding: const EdgeInsets.all(4),
     children: <Widget>[
-      Text(
-        S
-            .of(context)
-            .notificationsActionExtractedCurrency(
-              extractedValue ?? S.of(context).notificationsActionNoValue,
-            ),
-        style: context.notificationSectionDescription,
-      ),
-      const SizedBox(height: 16),
       TextField(
         controller: searchController,
         autofocus: true,
@@ -286,6 +276,7 @@ class ActionCurrencyMatchStep extends StatelessWidget {
                   ),
                 );
               }
+
               if (snapshot.hasError) {
                 return Text(
                   S.of(context).notificationsActionCurrenciesLoadFailure,
@@ -314,6 +305,136 @@ class ActionCurrencyMatchStep extends StatelessWidget {
                       ),
                     )
                     .toList(),
+              );
+            },
+      ),
+    ],
+  );
+}
+
+class ActionCurrencyResolutionStep extends StatelessWidget {
+  const ActionCurrencyResolutionStep({
+    super.key,
+    required this.onFixed,
+    required this.onDynamic,
+    required this.dynamicAvailable,
+  });
+
+  final VoidCallback onFixed;
+  final VoidCallback onDynamic;
+  final bool dynamicAvailable;
+
+  @override
+  Widget build(BuildContext context) => ListView(
+    key: const ValueKey<String>('currency-resolution'),
+    shrinkWrap: true,
+    physics: const ClampingScrollPhysics(),
+    padding: const EdgeInsets.symmetric(vertical: 4),
+    children: <Widget>[
+      DialogSelectorCard(
+        margin: const EdgeInsets.only(bottom: 8),
+        leading: const Icon(Icons.link_outlined),
+        title: Text(S.of(context).notificationsCurrencyResolutionFixed),
+        subtitle: Text(
+          S.of(context).notificationsCurrencyResolutionFixedDescription,
+          style: context.notificationSupportingText,
+        ),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: onFixed,
+      ),
+      DialogSelectorCard(
+        leading: const Icon(Icons.sync_outlined),
+        title: Text(S.of(context).notificationsCurrencyResolutionDynamic),
+        subtitle: Text(
+          dynamicAvailable
+              ? S.of(context).notificationsCurrencyResolutionDynamicDescription
+              : S
+                    .of(context)
+                    .notificationsCurrencyResolutionDynamicNeedsExtractor,
+          style: context.notificationSupportingText,
+        ),
+        trailing: dynamicAvailable
+            ? const Icon(Icons.chevron_right)
+            : const Icon(Icons.warning_amber_outlined),
+        onTap: dynamicAvailable ? onDynamic : null,
+      ),
+    ],
+  );
+}
+
+class ActionDynamicCurrencyPreviewStep extends StatelessWidget {
+  const ActionDynamicCurrencyPreviewStep({
+    super.key,
+    required this.extractedValue,
+    required this.dynamicMatch,
+  });
+
+  final String extractedValue;
+  final Future<FireflyCurrencyResolution> dynamicMatch;
+
+  @override
+  Widget build(BuildContext context) => ListView(
+    key: const ValueKey<String>('dynamic-currency-preview'),
+    shrinkWrap: true,
+    physics: const ClampingScrollPhysics(),
+    padding: const EdgeInsets.symmetric(vertical: 4),
+    children: <Widget>[
+      Text(
+        S.of(context).notificationsActionExtractedCurrency(extractedValue),
+        style: context.notificationSectionDescription,
+      ),
+      const SizedBox(height: 12),
+      FutureBuilder<FireflyCurrencyResolution>(
+        future: dynamicMatch,
+        builder:
+            (
+              BuildContext context,
+              AsyncSnapshot<FireflyCurrencyResolution> snapshot,
+            ) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+              final FireflyCurrencyResolution? resolution = snapshot.data;
+              final FireflyCurrency? currency = resolution?.currency;
+              final bool available = !snapshot.hasError && currency != null;
+              return MessageStatusCard(
+                status: available
+                    ? MessageStatus.success
+                    : MessageStatus.warning,
+                title: available
+                    ? S.of(context).notificationsCurrencyDynamicPreviewSuccess
+                    : S.of(context).notificationsCurrencyDynamicPreviewWarning,
+                message: snapshot.hasError
+                    ? S
+                          .of(context)
+                          .notificationsCurrencyDynamicPreviewLookupFailure(
+                            extractedValue,
+                          )
+                    : available
+                    ? S
+                          .of(context)
+                          .notificationsCurrencyDynamicCardSuccess(
+                            extractedValue,
+                            currency.code,
+                            currency.name,
+                          )
+                    : resolution?.status ==
+                          FireflyCurrencyResolutionStatus.ambiguous
+                    ? S
+                          .of(context)
+                          .notificationsCurrencyDynamicPreviewAmbiguous(
+                            extractedValue,
+                          )
+                    : S
+                          .of(context)
+                          .notificationsCurrencyDynamicPreviewUnavailable(
+                            extractedValue,
+                          ),
               );
             },
       ),
@@ -361,6 +482,8 @@ IconData actionStepIcon(TransactionActionStep step, TransactionField? field) =>
     switch (step) {
       TransactionActionStep.field => Icons.account_tree_outlined,
       TransactionActionStep.currencyMatch => Icons.currency_exchange_outlined,
+      TransactionActionStep.currencyResolution => Icons.sync_alt_outlined,
+      TransactionActionStep.currencyDynamicPreview => Icons.preview_outlined,
       TransactionActionStep.source => Icons.tune_outlined,
       TransactionActionStep.buildText => Icons.segment_outlined,
       TransactionActionStep.tags => fieldIcon(TransactionField.tag),

@@ -164,6 +164,7 @@ class _ActionValueSourceDialogState extends State<_ActionValueSourceDialog> {
   final FocusNode _literalFocusNode = FocusNode();
   final TextEditingController _currencyController = TextEditingController();
   Future<Iterable<FireflyCurrency>>? _currencyMatches;
+  Future<FireflyCurrencyResolution>? _dynamicCurrencyMatch;
   String? _literalError;
   late List<ValueSource> _composedParts;
   late List<String> _selectedTags;
@@ -228,9 +229,7 @@ class _ActionValueSourceDialogState extends State<_ActionValueSourceDialog> {
 
   void _selectOptionalField(TransactionField field) {
     if (field == TransactionField.currency) {
-      _controller
-        ..selectField(field)
-        ..setSourceMode(TransactionActionSourceMode.capture);
+      _controller.selectField(field);
       return;
     }
     final (
@@ -271,9 +270,9 @@ class _ActionValueSourceDialogState extends State<_ActionValueSourceDialog> {
     if (field == TransactionField.currency) {
       _controller.selectCapture(capture, selection.value);
       final String normalized = selection.value.trim();
-      _currencyController.text =
-          RegExp(r'^[A-Za-z0-9]{3,}$').hasMatch(normalized) ? normalized : '';
-      _currencyMatches = _searchCurrencies();
+      _dynamicCurrencyMatch = context.read<FireflyCurrencyResolver>().inspect(
+        normalized,
+      );
     } else {
       Navigator.of(
         context,
@@ -309,10 +308,27 @@ class _ActionValueSourceDialogState extends State<_ActionValueSourceDialog> {
   void _selectCurrency(FireflyCurrency currency) {
     _complete(
       TransactionField.currency,
+      FireflyResourceValueSource(
+        resourceKind: FireflyResourceKind.currency,
+        resourceId: currency.id,
+      ),
+    );
+  }
+
+  void _selectFixedCurrencyResolution() {
+    _currencyController.clear();
+    setState(() {
+      _currencyMatches = _searchCurrencies();
+    });
+    _controller.selectFixedCurrencyResolution();
+  }
+
+  void _saveDynamicCurrency() {
+    _complete(
+      TransactionField.currency,
       CurrencyCaptureValueSource(
         capture: _controller.draft.capture!,
-        resourceId: currency.id,
-        expectedValue: _controller.draft.extractedValue,
+        resolutionMode: CurrencyResolutionMode.dynamic,
       ),
     );
   }
@@ -347,6 +363,20 @@ class _ActionValueSourceDialogState extends State<_ActionValueSourceDialog> {
   void _complete(TransactionField field, ValueSource source) => Navigator.of(
     context,
   ).pop(SetTransactionFieldAction(target: field, valueSource: source));
+
+  List<RegExpDefinition> _captureExtractors(TransactionField field) => widget
+      .extractors
+      .where(
+        (RegExpDefinition extractor) =>
+            (widget.captureExtractorId == null ||
+                extractor.id == widget.captureExtractorId) &&
+            extractor.id != widget.excludedExtractorId &&
+            (field != TransactionField.currency ||
+                extractor.predefinedType ==
+                    PredefinedRegExpDefinition.currency ||
+                extractor.type == RegExpDefinitionType.custom),
+      )
+      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -433,6 +463,9 @@ class _ActionValueSourceDialogState extends State<_ActionValueSourceDialog> {
         if (draft.step != TransactionActionStep.field &&
             (widget.fixedField == null ||
                 draft.step == TransactionActionStep.currencyMatch ||
+                draft.step == TransactionActionStep.currencyDynamicPreview ||
+                (draft.step == TransactionActionStep.source &&
+                    draft.field == TransactionField.currency) ||
                 draft.step == TransactionActionStep.buildText ||
                 draft.step == TransactionActionStep.tags))
           TextButton(
@@ -480,6 +513,12 @@ class _ActionValueSourceDialogState extends State<_ActionValueSourceDialog> {
                   ).pop(SetTransactionTagsAction(_selectedTags)),
             child: Text(S.of(context).notificationsActionSave),
           ),
+        if (draft.step == TransactionActionStep.currencyDynamicPreview)
+          FilledButton(
+            key: const Key('dynamic-currency-save'),
+            onPressed: _saveDynamicCurrency,
+            child: Text(S.of(context).notificationsActionSave),
+          ),
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
@@ -501,17 +540,13 @@ class _ActionValueSourceDialogState extends State<_ActionValueSourceDialog> {
       key: ValueKey<String>('action-source-${draft.field!.name}'),
       field: draft.field!,
       sourceMode: draft.sourceMode,
-      extractors: widget.extractors
-          .where(
-            (RegExpDefinition extractor) =>
-                (widget.captureExtractorId == null ||
-                    extractor.id == widget.captureExtractorId) &&
-                extractor.id != widget.excludedExtractorId,
-          )
-          .toList(),
+      extractors: _captureExtractors(draft.field!),
       notificationContext: widget.notificationContext,
-      captureOnly: widget.captureOnly,
-      allowFireflyResource: widget.allowFireflyResource,
+      captureOnly:
+          widget.captureOnly || draft.field == TransactionField.currency,
+      allowFireflyResource:
+          widget.allowFireflyResource &&
+          draft.field != TransactionField.currency,
       literalController: _literalController,
       literalFocusNode: _literalFocusNode,
       literalError: _literalError,
@@ -549,18 +584,35 @@ class _ActionValueSourceDialogState extends State<_ActionValueSourceDialog> {
     ),
     TransactionActionStep.currencyMatch => ActionCurrencyMatchStep(
       key: const ValueKey<String>('action-currency-match'),
-      extractedValue: draft.extractedValue,
       searchController: _currencyController,
       matches: _currencyMatches,
       onSearchChanged: _searchCurrency,
       onSelected: _selectCurrency,
     ),
+    TransactionActionStep.currencyResolution => ActionCurrencyResolutionStep(
+      key: const ValueKey<String>('action-currency-resolution'),
+      onFixed: _selectFixedCurrencyResolution,
+      onDynamic: _controller.selectDynamicCurrencyResolution,
+      dynamicAvailable: _captureExtractors(
+        TransactionField.currency,
+      ).isNotEmpty,
+    ),
+    TransactionActionStep.currencyDynamicPreview =>
+      ActionDynamicCurrencyPreviewStep(
+        key: const ValueKey<String>('action-dynamic-currency-preview'),
+        extractedValue: draft.extractedValue!,
+        dynamicMatch: _dynamicCurrencyMatch!,
+      ),
   };
 
   String _title(TransactionActionDraft draft) => switch (draft.step) {
     TransactionActionStep.field => S.of(context).notificationsActionSelectField,
     TransactionActionStep.currencyMatch =>
       S.of(context).notificationsActionMatchCurrency,
+    TransactionActionStep.currencyResolution =>
+      S.of(context).notificationsCurrencyResolutionTitle,
+    TransactionActionStep.currencyDynamicPreview =>
+      S.of(context).notificationsCurrencyDynamicPreviewTitle,
     TransactionActionStep.buildText =>
       S.of(context).notificationsActionBuildText,
     TransactionActionStep.tags => S.of(context).transactionDialogTagsTitle,
@@ -576,6 +628,10 @@ class _ActionValueSourceDialogState extends State<_ActionValueSourceDialog> {
     TransactionActionStep.field => S.of(context).notificationsActionChooseField,
     TransactionActionStep.currencyMatch =>
       S.of(context).notificationsActionChooseCurrency,
+    TransactionActionStep.currencyResolution =>
+      S.of(context).notificationsCurrencyResolutionDescription,
+    TransactionActionStep.currencyDynamicPreview =>
+      S.of(context).notificationsCurrencyDynamicPreviewDescription,
     TransactionActionStep.buildText =>
       S.of(context).notificationsActionBuildTextDescription,
     TransactionActionStep.tags =>

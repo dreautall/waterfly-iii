@@ -112,4 +112,20 @@ void main() {
     );
     expect(resources.currency, isNull);
   });
+
+  test('resolves a persisted dynamic currency before prompting', () async {
+    final PromptedTransactionResources resources = await hydrator.hydrate(
+      const TransactionPatch(
+        <TransactionField, String>{TransactionField.currency: 'CAD'},
+        dynamicCurrencyValues: <TransactionField, String>{
+          TransactionField.currency: 'CAD',
+        },
+      ),
+    );
+
+    expect(resources.patch.values[TransactionField.currency], '4');
+    expect(resources.patch.dynamicCurrencyValues, isEmpty);
+    expect(resources.patch.currencyCodes[TransactionField.currency], 'CAD');
+    expect(resources.currency?.id, '4');
+  });
 }

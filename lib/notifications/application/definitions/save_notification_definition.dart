@@ -10,7 +10,6 @@ import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.d
 import 'package:waterflyiii/notifications/domain/notification_id.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
-import 'package:waterflyiii/notifications/domain/value_sources/currency_capture_value_source.dart';
 
 enum SaveNotificationDefinitionStatus { saved, duplicate, notFound, failed }
 
@@ -308,10 +307,10 @@ class SaveNotificationDefinition {
       rule.actions.whereType<SetTransactionFieldAction>().any(
         (SetTransactionFieldAction action) =>
             action.target == TransactionField.currency &&
-            action.valueSource is CurrencyCaptureValueSource,
+            isConfiguredCurrencyValueSource(action.valueSource),
       );
 
   bool _isUnresolvedCurrencyAction(SetTransactionFieldAction action) =>
       action.target == TransactionField.currency &&
-      action.valueSource is! CurrencyCaptureValueSource;
+      !isConfiguredCurrencyValueSource(action.valueSource);
 }

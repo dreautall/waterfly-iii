@@ -5713,16 +5713,16 @@ abstract class S {
   /// **'Save'**
   String get notificationsActionSave;
 
-  /// Currency capture mapping title.
+  /// Fixed currency selection title.
   ///
   /// In en, this message translates to:
-  /// **'Match extracted currency'**
+  /// **'Select currency'**
   String get notificationsActionMatchCurrency;
 
-  /// Currency mapping description.
+  /// Fixed currency selection description.
   ///
   /// In en, this message translates to:
-  /// **'Choose the Firefly currency for the captured value.'**
+  /// **'Choose the Firefly currency to use whenever this rule runs.'**
   String get notificationsActionChooseCurrency;
 
   /// Currency mapping search field label.
@@ -5743,10 +5743,10 @@ abstract class S {
   /// **'no value'**
   String get notificationsActionNoValue;
 
-  /// Currency capture mapping description.
+  /// Dynamic currency sample value.
   ///
   /// In en, this message translates to:
-  /// **'Extracted value \"{value}\". Select its matching Firefly currency.'**
+  /// **'Extracted value: \"{value}\"'**
   String notificationsActionExtractedCurrency(String value);
 
   /// Transaction field description.
@@ -5844,6 +5844,190 @@ abstract class S {
   /// In en, this message translates to:
   /// **'No matching Firefly currencies found.'**
   String get notificationsActionNoCurrencies;
+
+  /// Title for choosing fixed or dynamic currency matching.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose currency matching'**
+  String get notificationsCurrencyResolutionTitle;
+
+  /// Description for choosing fixed or dynamic currency matching.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how Waterfly should match the extracted currency.'**
+  String get notificationsCurrencyResolutionDescription;
+
+  /// Fixed currency matching choice.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a selected currency'**
+  String get notificationsCurrencyResolutionFixed;
+
+  /// Description of fixed currency matching.
+  ///
+  /// In en, this message translates to:
+  /// **'Always use one selected Firefly currency when this rule runs. No extractor is required.'**
+  String get notificationsCurrencyResolutionFixedDescription;
+
+  /// Dynamic currency matching choice.
+  ///
+  /// In en, this message translates to:
+  /// **'Match dynamically'**
+  String get notificationsCurrencyResolutionDynamic;
+
+  /// Description of dynamic currency matching.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an extractor capture, then match its code or symbol against enabled Firefly currencies when the rule runs.'**
+  String get notificationsCurrencyResolutionDynamicDescription;
+
+  /// Status while checking a sample dynamic currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking this sample value...'**
+  String get notificationsCurrencyResolutionChecking;
+
+  /// Successful sample dynamic currency match.
+  ///
+  /// In en, this message translates to:
+  /// **'This sample uniquely matches {name} ({code}).'**
+  String notificationsCurrencyResolutionDynamicMatch(String name, String code);
+
+  /// Unavailable dynamic currency matching status.
+  ///
+  /// In en, this message translates to:
+  /// **'This sample is missing or ambiguous. You can still save the action, but this value would fail during processing.'**
+  String get notificationsCurrencyResolutionDynamicUnavailable;
+
+  /// Title shown after selecting a dynamic currency capture.
+  ///
+  /// In en, this message translates to:
+  /// **'Review dynamic matching'**
+  String get notificationsCurrencyDynamicPreviewTitle;
+
+  /// Description shown after selecting a dynamic currency capture.
+  ///
+  /// In en, this message translates to:
+  /// **'Review how the current sample resolves. This preview does not prevent saving the action.'**
+  String get notificationsCurrencyDynamicPreviewDescription;
+
+  /// Explanation shown when dynamic currency matching is unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a currency or custom extractor before configuring dynamic matching.'**
+  String get notificationsCurrencyResolutionDynamicNeedsExtractor;
+
+  /// Title for a successful dynamic currency sample preview.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample resolves'**
+  String get notificationsCurrencyDynamicPreviewSuccess;
+
+  /// Title for an unresolved dynamic currency sample preview.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample needs attention'**
+  String get notificationsCurrencyDynamicPreviewWarning;
+
+  /// Successful dynamic currency resolution shown on an action card.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{captured}\" → {code} — {name}'**
+  String notificationsCurrencyDynamicCardSuccess(
+    String captured,
+    String code,
+    String name,
+  );
+
+  /// Ambiguous dynamic currency resolution shown on an action card.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{captured}\" → Ambiguous currency; cannot resolve'**
+  String notificationsCurrencyDynamicCardAmbiguous(String captured);
+
+  /// Unavailable dynamic currency resolution shown on an action card.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{captured}\" → No enabled currency found'**
+  String notificationsCurrencyDynamicCardUnavailable(String captured);
+
+  /// Loading dynamic currency resolution shown on an action card.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{captured}\" → Checking currency...'**
+  String notificationsCurrencyDynamicCardChecking(String captured);
+
+  /// Failed dynamic currency lookup shown on an action card.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{captured}\" → Currency lookup failed; try again'**
+  String notificationsCurrencyDynamicCardLookupFailure(String captured);
+
+  /// Successful dynamic currency outcome shown after a resolved value.
+  ///
+  /// In en, this message translates to:
+  /// **'{code} — {name}'**
+  String notificationsCurrencyDynamicOutcomeSuccess(String code, String name);
+
+  /// Ambiguous dynamic currency outcome shown after a resolved value.
+  ///
+  /// In en, this message translates to:
+  /// **'Ambiguous currency; cannot resolve'**
+  String get notificationsCurrencyDynamicOutcomeAmbiguous;
+
+  /// Unavailable dynamic currency outcome shown after a resolved value.
+  ///
+  /// In en, this message translates to:
+  /// **'No enabled currency found'**
+  String get notificationsCurrencyDynamicOutcomeUnavailable;
+
+  /// Loading dynamic currency outcome shown after a resolved value.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking currency...'**
+  String get notificationsCurrencyDynamicOutcomeChecking;
+
+  /// Failed dynamic currency outcome shown after a resolved value.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency lookup failed; try again'**
+  String get notificationsCurrencyDynamicOutcomeLookupFailure;
+
+  /// Loading fixed currency shown after the resolved value label.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking currency...'**
+  String get notificationsCurrencyFixedCardChecking;
+
+  /// Unavailable fixed currency shown after the resolved value label.
+  ///
+  /// In en, this message translates to:
+  /// **'Configured currency is no longer available in Firefly III'**
+  String get notificationsCurrencyFixedCardUnavailable;
+
+  /// Failed fixed currency lookup shown after the resolved value label.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency lookup failed; try again'**
+  String get notificationsCurrencyFixedCardLookupFailure;
+
+  /// Detailed ambiguous dynamic currency guidance shown in the configuration dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{captured}\" matches more than one enabled Firefly currency. Waterfly cannot safely choose between them. To resolve this dynamically, update the enabled currencies in Firefly III so this value has one unique match. You can still save this configuration despite the warning.'**
+  String notificationsCurrencyDynamicPreviewAmbiguous(String captured);
+
+  /// Detailed unavailable dynamic currency guidance shown in the configuration dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{captured}\" does not match an enabled Firefly currency. Waterfly cannot create or substitute a currency mapping locally. Add or enable the matching currency in Firefly III to resolve this value dynamically. You can still save this configuration for other or future values.'**
+  String notificationsCurrencyDynamicPreviewUnavailable(String captured);
+
+  /// Detailed failed dynamic currency lookup guidance shown in the configuration dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Waterfly could not check \"{captured}\" against Firefly currencies right now. Verify that Firefly III is available and its currencies can be loaded. You can still save this configuration; Waterfly will try the lookup again when a notification is processed.'**
+  String notificationsCurrencyDynamicPreviewLookupFailure(String captured);
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
+import 'package:waterflyiii/notifications/application/resources/firefly_currency_resolver.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
 import 'package:waterflyiii/notifications/domain/actions/action_evaluation_result.dart';
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
@@ -102,6 +103,10 @@ class RuleActionsSectionState extends State<RuleActionsSection> {
   final Set<NotificationAction> removingActions = <NotificationAction>{};
   final Map<NotificationAction, Timer> actionRemovalTimers =
       <NotificationAction, Timer>{};
+  final Map<String, Future<FireflyCurrencyResolution>>
+  dynamicCurrencyResolutions = <String, Future<FireflyCurrencyResolution>>{};
+  final Map<String, Future<FireflyCurrency>> fixedCurrencyResolutions =
+      <String, Future<FireflyCurrency>>{};
 
   List<NotificationAction> get actions => widget.actions;
   Set<TransactionField> get reviewedPredefinedFields =>
@@ -309,8 +314,9 @@ extension RuleActionEditor on RuleActionsSectionState {
           entry.$2 is SetTransactionFieldAction &&
           (entry.$2 as SetTransactionFieldAction).target ==
               TransactionField.currency &&
-          (entry.$2 as SetTransactionFieldAction).valueSource
-              is! CurrencyCaptureValueSource;
+          !isConfiguredCurrencyValueSource(
+            (entry.$2 as SetTransactionFieldAction).valueSource,
+          );
       final bool hasVisibleError = status.hasError && !pendingCurrencyMapping;
       final bool needsReview =
           pendingCurrencyMapping ||
@@ -448,7 +454,7 @@ extension RuleActionEditor on RuleActionsSectionState {
     }
     final ValueSource source = action.valueSource;
     if (action.target == TransactionField.currency &&
-        source is! CurrencyCaptureValueSource) {
+        !isConfiguredCurrencyValueSource(source)) {
       return ActionCardStatus.error(
         S.of(context).notificationsRuleChooseMatchingCurrency,
       );
@@ -674,14 +680,14 @@ extension RuleActionWorkflows on RuleActionsSectionState {
   ) async {
     if (current is! SetTransactionFieldAction) return;
     final RegExpCaptureValueSource? capture = captureFor(current.valueSource);
-    if (capture == null) return;
+    if (capture == null && current.target != TransactionField.currency) return;
     final NotificationAction? action = await selectTransactionAction(
       context,
       extractors: widget.extractors,
       notificationContext: widget.notificationContext,
       fixedField: current.target,
-      captureExtractorId: capture.extractorId,
-      captureOnly: true,
+      captureExtractorId: capture?.extractorId,
+      captureOnly: capture != null,
     );
     if (action is SetTransactionFieldAction && mounted) {
       widget.onReplaceAt(index, action);

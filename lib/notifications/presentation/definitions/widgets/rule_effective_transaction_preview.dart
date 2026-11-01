@@ -80,6 +80,7 @@ class EffectiveTransactionPreviewCard extends StatelessWidget {
       displayValues: displayValues,
       currencyCodes: patch.currencyCodes,
       resourceReferences: patch.resourceReferences,
+      dynamicCurrencyValues: patch.dynamicCurrencyValues,
     );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

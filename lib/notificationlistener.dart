@@ -16,12 +16,15 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/notifications/application/listeners/notification_listener_health_service.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_listener_orchestrator.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_listener_status.dart';
+import 'package:waterflyiii/notifications/application/processing/automatic_currency_safety_validator.dart';
 import 'package:waterflyiii/notifications/application/processing/notification_definition_processor.dart';
+import 'package:waterflyiii/notifications/application/processing/dynamic_currency_patch_resolver.dart';
 import 'package:waterflyiii/notifications/application/processing/notification_history_outcome_recorder.dart';
 import 'package:waterflyiii/notifications/application/processing/notification_transaction_intent_adapter.dart';
 import 'package:waterflyiii/notifications/application/processing/local_notification_post_verifier.dart';
 import 'package:waterflyiii/notifications/application/processing/local_notification_id_generator.dart';
 import 'package:waterflyiii/notifications/application/processing/notification_transaction_intent_executor.dart';
+import 'package:waterflyiii/notifications/application/resources/firefly_currency_resolver.dart';
 import 'package:waterflyiii/notifications/data/listeners/platform_notification_listener_health_notifier.dart';
 import 'package:waterflyiii/notifications/data/migrations/platform_notification_migration_review_notifier.dart';
 import 'package:waterflyiii/notifications/data/platform/platform_notification_formatting_preferences.dart';
@@ -31,6 +34,8 @@ import 'package:waterflyiii/notifications/data/repositories/notification_history
 import 'package:waterflyiii/notifications/data/repositories/sqlcipher_notification_alert_store.dart';
 import 'package:waterflyiii/notifications/data/repositories/sqlcipher_notification_history_store.dart';
 import 'package:waterflyiii/notifications/data/repositories/shared_preferences_notification_listener_health_store.dart';
+import 'package:waterflyiii/notifications/data/resources/api_firefly_account_currency_gateway.dart';
+import 'package:waterflyiii/notifications/data/resources/api_firefly_currency_gateway.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/domain/evaluation/notification_formatting_preferences.dart';
@@ -182,6 +187,20 @@ _notificationListenerOrchestrator() => NotificationListenerOrchestrator(
       return Future<void>.value();
     },
     failureHandler: _recordIntentExecutionFailure,
+    intentPreparer: (TransactionIntent intent) async {
+      final FireflyService firefly = FireflyService();
+      final DynamicCurrencyPatchResolver resolver =
+          DynamicCurrencyPatchResolver(
+            FireflyCurrencyResolver(ApiFireflyCurrencyGateway(firefly)),
+          );
+      final TransactionIntent resolvedIntent = intent.withPatch(
+        await resolver.resolve(intent.patch),
+      );
+      await AutomaticCurrencySafetyValidator(
+        ApiFireflyAccountCurrencyGateway(firefly),
+      ).validate(resolvedIntent);
+      return resolvedIntent;
+    },
   ),
   outcomeRecorder: NotificationHistoryOutcomeRecorder(
     NotificationHistoryRepository(

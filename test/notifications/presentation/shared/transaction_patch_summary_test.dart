@@ -101,6 +101,14 @@ void main() {
       tester.getTopLeft(find.text('Amount')).dy,
       greaterThan(tester.getBottomLeft(find.text('Card purchase')).dy),
     );
+    expect(
+      tester.getCenter(find.text('Amount')).dy,
+      tester.getCenter(find.text('12.50')).dy,
+    );
+    expect(
+      tester.getCenter(find.byIcon(Icons.monetization_on)).dy,
+      tester.getCenter(find.text('12.50')).dy,
+    );
   });
 
   testWidgets('keeps a four-digit amount visible in a narrow preview', (
@@ -141,5 +149,57 @@ void main() {
       greaterThan(tester.getBottomLeft(title).dy),
     );
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('centers title and amount labels when provenance is shown', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: Scaffold(
+          body: TransactionPatchSummary(
+            patch: TransactionPatch(<TransactionField, String>{
+              TransactionField.title: 'Card purchase',
+              TransactionField.amount: '12.50',
+            }),
+            fieldProvenance: <TransactionField, TransactionFieldProvenance>{
+              TransactionField.title: TransactionFieldProvenance(
+                source: 'Set by: Shared actions',
+              ),
+              TransactionField.amount: TransactionFieldProvenance(
+                source: 'Set by: Shared actions',
+              ),
+            },
+          ),
+        ),
+      ),
+    );
+
+    expect(
+      tester.getCenter(find.text('Title')).dy,
+      tester
+          .getCenter(find.byKey(const Key('transaction-summary-title-value')))
+          .dy,
+    );
+    expect(
+      tester.getCenter(find.byIcon(Icons.receipt_long)).dy,
+      tester
+          .getCenter(find.byKey(const Key('transaction-summary-title-value')))
+          .dy,
+    );
+    expect(
+      tester.getCenter(find.text('Amount')).dy,
+      tester
+          .getCenter(find.byKey(const Key('transaction-summary-amount-value')))
+          .dy,
+    );
+    expect(
+      tester.getCenter(find.byIcon(Icons.monetization_on)).dy,
+      tester
+          .getCenter(find.byKey(const Key('transaction-summary-amount-value')))
+          .dy,
+    );
   });
 }

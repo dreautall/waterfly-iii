@@ -74,6 +74,21 @@ class NotificationProcessingOutcome {
     failureMessage: failureMessage,
   );
 
+  NotificationProcessingOutcome withTransactionPatch(
+    TransactionPatch patch,
+  ) => NotificationProcessingOutcome(
+    status: status,
+    definition: definition,
+    rule: rule,
+    conditionalActionGroups: conditionalActionGroups,
+    transactionCreationMode: transactionCreationMode,
+    hasTransactionIntent: hasTransactionIntent,
+    transactionPatch: patch,
+    transactionId: transactionId,
+    transactionCreationOrigin: transactionCreationOrigin,
+    failureMessage: failureMessage,
+  );
+
   NotificationProcessingOutcome withoutTransactionLink() =>
       NotificationProcessingOutcome(
         status: status,

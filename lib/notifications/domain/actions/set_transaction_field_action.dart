@@ -13,6 +13,11 @@ import 'package:waterflyiii/notifications/domain/value_sources/normalized_amount
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/value_source.dart';
 
+bool isConfiguredCurrencyValueSource(ValueSource source) =>
+    source is CurrencyCaptureValueSource ||
+    source is FireflyResourceValueSource &&
+        source.resourceKind == FireflyResourceKind.currency;
+
 class SetTransactionFieldAction implements NotificationAction {
   const SetTransactionFieldAction({
     required this.target,
@@ -47,7 +52,7 @@ class SetTransactionFieldAction implements NotificationAction {
       );
     }
     if (target == TransactionField.currency &&
-        source is! CurrencyCaptureValueSource) {
+        !isConfiguredCurrencyValueSource(source)) {
       return const ActionEvaluationResult.failure(
         'Currency must be mapped to a Firefly currency.',
       );
@@ -96,10 +101,12 @@ class SetTransactionFieldAction implements NotificationAction {
         kind: resource.resourceKind,
         id: resource.resourceId,
       ),
-      final CurrencyCaptureValueSource currency => FireflyResourceReference(
-        kind: FireflyResourceKind.currency,
-        id: currency.resourceId,
-      ),
+      final CurrencyCaptureValueSource currency
+          when currency.resolutionMode == CurrencyResolutionMode.fixed =>
+        FireflyResourceReference(
+          kind: FireflyResourceKind.currency,
+          id: currency.resourceId!,
+        ),
       _ => null,
     };
     return ActionEvaluationResult.success(
@@ -110,6 +117,11 @@ class SetTransactionFieldAction implements NotificationAction {
             : <TransactionField, FireflyResourceReference>{
                 target: resourceReference,
               },
+        dynamicCurrencyValues:
+            source is CurrencyCaptureValueSource &&
+                source.resolutionMode == CurrencyResolutionMode.dynamic
+            ? <TransactionField, String>{target: value}
+            : const <TransactionField, String>{},
       ),
     );
   }

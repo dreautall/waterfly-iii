@@ -59,6 +59,10 @@ void main() {
     );
 
     expect(await resolver.resolveUnique(r'$'), isNull);
+    expect(
+      (await resolver.inspect(r'$')).status,
+      FireflyCurrencyResolutionStatus.ambiguous,
+    );
   });
 
   test('does not accept a fuzzy result for an ISO code', () async {
@@ -69,6 +73,10 @@ void main() {
     );
 
     expect(await resolver.resolveUnique('USD'), isNull);
+    expect(
+      (await resolver.inspect('USD')).status,
+      FireflyCurrencyResolutionStatus.unavailable,
+    );
   });
 
   test('resolves a currency by its canonical identifier', () async {
@@ -91,10 +99,10 @@ void main() {
     await expectLater(
       resolver.resolveById('9'),
       throwsA(
-        isA<StateError>().having(
-          (StateError error) => error.message,
-          'message',
-          'Currency 9 is unavailable.',
+        isA<FireflyCurrencyUnavailableException>().having(
+          (FireflyCurrencyUnavailableException error) => error.id,
+          'id',
+          '9',
         ),
       ),
     );

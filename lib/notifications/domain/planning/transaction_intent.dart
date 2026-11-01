@@ -7,6 +7,9 @@ class TransactionIntent {
   final TransactionCreationMode mode;
   final TransactionPatch patch;
 
+  TransactionIntent withPatch(TransactionPatch patch) =>
+      TransactionIntent(mode: mode, patch: patch);
+
   factory TransactionIntent.fromJson(Map<String, dynamic> json) {
     final Map<String, dynamic> patch = json['patch'] as Map<String, dynamic>;
     return TransactionIntent(

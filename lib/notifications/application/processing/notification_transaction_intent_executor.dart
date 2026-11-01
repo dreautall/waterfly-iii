@@ -23,6 +23,8 @@ typedef IntentFailureHandler =
       Object error,
       StackTrace stackTrace,
     );
+typedef NotificationIntentPreparer =
+    Future<TransactionIntent> Function(TransactionIntent intent);
 
 class NotificationTransactionIntentExecutor
     implements NotificationIntentExecutor {
@@ -31,15 +33,18 @@ class NotificationTransactionIntentExecutor
     required ManualNotificationIntentHandler manualHandler,
     required IntentFailureHandler failureHandler,
     required AutomaticIntentCompletedHandler automaticCompletedHandler,
+    NotificationIntentPreparer? intentPreparer,
   }) : _automaticHandler = automaticHandler,
        _manualHandler = manualHandler,
        _failureHandler = failureHandler,
-       _automaticCompletedHandler = automaticCompletedHandler;
+       _automaticCompletedHandler = automaticCompletedHandler,
+       _intentPreparer = intentPreparer;
 
   final AutomaticNotificationIntentHandler _automaticHandler;
   final ManualNotificationIntentHandler _manualHandler;
   final IntentFailureHandler _failureHandler;
   final AutomaticIntentCompletedHandler _automaticCompletedHandler;
+  final NotificationIntentPreparer? _intentPreparer;
 
   @override
   Future<NotificationProcessingOutcome> execute({
@@ -48,19 +53,26 @@ class NotificationTransactionIntentExecutor
     required NotificationProcessingOutcome outcome,
   }) async {
     try {
-      if (intent.mode == TransactionCreationMode.automatic) {
+      final TransactionIntent preparedIntent = _intentPreparer == null
+          ? intent
+          : await _intentPreparer(intent);
+      final NotificationProcessingOutcome preparedOutcome =
+          preparedIntent.patch == intent.patch
+          ? outcome
+          : outcome.withTransactionPatch(preparedIntent.patch);
+      if (preparedIntent.mode == TransactionCreationMode.automatic) {
         final String transactionId = await _automaticHandler(
           notification,
-          intent,
+          preparedIntent,
         );
         await _automaticCompletedHandler(notification);
-        return outcome.withTransactionId(
+        return preparedOutcome.withTransactionId(
           transactionId,
           origin: NotificationTransactionCreationOrigin.automatic,
         );
       }
-      await _manualHandler(notification, intent);
-      return outcome;
+      await _manualHandler(notification, preparedIntent);
+      return preparedOutcome;
     } catch (error, stackTrace) {
       final NotificationProcessingOutcome failedOutcome = outcome.withFailure(
         error.toString(),

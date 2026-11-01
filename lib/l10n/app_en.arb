@@ -2975,13 +2975,13 @@
  "@notificationsActionUseLiteral": {"description": "Action dialog confirmation button."},
  "@notificationsActionUseValue": {"description": "Action dialog confirmation button."},
  "@notificationsActionUseField": {"description": "Action dialog confirmation button.", "placeholders": {"field": {"type": "String", "example": "amount"}}},
-    "notificationsActionMatchCurrency": "Match extracted currency", "@notificationsActionMatchCurrency": {"description": "Currency capture mapping title."},
-    "notificationsActionChooseCurrency": "Choose the Firefly currency for the captured value.", "@notificationsActionChooseCurrency": {"description": "Currency mapping description."},
+    "notificationsActionMatchCurrency": "Select currency", "@notificationsActionMatchCurrency": {"description": "Fixed currency selection title."},
+    "notificationsActionChooseCurrency": "Choose the Firefly currency to use whenever this rule runs.", "@notificationsActionChooseCurrency": {"description": "Fixed currency selection description."},
  "@notificationsActionEnterFixedValue": {"description": "Literal value dialog description."},
     "notificationsActionSearchCurrencies": "Search Firefly currencies", "@notificationsActionSearchCurrencies": {"description": "Currency mapping search field label."},
     "notificationsActionCurrenciesLoadFailure": "Firefly currencies could not be loaded.", "@notificationsActionCurrenciesLoadFailure": {"description": "Currency mapping load error."},
     "notificationsActionNoValue": "no value", "@notificationsActionNoValue": {"description": "Fallback captured value label."},
-    "notificationsActionExtractedCurrency": "Extracted value \"{value}\". Select its matching Firefly currency.", "@notificationsActionExtractedCurrency": {"description": "Currency capture mapping description.", "placeholders": {"value": {"type": "String", "example": "USD"}}},
+    "notificationsActionExtractedCurrency": "Extracted value: \"{value}\"", "@notificationsActionExtractedCurrency": {"description": "Dynamic currency sample value.", "placeholders": {"value": {"type": "String", "example": "USD"}}},
     "notificationsFieldTitleDescription": "The transaction description shown in Firefly.", "@notificationsFieldTitleDescription": {"description": "Transaction field description."},
     "notificationsFieldAmountDescription": "A numeric amount, such as 12.50.", "@notificationsFieldAmountDescription": {"description": "Transaction field description."},
     "notificationsFieldDateDescription": "An ISO date in the form YYYY-MM-DD.", "@notificationsFieldDateDescription": {"description": "Transaction field description."},
@@ -3000,5 +3000,105 @@
     "@notificationsRuleConditionalGroupActionsDescription": {
         "description": "Description of actions in a conditional action group."
     },
-    "notificationsActionNoCurrencies": "No matching Firefly currencies found.", "@notificationsActionNoCurrencies": {"description": "Currency mapping empty state."}
+    "notificationsActionNoCurrencies": "No matching Firefly currencies found.", "@notificationsActionNoCurrencies": {"description": "Currency mapping empty state."},
+    "notificationsCurrencyResolutionTitle": "Choose currency matching",
+    "@notificationsCurrencyResolutionTitle": {"description": "Title for choosing fixed or dynamic currency matching."},
+    "notificationsCurrencyResolutionDescription": "Choose how Waterfly should match the extracted currency.",
+    "@notificationsCurrencyResolutionDescription": {"description": "Description for choosing fixed or dynamic currency matching."},
+    "notificationsCurrencyResolutionFixed": "Use a selected currency",
+    "@notificationsCurrencyResolutionFixed": {"description": "Fixed currency matching choice."},
+    "notificationsCurrencyResolutionFixedDescription": "Always use one selected Firefly currency when this rule runs. No extractor is required.",
+    "@notificationsCurrencyResolutionFixedDescription": {"description": "Description of fixed currency matching."},
+    "notificationsCurrencyResolutionDynamic": "Match dynamically",
+    "@notificationsCurrencyResolutionDynamic": {"description": "Dynamic currency matching choice."},
+    "notificationsCurrencyResolutionDynamicDescription": "Choose an extractor capture, then match its code or symbol against enabled Firefly currencies when the rule runs.",
+    "@notificationsCurrencyResolutionDynamicDescription": {"description": "Description of dynamic currency matching."},
+    "notificationsCurrencyResolutionChecking": "Checking this sample value...",
+    "@notificationsCurrencyResolutionChecking": {"description": "Status while checking a sample dynamic currency."},
+    "notificationsCurrencyResolutionDynamicMatch": "This sample uniquely matches {name} ({code}).",
+    "@notificationsCurrencyResolutionDynamicMatch": {
+        "description": "Successful sample dynamic currency match.",
+        "placeholders": {
+            "name": {"type": "String", "example": "Euro"},
+            "code": {"type": "String", "example": "EUR"}
+        }
+    },
+    "notificationsCurrencyResolutionDynamicUnavailable": "This sample is missing or ambiguous. You can still save the action, but this value would fail during processing.",
+    "@notificationsCurrencyResolutionDynamicUnavailable": {"description": "Unavailable dynamic currency matching status."},
+    "notificationsCurrencyDynamicPreviewTitle": "Review dynamic matching",
+    "@notificationsCurrencyDynamicPreviewTitle": {"description": "Title shown after selecting a dynamic currency capture."},
+    "notificationsCurrencyDynamicPreviewDescription": "Review how the current sample resolves. This preview does not prevent saving the action.",
+    "@notificationsCurrencyDynamicPreviewDescription": {"description": "Description shown after selecting a dynamic currency capture."},
+    "notificationsCurrencyResolutionDynamicNeedsExtractor": "Add a currency or custom extractor before configuring dynamic matching.",
+    "@notificationsCurrencyResolutionDynamicNeedsExtractor": {"description": "Explanation shown when dynamic currency matching is unavailable."},
+    "notificationsCurrencyDynamicPreviewSuccess": "Sample resolves",
+    "@notificationsCurrencyDynamicPreviewSuccess": {"description": "Title for a successful dynamic currency sample preview."},
+    "notificationsCurrencyDynamicPreviewWarning": "Sample needs attention",
+    "@notificationsCurrencyDynamicPreviewWarning": {"description": "Title for an unresolved dynamic currency sample preview."},
+    "notificationsCurrencyDynamicCardSuccess": "\"{captured}\" → {code} — {name}",
+    "@notificationsCurrencyDynamicCardSuccess": {
+        "description": "Successful dynamic currency resolution shown on an action card.",
+        "placeholders": {
+            "captured": {"type": "String", "example": "CAD"},
+            "code": {"type": "String", "example": "CAD"},
+            "name": {"type": "String", "example": "Canadian dollar"}
+        }
+    },
+    "notificationsCurrencyDynamicCardAmbiguous": "\"{captured}\" → Ambiguous currency; cannot resolve",
+    "@notificationsCurrencyDynamicCardAmbiguous": {
+        "description": "Ambiguous dynamic currency resolution shown on an action card.",
+        "placeholders": {"captured": {"type": "String", "example": "$"}}
+    },
+    "notificationsCurrencyDynamicCardUnavailable": "\"{captured}\" → No enabled currency found",
+    "@notificationsCurrencyDynamicCardUnavailable": {
+        "description": "Unavailable dynamic currency resolution shown on an action card.",
+        "placeholders": {"captured": {"type": "String", "example": "XYZ"}}
+    },
+    "notificationsCurrencyDynamicCardChecking": "\"{captured}\" → Checking currency...",
+    "@notificationsCurrencyDynamicCardChecking": {
+        "description": "Loading dynamic currency resolution shown on an action card.",
+        "placeholders": {"captured": {"type": "String", "example": "CAD"}}
+    },
+    "notificationsCurrencyDynamicCardLookupFailure": "\"{captured}\" → Currency lookup failed; try again",
+    "@notificationsCurrencyDynamicCardLookupFailure": {
+        "description": "Failed dynamic currency lookup shown on an action card.",
+        "placeholders": {"captured": {"type": "String", "example": "CAD"}}
+    },
+    "notificationsCurrencyDynamicOutcomeSuccess": "{code} — {name}",
+    "@notificationsCurrencyDynamicOutcomeSuccess": {
+        "description": "Successful dynamic currency outcome shown after a resolved value.",
+        "placeholders": {
+            "code": {"type": "String", "example": "CAD"},
+            "name": {"type": "String", "example": "Canadian dollar"}
+        }
+    },
+    "notificationsCurrencyDynamicOutcomeAmbiguous": "Ambiguous currency; cannot resolve",
+    "@notificationsCurrencyDynamicOutcomeAmbiguous": {"description": "Ambiguous dynamic currency outcome shown after a resolved value."},
+    "notificationsCurrencyDynamicOutcomeUnavailable": "No enabled currency found",
+    "@notificationsCurrencyDynamicOutcomeUnavailable": {"description": "Unavailable dynamic currency outcome shown after a resolved value."},
+    "notificationsCurrencyDynamicOutcomeChecking": "Checking currency...",
+    "@notificationsCurrencyDynamicOutcomeChecking": {"description": "Loading dynamic currency outcome shown after a resolved value."},
+    "notificationsCurrencyDynamicOutcomeLookupFailure": "Currency lookup failed; try again",
+    "@notificationsCurrencyDynamicOutcomeLookupFailure": {"description": "Failed dynamic currency outcome shown after a resolved value."},
+    "notificationsCurrencyFixedCardChecking": "Checking currency...",
+    "@notificationsCurrencyFixedCardChecking": {"description": "Loading fixed currency shown after the resolved value label."},
+    "notificationsCurrencyFixedCardUnavailable": "Configured currency is no longer available in Firefly III",
+    "@notificationsCurrencyFixedCardUnavailable": {"description": "Unavailable fixed currency shown after the resolved value label."},
+    "notificationsCurrencyFixedCardLookupFailure": "Currency lookup failed; try again",
+    "@notificationsCurrencyFixedCardLookupFailure": {"description": "Failed fixed currency lookup shown after the resolved value label."},
+    "notificationsCurrencyDynamicPreviewAmbiguous": "\"{captured}\" matches more than one enabled Firefly currency. Waterfly cannot safely choose between them. To resolve this dynamically, update the enabled currencies in Firefly III so this value has one unique match. You can still save this configuration despite the warning.",
+    "@notificationsCurrencyDynamicPreviewAmbiguous": {
+        "description": "Detailed ambiguous dynamic currency guidance shown in the configuration dialog.",
+        "placeholders": {"captured": {"type": "String", "example": "$"}}
+    },
+    "notificationsCurrencyDynamicPreviewUnavailable": "\"{captured}\" does not match an enabled Firefly currency. Waterfly cannot create or substitute a currency mapping locally. Add or enable the matching currency in Firefly III to resolve this value dynamically. You can still save this configuration for other or future values.",
+    "@notificationsCurrencyDynamicPreviewUnavailable": {
+        "description": "Detailed unavailable dynamic currency guidance shown in the configuration dialog.",
+        "placeholders": {"captured": {"type": "String", "example": "XYZ"}}
+    },
+    "notificationsCurrencyDynamicPreviewLookupFailure": "Waterfly could not check \"{captured}\" against Firefly currencies right now. Verify that Firefly III is available and its currencies can be loaded. You can still save this configuration; Waterfly will try the lookup again when a notification is processed.",
+    "@notificationsCurrencyDynamicPreviewLookupFailure": {
+        "description": "Detailed failed dynamic currency lookup guidance shown in the configuration dialog.",
+        "placeholders": {"captured": {"type": "String", "example": "CAD"}}
+    }
 }

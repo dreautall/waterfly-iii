@@ -5347,11 +5347,17 @@ abstract class S {
   /// **'No extractor captures are available for this sample.'**
   String get notificationsConditionNoCaptures;
 
-  /// Condition editor menu tooltip.
+  /// Condition operand source change action.
   ///
   /// In en, this message translates to:
-  /// **'Change value type'**
-  String get notificationsConditionChangeValueType;
+  /// **'Change to extractor capture'**
+  String get notificationsConditionChangeToExtractorCapture;
+
+  /// Condition operand source change action.
+  ///
+  /// In en, this message translates to:
+  /// **'Change to literal value'**
+  String get notificationsConditionChangeToLiteralValue;
 
   /// Fallback extractor name.
   ///
@@ -5538,6 +5544,18 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Choose the value this condition evaluates.'**
   String get notificationsConditionValueDescription;
+
+  /// Condition editor description while editing the comparison operand.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the value to compare with.'**
+  String get notificationsConditionEditComparisonValue;
+
+  /// Condition editor description while editing the evaluated operand.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the value this condition evaluates.'**
+  String get notificationsConditionEditEvaluatedValue;
 
   /// Condition builder description.
   ///

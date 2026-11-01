@@ -319,66 +319,94 @@ class ConditionOverviewStep extends StatelessWidget {
       expanded: expanded,
       onTap: () =>
           expanded ? onCancelEdit() : onBeginEdit(value, source, current),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          if (value == ConditionEditedValue.right) ...<Widget>[
-            IconButton(
-              key: const Key('change-condition-value-type'),
-              tooltip: current == ConditionSourceMode.literal
-                  ? S.of(context).notificationsConditionExtractorCapture
-                  : S.of(context).notificationsConditionLiteralValue,
-              icon: const Icon(Icons.swap_horiz),
-              onPressed: () => onBeginEdit(
-                value,
-                source,
-                current == ConditionSourceMode.literal
-                    ? ConditionSourceMode.extractor
-                    : ConditionSourceMode.literal,
-              ),
-            ),
-            const SizedBox(width: 8),
-          ],
-          AnimatedRotation(
-            turns: expanded ? 0.5 : 0,
-            duration: const Duration(milliseconds: 180),
-            curve: Curves.easeInOut,
-            child: const Icon(Icons.expand_more),
-          ),
-        ],
+      trailing: AnimatedRotation(
+        turns: expanded ? 0.5 : 0,
+        duration: const Duration(milliseconds: 180),
+        curve: Curves.easeInOut,
+        child: const Icon(Icons.expand_more),
       ),
       belly: expanded
-          ? _editor(controller.draft.sourceMode)
+          ? _editor(context, value, source, controller.draft.sourceMode)
           : const SizedBox.shrink(),
     );
   }
 
-  Widget _editor(ConditionSourceMode? mode) => switch (mode) {
-    ConditionSourceMode.literal => _LiteralEditor(
-      type: _literalType(controller),
-      controller: literalController,
-      onPickDateTime: onPickDateTime,
-    ),
-    ConditionSourceMode.extractor => ExtractorCapturePicker(
-      extractors: controller.extractors,
-      notificationContext: controller.notificationContext,
-      emptyMessage: '',
-      isCaptureAllowed: (RegExpDefinition extractor, String _, String value) =>
-          controller.captureIsAllowed(
-            extractor,
-            value,
-            selectingRight:
-                controller.draft.editedValue == ConditionEditedValue.right,
-          ),
-      onSelected: (ExtractorCaptureSelection selection) => onSourceSelected(
-        selection.toValueSource(),
-        capturedType: controller.draft.editedValue == ConditionEditedValue.left
-            ? ConditionValueType.parse(selection.value)
-            : null,
+  Widget _editor(
+    BuildContext context,
+    ConditionEditedValue value,
+    ValueSource source,
+    ConditionSourceMode? mode,
+  ) {
+    final Widget editor = switch (mode) {
+      ConditionSourceMode.literal => _LiteralEditor(
+        type: _literalType(controller),
+        controller: literalController,
+        onPickDateTime: onPickDateTime,
       ),
-    ),
-    null => const SizedBox.shrink(),
-  };
+      ConditionSourceMode.extractor => ExtractorCapturePicker(
+        extractors: controller.extractors,
+        notificationContext: controller.notificationContext,
+        emptyMessage: '',
+        isCaptureAllowed:
+            (RegExpDefinition extractor, String _, String capturedValue) =>
+                controller.captureIsAllowed(
+                  extractor,
+                  capturedValue,
+                  selectingRight: value == ConditionEditedValue.right,
+                ),
+        onSelected: (ExtractorCaptureSelection selection) => onSourceSelected(
+          selection.toValueSource(),
+          capturedType: value == ConditionEditedValue.left
+              ? ConditionValueType.parse(selection.value)
+              : null,
+        ),
+      ),
+      null => const SizedBox.shrink(),
+    };
+    final bool canChangeToExtractor =
+        value == ConditionEditedValue.right &&
+        mode == ConditionSourceMode.literal &&
+        ExtractorCapturePicker.hasAvailableCapture(
+          extractors: controller.extractors,
+          notificationContext: controller.notificationContext,
+          isCaptureAllowed:
+              (RegExpDefinition extractor, String _, String capturedValue) =>
+                  controller.captureIsAllowed(
+                    extractor,
+                    capturedValue,
+                    selectingRight: true,
+                  ),
+        );
+    final bool canChangeToLiteral =
+        value == ConditionEditedValue.right &&
+        mode == ConditionSourceMode.extractor;
+    if (!canChangeToExtractor && !canChangeToLiteral) return editor;
+    final ConditionSourceMode targetMode = canChangeToExtractor
+        ? ConditionSourceMode.extractor
+        : ConditionSourceMode.literal;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        editor,
+        const SizedBox(height: 8),
+        const Divider(),
+        SizedBox(
+          width: double.infinity,
+          child: FilledButton.tonalIcon(
+            key: const Key('change-condition-value-source'),
+            onPressed: () => onBeginEdit(value, source, targetMode),
+            style: FilledButton.styleFrom(shape: const StadiumBorder()),
+            icon: const Icon(Icons.swap_horiz),
+            label: Text(
+              canChangeToExtractor
+                  ? S.of(context).notificationsConditionChangeToExtractorCapture
+                  : S.of(context).notificationsConditionChangeToLiteralValue,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   String _sourceSubtitle(BuildContext context, ValueSource source) {
     if (source is LiteralValueSource) {

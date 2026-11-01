@@ -309,7 +309,7 @@ extension RuleConditionRenderer on RuleConditionsSectionState {
     Widget? source,
   ) {
     if (!isTestMode) {
-      return conditionModeSubtitle(source ?? const SizedBox.shrink());
+      return source == null ? null : conditionModeSubtitle(source);
     }
     final ConditionEvaluationResult result = condition.evaluate(
       testEvaluationContext,

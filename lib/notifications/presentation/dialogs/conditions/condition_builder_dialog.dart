@@ -353,9 +353,7 @@ class _ConditionBuilderDialogState extends State<_ConditionBuilderDialog> {
           S.of(context).notificationsConditionEqualsLabel,
         ConditionBuilderStep.source => conditionKindLabel(context, draft.kind!),
         ConditionBuilderStep.overview =>
-          draft.editedValue == null
-              ? S.of(context).notificationsConditionEdit
-              : conditionKindLabel(context, draft.kind!),
+          S.of(context).notificationsConditionEdit,
       };
 
   String _description(BuildContext context, ConditionBuilderDraft draft) =>
@@ -378,7 +376,7 @@ class _ConditionBuilderDialogState extends State<_ConditionBuilderDialog> {
           draft.editedValue == null
               ? S.of(context).notificationsConditionReview
               : draft.editedValue == ConditionEditedValue.right
-              ? S.of(context).notificationsConditionCompareDescription
-              : S.of(context).notificationsConditionValueDescription,
+              ? S.of(context).notificationsConditionEditComparisonValue
+              : S.of(context).notificationsConditionEditEvaluatedValue,
       };
 }

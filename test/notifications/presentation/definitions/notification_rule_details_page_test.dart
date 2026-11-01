@@ -2287,20 +2287,11 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 90));
 
-    final Iterable<double> subtitleOpacities = tester
-        .widgetList<FadeTransition>(
-          find.byKey(const Key('condition-mode-fade')),
-        )
-        .map((FadeTransition fade) => fade.opacity.value);
     final Iterable<double> leadingOpacities = tester
         .widgetList<FadeTransition>(
           find.byKey(const Key('condition-leading-fade')),
         )
         .map((FadeTransition fade) => fade.opacity.value);
-    expect(
-      subtitleOpacities,
-      contains(predicate<double>((double value) => value > 0 && value < 1)),
-    );
     expect(
       leadingOpacities,
       contains(predicate<double>((double value) => value > 0 && value < 1)),
@@ -4678,6 +4669,17 @@ void main() {
           matching: find.byType(ElevatedButton),
         )
         .first;
+    expect(
+      tester
+          .getRect(
+            conditionTitle(
+              'Extractor "Notification title" value equals "Wise"',
+            ),
+          )
+          .center
+          .dy,
+      closeTo(tester.getRect(conditionCard).center.dy, 1),
+    );
     await tester.tap(
       find.descendant(
         of: conditionCard,
@@ -4725,6 +4727,21 @@ void main() {
       isNull,
     );
     expect(find.text('Back'), findsNothing);
+    expect(find.text('Edit condition'), findsOneWidget);
+    expect(
+      find.text('Review the condition before applying it.'),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.byKey(const ValueKey<String>('condition-edit-left')));
+    await tester.pumpAndSettle();
+    expect(find.text('Edit condition'), findsOneWidget);
+    expect(
+      find.text('Edit the value this condition evaluates.'),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const ValueKey<String>('condition-edit-left')));
+    await tester.pumpAndSettle();
 
     await tester.tap(
       find.byKey(const ValueKey<String>('condition-edit-right')),
@@ -4735,8 +4752,8 @@ void main() {
       findsOneWidget,
     );
     await tester.pumpAndSettle();
-    expect(find.text('Equals value'), findsOneWidget);
-    expect(find.text('Choose the value to compare with.'), findsOneWidget);
+    expect(find.text('Edit condition'), findsOneWidget);
+    expect(find.text('Edit the value to compare with.'), findsOneWidget);
     expect(
       tester
           .widget<AnimatedRotation>(
@@ -4790,19 +4807,33 @@ void main() {
           .onPressed,
       isNull,
     );
-    final Finder changeValueType = find.descendant(
+    final Finder changeValueSource = find.descendant(
       of: find.byKey(const ValueKey<String>('condition-edit-right')),
-      matching: find.byKey(const Key('change-condition-value-type')),
+      matching: find.byKey(const Key('change-condition-value-source')),
     );
-    expect(changeValueType, findsOneWidget);
+    expect(changeValueSource, findsOneWidget);
+    expect(find.text('Change to extractor capture'), findsOneWidget);
+    final FilledButton changeButton = tester.widget(changeValueSource);
+    expect(
+      changeButton.style?.shape?.resolve(<WidgetState>{}),
+      isA<StadiumBorder>(),
+    );
+    final Finder sourceDivider = find.descendant(
+      of: find.byKey(const ValueKey<String>('condition-edit-right')),
+      matching: find.byType(Divider),
+    );
+    expect(
+      tester.getSize(changeValueSource).width,
+      tester.getSize(sourceDivider).width,
+    );
     expect(
       find.descendant(
         of: find.byKey(const ValueKey<String>('condition-edit-right')),
-        matching: find.byIcon(Icons.more_vert),
+        matching: find.byIcon(Icons.swap_horiz),
       ),
-      findsNothing,
+      findsOneWidget,
     );
-    await tester.tap(changeValueType);
+    await tester.tap(changeValueSource);
     await tester.pumpAndSettle();
     expect(
       find.descendant(
@@ -4819,6 +4850,7 @@ void main() {
       findsNothing,
     );
     expect(find.text('Notification message'), findsOneWidget);
+    expect(find.text('Change to literal value'), findsOneWidget);
     await tester.tap(find.text('Notification message'));
     await tester.pumpAndSettle();
     expect(

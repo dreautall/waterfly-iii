@@ -3443,7 +3443,12 @@ class SPt extends S {
       'No extractor captures are available for this sample.';
 
   @override
-  String get notificationsConditionChangeValueType => 'Change value type';
+  String get notificationsConditionChangeToExtractorCapture =>
+      'Change to extractor capture';
+
+  @override
+  String get notificationsConditionChangeToLiteralValue =>
+      'Change to literal value';
 
   @override
   String get notificationsConditionDeletedExtractor => 'Deleted extractor';
@@ -3553,6 +3558,14 @@ class SPt extends S {
   @override
   String get notificationsConditionValueDescription =>
       'Choose the value this condition evaluates.';
+
+  @override
+  String get notificationsConditionEditComparisonValue =>
+      'Edit the value to compare with.';
+
+  @override
+  String get notificationsConditionEditEvaluatedValue =>
+      'Edit the value this condition evaluates.';
 
   @override
   String get notificationsConditionReview =>

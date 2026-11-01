@@ -433,6 +433,52 @@ void main() {
   });
 
   testWidgets(
+    'updates and validates a predefined regexp pattern in advanced mode',
+    (WidgetTester tester) async {
+      RegExpDefinition? savedExtractor;
+      await tester.pumpWidget(
+        extractorPage(
+          RegExpDefinition.createPredefinedRegExpDefinition(
+            PredefinedRegExpDefinition.currency,
+          ),
+          isAdvancedMode: true,
+          onSave: (RegExpDefinition extractor) async {
+            savedExtractor = extractor;
+            return true;
+          },
+        ),
+      );
+
+      await tester.enterText(find.byKey(const Key('extractor-source')), '(');
+      await tester.pumpAndSettle();
+
+      expect(find.text('Invalid pattern'), findsOneWidget);
+      expect(find.byTooltip('Save'), findsOneWidget);
+      await tester.tap(find.byTooltip('Back'));
+      await tester.pumpAndSettle();
+      expect(find.text('Discard changes?'), findsOneWidget);
+      await tester.tap(find.widgetWithText(FilledButton, 'Cancel'));
+      await tester.pumpAndSettle();
+
+      const String updatedPattern = r'(?<currency>USD)';
+      await tester.enterText(
+        find.byKey(const Key('extractor-source')),
+        updatedPattern,
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Invalid pattern'), findsNothing);
+      expect(find.text('No sample match'), findsOneWidget);
+      expect(find.byTooltip('Save'), findsOneWidget);
+      await tester.tap(find.byTooltip('Save'));
+      await tester.pumpAndSettle();
+
+      expect(savedExtractor?.regExpSource, updatedPattern);
+      expect(find.byTooltip('Save'), findsNothing);
+    },
+  );
+
+  testWidgets(
     'confirms before discarding an invalid custom regular expression',
     (WidgetTester tester) async {
       await tester.pumpWidget(

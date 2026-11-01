@@ -75,7 +75,7 @@ class NotificationExtractorEditorViewModel extends ChangeNotifier {
     if (description != null) {
       _draft.description = description.trim();
     }
-    if (_extractor.type == RegExpDefinitionType.custom) {
+    if (_extractor.type == RegExpDefinitionType.custom || isAdvancedMode) {
       _draft.source = source;
     }
     validationError = null;

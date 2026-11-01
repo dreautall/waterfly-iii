@@ -113,6 +113,90 @@ void main() {
     );
   });
 
+  test('derives shared readiness from reachable execution paths', () {
+    const List<NotificationAction> incompleteSharedActions =
+        <NotificationAction>[
+          SetTransactionFieldAction(
+            target: TransactionField.amount,
+            valueSource: LiteralValueSource('12.50'),
+          ),
+        ];
+    const List<NotificationAction> completingActions = <NotificationAction>[
+      SetTransactionFieldAction(
+        target: TransactionField.title,
+        valueSource: LiteralValueSource('Payment'),
+      ),
+      SetTransactionFieldAction(
+        target: TransactionField.sourceAccount,
+        valueSource: LiteralValueSource('Checking'),
+      ),
+    ];
+    final NotificationDefinition definition = NotificationDefinition(
+      id: 'payments',
+      applicationId: 'com.example.app',
+      name: 'Payments',
+      sampleTitle: 'Payment',
+      sampleBody: 'Paid 12.50 CAD',
+      extractors: <RegExpDefinition>[
+        RegExpDefinition.createCustomRegExpDefinition('Payment', r'Paid'),
+      ],
+      sharedActions: incompleteSharedActions,
+      rules: const <NotificationRule>[
+        NotificationRule(
+          id: 'payment',
+          name: 'Payment',
+          conditions: <NotificationCondition>[],
+          actions: completingActions,
+        ),
+      ],
+      extractorMode: NotificationExtractorMode.advanced,
+      transactionCreationMode: TransactionCreationMode.automatic,
+    );
+
+    expect(definition.automaticTransactionReadiness.isReady, isFalse);
+    expect(definition.status, NotificationDefinitionStatus.ready);
+    expect(
+      definition
+          .copyWith(
+            rules: <NotificationRule>[
+              definition.rules.single.copyWith(
+                actions: const <NotificationAction>[],
+                processingMode: NotificationRuleProcessingMode.prompt,
+              ),
+            ],
+          )
+          .status,
+      NotificationDefinitionStatus.ready,
+    );
+    expect(
+      definition
+          .copyWith(
+            rules: <NotificationRule>[
+              definition.rules.single.copyWith(
+                actions: const <NotificationAction>[],
+                processingMode: NotificationRuleProcessingMode.ignore,
+              ),
+            ],
+          )
+          .status,
+      NotificationDefinitionStatus.ready,
+    );
+    expect(
+      definition
+          .copyWith(
+            rules: <NotificationRule>[
+              definition.rules.single.copyWith(
+                conditions: const <NotificationCondition>[
+                  ValueExistsCondition(LiteralValueSource('payment')),
+                ],
+              ),
+            ],
+          )
+          .status,
+      NotificationDefinitionStatus.needsReview,
+    );
+  });
+
   test('unconfigured conditional actions require review, not setup', () {
     const NotificationRule rule = NotificationRule(
       id: 'rule',

@@ -192,6 +192,30 @@ void main() {
       );
     });
 
+    test('compares grouped numeric values across separator styles', () {
+      for (final String grouped in <String>[
+        '1,234.56',
+        '1.234,56',
+        '1 234,56',
+      ]) {
+        expect(
+          ValuesNumericallyEqualCondition(
+            left: LiteralValueSource(grouped),
+            right: const LiteralValueSource('1234.56'),
+          ).evaluate(context).matches,
+          isTrue,
+          reason: grouped,
+        );
+      }
+      expect(
+        const ValuesNumericallyEqualCondition(
+          left: LiteralValueSource('1,234'),
+          right: LiteralValueSource('1234'),
+        ).evaluate(context).matches,
+        isTrue,
+      );
+    });
+
     test('reports unresolved and nonnumeric values as diagnostics', () {
       final ConditionEvaluationResult result =
           const ValuesNumericallyEqualCondition(

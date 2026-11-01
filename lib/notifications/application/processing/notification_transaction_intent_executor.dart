@@ -23,7 +23,7 @@ typedef IntentFailureHandler =
       Object error,
       StackTrace stackTrace,
     );
-typedef NotificationIntentPreparer =
+typedef AutomaticNotificationIntentPreparer =
     Future<TransactionIntent> Function(TransactionIntent intent);
 
 class NotificationTransactionIntentExecutor
@@ -33,18 +33,18 @@ class NotificationTransactionIntentExecutor
     required ManualNotificationIntentHandler manualHandler,
     required IntentFailureHandler failureHandler,
     required AutomaticIntentCompletedHandler automaticCompletedHandler,
-    NotificationIntentPreparer? intentPreparer,
+    AutomaticNotificationIntentPreparer? automaticIntentPreparer,
   }) : _automaticHandler = automaticHandler,
        _manualHandler = manualHandler,
        _failureHandler = failureHandler,
        _automaticCompletedHandler = automaticCompletedHandler,
-       _intentPreparer = intentPreparer;
+       _automaticIntentPreparer = automaticIntentPreparer;
 
   final AutomaticNotificationIntentHandler _automaticHandler;
   final ManualNotificationIntentHandler _manualHandler;
   final IntentFailureHandler _failureHandler;
   final AutomaticIntentCompletedHandler _automaticCompletedHandler;
-  final NotificationIntentPreparer? _intentPreparer;
+  final AutomaticNotificationIntentPreparer? _automaticIntentPreparer;
 
   @override
   Future<NotificationProcessingOutcome> execute({
@@ -53,9 +53,11 @@ class NotificationTransactionIntentExecutor
     required NotificationProcessingOutcome outcome,
   }) async {
     try {
-      final TransactionIntent preparedIntent = _intentPreparer == null
+      final TransactionIntent preparedIntent =
+          intent.mode != TransactionCreationMode.automatic ||
+              _automaticIntentPreparer == null
           ? intent
-          : await _intentPreparer(intent);
+          : await _automaticIntentPreparer(intent);
       final NotificationProcessingOutcome preparedOutcome =
           preparedIntent.patch == intent.patch
           ? outcome

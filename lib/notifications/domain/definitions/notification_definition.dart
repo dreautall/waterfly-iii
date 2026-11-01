@@ -178,11 +178,21 @@ class NotificationDefinition {
         extractors.isNotEmpty &&
         (rules.isNotEmpty || sharedActions.isNotEmpty);
     if (!hasRequiredSetup) return NotificationDefinitionStatus.needsSetup;
+    final int catchAllRuleIndex = rules.indexWhere(
+      (NotificationRule rule) => rule.conditions.isEmpty,
+    );
+    final Iterable<NotificationRule> reachableRules = rules.take(
+      catchAllRuleIndex == -1 ? rules.length : catchAllRuleIndex + 1,
+    );
+    final bool sharedOnlyPathIsReachable = !reachableRules.any(
+      (NotificationRule rule) => rule.conditions.isEmpty,
+    );
     final bool sharedAutomaticIncomplete =
         transactionCreationMode == TransactionCreationMode.automatic &&
         sharedActions.isNotEmpty &&
+        sharedOnlyPathIsReachable &&
         !automaticTransactionReadiness.isReady;
-    final bool ruleAutomaticIncomplete = rules
+    final bool ruleAutomaticIncomplete = reachableRules
         .where(
           (NotificationRule rule) =>
               !rule.processingMode.ignoresNotification &&

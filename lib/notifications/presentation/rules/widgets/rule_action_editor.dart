@@ -624,7 +624,7 @@ extension RuleActionWorkflows on RuleActionsSectionState {
     final NotificationAction? action = await selectTransactionAction(
       context,
       extractors: widget.extractors,
-      notificationContext: widget.notificationContext,
+      notificationContext: activeNotificationContext,
       unavailableFields: <TransactionField>{
         for (final NotificationAction action in actions)
           if (targetFor(action) != null) targetFor(action)!,
@@ -644,7 +644,7 @@ extension RuleActionWorkflows on RuleActionsSectionState {
       final NotificationAction? action = await selectTransactionAction(
         context,
         extractors: widget.extractors,
-        notificationContext: widget.notificationContext,
+        notificationContext: activeNotificationContext,
         fixedField: TransactionField.tag,
         initialTags: current.tags,
       );
@@ -661,7 +661,7 @@ extension RuleActionWorkflows on RuleActionsSectionState {
     final NotificationAction? action = await selectTransactionAction(
       context,
       extractors: widget.extractors,
-      notificationContext: widget.notificationContext,
+      notificationContext: activeNotificationContext,
       fixedField: current.target,
       excludedExtractorId: current.target == TransactionField.currency
           ? null
@@ -686,7 +686,7 @@ extension RuleActionWorkflows on RuleActionsSectionState {
     final NotificationAction? action = await selectTransactionAction(
       context,
       extractors: widget.extractors,
-      notificationContext: widget.notificationContext,
+      notificationContext: activeNotificationContext,
       fixedField: current.target,
       captureExtractorId: capture?.extractorId,
       captureOnly: capture != null,

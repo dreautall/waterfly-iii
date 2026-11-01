@@ -187,7 +187,7 @@ _notificationListenerOrchestrator() => NotificationListenerOrchestrator(
       return Future<void>.value();
     },
     failureHandler: _recordIntentExecutionFailure,
-    intentPreparer: (TransactionIntent intent) async {
+    automaticIntentPreparer: (TransactionIntent intent) async {
       final FireflyService firefly = FireflyService();
       final DynamicCurrencyPatchResolver resolver =
           DynamicCurrencyPatchResolver(

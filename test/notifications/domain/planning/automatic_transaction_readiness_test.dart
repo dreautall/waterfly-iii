@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
 import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
+import 'package:waterflyiii/notifications/domain/conditions/value_exists_condition.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
@@ -113,7 +114,9 @@ void main() {
         NotificationRule(
           id: 'conditional-account',
           name: 'Conditional account',
-          conditions: <NotificationCondition>[],
+          conditions: <NotificationCondition>[
+            ValueExistsCondition(LiteralValueSource('payment')),
+          ],
           actions: <NotificationAction>[
             SetTransactionFieldAction(
               target: TransactionField.sourceAccount,

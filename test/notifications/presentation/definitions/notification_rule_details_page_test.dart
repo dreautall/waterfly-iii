@@ -32,6 +32,7 @@ import 'package:waterflyiii/notifications/domain/value_sources/normalized_amount
 import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 import 'package:waterflyiii/notifications/presentation/shared/dialog_expander_card.dart';
+import 'package:waterflyiii/notifications/presentation/shared/dialog_selector_card.dart';
 import 'package:waterflyiii/notifications/presentation/shared/definition_expandable_detail_card.dart';
 import 'package:waterflyiii/notifications/presentation/rules/pages/notification_rule_details_page.dart';
 import 'package:waterflyiii/notifications/presentation/rules/widgets/notification_action_group_details_page.dart';
@@ -2547,6 +2548,95 @@ void main() {
 
     expect(find.byTooltip('Save'), findsOneWidget);
   });
+
+  testWidgets(
+    'saves a rule sample override and uses it in the currency action flow',
+    (WidgetTester tester) async {
+      await tester.binding.setSurfaceSize(const Size(800, 1000));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      final RegExpDefinition extractor =
+          RegExpDefinition.createCustomRegExpDefinition(
+            'Currency extractor',
+            r'(?<currency>CAD|USD)',
+          );
+      NotificationRule? savedRule;
+      await tester.pumpWidget(
+        Provider<FireflyCurrencyResolver>.value(
+          value: FireflyCurrencyResolver(_CurrencyGateway()),
+          child: MaterialApp(
+            home: NotificationRuleDetailsPage(
+              rule: NotificationRule(
+                id: 'rule',
+                name: 'Card payment',
+                conditions: const <NotificationCondition>[],
+                actions: <NotificationAction>[
+                  SetTransactionFieldAction(
+                    target: TransactionField.currency,
+                    valueSource: CurrencyCaptureValueSource(
+                      capture: RegExpCaptureValueSource(
+                        extractorId: extractor.id,
+                        captureName: 'currency',
+                      ),
+                      resolutionMode: CurrencyResolutionMode.dynamic,
+                    ),
+                  ),
+                ],
+                sampleOverride: NotificationSample(
+                  title: 'Card payment',
+                  body: 'Paid 12 CAD',
+                  receivedAt: DateTime(2026, 9, 7),
+                ),
+              ),
+              extractors: <RegExpDefinition>[extractor],
+              notificationContext: NotificationContext(
+                title: 'Card payment',
+                body: 'Paid 12 CAD',
+                receivedAt: DateTime(2026, 9, 7),
+              ),
+              onSave: (NotificationRule rule) async {
+                savedRule = rule;
+                return true;
+              },
+            ),
+          ),
+        ),
+      );
+
+      await tester.tap(find.byType(SampleNotificationCard));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byKey(const Key('sample-notification-body')),
+        'Paid 12 USD',
+      );
+      await tester.tap(find.widgetWithText(FilledButton, 'Apply'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('Save'));
+      await tester.pumpAndSettle();
+
+      expect(savedRule?.sampleOverride?.body, 'Paid 12 USD');
+      expect(find.byTooltip('Save'), findsNothing);
+
+      final Finder actionCard = find
+          .ancestor(
+            of: richText(
+              'Set field "currency" from extractor "Currency extractor"',
+            ),
+            matching: find.byType(ElevatedButton),
+          )
+          .first;
+      await tester.ensureVisible(actionCard);
+      await tester.pumpAndSettle();
+      await tester.tap(actionCard);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Match dynamically'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(DialogSelectorCard));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Extracted value: "USD"'), findsOneWidget);
+      expect(find.textContaining('USD — US dollar'), findsWidgets);
+    },
+  );
 
   testWidgets('keeps configured extractor and shows edited sample value', (
     WidgetTester tester,

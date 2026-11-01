@@ -559,7 +559,9 @@ NotificationProcessingOutcome _recordedProcessingOutcome({
   final TransactionIntent? intent =
       processed.evaluation.effectiveTransactionIntent;
   return NotificationProcessingOutcome(
-    status: selectedRuleId != null || intent != null
+    status: rule?.processingMode.ignoresNotification ?? false
+        ? NotificationProcessingOutcomeStatus.ignored
+        : selectedRuleId != null || intent != null
         ? NotificationProcessingOutcomeStatus.matched
         : NotificationProcessingOutcomeStatus.noMatch,
     definition: NotificationHistoryReference(

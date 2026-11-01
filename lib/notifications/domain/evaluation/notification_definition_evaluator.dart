@@ -65,6 +65,21 @@ class NotificationDefinitionEvaluator {
             )
             .toList();
     if (unmetSharedRequirements.isNotEmpty) {
+      final Map<String, NotificationRuleEvaluationResult> ruleResults =
+          <String, NotificationRuleEvaluationResult>{};
+      for (final NotificationRule rule in rules) {
+        final NotificationRuleEvaluationResult result = rule.evaluate(context);
+        ruleResults[rule.id] = result;
+        if (!result.matches) continue;
+        if (rule.processingMode.ignoresNotification) {
+          return NotificationDefinitionEvaluationResult(
+            extractionResults: extractionResults,
+            ruleResults: ruleResults,
+            selectedRuleId: rule.id,
+          );
+        }
+        break;
+      }
       return NotificationDefinitionEvaluationResult(
         extractionResults: extractionResults,
         ruleResults: const <String, NotificationRuleEvaluationResult>{},
@@ -98,6 +113,13 @@ class NotificationDefinitionEvaluator {
         ruleResults: ruleResults,
       );
     }
+    if (selectedRule.processingMode.ignoresNotification) {
+      return NotificationDefinitionEvaluationResult(
+        extractionResults: extractionResults,
+        ruleResults: ruleResults,
+        selectedRuleId: selectedRule.id,
+      );
+    }
 
     final List<ActionEvaluationResult> sharedActionResults = sharedActions
         .map((NotificationAction action) => action.evaluate(context))
@@ -121,7 +143,9 @@ class NotificationDefinitionEvaluator {
       selectedRuleId: selectedRule.id,
       effectiveTransactionIntent: actionsSucceeded
           ? TransactionIntent(
-              mode: transactionCreationMode,
+              mode: selectedRule.processingMode.resolve(
+                transactionCreationMode,
+              ),
               patch: effectivePatch,
             )
           : null,

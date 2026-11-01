@@ -213,6 +213,51 @@ Widget _page(
 );
 
 void main() {
+  testWidgets('shows ignored outcomes without transaction creation', (
+    WidgetTester tester,
+  ) async {
+    final NotificationHistoryEntry notification = NotificationHistoryEntry(
+      id: 'promotion',
+      applicationId: 'com.example.app',
+      title: 'Special offer',
+      body: 'Save today',
+      receivedAt: DateTime(2026, 10, 1),
+      processingOutcome: const NotificationProcessingOutcome(
+        status: NotificationProcessingOutcomeStatus.ignored,
+        definition: NotificationHistoryReference(
+          id: 'promotions',
+          name: 'Promotions',
+        ),
+        rule: NotificationHistoryReference(
+          id: 'ignore-promotions',
+          name: 'Ignore promotions',
+        ),
+      ),
+    );
+    await tester.pumpWidget(
+      _page(
+        Future<List<RecentNotificationHistoryEntry>>.value(
+          <RecentNotificationHistoryEntry>[
+            RecentNotificationHistoryEntry(
+              notification: notification,
+              processingOutcome: notification.processingOutcome,
+              canCreateTransaction: false,
+            ),
+          ],
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Special offer'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Notification ignored'), findsOneWidget);
+    expect(find.text('Ignore promotions'), findsOneWidget);
+    expect(find.byIcon(Icons.notifications_off_outlined), findsOneWidget);
+    expect(find.text('Create transaction'), findsNothing);
+  });
+
   testWidgets('scrolls the description and entries as one page', (
     WidgetTester tester,
   ) async {

@@ -18,6 +18,7 @@ import 'package:waterflyiii/notifications/domain/evaluation/notification_rule_re
 import 'package:waterflyiii/notifications/domain/rules/notification_action_group.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule_diagnostics.dart';
+import 'package:waterflyiii/notifications/domain/rules/notification_rule_processing_mode.dart';
 import 'package:waterflyiii/notifications/domain/evaluation/notification_rule_evaluation_result.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_creation_mode.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
@@ -118,6 +119,83 @@ void main() {
       final Map<String, dynamic> json = rule.toJson()..remove('description');
 
       expect(NotificationRule.fromJson(json).description, isEmpty);
+    });
+
+    test('round-trips processing modes and restores older outcomes', () {
+      const NotificationRule rule = NotificationRule(
+        id: 'rule',
+        name: 'Payment',
+        conditions: <NotificationCondition>[],
+        actions: <NotificationAction>[],
+      );
+
+      for (final NotificationRuleProcessingMode mode
+          in NotificationRuleProcessingMode.values) {
+        expect(
+          NotificationRule.fromJson(
+            rule.copyWith(processingMode: mode).toJson(),
+          ).processingMode,
+          mode,
+        );
+      }
+      expect(
+        NotificationRule.fromJson(
+          rule.toJson()..remove('processingMode'),
+        ).processingMode,
+        NotificationRuleProcessingMode.inherit,
+      );
+      expect(
+        NotificationRule.fromJson(<String, dynamic>{
+          ...rule.toJson(),
+          'outcome': 'ignoreNotification',
+        }).processingMode,
+        NotificationRuleProcessingMode.ignore,
+      );
+    });
+
+    test('ignored rules retain but do not evaluate transaction actions', () {
+      const NotificationRule rule = NotificationRule(
+        id: 'ignored',
+        name: 'Ignore promotions',
+        conditions: <NotificationCondition>[
+          ValueExistsCondition(LiteralValueSource('promotion')),
+        ],
+        actions: <NotificationAction>[
+          SetTransactionFieldAction(
+            target: TransactionField.amount,
+            valueSource: RegExpCaptureValueSource(
+              extractorId: 'missing',
+              captureName: 'amount',
+            ),
+          ),
+        ],
+        conditionalActionGroups: <NotificationActionGroup>[
+          NotificationActionGroup(
+            id: 'stored',
+            name: 'Stored actions',
+            conditions: <NotificationCondition>[],
+            actions: <NotificationAction>[
+              SetTransactionFieldAction(
+                target: TransactionField.title,
+                valueSource: LiteralValueSource('Stored'),
+              ),
+            ],
+          ),
+        ],
+        processingMode: NotificationRuleProcessingMode.ignore,
+      );
+
+      final NotificationRuleEvaluationResult result = rule.evaluate(context);
+
+      expect(result.matches, isTrue);
+      expect(result.actions, isEmpty);
+      expect(result.conditionalGroups, isEmpty);
+      expect(result.patch.values, isEmpty);
+      expect(result.patch.tags, isEmpty);
+      expect(rule.requirements, isEmpty);
+      expect(rule.allActions, isEmpty);
+      expect(rule.actions, hasLength(1));
+      expect(rule.conditionalActionGroups, hasLength(1));
     });
 
     // Verifies a fully matching rule combines action patches, which is the

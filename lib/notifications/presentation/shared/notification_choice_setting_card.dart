@@ -4,10 +4,15 @@ import 'package:waterflyiii/notifications/presentation/shared/notification_dialo
 import 'package:waterflyiii/notifications/presentation/shared/notification_text_styles.dart';
 
 class NotificationChoiceOption<T> {
-  const NotificationChoiceOption({required this.value, required this.label});
+  const NotificationChoiceOption({
+    required this.value,
+    required this.label,
+    this.description,
+  });
 
   final T value;
   final String label;
+  final String? description;
 }
 
 class NotificationChoiceSettingCard<T> extends StatelessWidget {
@@ -48,21 +53,28 @@ class NotificationChoiceSettingCard<T> extends StatelessWidget {
       subtitle: Text(subtitle, style: context.notificationSupportingText),
       trailing: Padding(
         padding: const EdgeInsets.only(right: 8),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              currentLabel,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 144),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Flexible(
+                child: Text(
+                  currentLabel,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: enabled ? colors.onSurfaceVariant : colors.outline,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 4),
+              Icon(
+                Icons.chevron_right,
                 color: enabled ? colors.onSurfaceVariant : colors.outline,
               ),
-            ),
-            const SizedBox(width: 4),
-            Icon(
-              Icons.chevron_right,
-              color: enabled ? colors.onSurfaceVariant : colors.outline,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -117,6 +129,12 @@ class _NotificationChoiceDialog<T> extends StatelessWidget {
                         )
                       : null,
                 ),
+                subtitle: option.description == null
+                    ? null
+                    : Text(
+                        option.description!,
+                        style: context.notificationSupportingText,
+                      ),
                 trailing: option.value == value
                     ? Icon(Icons.check, color: colors.primary)
                     : null,

@@ -1734,6 +1734,138 @@ abstract class S {
   /// **'Always executed actions'**
   String get notificationsRuleAlwaysActionsTitle;
 
+  /// Heading for notification rule behavior options.
+  ///
+  /// In en, this message translates to:
+  /// **'Options'**
+  String get notificationsRuleOptionsHeading;
+
+  /// Description for notification rule behavior options.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose what happens when this rule matches.'**
+  String get notificationsRuleOptionsDescription;
+
+  /// Title of the notification rule outcome choice.
+  ///
+  /// In en, this message translates to:
+  /// **'When this rule matches'**
+  String get notificationsRuleOutcome;
+
+  /// Rule processing mode that inherits the application transaction setting.
+  ///
+  /// In en, this message translates to:
+  /// **'Use app setting'**
+  String get notificationsRuleModeUseApplication;
+
+  /// Description of the inherited rule processing mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow the application setting. Currently: {mode}.'**
+  String notificationsRuleModeUseApplicationDescription(String mode);
+
+  /// Rule processing mode that always prompts before transaction creation.
+  ///
+  /// In en, this message translates to:
+  /// **'Prompt for creation'**
+  String get notificationsRuleModePrompt;
+
+  /// Description of the prompt rule processing mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Review the resolved transaction before creating it.'**
+  String get notificationsRuleModePromptDescription;
+
+  /// Rule processing mode that automatically creates transactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Create automatically'**
+  String get notificationsRuleModeAutomatic;
+
+  /// Description of the automatic rule processing mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Create the transaction immediately when all required details are available.'**
+  String get notificationsRuleModeAutomaticDescription;
+
+  /// Rule processing mode that stops notification processing.
+  ///
+  /// In en, this message translates to:
+  /// **'Ignore notification'**
+  String get notificationsRuleModeIgnore;
+
+  /// Description of the ignored rule processing mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop processing without creating or prompting for a transaction.'**
+  String get notificationsRuleModeIgnoreDescription;
+
+  /// Status title for a rule ready to create transactions automatically.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction will be created automatically'**
+  String get notificationsRuleAutomaticReadyTitle;
+
+  /// Status message for a rule ready to create transactions automatically.
+  ///
+  /// In en, this message translates to:
+  /// **'Matching notifications will create a transaction without prompting.'**
+  String get notificationsRuleAutomaticReadyMessage;
+
+  /// Status title for a rule missing fields required for automatic transaction creation.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic creation needs more information'**
+  String get notificationsRuleAutomaticIncompleteTitle;
+
+  /// Status title for an ignored notification rule.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification will be ignored'**
+  String get notificationsRuleIgnoredTitle;
+
+  /// Status message for an ignored notification rule.
+  ///
+  /// In en, this message translates to:
+  /// **'When this rule matches, Waterfly will stop processing the notification.'**
+  String get notificationsRuleIgnoredMessage;
+
+  /// Status shown beneath an ignored rule in the definition rule list.
+  ///
+  /// In en, this message translates to:
+  /// **'Matching notifications are ignored.'**
+  String get notificationsRuleIgnoredListStatus;
+
+  /// Status shown beneath a rule that overrides transaction creation to prompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Always prompts before creating a transaction.'**
+  String get notificationsRulePromptListStatus;
+
+  /// Status shown beneath a rule that overrides transaction creation to automatic.
+  ///
+  /// In en, this message translates to:
+  /// **'Creates matching transactions automatically.'**
+  String get notificationsRuleAutomaticListStatus;
+
+  /// History outcome title for a notification ignored by a rule.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification ignored'**
+  String get notificationsHistoryIgnoredTitle;
+
+  /// History outcome fallback message for an ignored notification.
+  ///
+  /// In en, this message translates to:
+  /// **'A matching rule stopped notification processing.'**
+  String get notificationsHistoryIgnoredMessage;
+
+  /// History action label for editing the rule that ignored a notification.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit ignored rule'**
+  String get notificationsHistoryEditIgnoredRule;
+
   /// Description of the actions that always run for a selected notification rule.
   ///
   /// In en, this message translates to:

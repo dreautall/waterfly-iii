@@ -21,6 +21,7 @@ import 'package:waterflyiii/notifications/domain/definitions/notification_defini
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_action_group.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
+import 'package:waterflyiii/notifications/domain/rules/notification_rule_processing_mode.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/currency_capture_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/date_time_capture_value_source.dart';
@@ -63,6 +64,162 @@ void main() {
 
   Finder conditionTitle(String text) => richText(text);
 
+  testWidgets('ignores notifications without discarding configured actions', (
+    WidgetTester tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    NotificationRule? savedRule;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationRuleDetailsPage(
+          rule: const NotificationRule(
+            id: 'promotion',
+            name: 'Promotions',
+            conditions: <NotificationCondition>[],
+            actions: <NotificationAction>[
+              SetTransactionFieldAction(
+                target: TransactionField.title,
+                valueSource: LiteralValueSource('Promotion'),
+              ),
+            ],
+            conditionalActionGroups: <NotificationActionGroup>[
+              NotificationActionGroup(
+                id: 'special-offer',
+                name: 'Special offer',
+                conditions: <NotificationCondition>[
+                  ValueExistsCondition(LiteralValueSource('offer')),
+                ],
+                actions: <NotificationAction>[
+                  SetTransactionFieldAction(
+                    target: TransactionField.category,
+                    valueSource: LiteralValueSource('Marketing'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          extractors: const <RegExpDefinition>[],
+          notificationContext: NotificationContext(
+            title: 'Special offer',
+            body: 'Save today',
+            receivedAt: DateTime(2026, 10, 1),
+          ),
+          onSave: (NotificationRule rule) async {
+            savedRule = rule;
+            return true;
+          },
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Always executed actions'), findsOneWidget);
+    expect(find.text('Conditional actions'), findsOneWidget);
+    expect(find.text('Resolved transaction fields'), findsOneWidget);
+
+    await tester.scrollUntilVisible(
+      find.text('When this rule matches'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.text('Options'), findsOneWidget);
+    expect(
+      tester.getTopLeft(find.text('Options')).dy,
+      greaterThan(tester.getTopLeft(find.text('Applies when')).dy),
+    );
+    expect(
+      tester.getTopLeft(find.text('Options')).dy,
+      lessThan(tester.getTopLeft(find.text('Always executed actions')).dy),
+    );
+    final Finder transactionSections = find.byKey(
+      const Key('rule-transaction-sections-transition'),
+    );
+    final double expandedHeight = tester.getSize(transactionSections).height;
+
+    expect(find.text('Use app setting'), findsOneWidget);
+    await tester.tap(find.text('When this rule matches'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Use app setting'), findsNWidgets(2));
+    expect(find.text('Prompt for creation'), findsOneWidget);
+    expect(find.text('Create automatically'), findsOneWidget);
+    expect(find.text('Ignore notification'), findsOneWidget);
+    expect(
+      find.text(
+        'Follow the application setting. Currently: Prompt for creation.',
+      ),
+      findsNWidgets(2),
+    );
+    await tester.tap(find.text('Create automatically'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('Automatic creation needs more information'),
+      findsOneWidget,
+    );
+    expect(find.text('Always executed actions'), findsOneWidget);
+
+    await tester.tap(find.text('When this rule matches'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Prompt for creation'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('Automatic creation needs more information'),
+      findsNothing,
+    );
+
+    await tester.tap(find.text('When this rule matches'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Ignore notification'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 120));
+
+    expect(
+      tester.getSize(transactionSections).height,
+      lessThan(expandedHeight),
+    );
+    expect(tester.getSize(transactionSections).height, greaterThan(0));
+
+    await tester.pumpAndSettle();
+
+    expect(find.text('Notification will be ignored'), findsOneWidget);
+    expect(tester.getSize(transactionSections).height, 0);
+    expect(find.text('Always executed actions'), findsNothing);
+    expect(find.text('Conditional actions'), findsNothing);
+    expect(find.text('Resolved transaction fields'), findsNothing);
+    expect(find.byTooltip('Save'), findsOneWidget);
+
+    await tester.tap(find.text('When this rule matches'));
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.text('Use app setting'),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 120));
+
+    expect(tester.getSize(transactionSections).height, greaterThan(0));
+
+    await tester.pumpAndSettle();
+    expect(find.text('Always executed actions'), findsOneWidget);
+
+    await tester.tap(find.text('When this rule matches'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Ignore notification'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+
+    expect(savedRule?.processingMode, NotificationRuleProcessingMode.ignore);
+    expect(savedRule?.actions, hasLength(1));
+    expect(savedRule?.conditionalActionGroups, hasLength(1));
+  });
+
   testWidgets('resolves notification properties from the active sample', (
     WidgetTester tester,
   ) async {
@@ -93,6 +250,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await tester.scrollUntilVisible(
+      richText('Resolved value: "Card payment"'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(richText('Resolved value: "Card payment"'), findsOneWidget);
     expect(richText('Resolved value: "title"'), findsNothing);
   });
@@ -392,6 +554,8 @@ void main() {
       200,
       scrollable: find.byType(Scrollable).first,
     );
+    await tester.ensureVisible(find.text('Salary source').first);
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Salary source').first);
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Condition options'));
@@ -815,6 +979,8 @@ void main() {
       200,
       scrollable: find.byType(Scrollable).first,
     );
+    await tester.ensureVisible(find.text('Add conditional action'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Add conditional action'));
     await tester.pumpAndSettle();
 
@@ -1051,6 +1217,8 @@ void main() {
         200,
         scrollable: find.byType(Scrollable).first,
       );
+      await tester.ensureVisible(find.text('Merchant category'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Merchant category'));
       await tester.pumpAndSettle();
 
@@ -1444,6 +1612,8 @@ void main() {
       200,
       scrollable: find.byType(Scrollable).first,
     );
+    await tester.ensureVisible(find.byTooltip('Conditional action options'));
+    await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Conditional action options'));
     await tester.pumpAndSettle();
     expect(find.text('Edit'), findsOneWidget);
@@ -1505,6 +1675,8 @@ void main() {
         200,
         scrollable: find.byType(Scrollable).first,
       );
+      await tester.ensureVisible(find.byTooltip('Conditional action options'));
+      await tester.pumpAndSettle();
       await tester.tap(find.byTooltip('Conditional action options'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Rename'));
@@ -2140,6 +2312,8 @@ void main() {
       200,
       scrollable: find.byType(Scrollable).first,
     );
+    await tester.ensureVisible(find.text('Salary source').first);
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Salary source').first);
     await tester.pumpAndSettle();
     await tester.tap(find.byType(SampleNotificationCard));
@@ -3140,7 +3314,11 @@ void main() {
       ),
     );
 
-    await tester.ensureVisible(find.text('Set transaction tags'));
+    await tester.scrollUntilVisible(
+      find.text('Set transaction tags'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Set transaction tags'));
     await tester.pumpAndSettle();
@@ -3187,6 +3365,11 @@ void main() {
       ),
     );
 
+    await tester.scrollUntilVisible(
+      find.widgetWithText(InputChip, 'work'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     tester
         .widget<InputChip>(find.widgetWithText(InputChip, 'work'))
         .onDeleted!();
@@ -4132,6 +4315,11 @@ void main() {
     );
     final Finder fireflySummary = richText(
       'Set field "title" to Firefly supplied value',
+    );
+    await tester.scrollUntilVisible(
+      literalSummary,
+      200,
+      scrollable: find.byType(Scrollable).first,
     );
     expect(literalSummary, findsOneWidget);
     expect(fireflySummary, findsOneWidget);

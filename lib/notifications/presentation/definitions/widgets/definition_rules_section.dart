@@ -3,6 +3,7 @@ import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
+import 'package:waterflyiii/notifications/domain/rules/notification_rule_processing_mode.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule_diagnostics.dart';
 import 'package:waterflyiii/notifications/presentation/shared/definition_detail_card.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_empty_state.dart';
@@ -135,6 +136,8 @@ class _RuleCard extends StatelessWidget {
         .length;
     final bool needsSetup = incompleteActionCount > 0;
     final bool needsReview = rule.hasUnconfiguredConditionalActions;
+    final bool ignored = rule.processingMode.ignoresNotification;
+    final NotificationRuleProcessingMode processingMode = rule.processingMode;
     final ColorScheme colors = Theme.of(context).colorScheme;
     return Padding(
       padding: EdgeInsets.only(bottom: bottomPadding),
@@ -145,6 +148,12 @@ class _RuleCard extends StatelessWidget {
               ? Icons.cancel_outlined
               : needsReview
               ? Icons.error_outline
+              : ignored
+              ? Icons.notifications_off_outlined
+              : processingMode == NotificationRuleProcessingMode.automatic
+              ? Icons.bolt_outlined
+              : processingMode == NotificationRuleProcessingMode.prompt
+              ? Icons.rate_review_outlined
               : blocksFollowingRules
               ? Icons.warning_amber_outlined
               : Icons.rule,
@@ -162,6 +171,7 @@ class _RuleCard extends StatelessWidget {
           needsSetup: needsSetup,
           needsReview: needsReview,
           blocksFollowingRules: blocksFollowingRules,
+          processingMode: processingMode,
         ),
         trailing: trailing,
       ),
@@ -173,7 +183,9 @@ class _RuleCard extends StatelessWidget {
     required bool needsSetup,
     required bool needsReview,
     required bool blocksFollowingRules,
+    required NotificationRuleProcessingMode processingMode,
   }) {
+    final bool ignored = processingMode.ignoresNotification;
     final ColorScheme colors = Theme.of(context).colorScheme;
     final List<Widget> lines = <Widget>[
       if (needsSetup)
@@ -190,6 +202,38 @@ class _RuleCard extends StatelessWidget {
         Text(
           S.of(context).notificationsDefinitionRuleShadowsFollowing,
           style: TextStyle(color: colors.tertiary),
+        )
+      else if (ignored)
+        Text(
+          S.of(context).notificationsRuleIgnoredListStatus,
+          style: context.notificationSupportingText,
+        )
+      else if (processingMode == NotificationRuleProcessingMode.automatic)
+        Text(
+          S.of(context).notificationsRuleAutomaticListStatus,
+          style: context.notificationSupportingText,
+        )
+      else if (processingMode == NotificationRuleProcessingMode.prompt)
+        Text(
+          S.of(context).notificationsRulePromptListStatus,
+          style: context.notificationSupportingText,
+        ),
+      if (ignored && blocksFollowingRules)
+        Text(
+          S.of(context).notificationsRuleIgnoredListStatus,
+          style: context.notificationSupportingText,
+        ),
+      if (processingMode == NotificationRuleProcessingMode.automatic &&
+          blocksFollowingRules)
+        Text(
+          S.of(context).notificationsRuleAutomaticListStatus,
+          style: context.notificationSupportingText,
+        ),
+      if (processingMode == NotificationRuleProcessingMode.prompt &&
+          blocksFollowingRules)
+        Text(
+          S.of(context).notificationsRulePromptListStatus,
+          style: context.notificationSupportingText,
         ),
       if (rule.description.isNotEmpty)
         Text(
@@ -198,7 +242,10 @@ class _RuleCard extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         )
-      else if (!needsSetup && !needsReview && !blocksFollowingRules)
+      else if (!needsSetup &&
+          !needsReview &&
+          !blocksFollowingRules &&
+          processingMode == NotificationRuleProcessingMode.inherit)
         Text(
           rule.conditionalActionGroups.isEmpty
               ? S

@@ -1050,6 +1050,86 @@ class SEs extends S {
   String get notificationsRuleAlwaysActionsTitle => 'Always executed actions';
 
   @override
+  String get notificationsRuleOptionsHeading => 'Options';
+
+  @override
+  String get notificationsRuleOptionsDescription =>
+      'Choose what happens when this rule matches.';
+
+  @override
+  String get notificationsRuleOutcome => 'When this rule matches';
+
+  @override
+  String get notificationsRuleModeUseApplication => 'Use app setting';
+
+  @override
+  String notificationsRuleModeUseApplicationDescription(String mode) {
+    return 'Follow the application setting. Currently: $mode.';
+  }
+
+  @override
+  String get notificationsRuleModePrompt => 'Prompt for creation';
+
+  @override
+  String get notificationsRuleModePromptDescription =>
+      'Review the resolved transaction before creating it.';
+
+  @override
+  String get notificationsRuleModeAutomatic => 'Create automatically';
+
+  @override
+  String get notificationsRuleModeAutomaticDescription =>
+      'Create the transaction immediately when all required details are available.';
+
+  @override
+  String get notificationsRuleModeIgnore => 'Ignore notification';
+
+  @override
+  String get notificationsRuleModeIgnoreDescription =>
+      'Stop processing without creating or prompting for a transaction.';
+
+  @override
+  String get notificationsRuleAutomaticReadyTitle =>
+      'Transaction will be created automatically';
+
+  @override
+  String get notificationsRuleAutomaticReadyMessage =>
+      'Matching notifications will create a transaction without prompting.';
+
+  @override
+  String get notificationsRuleAutomaticIncompleteTitle =>
+      'Automatic creation needs more information';
+
+  @override
+  String get notificationsRuleIgnoredTitle => 'Notification will be ignored';
+
+  @override
+  String get notificationsRuleIgnoredMessage =>
+      'When this rule matches, Waterfly will stop processing the notification.';
+
+  @override
+  String get notificationsRuleIgnoredListStatus =>
+      'Matching notifications are ignored.';
+
+  @override
+  String get notificationsRulePromptListStatus =>
+      'Always prompts before creating a transaction.';
+
+  @override
+  String get notificationsRuleAutomaticListStatus =>
+      'Creates matching transactions automatically.';
+
+  @override
+  String get notificationsHistoryIgnoredTitle => 'Notification ignored';
+
+  @override
+  String get notificationsHistoryIgnoredMessage =>
+      'A matching rule stopped notification processing.';
+
+  @override
+  String get notificationsHistoryEditIgnoredRule => 'Edit ignored rule';
+
+  @override
   String get notificationsRuleAlwaysActionsDescription =>
       'Run whenever this rule is selected, before matching conditional actions.';
 

@@ -15,6 +15,7 @@ import 'package:waterflyiii/notifications/domain/extractors/reg_exp_evaluation_r
 import 'package:waterflyiii/notifications/domain/notification_id.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_action_group.dart';
+import 'package:waterflyiii/notifications/domain/rules/notification_rule_processing_mode.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 
@@ -50,6 +51,7 @@ class NotificationRuleEditorViewModel extends ChangeNotifier {
       );
   Set<TransactionField> get reviewedPredefinedFields =>
       Set<TransactionField>.unmodifiable(_draft.reviewedPredefinedFields);
+  NotificationRuleProcessingMode get processingMode => _draft.processingMode;
   NotificationContext testNotificationContext;
   bool isTestMode;
 
@@ -167,6 +169,11 @@ class NotificationRuleEditorViewModel extends ChangeNotifier {
 
   void updateDescription(String value) {
     _draft.description = value;
+    notifyListeners();
+  }
+
+  void updateProcessingMode(NotificationRuleProcessingMode value) {
+    _draft.processingMode = value;
     notifyListeners();
   }
 

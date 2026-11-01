@@ -17,21 +17,7 @@ class AutomaticTransactionReadiness {
 
   bool get isReady => missingRequirements.isEmpty;
 
-  factory AutomaticTransactionReadiness.evaluate({
-    required List<NotificationAction> sharedActions,
-    required List<RegExpDefinition> extractors,
-    required NotificationContext notificationContext,
-  }) {
-    final List<ActionEvaluationResult> results =
-        NotificationDefinitionEvaluator(
-          extractors: extractors,
-          rules: const <NotificationRule>[],
-          sharedActions: sharedActions,
-          transactionCreationMode: TransactionCreationMode.automatic,
-        ).evaluate(notificationContext).sharedActions;
-    final TransactionPatch patch = TransactionPatch.merge(
-      results.map((ActionEvaluationResult result) => result.patch),
-    );
+  factory AutomaticTransactionReadiness.fromPatch(TransactionPatch patch) {
     final String? title = patch.values[TransactionField.title];
     final String? amount = patch.values[TransactionField.amount];
     final num? parsedAmount = amount == null
@@ -48,5 +34,40 @@ class AutomaticTransactionReadiness {
           (destinationAccount?.trim().isEmpty ?? true))
         AutomaticTransactionRequirement.account,
     });
+  }
+
+  factory AutomaticTransactionReadiness.evaluate({
+    required List<NotificationAction> sharedActions,
+    required List<RegExpDefinition> extractors,
+    required NotificationContext notificationContext,
+  }) {
+    final List<ActionEvaluationResult> results =
+        NotificationDefinitionEvaluator(
+          extractors: extractors,
+          rules: const <NotificationRule>[],
+          sharedActions: sharedActions,
+          transactionCreationMode: TransactionCreationMode.automatic,
+        ).evaluate(notificationContext).sharedActions;
+    final TransactionPatch patch = TransactionPatch.merge(
+      results.map((ActionEvaluationResult result) => result.patch),
+    );
+    return AutomaticTransactionReadiness.fromPatch(patch);
+  }
+
+  factory AutomaticTransactionReadiness.evaluateRule({
+    required List<NotificationAction> sharedActions,
+    required NotificationRule rule,
+    required List<RegExpDefinition> extractors,
+    required NotificationContext notificationContext,
+  }) {
+    final TransactionPatch patch =
+        NotificationDefinitionEvaluator(
+          extractors: extractors,
+          rules: <NotificationRule>[rule],
+          sharedActions: sharedActions,
+          transactionCreationMode: TransactionCreationMode.automatic,
+        ).evaluate(notificationContext).effectiveTransactionIntent?.patch ??
+        const TransactionPatch(<TransactionField, String>{});
+    return AutomaticTransactionReadiness.fromPatch(patch);
   }
 }

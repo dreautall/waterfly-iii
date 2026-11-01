@@ -276,6 +276,29 @@ class _RecentNotificationCardState extends State<RecentNotificationCard> {
         ),
       );
     }
+    if (entry.processingOutcome?.status ==
+        NotificationProcessingOutcomeStatus.ignored) {
+      return _promptControls(
+        RecentNotificationOutcome(
+          status: MessageStatus.informational,
+          icon: Icons.notifications_off_outlined,
+          title: S.of(context).notificationsHistoryIgnoredTitle,
+          message:
+              entry.matchingRuleName ??
+              S.of(context).notificationsHistoryIgnoredMessage,
+          trailing: RecentNotificationDetails(entry: entry),
+        ),
+        actions.editRule == null
+            ? null
+            : RecentNotificationActionsButton(
+                label: S.of(context).notificationsHistoryEditIgnoredRule,
+                primaryIcon: Icons.edit_outlined,
+                onPrimaryAction: () => actions.editRule!(entry),
+                onOpenDefinition: _definitionAction(entry),
+                onRemoveFromHistory: _removeAction(entry),
+              ),
+      );
+    }
     if (entry.matchingRuleName != null) {
       return _promptControls(
         RecentNotificationOutcome(

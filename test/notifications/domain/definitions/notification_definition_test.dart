@@ -11,6 +11,7 @@ import 'package:waterflyiii/notifications/domain/definitions/notification_defini
 import 'package:waterflyiii/notifications/domain/evaluation/notification_definition_evaluation_result.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_action_group.dart';
+import 'package:waterflyiii/notifications/domain/rules/notification_rule_processing_mode.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_creation_mode.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/literal_value_source.dart';
@@ -18,6 +19,100 @@ import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_v
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 
 void main() {
+  test(
+    'ignore-only automatic definitions do not require transaction setup',
+    () {
+      final NotificationDefinition definition = NotificationDefinition(
+        id: 'promotions',
+        applicationId: 'com.example.app',
+        name: 'Promotions',
+        sampleTitle: 'Special offer',
+        sampleBody: 'Save today',
+        extractors: <RegExpDefinition>[
+          RegExpDefinition.createCustomRegExpDefinition('Offer', r'Save'),
+        ],
+        rules: const <NotificationRule>[
+          NotificationRule(
+            id: 'ignore',
+            name: 'Ignore promotions',
+            conditions: <NotificationCondition>[],
+            actions: <NotificationAction>[],
+            processingMode: NotificationRuleProcessingMode.ignore,
+          ),
+        ],
+        extractorMode: NotificationExtractorMode.advanced,
+        transactionCreationMode: TransactionCreationMode.automatic,
+      );
+
+      expect(definition.automaticTransactionReadiness.isReady, isFalse);
+      expect(definition.status, NotificationDefinitionStatus.ready);
+    },
+  );
+
+  test('derives automatic readiness from each rule effective mode', () {
+    final NotificationDefinition definition = NotificationDefinition(
+      id: 'payments',
+      applicationId: 'com.example.app',
+      name: 'Payments',
+      sampleTitle: 'Payment',
+      sampleBody: 'Paid 12.50 CAD',
+      extractors: <RegExpDefinition>[
+        RegExpDefinition.createCustomRegExpDefinition('Payment', r'Paid'),
+      ],
+      rules: const <NotificationRule>[
+        NotificationRule(
+          id: 'payment',
+          name: 'Payment',
+          conditions: <NotificationCondition>[],
+          actions: <NotificationAction>[],
+          processingMode: NotificationRuleProcessingMode.automatic,
+        ),
+      ],
+      extractorMode: NotificationExtractorMode.advanced,
+      transactionCreationMode: TransactionCreationMode.prompt,
+    );
+
+    expect(definition.status, NotificationDefinitionStatus.needsReview);
+    expect(
+      definition
+          .copyWith(
+            rules: <NotificationRule>[
+              definition.rules.single.copyWith(
+                actions: const <NotificationAction>[
+                  SetTransactionFieldAction(
+                    target: TransactionField.title,
+                    valueSource: LiteralValueSource('Payment'),
+                  ),
+                  SetTransactionFieldAction(
+                    target: TransactionField.amount,
+                    valueSource: LiteralValueSource('12.50'),
+                  ),
+                  SetTransactionFieldAction(
+                    target: TransactionField.sourceAccount,
+                    valueSource: LiteralValueSource('Checking'),
+                  ),
+                ],
+              ),
+            ],
+          )
+          .status,
+      NotificationDefinitionStatus.ready,
+    );
+    expect(
+      definition
+          .copyWith(
+            transactionCreationMode: TransactionCreationMode.automatic,
+            rules: <NotificationRule>[
+              definition.rules.single.copyWith(
+                processingMode: NotificationRuleProcessingMode.prompt,
+              ),
+            ],
+          )
+          .status,
+      NotificationDefinitionStatus.ready,
+    );
+  });
+
   test('unconfigured conditional actions require review, not setup', () {
     const NotificationRule rule = NotificationRule(
       id: 'rule',

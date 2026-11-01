@@ -8,6 +8,7 @@ import 'package:waterflyiii/notifications/domain/evaluation/notification_definit
 import 'package:waterflyiii/notifications/domain/evaluation/notification_action_group_evaluation_result.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_action_group.dart';
+import 'package:waterflyiii/notifications/domain/rules/notification_rule_processing_mode.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_creation_mode.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/composed_value_source.dart';
@@ -129,6 +130,184 @@ void main() {
         TransactionField.category: 'Groceries',
       },
     );
+  });
+
+  test('an ignored rule suppresses shared and rule actions', () {
+    const NotificationRule ignoredRule = NotificationRule(
+      id: 'ignored',
+      name: 'Ignore promotions',
+      conditions: <NotificationCondition>[],
+      actions: <SetTransactionFieldAction>[
+        SetTransactionFieldAction(
+          target: TransactionField.title,
+          valueSource: LiteralValueSource('Stored rule action'),
+        ),
+      ],
+      processingMode: NotificationRuleProcessingMode.ignore,
+    );
+
+    final NotificationDefinitionEvaluationResult result =
+        const NotificationDefinitionEvaluator(
+          extractors: <RegExpDefinition>[],
+          rules: <NotificationRule>[ignoredRule],
+          sharedActions: <SetTransactionFieldAction>[
+            SetTransactionFieldAction(
+              target: TransactionField.category,
+              valueSource: LiteralValueSource('Shared action'),
+            ),
+          ],
+          transactionCreationMode: TransactionCreationMode.prompt,
+        ).evaluate(
+          NotificationContext(
+            title: 'Promotion',
+            body: 'Special offer',
+            receivedAt: DateTime(2026, 10, 1),
+          ),
+        );
+
+    expect(result.selectedRuleId, ignoredRule.id);
+    expect(result.ruleResults[ignoredRule.id]?.matches, isTrue);
+    expect(result.ruleResults[ignoredRule.id]?.actions, isEmpty);
+    expect(result.sharedActions, isEmpty);
+    expect(result.effectiveTransactionIntent, isNull);
+  });
+
+  test('an earlier transaction rule keeps first-match priority', () {
+    const NotificationRule transactionRule = NotificationRule(
+      id: 'transaction',
+      name: 'Create transaction',
+      conditions: <NotificationCondition>[],
+      actions: <SetTransactionFieldAction>[
+        SetTransactionFieldAction(
+          target: TransactionField.title,
+          valueSource: LiteralValueSource('Transaction'),
+        ),
+      ],
+    );
+    const NotificationRule ignoredRule = NotificationRule(
+      id: 'ignored',
+      name: 'Ignore',
+      conditions: <NotificationCondition>[],
+      actions: <SetTransactionFieldAction>[],
+      processingMode: NotificationRuleProcessingMode.ignore,
+    );
+
+    final NotificationDefinitionEvaluationResult result =
+        const NotificationDefinitionEvaluator(
+          extractors: <RegExpDefinition>[],
+          rules: <NotificationRule>[transactionRule, ignoredRule],
+          transactionCreationMode: TransactionCreationMode.prompt,
+        ).evaluate(
+          NotificationContext(
+            title: 'Payment',
+            body: 'Paid 12.50 CAD',
+            receivedAt: DateTime(2026, 10, 1),
+          ),
+        );
+
+    expect(result.selectedRuleId, transactionRule.id);
+    expect(result.ruleResults.containsKey(ignoredRule.id), isFalse);
+    expect(result.effectiveTransactionIntent, isNotNull);
+  });
+
+  test('rule processing modes override or inherit the application mode', () {
+    const NotificationRule inheritedRule = NotificationRule(
+      id: 'inherit',
+      name: 'Inherit',
+      conditions: <NotificationCondition>[],
+      actions: <SetTransactionFieldAction>[
+        SetTransactionFieldAction(
+          target: TransactionField.title,
+          valueSource: LiteralValueSource('Transaction'),
+        ),
+      ],
+    );
+    final NotificationContext notification = NotificationContext(
+      title: 'Payment',
+      body: 'Paid 12.50 CAD',
+      receivedAt: DateTime(2026, 10, 1),
+    );
+
+    NotificationDefinitionEvaluationResult evaluate(
+      NotificationRuleProcessingMode processingMode,
+      TransactionCreationMode applicationMode,
+    ) => NotificationDefinitionEvaluator(
+      extractors: const <RegExpDefinition>[],
+      rules: <NotificationRule>[
+        inheritedRule.copyWith(processingMode: processingMode),
+      ],
+      transactionCreationMode: applicationMode,
+    ).evaluate(notification);
+
+    expect(
+      evaluate(
+        NotificationRuleProcessingMode.inherit,
+        TransactionCreationMode.automatic,
+      ).effectiveTransactionIntent?.mode,
+      TransactionCreationMode.automatic,
+    );
+    expect(
+      evaluate(
+        NotificationRuleProcessingMode.prompt,
+        TransactionCreationMode.automatic,
+      ).effectiveTransactionIntent?.mode,
+      TransactionCreationMode.prompt,
+    );
+    expect(
+      evaluate(
+        NotificationRuleProcessingMode.automatic,
+        TransactionCreationMode.prompt,
+      ).effectiveTransactionIntent?.mode,
+      TransactionCreationMode.automatic,
+    );
+  });
+
+  test('an ignored match bypasses unmet shared requirements in rule order', () {
+    const NotificationRule nonMatchingRule = NotificationRule(
+      id: 'non-match',
+      name: 'Non-match',
+      conditions: <NotificationCondition>[
+        ValueExistsCondition(LiteralValueSource('')),
+      ],
+      actions: <SetTransactionFieldAction>[],
+    );
+    const NotificationRule ignoredRule = NotificationRule(
+      id: 'ignored',
+      name: 'Ignore',
+      conditions: <NotificationCondition>[],
+      actions: <SetTransactionFieldAction>[],
+      processingMode: NotificationRuleProcessingMode.ignore,
+    );
+
+    final NotificationDefinitionEvaluationResult result =
+        const NotificationDefinitionEvaluator(
+          extractors: <RegExpDefinition>[],
+          rules: <NotificationRule>[nonMatchingRule, ignoredRule],
+          sharedActions: <SetTransactionFieldAction>[
+            SetTransactionFieldAction(
+              target: TransactionField.amount,
+              valueSource: RegExpCaptureValueSource(
+                extractorId: 'missing',
+                captureName: 'amount',
+              ),
+            ),
+          ],
+          transactionCreationMode: TransactionCreationMode.prompt,
+        ).evaluate(
+          NotificationContext(
+            title: 'Promotion',
+            body: 'Special offer',
+            receivedAt: DateTime(2026, 10, 1),
+          ),
+        );
+
+    expect(result.selectedRuleId, ignoredRule.id);
+    expect(result.ruleResults.keys, <String>[
+      nonMatchingRule.id,
+      ignoredRule.id,
+    ]);
+    expect(result.unmetSharedRequirements, isEmpty);
+    expect(result.effectiveTransactionIntent, isNull);
   });
 
   test('creates a transaction from shared actions without a matching rule', () {

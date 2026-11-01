@@ -5,6 +5,25 @@ import 'package:waterflyiii/notifications/domain/transactions/transaction_field.
 import 'package:waterflyiii/notifications/domain/transactions/transaction_patch.dart';
 
 void main() {
+  test('round-trips an ignored processing outcome', () {
+    const NotificationProcessingOutcome outcome = NotificationProcessingOutcome(
+      status: NotificationProcessingOutcomeStatus.ignored,
+      rule: NotificationHistoryReference(
+        id: 'promotion',
+        name: 'Promotional notifications',
+      ),
+      hasTransactionIntent: false,
+    );
+
+    final NotificationProcessingOutcome restored =
+        NotificationProcessingOutcome.fromJson(outcome.toJson());
+
+    expect(restored.status, NotificationProcessingOutcomeStatus.ignored);
+    expect(restored.rule?.name, 'Promotional notifications');
+    expect(restored.hasTransactionIntent, isFalse);
+    expect(restored.transactionPatch, isNull);
+  });
+
   test('round-trips a complete recorded processing outcome', () {
     const NotificationProcessingOutcome outcome = NotificationProcessingOutcome(
       status: NotificationProcessingOutcomeStatus.matched,

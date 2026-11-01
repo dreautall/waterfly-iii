@@ -11,6 +11,7 @@ import 'package:waterflyiii/notifications/domain/transactions/transaction_field.
 import 'package:waterflyiii/notifications/domain/transactions/transaction_patch.dart';
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_action_group.dart';
+import 'package:waterflyiii/notifications/domain/rules/notification_rule_processing_mode.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/currency_capture_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/composed_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/date_time_capture_value_source.dart';
@@ -36,6 +37,7 @@ class NotificationRule {
     required this.conditions,
     required this.actions,
     this.conditionalActionGroups = const <NotificationActionGroup>[],
+    this.processingMode = NotificationRuleProcessingMode.inherit,
     this.isPredefined = false,
     this.reviewedPredefinedFields = const <TransactionField>{},
     this.sampleOverride,
@@ -47,28 +49,34 @@ class NotificationRule {
   final List<NotificationCondition> conditions;
   final List<NotificationAction> actions;
   final List<NotificationActionGroup> conditionalActionGroups;
+  final NotificationRuleProcessingMode processingMode;
   final bool isPredefined;
   final Set<TransactionField> reviewedPredefinedFields;
   final NotificationSample? sampleOverride;
 
-  bool get hasUnconfiguredConditionalActions => conditionalActionGroups.any(
-    (NotificationActionGroup group) => !group.isConfigured,
-  );
+  bool get hasUnconfiguredConditionalActions =>
+      !processingMode.ignoresNotification &&
+      conditionalActionGroups.any(
+        (NotificationActionGroup group) => !group.isConfigured,
+      );
 
   List<NotificationRuleRequirement> get requirements =>
       <NotificationRuleRequirement>{
         for (final NotificationCondition condition in conditions)
           ..._requirementsForCondition(condition),
-        for (final NotificationAction action in actions)
-          ..._requirementsForAction(action),
-        for (final NotificationActionGroup group in conditionalActionGroups)
-          if (group.isConfigured)
-            for (final NotificationCondition condition in group.conditions)
-              ..._requirementsForCondition(condition),
-        for (final NotificationActionGroup group in conditionalActionGroups)
-          if (group.isConfigured)
-            for (final NotificationAction action in group.actions)
-              ..._requirementsForAction(action),
+        if (!processingMode
+            .ignoresNotification) ...<NotificationRuleRequirement>{
+          for (final NotificationAction action in actions)
+            ..._requirementsForAction(action),
+          for (final NotificationActionGroup group in conditionalActionGroups)
+            if (group.isConfigured)
+              for (final NotificationCondition condition in group.conditions)
+                ..._requirementsForCondition(condition),
+          for (final NotificationActionGroup group in conditionalActionGroups)
+            if (group.isConfigured)
+              for (final NotificationAction action in group.actions)
+                ..._requirementsForAction(action),
+        },
       }.toList();
 
   NotificationRule copyWith({
@@ -78,6 +86,7 @@ class NotificationRule {
     List<NotificationCondition>? conditions,
     List<NotificationAction>? actions,
     List<NotificationActionGroup>? conditionalActionGroups,
+    NotificationRuleProcessingMode? processingMode,
     bool? isPredefined,
     Set<TransactionField>? reviewedPredefinedFields,
     NotificationSample? sampleOverride,
@@ -89,6 +98,7 @@ class NotificationRule {
     actions: actions ?? this.actions,
     conditionalActionGroups:
         conditionalActionGroups ?? this.conditionalActionGroups,
+    processingMode: processingMode ?? this.processingMode,
     isPredefined: isPredefined ?? this.isPredefined,
     reviewedPredefinedFields:
         reviewedPredefinedFields ?? this.reviewedPredefinedFields,
@@ -102,6 +112,7 @@ class NotificationRule {
     conditions: conditions,
     actions: actions,
     conditionalActionGroups: conditionalActionGroups,
+    processingMode: processingMode,
     isPredefined: isPredefined,
     reviewedPredefinedFields: reviewedPredefinedFields,
   );
@@ -135,6 +146,14 @@ class NotificationRule {
     if (!matches) {
       return NotificationRuleEvaluationResult(
         matches: false,
+        conditions: conditionResults,
+        actions: const <ActionEvaluationResult>[],
+        patch: const TransactionPatch(<TransactionField, String>{}),
+      );
+    }
+    if (processingMode.ignoresNotification) {
+      return NotificationRuleEvaluationResult(
+        matches: true,
         conditions: conditionResults,
         actions: const <ActionEvaluationResult>[],
         patch: const TransactionPatch(<TransactionField, String>{}),
@@ -193,22 +212,28 @@ class NotificationRule {
       conditionalGroups: groupResults,
       transactionIntent: transactionCreationMode == null
           ? null
-          : TransactionIntent(mode: transactionCreationMode, patch: patch),
+          : TransactionIntent(
+              mode: processingMode.resolve(transactionCreationMode),
+              patch: patch,
+            ),
     );
   }
 
-  List<NotificationAction> get allActions => <NotificationAction>[
-    ...actions,
-    for (final NotificationActionGroup group in conditionalActionGroups)
-      if (group.isConfigured) ...group.actions,
-  ];
+  List<NotificationAction> get allActions => processingMode.ignoresNotification
+      ? const <NotificationAction>[]
+      : <NotificationAction>[
+          ...actions,
+          for (final NotificationActionGroup group in conditionalActionGroups)
+            if (group.isConfigured) ...group.actions,
+        ];
 
   Set<NotificationRuleRequirement> get _selectionRequirements =>
       <NotificationRuleRequirement>{
         for (final NotificationCondition condition in conditions)
           ..._requirementsForCondition(condition),
-        for (final NotificationAction action in actions)
-          ..._requirementsForAction(action),
+        if (!processingMode.ignoresNotification)
+          for (final NotificationAction action in actions)
+            ..._requirementsForAction(action),
       };
 
   List<ActionEvaluationResult> _evaluateActions(
@@ -319,6 +344,8 @@ class NotificationRule {
     'conditionalActionGroups': conditionalActionGroups
         .map((NotificationActionGroup group) => group.toJson())
         .toList(),
+    if (processingMode != NotificationRuleProcessingMode.inherit)
+      'processingMode': processingMode.name,
     'isPredefined': isPredefined,
     if (reviewedPredefinedFields.isNotEmpty)
       'reviewedPredefinedFields': reviewedPredefinedFields
@@ -358,6 +385,7 @@ class NotificationRule {
                 ),
               )
               .toList(),
+      processingMode: _processingModeFromJson(json),
       isPredefined: json['isPredefined'] as bool? ?? false,
       reviewedPredefinedFields:
           (json['reviewedPredefinedFields'] as List<dynamic>? ?? <dynamic>[])
@@ -373,6 +401,24 @@ class NotificationRule {
         _ => null,
       },
     );
+  }
+
+  static NotificationRuleProcessingMode _processingModeFromJson(
+    Map<String, dynamic> json,
+  ) {
+    final String? processingMode = json['processingMode'] as String?;
+    if (processingMode != null) {
+      return NotificationRuleProcessingMode.values
+              .where(
+                (NotificationRuleProcessingMode value) =>
+                    value.name == processingMode,
+              )
+              .firstOrNull ??
+          NotificationRuleProcessingMode.inherit;
+    }
+    return json['outcome'] == 'ignoreNotification'
+        ? NotificationRuleProcessingMode.ignore
+        : NotificationRuleProcessingMode.inherit;
   }
 
   static String _predefinedDescription(String name, bool isPredefined) {

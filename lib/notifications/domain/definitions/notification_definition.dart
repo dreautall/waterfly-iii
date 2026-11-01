@@ -2,6 +2,7 @@ import 'package:waterflyiii/notifications/domain/actions/notification_action.dar
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
 import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
+import 'package:waterflyiii/notifications/domain/definitions/notification_sample.dart';
 import 'package:waterflyiii/notifications/domain/evaluation/notification_definition_evaluation_result.dart';
 import 'package:waterflyiii/notifications/domain/evaluation/notification_formatting_preferences.dart';
 import 'package:waterflyiii/notifications/domain/evaluation/notification_definition_evaluator.dart';
@@ -177,8 +178,33 @@ class NotificationDefinition {
         extractors.isNotEmpty &&
         (rules.isNotEmpty || sharedActions.isNotEmpty);
     if (!hasRequiredSetup) return NotificationDefinitionStatus.needsSetup;
-    if (transactionCreationMode == TransactionCreationMode.automatic &&
-        !automaticTransactionReadiness.isReady) {
+    final bool sharedAutomaticIncomplete =
+        transactionCreationMode == TransactionCreationMode.automatic &&
+        sharedActions.isNotEmpty &&
+        !automaticTransactionReadiness.isReady;
+    final bool ruleAutomaticIncomplete = rules
+        .where(
+          (NotificationRule rule) =>
+              !rule.processingMode.ignoresNotification &&
+              rule.processingMode.resolve(transactionCreationMode) ==
+                  TransactionCreationMode.automatic,
+        )
+        .any((NotificationRule rule) {
+          final NotificationSample? sample = rule.sampleOverride;
+          return !AutomaticTransactionReadiness.evaluateRule(
+            sharedActions: sharedActions,
+            rule: rule,
+            extractors: extractors,
+            notificationContext: NotificationContext(
+              applicationId: applicationId,
+              applicationName: name,
+              title: sample?.title ?? sampleTitle ?? '',
+              body: sample?.body ?? sampleBody ?? '',
+              receivedAt: sample?.receivedAt ?? createdAt ?? sampleReceivedAt,
+            ),
+          ).isReady;
+        });
+    if (sharedAutomaticIncomplete || ruleAutomaticIncomplete) {
       return NotificationDefinitionStatus.needsReview;
     }
     if (extractorMode == NotificationExtractorMode.advanced &&

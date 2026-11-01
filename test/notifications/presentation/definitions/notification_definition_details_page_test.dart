@@ -15,6 +15,7 @@ import 'package:waterflyiii/notifications/domain/planning/transaction_creation_m
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/history/notification_history_entry.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_action_group.dart';
+import 'package:waterflyiii/notifications/domain/rules/notification_rule_processing_mode.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/literal_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
@@ -449,6 +450,97 @@ void main() {
       same(child),
     );
     expect(find.text('1 condition · No actions'), findsOneWidget);
+  });
+
+  testWidgets('identifies rules that ignore matching notifications', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: DefinitionRulesSection(
+            rules: const <NotificationRule>[
+              NotificationRule(
+                id: 'ignore',
+                name: 'Ignore promotions',
+                conditions: <NotificationCondition>[
+                  ValueExistsCondition(LiteralValueSource('promotion')),
+                ],
+                actions: <NotificationAction>[],
+                processingMode: NotificationRuleProcessingMode.ignore,
+              ),
+            ],
+            extractors: const <RegExpDefinition>[],
+            notificationContext: NotificationContext(
+              title: 'Promotion',
+              body: 'Special offer',
+              receivedAt: DateTime(2026, 10, 1),
+            ),
+            onEditRule: (_) {},
+            onAddRule: () {},
+            onMoveRule: (_, _) {},
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text('Ignore promotions'), findsOneWidget);
+    expect(find.text('Matching notifications are ignored.'), findsOneWidget);
+    expect(find.byIcon(Icons.notifications_off_outlined), findsOneWidget);
+    expect(find.textContaining('No actions'), findsNothing);
+  });
+
+  testWidgets('identifies per-rule transaction creation overrides', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: DefinitionRulesSection(
+            rules: const <NotificationRule>[
+              NotificationRule(
+                id: 'prompt',
+                name: 'Review purchases',
+                conditions: <NotificationCondition>[
+                  ValueExistsCondition(LiteralValueSource('purchase')),
+                ],
+                actions: <NotificationAction>[],
+                processingMode: NotificationRuleProcessingMode.prompt,
+              ),
+              NotificationRule(
+                id: 'automatic',
+                name: 'Automatic deposits',
+                conditions: <NotificationCondition>[
+                  ValueExistsCondition(LiteralValueSource('deposit')),
+                ],
+                actions: <NotificationAction>[],
+                processingMode: NotificationRuleProcessingMode.automatic,
+              ),
+            ],
+            extractors: const <RegExpDefinition>[],
+            notificationContext: NotificationContext(
+              title: 'Payment',
+              body: 'Payment received',
+              receivedAt: DateTime(2026, 10, 1),
+            ),
+            onEditRule: (_) {},
+            onAddRule: () {},
+            onMoveRule: (_, _) {},
+          ),
+        ),
+      ),
+    );
+
+    expect(
+      find.text('Always prompts before creating a transaction.'),
+      findsOneWidget,
+    );
+    expect(
+      find.text('Creates matching transactions automatically.'),
+      findsOneWidget,
+    );
+    expect(find.byIcon(Icons.rate_review_outlined), findsOneWidget);
+    expect(find.byIcon(Icons.bolt_outlined), findsOneWidget);
   });
 
   testWidgets('incomplete conditional action does not invalidate rule card', (

@@ -13,6 +13,7 @@ import 'package:waterflyiii/notifications/domain/planning/automatic_transaction_
 import 'package:waterflyiii/notifications/domain/notification_id.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_action_group.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
+import 'package:waterflyiii/notifications/domain/rules/notification_rule_processing_mode.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule_diagnostics.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/presentation/rules/widgets/rename_rule_dialog.dart';
@@ -34,6 +35,7 @@ import 'package:waterflyiii/notifications/presentation/rules/widgets/rule_action
 import 'package:waterflyiii/notifications/presentation/rules/widgets/rule_condition_editor.dart';
 import 'package:waterflyiii/notifications/presentation/rules/widgets/rule_conditional_action_groups.dart';
 import 'package:waterflyiii/notifications/presentation/rules/widgets/rule_editor_shared.dart';
+import 'package:waterflyiii/notifications/presentation/rules/widgets/rule_options_section.dart';
 
 class NotificationRuleDetailsResult {
   const NotificationRuleDetailsResult._({this.rule, this.delete = false});
@@ -103,6 +105,8 @@ class _NotificationRuleDetailsPageState
       _viewModel.conditionalActionGroups;
   Set<TransactionField> get _reviewedPredefinedFields =>
       _viewModel.reviewedPredefinedFields;
+  NotificationRuleProcessingMode get _processingMode =>
+      _viewModel.processingMode;
   NotificationSample? get _sampleOverride => _viewModel.sampleOverride;
   NotificationContext get _testNotificationContext =>
       _viewModel.testNotificationContext;
@@ -297,58 +301,42 @@ class _NotificationRuleDetailsPageState
                             setState(() => _clipboardOperation = operation),
                   ),
                   const SizedBox(height: 24),
-                ],
-                RuleActionsSection(
-                  rule: _currentRule(),
-                  actions: _actions,
-                  title: widget.isSharedActionsEditor
-                      ? S.of(context).notificationsRuleActionsTitle
-                      : S.of(context).notificationsRuleAlwaysActionsTitle,
-                  description: widget.isSharedActionsEditor
-                      ? widget.extractorMode == NotificationExtractorMode.basic
-                            ? S
-                                  .of(context)
-                                  .notificationsDefinitionBasicActionsDescription
-                            : S
-                                  .of(context)
-                                  .notificationsDefinitionSharedActionsDescription
-                      : S.of(context).notificationsRuleAlwaysActionsDescription,
-                  reviewedPredefinedFields: _reviewedPredefinedFields,
-                  extractors: widget.extractors,
-                  notificationContext: widget.notificationContext,
-                  activeNotificationContext: _activeNotificationContext,
-                  extractorMode: widget.extractorMode,
-                  ruleName: _nameController.text,
-                  onAdd: _viewModel.addAction,
-                  onReplaceAt: _viewModel.replaceActionAt,
-                  onRemoveAt: _viewModel.removeActionAt,
-                  onRemoveTag: _viewModel.removeTagFromAction,
-                  onSetPredefinedFieldReviewed:
-                      _viewModel.setPredefinedFieldReviewed,
-                ),
-                if (!widget.isSharedActionsEditor &&
-                    !widget.rule.isPredefined) ...<Widget>[
-                  const SizedBox(height: 24),
-                  RuleConditionalActionGroupsSection(
-                    groups: _conditionalActionGroups,
-                    onAdd: _addConditionalActionGroup,
-                    onEdit: _editConditionalActionGroup,
-                    onReplace: _viewModel.replaceConditionalActionGroup,
-                    onDuplicate: _viewModel.duplicateConditionalActionGroup,
-                    onRemove: _viewModel.removeConditionalActionGroup,
-                    onMove: _viewModel.moveConditionalActionGroup,
+                  RuleOptionsSection(
+                    processingMode: _processingMode,
+                    applicationMode: widget.transactionCreationMode,
+                    automaticReadiness: _automaticRuleReadiness,
+                    onChanged: _viewModel.updateProcessingMode,
+                  ),
+                  ClipRect(
+                    child: AnimatedSwitcher(
+                      key: const Key('rule-transaction-sections-transition'),
+                      duration: const Duration(milliseconds: 240),
+                      switchInCurve: Curves.easeOutCubic,
+                      switchOutCurve: Curves.easeInCubic,
+                      transitionBuilder:
+                          (Widget child, Animation<double> animation) =>
+                              FadeTransition(
+                                opacity: animation,
+                                child: SizeTransition(
+                                  sizeFactor: animation,
+                                  alignment: Alignment.topCenter,
+                                  child: child,
+                                ),
+                              ),
+                      child: !_processingMode.ignoresNotification
+                          ? Padding(
+                              key: const Key('rule-transaction-sections'),
+                              padding: const EdgeInsets.only(top: 24),
+                              child: _transactionSections(context),
+                            )
+                          : const SizedBox(
+                              key: Key('rule-transaction-sections-hidden'),
+                            ),
+                    ),
                   ),
                 ],
-                const SizedBox(height: 24),
-                EffectiveTransactionPreviewCard(
-                  rule: _currentRule(),
-                  rules: widget.rules,
-                  sharedActions: widget.sharedActions,
-                  extractors: widget.extractors,
-                  notificationContext: _activeNotificationContext,
-                  transactionCreationMode: widget.transactionCreationMode,
-                  showProvenance: !widget.isSharedActionsEditor,
-                ),
+                if (widget.isSharedActionsEditor || widget.rule.isPredefined)
+                  _transactionSections(context),
                 if (_isDirty) const SizedBox(height: 56),
               ],
             ),
@@ -357,6 +345,60 @@ class _NotificationRuleDetailsPageState
       ),
     );
   }
+
+  Widget _transactionSections(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      RuleActionsSection(
+        rule: _currentRule(),
+        actions: _actions,
+        title: widget.isSharedActionsEditor
+            ? S.of(context).notificationsRuleActionsTitle
+            : S.of(context).notificationsRuleAlwaysActionsTitle,
+        description: widget.isSharedActionsEditor
+            ? widget.extractorMode == NotificationExtractorMode.basic
+                  ? S.of(context).notificationsDefinitionBasicActionsDescription
+                  : S
+                        .of(context)
+                        .notificationsDefinitionSharedActionsDescription
+            : S.of(context).notificationsRuleAlwaysActionsDescription,
+        reviewedPredefinedFields: _reviewedPredefinedFields,
+        extractors: widget.extractors,
+        notificationContext: widget.notificationContext,
+        activeNotificationContext: _activeNotificationContext,
+        extractorMode: widget.extractorMode,
+        ruleName: _nameController.text,
+        onAdd: _viewModel.addAction,
+        onReplaceAt: _viewModel.replaceActionAt,
+        onRemoveAt: _viewModel.removeActionAt,
+        onRemoveTag: _viewModel.removeTagFromAction,
+        onSetPredefinedFieldReviewed: _viewModel.setPredefinedFieldReviewed,
+      ),
+      if (!widget.isSharedActionsEditor &&
+          !widget.rule.isPredefined) ...<Widget>[
+        const SizedBox(height: 24),
+        RuleConditionalActionGroupsSection(
+          groups: _conditionalActionGroups,
+          onAdd: _addConditionalActionGroup,
+          onEdit: _editConditionalActionGroup,
+          onReplace: _viewModel.replaceConditionalActionGroup,
+          onDuplicate: _viewModel.duplicateConditionalActionGroup,
+          onRemove: _viewModel.removeConditionalActionGroup,
+          onMove: _viewModel.moveConditionalActionGroup,
+        ),
+      ],
+      const SizedBox(height: 24),
+      EffectiveTransactionPreviewCard(
+        rule: _currentRule(),
+        rules: widget.rules,
+        sharedActions: widget.sharedActions,
+        extractors: widget.extractors,
+        notificationContext: _activeNotificationContext,
+        transactionCreationMode: widget.transactionCreationMode,
+        showProvenance: !widget.isSharedActionsEditor,
+      ),
+    ],
+  );
 
   Widget? _ruleStatusCard() {
     if (widget.isSharedActionsEditor) {
@@ -446,6 +488,14 @@ class _NotificationRuleDetailsPageState
 
   NotificationContext get _activeNotificationContext =>
       _sampleNotificationContext;
+
+  AutomaticTransactionReadiness get _automaticRuleReadiness =>
+      AutomaticTransactionReadiness.evaluateRule(
+        sharedActions: widget.sharedActions,
+        rule: _currentRule(),
+        extractors: widget.extractors,
+        notificationContext: _testNotificationContext,
+      );
 
   bool get _isBasicSharedActionsEditor =>
       widget.extractorMode == NotificationExtractorMode.basic &&

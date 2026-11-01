@@ -3121,6 +3121,9 @@ class SUk extends S {
   String get notificationsConditionEquals => 'equals';
 
   @override
+  String get notificationsConditionEqualsNumerically => 'equals numerically';
+
+  @override
   String get notificationsConditionContains => 'contains';
 
   @override
@@ -3519,11 +3522,34 @@ class SUk extends S {
   String get notificationsConditionEqualsLabel => 'Equals value';
 
   @override
+  String get notificationsConditionEqualsDescription =>
+      'Choose exact or numeric comparison.';
+
+  @override
+  String get notificationsConditionChooseEqualityMode =>
+      'Choose how the values should be compared.';
+
+  @override
+  String get notificationsConditionEqualsExactlyLabel => 'Equals exactly';
+
+  @override
+  String get notificationsConditionEqualsExactlyDescription =>
+      'Compare any two values as text. Formatting and capitalization matter.';
+
+  @override
+  String get notificationsConditionEqualsNumericallyLabel =>
+      'Equals numerically';
+
+  @override
+  String get notificationsConditionEqualsNumericallyDescription =>
+      'Compare two numbers after normalizing their decimal separator.';
+
+  @override
   String get notificationsConditionContainsLabel => 'Contains text';
 
   @override
   String get notificationsConditionComparisonDescription =>
-      'Compare two numeric values.';
+      'Compare two numbers, dates, or times.';
 
   @override
   String get notificationsConditionSelectNegated =>

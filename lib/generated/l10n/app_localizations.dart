@@ -4753,6 +4753,12 @@ abstract class S {
   /// **'equals'**
   String get notificationsConditionEquals;
 
+  /// Numeric equality condition summary operator.
+  ///
+  /// In en, this message translates to:
+  /// **'equals numerically'**
+  String get notificationsConditionEqualsNumerically;
+
   /// Condition summary operator.
   ///
   /// In en, this message translates to:
@@ -5461,16 +5467,52 @@ abstract class S {
   /// **'Equals value'**
   String get notificationsConditionEqualsLabel;
 
+  /// Equality condition kind description.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose exact or numeric comparison.'**
+  String get notificationsConditionEqualsDescription;
+
+  /// Equality mode selection description.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how the values should be compared.'**
+  String get notificationsConditionChooseEqualityMode;
+
+  /// Exact equality mode label.
+  ///
+  /// In en, this message translates to:
+  /// **'Equals exactly'**
+  String get notificationsConditionEqualsExactlyLabel;
+
+  /// Exact equality mode description.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare any two values as text. Formatting and capitalization matter.'**
+  String get notificationsConditionEqualsExactlyDescription;
+
+  /// Numeric equality mode label.
+  ///
+  /// In en, this message translates to:
+  /// **'Equals numerically'**
+  String get notificationsConditionEqualsNumericallyLabel;
+
+  /// Numeric equality mode description.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare two numbers after normalizing their decimal separator.'**
+  String get notificationsConditionEqualsNumericallyDescription;
+
   /// Condition kind label.
   ///
   /// In en, this message translates to:
   /// **'Contains text'**
   String get notificationsConditionContainsLabel;
 
-  /// Condition kind description.
+  /// Ordered condition kind description.
   ///
   /// In en, this message translates to:
-  /// **'Compare two numeric values.'**
+  /// **'Compare two numbers, dates, or times.'**
   String get notificationsConditionComparisonDescription;
 
   /// Condition builder title.

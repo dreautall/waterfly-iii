@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:waterflyiii/notifications/domain/conditions/not_condition.dart';
+import 'package:waterflyiii/notifications/domain/conditions/values_equal_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_greater_than_condition.dart';
+import 'package:waterflyiii/notifications/domain/conditions/values_numerically_equal_condition.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/literal_value_source.dart';
@@ -57,6 +59,71 @@ void main() {
       isA<ValuesGreaterThanCondition>(),
     );
     controller.dispose();
+  });
+
+  test('builds exact and numeric equality as distinct condition types', () {
+    final ConditionBuilderController exact = ConditionBuilderController(
+      extractors: const <RegExpDefinition>[],
+      notificationContext: context,
+    );
+    exact.selectCategory(ConditionKindCategory.value);
+    exact.selectKind(ConditionKind.equals);
+    expect(exact.draft.step, ConditionBuilderStep.equalityMode);
+    exact.selectEqualityMode(ConditionEqualityMode.exact);
+    expect(exact.selectedLeftType, ConditionValueType.text);
+    exact.selectSource(
+      const LiteralValueSource('10.40'),
+      capturedType: ConditionValueType.number,
+    );
+    expect(
+      exact.selectSource(const LiteralValueSource('10,40')),
+      isA<ValuesEqualCondition>(),
+    );
+
+    final ConditionBuilderController numeric = ConditionBuilderController(
+      extractors: const <RegExpDefinition>[],
+      notificationContext: context,
+    );
+    numeric.selectCategory(ConditionKindCategory.value);
+    numeric.selectKind(ConditionKind.equals);
+    numeric.selectEqualityMode(ConditionEqualityMode.numeric);
+    expect(numeric.selectedLeftType, ConditionValueType.number);
+    numeric.selectSource(
+      const LiteralValueSource('10.40'),
+      capturedType: ConditionValueType.number,
+    );
+    expect(
+      numeric.selectSource(const LiteralValueSource('10,40')),
+      isA<ValuesNumericallyEqualCondition>(),
+    );
+    exact.dispose();
+    numeric.dispose();
+  });
+
+  test('restores the equality mode while editing persisted conditions', () {
+    final ConditionBuilderController exact = ConditionBuilderController(
+      extractors: const <RegExpDefinition>[],
+      notificationContext: context,
+      existingCondition: const ValuesEqualCondition(
+        left: LiteralValueSource('10.40'),
+        right: LiteralValueSource('10,40'),
+      ),
+    );
+    final ConditionBuilderController numeric = ConditionBuilderController(
+      extractors: const <RegExpDefinition>[],
+      notificationContext: context,
+      existingCondition: const ValuesNumericallyEqualCondition(
+        left: LiteralValueSource('10.40'),
+        right: LiteralValueSource('10,40'),
+      ),
+    );
+
+    expect(exact.draft.equalityMode, ConditionEqualityMode.exact);
+    expect(numeric.draft.equalityMode, ConditionEqualityMode.numeric);
+    expect(exact.draft.step, ConditionBuilderStep.overview);
+    expect(numeric.draft.step, ConditionBuilderStep.overview);
+    exact.dispose();
+    numeric.dispose();
   });
 
   test('editing draft tracks operand changes and saves literal', () {

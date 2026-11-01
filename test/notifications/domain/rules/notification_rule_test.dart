@@ -10,6 +10,7 @@ import 'package:waterflyiii/notifications/domain/conditions/any_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/value_contains_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_equal_condition.dart';
+import 'package:waterflyiii/notifications/domain/conditions/values_numerically_equal_condition.dart';
 import 'package:waterflyiii/notifications/domain/evaluation/evaluation_context.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_sample.dart';
@@ -323,6 +324,26 @@ void main() {
       expect(rule.requirements, hasLength(1));
       expect(rule.requirements.single.capture.captureName, 'merchant');
       expect(rule.evaluate(context).unmetRequirements, hasLength(1));
+    });
+
+    test('requires captures used by numeric equality', () {
+      const NotificationRule rule = NotificationRule(
+        id: 'amount-rule',
+        name: 'Amount rule',
+        conditions: <NotificationCondition>[
+          ValuesNumericallyEqualCondition(
+            left: RegExpCaptureValueSource(
+              extractorId: 'payment',
+              captureName: 'amount',
+            ),
+            right: LiteralValueSource('12,50'),
+          ),
+        ],
+        actions: <NotificationAction>[],
+      );
+
+      expect(rule.requirements, hasLength(1));
+      expect(rule.requirements.single.capture.captureName, 'amount');
     });
 
     test('requires every capture used by a composed action value', () {

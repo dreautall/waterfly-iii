@@ -6,6 +6,7 @@ import 'package:waterflyiii/notifications/domain/conditions/notification_conditi
 import 'package:waterflyiii/notifications/domain/conditions/value_contains_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/value_exists_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_equal_condition.dart';
+import 'package:waterflyiii/notifications/domain/conditions/values_numerically_equal_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_greater_than_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_greater_than_or_equal_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_less_than_condition.dart';
@@ -19,13 +20,15 @@ import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_v
 import 'package:waterflyiii/notifications/domain/value_sources/value_source.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/conditions/condition_value_type.dart';
 
-enum ConditionBuilderStep { category, kind, source, overview }
+enum ConditionBuilderStep { category, kind, equalityMode, source, overview }
 
 enum ConditionKindCategory { value, group }
 
 enum ConditionEditedValue { left, right }
 
 enum ConditionSourceMode { extractor, literal }
+
+enum ConditionEqualityMode { exact, numeric }
 
 enum ConditionKind {
   all,
@@ -49,6 +52,7 @@ enum ConditionKind {
       switch (condition) {
         ValueExistsCondition() => exists,
         ValuesEqualCondition() => equals,
+        ValuesNumericallyEqualCondition() => equals,
         ValueContainsCondition() => contains,
         ValuesGreaterThanCondition() => greaterThan,
         ValuesGreaterThanOrEqualCondition() => greaterThanOrEqual,
@@ -68,6 +72,7 @@ class ConditionBuilderDraft {
     this.step = ConditionBuilderStep.category,
     this.category,
     this.kind,
+    this.equalityMode,
     this.left,
     this.right,
     this.originalLeft,
@@ -83,6 +88,7 @@ class ConditionBuilderDraft {
   final ConditionBuilderStep step;
   final ConditionKindCategory? category;
   final ConditionKind? kind;
+  final ConditionEqualityMode? equalityMode;
   final ValueSource? left;
   final ValueSource? right;
   final ValueSource? originalLeft;
@@ -98,6 +104,7 @@ class ConditionBuilderDraft {
     ConditionBuilderStep? step,
     ConditionKindCategory? category,
     ConditionKind? kind,
+    ConditionEqualityMode? equalityMode,
     ValueSource? left,
     ValueSource? right,
     ConditionValueType? selectedLeftType,
@@ -113,6 +120,7 @@ class ConditionBuilderDraft {
     step: step ?? this.step,
     category: clearCategory ? null : category ?? this.category,
     kind: kind ?? this.kind,
+    equalityMode: equalityMode ?? this.equalityMode,
     left: left ?? this.left,
     right: right ?? this.right,
     originalLeft: originalLeft,
@@ -150,6 +158,11 @@ class ConditionBuilderController extends ChangeNotifier {
           ? ConditionBuilderStep.source
           : ConditionBuilderStep.overview,
       kind: ConditionKind.fromCondition(condition),
+      equalityMode: switch (condition) {
+        ValuesEqualCondition() => ConditionEqualityMode.exact,
+        ValuesNumericallyEqualCondition() => ConditionEqualityMode.numeric,
+        _ => null,
+      },
       left: left,
       right: right,
       originalLeft: left,
@@ -192,7 +205,9 @@ class ConditionBuilderController extends ChangeNotifier {
     _set(
       _draft.copyWith(
         kind: kind,
-        step: ConditionBuilderStep.source,
+        step: kind == ConditionKind.equals
+            ? ConditionBuilderStep.equalityMode
+            : ConditionBuilderStep.source,
         selectingRight: false,
         forward: true,
         clearSourceMode: true,
@@ -200,6 +215,16 @@ class ConditionBuilderController extends ChangeNotifier {
     );
     return null;
   }
+
+  void selectEqualityMode(ConditionEqualityMode mode) => _set(
+    _draft.copyWith(
+      equalityMode: mode,
+      step: ConditionBuilderStep.source,
+      selectingRight: false,
+      forward: true,
+      clearSourceMode: true,
+    ),
+  );
 
   NotificationCondition? selectSource(
     ValueSource source, {
@@ -275,6 +300,15 @@ class ConditionBuilderController extends ChangeNotifier {
           ),
         );
         return;
+      case ConditionBuilderStep.equalityMode:
+        _set(
+          _draft.copyWith(
+            step: ConditionBuilderStep.kind,
+            forward: false,
+            clearSourceMode: true,
+          ),
+        );
+        return;
       case ConditionBuilderStep.source:
         _set(
           _draft.selectingRight
@@ -284,7 +318,9 @@ class ConditionBuilderController extends ChangeNotifier {
                   clearSourceMode: true,
                 )
               : _draft.copyWith(
-                  step: ConditionBuilderStep.kind,
+                  step: _draft.kind == ConditionKind.equals
+                      ? ConditionBuilderStep.equalityMode
+                      : ConditionBuilderStep.kind,
                   forward: false,
                   clearSourceMode: true,
                 ),
@@ -308,7 +344,10 @@ class ConditionBuilderController extends ChangeNotifier {
     final ValueSource left = _draft.left!;
     final ValueSource right = _draft.right!;
     return switch (_draft.kind!) {
-      ConditionKind.equals => ValuesEqualCondition(left: left, right: right),
+      ConditionKind.equals =>
+        _draft.equalityMode == ConditionEqualityMode.numeric
+            ? ValuesNumericallyEqualCondition(left: left, right: right)
+            : ValuesEqualCondition(left: left, right: right),
       ConditionKind.contains => ValueContainsCondition(
         value: left,
         substring: right,
@@ -341,6 +380,11 @@ class ConditionBuilderController extends ChangeNotifier {
   }
 
   ConditionValueType? get selectedLeftType {
+    if (_draft.kind == ConditionKind.equals) {
+      return _draft.equalityMode == ConditionEqualityMode.numeric
+          ? ConditionValueType.number
+          : ConditionValueType.text;
+    }
     if (_draft.selectedLeftType case final ConditionValueType type) return type;
     final ValueSource? source = _draft.left;
     if (source == null) return null;
@@ -373,7 +417,9 @@ class ConditionBuilderController extends ChangeNotifier {
     final ConditionValueType type = ConditionValueType.parse(value);
     return switch (_draft.kind) {
       ConditionKind.contains => type == ConditionValueType.text,
-      ConditionKind.equals => !selectingRight || type == selectedLeftType,
+      ConditionKind.equals =>
+        _draft.equalityMode == ConditionEqualityMode.exact ||
+            type == ConditionValueType.number,
       ConditionKind.greaterThan ||
       ConditionKind.greaterThanOrEqual ||
       ConditionKind.lessThan ||
@@ -403,6 +449,7 @@ class ConditionBuilderController extends ChangeNotifier {
       switch (condition) {
         ValueExistsCondition(:final ValueSource valueSource) => valueSource,
         ValuesEqualCondition(:final ValueSource left) => left,
+        ValuesNumericallyEqualCondition(:final ValueSource left) => left,
         ValueContainsCondition(:final ValueSource value) => value,
         ValuesGreaterThanCondition(:final ValueSource left) => left,
         ValuesGreaterThanOrEqualCondition(:final ValueSource left) => left,
@@ -414,6 +461,7 @@ class ConditionBuilderController extends ChangeNotifier {
   static ValueSource? _rightSource(NotificationCondition condition) =>
       switch (condition) {
         ValuesEqualCondition(:final ValueSource right) => right,
+        ValuesNumericallyEqualCondition(:final ValueSource right) => right,
         ValueContainsCondition(:final ValueSource substring) => substring,
         ValuesGreaterThanCondition(:final ValueSource right) => right,
         ValuesGreaterThanOrEqualCondition(:final ValueSource right) => right,

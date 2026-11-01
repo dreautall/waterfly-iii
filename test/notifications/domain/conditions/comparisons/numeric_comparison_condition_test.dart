@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:waterflyiii/notifications/domain/conditions/all_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/any_condition.dart';
+import 'package:waterflyiii/notifications/domain/conditions/condition_evaluation_result.dart';
 import 'package:waterflyiii/notifications/domain/conditions/not_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
+import 'package:waterflyiii/notifications/domain/conditions/values_equal_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_greater_than_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_greater_than_or_equal_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_less_than_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_less_than_or_equal_condition.dart';
+import 'package:waterflyiii/notifications/domain/conditions/values_numerically_equal_condition.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/domain/evaluation/evaluation_context.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_evaluation_result.dart';
@@ -169,5 +172,66 @@ void main() {
         expect(restored.evaluate(context).matches, isTrue);
       },
     );
+  });
+
+  group('Numeric equality condition', () {
+    test('compares normalized numeric values', () {
+      expect(
+        const ValuesNumericallyEqualCondition(
+          left: LiteralValueSource('10.40'),
+          right: LiteralValueSource('10,4'),
+        ).evaluate(context).matches,
+        isTrue,
+      );
+      expect(
+        const ValuesNumericallyEqualCondition(
+          left: LiteralValueSource('10.40'),
+          right: LiteralValueSource('10.41'),
+        ).evaluate(context).matches,
+        isFalse,
+      );
+    });
+
+    test('reports unresolved and nonnumeric values as diagnostics', () {
+      final ConditionEvaluationResult result =
+          const ValuesNumericallyEqualCondition(
+            left: LiteralValueSource('ten'),
+            right: LiteralValueSource('10'),
+          ).evaluate(context);
+      expect(result.matches, isFalse);
+      expect(result.isDiagnosticFailure, isTrue);
+      expect(result.failureReason, 'Both values must be numbers.');
+
+      final ConditionEvaluationResult unresolved =
+          const ValuesNumericallyEqualCondition(
+            left: RegExpCaptureValueSource(
+              extractorId: 'missing',
+              captureName: 'amount',
+            ),
+            right: LiteralValueSource('10'),
+          ).evaluate(context);
+      expect(unresolved.isDiagnosticFailure, isTrue);
+      expect(unresolved.failureReason, 'A value source did not resolve.');
+    });
+
+    test('round-trips through JSON without changing exact equality', () {
+      expect(
+        const ValuesEqualCondition(
+          left: LiteralValueSource('12.50'),
+          right: LiteralValueSource('12,50'),
+        ).evaluate(context).matches,
+        isFalse,
+      );
+      const NotificationCondition condition = ValuesNumericallyEqualCondition(
+        left: LiteralValueSource('12.50'),
+        right: LiteralValueSource('12,5'),
+      );
+      final NotificationCondition restored = NotificationCondition.fromJson(
+        jsonDecode(jsonEncode(condition)) as Map<String, dynamic>,
+      );
+
+      expect(restored, isA<ValuesNumericallyEqualCondition>());
+      expect(restored.evaluate(context).matches, isTrue);
+    });
   });
 }

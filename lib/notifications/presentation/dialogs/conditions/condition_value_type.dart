@@ -1,3 +1,5 @@
+import 'package:waterflyiii/notifications/domain/conditions/normalized_number.dart';
+
 enum ConditionValueType {
   text,
   number,
@@ -7,7 +9,7 @@ enum ConditionValueType {
 
   static ConditionValueType parse(String value) {
     final String normalized = value.trim();
-    if (num.tryParse(normalized.replaceAll(',', '.')) != null) return number;
+    if (parseNormalizedNumber(normalized) != null) return number;
     if (RegExp(r'^\d{4}-\d{2}-\d{2}T').hasMatch(normalized) &&
         DateTime.tryParse(normalized) != null) {
       return dateTime;
@@ -25,8 +27,7 @@ enum ConditionValueType {
 
   bool isValid(String value) => switch (this) {
     text => value.trim().isNotEmpty,
-    number =>
-      num.tryParse(value.trim().replaceAll(',', '.'))?.isFinite ?? false,
+    number => parseNormalizedNumber(value)?.isFinite ?? false,
     dateTime =>
       RegExp(r'^\d{4}-\d{2}-\d{2}T').hasMatch(value.trim()) &&
           DateTime.tryParse(value.trim()) != null,

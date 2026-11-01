@@ -231,6 +231,7 @@ class _ConditionBuilderDialogState extends State<_ConditionBuilderDialog> {
         actions: <Widget>[
           if (!_controller.isEditing &&
               (draft.step == ConditionBuilderStep.kind ||
+                  draft.step == ConditionBuilderStep.equalityMode ||
                   draft.step == ConditionBuilderStep.source ||
                   (draft.step == ConditionBuilderStep.category &&
                       draft.notDepth > 0)))
@@ -300,6 +301,10 @@ class _ConditionBuilderDialogState extends State<_ConditionBuilderDialog> {
           (kind == ConditionKind.any && widget.parentGroup is AnyCondition),
       onSelected: _selectKind,
     ),
+    ConditionBuilderStep.equalityMode => ConditionEqualityModeStep(
+      key: const ValueKey<String>('condition-equality-mode'),
+      onSelected: _controller.selectEqualityMode,
+    ),
     ConditionBuilderStep.source => ConditionSourceStep(
       key: ValueKey<String>(
         'condition-source-${draft.selectingRight ? 'right' : 'left'}',
@@ -344,6 +349,8 @@ class _ConditionBuilderDialogState extends State<_ConditionBuilderDialog> {
           draft.category == ConditionKindCategory.value
               ? S.of(context).notificationsConditionValueCategory
               : S.of(context).notificationsConditionGroupCategory,
+        ConditionBuilderStep.equalityMode =>
+          S.of(context).notificationsConditionEqualsLabel,
         ConditionBuilderStep.source => conditionKindLabel(context, draft.kind!),
         ConditionBuilderStep.overview =>
           draft.editedValue == null
@@ -361,6 +368,8 @@ class _ConditionBuilderDialogState extends State<_ConditionBuilderDialog> {
           draft.category == ConditionKindCategory.value
               ? S.of(context).notificationsConditionChooseValueKind
               : S.of(context).notificationsConditionChooseGroupKind,
+        ConditionBuilderStep.equalityMode =>
+          S.of(context).notificationsConditionChooseEqualityMode,
         ConditionBuilderStep.source =>
           draft.selectingRight
               ? S.of(context).notificationsConditionCompareDescription

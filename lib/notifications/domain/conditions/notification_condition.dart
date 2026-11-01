@@ -7,6 +7,7 @@ import 'package:waterflyiii/notifications/domain/conditions/value_contains_condi
 import 'package:waterflyiii/notifications/domain/conditions/values_greater_than_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_greater_than_or_equal_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_equal_condition.dart';
+import 'package:waterflyiii/notifications/domain/conditions/values_numerically_equal_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_less_than_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_less_than_or_equal_condition.dart';
 import 'package:waterflyiii/notifications/domain/evaluation/evaluation_context.dart';
@@ -30,6 +31,8 @@ abstract interface class NotificationCondition {
         return ValueContainsCondition.fromJson(json);
       case ValuesEqualCondition.type:
         return ValuesEqualCondition.fromJson(json);
+      case ValuesNumericallyEqualCondition.type:
+        return ValuesNumericallyEqualCondition.fromJson(json);
       case ValuesGreaterThanCondition.type:
         return ValuesGreaterThanCondition.fromJson(json);
       case ValuesGreaterThanOrEqualCondition.type:

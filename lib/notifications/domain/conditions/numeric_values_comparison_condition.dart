@@ -1,4 +1,5 @@
 import 'package:waterflyiii/notifications/domain/conditions/condition_evaluation_result.dart';
+import 'package:waterflyiii/notifications/domain/conditions/normalized_number.dart';
 import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
 import 'package:waterflyiii/notifications/domain/evaluation/evaluation_context.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/value_source.dart';
@@ -63,7 +64,7 @@ class _ComparableValue {
 
   factory _ComparableValue.parse(String value) {
     final String normalized = value.trim();
-    final num? number = num.tryParse(normalized.replaceAll(',', '.'));
+    final num? number = parseNormalizedNumber(normalized);
     if (number != null) {
       return _ComparableValue(_ComparableValueType.number, number);
     }

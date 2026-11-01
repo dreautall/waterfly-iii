@@ -3748,7 +3748,7 @@ void main() {
     expect(find.text('Notification date and time'), findsNothing);
   });
 
-  testWidgets('matches equals operands by the left extractor type', (
+  testWidgets('offers exact equality for values of any type', (
     WidgetTester tester,
   ) async {
     final RegExpDefinition dateExtractor =
@@ -3810,21 +3810,123 @@ void main() {
     );
     await tester.tap(find.text('Equals value'));
     await tester.pumpAndSettle();
+    expect(find.text('Equals exactly'), findsOneWidget);
+    expect(find.text('Equals numerically'), findsOneWidget);
+    expect(
+      find.text(
+        'Compare any two values as text. Formatting and capitalization matter.',
+      ),
+      findsOneWidget,
+    );
+    await tester.tap(find.text('Equals exactly'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Created at'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Date and time value'), findsOneWidget);
+    expect(find.text('Literal value'), findsAtLeastNWidgets(1));
     await tester.tap(
       find.widgetWithText(DialogExpanderCard, 'Extractor capture'),
     );
     await tester.pumpAndSettle();
     expect(find.text('Processed at'), findsOneWidget);
-    expect(find.text('Amount'), findsNothing);
+    expect(find.text('Amount'), findsOneWidget);
+    expect(find.text('Date and time value'), findsNothing);
+    expect(find.text('Choose date and time'), findsNothing);
+  });
+
+  testWidgets('limits numeric equality operands to numeric values', (
+    WidgetTester tester,
+  ) async {
+    final RegExpDefinition amount = RegExpDefinition.fromJson(<String, dynamic>{
+      'id': 'amount',
+      'name': 'Amount',
+      'source': r'Amount (?<amount>\d+[.,]\d+)',
+      'type': RegExpDefinitionType.custom.index,
+      'isRequiredForMatch': false,
+    });
+    final RegExpDefinition tax = RegExpDefinition.fromJson(<String, dynamic>{
+      'id': 'tax',
+      'name': 'Tax',
+      'source': r'Tax (?<tax>\d+[.,]\d+)',
+      'type': RegExpDefinitionType.custom.index,
+      'isRequiredForMatch': false,
+    });
+    final RegExpDefinition merchant =
+        RegExpDefinition.fromJson(<String, dynamic>{
+          'id': 'merchant',
+          'name': 'Merchant',
+          'source': r'at (?<merchant>\w+)',
+          'type': RegExpDefinitionType.custom.index,
+          'isRequiredForMatch': false,
+        });
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationRuleDetailsPage(
+          rule: const NotificationRule(
+            id: 'rule',
+            name: 'Card payment',
+            conditions: <NotificationCondition>[],
+            actions: <NotificationAction>[],
+          ),
+          extractors: <RegExpDefinition>[amount, tax, merchant],
+          notificationContext: NotificationContext(
+            title: 'Card payment',
+            body: 'Amount 12.50 Tax 12,50 at Market',
+            receivedAt: DateTime(2026, 9, 1),
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Add condition'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Value condition'));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.text('Equals value'),
+      200,
+      scrollable: find.byType(Scrollable).last,
+    );
+    await tester.tap(find.text('Equals value'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Equals numerically'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Amount'), findsOneWidget);
+    expect(find.text('Tax'), findsOneWidget);
+    expect(find.text('Merchant'), findsNothing);
+    await tester.tap(find.text('Amount'));
+    await tester.pumpAndSettle();
     await tester.tap(
-      find.widgetWithText(DialogExpanderCard, 'Date and time value'),
+      find.widgetWithText(DialogExpanderCard, 'Extractor capture'),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Choose date and time'), findsOneWidget);
+    expect(find.text('Tax'), findsOneWidget);
+    expect(find.text('Merchant'), findsNothing);
+    expect(find.text('Number value'), findsOneWidget);
+    await tester.tap(find.widgetWithText(DialogExpanderCard, 'Number value'));
+    await tester.pumpAndSettle();
+    final TextField literal = tester.widget(
+      find.byKey(const Key('condition-literal-value')),
+    );
+    expect(
+      literal.keyboardType,
+      const TextInputType.numberWithOptions(decimal: true, signed: true),
+    );
+    await tester.enterText(
+      find.byKey(const Key('condition-literal-value')),
+      '12,5',
+    );
+    await tester.pumpAndSettle();
+    final Finder save = find.widgetWithText(FilledButton, 'Save');
+    expect(tester.widget<FilledButton>(save).onPressed, isNotNull);
+    await tester.tap(save);
+    await tester.pumpAndSettle();
+
+    expect(
+      conditionTitle('Extractor "Amount" value equals numerically "12,5"'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('does not offer the first operand extractor a second time', (
@@ -3873,6 +3975,8 @@ void main() {
       scrollable: find.byType(Scrollable).last,
     );
     await tester.tap(find.text('Equals value'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Equals exactly'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('First'));
     await tester.pumpAndSettle();
@@ -3925,6 +4029,8 @@ void main() {
       scrollable: find.byType(Scrollable).last,
     );
     await tester.tap(find.text('Equals value'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Equals exactly'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Only'));
     await tester.pumpAndSettle();

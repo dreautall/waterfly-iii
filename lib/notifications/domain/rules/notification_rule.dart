@@ -25,6 +25,7 @@ import 'package:waterflyiii/notifications/domain/conditions/not_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/value_contains_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/value_exists_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_equal_condition.dart';
+import 'package:waterflyiii/notifications/domain/conditions/values_numerically_equal_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/numeric_values_comparison_condition.dart';
 
 class NotificationRule {
@@ -253,6 +254,10 @@ class NotificationRule {
         ..._requirementsForValueSource(substring),
       },
     ValuesEqualCondition(:final ValueSource left, :final ValueSource right) ||
+    ValuesNumericallyEqualCondition(
+      :final ValueSource left,
+      :final ValueSource right,
+    ) ||
     NumericValuesComparisonCondition(
       :final ValueSource left,
       :final ValueSource right,

@@ -101,6 +101,42 @@ class ConditionKindStep extends StatelessWidget {
   );
 }
 
+class ConditionEqualityModeStep extends StatelessWidget {
+  const ConditionEqualityModeStep({super.key, required this.onSelected});
+
+  final ValueChanged<ConditionEqualityMode> onSelected;
+
+  @override
+  Widget build(BuildContext context) => ListView(
+    shrinkWrap: true,
+    physics: const ClampingScrollPhysics(),
+    padding: const EdgeInsets.all(4),
+    children: <Widget>[
+      DialogSelectorCard(
+        margin: const EdgeInsets.only(bottom: 8),
+        leading: const Icon(Icons.text_fields_outlined),
+        title: Text(S.of(context).notificationsConditionEqualsExactlyLabel),
+        subtitle: Text(
+          S.of(context).notificationsConditionEqualsExactlyDescription,
+          style: context.notificationSupportingText,
+        ),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => onSelected(ConditionEqualityMode.exact),
+      ),
+      DialogSelectorCard(
+        leading: const Icon(Icons.numbers_outlined),
+        title: Text(S.of(context).notificationsConditionEqualsNumericallyLabel),
+        subtitle: Text(
+          S.of(context).notificationsConditionEqualsNumericallyDescription,
+          style: context.notificationSupportingText,
+        ),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => onSelected(ConditionEqualityMode.numeric),
+      ),
+    ],
+  );
+}
+
 class ConditionSourceStep extends StatelessWidget {
   const ConditionSourceStep({
     super.key,
@@ -237,7 +273,7 @@ class ConditionOverviewStep extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Text(
-            _kindVerb(context, draft.kind!),
+            _kindVerb(context, draft.kind!, draft.equalityMode),
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
@@ -498,19 +534,28 @@ String conditionKindLabel(
     S.of(context).notificationsConditionAtMostLabel,
 };
 
-String _kindDescription(BuildContext context, ConditionKind kind) =>
-    switch (kind) {
-      ConditionKind.all => S.of(context).notificationsConditionAllDescription,
-      ConditionKind.any => S.of(context).notificationsConditionAnyDescription,
-      ConditionKind.not => S.of(context).notificationsConditionNotDescription,
-      ConditionKind.exists =>
-        S.of(context).notificationsConditionExistsDescription,
-      ConditionKind.contains => S.of(context).notificationsConditionUseCapture,
-      _ => S.of(context).notificationsConditionComparisonDescription,
-    };
+String _kindDescription(
+  BuildContext context,
+  ConditionKind kind,
+) => switch (kind) {
+  ConditionKind.all => S.of(context).notificationsConditionAllDescription,
+  ConditionKind.any => S.of(context).notificationsConditionAnyDescription,
+  ConditionKind.not => S.of(context).notificationsConditionNotDescription,
+  ConditionKind.exists => S.of(context).notificationsConditionExistsDescription,
+  ConditionKind.equals => S.of(context).notificationsConditionEqualsDescription,
+  ConditionKind.contains => S.of(context).notificationsConditionUseCapture,
+  _ => S.of(context).notificationsConditionComparisonDescription,
+};
 
-String _kindVerb(BuildContext context, ConditionKind kind) => switch (kind) {
-  ConditionKind.equals => S.of(context).notificationsConditionEquals,
+String _kindVerb(
+  BuildContext context,
+  ConditionKind kind,
+  ConditionEqualityMode? equalityMode,
+) => switch (kind) {
+  ConditionKind.equals =>
+    equalityMode == ConditionEqualityMode.numeric
+        ? S.of(context).notificationsConditionEqualsNumerically
+        : S.of(context).notificationsConditionEquals,
   ConditionKind.contains => S.of(context).notificationsConditionContains,
   ConditionKind.greaterThan => S.of(context).notificationsConditionGreaterThan,
   ConditionKind.greaterThanOrEqual =>

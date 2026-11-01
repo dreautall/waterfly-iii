@@ -4,6 +4,7 @@ import 'package:waterflyiii/notifications/domain/conditions/notification_conditi
 import 'package:waterflyiii/notifications/domain/conditions/value_contains_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/value_exists_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_equal_condition.dart';
+import 'package:waterflyiii/notifications/domain/conditions/values_numerically_equal_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_greater_than_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_greater_than_or_equal_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/values_less_than_condition.dart';
@@ -101,6 +102,13 @@ extension RuleConditionSummary on RuleConditionsSectionState {
         addLeftOperand(left);
         addOperator(S.of(context).notificationsConditionEquals);
         addRightOperand(right, left);
+      case ValuesNumericallyEqualCondition(
+        :final ValueSource left,
+        :final ValueSource right,
+      ):
+        addLeftOperand(left);
+        addOperator(S.of(context).notificationsConditionEqualsNumerically);
+        addRightOperand(right, left);
       case ValueContainsCondition(
         :final ValueSource value,
         :final ValueSource substring,
@@ -168,6 +176,11 @@ extension RuleConditionSummary on RuleConditionsSectionState {
           valueSource,
         ],
         ValuesEqualCondition(
+          :final ValueSource left,
+          :final ValueSource right,
+        ) =>
+          <ValueSource>[left, right],
+        ValuesNumericallyEqualCondition(
           :final ValueSource left,
           :final ValueSource right,
         ) =>

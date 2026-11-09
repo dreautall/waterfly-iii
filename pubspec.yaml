@@ -57,7 +57,7 @@ dependencies:
   flutter_sharing_intent: ^2.0.3
   open_file: ^4.0.0
   expressions: ^0.2.5+3
-  material_ui: ^1.9.0
+  material_ui: ^1.10.0
   android_file_picker: ^2.1.2
 dev_dependencies:
   flutter_lints: ^6.0.0

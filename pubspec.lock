@@ -21,10 +21,10 @@ packages:
     dependency: "direct main"
     description:
       name: android_file_picker
-      sha256: "03d3dd3cb578ab26b1e528aeea27bf6b976942f5a24e3da82d270369b8e161a8"
+      sha256: "6450f61b8d4b1642e262fc1bef25b258eef91ae0a61ca56e766cc91b844c7e59"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.2"
+    version: "2.1.4"
   animations:
     dependency: "direct main"
     description:
@@ -373,18 +373,18 @@ packages:
     dependency: "direct main"
     description:
       name: file_picker
-      sha256: e67f1bcbef00f8b28f3b6ce09a1f0d2d9de37cf1e1e7e73b70df7a20d3eee8be
+      sha256: c64036857780d7125f011d543f89eedcb5df61da473668bace4eee9ab875284d
       url: "https://pub.dev"
     source: hosted
-    version: "13.3.0"
+    version: "13.3.2"
   file_picker_darwin:
     dependency: transitive
     description:
       name: file_picker_darwin
-      sha256: "13e731433fb3e59c1aff5a1197e41c5c5f930fad16342d101579086271a70d7b"
+      sha256: "8232e6998a4ad33053d92f935dcfb7f2b018a0c5082c3c0d31a6c25fb9a1fb9e"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.0"
+    version: "2.5.0"
   file_picker_linux:
     dependency: transitive
     description:

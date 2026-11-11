@@ -1,5 +1,6 @@
 import 'package:waterflyiii/notifications/domain/actions/action_evaluation_result.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
+import 'package:waterflyiii/notifications/domain/conditions/normalized_number.dart';
 import 'package:waterflyiii/notifications/domain/evaluation/evaluation_context.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/transactions/firefly_resource_reference.dart';
@@ -95,6 +96,9 @@ class SetTransactionFieldAction implements NotificationAction {
     if (validationError != null) {
       return ActionEvaluationResult.failure(validationError.name);
     }
+    final String patchValue = spec.valueType == TransactionFieldValueType.amount
+        ? normalizeNumber(value)!
+        : value;
 
     final FireflyResourceReference? resourceReference = switch (source) {
       final FireflyResourceValueSource resource => FireflyResourceReference(
@@ -111,7 +115,7 @@ class SetTransactionFieldAction implements NotificationAction {
     };
     return ActionEvaluationResult.success(
       TransactionPatch(
-        <TransactionField, String>{target: value},
+        <TransactionField, String>{target: patchValue},
         resourceReferences: resourceReference == null
             ? const <TransactionField, FireflyResourceReference>{}
             : <TransactionField, FireflyResourceReference>{

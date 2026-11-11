@@ -114,6 +114,7 @@ void main() {
   test('accepts numeric amount captures regardless of their group name', () {
     expect(isAmountCaptureValue('9.00'), isTrue);
     expect(isAmountCaptureValue('9,00'), isTrue);
+    expect(isAmountCaptureValue('1.000,00'), isTrue);
     expect(isAmountCaptureValue('not an amount'), isFalse);
   });
 

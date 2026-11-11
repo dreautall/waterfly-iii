@@ -1,5 +1,6 @@
 import 'package:waterflyiii/notifications/domain/actions/action_evaluation_result.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
+import 'package:waterflyiii/notifications/domain/conditions/normalized_number.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/domain/evaluation/notification_definition_evaluator.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
@@ -22,7 +23,7 @@ class AutomaticTransactionReadiness {
     final String? amount = patch.values[TransactionField.amount];
     final num? parsedAmount = amount == null
         ? null
-        : num.tryParse(amount.trim().replaceAll(',', '.'));
+        : parseNormalizedNumber(amount);
     final String? sourceAccount = patch.values[TransactionField.sourceAccount];
     final String? destinationAccount =
         patch.values[TransactionField.destinationAccount];

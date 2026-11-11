@@ -70,6 +70,25 @@ void main() {
       );
     });
 
+    test('normalizes a grouped amount from a persisted patch', () {
+      const TransactionIntent intent = TransactionIntent(
+        mode: TransactionCreationMode.automatic,
+        patch: TransactionPatch(<TransactionField, String>{
+          TransactionField.title: 'Rent',
+          TransactionField.amount: '1.000,00',
+          TransactionField.sourceAccount: 'account-1',
+        }),
+      );
+
+      final TransactionStore store =
+          NotificationTransactionIntentAdapter.toStore(
+            intent,
+            fallbackDate: DateTime(2026, 1, 2),
+          );
+
+      expect(store.transactions.single.amount, '1000.0');
+    });
+
     test('uses the notification date at minute precision by default', () {
       const TransactionPatch patch = TransactionPatch(
         <TransactionField, String>{},

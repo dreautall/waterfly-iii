@@ -1,3 +1,5 @@
+import 'package:waterflyiii/notifications/domain/conditions/normalized_number.dart';
+
 enum TransactionField {
   title,
   amount,
@@ -52,7 +54,7 @@ class TransactionFieldSpec {
   ) {
     switch (type) {
       case TransactionFieldValueType.amount:
-        final num? amount = num.tryParse(value.trim().replaceAll(',', '.'));
+        final num? amount = parseNormalizedNumber(value);
         return amount == null || !amount.isFinite
             ? TransactionFieldValidationError.invalidAmount
             : null;

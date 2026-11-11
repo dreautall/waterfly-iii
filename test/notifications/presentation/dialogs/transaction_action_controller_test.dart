@@ -20,6 +20,7 @@ void main() {
       controller.validateLiteral('not an amount'),
       TransactionFieldValidationError.invalidAmount,
     );
+    expect(controller.validateLiteral('1.000,00'), isNull);
     final SetTransactionFieldAction action =
         controller.buildLiteral(' 12.50 ') as SetTransactionFieldAction;
     expect(action.target, TransactionField.amount);
@@ -81,6 +82,10 @@ void main() {
 
   test('validates capture values without relying on capture names', () {
     expect(TransactionActionController.isAmountCaptureValue('9,00'), isTrue);
+    expect(
+      TransactionActionController.isAmountCaptureValue('1.000,00'),
+      isTrue,
+    );
     expect(
       TransactionActionController.isAmountCaptureValue('not an amount'),
       isFalse,

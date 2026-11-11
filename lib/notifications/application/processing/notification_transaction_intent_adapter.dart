@@ -1,5 +1,6 @@
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_intent.dart';
+import 'package:waterflyiii/notifications/domain/conditions/normalized_number.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_patch.dart';
 
@@ -13,7 +14,7 @@ class NotificationTransactionIntentAdapter {
   }) {
     final TransactionPatch patch = intent.patch;
     final String amount = _requiredValue(patch, TransactionField.amount);
-    final num? parsedAmount = num.tryParse(amount.replaceAll(',', '.'));
+    final num? parsedAmount = parseNormalizedNumber(amount);
     if (parsedAmount == null || !parsedAmount.isFinite || parsedAmount <= 0) {
       throw const FormatException(
         'Automatic transaction creation requires a positive amount.',

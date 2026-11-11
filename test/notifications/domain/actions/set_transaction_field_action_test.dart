@@ -172,6 +172,43 @@ void main() {
       );
     });
 
+    test('normalizes grouped amount literals and captures', () {
+      const SetTransactionFieldAction literalAction = SetTransactionFieldAction(
+        target: TransactionField.amount,
+        valueSource: LiteralValueSource('1.000,00'),
+      );
+      final EvaluationContext captureContext = EvaluationContext(
+        notification: context.notification,
+        extractionResults: const <String, RegExpEvaluationResult>{
+          'payment': RegExpEvaluationResult(
+            hasMatches: true,
+            namedCaptures: <String, List<String>>{
+              'amount': <String>['1,234.56'],
+            },
+          ),
+        },
+      );
+      const SetTransactionFieldAction captureAction = SetTransactionFieldAction(
+        target: TransactionField.amount,
+        valueSource: RegExpCaptureValueSource(
+          extractorId: 'payment',
+          captureName: 'amount',
+        ),
+      );
+
+      expect(
+        literalAction.evaluate(context).patch?.values[TransactionField.amount],
+        '1000.00',
+      );
+      expect(
+        captureAction
+            .evaluate(captureContext)
+            .patch
+            ?.values[TransactionField.amount],
+        '1234.56',
+      );
+    });
+
     test('accepts built text only for text transaction fields', () {
       final ComposedValueSource source = ComposedValueSource(
         const <LiteralValueSource>[

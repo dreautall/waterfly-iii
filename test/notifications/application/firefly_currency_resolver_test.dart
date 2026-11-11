@@ -27,6 +27,18 @@ void main() {
     code: 'CAD',
     symbol: r'$',
   );
+  const FireflyCurrency prefixedCad = FireflyCurrency(
+    id: '2',
+    name: 'Canadian dollar',
+    code: 'CAD',
+    symbol: r'CA$',
+  );
+  const FireflyCurrency prefixedUsd = FireflyCurrency(
+    id: '1',
+    name: 'US dollar',
+    code: 'USD',
+    symbol: r'US$',
+  );
 
   test('preserves editor search and exact-code fallback behavior', () async {
     final _CurrencyGateway gateway = _CurrencyGateway(
@@ -62,6 +74,30 @@ void main() {
     expect(
       (await resolver.inspect(r'$')).status,
       FireflyCurrencyResolutionStatus.ambiguous,
+    );
+  });
+
+  test('resolves only the exact currency symbol from broad matches', () async {
+    final FireflyCurrencyResolver resolver = FireflyCurrencyResolver(
+      _CurrencyGateway(<String, List<FireflyCurrency>>{
+        r'$': const <FireflyCurrency>[prefixedCad, usd],
+      }),
+    );
+
+    expect(await resolver.resolveUnique(r'$'), same(usd));
+  });
+
+  test('does not accept prefixed symbols for an exact symbol lookup', () async {
+    final FireflyCurrencyResolver resolver = FireflyCurrencyResolver(
+      _CurrencyGateway(<String, List<FireflyCurrency>>{
+        r'$': const <FireflyCurrency>[prefixedCad, prefixedUsd],
+      }),
+    );
+
+    expect(await resolver.resolveUnique(r'$'), isNull);
+    expect(
+      (await resolver.inspect(r'$')).status,
+      FireflyCurrencyResolutionStatus.unavailable,
     );
   });
 

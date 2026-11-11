@@ -72,7 +72,9 @@ class FireflyCurrencyResolver {
         token,
       ).toList();
     } else {
-      candidates = matches;
+      candidates = matches
+          .where((FireflyCurrency currency) => currency.symbol == token)
+          .toList();
     }
     return switch (candidates.length) {
       0 => const FireflyCurrencyResolution.unavailable(),

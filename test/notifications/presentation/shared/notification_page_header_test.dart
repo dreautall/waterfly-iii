@@ -3,7 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_page_header.dart';
 
 void main() {
-  testWidgets('positions circular controls like the reference header', (
+  testWidgets('matches standard app bar control geometry when unscrolled', (
     WidgetTester tester,
   ) async {
     final ScrollController controller = ScrollController();
@@ -30,7 +30,7 @@ void main() {
       ),
     );
 
-    expect(tester.getSize(find.byType(NotificationPageHeader)).height, 72);
+    expect(tester.getSize(find.byType(NotificationPageHeader)).height, 56);
 
     final Rect back = tester.getRect(find.byType(BackButton));
     final Rect firstAction = tester.getRect(
@@ -40,18 +40,23 @@ void main() {
       find.widgetWithIcon(IconButton, Icons.delete_outline),
     );
 
-    expect(back, const Rect.fromLTWH(12, 16, 40, 40));
-    final BackButton backButton = tester.widget<BackButton>(
-      find.byType(BackButton),
+    expect(back, const Rect.fromLTWH(4, 4, 48, 48));
+    final IconTheme controlIconTheme = tester.widget<IconTheme>(
+      find
+          .descendant(
+            of: find.byType(NotificationPageHeaderControl).first,
+            matching: find.byType(IconTheme),
+          )
+          .first,
     );
     expect(
-      backButton.style?.iconSize?.resolve(<WidgetState>{}),
-      NotificationPageHeader.controlIconSize,
+      controlIconTheme.data.size,
+      NotificationPageHeader.expandedControlIconSize,
     );
-    expect(firstAction.size, const Size.square(40));
-    expect(lastAction.size, const Size.square(40));
-    expect(firstAction.right + 12, lastAction.left);
-    expect(lastAction.right, 788);
+    expect(firstAction.size, const Size.square(48));
+    expect(lastAction.size, const Size.square(48));
+    expect(firstAction.right, lastAction.left);
+    expect(lastAction.right, 796);
   });
 
   testWidgets('uses theme-aware control surfaces', (WidgetTester tester) async {
@@ -142,9 +147,26 @@ void main() {
           ),
         )
         .opacity;
+    double controlIconSize() => tester
+        .widget<IconTheme>(
+          find
+              .descendant(
+                of: find.byType(NotificationPageHeaderControl).first,
+                matching: find.byType(IconTheme),
+              )
+              .first,
+        )
+        .data
+        .size!;
+    double controlScale() => tester
+        .widget<Transform>(_controlBackgroundTransform())
+        .transform
+        .entry(0, 0);
 
     expect(controlAlpha(), 0);
     expect(titleAlpha(), 1);
+    expect(controlIconSize(), NotificationPageHeader.expandedControlIconSize);
+    expect(controlScale(), closeTo(0.8, 0.001));
 
     controller.jumpTo(32);
     await tester.pump();
@@ -154,6 +176,8 @@ void main() {
       closeTo(NotificationPageHeader.controlBackgroundOpacity / 2, 0.001),
     );
     expect(titleAlpha(), 0.5);
+    expect(controlIconSize(), closeTo(22, 0.001));
+    expect(controlScale(), closeTo(0.9, 0.001));
 
     controller.jumpTo(64);
     await tester.pump();
@@ -163,6 +187,8 @@ void main() {
       closeTo(NotificationPageHeader.controlBackgroundOpacity, 0.001),
     );
     expect(titleAlpha(), 0);
+    expect(controlIconSize(), NotificationPageHeader.controlIconSize);
+    expect(controlScale(), closeTo(1, 0.001));
   });
 
   testWidgets('positions toolbar controls below the system status bar', (
@@ -188,12 +214,12 @@ void main() {
       ),
     );
 
-    expect(tester.getTopLeft(find.byType(BackButton)).dy, 40);
+    expect(tester.getTopLeft(find.byType(BackButton)).dy, 28);
     expect(
       tester.getTopLeft(find.widgetWithIcon(IconButton, Icons.more_vert)).dy,
-      40,
+      28,
     );
-    expect(tester.getCenter(find.text('Notifications')).dy, 60);
+    expect(tester.getCenter(find.text('Notifications')).dy, 52);
   });
 
   testWidgets('fades a surface gradient in after scrolling', (
@@ -305,6 +331,14 @@ Finder _circularControl() => find.byWidgetPredicate(
       widget is DecoratedBox &&
       widget.decoration is BoxDecoration &&
       (widget.decoration as BoxDecoration).shape == BoxShape.circle,
+);
+
+Finder _controlBackgroundTransform() => find.byWidgetPredicate(
+  (Widget widget) =>
+      widget is Transform &&
+      widget.child is SizedBox &&
+      (widget.child! as SizedBox).width == 40 &&
+      (widget.child! as SizedBox).height == 40,
 );
 
 Finder _gradient() => find.byWidgetPredicate(

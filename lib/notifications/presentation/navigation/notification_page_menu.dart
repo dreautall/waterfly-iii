@@ -9,7 +9,6 @@ import 'package:waterflyiii/notifications/presentation/alerts/controllers/notifi
 import 'package:waterflyiii/notifications/presentation/health/controllers/notification_listener_health_view_model.dart';
 import 'package:waterflyiii/notifications/presentation/navigation/notification_navigation_coordinator.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_menu_theme.dart';
-import 'package:waterflyiii/notifications/presentation/shared/notification_page_header.dart';
 
 class NotificationPageMenu extends StatefulWidget {
   const NotificationPageMenu({
@@ -102,7 +101,6 @@ class _NotificationPageMenuState extends State<NotificationPageMenu> {
       child: PopupMenuButton<_NotificationPageMenuAction>(
         tooltip: S.of(context).notificationsMenuOptions,
         position: PopupMenuPosition.under,
-        iconSize: NotificationPageHeader.controlIconSize,
         icon: Badge(
           isLabelVisible: hasActiveHealthIssue || alertCount > 0,
           label: Text(hasActiveHealthIssue ? '!' : '$alertCount'),

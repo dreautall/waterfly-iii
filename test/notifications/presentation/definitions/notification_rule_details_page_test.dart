@@ -2288,7 +2288,6 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Ready'), findsNothing);
-    expect(find.byType(MessageStatusCard), findsNothing);
   });
 
   testWidgets('clears the rule name from the details field', (

@@ -147,12 +147,7 @@ class _NotificationRuleDetailsPageState
             extendBodyBehindAppBar: true,
             appBar: NotificationPageHeader(
               scrollController: _scrollController,
-              leading: BackButton(
-                onPressed: _onBackRequested,
-                style: IconButton.styleFrom(
-                  iconSize: NotificationPageHeader.controlIconSize,
-                ),
-              ),
+              leading: BackButton(onPressed: _onBackRequested),
               title: Text(_nameController.text),
               actions: <Widget>[
                 if (!widget.isSharedActionsEditor &&
@@ -163,7 +158,6 @@ class _NotificationRuleDetailsPageState
                     tooltip: _isTestMode
                         ? strings.notificationsRuleExitTestMode
                         : strings.notificationsRuleEnterTestMode,
-                    iconSize: NotificationPageHeader.controlIconSize,
                     onPressed: _toggleTestMode,
                     icon: Icon(
                       _isTestMode ? Icons.science : Icons.science_outlined,
@@ -173,7 +167,6 @@ class _NotificationRuleDetailsPageState
                   PopupMenuButton<_RuleAction>(
                     tooltip: strings.notificationsRuleOptions,
                     position: PopupMenuPosition.under,
-                    iconSize: NotificationPageHeader.controlIconSize,
                     clipBehavior: Clip.antiAlias,
                     onSelected: _onActionSelected,
                     itemBuilder: (BuildContext context) =>

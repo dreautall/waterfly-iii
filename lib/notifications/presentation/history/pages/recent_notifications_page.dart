@@ -541,10 +541,11 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage>
   Widget build(BuildContext context) {
     return NotificationMenuTheme(
       child: Scaffold(
-        appBar: NotificationPageHeader(
-          scrollController: _scrollController,
+        appBar: AppBar(
           title: Text(S.of(context).notificationsHistoryTitle),
-          fadeTitleOnScroll: false,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          scrolledUnderElevation: 0,
+          surfaceTintColor: Colors.transparent,
         ),
         body: _body(context),
         floatingActionButton: AnimatedScale(
@@ -1039,7 +1040,12 @@ class _NotificationDayHeaderDelegate extends SliverPersistentHeaderDelegate {
     BuildContext context,
     double shrinkOffset,
     bool overlapsContent,
-  ) => child;
+  ) => OverflowBox(
+    minHeight: height + 1,
+    maxHeight: height + 1,
+    alignment: Alignment.bottomCenter,
+    child: child,
+  );
 
   @override
   bool shouldRebuild(_NotificationDayHeaderDelegate oldDelegate) =>

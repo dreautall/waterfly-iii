@@ -187,7 +187,6 @@ class _NotificationAlertsPageState extends State<NotificationAlertsPage> {
           actions: <Widget>[
             IconButton(
               tooltip: S.of(context).notificationsAlertsDismissAll,
-              iconSize: NotificationPageHeader.controlIconSize,
               onPressed:
                   _viewModel.visibleAlerts.isNotEmpty &&
                       !_viewModel.isDismissingAll

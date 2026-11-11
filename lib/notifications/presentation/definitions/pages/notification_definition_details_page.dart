@@ -186,7 +186,6 @@ class _NotificationDefinitionDetailsPageState
                 IconButton(
                   key: const Key('delete-notification-definition'),
                   tooltip: strings.notificationsDefinitionDelete,
-                  iconSize: NotificationPageHeader.controlIconSize,
                   onPressed: () => _workflows.handleMenuAction(
                     DefinitionEditorMenuAction.delete,
                     delete: widget.onDelete,
@@ -199,7 +198,6 @@ class _NotificationDefinitionDetailsPageState
                 PopupMenuButton<DefinitionEditorMenuAction>(
                   tooltip: strings.notificationsDefinitionOptions,
                   position: PopupMenuPosition.under,
-                  iconSize: NotificationPageHeader.controlIconSize,
                   onSelected: _handleDefinitionMenuAction,
                   itemBuilder: (BuildContext context) =>
                       <PopupMenuEntry<DefinitionEditorMenuAction>>[

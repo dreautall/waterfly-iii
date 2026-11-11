@@ -135,12 +135,7 @@ class _NotificationActionGroupDetailsPageState
           extendBodyBehindAppBar: true,
           appBar: NotificationPageHeader(
             scrollController: _scrollController,
-            leading: BackButton(
-              onPressed: _onBackRequested,
-              style: IconButton.styleFrom(
-                iconSize: NotificationPageHeader.controlIconSize,
-              ),
-            ),
+            leading: BackButton(onPressed: _onBackRequested),
             title: Text(_nameController.text),
             actions: <Widget>[
               if (widget.onToggleTestMode != null)
@@ -148,7 +143,6 @@ class _NotificationActionGroupDetailsPageState
                   tooltip: _isTestMode
                       ? S.of(context).notificationsRuleExitTestMode
                       : S.of(context).notificationsRuleEnterTestMode,
-                  iconSize: NotificationPageHeader.controlIconSize,
                   onPressed: _toggleTestMode,
                   icon: Icon(
                     _isTestMode ? Icons.science : Icons.science_outlined,
@@ -158,7 +152,6 @@ class _NotificationActionGroupDetailsPageState
                 IconButton(
                   key: const Key('rename-new-conditional-action'),
                   tooltip: S.of(context).notificationsRuleRename,
-                  iconSize: NotificationPageHeader.controlIconSize,
                   onPressed: () => _onActionSelected(_RuleAction.rename),
                   icon: const Icon(Icons.drive_file_rename_outline),
                 )
@@ -166,7 +159,6 @@ class _NotificationActionGroupDetailsPageState
                 PopupMenuButton<_RuleAction>(
                   tooltip: S.of(context).notificationsRuleOptions,
                   position: PopupMenuPosition.under,
-                  iconSize: NotificationPageHeader.controlIconSize,
                   onSelected: _onActionSelected,
                   itemBuilder: (BuildContext context) =>
                       <PopupMenuEntry<_RuleAction>>[

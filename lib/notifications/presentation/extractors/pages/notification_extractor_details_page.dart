@@ -106,19 +106,13 @@ class _NotificationExtractorDetailsPageState
           extendBodyBehindAppBar: true,
           appBar: NotificationPageHeader(
             scrollController: _scrollController,
-            leading: BackButton(
-              onPressed: _onBackRequested,
-              style: IconButton.styleFrom(
-                iconSize: NotificationPageHeader.controlIconSize,
-              ),
-            ),
+            leading: BackButton(onPressed: _onBackRequested),
             title: Text(_nameController.text),
             actions: <Widget>[
               if (widget.canEdit && !widget.canDelete)
                 IconButton(
                   key: const Key('edit-extractor-details'),
                   tooltip: S.of(context).notificationsEditDetails,
-                  iconSize: NotificationPageHeader.controlIconSize,
                   onPressed: () => _onActionSelected(_ExtractorAction.rename),
                   icon: const Icon(Icons.edit_outlined),
                 )
@@ -126,7 +120,6 @@ class _NotificationExtractorDetailsPageState
                 PopupMenuButton<_ExtractorAction>(
                   tooltip: S.of(context).notificationsExtractorActions,
                   position: PopupMenuPosition.under,
-                  iconSize: NotificationPageHeader.controlIconSize,
                   clipBehavior: Clip.antiAlias,
                   onSelected: _onActionSelected,
                   itemBuilder: (BuildContext context) =>

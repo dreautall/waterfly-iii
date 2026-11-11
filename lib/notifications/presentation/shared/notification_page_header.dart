@@ -1,3 +1,5 @@
+import 'dart:ui' show lerpDouble;
+
 import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_card_theme.dart';
@@ -16,10 +18,12 @@ class NotificationPageHeader extends StatelessWidget
   static const double _titleFadeDistance = 64;
   static const double _gradientFadeDistance = 32;
   static const double _gradientBottomInset = 16;
-  static const double _toolbarHeight = 72;
-  static const double _controlSize = 40;
-  static const double _horizontalInset = 12;
-  static const double _controlSpacing = 12;
+  static const double _toolbarHeight = kToolbarHeight;
+  static const double _controlSize = 48;
+  static const double _controlBackgroundSize = 40;
+  static const double _horizontalInset = 4;
+  static const double _titleHorizontalInset = 72;
+  static const double expandedControlIconSize = 24;
   static const double controlIconSize = 20;
   static const double controlBackgroundOpacity = 0.72;
 
@@ -53,6 +57,7 @@ class NotificationPageHeader extends StatelessWidget
       final double controlBackgroundOpacity = fadeTitleOnScroll
           ? NotificationPageHeader.controlBackgroundOpacity * (1 - titleOpacity)
           : NotificationPageHeader.controlBackgroundOpacity;
+      final double controlTransition = fadeTitleOnScroll ? 1 - titleOpacity : 1;
       final double gradientOpacity = (offset / _gradientFadeDistance).clamp(
         0,
         1,
@@ -105,21 +110,13 @@ class NotificationPageHeader extends StatelessWidget
               top: toolbarTop + (_toolbarHeight - _controlSize) / 2,
               child: NotificationPageHeaderControl(
                 backgroundOpacity: controlBackgroundOpacity,
-                child:
-                    leading ??
-                    BackButton(
-                      style: IconButton.styleFrom(iconSize: controlIconSize),
-                    ),
+                transition: controlTransition,
+                child: leading ?? const BackButton(),
               ),
             ),
             Positioned(
-              left: _controlSize + _horizontalInset * 2,
-              right:
-                  _horizontalInset +
-                  actions.length * _controlSize +
-                  (actions.isEmpty
-                      ? 0
-                      : (actions.length - 1) * _controlSpacing),
+              left: _titleHorizontalInset,
+              right: _horizontalInset + actions.length * _controlSize,
               top: toolbarTop,
               height: _toolbarHeight,
               child: IgnorePointer(
@@ -144,11 +141,11 @@ class NotificationPageHeader extends StatelessWidget
               top: toolbarTop + (_toolbarHeight - _controlSize) / 2,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                spacing: _controlSpacing,
                 children: <Widget>[
                   for (final Widget action in actions)
                     NotificationPageHeaderControl(
                       backgroundOpacity: controlBackgroundOpacity,
+                      transition: controlTransition,
                       child: action,
                     ),
                 ],
@@ -166,10 +163,12 @@ class NotificationPageHeaderControl extends StatelessWidget {
     super.key,
     required this.child,
     this.backgroundOpacity = NotificationPageHeader.controlBackgroundOpacity,
+    this.transition = 1,
   });
 
   final Widget child;
   final double backgroundOpacity;
+  final double transition;
 
   @override
   Widget build(BuildContext context) {
@@ -183,16 +182,31 @@ class NotificationPageHeaderControl extends StatelessWidget {
     return IconTheme.merge(
       data: IconThemeData(
         color: colors.onSurface,
-        size: NotificationPageHeader.controlIconSize,
+        size: lerpDouble(
+          NotificationPageHeader.expandedControlIconSize,
+          NotificationPageHeader.controlIconSize,
+          transition,
+        ),
       ),
       child: SizedBox.square(
         dimension: NotificationPageHeader._controlSize,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: background.withValues(alpha: backgroundOpacity),
-            shape: BoxShape.circle,
-          ),
-          child: child,
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Transform.scale(
+              scale: lerpDouble(0.8, 1, transition),
+              child: SizedBox.square(
+                dimension: NotificationPageHeader._controlBackgroundSize,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: background.withValues(alpha: backgroundOpacity),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            ),
+            Positioned.fill(child: child),
+          ],
         ),
       ),
     );

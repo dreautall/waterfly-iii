@@ -782,7 +782,7 @@ void main() {
 
     final ListView list = tester.widget<ListView>(find.byType(ListView).first);
     final EdgeInsets padding = list.padding! as EdgeInsets;
-    expect(padding.top, greaterThan(kToolbarHeight));
+    expect(padding.top, kToolbarHeight);
     expect(padding.bottom, 58);
     expect(tester.getTopLeft(find.byType(ListView).first).dy, 0);
     expect(tester.getBottomRight(find.byType(ListView).first).dy, 1000);

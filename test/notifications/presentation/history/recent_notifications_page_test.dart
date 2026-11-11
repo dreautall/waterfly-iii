@@ -338,6 +338,13 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    final AppBar appBar = tester.widget<AppBar>(find.byType(AppBar));
+    expect(
+      appBar.backgroundColor,
+      Theme.of(tester.element(find.byType(AppBar))).scaffoldBackgroundColor,
+    );
+    expect(appBar.scrolledUnderElevation, 0);
+    expect(appBar.surfaceTintColor, Colors.transparent);
     expect(find.byType(SliverPersistentHeader), findsOneWidget);
     expect(find.byKey(const Key('history-day-2026-9-27')), findsOneWidget);
     expect(find.byKey(const Key('history-day-2026-9-26')), findsNothing);
@@ -348,6 +355,16 @@ void main() {
       ),
       findsOneWidget,
     );
+    final double appBarBottom = tester.getBottomLeft(find.byType(AppBar)).dy;
+    final ScrollPosition position = tester
+        .state<ScrollableState>(find.byType(Scrollable).first)
+        .position;
+    position.jumpTo(300);
+    await tester.pump();
+    expect(
+      tester.getTopLeft(find.byKey(const Key('history-day-2026-9-27'))).dy,
+      appBarBottom - 1,
+    );
 
     await tester.scrollUntilVisible(
       find.text('Older payment 0'),
@@ -356,12 +373,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final double backButtonBottom = tester
-        .getBottomLeft(find.byType(BackButton))
-        .dy;
     expect(
       tester.getTopLeft(find.byKey(const Key('history-day-2026-9-26'))).dy,
-      inInclusiveRange(backButtonBottom, backButtonBottom + 48),
+      inInclusiveRange(appBarBottom - 1, appBarBottom + 48),
     );
     expect(
       find.descendant(
@@ -373,7 +387,8 @@ void main() {
     expect(
       tester.getBottomLeft(find.byKey(const Key('history-day-2026-9-27'))).dy,
       lessThanOrEqualTo(
-        tester.getTopLeft(find.byKey(const Key('history-day-2026-9-26'))).dy,
+        tester.getTopLeft(find.byKey(const Key('history-day-2026-9-26'))).dy +
+            1,
       ),
     );
   });
@@ -446,11 +461,8 @@ void main() {
         .state<ScrollableState>(find.byType(Scrollable).first)
         .position;
     expect(position.pixels, greaterThan(300));
-    final Finder titleOpacity = find.ancestor(
-      of: find.text('Recent notifications'),
-      matching: find.byType(Opacity),
-    );
-    expect(tester.widget<Opacity>(titleOpacity).opacity, 1);
+    expect(find.byType(AppBar), findsOneWidget);
+    expect(find.text('Recent notifications'), findsOneWidget);
     expect(
       tester
           .widget<AnimatedScale>(

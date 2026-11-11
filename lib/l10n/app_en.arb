@@ -2579,6 +2579,22 @@
     "@notificationsDefinitionCustomRuleDescription": {"description": "Description for the custom rule option."},
     "notificationsRuleName": "Rule name",
     "@notificationsRuleName": {"description": "Field label for a notification rule name."},
+    "notificationsRuleStartFrom": "Start from",
+    "@notificationsRuleStartFrom": {"description": "Label for choosing an existing rule as the template for a new rule."},
+    "notificationsRuleStartFromBlankDescription": "Create an empty rule and configure it from scratch.",
+    "@notificationsRuleStartFromBlankDescription": {"description": "Description shown when a new notification rule will start blank."},
+    "notificationsRuleStartFromRuleDescription": "Copy the conditions, actions, and processing mode from {ruleName}. The rules remain independent.",
+    "@notificationsRuleStartFromRuleDescription": {
+        "description": "Description shown when an existing notification rule is selected as a template.",
+        "placeholders": {
+            "ruleName": {
+                "type": "String",
+                "example": "Card payments"
+            }
+        }
+    },
+    "notificationsRuleBlank": "Blank rule",
+    "@notificationsRuleBlank": {"description": "Option for creating a rule without copying an existing rule."},
     "notificationsDefinitionOptionsHeading": "Options",
     "@notificationsDefinitionOptionsHeading": {"description": "Heading for notification definition options."},
     "notificationsDefinitionOptionsDescription": "Choose whether matching notifications create transactions automatically or wait for review.",

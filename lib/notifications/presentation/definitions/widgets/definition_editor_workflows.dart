@@ -94,12 +94,21 @@ class NotificationDefinitionEditorWorkflows {
   Future<void> addRule() async {
     final RuleCreation? creation = await showNotificationDialog<RuleCreation>(
       context: context,
-      builder: (BuildContext context) => const AddRuleDialog(),
+      builder: (BuildContext context) =>
+          AddRuleDialog(templateRules: viewModel.rules),
     );
     if (creation == null || !context.mounted) return;
+    final NotificationRule? template = creation.templateRuleId == null
+        ? null
+        : viewModel.rules
+              .where(
+                (NotificationRule rule) => rule.id == creation.templateRuleId,
+              )
+              .firstOrNull;
     final NotificationRule rule = viewModel.createCustomRule(
       creation.name,
       description: creation.description,
+      template: template,
     );
     viewModel.addRule(rule);
     await editRule(rule);

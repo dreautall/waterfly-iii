@@ -2773,6 +2773,21 @@ class SFr extends S {
   String get notificationsRuleName => 'Rule name';
 
   @override
+  String get notificationsRuleStartFrom => 'Start from';
+
+  @override
+  String get notificationsRuleStartFromBlankDescription =>
+      'Create an empty rule and configure it from scratch.';
+
+  @override
+  String notificationsRuleStartFromRuleDescription(String ruleName) {
+    return 'Copy the conditions, actions, and processing mode from $ruleName. The rules remain independent.';
+  }
+
+  @override
+  String get notificationsRuleBlank => 'Blank rule';
+
+  @override
   String get notificationsDefinitionOptionsHeading => 'Options';
 
   @override

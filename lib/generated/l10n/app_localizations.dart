@@ -4290,6 +4290,30 @@ abstract class S {
   /// **'Rule name'**
   String get notificationsRuleName;
 
+  /// Label for choosing an existing rule as the template for a new rule.
+  ///
+  /// In en, this message translates to:
+  /// **'Start from'**
+  String get notificationsRuleStartFrom;
+
+  /// Description shown when a new notification rule will start blank.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an empty rule and configure it from scratch.'**
+  String get notificationsRuleStartFromBlankDescription;
+
+  /// Description shown when an existing notification rule is selected as a template.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the conditions, actions, and processing mode from {ruleName}. The rules remain independent.'**
+  String notificationsRuleStartFromRuleDescription(String ruleName);
+
+  /// Option for creating a rule without copying an existing rule.
+  ///
+  /// In en, this message translates to:
+  /// **'Blank rule'**
+  String get notificationsRuleBlank;
+
   /// Heading for notification definition options.
   ///
   /// In en, this message translates to:

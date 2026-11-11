@@ -1965,6 +1965,104 @@ void main() {
     );
   });
 
+  testWidgets('creates a rule from an existing rule template', (
+    WidgetTester tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1000));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    NotificationDefinition? savedDefinition;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationDefinitionDetailsPage(
+          definition: const NotificationDefinition(
+            id: 'bank',
+            applicationId: 'com.example.bank',
+            name: 'Example Bank',
+            sampleTitle: 'Card payment',
+            sampleBody: 'Paid 12 CAD',
+            extractors: <RegExpDefinition>[],
+            rules: <NotificationRule>[
+              NotificationRule(
+                id: 'card-payment',
+                name: 'Card payment',
+                conditions: <NotificationCondition>[
+                  ValueExistsCondition(LiteralValueSource('payment')),
+                ],
+                actions: <NotificationAction>[
+                  SetTransactionFieldAction(
+                    target: TransactionField.title,
+                    valueSource: LiteralValueSource('Purchase'),
+                  ),
+                ],
+                processingMode: NotificationRuleProcessingMode.automatic,
+              ),
+            ],
+            extractorMode: NotificationExtractorMode.advanced,
+          ),
+          onSave: (NotificationDefinition definition) async {
+            savedDefinition = definition;
+            return true;
+          },
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Add rule'));
+    await tester.pumpAndSettle();
+    expect(find.text('Start from'), findsOneWidget);
+    expect(find.text('Blank rule'), findsOneWidget);
+    expect(
+      find.text('Create an empty rule and configure it from scratch.'),
+      findsOneWidget,
+    );
+    await tester.enterText(find.byType(TextField).first, 'Weekend payment');
+    final Finder selector = find.byKey(const Key('rule-template'));
+    final MenuAnchor menuAnchor = tester.widget<MenuAnchor>(
+      find.byType(MenuAnchor),
+    );
+    expect(menuAnchor.animated, isTrue);
+    expect(
+      menuAnchor.style!.fixedSize!.resolve(<WidgetState>{})!.width,
+      tester.getSize(selector).width,
+    );
+    await tester.tap(selector);
+    await tester.pumpAndSettle();
+    final Finder templateOption = find.widgetWithText(
+      MenuItemButton,
+      'Card payment',
+    );
+    expect(
+      tester.getTopLeft(templateOption).dy,
+      greaterThanOrEqualTo(tester.getBottomLeft(selector).dy),
+    );
+    expect(
+      tester.getSize(templateOption).width,
+      tester.getSize(selector).width,
+    );
+    await tester.tap(templateOption);
+    await tester.pumpAndSettle();
+    expect(
+      find.text(
+        'Copy the conditions, actions, and processing mode from Card payment. '
+        'The rules remain independent.',
+      ),
+      findsOneWidget,
+    );
+    await tester.tap(find.text('Add'));
+    await tester.pumpAndSettle();
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Save definition'));
+    await tester.pumpAndSettle();
+
+    final NotificationRule copied = savedDefinition!.rules.last;
+    expect(copied.id, isNot('card-payment'));
+    expect(copied.name, 'Weekend payment');
+    expect(copied.conditions, hasLength(1));
+    expect(copied.actions, hasLength(1));
+    expect(copied.processingMode, NotificationRuleProcessingMode.automatic);
+  });
+
   testWidgets('cancels rule naming without creating a rule', (
     WidgetTester tester,
   ) async {

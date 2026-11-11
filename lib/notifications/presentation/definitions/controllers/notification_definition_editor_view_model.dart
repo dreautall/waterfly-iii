@@ -11,6 +11,8 @@ import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.d
 import 'package:waterflyiii/notifications/domain/notification_id.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_creation_mode.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
+import 'package:waterflyiii/notifications/domain/rules/notification_action_group.dart';
+import 'package:waterflyiii/notifications/domain/rules/notification_rule_processing_mode.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
@@ -186,14 +188,26 @@ class NotificationDefinitionEditorViewModel extends ChangeNotifier {
     return rule;
   }
 
-  NotificationRule createCustomRule(String name, {String description = ''}) =>
-      NotificationRule(
-        id: newNotificationId(),
-        name: name,
-        description: description,
-        conditions: const <NotificationCondition>[],
-        actions: const <NotificationAction>[],
-      );
+  NotificationRule createCustomRule(
+    String name, {
+    String description = '',
+    NotificationRule? template,
+  }) {
+    final NotificationRule? copied = template == null
+        ? null
+        : NotificationRule.fromJson(template.toJson());
+    return NotificationRule(
+      id: newNotificationId(),
+      name: name,
+      description: description,
+      conditions: copied?.conditions ?? const <NotificationCondition>[],
+      actions: copied?.actions ?? const <NotificationAction>[],
+      conditionalActionGroups:
+          copied?.conditionalActionGroups ?? const <NotificationActionGroup>[],
+      processingMode:
+          copied?.processingMode ?? NotificationRuleProcessingMode.inherit,
+    );
+  }
 
   RegExpDefinition createPredefinedExtractor(PredefinedRegExpDefinition type) =>
       _presetFactory.createPredefinedExtractor(type);

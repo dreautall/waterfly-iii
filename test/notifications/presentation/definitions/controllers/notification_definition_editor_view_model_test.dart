@@ -3,10 +3,13 @@ import 'package:waterflyiii/notifications/domain/actions/notification_action.dar
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
 import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
+import 'package:waterflyiii/notifications/domain/conditions/value_exists_condition.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
+import 'package:waterflyiii/notifications/domain/definitions/notification_sample.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_creation_mode.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
+import 'package:waterflyiii/notifications/domain/rules/notification_rule_processing_mode.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
@@ -451,6 +454,56 @@ void main() {
       isTrue,
     );
     expect(viewModel.rules, contains(transactionRule));
+  });
+
+  test('creates an independent rule from an existing rule template', () {
+    final NotificationDefinitionEditorViewModel viewModel =
+        NotificationDefinitionEditorViewModel(definition);
+    final NotificationRule template = NotificationRule(
+      id: 'template',
+      name: 'Template',
+      description: 'Original description',
+      conditions: const <NotificationCondition>[
+        ValueExistsCondition(
+          NotificationPropertyValueSource(NotificationProperty.title),
+        ),
+      ],
+      actions: const <NotificationAction>[
+        SetTransactionFieldAction(
+          target: TransactionField.title,
+          valueSource: NotificationPropertyValueSource(
+            NotificationProperty.title,
+          ),
+        ),
+      ],
+      processingMode: NotificationRuleProcessingMode.automatic,
+      isPredefined: true,
+      reviewedPredefinedFields: const <TransactionField>{
+        TransactionField.title,
+      },
+      sampleOverride: NotificationSample(
+        title: 'Template sample',
+        body: 'Template body',
+        receivedAt: DateTime(2026, 11, 10),
+      ),
+    );
+
+    final NotificationRule copied = viewModel.createCustomRule(
+      'Copied rule',
+      description: 'New description',
+      template: template,
+    );
+
+    expect(copied.id, isNot(template.id));
+    expect(copied.name, 'Copied rule');
+    expect(copied.description, 'New description');
+    expect(copied.conditions, hasLength(1));
+    expect(copied.actions, hasLength(1));
+    expect(copied.processingMode, NotificationRuleProcessingMode.automatic);
+    expect(copied.isPredefined, isFalse);
+    expect(copied.reviewedPredefinedFields, isEmpty);
+    expect(copied.sampleOverride, isNull);
+    expect(copied.toJson(), isNot(same(template.toJson())));
   });
 
   test('exposes immutable collection snapshots and copies setup inputs', () {

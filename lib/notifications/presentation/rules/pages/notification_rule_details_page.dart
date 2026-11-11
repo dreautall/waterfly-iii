@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
 import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
@@ -214,13 +215,13 @@ class _NotificationRuleDetailsPageState
               ),
               children: <Widget>[
                 AnimatedSize(
-                  duration: const Duration(milliseconds: 240),
-                  curve: Curves.easeInOut,
+                  duration: animDurationStandard,
+                  curve: animCurveStandard,
                   alignment: Alignment.topCenter,
                   child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 180),
-                    switchInCurve: Curves.easeIn,
-                    switchOutCurve: Curves.easeOut,
+                    duration: animDurationStandard,
+                    switchInCurve: animCurveStandardAccelerate,
+                    switchOutCurve: animCurveStandardDecelerate,
                     transitionBuilder:
                         (Widget child, Animation<double> animation) =>
                             FadeTransition(
@@ -303,9 +304,9 @@ class _NotificationRuleDetailsPageState
                   ClipRect(
                     child: AnimatedSwitcher(
                       key: const Key('rule-transaction-sections-transition'),
-                      duration: const Duration(milliseconds: 240),
-                      switchInCurve: Curves.easeOutCubic,
-                      switchOutCurve: Curves.easeInCubic,
+                      duration: animDurationStandard,
+                      switchInCurve: animCurveStandardDecelerate,
+                      switchOutCurve: animCurveStandardAccelerate,
                       transitionBuilder:
                           (Widget child, Animation<double> animation) =>
                               FadeTransition(

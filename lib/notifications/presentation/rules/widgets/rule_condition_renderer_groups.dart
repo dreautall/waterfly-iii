@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/domain/conditions/all_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/any_condition.dart';
@@ -54,8 +55,8 @@ extension RuleConditionGroupRenderer on RuleConditionsSectionState {
                 child: Center(
                   child: AnimatedRotation(
                     turns: expanded ? 0.5 : 0,
-                    duration: const Duration(milliseconds: 180),
-                    curve: Curves.easeInOut,
+                    duration: animDurationStandard,
+                    curve: animCurveStandard,
                     child: const Icon(Icons.expand_more),
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:chopper/chopper.dart' show Response;
 import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger.dart';
@@ -402,11 +403,11 @@ class _ActionValueSourceDialogState extends State<_ActionValueSourceDialog> {
               fit: FlexFit.loose,
               child: ClipRect(
                 child: AnimatedSize(
-                  duration: const Duration(milliseconds: 220),
-                  curve: Curves.easeInOut,
+                  duration: animDurationStandard,
+                  curve: animCurveStandard,
                   alignment: Alignment.topCenter,
                   child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 220),
+                    duration: animDurationStandard,
                     layoutBuilder: (Widget? current, List<Widget> previous) =>
                         Stack(
                           alignment: Alignment.topLeft,

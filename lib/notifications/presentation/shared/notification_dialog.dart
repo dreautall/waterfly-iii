@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 
 class NotificationDialogTitle extends StatelessWidget {
   const NotificationDialogTitle({
@@ -40,10 +41,10 @@ Future<T?> showNotificationDialog<T>({
       mediaQuery.disableAnimations || mediaQuery.accessibleNavigation;
   final Duration transitionDuration = disableAnimations
       ? Duration.zero
-      : const Duration(milliseconds: 200);
+      : animDurationStandardDecelerate;
   final Duration reverseTransitionDuration = disableAnimations
       ? Duration.zero
-      : const Duration(milliseconds: 150);
+      : animDurationStandardAccelerate;
 
   return navigator.push<T>(
     PageRouteBuilder<T>(
@@ -70,8 +71,8 @@ Future<T?> showNotificationDialog<T>({
             if (disableAnimations) return child;
             final Animation<double> curvedAnimation = CurvedAnimation(
               parent: animation,
-              curve: Curves.easeOutCubic,
-              reverseCurve: Curves.easeInCubic,
+              curve: animCurveStandardDecelerate,
+              reverseCurve: animCurveStandardAccelerate,
             );
             return FadeTransition(
               opacity: curvedAnimation,

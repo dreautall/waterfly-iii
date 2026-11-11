@@ -1,3 +1,4 @@
+import 'package:waterflyiii/animations.dart';
 import 'package:material_ui/material_ui.dart';
 
 class AnimatedStatusIcon extends StatefulWidget {
@@ -16,7 +17,7 @@ class AnimatedStatusIcon extends StatefulWidget {
 
 class _AnimatedStatusIconState extends State<AnimatedStatusIcon>
     with SingleTickerProviderStateMixin {
-  static const Duration _duration = Duration(milliseconds: 180);
+  static const Duration _duration = animDurationStandard;
 
   late final AnimationController _controller;
   late final Animation<double> _animation;
@@ -33,8 +34,8 @@ class _AnimatedStatusIconState extends State<AnimatedStatusIcon>
     )..addStatusListener(_handleAnimationStatus);
     _animation = CurvedAnimation(
       parent: _controller,
-      curve: Curves.easeOutCubic,
-      reverseCurve: Curves.easeInCubic,
+      curve: animCurveStandardDecelerate,
+      reverseCurve: animCurveStandardAccelerate,
     );
   }
 

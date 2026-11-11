@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/rendering.dart';
 import 'package:logging/logging.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/history/recent_notification_samples.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
@@ -297,13 +298,13 @@ class _NotificationDefinitionDetailsPageState
               _ScrollAnchorSizeObserver(
                 onHeightChanged: _correctAutomaticAnchorBy,
                 child: AnimatedSize(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOut,
+                  duration: animDurationStandard,
+                  curve: animCurveStandard,
                   alignment: Alignment.topCenter,
                   child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 140),
-                    switchInCurve: Curves.easeIn,
-                    switchOutCurve: Curves.easeOut,
+                    duration: animDurationStandard,
+                    switchInCurve: animCurveStandardAccelerate,
+                    switchOutCurve: animCurveStandardDecelerate,
                     child: statusCard == null
                         ? const SizedBox.shrink(
                             key: Key('definition-status-empty'),
@@ -366,8 +367,8 @@ class _NotificationDefinitionDetailsPageState
                       strings.notificationsDefinitionExampleResultDescription,
                 ),
                 AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOut,
+                  duration: animDurationStandard,
+                  curve: animCurveStandard,
                   height: _isDirty ? _floatingSaveButtonSpacing : 0,
                 ),
                 SizedBox(height: _automaticAnchorSlack),
@@ -444,8 +445,8 @@ class _NotificationDefinitionDetailsPageState
                   ),
                 ],
                 AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOut,
+                  duration: animDurationStandard,
+                  curve: animCurveStandard,
                   height: _isDirty ? _floatingSaveButtonSpacing : 0,
                 ),
                 SizedBox(height: _automaticAnchorSlack),
@@ -726,7 +727,7 @@ class _NotificationDefinitionDetailsPageState
     if (!mounted || generation != _automaticAnchorGeneration) return;
 
     _viewModel.setTransactionCreationMode(true);
-    await Future<void>.delayed(const Duration(milliseconds: 220));
+    await Future<void>.delayed(animDurationStandard);
     _finishAutomaticAnchorTransition(generation);
   }
 
@@ -792,8 +793,8 @@ class _NotificationDefinitionDetailsPageState
         position.minScrollExtent,
         position.maxScrollExtent,
       ),
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.easeOut,
+      duration: animDurationStandard,
+      curve: animCurveStandardDecelerate,
     );
   }
 

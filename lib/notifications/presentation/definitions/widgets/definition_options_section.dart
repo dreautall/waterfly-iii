@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/presentation/shared/definition_detail_card.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_text_styles.dart';
@@ -70,8 +71,8 @@ class AutomaticTransactionOptionCard extends StatefulWidget {
 
 class _AutomaticTransactionOptionCardState
     extends State<AutomaticTransactionOptionCard> {
-  static const Duration _warningDuration = Duration(milliseconds: 200);
-  static const Duration _fadeDuration = Duration(milliseconds: 140);
+  static const Duration _warningDuration = animDurationStandard;
+  static const Duration _fadeDuration = animDurationStandard;
 
   bool get _shouldShowWarning =>
       widget.createAutomatically && !widget.automaticReadiness.isReady;
@@ -135,13 +136,13 @@ class _AutomaticTransactionOptionCardState
         ClipRect(
           child: AnimatedAlign(
             duration: _warningDuration,
-            curve: Curves.easeInOut,
+            curve: animCurveStandard,
             alignment: Alignment.topCenter,
             heightFactor: _revealWarning ? 1 : 0,
             onEnd: _handleWarningAnimationEnd,
             child: AnimatedOpacity(
               duration: _fadeDuration,
-              curve: Curves.easeIn,
+              curve: animCurveStandardAccelerate,
               opacity: _revealWarning ? 1 : 0,
               child: Padding(
                 padding: const EdgeInsets.only(top: 12),

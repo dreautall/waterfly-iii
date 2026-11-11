@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart' hide MaterialApp;
 import 'package:material_ui/material_ui.dart' as material_ui;
 import 'package:provider/provider.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/resources/firefly_currency_resolver.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
@@ -195,14 +196,14 @@ void main() {
     expect(tester.widget<EditableText>(editable).focusNode.hasFocus, isFalse);
 
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump(animDurationStandard * 0.5);
     editable = find.descendant(
       of: literal,
       matching: find.byType(EditableText),
     );
     expect(tester.widget<EditableText>(editable).focusNode.hasFocus, isFalse);
 
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pumpAndSettle();
     editable = find.descendant(
       of: literal,
       matching: find.byType(EditableText),
@@ -994,12 +995,12 @@ void main() {
     );
     expect(customEditor.focusNode!.hasFocus, isFalse);
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump(animDurationStandard * 0.5);
     customEditor = tester.widget<TextField>(
       find.byKey(const Key('build-text-custom-fixed')),
     );
     expect(customEditor.focusNode!.hasFocus, isFalse);
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pumpAndSettle();
     customEditor = tester.widget<TextField>(
       find.byKey(const Key('build-text-custom-fixed')),
     );

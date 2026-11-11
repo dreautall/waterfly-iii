@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/domain/conditions/all_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/any_condition.dart';
@@ -235,7 +236,7 @@ extension RuleConditionRenderer on RuleConditionsSectionState {
     Widget child,
   ) => TweenAnimationBuilder<Color?>(
     duration: const Duration(milliseconds: 1500),
-    curve: Curves.easeOut,
+    curve: animCurveStandardDecelerate,
     tween: ColorTween(
       end: isMovingCondition(condition)
           ? Theme.of(context).colorScheme.primary
@@ -275,13 +276,13 @@ extension RuleConditionRenderer on RuleConditionsSectionState {
         ? Clip.hardEdge
         : Clip.none,
     child: AnimatedAlign(
-      duration: const Duration(milliseconds: 240),
-      curve: Curves.easeInOut,
+      duration: animDurationStandard,
+      curve: animCurveStandard,
       alignment: Alignment.topCenter,
       heightFactor: removingConditions.contains(condition) ? 0 : 1,
       child: AnimatedOpacity(
-        duration: const Duration(milliseconds: 180),
-        curve: Curves.easeIn,
+        duration: animDurationStandard,
+        curve: animCurveStandardAccelerate,
         opacity: removingConditions.contains(condition) ? 0 : 1,
         child: child,
       ),
@@ -355,9 +356,9 @@ extension RuleConditionRenderer on RuleConditionsSectionState {
       );
     }
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 180),
-      switchInCurve: Curves.easeIn,
-      switchOutCurve: Curves.easeOut,
+      duration: animDurationStandard,
+      switchInCurve: animCurveStandardAccelerate,
+      switchOutCurve: animCurveStandardDecelerate,
       transitionBuilder: (Widget child, Animation<double> animation) =>
           FadeTransition(
             key: const Key('condition-leading-fade'),
@@ -482,13 +483,13 @@ extension RuleConditionRenderer on RuleConditionsSectionState {
   }
 
   Widget conditionModeSubtitle(Widget child) => AnimatedSize(
-    duration: const Duration(milliseconds: 240),
-    curve: Curves.easeInOut,
+    duration: animDurationStandard,
+    curve: animCurveStandard,
     alignment: Alignment.topLeft,
     child: AnimatedSwitcher(
-      duration: const Duration(milliseconds: 180),
-      switchInCurve: Curves.easeIn,
-      switchOutCurve: Curves.easeOut,
+      duration: animDurationStandard,
+      switchInCurve: animCurveStandardAccelerate,
+      switchOutCurve: animCurveStandardDecelerate,
       layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) =>
           Stack(
             alignment: Alignment.centerLeft,

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
 import 'package:waterflyiii/notifications/presentation/alerts/notification_alert_display.dart';
@@ -35,7 +36,7 @@ class NotificationAlertCard extends StatefulWidget {
 }
 
 class _NotificationAlertCardState extends State<NotificationAlertCard> {
-  static const Duration _issueAnimationDuration = Duration(milliseconds: 200);
+  static const Duration _issueAnimationDuration = animDurationStandard;
 
   bool _expanded = false;
   late final List<NotificationAlert> _displayedAlerts =
@@ -88,7 +89,7 @@ class _NotificationAlertCardState extends State<NotificationAlertCard> {
     final ColorScheme colors = Theme.of(context).colorScheme;
     return TweenAnimationBuilder<Color?>(
       duration: const Duration(milliseconds: 1500),
-      curve: Curves.easeOut,
+      curve: animCurveStandardDecelerate,
       tween: ColorTween(
         end: widget.highlighted ? colors.primary : Colors.transparent,
       ),
@@ -141,9 +142,9 @@ class _NotificationAlertCardState extends State<NotificationAlertCard> {
                           ],
                           const SizedBox(height: 6),
                           AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 140),
-                            switchInCurve: Curves.easeIn,
-                            switchOutCurve: Curves.easeOut,
+                            duration: animDurationStandard,
+                            switchInCurve: animCurveStandardAccelerate,
+                            switchOutCurve: animCurveStandardDecelerate,
                             layoutBuilder:
                                 (Widget? current, List<Widget> previous) =>
                                     Stack(
@@ -168,7 +169,7 @@ class _NotificationAlertCardState extends State<NotificationAlertCard> {
                       child: AnimatedRotation(
                         turns: _expanded ? 0.5 : 0,
                         duration: notificationExpansionDuration,
-                        curve: Curves.easeInOut,
+                        curve: animCurveStandard,
                         child: const Icon(Icons.expand_more),
                       ),
                     ),
@@ -178,12 +179,12 @@ class _NotificationAlertCardState extends State<NotificationAlertCard> {
               ClipRect(
                 child: AnimatedAlign(
                   duration: notificationExpansionDuration,
-                  curve: Curves.easeInOut,
+                  curve: animCurveStandard,
                   alignment: Alignment.topCenter,
                   heightFactor: _expanded ? 1 : 0,
                   child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 140),
-                    curve: Curves.easeIn,
+                    duration: animDurationStandard,
+                    curve: animCurveStandardAccelerate,
                     opacity: _expanded ? 1 : 0,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -237,12 +238,12 @@ class _NotificationAlertCardState extends State<NotificationAlertCard> {
         .join('|');
     return AnimatedSize(
       duration: _issueAnimationDuration,
-      curve: Curves.easeInOut,
+      curve: animCurveStandard,
       alignment: Alignment.topCenter,
       child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 140),
-        switchInCurve: Curves.easeIn,
-        switchOutCurve: Curves.easeOut,
+        duration: animDurationStandard,
+        switchInCurve: animCurveStandardAccelerate,
+        switchOutCurve: animCurveStandardDecelerate,
         layoutBuilder: (Widget? current, List<Widget> previous) => Stack(
           alignment: Alignment.topLeft,
           children: <Widget>[...previous, ?current],
@@ -538,17 +539,15 @@ class _AnimatedAlertIssue extends StatelessWidget {
     final bool disableAnimations = MediaQuery.disableAnimationsOf(context);
     return ClipRect(
       child: AnimatedAlign(
-        duration: disableAnimations
-            ? Duration.zero
-            : const Duration(milliseconds: 200),
-        curve: Curves.easeInOut,
+        duration: disableAnimations ? Duration.zero : animDurationStandard,
+        curve: animCurveStandard,
         alignment: Alignment.topCenter,
         heightFactor: visible ? 1 : 0,
         child: AnimatedOpacity(
-          duration: disableAnimations
-              ? Duration.zero
-              : const Duration(milliseconds: 140),
-          curve: visible ? Curves.easeOut : Curves.easeIn,
+          duration: disableAnimations ? Duration.zero : animDurationStandard,
+          curve: visible
+              ? animCurveStandardDecelerate
+              : animCurveStandardAccelerate,
           opacity: visible ? 1 : 0,
           child: child,
         ),

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:logging/logging.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/history/recent_notification_history.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
@@ -73,8 +74,8 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage>
     with WidgetsBindingObserver, SingleTickerProviderStateMixin {
   static const Duration _emptyHistoryRefreshInterval = Duration(seconds: 3);
   static const Duration _removeUndoDuration = Duration(seconds: 6);
-  static const Duration _entryTransitionDuration = Duration(milliseconds: 450);
-  static const Duration _historyFadeDuration = Duration(milliseconds: 320);
+  static const Duration _entryTransitionDuration = animDurationEmphasized;
+  static const Duration _historyFadeDuration = animDurationStandard;
   static const double _scrollToTopThreshold = 300;
 
   static final Logger _log = Logger('Notifications.RecentNotifications');
@@ -87,7 +88,7 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage>
   );
   late final Animation<double> _historyFadeAnimation = CurvedAnimation(
     parent: _historyFadeController,
-    curve: Curves.easeInOut,
+    curve: animCurveStandard,
   );
   bool _ownsViewModel = false;
   bool _isInitialLoadPending = true;
@@ -253,8 +254,8 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage>
     if (!_scrollController.hasClients) return;
     await _scrollController.animateTo(
       _scrollController.position.minScrollExtent,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOutCubic,
+      duration: animDurationStandard,
+      curve: animCurveStandardDecelerate,
     );
   }
 
@@ -550,8 +551,8 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage>
         body: _body(context),
         floatingActionButton: AnimatedScale(
           scale: _showScrollToTop ? 1 : 0,
-          duration: const Duration(milliseconds: 180),
-          curve: Curves.easeOutCubic,
+          duration: animDurationStandard,
+          curve: animCurveStandardDecelerate,
           child: IgnorePointer(
             ignoring: !_showScrollToTop,
             child: FloatingActionButton(
@@ -841,8 +842,8 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage>
     final Widget layoutTransition = AnimatedSwitcher(
       key: Key('history-entry-layout-$entryId'),
       duration: _entryTransitionDuration,
-      switchInCurve: Curves.easeOutCubic,
-      switchOutCurve: Curves.easeInOutCubic,
+      switchInCurve: animCurveStandardDecelerate,
+      switchOutCurve: animCurveStandard,
       transitionBuilder: (Widget child, Animation<double> animation) =>
           SizeTransition(
             sizeFactor: animation,
@@ -866,7 +867,7 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage>
         key: Key('history-refresh-opacity-$entryId'),
         opacity: isHidden ? 0 : 1,
         duration: _entryTransitionDuration,
-        curve: Curves.easeInOutCubic,
+        curve: animCurveStandard,
         child: layoutTransition,
       ),
     );
@@ -906,7 +907,7 @@ class _HistoryLoadingSkeletonState extends State<_HistoryLoadingSkeleton>
   )..repeat(reverse: true);
   late final Animation<double> _animation = CurvedAnimation(
     parent: _controller,
-    curve: Curves.easeInOut,
+    curve: animCurveStandard,
   );
 
   @override

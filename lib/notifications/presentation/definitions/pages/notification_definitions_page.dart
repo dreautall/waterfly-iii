@@ -1,6 +1,7 @@
 import 'package:appcheck/appcheck.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_access_settings_launcher.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_alert_store.dart';
@@ -704,9 +705,9 @@ class _NotificationAccessOnboarding extends StatelessWidget {
             }
             return AnimatedSwitcher(
               key: const Key('notification-access-status-switcher'),
-              duration: const Duration(milliseconds: 180),
-              switchInCurve: Curves.easeIn,
-              switchOutCurve: Curves.easeOut,
+              duration: animDurationStandard,
+              switchInCurve: animCurveStandardAccelerate,
+              switchOutCurve: animCurveStandardDecelerate,
               child: child,
             );
           },

@@ -1,9 +1,10 @@
 import 'dart:math' as math;
 
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_page_header.dart';
 
-const Duration notificationExpansionDuration = Duration(milliseconds: 180);
+const Duration notificationExpansionDuration = animDurationStandard;
 const double _expandedContentTopSpacing = 8;
 const double _expandedContentBottomSpacing = 16;
 
@@ -58,6 +59,6 @@ Future<void> revealExpandedContent(
   await position.animateTo(
     boundedOffset,
     duration: expansionDuration,
-    curve: Curves.easeInOut,
+    curve: animCurveStandard,
   );
 }

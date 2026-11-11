@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/domain/conditions/condition_nesting.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
@@ -321,8 +322,8 @@ class ConditionOverviewStep extends StatelessWidget {
           expanded ? onCancelEdit() : onBeginEdit(value, source, current),
       trailing: AnimatedRotation(
         turns: expanded ? 0.5 : 0,
-        duration: const Duration(milliseconds: 180),
-        curve: Curves.easeInOut,
+        duration: animDurationStandard,
+        curve: animCurveStandard,
         child: const Icon(Icons.expand_more),
       ),
       belly: expanded

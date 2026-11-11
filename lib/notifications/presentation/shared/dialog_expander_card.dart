@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_card_theme.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_input_decoration.dart';
 
@@ -33,8 +34,8 @@ class DialogExpanderCard extends StatefulWidget {
 }
 
 class _DialogExpanderCardState extends State<DialogExpanderCard> {
-  static const Duration _expansionDuration = Duration(milliseconds: 180);
-  static const Duration _fadeDuration = Duration(milliseconds: 140);
+  static const Duration _expansionDuration = animDurationStandard;
+  static const Duration _fadeDuration = animDurationStandard;
 
   late bool _showBelly = widget.expanded;
   late bool _revealBelly = widget.expanded;
@@ -95,13 +96,13 @@ class _DialogExpanderCardState extends State<DialogExpanderCard> {
             ClipRect(
               child: AnimatedAlign(
                 duration: _expansionDuration,
-                curve: Curves.easeInOut,
+                curve: animCurveStandard,
                 alignment: Alignment.topCenter,
                 heightFactor: _revealBelly ? 1 : 0,
                 onEnd: _handleExpansionEnd,
                 child: AnimatedOpacity(
                   duration: _fadeDuration,
-                  curve: Curves.easeIn,
+                  curve: animCurveStandardAccelerate,
                   opacity: _revealBelly ? 1 : 0,
                   child: NotificationDialogSurfaceScope.deep(
                     child: Padding(

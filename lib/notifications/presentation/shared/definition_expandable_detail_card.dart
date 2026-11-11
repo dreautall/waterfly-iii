@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/notifications/presentation/shared/definition_detail_card.dart';
 
 class DefinitionExpandableDetailCard extends StatelessWidget {
@@ -56,14 +57,14 @@ class DefinitionExpandableDetailCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         TweenAnimationBuilder<BorderRadius?>(
-          duration: const Duration(milliseconds: 180),
-          curve: Curves.easeInOut,
+          duration: animDurationStandard,
+          curve: animCurveStandard,
           tween: BorderRadiusTween(
             end: expanded ? expandedHeaderBorderRadius : headerBorderRadius,
           ),
           builder: (BuildContext context, BorderRadius? radius, Widget? _) =>
               AnimatedOpacity(
-                duration: const Duration(milliseconds: 180),
+                duration: animDurationStandard,
                 opacity: headerOpacity,
                 child: DefinitionDetailCard(
                   key: headerKey,
@@ -79,13 +80,13 @@ class DefinitionExpandableDetailCard extends StatelessWidget {
         ClipRect(
           clipBehavior: expanded ? Clip.none : Clip.hardEdge,
           child: AnimatedAlign(
-            duration: const Duration(milliseconds: 180),
-            curve: Curves.easeInOut,
+            duration: animDurationStandard,
+            curve: animCurveStandard,
             alignment: Alignment.topCenter,
             heightFactor: expanded ? 1 : 0,
             child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 140),
-              curve: Curves.easeIn,
+              duration: animDurationStandard,
+              curve: animCurveStandardAccelerate,
               opacity: expanded ? 1 : 0,
               child: Card(
                 margin: EdgeInsets.zero,

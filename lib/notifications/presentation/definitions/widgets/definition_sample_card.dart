@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/presentation/shared/sample_notification_card.dart';
 
@@ -28,14 +29,14 @@ class DefinitionSampleCard extends StatefulWidget {
 
 class _DefinitionSampleCardState extends State<DefinitionSampleCard>
     with SingleTickerProviderStateMixin {
-  static const Duration _animationDuration = Duration(milliseconds: 220);
+  static const Duration _animationDuration = animDurationStandard;
   late final AnimationController _controller = AnimationController(
     vsync: this,
     duration: _animationDuration,
   );
   late final Animation<double> _animation = CurvedAnimation(
     parent: _controller,
-    curve: Curves.easeInOut,
+    curve: animCurveStandard,
   );
   Animation<double>? _routeAnimation;
   AnimationStatusListener? _routeStatusListener;

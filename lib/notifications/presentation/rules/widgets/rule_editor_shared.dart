@@ -1,10 +1,11 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
 
 const AnimationStyle ruleEditorMessageAnimation = AnimationStyle(
-  duration: Duration(milliseconds: 250),
-  reverseDuration: Duration(milliseconds: 250),
+  duration: animDurationStandardDecelerate,
+  reverseDuration: animDurationStandardAccelerate,
 );
 
 Future<bool> showRuleRemovalConfirmation(

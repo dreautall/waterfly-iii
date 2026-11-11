@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/resources/firefly_currency_resolver.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
@@ -235,7 +236,7 @@ class RuleActionsSectionState extends State<RuleActionsSection> {
   ) {
     if (!removingActions.add(action)) return;
     update(() {});
-    actionRemovalTimers[action] = Timer(const Duration(milliseconds: 240), () {
+    actionRemovalTimers[action] = Timer(animDurationStandard, () {
       if (!mounted) return;
       onComplete();
       update(() => removingActions.remove(action));
@@ -249,13 +250,13 @@ class RuleActionsSectionState extends State<RuleActionsSection> {
             ? Clip.hardEdge
             : Clip.none,
         child: AnimatedAlign(
-          duration: const Duration(milliseconds: 240),
-          curve: Curves.easeInOut,
+          duration: animDurationStandard,
+          curve: animCurveStandard,
           alignment: Alignment.topCenter,
           heightFactor: removingActions.contains(action) ? 0 : 1,
           child: AnimatedOpacity(
-            duration: const Duration(milliseconds: 180),
-            curve: Curves.easeIn,
+            duration: animDurationStandard,
+            curve: animCurveStandardAccelerate,
             opacity: removingActions.contains(action) ? 0 : 1,
             child: child,
           ),
@@ -265,7 +266,7 @@ class RuleActionsSectionState extends State<RuleActionsSection> {
   Widget actionHighlightAnimation(NotificationAction action, Widget child) =>
       TweenAnimationBuilder<Color?>(
         duration: const Duration(milliseconds: 1500),
-        curve: Curves.easeOut,
+        curve: animCurveStandardDecelerate,
         tween: ColorTween(
           end: highlightedActions.contains(action)
               ? Theme.of(context).colorScheme.primary

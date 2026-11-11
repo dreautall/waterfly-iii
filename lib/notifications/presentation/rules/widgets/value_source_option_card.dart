@@ -1,3 +1,4 @@
+import 'package:waterflyiii/animations.dart';
 import 'package:material_ui/material_ui.dart';
 
 class ValueSourceOptionCard extends StatelessWidget {
@@ -23,8 +24,8 @@ class ValueSourceOptionCard extends StatelessWidget {
     margin: const EdgeInsets.only(bottom: 8),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
     child: AnimatedSize(
-      duration: const Duration(milliseconds: 180),
-      curve: Curves.easeInOut,
+      duration: animDurationStandard,
+      curve: animCurveStandard,
       child: Column(
         children: <Widget>[
           ListTile(
@@ -33,7 +34,7 @@ class ValueSourceOptionCard extends StatelessWidget {
             subtitle: subtitle,
             trailing: AnimatedRotation(
               turns: expanded ? 0.5 : 0,
-              duration: const Duration(milliseconds: 180),
+              duration: animDurationStandard,
               child: const Icon(Icons.expand_more),
             ),
             onTap: onTap,

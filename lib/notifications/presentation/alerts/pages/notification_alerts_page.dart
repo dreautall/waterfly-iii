@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/alerts/dismiss_notification_alerts.dart';
 import 'package:waterflyiii/notifications/application/rules/notification_rule_operations.dart';
@@ -50,7 +51,8 @@ class NotificationAlertsPage extends StatefulWidget {
 class _NotificationAlertsPageState extends State<NotificationAlertsPage> {
   static const Duration _dismissUndoDuration = Duration(seconds: 6);
 
-  static const Duration _groupAnimationDuration = Duration(milliseconds: 220);
+  static const Duration _groupAnimationDuration =
+      animDurationStandardDecelerate;
   static const Duration _groupStagger = Duration(milliseconds: 24);
 
   late final NotificationAlertsViewModel _viewModel;
@@ -247,8 +249,8 @@ class _NotificationAlertsPageState extends State<NotificationAlertsPage> {
                     tween: Tween<double>(begin: 0, end: 1),
                     duration: MediaQuery.disableAnimationsOf(context)
                         ? Duration.zero
-                        : const Duration(milliseconds: 160),
-                    curve: Curves.easeOut,
+                        : animDurationStandard,
+                    curve: animCurveStandardDecelerate,
                     builder:
                         (BuildContext context, double opacity, Widget? child) =>
                             Opacity(opacity: opacity, child: child),
@@ -345,8 +347,8 @@ class _NotificationAlertsPageState extends State<NotificationAlertsPage> {
               tween: Tween<double>(begin: 0, end: 1),
               duration: MediaQuery.disableAnimationsOf(context)
                   ? Duration.zero
-                  : const Duration(milliseconds: 160),
-              curve: Curves.easeOut,
+                  : animDurationStandard,
+              curve: animCurveStandardDecelerate,
               builder: (BuildContext context, double opacity, Widget? child) =>
                   Opacity(opacity: opacity, child: child),
               child: NotificationEmptyState(
@@ -474,8 +476,8 @@ class _NotificationAlertsPageState extends State<NotificationAlertsPage> {
       setState(() => _highlightedGroupKey = group.key);
       Scrollable.ensureVisible(
         target,
-        duration: const Duration(milliseconds: 240),
-        curve: Curves.easeInOut,
+        duration: animDurationStandard,
+        curve: animCurveStandard,
         alignment: 0.2,
       );
       _highlightTimer = Timer(const Duration(milliseconds: 2500), () {
@@ -754,23 +756,29 @@ class _AnimatedAlertGroup extends StatelessWidget {
     final bool disableAnimations = MediaQuery.disableAnimationsOf(context);
     final Duration sizeDuration = disableAnimations
         ? Duration.zero
-        : const Duration(milliseconds: 220);
+        : visible
+        ? animDurationStandardDecelerate
+        : animDurationStandardAccelerate;
     final Duration fadeDuration = disableAnimations
         ? Duration.zero
-        : const Duration(milliseconds: 160);
+        : visible
+        ? animDurationStandardDecelerate
+        : animDurationStandardAccelerate;
     return ClipRect(
       child: AnimatedAlign(
         duration: sizeDuration,
-        curve: Curves.easeInOut,
+        curve: animCurveStandard,
         alignment: Alignment.topCenter,
         heightFactor: visible ? 1 : 0,
         child: AnimatedOpacity(
           duration: fadeDuration,
-          curve: visible ? Curves.easeOut : Curves.easeIn,
+          curve: visible
+              ? animCurveStandardDecelerate
+              : animCurveStandardAccelerate,
           opacity: visible ? 1 : 0,
           child: AnimatedScale(
             duration: fadeDuration,
-            curve: Curves.easeInOut,
+            curve: animCurveStandard,
             scale: visible ? 1 : 0.98,
             alignment: Alignment.topCenter,
             child: child,

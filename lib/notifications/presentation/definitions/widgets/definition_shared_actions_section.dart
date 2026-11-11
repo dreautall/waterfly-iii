@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
 import 'package:waterflyiii/notifications/presentation/shared/definition_detail_card.dart';
@@ -44,8 +45,8 @@ class DefinitionSharedActionsSection extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         AnimatedSize(
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeInOut,
+          duration: animDurationStandard,
+          curve: animCurveStandard,
           alignment: Alignment.topCenter,
           child: DefinitionDetailCard(
             onTap: onEdit,
@@ -68,9 +69,9 @@ class DefinitionSharedActionsSection extends StatelessWidget {
             ),
             title: Text(strings.notificationsDefinitionSharedTransactionFields),
             subtitle: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 140),
-              switchInCurve: Curves.easeIn,
-              switchOutCurve: Curves.easeOut,
+              duration: animDurationStandard,
+              switchInCurve: animCurveStandardAccelerate,
+              switchOutCurve: animCurveStandardDecelerate,
               layoutBuilder: (Widget? current, List<Widget> previous) => Stack(
                 alignment: Alignment.centerLeft,
                 children: <Widget>[...previous, ?current],

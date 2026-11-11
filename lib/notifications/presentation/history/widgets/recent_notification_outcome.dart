@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/notifications/presentation/shared/message_status_card.dart';
 import 'package:waterflyiii/notifications/presentation/shared/reveal_expanded_content.dart';
 
@@ -96,7 +97,7 @@ class _RecentNotificationOutcomeState extends State<RecentNotificationOutcome> {
           AnimatedRotation(
             turns: _expanded ? 0.5 : 0,
             duration: notificationExpansionDuration,
-            curve: Curves.easeInOut,
+            curve: animCurveStandard,
             child: const Icon(Icons.expand_more),
           ),
         ],
@@ -120,12 +121,12 @@ class _RecentNotificationOutcomeState extends State<RecentNotificationOutcome> {
               ClipRect(
                 child: AnimatedAlign(
                   duration: notificationExpansionDuration,
-                  curve: Curves.easeInOut,
+                  curve: animCurveStandard,
                   alignment: Alignment.topCenter,
                   heightFactor: _expanded ? 1 : 0,
                   child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 140),
-                    curve: Curves.easeIn,
+                    duration: animDurationStandard,
+                    curve: animCurveStandardAccelerate,
                     opacity: _expanded ? 1 : 0,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/domain/evaluation/evaluation_context.dart';
@@ -196,9 +197,9 @@ class _BuildTextStepState extends State<BuildTextStep> {
     final Color? dialogSurface = notificationDialogSurfaceColor(context);
     return AnimatedSwitcher(
       key: const Key('build-text-step'),
-      duration: const Duration(milliseconds: 180),
-      switchInCurve: Curves.easeOut,
-      switchOutCurve: Curves.easeIn,
+      duration: animDurationStandard,
+      switchInCurve: animCurveStandardDecelerate,
+      switchOutCurve: animCurveStandardAccelerate,
       layoutBuilder: (Widget? current, List<Widget> previous) => Stack(
         alignment: Alignment.topLeft,
         children: <Widget>[...previous, ?current],
@@ -446,11 +447,11 @@ class _AddPartDialogState extends State<_AddPartDialog>
         width: 440,
         child: ClipRect(
           child: AnimatedSize(
-            duration: const Duration(milliseconds: 220),
-            curve: Curves.easeInOut,
+            duration: animDurationStandard,
+            curve: animCurveStandard,
             alignment: Alignment.topCenter,
             child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 220),
+              duration: animDurationStandard,
               layoutBuilder: (Widget? current, List<Widget> previous) => Stack(
                 alignment: Alignment.topLeft,
                 children: <Widget>[
@@ -577,8 +578,8 @@ class _AddPartDialogState extends State<_AddPartDialog>
       }
       _fixedChoicesScrollController.animateTo(
         _fixedChoicesScrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeInOut,
+        duration: animDurationStandard,
+        curve: animCurveStandard,
       );
     });
   }

@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/domain/conditions/all_condition.dart';
 import 'package:waterflyiii/notifications/domain/conditions/any_condition.dart';
@@ -171,11 +172,11 @@ class _ConditionBuilderDialogState extends State<_ConditionBuilderDialog> {
                 fit: FlexFit.loose,
                 child: ClipRect(
                   child: AnimatedSize(
-                    duration: const Duration(milliseconds: 220),
-                    curve: Curves.easeInOut,
+                    duration: animDurationStandard,
+                    curve: animCurveStandard,
                     alignment: Alignment.topCenter,
                     child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 220),
+                      duration: animDurationStandard,
                       layoutBuilder: (Widget? current, List<Widget> previous) =>
                           Stack(
                             alignment: Alignment.topLeft,

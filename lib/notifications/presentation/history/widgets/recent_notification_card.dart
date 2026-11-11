@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/history/recent_notification_history.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
@@ -164,7 +165,7 @@ class _RecentNotificationCardState extends State<RecentNotificationCard> {
                     child: AnimatedRotation(
                       turns: widget.expanded ? 0.5 : 0,
                       duration: notificationExpansionDuration,
-                      curve: Curves.easeInOut,
+                      curve: animCurveStandard,
                       child: const Icon(Icons.expand_more),
                     ),
                   ),
@@ -174,12 +175,12 @@ class _RecentNotificationCardState extends State<RecentNotificationCard> {
             ClipRect(
               child: AnimatedAlign(
                 duration: notificationExpansionDuration,
-                curve: Curves.easeInOut,
+                curve: animCurveStandard,
                 alignment: Alignment.topCenter,
                 heightFactor: widget.expanded ? 1 : 0,
                 child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 140),
-                  curve: Curves.easeIn,
+                  duration: animDurationStandard,
+                  curve: animCurveStandardAccelerate,
                   opacity: widget.expanded ? 1 : 0,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,

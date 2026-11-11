@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:appcheck/appcheck.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_access_settings_launcher.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_listener_status.dart';
@@ -730,7 +731,7 @@ void main() {
             find.byKey(const Key('notification-access-status-switcher')),
           )
           .duration,
-      const Duration(milliseconds: 180),
+      animDurationStandard,
     );
 
     await tester.pumpAndSettle();

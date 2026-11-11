@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:appcheck/appcheck.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/definitions/notification_application_candidates.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
@@ -155,13 +156,13 @@ class _NotificationApplicationSelectorDialogState
                           ) {
                             return ClipRect(
                               child: AnimatedSize(
-                                duration: const Duration(milliseconds: 220),
-                                curve: Curves.easeInOut,
+                                duration: animDurationStandard,
+                                curve: animCurveStandard,
                                 alignment: Alignment.topCenter,
                                 child: AnimatedSwitcher(
-                                  duration: const Duration(milliseconds: 180),
-                                  switchInCurve: Curves.easeIn,
-                                  switchOutCurve: Curves.easeOut,
+                                  duration: animDurationStandard,
+                                  switchInCurve: animCurveStandardAccelerate,
+                                  switchOutCurve: animCurveStandardDecelerate,
                                   layoutBuilder:
                                       (
                                         Widget? currentChild,

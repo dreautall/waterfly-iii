@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_action_group.dart';
 import 'package:waterflyiii/notifications/presentation/shared/definition_detail_card.dart';
@@ -128,7 +129,7 @@ class _RuleConditionalActionGroupsSectionState
             ),
             child: TweenAnimationBuilder<Color?>(
               duration: const Duration(milliseconds: 1500),
-              curve: Curves.easeOut,
+              curve: animCurveStandardDecelerate,
               tween: ColorTween(
                 end: _highlightedGroupIds.contains(entry.$2.id)
                     ? colors.primary

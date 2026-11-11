@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_alert_store.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_definition_store.dart';
@@ -944,7 +945,7 @@ void main() {
       findsOneWidget,
     );
 
-    await tester.pump(const Duration(milliseconds: 120));
+    await tester.pump(animDurationStandard);
     expect(
       find.text(
         'Transactions will use Prompt mode until you review the imported setup.',
@@ -1019,7 +1020,9 @@ void main() {
 
     expect(find.byType(Card), findsNWidgets(2));
 
-    await tester.pump(const Duration(milliseconds: 221));
+    await tester.pump(
+      animDurationStandardDecelerate + const Duration(milliseconds: 1),
+    );
     expect(find.byType(Card), findsOneWidget);
 
     await tester.pump(const Duration(milliseconds: 30));

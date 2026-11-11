@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/rules/notification_condition_tree.dart';
 import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
@@ -218,15 +219,15 @@ class RuleConditionsSectionState extends State<RuleConditionsSection>
 
   void revealCondition(NotificationCondition condition) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future<void>.delayed(const Duration(milliseconds: 180), () {
+      Future<void>.delayed(animDurationStandard, () {
         if (!mounted) return;
         final BuildContext? conditionContext =
             conditionKeys[condition]?.currentContext;
         if (conditionContext != null && conditionContext.mounted) {
           Scrollable.ensureVisible(
             conditionContext,
-            duration: const Duration(milliseconds: 180),
-            curve: Curves.easeInOut,
+            duration: animDurationStandard,
+            curve: animCurveStandard,
             alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd,
           );
         }
@@ -240,15 +241,12 @@ class RuleConditionsSectionState extends State<RuleConditionsSection>
   ) {
     if (!removingConditions.add(condition)) return;
     update(() {});
-    conditionRemovalTimers[condition] = Timer(
-      const Duration(milliseconds: 240),
-      () {
-        if (!mounted) return;
-        onComplete();
-        update(() => removingConditions.remove(condition));
-        conditionRemovalTimers.remove(condition);
-      },
-    );
+    conditionRemovalTimers[condition] = Timer(animDurationStandard, () {
+      if (!mounted) return;
+      onComplete();
+      update(() => removingConditions.remove(condition));
+      conditionRemovalTimers.remove(condition);
+    });
   }
 }
 

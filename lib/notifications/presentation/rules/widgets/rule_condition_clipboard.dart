@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:waterflyiii/animations.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
 import 'package:waterflyiii/notifications/application/rules/notification_condition_tree.dart';
 import 'package:waterflyiii/notifications/domain/conditions/all_condition.dart';
@@ -15,11 +16,8 @@ import 'package:waterflyiii/notifications/presentation/rules/widgets/rule_condit
 
 class RuleConditionClipboardState {
   RuleConditionClipboardState(TickerProvider vsync) {
-    fade = AnimationController(
-      vsync: vsync,
-      duration: const Duration(milliseconds: 300),
-    );
-    opacity = CurvedAnimation(parent: fade, curve: Curves.easeInOut);
+    fade = AnimationController(vsync: vsync, duration: animDurationStandard);
+    opacity = CurvedAnimation(parent: fade, curve: animCurveStandard);
   }
 
   ConditionClipboardEntry? entry;

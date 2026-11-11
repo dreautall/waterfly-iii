@@ -4488,7 +4488,7 @@ void main() {
     expect(find.byKey(const Key('condition-literal-value')), findsOneWidget);
   });
 
-  testWidgets('omits the current action extractor while editing', (
+  testWidgets('keeps the current action extractor available while editing', (
     WidgetTester tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(800, 1000));
@@ -4496,12 +4496,12 @@ void main() {
     final RegExpDefinition currentExtractor =
         RegExpDefinition.createCustomRegExpDefinition(
           'Current extractor',
-          r'(?<value>first)',
+          r'(?<value>12\.50)',
         );
     final RegExpDefinition alternateExtractor =
         RegExpDefinition.createCustomRegExpDefinition(
           'Alternate extractor',
-          r'(?<value>second)',
+          r'(?<value>8\.25)',
         );
     await tester.pumpWidget(
       MaterialApp(
@@ -4512,7 +4512,7 @@ void main() {
             conditions: const <NotificationCondition>[],
             actions: <NotificationAction>[
               SetTransactionFieldAction(
-                target: TransactionField.title,
+                target: TransactionField.amount,
                 valueSource: RegExpCaptureValueSource(
                   extractorId: currentExtractor.id,
                   captureName: 'value',
@@ -4524,7 +4524,7 @@ void main() {
           extractors: <RegExpDefinition>[currentExtractor, alternateExtractor],
           notificationContext: NotificationContext(
             title: 'Card payment',
-            body: 'first second',
+            body: '12.50 8.25',
             receivedAt: DateTime(2026, 9, 6),
           ),
         ),
@@ -4533,7 +4533,7 @@ void main() {
 
     final Finder actionCard = find
         .ancestor(
-          of: richText('Set field "title" from extractor "Current extractor"'),
+          of: richText('Set field "amount" from extractor "Current extractor"'),
           matching: find.byType(ElevatedButton),
         )
         .first;
@@ -4546,7 +4546,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Current extractor'), findsNothing);
+    expect(find.text('Current extractor'), findsOneWidget);
     expect(find.text('Alternate extractor'), findsOneWidget);
   });
 

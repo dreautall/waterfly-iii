@@ -209,6 +209,18 @@ void main() {
       );
     });
 
+    test('preserves three-decimal amount literals', () {
+      const SetTransactionFieldAction action = SetTransactionFieldAction(
+        target: TransactionField.amount,
+        valueSource: LiteralValueSource('0.001'),
+      );
+
+      expect(
+        action.evaluate(context).patch?.values[TransactionField.amount],
+        '0.001',
+      );
+    });
+
     test('accepts built text only for text transaction fields', () {
       final ComposedValueSource source = ComposedValueSource(
         const <LiteralValueSource>[

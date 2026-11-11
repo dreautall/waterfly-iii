@@ -356,9 +356,10 @@ extension RuleConditionRenderer on RuleConditionsSectionState {
       );
     }
     return AnimatedSwitcher(
-      duration: animDurationStandard,
-      switchInCurve: animCurveStandardAccelerate,
-      switchOutCurve: animCurveStandardDecelerate,
+      duration: animDurationStandardDecelerate,
+      reverseDuration: animDurationStandardAccelerate,
+      switchInCurve: animCurveStandardDecelerate,
+      switchOutCurve: animCurveStandardAccelerate,
       transitionBuilder: (Widget child, Animation<double> animation) =>
           FadeTransition(
             key: const Key('condition-leading-fade'),
@@ -487,9 +488,10 @@ extension RuleConditionRenderer on RuleConditionsSectionState {
     curve: animCurveStandard,
     alignment: Alignment.topLeft,
     child: AnimatedSwitcher(
-      duration: animDurationStandard,
-      switchInCurve: animCurveStandardAccelerate,
-      switchOutCurve: animCurveStandardDecelerate,
+      duration: animDurationStandardDecelerate,
+      reverseDuration: animDurationStandardAccelerate,
+      switchInCurve: animCurveStandardDecelerate,
+      switchOutCurve: animCurveStandardAccelerate,
       layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) =>
           Stack(
             alignment: Alignment.centerLeft,

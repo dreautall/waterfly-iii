@@ -19,7 +19,7 @@ class NormalizedAmountCaptureValueSource implements ValueSource {
   static String? normalize(String value) {
     final String normalized = value.replaceAll(RegExp(r'[^0-9.,]'), '');
     if (normalized.isEmpty) return null;
-    return normalizeNumber(normalized);
+    return normalizeTransactionAmount(normalized);
   }
 
   @override

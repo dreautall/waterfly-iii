@@ -336,9 +336,10 @@ class _SampleNotificationEditorDialogState
           const SizedBox(height: 12),
           Expanded(
             child: AnimatedSwitcher(
-              duration: animDurationStandard,
-              switchInCurve: animCurveStandardAccelerate,
-              switchOutCurve: animCurveStandardDecelerate,
+              duration: animDurationStandardDecelerate,
+              reverseDuration: animDurationStandardAccelerate,
+              switchInCurve: animCurveStandardDecelerate,
+              switchOutCurve: animCurveStandardAccelerate,
               child: _recentSamplesContent(context),
             ),
           ),

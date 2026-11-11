@@ -69,9 +69,10 @@ class DefinitionSharedActionsSection extends StatelessWidget {
             ),
             title: Text(strings.notificationsDefinitionSharedTransactionFields),
             subtitle: AnimatedSwitcher(
-              duration: animDurationStandard,
-              switchInCurve: animCurveStandardAccelerate,
-              switchOutCurve: animCurveStandardDecelerate,
+              duration: animDurationStandardDecelerate,
+              reverseDuration: animDurationStandardAccelerate,
+              switchInCurve: animCurveStandardDecelerate,
+              switchOutCurve: animCurveStandardAccelerate,
               layoutBuilder: (Widget? current, List<Widget> previous) => Stack(
                 alignment: Alignment.centerLeft,
                 children: <Widget>[...previous, ?current],

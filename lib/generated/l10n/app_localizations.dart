@@ -2301,7 +2301,7 @@ abstract class S {
   /// Description of editable predefined notification rule mappings.
   ///
   /// In en, this message translates to:
-  /// **'Select each suggested mapping to review it, and add any optional fields you need.'**
+  /// **'Resolve any ambiguous mappings, and add or remove optional transaction fields.'**
   String get notificationsRuleAdjustableMappingsDescription;
 
   /// Label for a group where every notification condition must match.
@@ -4533,7 +4533,7 @@ abstract class S {
   /// Explains that detailed notification setup is available from simple Basic mode.
   ///
   /// In en, this message translates to:
-  /// **'Basic mode lets you adjust extraction, field mappings, and other transaction details.'**
+  /// **'Basic mode lets you resolve ambiguous mappings, manage optional fields, and adjust transaction options.'**
   String get notificationsDefinitionSimpleMoreOptionsMessage;
 
   /// Title for simple Basic-mode guidance when the sample cannot be resolved without intervention.

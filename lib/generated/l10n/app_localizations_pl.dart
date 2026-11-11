@@ -1400,7 +1400,7 @@ class SPl extends S {
 
   @override
   String get notificationsRuleAdjustableMappingsDescription =>
-      'Select each suggested mapping to review it, and add any optional fields you need.';
+      'Resolve any ambiguous mappings, and add or remove optional transaction fields.';
 
   @override
   String get notificationsRuleAllConditionsMatch => 'All conditions match';
@@ -2922,7 +2922,7 @@ class SPl extends S {
 
   @override
   String get notificationsDefinitionSimpleMoreOptionsMessage =>
-      'Basic mode lets you adjust extraction, field mappings, and other transaction details.';
+      'Basic mode lets you resolve ambiguous mappings, manage optional fields, and adjust transaction options.';
 
   @override
   String get notificationsDefinitionSimpleReviewTitle =>

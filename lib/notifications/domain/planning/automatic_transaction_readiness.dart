@@ -23,7 +23,7 @@ class AutomaticTransactionReadiness {
     final String? amount = patch.values[TransactionField.amount];
     final num? parsedAmount = amount == null
         ? null
-        : parseNormalizedNumber(amount);
+        : parseNormalizedTransactionAmount(amount);
     final String? sourceAccount = patch.values[TransactionField.sourceAccount];
     final String? destinationAccount =
         patch.values[TransactionField.destinationAccount];

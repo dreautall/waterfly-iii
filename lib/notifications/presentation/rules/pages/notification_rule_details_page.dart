@@ -219,9 +219,10 @@ class _NotificationRuleDetailsPageState
                   curve: animCurveStandard,
                   alignment: Alignment.topCenter,
                   child: AnimatedSwitcher(
-                    duration: animDurationStandard,
-                    switchInCurve: animCurveStandardAccelerate,
-                    switchOutCurve: animCurveStandardDecelerate,
+                    duration: animDurationStandardDecelerate,
+                    reverseDuration: animDurationStandardAccelerate,
+                    switchInCurve: animCurveStandardDecelerate,
+                    switchOutCurve: animCurveStandardAccelerate,
                     transitionBuilder:
                         (Widget child, Animation<double> animation) =>
                             FadeTransition(

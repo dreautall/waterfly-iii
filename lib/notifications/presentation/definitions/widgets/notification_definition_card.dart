@@ -36,6 +36,8 @@ class NotificationDefinitionCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: InkWell(
         onTap: onTap,
+        splashFactory: NoSplash.splashFactory,
+        highlightColor: Colors.transparent,
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(

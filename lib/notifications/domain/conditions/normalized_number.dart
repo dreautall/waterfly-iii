@@ -1,4 +1,12 @@
-String? normalizeNumber(String value) {
+String? normalizeNumber(String value) => _normalizeNumber(value);
+
+String? normalizeTransactionAmount(String value) =>
+    _normalizeNumber(value, singleSeparatorAsDecimal: true);
+
+String? _normalizeNumber(
+  String value, {
+  bool singleSeparatorAsDecimal = false,
+}) {
   String normalized = value.trim().replaceAll(RegExp(r"[\s\u00a0\u202f']"), '');
   if (!RegExp(r'^[+-]?(?:\d+(?:[.,]\d+)*|[.,]\d+)$').hasMatch(normalized)) {
     return null;
@@ -26,7 +34,7 @@ String? normalizeNumber(String value) {
     if (lastComma != -1 || lastPeriod != -1) {
       final List<String> groups = normalized.split(separator);
       final bool usesGrouping =
-          groups.length > 1 &&
+          groups.length > (singleSeparatorAsDecimal ? 2 : 1) &&
           groups.first.isNotEmpty &&
           groups.skip(1).every((String group) => group.length == 3);
       if (usesGrouping) {
@@ -44,5 +52,10 @@ String? normalizeNumber(String value) {
 
 num? parseNormalizedNumber(String value) {
   final String? normalized = normalizeNumber(value);
+  return normalized == null ? null : num.tryParse(normalized);
+}
+
+num? parseNormalizedTransactionAmount(String value) {
+  final String? normalized = normalizeTransactionAmount(value);
   return normalized == null ? null : num.tryParse(normalized);
 }

@@ -664,9 +664,6 @@ extension RuleActionWorkflows on RuleActionsSectionState {
       extractors: widget.extractors,
       notificationContext: activeNotificationContext,
       fixedField: current.target,
-      excludedExtractorId: current.target == TransactionField.currency
-          ? null
-          : captureFor(current.valueSource)?.extractorId,
       allowFireflyResource:
           widget.extractorMode != NotificationExtractorMode.basic,
       initialSource: current.valueSource,

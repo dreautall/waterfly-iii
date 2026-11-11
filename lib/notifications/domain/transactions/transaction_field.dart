@@ -54,7 +54,7 @@ class TransactionFieldSpec {
   ) {
     switch (type) {
       case TransactionFieldValueType.amount:
-        final num? amount = parseNormalizedNumber(value);
+        final num? amount = parseNormalizedTransactionAmount(value);
         return amount == null || !amount.isFinite
             ? TransactionFieldValidationError.invalidAmount
             : null;

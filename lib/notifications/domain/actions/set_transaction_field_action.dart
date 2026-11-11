@@ -97,7 +97,7 @@ class SetTransactionFieldAction implements NotificationAction {
       return ActionEvaluationResult.failure(validationError.name);
     }
     final String patchValue = spec.valueType == TransactionFieldValueType.amount
-        ? normalizeNumber(value)!
+        ? normalizeTransactionAmount(value)!
         : value;
 
     final FireflyResourceReference? resourceReference = switch (source) {

@@ -160,9 +160,11 @@ class _NotificationApplicationSelectorDialogState
                                 curve: animCurveStandard,
                                 alignment: Alignment.topCenter,
                                 child: AnimatedSwitcher(
-                                  duration: animDurationStandard,
-                                  switchInCurve: animCurveStandardAccelerate,
-                                  switchOutCurve: animCurveStandardDecelerate,
+                                  duration: animDurationStandardDecelerate,
+                                  reverseDuration:
+                                      animDurationStandardAccelerate,
+                                  switchInCurve: animCurveStandardDecelerate,
+                                  switchOutCurve: animCurveStandardAccelerate,
                                   layoutBuilder:
                                       (
                                         Widget? currentChild,

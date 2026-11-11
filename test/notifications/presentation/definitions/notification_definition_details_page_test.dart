@@ -2180,7 +2180,7 @@ void main() {
         tester
             .getBottomLeft(
               find.text(
-                'Basic mode lets you adjust extraction, field mappings, and other transaction details.',
+                'Basic mode lets you resolve ambiguous mappings, manage optional fields, and adjust transaction options.',
               ),
             )
             .dy,
@@ -2629,7 +2629,7 @@ void main() {
     expect(find.text('Adjustable mappings'), findsOneWidget);
     expect(
       find.text(
-        'Select each suggested mapping to review it, and add any optional fields you need.',
+        'Resolve any ambiguous mappings, and add or remove optional transaction fields.',
       ),
       findsOneWidget,
     );

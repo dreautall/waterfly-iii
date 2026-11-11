@@ -705,9 +705,10 @@ class _NotificationAccessOnboarding extends StatelessWidget {
             }
             return AnimatedSwitcher(
               key: const Key('notification-access-status-switcher'),
-              duration: animDurationStandard,
-              switchInCurve: animCurveStandardAccelerate,
-              switchOutCurve: animCurveStandardDecelerate,
+              duration: animDurationStandardDecelerate,
+              reverseDuration: animDurationStandardAccelerate,
+              switchInCurve: animCurveStandardDecelerate,
+              switchOutCurve: animCurveStandardAccelerate,
               child: child,
             );
           },

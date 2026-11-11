@@ -302,9 +302,10 @@ class _NotificationDefinitionDetailsPageState
                   curve: animCurveStandard,
                   alignment: Alignment.topCenter,
                   child: AnimatedSwitcher(
-                    duration: animDurationStandard,
-                    switchInCurve: animCurveStandardAccelerate,
-                    switchOutCurve: animCurveStandardDecelerate,
+                    duration: animDurationStandardDecelerate,
+                    reverseDuration: animDurationStandardAccelerate,
+                    switchInCurve: animCurveStandardDecelerate,
+                    switchOutCurve: animCurveStandardAccelerate,
                     child: statusCard == null
                         ? const SizedBox.shrink(
                             key: Key('definition-status-empty'),

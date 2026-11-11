@@ -725,14 +725,13 @@ void main() {
       find.byKey(const Key('notification-access-onboarding')),
       findsOneWidget,
     );
-    expect(
-      tester
-          .widget<AnimatedSwitcher>(
-            find.byKey(const Key('notification-access-status-switcher')),
-          )
-          .duration,
-      animDurationStandard,
+    final AnimatedSwitcher statusSwitcher = tester.widget<AnimatedSwitcher>(
+      find.byKey(const Key('notification-access-status-switcher')),
     );
+    expect(statusSwitcher.duration, animDurationStandardDecelerate);
+    expect(statusSwitcher.reverseDuration, animDurationStandardAccelerate);
+    expect(statusSwitcher.switchInCurve, animCurveStandardDecelerate);
+    expect(statusSwitcher.switchOutCurve, animCurveStandardAccelerate);
 
     await tester.pumpAndSettle();
 

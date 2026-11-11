@@ -142,9 +142,10 @@ class _NotificationAlertCardState extends State<NotificationAlertCard> {
                           ],
                           const SizedBox(height: 6),
                           AnimatedSwitcher(
-                            duration: animDurationStandard,
-                            switchInCurve: animCurveStandardAccelerate,
-                            switchOutCurve: animCurveStandardDecelerate,
+                            duration: animDurationStandardDecelerate,
+                            reverseDuration: animDurationStandardAccelerate,
+                            switchInCurve: animCurveStandardDecelerate,
+                            switchOutCurve: animCurveStandardAccelerate,
                             layoutBuilder:
                                 (Widget? current, List<Widget> previous) =>
                                     Stack(
@@ -241,9 +242,10 @@ class _NotificationAlertCardState extends State<NotificationAlertCard> {
       curve: animCurveStandard,
       alignment: Alignment.topCenter,
       child: AnimatedSwitcher(
-        duration: animDurationStandard,
-        switchInCurve: animCurveStandardAccelerate,
-        switchOutCurve: animCurveStandardDecelerate,
+        duration: animDurationStandardDecelerate,
+        reverseDuration: animDurationStandardAccelerate,
+        switchInCurve: animCurveStandardDecelerate,
+        switchOutCurve: animCurveStandardAccelerate,
         layoutBuilder: (Widget? current, List<Widget> previous) => Stack(
           alignment: Alignment.topLeft,
           children: <Widget>[...previous, ?current],

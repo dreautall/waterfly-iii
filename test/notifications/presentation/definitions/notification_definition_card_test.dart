@@ -85,6 +85,10 @@ void main() {
       ),
     );
 
+    final InkWell interaction = tester.widget<InkWell>(find.byType(InkWell));
+    expect(interaction.splashFactory, NoSplash.splashFactory);
+    expect(interaction.highlightColor, Colors.transparent);
+
     await tester.tap(find.text('Example Bank'));
 
     expect(wasOpened, isTrue);

@@ -14,7 +14,7 @@ class NotificationTransactionIntentAdapter {
   }) {
     final TransactionPatch patch = intent.patch;
     final String amount = _requiredValue(patch, TransactionField.amount);
-    final num? parsedAmount = parseNormalizedNumber(amount);
+    final num? parsedAmount = parseNormalizedTransactionAmount(amount);
     if (parsedAmount == null || !parsedAmount.isFinite || parsedAmount <= 0) {
       throw const FormatException(
         'Automatic transaction creation requires a positive amount.',

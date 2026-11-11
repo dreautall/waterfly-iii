@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
+import 'package:waterflyiii/notifications/domain/actions/set_transaction_tags_action.dart';
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
 import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
@@ -275,6 +276,71 @@ void main() {
           ),
     );
     expect(viewModel.isDirty, isFalse);
+  });
+
+  test('updates shared actions and their review state together', () {
+    final NotificationDefinitionEditorViewModel viewModel =
+        NotificationDefinitionEditorViewModel(
+          definition.copyWith(
+            sharedActions: const <NotificationAction>[
+              SetTransactionFieldAction(
+                target: TransactionField.amount,
+                valueSource: NotificationPropertyValueSource(
+                  NotificationProperty.title,
+                ),
+              ),
+              SetTransactionTagsAction(<String>['groceries', 'card']),
+            ],
+            reviewedSharedActionFields: const <TransactionField>{
+              TransactionField.amount,
+              TransactionField.tag,
+            },
+          ),
+        );
+
+    viewModel.removeSharedActionAt(0);
+
+    expect(viewModel.sharedActions, hasLength(1));
+    expect(
+      viewModel.reviewedSharedActionFields,
+      isNot(contains(TransactionField.amount)),
+    );
+
+    viewModel.removeTagFromSharedAction(0, 'groceries');
+
+    expect(
+      (viewModel.sharedActions.single as SetTransactionTagsAction).tags,
+      <String>['card'],
+    );
+    expect(
+      viewModel.reviewedSharedActionFields,
+      contains(TransactionField.tag),
+    );
+
+    viewModel.removeTagFromSharedAction(0, 'card');
+
+    expect(
+      (viewModel.sharedActions.single as SetTransactionTagsAction).tags,
+      isEmpty,
+    );
+    viewModel.removeSharedActionAt(0);
+
+    expect(viewModel.sharedActions, isEmpty);
+    expect(
+      viewModel.reviewedSharedActionFields,
+      isNot(contains(TransactionField.tag)),
+    );
+
+    viewModel.setSharedActionFieldReviewed(TransactionField.title, true);
+    expect(
+      viewModel.reviewedSharedActionFields,
+      contains(TransactionField.title),
+    );
+    viewModel.setSharedActionFieldReviewed(TransactionField.title, false);
+    expect(
+      viewModel.reviewedSharedActionFields,
+      isNot(contains(TransactionField.title)),
+    );
   });
 
   test('persists Simple as a Basic presentation choice', () {

@@ -1534,14 +1534,10 @@ void main() {
     await tester.tap(find.text('Basic'));
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
-      find.text('Set transaction fields'),
+      find.text('Adjustable mappings'),
       300,
       scrollable: find.byType(Scrollable).first,
     );
-    await tester.ensureVisible(find.text('Set transaction fields'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Set transaction fields'));
-    await tester.pumpAndSettle();
 
     expect(
       richText('Set field "title" from extractor "Notification title"'),
@@ -2198,6 +2194,11 @@ void main() {
     expect(find.text('Extractors'), findsOneWidget);
     expect(find.text('Actions'), findsOneWidget);
     expect(find.text('Options'), findsOneWidget);
+    expect(find.text('Resolved transaction fields'), findsOneWidget);
+    expect(
+      tester.getTopLeft(find.text('Options')).dy,
+      lessThan(tester.getTopLeft(find.text('Resolved transaction fields')).dy),
+    );
 
     await selectDefinitionOption(tester, 'Show simple view');
 
@@ -2241,17 +2242,12 @@ void main() {
     );
 
     expect(find.text('Actions'), findsOneWidget);
-    await tester.tap(find.text('Set transaction fields'));
-    await tester.pumpAndSettle();
-    expect(find.text('Set transaction fields'), findsOneWidget);
-    expect(find.text('Actions'), findsOneWidget);
+    expect(find.text('Set transaction fields'), findsNothing);
     expect(find.text('Shared actions'), findsNothing);
     expect(find.text('When'), findsNothing);
     expect(find.byTooltip('Rule options'), findsNothing);
     expect(find.text('Add action'), findsNothing);
 
-    await tester.pageBack();
-    await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Definition options'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Convert to advanced'));
@@ -2442,7 +2438,7 @@ void main() {
 
     expect(find.text('Needs setup'), findsOneWidget);
     await tester.scrollUntilVisible(
-      find.text('Set transaction fields'),
+      find.text('Actions'),
       300,
       scrollable: find.byType(Scrollable).first,
     );
@@ -2629,28 +2625,6 @@ void main() {
       ),
     );
 
-    Finder sharedActionsCard() => find.ancestor(
-      of: find.text('Set transaction fields'),
-      matching: find.byType(DefinitionDetailCard),
-    );
-
-    expect(
-      find.descendant(
-        of: sharedActionsCard(),
-        matching: find.text('Needs review'),
-      ),
-      findsOneWidget,
-    );
-    expect(
-      find.descendant(
-        of: sharedActionsCard(),
-        matching: find.byIcon(Icons.error_outline),
-      ),
-      findsOneWidget,
-    );
-    await tester.tap(find.text('Set transaction fields'));
-    await tester.pumpAndSettle();
-
     expect(find.text('Fixed mappings'), findsNothing);
     expect(find.text('Adjustable mappings'), findsOneWidget);
     expect(
@@ -2692,17 +2666,91 @@ void main() {
 
     expect(find.text('Needs review'), findsNothing);
     expect(find.byTooltip('Mark mapping as needing review'), findsNothing);
-    await tester.tap(find.byTooltip('Save'));
+    await tester.tap(find.byTooltip('Save definition'));
     await tester.pumpAndSettle();
-    await tester.tap(find.byTooltip('Back'));
+    expect(find.text('Needs review'), findsNothing);
+  });
+
+  testWidgets('adds and persists an optional Basic mapping inline', (
+    WidgetTester tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1000));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final List<RegExpDefinition> extractors = <RegExpDefinition>[
+      RegExpDefinition.createPredefinedRegExpDefinition(
+        PredefinedRegExpDefinition.notificationTitle,
+      ),
+      RegExpDefinition.createPredefinedRegExpDefinition(
+        PredefinedRegExpDefinition.notificationMessage,
+      ),
+      RegExpDefinition.createPredefinedRegExpDefinition(
+        PredefinedRegExpDefinition.notificationDate,
+      ),
+      RegExpDefinition.createPredefinedRegExpDefinition(
+        PredefinedRegExpDefinition.amount,
+      ),
+      RegExpDefinition.createPredefinedRegExpDefinition(
+        PredefinedRegExpDefinition.currency,
+      ),
+    ];
+    NotificationDefinition? savedDefinition;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: NotificationDefinitionDetailsPage(
+          definition: NotificationDefinition(
+            id: 'bank',
+            applicationId: 'com.example.bank',
+            name: 'Example Bank',
+            sampleTitle: 'Card payment',
+            sampleBody: 'Paid 12 CAD',
+            extractors: extractors,
+            rules: const <NotificationRule>[],
+            sharedActions: <NotificationAction>[
+              SetTransactionFieldAction(
+                target: TransactionField.amount,
+                valueSource: RegExpCaptureValueSource(
+                  extractorId: extractors[3].id,
+                  captureName: 'amount',
+                ),
+              ),
+            ],
+            extractorMode: NotificationExtractorMode.basic,
+          ),
+          onSave: (NotificationDefinition definition) async {
+            savedDefinition = definition;
+            return true;
+          },
+        ),
+      ),
+    );
+
+    await tester.scrollUntilVisible(
+      find.text('Add optional field'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.ensureVisible(find.text('Add optional field'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Add optional field'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Title'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Set field "title"'), findsOneWidget);
+    expect(find.byTooltip('Save definition'), findsOneWidget);
+    await tester.tap(find.byTooltip('Save definition'));
     await tester.pumpAndSettle();
 
     expect(
-      find.descendant(
-        of: sharedActionsCard(),
-        matching: find.text('Needs review'),
+      savedDefinition!.sharedActions.whereType<SetTransactionFieldAction>().any(
+        (SetTransactionFieldAction action) =>
+            action.target == TransactionField.title,
       ),
-      findsNothing,
+      isTrue,
+    );
+    expect(
+      savedDefinition!.reviewedSharedActionFields,
+      contains(TransactionField.title),
     );
   });
 
@@ -2804,11 +2852,6 @@ void main() {
         ),
       ),
     );
-
-    expect(find.text('Set transaction fields'), findsOneWidget);
-    await tester.ensureVisible(find.text('Set transaction fields'));
-    await tester.tap(find.text('Set transaction fields'));
-    await tester.pumpAndSettle();
 
     expect(find.text('Choose a matching Firefly currency.'), findsOneWidget);
     expect(find.byIcon(Icons.cancel_outlined), findsNothing);
@@ -3118,10 +3161,6 @@ void main() {
         ),
         findsWidgets,
       );
-
-      await tester.ensureVisible(find.text('Set transaction fields'));
-      await tester.tap(find.text('Set transaction fields'));
-      await tester.pumpAndSettle();
 
       expect(find.text('Automatic creation is incomplete'), findsOneWidget);
       expect(

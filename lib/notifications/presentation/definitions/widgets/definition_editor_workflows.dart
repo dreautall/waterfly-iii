@@ -120,9 +120,7 @@ class NotificationDefinitionEditorWorkflows {
           MaterialPageRoute<NotificationRuleDetailsResult>(
             builder: (BuildContext context) => NotificationRuleDetailsPage(
               rule: viewModel.createSharedActionsRule(
-                viewModel.extractorMode == NotificationExtractorMode.basic
-                    ? S.of(context).notificationsDefinitionSetTransactionFields
-                    : S.of(context).notificationsDefinitionSharedActionsTitle,
+                S.of(context).notificationsDefinitionSharedActionsTitle,
               ),
               extractors: viewModel.extractors,
               notificationContext: sampleContext(),
@@ -132,12 +130,8 @@ class NotificationDefinitionEditorWorkflows {
               isSharedActionsEditor: true,
               rules: viewModel.rules,
               showStatusTag: false,
-              onEditExtractor: (RegExpDefinition extractor) => editExtractor(
-                extractor,
-                removable:
-                    viewModel.extractorMode ==
-                    NotificationExtractorMode.advanced,
-              ),
+              onEditExtractor: (RegExpDefinition extractor) =>
+                  editExtractor(extractor, removable: true),
               onSave: (NotificationRule rule) {
                 viewModel.replaceSharedActions(
                   rule.actions,

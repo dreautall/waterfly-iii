@@ -10,7 +10,6 @@ class DefinitionSharedActionsSection extends StatelessWidget {
   const DefinitionSharedActionsSection({
     super.key,
     required this.actions,
-    required this.isBasicMode,
     required this.needsSetup,
     required this.needsReview,
     required this.automaticReadiness,
@@ -19,7 +18,6 @@ class DefinitionSharedActionsSection extends StatelessWidget {
   });
 
   final List<NotificationAction> actions;
-  final bool isBasicMode;
   final bool needsSetup;
   final bool needsReview;
   final AutomaticTransactionReadiness automaticReadiness;
@@ -36,16 +34,12 @@ class DefinitionSharedActionsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          isBasicMode
-              ? strings.notificationsRuleActionsTitle
-              : strings.notificationsDefinitionSharedActionsTitle,
+          strings.notificationsDefinitionSharedActionsTitle,
           style: context.notificationSectionTitle,
         ),
         const SizedBox(height: 4),
         Text(
-          isBasicMode
-              ? strings.notificationsDefinitionBasicActionsDescription
-              : strings.notificationsDefinitionSharedActionsDescription,
+          strings.notificationsDefinitionSharedActionsDescription,
           style: context.notificationSectionDescription,
         ),
         const SizedBox(height: 12),
@@ -72,11 +66,7 @@ class DefinitionSharedActionsSection extends StatelessWidget {
                   ? colors.tertiary
                   : null,
             ),
-            title: Text(
-              isBasicMode
-                  ? strings.notificationsDefinitionSetTransactionFields
-                  : strings.notificationsDefinitionSharedTransactionFields,
-            ),
+            title: Text(strings.notificationsDefinitionSharedTransactionFields),
             subtitle: AnimatedSwitcher(
               duration: const Duration(milliseconds: 140),
               switchInCurve: Curves.easeIn,
@@ -90,9 +80,7 @@ class DefinitionSharedActionsSection extends StatelessWidget {
                 automaticIncomplete
                     ? automaticReadiness.message(context)
                     : needsSetup
-                    ? isBasicMode
-                          ? strings.notificationsDefinitionNoTransactionFields
-                          : strings.notificationsDefinitionNoSharedFields
+                    ? strings.notificationsDefinitionNoSharedFields
                     : needsReview
                     ? strings.notificationsRuleNeedsReview
                     : strings.notificationsRuleActionCount(actions.length),

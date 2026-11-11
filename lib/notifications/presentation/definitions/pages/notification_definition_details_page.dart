@@ -22,6 +22,7 @@ import 'package:waterflyiii/notifications/presentation/definitions/widgets/defin
 import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_sample_card.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_rules_section.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_shared_actions_section.dart';
+import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_basic_actions_section.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_extractors_section.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/widgets/definition_options_section.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/widgets/automatic_transaction_readiness_display.dart';
@@ -384,18 +385,29 @@ class _NotificationDefinitionDetailsPageState
                 const SizedBox(height: 24),
                 _ScrollAnchorSizeObserver(
                   onHeightChanged: _correctAutomaticAnchorBy,
-                  child: DefinitionSharedActionsSection(
-                    actions: _viewModel.sharedActions,
-                    isBasicMode:
-                        _extractorMode == NotificationExtractorMode.basic,
-                    needsSetup: _sharedActionsNeedSetup(),
-                    needsReview: _sharedActionsNeedReview(),
-                    automaticReadiness: _automaticReadiness,
-                    createAutomatically:
-                        _transactionCreationMode ==
-                        TransactionCreationMode.automatic,
-                    onEdit: _workflows.editSharedActions,
-                  ),
+                  child: _extractorMode == NotificationExtractorMode.basic
+                      ? DefinitionBasicActionsSection(
+                          actions: _viewModel.sharedActions,
+                          reviewedFields: _viewModel.reviewedSharedActionFields,
+                          extractors: _extractors,
+                          notificationContext: _workflows.sampleContext(),
+                          onAdd: _viewModel.addSharedAction,
+                          onReplaceAt: _viewModel.replaceSharedActionAt,
+                          onRemoveAt: _viewModel.removeSharedActionAt,
+                          onRemoveTag: _viewModel.removeTagFromSharedAction,
+                          onSetFieldReviewed:
+                              _viewModel.setSharedActionFieldReviewed,
+                        )
+                      : DefinitionSharedActionsSection(
+                          actions: _viewModel.sharedActions,
+                          needsSetup: _sharedActionsNeedSetup(),
+                          needsReview: _sharedActionsNeedReview(),
+                          automaticReadiness: _automaticReadiness,
+                          createAutomatically:
+                              _transactionCreationMode ==
+                              TransactionCreationMode.automatic,
+                          onEdit: _workflows.editSharedActions,
+                        ),
                 ),
                 if (_extractorMode ==
                     NotificationExtractorMode.advanced) ...<Widget>[
@@ -422,6 +434,17 @@ class _NotificationDefinitionDetailsPageState
                     onWarningRevealed: _keepAutomaticWarningVisible,
                   ),
                 ),
+                if (_extractorMode ==
+                    NotificationExtractorMode.basic) ...<Widget>[
+                  const SizedBox(height: 24),
+                  DefinitionBasicTransactionPreview(
+                    actions: _viewModel.sharedActions,
+                    reviewedFields: _viewModel.reviewedSharedActionFields,
+                    extractors: _extractors,
+                    notificationContext: _workflows.sampleContext(),
+                    transactionCreationMode: _transactionCreationMode,
+                  ),
+                ],
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   curve: Curves.easeInOut,

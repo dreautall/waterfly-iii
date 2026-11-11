@@ -5,6 +5,7 @@ import 'package:waterflyiii/notifications/application/definitions/notification_d
 import 'package:waterflyiii/notifications/application/definitions/notification_definition_validator.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
+import 'package:waterflyiii/notifications/domain/actions/set_transaction_tags_action.dart';
 import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
@@ -348,6 +349,77 @@ class NotificationDefinitionEditorViewModel extends ChangeNotifier {
     _draft.reviewedSharedActionFields = Set<TransactionField>.from(
       reviewedFields,
     );
+    notifyListeners();
+  }
+
+  void addSharedAction(NotificationAction action) {
+    _draft.sharedActions = <NotificationAction>[
+      ..._draft.sharedActions,
+      action,
+    ];
+    notifyListeners();
+  }
+
+  void replaceSharedActionAt(int index, NotificationAction action) {
+    final List<NotificationAction> actions = List<NotificationAction>.from(
+      _draft.sharedActions,
+    );
+    actions[index] = action;
+    _draft.sharedActions = actions;
+    notifyListeners();
+  }
+
+  void removeSharedActionAt(int index) {
+    final NotificationAction removed = _draft.sharedActions[index];
+    final TransactionField? target = switch (removed) {
+      SetTransactionFieldAction(:final TransactionField target) => target,
+      SetTransactionTagsAction() => TransactionField.tag,
+      _ => null,
+    };
+    final List<NotificationAction> actions = List<NotificationAction>.from(
+      _draft.sharedActions,
+    )..removeAt(index);
+    _draft.sharedActions = actions;
+    if (target != null) {
+      final bool targetStillConfigured = actions.any(
+        (NotificationAction action) => switch (action) {
+          SetTransactionFieldAction(
+            target: final TransactionField actionTarget,
+          ) =>
+            actionTarget == target,
+          SetTransactionTagsAction() => target == TransactionField.tag,
+          _ => false,
+        },
+      );
+      if (!targetStillConfigured) {
+        _draft.reviewedSharedActionFields = Set<TransactionField>.from(
+          _draft.reviewedSharedActionFields,
+        )..remove(target);
+      }
+    }
+    notifyListeners();
+  }
+
+  SetTransactionTagsAction removeTagFromSharedAction(int index, String tag) {
+    final SetTransactionTagsAction current =
+        _draft.sharedActions[index] as SetTransactionTagsAction;
+    final SetTransactionTagsAction replacement = SetTransactionTagsAction(
+      List<String>.from(current.tags)..remove(tag),
+    );
+    replaceSharedActionAt(index, replacement);
+    return replacement;
+  }
+
+  void setSharedActionFieldReviewed(TransactionField field, bool reviewed) {
+    final Set<TransactionField> fields = Set<TransactionField>.from(
+      _draft.reviewedSharedActionFields,
+    );
+    if (reviewed) {
+      fields.add(field);
+    } else {
+      fields.remove(field);
+    }
+    _draft.reviewedSharedActionFields = fields;
     notifyListeners();
   }
 

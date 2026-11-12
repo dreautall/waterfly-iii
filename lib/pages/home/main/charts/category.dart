@@ -39,7 +39,7 @@ class CategoryChart extends StatelessWidget {
       (LabelAmountChart a, LabelAmountChart b) => a.amount.compareTo(b.amount),
     );
 
-    if (data.length > 5) {
+    if (chartData.length > 5) {
       final LabelAmountChart otherData = chartData
           .skip(5)
           .reduce(

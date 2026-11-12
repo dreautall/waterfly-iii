@@ -950,97 +950,13 @@
     "@settingsLockscreenInitial": {
         "description": "Prompt to authenticate once to set up the lockscreen"
     },
-    "settingsNLAppAccount": "Standaard account",
-    "@settingsNLAppAccount": {
-        "description": "Default account which will be used for the transaction."
-    },
-    "settingsNLAppAccountDynamic": "<Dynamic>",
-    "@settingsNLAppAccountDynamic": {
-        "description": "Account will be selected dynamically by the content of the notification."
-    },
-    "settingsNLAppAdd": "App toevoegen",
-    "@settingsNLAppAdd": {
-        "description": "Button title to add a new app."
-    },
-    "settingsNLAppAddHelp": "Klik om een app toe te voegen om naar te luisteren. Alleen geschikte apps worden weergegeven in de lijst.",
-    "@settingsNLAppAddHelp": {
-        "description": "Help text below adding the new app button."
-    },
-    "settingsNLAppAddInfo": "Maak enkele transacties waar je telefoonmeldingen ontvangt om apps toe te voegen aan deze lijst. Als de app nog steeds niet verschijnt, rapporteer deze dan aan app@vogt.pw.",
-    "@settingsNLAppAddInfo": {
-        "description": "Help text when no more app is available to add."
-    },
-    "settingsNLAutoAdd": "Transactie zonder interactie maken",
-    "@settingsNLAutoAdd": {
-        "description": "With this setting enabled, the transaction will be added automatically without further user interaction."
-    },
     "settingsNLDescription": "Deze service stelt u in staat om transactiegegevens op te halen van inkomende push-meldingen. Daarnaast kunt u een standaard account selecteren waaraan de transactie moet worden toegewezen - als er geen waarde is ingesteld. het probeert een account uit de melding te halen.",
     "@settingsNLDescription": {
         "description": "Description text for the notification listener service."
     },
-    "settingsNLEmptyNote": "Houd notitie veld leeg",
-    "@settingsNLEmptyNote": {
-        "description": "Usually the note field will be pre-filled with the notification details. With this setting enabled, it will be empty instead."
-    },
-    "settingsNLHistory": "Notificatiegeschiedenis",
-    "@settingsNLHistory": {
-        "description": "Label: Notification History view"
-    },
-    "settingsNLHistoryEmpty": "Nog geen notificaties opgeslagen.",
-    "@settingsNLHistoryEmpty": {
-        "description": "Notification history is empty"
-    },
-    "settingsNLHistoryLongDescription": "{notificationHistorySize, plural, =1 {Dit is de geschiedenis van de laatste notificatie ontvangen door de app. Daarnaast kun je transacties maken van (geldige) notificaties of zien waarom een notificatie niet kon worden verwerkt.} other {Dit is de geschiedenis van de laatste {notificationHistorySize} notificaties ontvangen door de app. Daarnaast kun je transacties maken van (geldige) notificaties of zien waarom een notificatie niet kon worden verwerkt.}}",
-    "@settingsNLHistoryLongDescription": {
-        "description": "Long description of the notification history feature.",
-        "placeholders": {
-            "notificationHistorySize": {
-                "type": "int",
-                "example": "5"
-            }
-        }
-    },
-    "settingsNLHistoryRejectedReason": "Notificatie overgeslagen: {reason, select, noMoney{Geen geldwaarde gevonden} noCurrency{Geen valuta gevonden} appNotUsed{App niet in lijst} other{Onbekende reden}}.",
-    "@settingsNLHistoryRejectedReason": {
-        "description": "Reason why a notification was not selected. Valid reasons: noMoney (no monetary value found in transaction), noCurrency (no valid currency found in transaction), appNotUsed (app not on the list)",
-        "placeholders": {
-            "reason": {
-                "type": "String",
-                "example": "noMoney"
-            }
-        }
-    },
-    "settingsNLHistoryShortDescription": "Toon eerdere notificaties",
-    "@settingsNLHistoryShortDescription": {
-        "description": "Short description of the notification history feature (for the settings navigation)"
-    },
-    "settingsNLPermissionGrant": "Klik hier om toestemming te geven.",
-    "@settingsNLPermissionGrant": {
-        "description": "Indicates user should tap the text to grant certain permissions (notification access)."
-    },
     "settingsNLPermissionNotGranted": "Toestemming niet verleend.",
     "@settingsNLPermissionNotGranted": {
         "description": "A requested permission was not granted."
-    },
-    "settingsNLPermissionRemove": "Verwijder toestemming?",
-    "@settingsNLPermissionRemove": {
-        "description": "Dialog title asking if permission should be removed."
-    },
-    "settingsNLPermissionRemoveHelp": "Om deze service uit te schakelen, klik op de app en verwijder de machtigingen op het volgende scherm.",
-    "@settingsNLPermissionRemoveHelp": {
-        "description": "Dialog text giving hint how to remove the permission."
-    },
-    "settingsNLPrefillTXTitle": "Transactietitel vooraf invullen met meldingstitel",
-    "@settingsNLPrefillTXTitle": {
-        "description": "Setting pre-fill transaction title with notification title."
-    },
-    "settingsNLRegularExpression": "Reguliere expressie (optioneel)",
-    "@settingsNLRegularExpression": {
-        "description": "Setting to use a custom regular expression (regex)."
-    },
-    "settingsNLRegularExpressionInvalid": "Ongeldige reguliere expressie",
-    "@settingsNLRegularExpressionInvalid": {
-        "description": "Custom provided regular expression is invalid."
     },
     "settingsNLServiceChecking": "Status controleren…",
     "@settingsNLServiceChecking": {

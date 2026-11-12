@@ -1,8 +1,5 @@
 // ignore_for_file: deprecated_member_use
 
-import 'dart:io';
-
-import 'package:animations/animations.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:logging/logging.dart';
@@ -16,10 +13,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:waterflyiii/auth.dart';
 import 'package:waterflyiii/extensions.dart';
 import 'package:waterflyiii/generated/l10n/app_localizations.dart';
-import 'package:waterflyiii/notificationlistener.dart';
 import 'package:waterflyiii/pages/settings/connection.dart';
 import 'package:waterflyiii/pages/settings/debug.dart';
-import 'package:waterflyiii/pages/settings/notifications.dart';
 import 'package:waterflyiii/pages/transaction/tags.dart';
 import 'package:waterflyiii/settings.dart';
 
@@ -233,65 +228,6 @@ class SettingsPageState extends State<SettingsPage>
               }),
         ),
         const Divider(),
-        // Notification Listener
-        if (Platform.isAndroid)
-          FutureBuilder<NotificationListenerStatus>(
-            future: nlStatus(),
-            builder:
-                (
-                  BuildContext context,
-                  AsyncSnapshot<NotificationListenerStatus> snapshot,
-                ) {
-                  final S l10n = S.of(context);
-
-                  late String subtitle;
-                  if (snapshot.connectionState == .done && snapshot.hasData) {
-                    if (!snapshot.data!.servicePermission ||
-                        !snapshot.data!.notificationPermission) {
-                      subtitle = l10n.settingsNLPermissionNotGranted;
-                    } else if (!snapshot.data!.serviceRunning) {
-                      subtitle = l10n.settingsNLServiceStopped;
-                    } else {
-                      subtitle = l10n.settingsNLServiceRunning;
-                    }
-                  } else if (snapshot.hasError) {
-                    log.severe(
-                      "error getting nlStatus",
-                      snapshot.error,
-                      snapshot.stackTrace,
-                    );
-                    subtitle = S
-                        .of(context)
-                        .settingsNLServiceCheckingError(
-                          snapshot.error.toString(),
-                        );
-                  } else {
-                    subtitle = S.of(context).settingsNLServiceChecking;
-                  }
-                  return OpenContainer(
-                    openBuilder:
-                        (BuildContext context, Function closedContainer) =>
-                            const SettingsNotifications(),
-                    openColor: Theme.of(context).cardColor,
-                    closedColor: Theme.of(context).cardColor,
-                    closedElevation: 0,
-                    closedBuilder:
-                        (BuildContext context, Function openContainer) =>
-                            ListTile(
-                              title: Text(
-                                S.of(context).settingsNotificationListener,
-                              ),
-                              subtitle: Text(subtitle, maxLines: 2),
-                              leading: const CircleAvatar(
-                                child: Icon(Icons.notifications),
-                              ),
-                              onTap: () => openContainer(),
-                            ),
-                    onClosed: (_) => setState(() {}),
-                  );
-                },
-          ),
-        if (Platform.isAndroid) const Divider(),
         // FAQ
         ListTile(
           title: Text(S.of(context).settingsFAQ),

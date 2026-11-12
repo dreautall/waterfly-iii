@@ -459,6 +459,41 @@ void main() {
       expect(store.type, TransactionTypeProperty.withdrawal);
     });
 
+    test('toStore preserves a selected category resource identifier', () {
+      final TransactionSplitState split = TransactionSplitState(parent);
+      split.titleTC.text = 'Test title';
+      split.setCategoryResource(id: '42', name: 'Groceries');
+
+      final TransactionSplitStore store = split.toStore();
+
+      expect(store.categoryId, '42');
+      expect(store.categoryName, isNull);
+    });
+
+    test('editing a selected category falls back to its name', () {
+      final TransactionSplitState split = TransactionSplitState(parent);
+      split.titleTC.text = 'Test title';
+      split.setCategoryResource(id: '42', name: 'Groceries');
+      split.categoryTC.text = 'Dining';
+
+      final TransactionSplitStore store = split.toStore();
+
+      expect(store.categoryId, isNull);
+      expect(store.categoryName, 'Dining');
+    });
+
+    test('only includes an explicit notification currency when requested', () {
+      parent.includeCurrencyInStore = false;
+      addTearDown(() => parent.includeCurrencyInStore = false);
+      final TransactionSplitState split = TransactionSplitState(parent);
+      split.titleTC.text = 'Test title';
+
+      expect(split.toStore().currencyId, isNull);
+
+      parent.includeCurrencyInStore = true;
+      expect(split.toStore().currencyId, parent.localCurrency.id);
+    });
+
     test('toStore handles bill and piggy bank', () {
       parent.date = tz.TZDateTime.now(tz.UTC);
       final TransactionSplitState split = TransactionSplitState(parent);

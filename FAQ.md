@@ -77,16 +77,6 @@ still doesn't show up, there are a couple of reasons why:
       Android-suggested replies.
 
 
-**Q: The app selects the wrong currency!**
-
-A: Most of the time, the issue is from currencies that also use the `$` (Dollar) sign, for example
-Austrian Dollar (`A$`). The app checks the notification for an exact match of the currency, so a
-transaction with "*You paid $12.34*" gets matched to the (US-)Dollar. To fix this, you can change
-the currency settings in Firefly III, for example change the sign of the US-Dollar to `US$`, and
-change Austrian Dollar from `A$` to just `$`. This way, notifications with just `$` will get matched
-to Austrian Dollar.
-
-
 
 ## Misc
 

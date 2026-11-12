@@ -37,8 +37,6 @@ jobs:
       # Call setup_env action to setup workspace
       - name: Setup Flutter environment
         uses: ./.github/actions/setup_env
-        with:
-          java-version: 17.x
 
       # Generate keystore from base64 secret
       - name: Generate keystore

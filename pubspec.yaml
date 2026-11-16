@@ -13,7 +13,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   # dart.dev
-  archive: ^4.2.0
+  archive: ^4.7.1
   async: ^2.13.1
   intl: ^0.20.3
   collection: ^1.19.0

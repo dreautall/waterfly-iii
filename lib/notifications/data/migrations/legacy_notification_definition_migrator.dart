@@ -1,4 +1,5 @@
 import 'package:waterflyiii/notifications/application/definitions/notification_definition_preset_factory.dart';
+import 'package:waterflyiii/notifications/application/migrations/legacy_notification_currency_mapper.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
@@ -12,7 +13,6 @@ import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/firefly_resource_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/composed_value_source.dart';
-import 'package:waterflyiii/notifications/domain/value_sources/currency_capture_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/literal_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/normalized_amount_capture_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
@@ -47,20 +47,17 @@ class LegacyNotificationMigrationIssue {
   final String message;
 }
 
-class LegacyResolvedCurrency {
-  const LegacyResolvedCurrency({required this.token, required this.resourceId});
-
-  final String token;
-  final String resourceId;
-}
-
 class LegacyNotificationDefinitionMigrator {
-  LegacyNotificationDefinitionMigrator({
+  const LegacyNotificationDefinitionMigrator({
     NotificationDefinitionPresetFactory presetFactory =
         const NotificationDefinitionPresetFactory(),
-  }) : _presetFactory = presetFactory;
+    LegacyNotificationCurrencyMapper currencyMapper =
+        const LegacyNotificationCurrencyMapper(),
+  }) : _presetFactory = presetFactory,
+       _currencyMapper = currencyMapper;
 
   final NotificationDefinitionPresetFactory _presetFactory;
+  final LegacyNotificationCurrencyMapper _currencyMapper;
 
   NotificationDefinition createHusk(
     String applicationId, {
@@ -117,15 +114,7 @@ class LegacyNotificationDefinitionMigrator {
           extractor.predefinedType == PredefinedRegExpDefinition.amount,
     );
     if (amountExtractor.evaluate(context).matches.length != 1) return null;
-    return _preferredCurrencyCapture(
-      _currencyCaptures(
-        extractors.firstWhere(
-          (RegExpDefinition extractor) =>
-              extractor.predefinedType == PredefinedRegExpDefinition.currency,
-        ),
-        context,
-      ),
-    )?.token;
+    return _currencyMapper.currencyCapture(extractors, context)?.token;
   }
 
   LegacyNotificationMigrationResult _migrateBuiltIn(
@@ -151,12 +140,15 @@ class LegacyNotificationDefinitionMigrator {
       (RegExpDefinition extractor) =>
           extractor.predefinedType == PredefinedRegExpDefinition.currency,
     );
-    final List<_LegacyCurrencyCapture> currencyCaptures = sample == null
-        ? const <_LegacyCurrencyCapture>[]
-        : _currencyCaptures(currencyExtractor, _context(applicationId, sample));
-    final _LegacyCurrencyCapture? preferredCurrencyCapture =
-        _preferredCurrencyCapture(currencyCaptures);
-    final _LegacyCurrencyCapture? currencyActionCapture =
+    final List<LegacyCurrencyCapture> currencyCaptures = sample == null
+        ? const <LegacyCurrencyCapture>[]
+        : _currencyMapper.currencyCaptures(
+            extractors,
+            _context(applicationId, sample),
+          );
+    final LegacyCurrencyCapture? preferredCurrencyCapture = _currencyMapper
+        .preferredCurrencyCapture(currencyCaptures);
+    final LegacyCurrencyCapture? currencyActionCapture =
         preferredCurrencyCapture ?? currencyCaptures.firstOrNull;
     final bool hasResolvedCurrency =
         amountMatchIndex != null &&
@@ -185,7 +177,7 @@ class LegacyNotificationDefinitionMigrator {
     actions.addAll(_legacyFieldActions(settings, extractors));
     if (currencyActionCapture != null) {
       actions.add(
-        _currencyAction(
+        _currencyMapper.currencyAction(
           currencyExtractor,
           currencyActionCapture,
           hasResolvedCurrency ? resolvedCurrency : null,
@@ -243,66 +235,6 @@ class LegacyNotificationDefinitionMigrator {
       ),
       reviewIssues: reviewIssues,
     );
-  }
-
-  SetTransactionFieldAction _currencyAction(
-    RegExpDefinition extractor,
-    _LegacyCurrencyCapture currency,
-    LegacyResolvedCurrency? resolvedCurrency,
-  ) {
-    final RegExpCaptureValueSource capture = RegExpCaptureValueSource(
-      extractorId: extractor.id,
-      captureName: currency.captureName,
-      matchIndex: currency.matchIndex,
-    );
-    return SetTransactionFieldAction(
-      target: TransactionField.currency,
-      valueSource: resolvedCurrency == null
-          ? capture
-          : CurrencyCaptureValueSource(
-              capture: capture,
-              resourceId: resolvedCurrency.resourceId,
-              expectedValue: currency.token,
-            ),
-    );
-  }
-
-  List<_LegacyCurrencyCapture> _currencyCaptures(
-    RegExpDefinition extractor,
-    NotificationContext context,
-  ) {
-    final List<RegExpMatch> matches = extractor.evaluate(context).matches;
-    if (matches.length != 1) return const <_LegacyCurrencyCapture>[];
-    final RegExpMatch match = matches.single;
-    final String? preCurrency = match.namedGroup('preCurrency');
-    final String? postCurrency = match.namedGroup('postCurrency');
-    return <_LegacyCurrencyCapture>[
-      if (preCurrency?.trim().isNotEmpty ?? false)
-        _LegacyCurrencyCapture(
-          captureName: 'preCurrency',
-          token: preCurrency!.trim(),
-          matchIndex: 0,
-        ),
-      if (postCurrency?.trim().isNotEmpty ?? false)
-        _LegacyCurrencyCapture(
-          captureName: 'postCurrency',
-          token: postCurrency!.trim(),
-          matchIndex: 0,
-        ),
-    ];
-  }
-
-  _LegacyCurrencyCapture? _preferredCurrencyCapture(
-    List<_LegacyCurrencyCapture> captures,
-  ) {
-    if (captures.length == 1) return captures.single;
-    final List<_LegacyCurrencyCapture> isoCodes = captures
-        .where(
-          (_LegacyCurrencyCapture capture) =>
-              RegExp(r'^[A-Za-z]{3}$').hasMatch(capture.token),
-        )
-        .toList(growable: false);
-    return isoCodes.length == 1 ? isoCodes.single : null;
   }
 
   LegacyNotificationMigrationResult _migrateCustom(
@@ -505,16 +437,4 @@ class LegacyNotificationDefinitionMigrator {
         ),
     ];
   }
-}
-
-class _LegacyCurrencyCapture {
-  const _LegacyCurrencyCapture({
-    required this.captureName,
-    required this.token,
-    required this.matchIndex,
-  });
-
-  final String captureName;
-  final String token;
-  final int matchIndex;
 }

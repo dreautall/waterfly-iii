@@ -2,12 +2,16 @@ import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:waterflyiii/notifications/application/definitions/save_notification_definition.dart';
+import 'package:waterflyiii/notifications/application/migrations/pending_notification_migration_completion_service.dart';
+import 'package:waterflyiii/notifications/application/resources/firefly_currency_resolver.dart';
+import 'package:waterflyiii/notifications/application/resources/application_name_resolver.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_definition_store.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_alert_store.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
+import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
@@ -15,7 +19,7 @@ import 'package:waterflyiii/notifications/domain/value_sources/currency_capture_
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/controllers/notification_definitions_view_model.dart';
 
-class InMemoryDefinitionStore implements NotificationDefinitionStore {
+class InMemoryDefinitionStore implements AtomicNotificationDefinitionStore {
   InMemoryDefinitionStore(this.definitions, {this.error});
 
   List<NotificationDefinition> definitions;
@@ -34,6 +38,23 @@ class InMemoryDefinitionStore implements NotificationDefinitionStore {
   Future<void> save(List<NotificationDefinition> definitions) async {
     savedDefinitions = definitions;
     this.definitions = definitions;
+  }
+
+  @override
+  Future<T> mutate<T>(
+    NotificationDefinitionMutation<T> Function(
+      List<NotificationDefinition> definitions,
+    )
+    mutation,
+  ) async {
+    final List<NotificationDefinition> current =
+        List<NotificationDefinition>.of(definitions);
+    final NotificationDefinitionMutation<T> result = mutation(current);
+    if (result.changed) {
+      definitions = current;
+      savedDefinitions = current;
+    }
+    return result.value;
   }
 }
 
@@ -59,11 +80,48 @@ class DelayedDefinitionStore implements NotificationDefinitionStore {
 NotificationDefinitionsViewModel definitionsViewModel(
   InMemoryDefinitionStore store, {
   InMemoryAlertStore? alertStore,
+  ApplicationNameResolver? applicationNameResolver,
 }) => NotificationDefinitionsViewModel(
   store,
   SaveNotificationDefinition(store, alertStore: alertStore),
   alertStore: alertStore,
+  applicationNameResolver: applicationNameResolver,
 );
+
+class _ApplicationNameResolver implements ApplicationNameResolver {
+  const _ApplicationNameResolver(this.name);
+
+  final String? name;
+
+  @override
+  Future<String?> resolve(String applicationId) async => name;
+}
+
+class _DelayedApplicationNameResolver implements ApplicationNameResolver {
+  final Completer<void> started = Completer<void>();
+  final Completer<String?> result = Completer<String?>();
+
+  @override
+  Future<String?> resolve(String applicationId) {
+    started.complete();
+    return result.future;
+  }
+}
+
+class _CurrencyGateway implements FireflyCurrencyGateway {
+  const _CurrencyGateway();
+
+  @override
+  Future<List<FireflyCurrency>> search(String query) async =>
+      const <FireflyCurrency>[
+        FireflyCurrency(
+          id: 'cad',
+          name: 'Canadian Dollar',
+          code: 'CAD',
+          symbol: r'$',
+        ),
+      ];
+}
 
 class InMemoryAlertStore implements NotificationAlertStore {
   InMemoryAlertStore([this.alerts = const <NotificationAlert>[]]);
@@ -128,6 +186,10 @@ void main() {
         name: 'Example Bank',
         extractors: <RegExpDefinition>[],
         rules: <NotificationRule>[],
+        requiresMigrationReview: true,
+        migrationReviewIssues: <NotificationMigrationIssue>{
+          NotificationMigrationIssue.missingAutomaticAccount,
+        },
       );
       final NotificationAlert migrationAlert = NotificationAlert.failure(
         kind: NotificationAlertKind.migrationNeedsReview,
@@ -157,6 +219,131 @@ void main() {
       ]);
     },
   );
+
+  test('refreshes a missing installed application name on load', () async {
+    const NotificationDefinition definition = NotificationDefinition(
+      id: 'bank',
+      applicationId: 'com.example.bank',
+      name: 'com.example.bank',
+      extractors: <RegExpDefinition>[],
+      rules: <NotificationRule>[],
+      requiresMigrationReview: true,
+      migrationReviewIssues: <NotificationMigrationIssue>{
+        NotificationMigrationIssue.missingApplicationName,
+      },
+    );
+    final InMemoryDefinitionStore store = InMemoryDefinitionStore(
+      <NotificationDefinition>[definition],
+    );
+    final InMemoryAlertStore alerts = InMemoryAlertStore(<NotificationAlert>[
+      NotificationAlert.failure(
+        kind: NotificationAlertKind.migrationNeedsReview,
+        operation: 'Reviewing imported notification settings',
+        message: 'Choose an application.',
+        applicationId: definition.applicationId,
+        definitionId: definition.id,
+        migrationIssue: NotificationMigrationIssue.missingApplicationName,
+      ),
+    ]);
+    final NotificationDefinitionsViewModel controller = definitionsViewModel(
+      store,
+      alertStore: alerts,
+      applicationNameResolver: const _ApplicationNameResolver('Example Bank'),
+    );
+
+    await controller.load();
+
+    expect(controller.definitions.single.name, 'Example Bank');
+    expect(controller.definitions.single.requiresMigrationReview, isFalse);
+    expect(controller.definitions.single.migrationReviewIssues, isEmpty);
+    expect(store.definitions.single.name, 'Example Bank');
+    expect(alerts.alerts, isEmpty);
+  });
+
+  test(
+    'merges a delayed application name into a completed migration',
+    () async {
+      const NotificationDefinition definition = NotificationDefinition(
+        id: 'legacy:com.example.bank',
+        applicationId: 'com.example.bank',
+        name: 'com.example.bank',
+        extractors: <RegExpDefinition>[],
+        rules: <NotificationRule>[],
+        requiresMigrationReview: true,
+        migrationReviewIssues: <NotificationMigrationIssue>{
+          NotificationMigrationIssue.missingApplicationName,
+          NotificationMigrationIssue.missingSettings,
+        },
+      );
+      final InMemoryDefinitionStore store = InMemoryDefinitionStore(
+        <NotificationDefinition>[definition],
+      );
+      final InMemoryAlertStore alerts = InMemoryAlertStore();
+      final _DelayedApplicationNameResolver resolver =
+          _DelayedApplicationNameResolver();
+      final NotificationDefinitionsViewModel controller = definitionsViewModel(
+        store,
+        alertStore: alerts,
+        applicationNameResolver: resolver,
+      );
+
+      final Future<void> load = controller.load();
+      await resolver.started.future;
+      await PendingNotificationMigrationCompletionService(
+        definitionStore: store,
+        alertStore: alerts,
+        currencyResolver: const FireflyCurrencyResolver(_CurrencyGateway()),
+      ).complete(
+        NotificationContext(
+          applicationId: definition.applicationId,
+          title: 'Card payment',
+          body: 'Paid 12.50 CAD',
+          receivedAt: DateTime(2026, 11, 16, 12, 30),
+        ),
+      );
+      resolver.result.complete('Example Bank');
+      await load;
+
+      expect(store.definitions.single.name, 'Example Bank');
+      expect(store.definitions.single.sampleBody, 'Paid 12.50 CAD');
+      expect(store.definitions.single.migrationReviewIssues, isEmpty);
+      expect(store.definitions.single.requiresMigrationReview, isFalse);
+      expect(
+        store.definitions.single.status,
+        NotificationDefinitionStatus.ready,
+      );
+    },
+  );
+
+  test('dismisses stale migration alerts while loading', () async {
+    const NotificationDefinition definition = NotificationDefinition(
+      id: 'bank',
+      applicationId: 'com.example.bank',
+      name: 'Example Bank',
+      extractors: <RegExpDefinition>[],
+      rules: <NotificationRule>[],
+    );
+    final NotificationAlert staleAlert = NotificationAlert.failure(
+      kind: NotificationAlertKind.migrationNeedsReview,
+      operation: 'Reviewing imported notification settings',
+      message: 'Enter a sample.',
+      applicationId: definition.applicationId,
+      definitionId: definition.id,
+      migrationIssue: NotificationMigrationIssue.sampleMissing,
+    );
+    final InMemoryAlertStore alerts = InMemoryAlertStore(<NotificationAlert>[
+      staleAlert,
+    ]);
+    final NotificationDefinitionsViewModel controller = definitionsViewModel(
+      InMemoryDefinitionStore(<NotificationDefinition>[definition]),
+      alertStore: alerts,
+    );
+
+    await controller.load();
+
+    expect(controller.migrationAlerts, isEmpty);
+    expect(alerts.alerts, isEmpty);
+  });
 
   test('clears a currency migration alert after mapping it', () async {
     const NotificationDefinition definition = NotificationDefinition(
@@ -249,6 +436,63 @@ void main() {
     );
 
     expect(alerts.alerts, isEmpty);
+  });
+
+  test('clears reviewed migration alerts after an explicit save', () async {
+    const NotificationDefinition definition = NotificationDefinition(
+      id: 'bank',
+      applicationId: 'com.example.bank',
+      name: 'Example Bank',
+      extractors: <RegExpDefinition>[],
+      rules: <NotificationRule>[],
+      requiresMigrationReview: true,
+      migrationReviewIssues: <NotificationMigrationIssue>{
+        NotificationMigrationIssue.sampleMissing,
+        NotificationMigrationIssue.missingSettings,
+      },
+    );
+    final NotificationAlert failure = NotificationAlert.failure(
+      kind: NotificationAlertKind.migrationFailed,
+      operation: 'Migrating notification settings',
+      message: 'Migration failed.',
+      applicationId: definition.applicationId,
+      definitionId: definition.id,
+    );
+    final InMemoryDefinitionStore store = InMemoryDefinitionStore(
+      <NotificationDefinition>[definition],
+    );
+    final InMemoryAlertStore alerts = InMemoryAlertStore(<NotificationAlert>[
+      NotificationAlert.failure(
+        kind: NotificationAlertKind.migrationNeedsReview,
+        operation: 'Reviewing imported notification settings',
+        message: 'Enter a sample.',
+        applicationId: definition.applicationId,
+        definitionId: definition.id,
+        migrationIssue: NotificationMigrationIssue.sampleMissing,
+      ),
+      NotificationAlert.failure(
+        kind: NotificationAlertKind.migrationNeedsReview,
+        operation: 'Reviewing imported notification settings',
+        message: 'Create a setup.',
+        applicationId: definition.applicationId,
+        definitionId: definition.id,
+        migrationIssue: NotificationMigrationIssue.missingSettings,
+      ),
+      failure,
+    ]);
+    final NotificationDefinitionsViewModel controller = definitionsViewModel(
+      store,
+      alertStore: alerts,
+    )..definitions = store.definitions;
+
+    await controller.update(
+      definition.copyWith(
+        requiresMigrationReview: false,
+        migrationReviewIssues: const <NotificationMigrationIssue>{},
+      ),
+    );
+
+    expect(alerts.alerts, <NotificationAlert>[failure]);
   });
 
   test(

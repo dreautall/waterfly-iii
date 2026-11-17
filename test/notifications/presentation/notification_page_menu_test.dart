@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
@@ -59,6 +61,21 @@ class _SettingsStore implements NotificationProcessingSettingsStore {
   Future<void> save(NotificationProcessingSettings settings) async {}
   @override
   Future<void> reset() async {}
+}
+
+class _DelayedDefinitionStore extends InMemoryNotificationDefinitionStore {
+  _DelayedDefinitionStore(super.definitions);
+
+  final Completer<List<NotificationDefinition>> firstLoad =
+      Completer<List<NotificationDefinition>>();
+  bool _hasLoaded = false;
+
+  @override
+  Future<List<NotificationDefinition>> load() {
+    if (_hasLoaded) return super.load();
+    _hasLoaded = true;
+    return firstLoad.future;
+  }
 }
 
 void main() {
@@ -288,6 +305,175 @@ void main() {
     await tester.pump();
 
     expect(find.text('1'), findsOneWidget);
+  });
+
+  testWidgets('refreshes the alert badge after a definition editor closes', (
+    WidgetTester tester,
+  ) async {
+    const NotificationDefinition definition = NotificationDefinition(
+      id: 'bank',
+      applicationId: 'com.example.bank',
+      name: 'Example Bank',
+      extractors: <RegExpDefinition>[],
+      rules: <NotificationRule>[],
+      requiresMigrationReview: true,
+      migrationReviewIssues: <NotificationMigrationIssue>{
+        NotificationMigrationIssue.missingSettings,
+      },
+    );
+    final NotificationAlert alert = NotificationAlert.failure(
+      kind: NotificationAlertKind.migrationNeedsReview,
+      operation: 'Review migration',
+      message: 'Complete the imported setup.',
+      applicationId: definition.applicationId,
+      definitionId: definition.id,
+      migrationIssue: NotificationMigrationIssue.missingSettings,
+    );
+    final InMemoryNotificationDefinitionStore definitions =
+        InMemoryNotificationDefinitionStore(<NotificationDefinition>[
+          definition,
+        ]);
+    final InMemoryNotificationAlertStore alerts =
+        InMemoryNotificationAlertStore(<NotificationAlert>[alert]);
+    final _HistoryStore history = _HistoryStore(<NotificationHistoryEntry>[]);
+    final InMemoryNotificationListenerHealthStore health =
+        InMemoryNotificationListenerHealthStore();
+    final NotificationRuleOperations rules = NotificationRuleOperations(
+      definitions,
+    );
+    final NotificationAlertsViewModel alertsViewModel =
+        NotificationAlertsViewModel(alerts);
+    final NotificationFeatureScope scope = NotificationFeatureScope(
+      definitionStore: definitions,
+      alertStore: alerts,
+      historyStore: history,
+      settingsStore: _SettingsStore(),
+      definitionsViewModel: NotificationDefinitionsViewModel(
+        definitions,
+        SaveNotificationDefinition(definitions, alertStore: alerts),
+        alertStore: alerts,
+      ),
+      recentNotificationsViewModel: RecentNotificationsViewModel(
+        RecentNotificationHistory(definitions, alerts, historyStore: history),
+      ),
+      alertsViewModel: alertsViewModel,
+      healthViewModel: NotificationListenerHealthViewModel(
+        store: health,
+        service: NotificationListenerHealthService(
+          store: health,
+          definitionStore: definitions,
+        ),
+      ),
+      ruleOperations: rules,
+      listenerStatusLoader: const UnavailableNotificationListenerStatusLoader(),
+      accessSettingsLauncher:
+          const UnavailableNotificationAccessSettingsLauncher(),
+    );
+
+    await tester.pumpWidget(
+      Provider<NotificationFeatureScope>.value(
+        value: scope,
+        child: const MaterialApp(
+          localizationsDelegates: S.localizationsDelegates,
+          supportedLocales: S.supportedLocales,
+          home: NotificationDefinitionsPage(showAppBar: true),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('1'), findsOneWidget);
+
+    await tester.drag(find.byType(CustomScrollView), const Offset(0, -300));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Example Bank'));
+    await tester.pumpAndSettle();
+    expect(find.byType(NotificationDefinitionDetailsPage), findsOneWidget);
+
+    await alerts.dismiss(alert.fingerprint);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+
+    expect(alertsViewModel.visibleAlerts, isEmpty);
+    expect(find.text('1'), findsNothing);
+  });
+
+  testWidgets('refreshes the alert badge after foreground reconciliation', (
+    WidgetTester tester,
+  ) async {
+    const NotificationDefinition definition = NotificationDefinition(
+      id: 'bank',
+      applicationId: 'com.example.bank',
+      name: 'Example Bank',
+      extractors: <RegExpDefinition>[],
+      rules: <NotificationRule>[],
+    );
+    final NotificationAlert staleAlert = NotificationAlert.failure(
+      kind: NotificationAlertKind.migrationNeedsReview,
+      operation: 'Review migration',
+      message: 'Enter a sample notification.',
+      applicationId: definition.applicationId,
+      definitionId: definition.id,
+      migrationIssue: NotificationMigrationIssue.sampleMissing,
+    );
+    final _DelayedDefinitionStore definitions = _DelayedDefinitionStore(
+      <NotificationDefinition>[definition],
+    );
+    final InMemoryNotificationAlertStore alerts =
+        InMemoryNotificationAlertStore(<NotificationAlert>[staleAlert]);
+    final _HistoryStore history = _HistoryStore(<NotificationHistoryEntry>[]);
+    final InMemoryNotificationListenerHealthStore health =
+        InMemoryNotificationListenerHealthStore();
+    final NotificationRuleOperations rules = NotificationRuleOperations(
+      definitions,
+    );
+    final NotificationAlertsViewModel alertsViewModel =
+        NotificationAlertsViewModel(alerts);
+    final NotificationFeatureScope scope = NotificationFeatureScope(
+      definitionStore: definitions,
+      alertStore: alerts,
+      historyStore: history,
+      settingsStore: _SettingsStore(),
+      definitionsViewModel: NotificationDefinitionsViewModel(
+        definitions,
+        SaveNotificationDefinition(definitions, alertStore: alerts),
+        alertStore: alerts,
+      ),
+      recentNotificationsViewModel: RecentNotificationsViewModel(
+        RecentNotificationHistory(definitions, alerts, historyStore: history),
+      ),
+      alertsViewModel: alertsViewModel,
+      healthViewModel: NotificationListenerHealthViewModel(
+        store: health,
+        service: NotificationListenerHealthService(
+          store: health,
+          definitionStore: definitions,
+        ),
+      ),
+      ruleOperations: rules,
+      listenerStatusLoader: const UnavailableNotificationListenerStatusLoader(),
+      accessSettingsLauncher:
+          const UnavailableNotificationAccessSettingsLauncher(),
+    );
+
+    await tester.pumpWidget(
+      Provider<NotificationFeatureScope>.value(
+        value: scope,
+        child: const MaterialApp(
+          localizationsDelegates: S.localizationsDelegates,
+          supportedLocales: S.supportedLocales,
+          home: NotificationDefinitionsPage(showAppBar: true),
+        ),
+      ),
+    );
+    await tester.pump();
+    expect(find.text('1'), findsOneWidget);
+
+    definitions.firstLoad.complete(<NotificationDefinition>[definition]);
+    await tester.pumpAndSettle();
+
+    expect(alerts.alerts, isEmpty);
+    expect(alertsViewModel.visibleAlerts, isEmpty);
+    expect(find.text('1'), findsNothing);
   });
 
   testWidgets('notifies the parent after the alerts page closes', (

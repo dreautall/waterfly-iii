@@ -5,7 +5,7 @@ import 'package:waterflyiii/data/database/database_provider.dart';
 import 'package:waterflyiii/notifications/data/repositories/notification_definition_storage.dart';
 
 class SqlcipherNotificationDefinitionStorage
-    implements NotificationDefinitionStorage {
+    implements AtomicNotificationDefinitionStorage {
   static const String _initializedKey = 'definitions_initialized';
 
   const SqlcipherNotificationDefinitionStorage(this._databaseProvider);
@@ -65,11 +65,29 @@ class SqlcipherNotificationDefinitionStorage
           initializedByCaller: false,
         );
       }
+
       await _write(transaction, data);
       return NotificationDefinitionInitializationResult(
         data: data,
         initializedByCaller: true,
       );
+    });
+  }
+
+  @override
+  Future<T> mutate<T>(
+    NotificationDefinitionStorageMutation<T> Function(Map<String, dynamic> data)
+    mutation,
+  ) async {
+    final Database database = await _databaseProvider.database;
+    return database.transaction((Transaction transaction) async {
+      final Map<String, dynamic>? data = await _read(transaction);
+      if (data == null) {
+        throw StateError('Notification definition storage is uninitialized.');
+      }
+      final NotificationDefinitionStorageMutation<T> result = mutation(data);
+      if (result.changed) await _write(transaction, data);
+      return result.value;
     });
   }
 

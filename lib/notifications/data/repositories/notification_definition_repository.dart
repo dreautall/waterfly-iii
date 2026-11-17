@@ -13,7 +13,8 @@ import 'package:waterflyiii/notifications/data/migrations/shared_preferences_leg
 import 'package:waterflyiii/notifications/application/resources/firefly_currency_resolver.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 
-class NotificationDefinitionRepository implements NotificationDefinitionStore {
+class NotificationDefinitionRepository
+    implements AtomicNotificationDefinitionStore {
   const NotificationDefinitionRepository(this._storage, {this.migrator});
 
   factory NotificationDefinitionRepository.encryptedDatabase(
@@ -129,6 +130,39 @@ class NotificationDefinitionRepository implements NotificationDefinitionStore {
   @override
   Future<void> save(List<NotificationDefinition> definitions) {
     return _storage.write(_definitionsData(definitions));
+  }
+
+  @override
+  Future<T> mutate<T>(
+    NotificationDefinitionMutation<T> Function(
+      List<NotificationDefinition> definitions,
+    )
+    mutation,
+  ) async {
+    if (await _storage.read() == null) await load();
+    final NotificationDefinitionStorage storage = _storage;
+    if (storage is AtomicNotificationDefinitionStorage) {
+      return storage.mutate((Map<String, dynamic> data) {
+        final List<NotificationDefinition> definitions = _definitionsFromData(
+          data,
+        );
+        final NotificationDefinitionMutation<T> result = mutation(definitions);
+        if (result.changed) {
+          data
+            ..clear()
+            ..addAll(_definitionsData(definitions));
+        }
+        return result.changed
+            ? NotificationDefinitionStorageMutation<T>.changed(result.value)
+            : NotificationDefinitionStorageMutation<T>.unchanged(result.value);
+      });
+    }
+
+    final List<NotificationDefinition> definitions =
+        List<NotificationDefinition>.of(await load());
+    final NotificationDefinitionMutation<T> result = mutation(definitions);
+    if (result.changed) await save(definitions);
+    return result.value;
   }
 
   Map<String, dynamic> _definitionsData(

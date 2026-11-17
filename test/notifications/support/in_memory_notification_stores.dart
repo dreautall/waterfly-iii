@@ -6,7 +6,7 @@ import 'package:waterflyiii/notifications/domain/definitions/notification_defini
 import 'package:waterflyiii/notifications/domain/listeners/notification_listener_health_issue.dart';
 
 class InMemoryNotificationDefinitionStore
-    implements NotificationDefinitionStore {
+    implements AtomicNotificationDefinitionStore {
   InMemoryNotificationDefinitionStore([
     List<NotificationDefinition>? definitions,
   ]) : definitions = definitions ?? <NotificationDefinition>[];
@@ -19,6 +19,20 @@ class InMemoryNotificationDefinitionStore
   @override
   Future<void> save(List<NotificationDefinition> definitions) async {
     this.definitions = definitions;
+  }
+
+  @override
+  Future<T> mutate<T>(
+    NotificationDefinitionMutation<T> Function(
+      List<NotificationDefinition> definitions,
+    )
+    mutation,
+  ) async {
+    final List<NotificationDefinition> current =
+        List<NotificationDefinition>.of(definitions);
+    final NotificationDefinitionMutation<T> result = mutation(current);
+    if (result.changed) definitions = current;
+    return result.value;
   }
 }
 

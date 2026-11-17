@@ -1798,6 +1798,14 @@ class SId extends S {
       'Migration review details could not be loaded.';
 
   @override
+  String get notificationsDefinitionsAutomaticMigrationTitle =>
+      'Waiting for a notification';
+
+  @override
+  String get notificationsDefinitionsAutomaticMigrationMessage =>
+      'When the next notification arrives from an unfinished imported application, Waterfly will use its title and text as a sample to complete the setup automatically. The sample will be stored on this device and can be changed or removed later. You can also finish the setup manually now.';
+
+  @override
   String get notificationsDefinitionsRegisteredApplications =>
       'Registered applications';
 

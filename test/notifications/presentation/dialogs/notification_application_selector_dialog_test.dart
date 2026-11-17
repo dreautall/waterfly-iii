@@ -82,6 +82,32 @@ void main() {
     );
   });
 
+  testWidgets('recovery also starts with suggested applications', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: Scaffold(
+          body: NotificationApplicationSelectorDialog(
+            mode: NotificationApplicationSelectionMode.recover,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const ValueKey<String>('applications-loaded-suggested')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey<String>('applications-loaded-all')),
+      findsNothing,
+    );
+  });
+
   testWidgets('shows contextual application empty states', (
     WidgetTester tester,
   ) async {

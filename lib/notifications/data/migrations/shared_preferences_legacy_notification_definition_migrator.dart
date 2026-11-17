@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_alert_store.dart';
 import 'package:waterflyiii/notifications/application/resources/firefly_currency_resolver.dart';
 import 'package:waterflyiii/notifications/application/resources/application_name_resolver.dart';
+import 'package:waterflyiii/notifications/application/migrations/legacy_notification_currency_mapper.dart';
 import 'package:waterflyiii/notifications/data/migrations/legacy_notification_definition_migrator.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
@@ -35,7 +36,7 @@ class SharedPreferencesLegacyNotificationDefinitionMigrator
            legacyPreferences ??
            const SharedPreferencesNotificationMigrationPreferences(),
        _definitionMigrator =
-           definitionMigrator ?? LegacyNotificationDefinitionMigrator(),
+           definitionMigrator ?? const LegacyNotificationDefinitionMigrator(),
        _currencyResolver = currencyResolver,
        _applicationNameResolver = applicationNameResolver,
        _alertStore = alertStore;

@@ -2904,6 +2904,18 @@ abstract class S {
   /// **'Migration review details could not be loaded.'**
   String get notificationsDefinitionsMigrationAlertsLoadFailure;
 
+  /// Title for guidance shown while an imported notification setup is waiting for its first sample.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for a notification'**
+  String get notificationsDefinitionsAutomaticMigrationTitle;
+
+  /// Privacy guidance for automatic completion of imported notification setups using the first received notification.
+  ///
+  /// In en, this message translates to:
+  /// **'When the next notification arrives from an unfinished imported application, Waterfly will use its title and text as a sample to complete the setup automatically. The sample will be stored on this device and can be changed or removed later. You can also finish the setup manually now.'**
+  String get notificationsDefinitionsAutomaticMigrationMessage;
+
   /// Heading for notification application registrations.
   ///
   /// In en, this message translates to:

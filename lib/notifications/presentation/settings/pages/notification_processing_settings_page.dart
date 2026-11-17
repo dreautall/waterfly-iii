@@ -13,6 +13,7 @@ import 'package:waterflyiii/notifications/application/settings/notification_proc
 import 'package:waterflyiii/notifications/application/stores/notification_alert_store.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_definition_store.dart';
 import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
+import 'package:waterflyiii/notifications/debug/notification_debug_tools.dart';
 import 'package:waterflyiii/notifications/presentation/settings/controllers/notification_processing_settings_view_model.dart';
 import 'package:waterflyiii/notifications/presentation/shared/message_status_card.dart';
 import 'package:waterflyiii/notifications/presentation/shared/notification_dialog.dart';
@@ -31,6 +32,7 @@ class NotificationProcessingSettingsPage extends StatefulWidget {
     this.accessSettingsLauncher =
         const UnavailableNotificationAccessSettingsLauncher(),
     this.backupFileGateway = const UnavailableNotificationBackupFileGateway(),
+    this.debugTools,
   });
 
   final NotificationDefinitionStore definitionStore;
@@ -39,6 +41,7 @@ class NotificationProcessingSettingsPage extends StatefulWidget {
   final NotificationProcessingSettingsStore settingsStore;
   final NotificationAccessSettingsLauncher accessSettingsLauncher;
   final NotificationBackupFileGateway backupFileGateway;
+  final NotificationDebugTools? debugTools;
 
   @override
   State<NotificationProcessingSettingsPage> createState() =>
@@ -271,10 +274,38 @@ class _NotificationProcessingSettingsPageState
                 ),
               ],
             ),
+            if (widget.debugTools != null) ...<Widget>[
+              const SizedBox(height: 24),
+              NotificationSettingsSection(
+                title: 'Debug testing',
+                description:
+                    'Seed migration states and deliver synthetic notifications on this debug installation.',
+                children: <Widget>[
+                  NotificationSettingsActionCard(
+                    icon: Icons.science_outlined,
+                    title: 'Notification migration test lab',
+                    subtitle:
+                        'Debug builds only. Seeded data is stored in the separate debug app.',
+                    onTap: _viewModel.isBusy ? null : _openDebugTestLab,
+                  ),
+                ],
+              ),
+            ],
           ],
         ),
       ],
     );
+  }
+
+  Future<void> _openDebugTestLab() async {
+    final NotificationDebugTools? debugTools = widget.debugTools;
+    if (debugTools == null) return;
+    await Navigator.of(context).push<void>(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => debugTools.buildTestLabPage(),
+      ),
+    );
+    await _viewModel.load();
   }
 
   Future<void> _createBackup() async {

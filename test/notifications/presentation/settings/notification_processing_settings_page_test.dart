@@ -12,6 +12,7 @@ import 'package:waterflyiii/notifications/domain/definitions/notification_defini
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/history/notification_history_entry.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
+import 'package:waterflyiii/notifications/debug/notification_debug_tools.dart';
 import 'package:waterflyiii/notifications/presentation/settings/pages/notification_processing_settings_page.dart';
 
 import '../../support/in_memory_notification_stores.dart';
@@ -99,6 +100,12 @@ class _BackupFileGateway implements NotificationBackupFileGateway {
     required String suggestedName,
     required Uint8List bytes,
   }) async => true;
+}
+
+class _DebugTools implements NotificationDebugTools {
+  @override
+  Widget buildTestLabPage() =>
+      const Scaffold(body: Text('Debug test lab page'));
 }
 
 void main() {
@@ -192,6 +199,35 @@ void main() {
         findsNothing,
       );
     }
+  });
+
+  testWidgets('shows and opens injected debug tools', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        home: NotificationProcessingSettingsPage(
+          definitionStore: InMemoryNotificationDefinitionStore(),
+          historyStore: _HistoryStore(),
+          alertStore: InMemoryNotificationAlertStore(),
+          settingsStore: _SettingsStore(),
+          debugTools: _DebugTools(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.drag(find.byType(ListView), const Offset(0, -600));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Notification migration test lab'), findsOneWidget);
+    await tester.ensureVisible(find.text('Notification migration test lab'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Notification migration test lab'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Debug test lab page'), findsOneWidget);
   });
 
   testWidgets('enables actions when their data exists', (

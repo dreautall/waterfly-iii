@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter/foundation.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:logging/logging.dart';
 import 'package:material_ui/material_ui.dart';
@@ -16,6 +17,7 @@ import 'package:waterflyiii/generated/swagger_fireflyiii_api/firefly_iii.swagger
 import 'package:waterflyiii/notifications/application/listeners/notification_listener_health_service.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_listener_orchestrator.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_listener_status.dart';
+import 'package:waterflyiii/notifications/application/migrations/pending_notification_migration_completion_service.dart';
 import 'package:waterflyiii/notifications/application/processing/automatic_currency_safety_validator.dart';
 import 'package:waterflyiii/notifications/application/processing/notification_definition_processor.dart';
 import 'package:waterflyiii/notifications/application/processing/dynamic_currency_patch_resolver.dart';
@@ -129,6 +131,23 @@ Future<NotificationListenerStatus> nlStatus() async {
   }
 }
 
+Future<void> processDebugNotification(NotificationContext notification) {
+  if (!kDebugMode) {
+    throw StateError('Synthetic notifications require a debug build.');
+  }
+  if (_isIncompleteNotification(notification)) {
+    log.finer(
+      () =>
+          'processDebugNotification(${notification.applicationId}): ignored incomplete notification',
+    );
+    return Future<void>.value();
+  }
+  return _notificationListenerOrchestrator().process(notification);
+}
+
+bool _isIncompleteNotification(NotificationContext notification) =>
+    notification.title.trim().isEmpty || notification.body.trim().isEmpty;
+
 @pragma('vm:entry-point')
 void nlCallback() {
   if (!Platform.isAndroid) {
@@ -161,7 +180,7 @@ void nlCallback() {
       body: evt.text ?? '',
       receivedAt: DateTime.tryParse(evt.postTime ?? '') ?? DateTime.now(),
     );
-    if (notification.title.trim().isEmpty || notification.body.trim().isEmpty) {
+    if (_isIncompleteNotification(notification)) {
       log.finer(
         () =>
             'nlCallback(${notification.applicationId}): ignored incomplete notification',
@@ -373,12 +392,16 @@ Future<NotificationDefinitionProcessingResult> _processNotificationDefinitions(
   await initializeDateFormatting(formattingPreferences.locale);
   final SqlcipherNotificationAlertStore alertStore =
       SqlcipherNotificationAlertStore(_notificationDatabase);
+  final FireflyCurrencyResolver currencyResolver = FireflyCurrencyResolver(
+    ApiFireflyCurrencyGateway(FireflyService()),
+  );
   final NotificationDefinitionRepository repository =
       NotificationDefinitionRepository.encryptedDatabase(
         _notificationDatabase,
         alertStore: alertStore,
+        currencyResolver: currencyResolver,
       );
-  final List<NotificationDefinition> registeredDefinitions;
+  List<NotificationDefinition> registeredDefinitions;
   try {
     registeredDefinitions = (await repository.load())
         .where(
@@ -411,6 +434,24 @@ Future<NotificationDefinitionProcessingResult> _processNotificationDefinitions(
   }
 
   try {
+    final PendingNotificationMigrationCompletionResult completion =
+        await PendingNotificationMigrationCompletionService(
+          definitionStore: repository,
+          alertStore: alertStore,
+          currencyResolver: currencyResolver,
+        ).complete(notification);
+    if (completion.definition case final NotificationDefinition updated) {
+      registeredDefinitions = registeredDefinitions
+          .map(
+            (NotificationDefinition definition) =>
+                definition.id == updated.id ? updated : definition,
+          )
+          .toList(growable: false);
+      log.fine(
+        () =>
+            'nlCallback(${notification.applicationId}): completed pending migration for ${updated.id}',
+      );
+    }
     final List<ProcessedNotificationDefinition> definitions =
         await NotificationDefinitionProcessor(
           repository,

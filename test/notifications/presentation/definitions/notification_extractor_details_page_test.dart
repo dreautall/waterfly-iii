@@ -23,6 +23,7 @@ Widget extractorPage(
   String sampleBody = 'Paid 12.50 CAD',
   bool alwaysUse24HourFormat = false,
   bool? canEdit,
+  bool? canEditInput,
   bool? canDelete,
   Future<bool> Function(RegExpDefinition extractor)? onSave,
   Future<List<NotificationSample>> Function()? recentSamplesLoader,
@@ -40,6 +41,7 @@ Widget extractorPage(
       sampleReceivedAt: sampleReceivedAt ?? DateTime(2026, 9, 6, 14, 58),
       isAdvancedMode: isAdvancedMode,
       canEdit: canEdit ?? isAdvancedMode,
+      canEditInput: canEditInput ?? isAdvancedMode,
       canDelete: canDelete ?? isAdvancedMode,
       onSave: onSave,
       recentSamplesLoader: recentSamplesLoader,
@@ -48,6 +50,40 @@ Widget extractorPage(
 );
 
 void main() {
+  testWidgets('lets Basic mode select the extractor input', (
+    WidgetTester tester,
+  ) async {
+    RegExpDefinition? savedExtractor;
+    await tester.pumpWidget(
+      extractorPage(
+        RegExpDefinition.createPredefinedRegExpDefinition(
+          PredefinedRegExpDefinition.amount,
+        ),
+        isAdvancedMode: false,
+        canEdit: false,
+        canEditInput: true,
+        onSave: (RegExpDefinition extractor) async {
+          savedExtractor = extractor;
+          return true;
+        },
+      ),
+    );
+
+    final DropdownMenu<NotificationExtractorInput> menu = tester.widget(
+      find.byKey(const Key('extractor-input-source')),
+    );
+    expect(menu.initialSelection, NotificationExtractorInput.body);
+    await tester.tap(find.byKey(const Key('extractor-input-source')));
+    await tester.pumpAndSettle();
+    expect(find.text('Notification title'), findsOneWidget);
+    await tester.tap(find.text('Notification title'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+
+    expect(savedExtractor?.input, NotificationExtractorInput.title);
+  });
+
   testWidgets('shows a direct edit action when it is the only option', (
     WidgetTester tester,
   ) async {

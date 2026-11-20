@@ -35,6 +35,7 @@ class NotificationExtractorDetailsPage extends StatefulWidget {
     this.definitionSample,
     required this.isAdvancedMode,
     required this.canEdit,
+    this.canEditInput = false,
     required this.canDelete,
     this.onSave,
     this.recentSamplesLoader,
@@ -49,6 +50,7 @@ class NotificationExtractorDetailsPage extends StatefulWidget {
   final NotificationSample? definitionSample;
   final bool isAdvancedMode;
   final bool canEdit;
+  final bool canEditInput;
   final bool canDelete;
   final Future<bool> Function(RegExpDefinition extractor)? onSave;
   final Future<List<NotificationSample>> Function()? recentSamplesLoader;
@@ -182,9 +184,11 @@ class _NotificationExtractorDetailsPageState
                   isAdvancedMode: widget.isAdvancedMode,
                   isDirty: _isDirty,
                   canEdit: widget.canEdit,
+                  canEditInput: widget.canEditInput,
                   hasSampleOverride: _viewModel.sampleOverride != null,
                   onEditSample: _editSample,
                   onClearSampleOverride: _viewModel.clearSampleOverride,
+                  onInputChanged: _viewModel.updateInput,
                 ),
               ],
             ),

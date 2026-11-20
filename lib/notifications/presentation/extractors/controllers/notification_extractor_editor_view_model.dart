@@ -55,6 +55,12 @@ class NotificationExtractorEditorViewModel extends ChangeNotifier {
     evaluate();
   }
 
+  void updateInput(NotificationExtractorInput input) {
+    if (isPropertyExtractor || _draft.input == input) return;
+    _draft.input = input;
+    evaluate();
+  }
+
   void clearSampleOverride() {
     _sampleOverride = null;
     evaluate();

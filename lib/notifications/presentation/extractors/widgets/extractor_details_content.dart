@@ -24,9 +24,11 @@ class ExtractorDetailsContent extends StatefulWidget {
     required this.isAdvancedMode,
     required this.isDirty,
     required this.canEdit,
+    required this.canEditInput,
     required this.hasSampleOverride,
     required this.onEditSample,
     required this.onClearSampleOverride,
+    required this.onInputChanged,
   });
 
   final RegExpDefinition extractor;
@@ -38,9 +40,11 @@ class ExtractorDetailsContent extends StatefulWidget {
   final bool isAdvancedMode;
   final bool isDirty;
   final bool canEdit;
+  final bool canEditInput;
   final bool hasSampleOverride;
   final VoidCallback onEditSample;
   final VoidCallback onClearSampleOverride;
+  final ValueChanged<NotificationExtractorInput> onInputChanged;
 
   @override
   State<ExtractorDetailsContent> createState() =>
@@ -131,6 +135,35 @@ class _ExtractorDetailsContentState extends State<ExtractorDetailsContent> {
             sample: _sample,
           )
         else ...<Widget>[
+          Text(
+            S.of(context).notificationsExtractorInputSource,
+            style: context.notificationSectionTitle,
+          ),
+          const SizedBox(height: 8),
+          DropdownMenu<NotificationExtractorInput>(
+            key: const Key('extractor-input-source'),
+            label: Text(S.of(context).notificationsExtractorReadFrom),
+            initialSelection: widget.extractor.input,
+            expandedInsets: EdgeInsets.zero,
+            enabled: widget.canEditInput,
+            dropdownMenuEntries:
+                <DropdownMenuEntry<NotificationExtractorInput>>[
+                  DropdownMenuEntry<NotificationExtractorInput>(
+                    value: NotificationExtractorInput.title,
+                    label: S.of(context).notificationsExtractorInputTitle,
+                  ),
+                  DropdownMenuEntry<NotificationExtractorInput>(
+                    value: NotificationExtractorInput.body,
+                    label: S.of(context).notificationsExtractorInputBody,
+                  ),
+                ],
+            onSelected: (NotificationExtractorInput? selection) {
+              if (selection != null) {
+                widget.onInputChanged(selection);
+              }
+            },
+          ),
+          const SizedBox(height: 24),
           ..._regularExpressionDetails(colors, evaluation),
           if (widget.isDirty) const SizedBox(height: 56),
         ],
@@ -140,9 +173,7 @@ class _ExtractorDetailsContentState extends State<ExtractorDetailsContent> {
 
   Widget _highlightedSampleText(String text, {required bool isTitle}) {
     final RegExpEvaluationResult? evaluation = _evaluation;
-    final NotificationExtractorInput input =
-        widget.extractor.predefinedType?.input ??
-        NotificationExtractorInput.body;
+    final NotificationExtractorInput input = widget.extractor.input;
     final bool matchesInput = isTitle
         ? input == NotificationExtractorInput.title
         : input == NotificationExtractorInput.body;

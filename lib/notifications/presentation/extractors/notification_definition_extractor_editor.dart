@@ -28,6 +28,9 @@ Future<SaveNotificationDefinitionResult?> editNotificationDefinitionExtractor({
             definitionSample: extractor.sampleOverride,
             isAdvancedMode: removable,
             canEdit: removable,
+            canEditInput:
+                definition.extractorMode !=
+                NotificationExtractorMode.notConfigured,
             canDelete: removable,
             recentSamplesLoader: recentSamplesLoader,
             onSave: (RegExpDefinition updated) =>

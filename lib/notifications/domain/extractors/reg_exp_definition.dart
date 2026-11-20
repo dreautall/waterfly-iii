@@ -74,6 +74,7 @@ class RegExpDefinition {
     this.isRequiredForMatch,
     this.predefinedType,
     this.sampleOverride,
+    this.input,
   );
 
   static RegExpDefinition createPredefinedRegExpDefinition(
@@ -81,6 +82,7 @@ class RegExpDefinition {
     String? description,
     bool isRequiredForMatch = false,
     NotificationSample? sampleOverride,
+    NotificationExtractorInput? input,
   }) {
     return RegExpDefinition._(
       _newId(),
@@ -91,6 +93,7 @@ class RegExpDefinition {
       isRequiredForMatch,
       predefinedType,
       sampleOverride,
+      _resolveInput(predefinedType, input ?? predefinedType.input),
     );
   }
 
@@ -100,6 +103,7 @@ class RegExpDefinition {
     String description = '',
     bool isRequiredForMatch = false,
     NotificationSample? sampleOverride,
+    NotificationExtractorInput input = NotificationExtractorInput.body,
   }) {
     return RegExpDefinition._(
       _newId(),
@@ -110,6 +114,7 @@ class RegExpDefinition {
       isRequiredForMatch,
       null,
       sampleOverride,
+      input,
     );
   }
 
@@ -121,6 +126,7 @@ class RegExpDefinition {
   final bool isRequiredForMatch;
   final PredefinedRegExpDefinition? predefinedType;
   final NotificationSample? sampleOverride;
+  final NotificationExtractorInput input;
 
   Set<RegExpSafetyIssue> get safetyIssues => type == RegExpDefinitionType.custom
       ? RegExpSafety.analyze(regExpSource)
@@ -131,6 +137,7 @@ class RegExpDefinition {
     String? description,
     String? source,
     NotificationSample? sampleOverride,
+    NotificationExtractorInput? input,
   }) {
     return RegExpDefinition._(
       id,
@@ -141,6 +148,7 @@ class RegExpDefinition {
       isRequiredForMatch,
       predefinedType,
       sampleOverride ?? this.sampleOverride,
+      _resolveInput(predefinedType, input ?? this.input),
     );
   }
 
@@ -153,6 +161,7 @@ class RegExpDefinition {
     isRequiredForMatch,
     predefinedType,
     null,
+    input,
   );
 
   RegExpEvaluationResult evaluate(NotificationContext context) {
@@ -163,9 +172,9 @@ class RegExpDefinition {
       );
     }
 
-    final String input = _inputFor(context);
+    final String extractorInput = _inputFor(context);
     if (type == RegExpDefinitionType.custom &&
-        input.length > maximumCustomInputLength) {
+        extractorInput.length > maximumCustomInputLength) {
       return const RegExpEvaluationResult(
         hasMatches: false,
         namedCaptures: <String, List<String>>{},
@@ -177,7 +186,7 @@ class RegExpDefinition {
     try {
       final List<RegExpMatch> matches = RegExp(
         regExpSource,
-      ).allMatches(input).toList();
+      ).allMatches(extractorInput).toList();
       return RegExpEvaluationResult(
         hasMatches: matches.isNotEmpty,
         namedCaptures: _namedCaptures(matches),
@@ -195,7 +204,7 @@ class RegExpDefinition {
   }
 
   String _inputFor(NotificationContext context) {
-    return switch (predefinedType?.input ?? NotificationExtractorInput.body) {
+    return switch (input) {
       NotificationExtractorInput.title => context.title,
       NotificationExtractorInput.body => context.body,
       NotificationExtractorInput.receivedAt =>
@@ -252,6 +261,7 @@ class RegExpDefinition {
         ),
         _ => null,
       },
+      _inputFromJson(json, predefinedType),
     );
   }
 
@@ -264,6 +274,7 @@ class RegExpDefinition {
     'isRequiredForMatch': isRequiredForMatch,
     if (predefinedType != null) 'predefinedType': predefinedType!.name,
     if (sampleOverride != null) 'sampleOverride': sampleOverride!.toJson(),
+    'input': input.name,
   };
 
   static PredefinedRegExpDefinition? _predefinedTypeFromJson(
@@ -280,6 +291,30 @@ class RegExpDefinition {
     }
     return PredefinedRegExpDefinition.values.byName(name);
   }
+
+  static NotificationExtractorInput _inputFromJson(
+    Map<String, dynamic> json,
+    PredefinedRegExpDefinition? predefinedType,
+  ) {
+    final String? value = json['input'] as String?;
+    final NotificationExtractorInput persistedInput = value == null
+        ? predefinedType?.input ?? NotificationExtractorInput.body
+        : NotificationExtractorInput.values.byName(value);
+    return _resolveInput(predefinedType, persistedInput);
+  }
+
+  static NotificationExtractorInput _resolveInput(
+    PredefinedRegExpDefinition? predefinedType,
+    NotificationExtractorInput requestedInput,
+  ) => switch (predefinedType) {
+    PredefinedRegExpDefinition.notificationTitle =>
+      NotificationExtractorInput.title,
+    PredefinedRegExpDefinition.notificationMessage =>
+      NotificationExtractorInput.body,
+    PredefinedRegExpDefinition.notificationDate =>
+      NotificationExtractorInput.receivedAt,
+    _ => requestedInput,
+  };
 
   static String _newId() => newNotificationId();
 }

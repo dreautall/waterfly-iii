@@ -5,7 +5,7 @@ import 'package:waterflyiii/notifications/domain/extractors/reg_exp_evaluation_r
 
 void main() {
   group('RegExpDefinition evaluation', () {
-    test('restores predefined extractors with the current preset pattern', () {
+    test('preserves customized predefined extractor patterns', () {
       final RegExpDefinition definition =
           RegExpDefinition.fromJson(<String, dynamic>{
             'id': 'currency',
@@ -15,10 +15,7 @@ void main() {
             'predefinedType': PredefinedRegExpDefinition.currency.name,
           });
 
-      expect(
-        definition.regExpSource,
-        PredefinedRegExpDefinition.currency.source,
-      );
+      expect(definition.regExpSource, r'old currency regex');
     });
 
     test('preserves the legacy predefined amount and currency pattern', () {

@@ -205,6 +205,36 @@ void main() {
       expect(result.capturesFor('amount'), <String>['268.87']);
     });
 
+    test('restores edited predefined extractor patterns', () async {
+      final InMemoryNotificationDefinitionStorage storage =
+          InMemoryNotificationDefinitionStorage();
+      final NotificationDefinitionRepository repository =
+          NotificationDefinitionRepository(storage);
+      final RegExpDefinition amount =
+          RegExpDefinition.createPredefinedRegExpDefinition(
+            PredefinedRegExpDefinition.amount,
+          ).copyWith(source: r'Paid (?<amount>\d+\.\d{2})');
+      final NotificationDefinition definition = NotificationDefinition(
+        id: 'bank-payments',
+        applicationId: 'com.example.bank',
+        name: 'Example Bank payments',
+        extractors: <RegExpDefinition>[amount],
+        rules: <NotificationRule>[],
+      );
+
+      await repository.save(<NotificationDefinition>[definition]);
+      final List<NotificationDefinition> definitions = await repository.load();
+
+      expect(
+        definitions.single.extractors.single.regExpSource,
+        amount.regExpSource,
+      );
+      expect(
+        definitions.single.extractors.single.predefinedType,
+        PredefinedRegExpDefinition.amount,
+      );
+    });
+
     test('removes persisted display names from resource references', () async {
       final InMemoryNotificationDefinitionStorage storage =
           InMemoryNotificationDefinitionStorage();

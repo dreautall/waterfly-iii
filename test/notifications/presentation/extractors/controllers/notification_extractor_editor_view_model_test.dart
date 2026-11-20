@@ -40,6 +40,29 @@ void main() {
     );
   });
 
+  test('saves advanced edits to a predefined extractor pattern', () {
+    final RegExpDefinition extractor =
+        RegExpDefinition.createPredefinedRegExpDefinition(
+          PredefinedRegExpDefinition.amount,
+        );
+    final NotificationExtractorEditorViewModel viewModel =
+        NotificationExtractorEditorViewModel(
+          extractor: extractor,
+          notificationContext: context,
+          isAdvancedMode: true,
+        );
+
+    viewModel.update(
+      name: extractor.definitionName,
+      source: r'Paid (?<amount>\d+\.\d{2}) CAD',
+    );
+
+    final RegExpDefinition saved = viewModel.save()!;
+    expect(saved.regExpSource, r'Paid (?<amount>\d+\.\d{2}) CAD');
+    expect(saved.predefinedType, PredefinedRegExpDefinition.amount);
+    expect(viewModel.evaluation?.capturesFor('amount'), <String>['12.50']);
+  });
+
   test('evaluates against an updated notification context', () {
     final NotificationExtractorEditorViewModel viewModel =
         NotificationExtractorEditorViewModel(

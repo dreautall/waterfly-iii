@@ -128,7 +128,11 @@ class RegExpDefinition {
   final NotificationSample? sampleOverride;
   final NotificationExtractorInput input;
 
-  Set<RegExpSafetyIssue> get safetyIssues => type == RegExpDefinitionType.custom
+  bool get hasUserDefinedPattern =>
+      type == RegExpDefinitionType.custom ||
+      (predefinedType != null && regExpSource != predefinedType!.source);
+
+  Set<RegExpSafetyIssue> get safetyIssues => hasUserDefinedPattern
       ? RegExpSafety.analyze(regExpSource)
       : const <RegExpSafetyIssue>{};
 
@@ -173,7 +177,7 @@ class RegExpDefinition {
     }
 
     final String extractorInput = _inputFor(context);
-    if (type == RegExpDefinitionType.custom &&
+    if (hasUserDefinedPattern &&
         extractorInput.length > maximumCustomInputLength) {
       return const RegExpEvaluationResult(
         hasMatches: false,
@@ -251,7 +255,7 @@ class RegExpDefinition {
       json['description'] as String? ??
           predefinedType?.defaultDescription ??
           '',
-      predefinedType?.source ?? json['source'] as String,
+      json['source'] as String? ?? predefinedType?.source ?? '',
       type,
       json['isRequiredForMatch'] as bool? ?? false,
       predefinedType,

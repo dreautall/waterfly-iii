@@ -53,6 +53,7 @@ class DynamicCurrencyPatchResolver {
       dynamicCurrencyValues: <TransactionField, String>{
         ...patch.dynamicCurrencyValues,
       }..remove(TransactionField.currency),
+      dynamicAccountValues: patch.dynamicAccountValues,
     );
   }
 }

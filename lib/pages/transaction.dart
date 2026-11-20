@@ -830,40 +830,36 @@ class _TransactionPageState extends State<TransactionPage>
 
     final FireflyIii api = context.read<FireflyService>().api;
     if (sourceId != null) {
-      _tx.selectSourceAccount(
-        await _resolveNotificationAccount(
-          api,
-          value: sourceId,
-          displayName:
-              patch.resourceReferences[TransactionField.sourceAccount]?.id ??
-              patch.displayValue(TransactionField.sourceAccount),
-          isResourceReference:
-              patch.resourceReferences.containsKey(
-                TransactionField.sourceAccount,
-              ) ||
-              patch.displayValues.containsKey(TransactionField.sourceAccount),
-        ),
-      );
+      final AutocompleteAccount? sourceAccount =
+          await _resolveNotificationAccount(
+            api,
+            value: sourceId,
+            displayName:
+                patch.resourceReferences[TransactionField.sourceAccount]?.id ??
+                patch.displayValue(TransactionField.sourceAccount),
+            isResourceReference: patch.resourceReferences.containsKey(
+              TransactionField.sourceAccount,
+            ),
+          );
+      if (sourceAccount != null) {
+        _tx.selectSourceAccount(sourceAccount);
+      }
     }
     if (destinationId != null) {
-      _tx.selectDestinationAccount(
-        await _resolveNotificationAccount(
-          api,
-          value: destinationId,
-          displayName:
-              patch
-                  .resourceReferences[TransactionField.destinationAccount]
-                  ?.id ??
-              patch.displayValue(TransactionField.destinationAccount),
-          isResourceReference:
-              patch.resourceReferences.containsKey(
-                TransactionField.destinationAccount,
-              ) ||
-              patch.displayValues.containsKey(
-                TransactionField.destinationAccount,
-              ),
+      final AutocompleteAccount?
+      destinationAccount = await _resolveNotificationAccount(
+        api,
+        value: destinationId,
+        displayName:
+            patch.resourceReferences[TransactionField.destinationAccount]?.id ??
+            patch.displayValue(TransactionField.destinationAccount),
+        isResourceReference: patch.resourceReferences.containsKey(
+          TransactionField.destinationAccount,
         ),
       );
+      if (destinationAccount != null) {
+        _tx.selectDestinationAccount(destinationAccount);
+      }
     }
 
     final String? currencyId = patch.values[TransactionField.currency];
@@ -888,7 +884,7 @@ class _TransactionPageState extends State<TransactionPage>
     }
   }
 
-  Future<AutocompleteAccount> _resolveNotificationAccount(
+  Future<AutocompleteAccount?> _resolveNotificationAccount(
     FireflyIii api, {
     required String value,
     required String displayName,
@@ -914,6 +910,7 @@ class _TransactionPageState extends State<TransactionPage>
           : account.name.toLowerCase() == value.toLowerCase();
       if (matches) return account;
     }
+    if (!isResourceReference) return null;
     throw _NotificationAccountResolutionException(unavailableMessage);
   }
 

@@ -63,6 +63,7 @@ class PromptedTransactionResourceHydrator {
         currencyCodes: currencyCodes,
         resourceReferences: resolvedPatch.resourceReferences,
         dynamicCurrencyValues: resolvedPatch.dynamicCurrencyValues,
+        dynamicAccountValues: resolvedPatch.dynamicAccountValues,
       ),
       currency: currency,
     );

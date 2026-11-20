@@ -30,6 +30,28 @@ void main() {
           displayValues: <TransactionField, String>{
             TransactionField.tag: 'Coffee shop',
           },
+          resourceReferences: <TransactionField, FireflyResourceReference>{
+            TransactionField.sourceAccount: FireflyResourceReference(
+              kind: FireflyResourceKind.account,
+              id: 'account-1',
+            ),
+            TransactionField.category: FireflyResourceReference(
+              kind: FireflyResourceKind.category,
+              id: 'category-2',
+            ),
+            TransactionField.currency: FireflyResourceReference(
+              kind: FireflyResourceKind.currency,
+              id: 'currency-3',
+            ),
+            TransactionField.subscription: FireflyResourceReference(
+              kind: FireflyResourceKind.subscription,
+              id: 'bill-4',
+            ),
+            TransactionField.piggyBank: FireflyResourceReference(
+              kind: FireflyResourceKind.piggyBank,
+              id: '5',
+            ),
+          },
         ),
       );
 
@@ -68,6 +90,96 @@ void main() {
         ),
         TransactionTypeProperty.transfer,
       );
+      expect(
+        NotificationTransactionIntentAdapter.transactionTypeFor(
+          sourceId: 'source',
+          destinationId: null,
+          destinationName: 'Merchant',
+          destinationIsDynamic: true,
+        ),
+        TransactionTypeProperty.withdrawal,
+      );
+      expect(
+        NotificationTransactionIntentAdapter.transactionTypeFor(
+          sourceId: null,
+          sourceName: 'Checking',
+          destinationId: null,
+          destinationName: 'Merchant',
+          destinationIsDynamic: true,
+        ),
+        TransactionTypeProperty.withdrawal,
+      );
+    });
+
+    test('maps named accounts separately from fixed account IDs', () {
+      const TransactionIntent intent = TransactionIntent(
+        mode: TransactionCreationMode.automatic,
+        patch: TransactionPatch(
+          <TransactionField, String>{
+            TransactionField.title: 'Coffee',
+            TransactionField.amount: '4.50',
+            TransactionField.sourceAccount: 'account-1',
+            TransactionField.destinationAccount: 'Coffee Shop',
+          },
+          resourceReferences: <TransactionField, FireflyResourceReference>{
+            TransactionField.sourceAccount: FireflyResourceReference(
+              kind: FireflyResourceKind.account,
+              id: 'account-1',
+            ),
+          },
+          dynamicAccountValues: <TransactionField, String>{
+            TransactionField.destinationAccount: 'Coffee Shop',
+          },
+        ),
+      );
+
+      final TransactionStore store =
+          NotificationTransactionIntentAdapter.toStore(
+            intent,
+            fallbackDate: DateTime(2026, 1, 2),
+          );
+      final TransactionSplitStore split = store.transactions.single;
+
+      expect(split.type, TransactionTypeProperty.withdrawal);
+      expect(split.sourceId, 'account-1');
+      expect(split.sourceName, isNull);
+      expect(split.destinationId, isNull);
+      expect(split.destinationName, 'Coffee Shop');
+    });
+
+    test('maps a captured source account as a name', () {
+      const TransactionIntent intent = TransactionIntent(
+        mode: TransactionCreationMode.automatic,
+        patch: TransactionPatch(
+          <TransactionField, String>{
+            TransactionField.title: 'Salary',
+            TransactionField.amount: '1000.00',
+            TransactionField.sourceAccount: 'Employer',
+            TransactionField.destinationAccount: 'account-2',
+          },
+          resourceReferences: <TransactionField, FireflyResourceReference>{
+            TransactionField.destinationAccount: FireflyResourceReference(
+              kind: FireflyResourceKind.account,
+              id: 'account-2',
+            ),
+          },
+          dynamicAccountValues: <TransactionField, String>{
+            TransactionField.sourceAccount: 'Employer',
+          },
+        ),
+      );
+
+      final TransactionSplitStore split =
+          NotificationTransactionIntentAdapter.toStore(
+            intent,
+            fallbackDate: DateTime(2026, 1, 2),
+          ).transactions.single;
+
+      expect(split.type, TransactionTypeProperty.deposit);
+      expect(split.sourceId, isNull);
+      expect(split.sourceName, 'Employer');
+      expect(split.destinationId, 'account-2');
+      expect(split.destinationName, isNull);
     });
 
     test('normalizes a grouped amount from a persisted patch', () {
@@ -187,6 +299,9 @@ void main() {
         currencyCodes: <TransactionField, String>{
           TransactionField.currency: 'EUR',
         },
+        dynamicAccountValues: <TransactionField, String>{
+          TransactionField.destinationAccount: 'Market',
+        },
       ),
     );
 
@@ -201,6 +316,10 @@ void main() {
       'account-1',
     );
     expect(restored.patch.currencyCodes[TransactionField.currency], 'EUR');
+    expect(
+      restored.patch.dynamicAccountValues[TransactionField.destinationAccount],
+      'Market',
+    );
   });
 
   test('later patch values replace matching display metadata', () {

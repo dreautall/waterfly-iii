@@ -162,6 +162,44 @@ void main() {
     expect(find.text('Select from Firefly'), findsNothing);
   });
 
+  testWidgets('offers extractor captures for destination accounts', (
+    WidgetTester tester,
+  ) async {
+    final RegExpDefinition extractor =
+        RegExpDefinition.createCustomRegExpDefinition(
+          'Merchant',
+          r'at (?<merchant>.+)$',
+        );
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Builder(
+            builder: (BuildContext context) => ElevatedButton(
+              onPressed: () => selectTransactionAction(
+                context,
+                extractors: <RegExpDefinition>[extractor],
+                notificationContext: NotificationContext(
+                  title: 'Card payment',
+                  body: 'Paid 12 CAD at Market',
+                  receivedAt: DateTime(2026, 9, 7),
+                ),
+                fixedField: TransactionField.destinationAccount,
+              ),
+              child: const Text('Edit destination'),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Edit destination'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Extractor capture'), findsOneWidget);
+    expect(find.text('Literal value'), findsOneWidget);
+    expect(find.text('Select from Firefly'), findsOneWidget);
+  });
+
   testWidgets('focuses a literal value only after its expander opens', (
     WidgetTester tester,
   ) async {

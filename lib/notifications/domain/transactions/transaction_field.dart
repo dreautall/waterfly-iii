@@ -118,7 +118,11 @@ class TransactionFieldSpec {
         ),
         TransactionField.destinationAccount: TransactionFieldSpec(
           valueType: TransactionFieldValueType.reference,
-          allowedSources: _literalOrResource,
+          allowedSources: <TransactionFieldSourceKind>{
+            TransactionFieldSourceKind.literal,
+            TransactionFieldSourceKind.extractorCapture,
+            TransactionFieldSourceKind.fireflyResource,
+          },
           resourceKind: FireflyResourceKind.account,
         ),
         TransactionField.category: TransactionFieldSpec(

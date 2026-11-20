@@ -4062,6 +4062,30 @@ abstract class S {
   /// **'Regular expression extractors can safely evaluate up to {maximumLength} characters. Use a shorter sample or simplify the source notification.'**
   String notificationsExtractorInputTooLongMessage(int maximumLength);
 
+  /// Heading for choosing the notification field evaluated by a regular expression extractor.
+  ///
+  /// In en, this message translates to:
+  /// **'Input source'**
+  String get notificationsExtractorInputSource;
+
+  /// Option for evaluating an extractor against the notification title.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification title'**
+  String get notificationsExtractorInputTitle;
+
+  /// Option for evaluating an extractor against the notification body.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification body'**
+  String get notificationsExtractorInputBody;
+
+  /// Field label for choosing which notification content a regular expression extractor reads.
+  ///
+  /// In en, this message translates to:
+  /// **'Read from'**
+  String get notificationsExtractorReadFrom;
+
   /// Warning title shown for a regular expression with potentially expensive repetition.
   ///
   /// In en, this message translates to:

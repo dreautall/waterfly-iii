@@ -37,6 +37,82 @@ void main() {
     expect(RegExpDefinition.fromJson(json).description, isEmpty);
   });
 
+  test('evaluates a predefined amount extractor against the title', () {
+    final RegExpDefinition extractor =
+        RegExpDefinition.createPredefinedRegExpDefinition(
+          PredefinedRegExpDefinition.amount,
+          input: NotificationExtractorInput.title,
+        );
+
+    final RegExpEvaluationResult result = extractor.evaluate(
+      NotificationContext(
+        title: 'Card payment 268.87 UAH',
+        body: 'Remaining balance 4,200.00 UAH',
+        receivedAt: DateTime(2026, 11, 20),
+      ),
+    );
+
+    expect(result.capturesFor('amount'), <String>['268.87']);
+  });
+
+  test('round-trips an extractor input selection', () {
+    final RegExpDefinition extractor =
+        RegExpDefinition.createCustomRegExpDefinition(
+          'Merchant',
+          r'(?<merchant>.+)',
+          input: NotificationExtractorInput.title,
+        );
+
+    final RegExpDefinition restored = RegExpDefinition.fromJson(
+      extractor.toJson(),
+    );
+
+    expect(restored.input, NotificationExtractorInput.title);
+  });
+
+  test('defaults legacy extractor input from its predefined type', () {
+    final RegExpDefinition title =
+        RegExpDefinition.createPredefinedRegExpDefinition(
+          PredefinedRegExpDefinition.notificationTitle,
+        );
+    final RegExpDefinition amount =
+        RegExpDefinition.createPredefinedRegExpDefinition(
+          PredefinedRegExpDefinition.amount,
+        );
+
+    expect(
+      RegExpDefinition.fromJson(title.toJson()..remove('input')).input,
+      NotificationExtractorInput.title,
+    );
+    expect(
+      RegExpDefinition.fromJson(amount.toJson()..remove('input')).input,
+      NotificationExtractorInput.body,
+    );
+  });
+
+  test('keeps property extractor inputs fixed', () {
+    for (final PredefinedRegExpDefinition type in <PredefinedRegExpDefinition>[
+      PredefinedRegExpDefinition.notificationTitle,
+      PredefinedRegExpDefinition.notificationMessage,
+      PredefinedRegExpDefinition.notificationDate,
+    ]) {
+      final RegExpDefinition extractor =
+          RegExpDefinition.createPredefinedRegExpDefinition(
+            type,
+            input: NotificationExtractorInput.title,
+          );
+      final Map<String, dynamic> mismatchedJson = extractor.toJson()
+        ..['input'] = NotificationExtractorInput.body.name;
+
+      expect(extractor.input, type.input);
+      expect(
+        extractor.copyWith(input: NotificationExtractorInput.body).input,
+        type.input,
+      );
+      expect(RegExpDefinition.fromJson(mismatchedJson).input, type.input);
+    }
+  });
+
   test('predefined amount extractor prefers values with a currency marker', () {
     final RegExpDefinition extractor =
         RegExpDefinition.createPredefinedRegExpDefinition(

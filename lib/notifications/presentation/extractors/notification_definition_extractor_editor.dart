@@ -15,33 +15,32 @@ Future<SaveNotificationDefinitionResult?> editNotificationDefinitionExtractor({
 }) async {
   final bool removable =
       definition.extractorMode == NotificationExtractorMode.advanced;
-  final ExtractorDetailsResult? result = await Navigator.of(context)
-      .push<ExtractorDetailsResult>(
-        MaterialPageRoute<ExtractorDetailsResult>(
-          builder: (BuildContext context) => NotificationExtractorDetailsPage(
-            extractor: extractor,
-            applicationName: definition.name,
-            applicationId: definition.applicationId,
-            sampleTitle: definition.sampleTitle ?? '',
-            sampleBody: definition.sampleBody ?? '',
-            sampleReceivedAt: definition.sampleReceivedAt,
-            definitionSample: extractor.sampleOverride,
-            isAdvancedMode: removable,
-            canEdit: removable,
-            canDelete: removable,
-            recentSamplesLoader: recentSamplesLoader,
-            onSave: (RegExpDefinition updated) =>
-                _saveExtractorChange(
-                  definition: definition,
-                  extractor: extractor,
-                  store: store,
-                  updated: updated,
-                ).then(
-                  (SaveNotificationDefinitionResult result) => result.succeeded,
-                ),
-          ),
-        ),
-      );
+  final ExtractorDetailsResult?
+  result = await Navigator.of(context).push<ExtractorDetailsResult>(
+    MaterialPageRoute<ExtractorDetailsResult>(
+      builder: (BuildContext context) => NotificationExtractorDetailsPage(
+        extractor: extractor,
+        applicationName: definition.name,
+        applicationId: definition.applicationId,
+        sampleTitle: definition.sampleTitle ?? '',
+        sampleBody: definition.sampleBody ?? '',
+        sampleReceivedAt: definition.sampleReceivedAt,
+        definitionSample: extractor.sampleOverride,
+        isAdvancedMode: removable,
+        canEdit: removable,
+        canEditInput:
+            definition.extractorMode != NotificationExtractorMode.notConfigured,
+        canDelete: removable,
+        recentSamplesLoader: recentSamplesLoader,
+        onSave: (RegExpDefinition updated) => _saveExtractorChange(
+          definition: definition,
+          extractor: extractor,
+          store: store,
+          updated: updated,
+        ).then((SaveNotificationDefinitionResult result) => result.succeeded),
+      ),
+    ),
+  );
   if (result == null) return null;
   if (!result.delete) return null;
   return _saveExtractorChange(

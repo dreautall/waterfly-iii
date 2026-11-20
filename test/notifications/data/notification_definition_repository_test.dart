@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/data/migrations/legacy_notification_definition_migrator.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 import 'package:waterflyiii/notifications/data/repositories/notification_definition_repository.dart';
 import 'package:waterflyiii/notifications/data/repositories/notification_definition_storage.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
+import 'package:waterflyiii/notifications/domain/extractors/reg_exp_evaluation_result.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
@@ -166,6 +168,41 @@ void main() {
       expect(definitions.single.id, definition.id);
       expect(definitions.single.applicationId, definition.applicationId);
       expect(definitions.single.name, definition.name);
+    });
+
+    test('persists an extractor input override', () async {
+      final InMemoryNotificationDefinitionStorage storage =
+          InMemoryNotificationDefinitionStorage();
+      final NotificationDefinitionRepository repository =
+          NotificationDefinitionRepository(storage);
+      final RegExpDefinition amount =
+          RegExpDefinition.createPredefinedRegExpDefinition(
+            PredefinedRegExpDefinition.amount,
+            input: NotificationExtractorInput.title,
+          );
+      final NotificationDefinition definition = NotificationDefinition(
+        id: 'bank-payments',
+        applicationId: 'com.example.bank',
+        name: 'Example Bank payments',
+        extractors: <RegExpDefinition>[amount],
+        rules: <NotificationRule>[],
+      );
+
+      await repository.save(<NotificationDefinition>[definition]);
+      final RegExpDefinition restored =
+          (await repository.load()).single.extractors.single;
+
+      final RegExpEvaluationResult result = restored.evaluate(
+        NotificationContext(
+          applicationId: definition.applicationId,
+          applicationName: definition.name,
+          title: 'Card payment 268.87 UAH',
+          body: 'Remaining balance 4,200.00 UAH',
+          receivedAt: DateTime(2026, 11, 20),
+        ),
+      );
+      expect(restored.input, NotificationExtractorInput.title);
+      expect(result.capturesFor('amount'), <String>['268.87']);
     });
 
     test('removes persisted display names from resource references', () async {

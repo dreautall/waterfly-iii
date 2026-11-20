@@ -2624,6 +2624,18 @@ class SNl extends S {
   }
 
   @override
+  String get notificationsExtractorInputSource => 'Input source';
+
+  @override
+  String get notificationsExtractorInputTitle => 'Notification title';
+
+  @override
+  String get notificationsExtractorInputBody => 'Notification body';
+
+  @override
+  String get notificationsExtractorReadFrom => 'Read from';
+
+  @override
   String get notificationsExtractorPerformanceWarning => 'Pattern may be slow';
 
   @override

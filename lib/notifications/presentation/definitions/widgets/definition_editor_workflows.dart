@@ -406,6 +406,8 @@ class NotificationDefinitionEditorWorkflows {
         isAdvancedMode:
             viewModel.extractorMode == NotificationExtractorMode.advanced,
         canEdit: canEdit,
+        canEditInput:
+            viewModel.extractorMode != NotificationExtractorMode.notConfigured,
         canDelete: removable,
         onSave: onSave,
         recentSamplesLoader: recentSamplesLoader,

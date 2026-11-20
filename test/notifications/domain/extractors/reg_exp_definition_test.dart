@@ -113,6 +113,35 @@ void main() {
     }
   });
 
+  for (final PredefinedRegExpDefinition predefinedType
+      in PredefinedRegExpDefinition.values) {
+    test('round-trips an edited ${predefinedType.name} extractor pattern', () {
+      final RegExpDefinition extractor =
+          RegExpDefinition.createPredefinedRegExpDefinition(
+            predefinedType,
+          ).copyWith(source: r'(?<custom>edited)');
+
+      final RegExpDefinition restored = RegExpDefinition.fromJson(
+        extractor.toJson(),
+      );
+
+      expect(restored.regExpSource, r'(?<custom>edited)');
+      expect(restored.type, RegExpDefinitionType.predefined);
+      expect(restored.predefinedType, predefinedType);
+    });
+
+    test('uses the ${predefinedType.name} default when source is missing', () {
+      final RegExpDefinition extractor =
+          RegExpDefinition.createPredefinedRegExpDefinition(predefinedType);
+      final Map<String, dynamic> json = extractor.toJson()..remove('source');
+
+      expect(
+        RegExpDefinition.fromJson(json).regExpSource,
+        predefinedType.source,
+      );
+    });
+  }
+
   test('predefined amount extractor prefers values with a currency marker', () {
     final RegExpDefinition extractor =
         RegExpDefinition.createPredefinedRegExpDefinition(
@@ -193,6 +222,37 @@ void main() {
 
     expect(result.failure, isNull);
     expect(result.capturesFor('amount'), contains('12.50'));
+  });
+
+  test('caps input for an edited predefined extractor', () {
+    final RegExpDefinition extractor =
+        RegExpDefinition.createPredefinedRegExpDefinition(
+          PredefinedRegExpDefinition.amount,
+        ).copyWith(source: r'(?<amount>\d+)');
+    final String body =
+        '12 ${List<String>.filled(RegExpDefinition.maximumCustomInputLength, 'x').join()}';
+
+    final RegExpEvaluationResult result = extractor.evaluate(
+      NotificationContext(
+        title: 'Long notification',
+        body: body,
+        receivedAt: DateTime(2026, 9, 26),
+      ),
+    );
+
+    expect(result.failure, RegExpEvaluationFailure.inputTooLong);
+  });
+
+  test('warns about unsafe edited predefined patterns', () {
+    final RegExpDefinition extractor =
+        RegExpDefinition.createPredefinedRegExpDefinition(
+          PredefinedRegExpDefinition.amount,
+        ).copyWith(source: r'(a+)+$');
+
+    expect(
+      extractor.safetyIssues,
+      contains(RegExpSafetyIssue.nestedQuantifier),
+    );
   });
 
   test('warns about nested quantifiers and repeated wildcards', () {

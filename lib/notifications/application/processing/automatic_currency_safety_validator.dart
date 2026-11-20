@@ -1,6 +1,7 @@
 import 'package:waterflyiii/notifications/application/resources/firefly_account_currency_gateway.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_creation_mode.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_intent.dart';
+import 'package:waterflyiii/notifications/domain/transactions/firefly_resource_reference.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 
 class AutomaticCurrencySafetyValidator {
@@ -18,10 +19,17 @@ class AutomaticCurrencySafetyValidator {
       return;
     }
 
-    final Set<String> accountIds = <String>{
-      ?intent.patch.values[TransactionField.sourceAccount],
-      ?intent.patch.values[TransactionField.destinationAccount],
-    };
+    final Set<String> accountIds = intent.patch.resourceReferences.entries
+        .where(
+          (MapEntry<TransactionField, FireflyResourceReference> entry) =>
+              entry.value.kind == FireflyResourceKind.account,
+        )
+        .map(
+          (MapEntry<TransactionField, FireflyResourceReference> entry) =>
+              entry.value.id,
+        )
+        .where((String id) => id.trim().isNotEmpty)
+        .toSet();
     for (final String accountId in accountIds) {
       final FireflyAccountCurrency accountCurrency = await _gateway
           .resolveAccountCurrency(accountId);

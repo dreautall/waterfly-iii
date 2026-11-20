@@ -275,6 +275,66 @@ void main() {
       );
     });
 
+    test('resolves an extracted destination account name', () {
+      final EvaluationContext captureContext = EvaluationContext(
+        notification: context.notification,
+        extractionResults: const <String, RegExpEvaluationResult>{
+          'merchant': RegExpEvaluationResult(
+            hasMatches: true,
+            namedCaptures: <String, List<String>>{
+              'merchant': <String>['Market'],
+            },
+          ),
+        },
+      );
+      const SetTransactionFieldAction action = SetTransactionFieldAction(
+        target: TransactionField.destinationAccount,
+        valueSource: RegExpCaptureValueSource(
+          extractorId: 'merchant',
+          captureName: 'merchant',
+        ),
+      );
+
+      final ActionEvaluationResult result = action.evaluate(captureContext);
+
+      expect(result.succeeded, isTrue);
+      expect(
+        result.patch?.values[TransactionField.destinationAccount],
+        'Market',
+      );
+      expect(result.patch?.resourceReferences, isEmpty);
+      expect(
+        result.patch?.dynamicAccountValues[TransactionField.destinationAccount],
+        'Market',
+      );
+    });
+
+    test('rejects an empty extracted destination account name', () {
+      final EvaluationContext captureContext = EvaluationContext(
+        notification: context.notification,
+        extractionResults: const <String, RegExpEvaluationResult>{
+          'merchant': RegExpEvaluationResult(
+            hasMatches: true,
+            namedCaptures: <String, List<String>>{
+              'merchant': <String>['  '],
+            },
+          ),
+        },
+      );
+      const SetTransactionFieldAction action = SetTransactionFieldAction(
+        target: TransactionField.destinationAccount,
+        valueSource: RegExpCaptureValueSource(
+          extractorId: 'merchant',
+          captureName: 'merchant',
+        ),
+      );
+
+      expect(
+        action.evaluate(captureContext).failureReason,
+        'Account names cannot be empty.',
+      );
+    });
+
     test('maps a captured currency to the selected Firefly currency', () {
       final EvaluationContext currencyContext = EvaluationContext(
         notification: context.notification,

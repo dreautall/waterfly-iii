@@ -90,6 +90,13 @@ class SetTransactionFieldAction implements NotificationAction {
         _unresolvedValueSourceMessage(source, context),
       );
     }
+    if ((target == TransactionField.sourceAccount ||
+            target == TransactionField.destinationAccount) &&
+        value.trim().isEmpty) {
+      return const ActionEvaluationResult.failure(
+        'Account names cannot be empty.',
+      );
+    }
 
     final TransactionFieldValidationError? validationError =
         TransactionFieldSpec.validateValue(value, spec.valueType);
@@ -124,6 +131,12 @@ class SetTransactionFieldAction implements NotificationAction {
         dynamicCurrencyValues:
             source is CurrencyCaptureValueSource &&
                 source.resolutionMode == CurrencyResolutionMode.dynamic
+            ? <TransactionField, String>{target: value}
+            : const <TransactionField, String>{},
+        dynamicAccountValues:
+            source is RegExpCaptureValueSource &&
+                (target == TransactionField.sourceAccount ||
+                    target == TransactionField.destinationAccount)
             ? <TransactionField, String>{target: value}
             : const <TransactionField, String>{},
       ),

@@ -21,12 +21,28 @@ class NotificationTransactionIntentAdapter {
       );
     }
     final String description = _requiredValue(patch, TransactionField.title);
-    final String? sourceId = patch.values[TransactionField.sourceAccount];
-    final String? destinationId =
-        patch.values[TransactionField.destinationAccount];
+    final String? sourceId = _resourceId(patch, TransactionField.sourceAccount);
+    final String? sourceName = sourceId == null
+        ? patch.values[TransactionField.sourceAccount]
+        : null;
+    final String? destinationId = _resourceId(
+      patch,
+      TransactionField.destinationAccount,
+    );
+    final String? destinationName = destinationId == null
+        ? patch.values[TransactionField.destinationAccount]
+        : null;
     final TransactionTypeProperty type = transactionTypeFor(
       sourceId: sourceId,
       destinationId: destinationId,
+      sourceName: sourceName,
+      destinationName: destinationName,
+      sourceIsDynamic: patch.dynamicAccountValues.containsKey(
+        TransactionField.sourceAccount,
+      ),
+      destinationIsDynamic: patch.dynamicAccountValues.containsKey(
+        TransactionField.destinationAccount,
+      ),
     );
     final String? piggyBankId = patch.values[TransactionField.piggyBank];
     final DateTime date = transactionDate(patch, fallbackDate: fallbackDate);
@@ -43,7 +59,9 @@ class NotificationTransactionIntentAdapter {
           currencyId: patch.values[TransactionField.currency],
           categoryId: patch.values[TransactionField.category],
           sourceId: sourceId,
+          sourceName: sourceName,
           destinationId: destinationId,
+          destinationName: destinationName,
           piggyBankId: piggyBankId == null
               ? null
               : int.tryParse(piggyBankId) ??
@@ -64,12 +82,31 @@ class NotificationTransactionIntentAdapter {
   static TransactionTypeProperty transactionTypeFor({
     required String? sourceId,
     required String? destinationId,
+    String? sourceName,
+    String? destinationName,
+    bool sourceIsDynamic = false,
+    bool destinationIsDynamic = false,
   }) {
-    final bool hasSource = sourceId?.trim().isNotEmpty ?? false;
-    final bool hasDestination = destinationId?.trim().isNotEmpty ?? false;
-    if (hasSource && hasDestination) return TransactionTypeProperty.transfer;
-    if (hasSource) return TransactionTypeProperty.withdrawal;
-    if (hasDestination) return TransactionTypeProperty.deposit;
+    final bool hasSourceId = sourceId?.trim().isNotEmpty ?? false;
+    final bool hasSourceName = sourceName?.trim().isNotEmpty ?? false;
+    final bool hasDestinationId = destinationId?.trim().isNotEmpty ?? false;
+    final bool hasDestinationName = destinationName?.trim().isNotEmpty ?? false;
+    if (destinationIsDynamic && !sourceIsDynamic) {
+      return TransactionTypeProperty.withdrawal;
+    }
+    if (sourceIsDynamic && !destinationIsDynamic) {
+      return TransactionTypeProperty.deposit;
+    }
+    if ((hasSourceId || hasSourceName) &&
+        (hasDestinationId || hasDestinationName)) {
+      return TransactionTypeProperty.transfer;
+    }
+    if (hasSourceId || hasSourceName) {
+      return TransactionTypeProperty.withdrawal;
+    }
+    if (hasDestinationId || hasDestinationName) {
+      return TransactionTypeProperty.deposit;
+    }
     throw const FormatException(
       'Automatic transaction creation requires a source or destination account.',
     );
@@ -119,6 +156,11 @@ class NotificationTransactionIntentAdapter {
     throw FormatException(
       'Automatic transaction creation requires ${field.name}.',
     );
+  }
+
+  static String? _resourceId(TransactionPatch patch, TransactionField field) {
+    final String? id = patch.resourceReferences[field]?.id;
+    return id?.trim().isEmpty ?? true ? null : id;
   }
 
   static List<String> _tagsFor(TransactionPatch patch) {

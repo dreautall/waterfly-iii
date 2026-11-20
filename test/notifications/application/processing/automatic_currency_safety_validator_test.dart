@@ -3,6 +3,7 @@ import 'package:waterflyiii/notifications/application/processing/automatic_curre
 import 'package:waterflyiii/notifications/application/resources/firefly_account_currency_gateway.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_creation_mode.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_intent.dart';
+import 'package:waterflyiii/notifications/domain/transactions/firefly_resource_reference.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_patch.dart';
 
@@ -11,11 +12,15 @@ class _AccountCurrencyGateway implements FireflyAccountCurrencyGateway {
 
   final bool exchangeRateAvailable;
   int exchangeRateChecks = 0;
+  final List<String> resolvedAccountIds = <String>[];
 
   @override
   Future<FireflyAccountCurrency> resolveAccountCurrency(
     String accountId,
-  ) async => const FireflyAccountCurrency(id: 'account-eur', code: 'EUR');
+  ) async {
+    resolvedAccountIds.add(accountId);
+    return const FireflyAccountCurrency(id: 'account-eur', code: 'EUR');
+  }
 
   @override
   Future<bool> hasExchangeRate({
@@ -42,6 +47,12 @@ void main() {
       currencyCodes: <TransactionField, String>{
         TransactionField.currency: currencyCode,
       },
+      resourceReferences: const <TransactionField, FireflyResourceReference>{
+        TransactionField.sourceAccount: FireflyResourceReference(
+          kind: FireflyResourceKind.account,
+          id: 'account',
+        ),
+      },
     ),
   );
 
@@ -55,6 +66,29 @@ void main() {
     ).validate(intent(mode: TransactionCreationMode.automatic));
 
     expect(gateway.exchangeRateChecks, 0);
+  });
+
+  test('does not resolve captured account names as IDs', () async {
+    final _AccountCurrencyGateway gateway = _AccountCurrencyGateway(
+      exchangeRateAvailable: false,
+    );
+    final TransactionIntent baseIntent = intent(
+      mode: TransactionCreationMode.automatic,
+    );
+    final TransactionIntent namedDestination = baseIntent.withPatch(
+      TransactionPatch(
+        <TransactionField, String>{
+          ...baseIntent.patch.values,
+          TransactionField.destinationAccount: 'Merchant',
+        },
+        currencyCodes: baseIntent.patch.currencyCodes,
+        resourceReferences: baseIntent.patch.resourceReferences,
+      ),
+    );
+
+    await AutomaticCurrencySafetyValidator(gateway).validate(namedDestination);
+
+    expect(gateway.resolvedAccountIds, <String>['account']);
   });
 
   test(

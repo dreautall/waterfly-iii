@@ -472,6 +472,10 @@ void main() {
           sampleBody: 'Paid 12.50',
           extractors: <RegExpDefinition>[],
           rules: <NotificationRule>[],
+          requiresMigrationReview: true,
+          migrationReviewIssues: <NotificationMigrationIssue>{
+            NotificationMigrationIssue.missingApplicationName,
+          },
         ),
       ],
     );
@@ -504,6 +508,8 @@ void main() {
     expect(excludedPackageIds, isNot(contains('com.legacy.unknown')));
     expect(store.definitions.single.applicationId, 'com.example.bank');
     expect(store.definitions.single.name, 'Example Bank');
+    expect(store.definitions.single.requiresMigrationReview, isFalse);
+    expect(store.definitions.single.migrationReviewIssues, isEmpty);
     expect(find.text('Example Bank'), findsOneWidget);
   });
 
@@ -1013,6 +1019,10 @@ void main() {
       name: 'Example Bank',
       extractors: <RegExpDefinition>[],
       rules: <NotificationRule>[],
+      requiresMigrationReview: true,
+      migrationReviewIssues: <NotificationMigrationIssue>{
+        NotificationMigrationIssue.missingAutomaticAccount,
+      },
     );
     final InMemoryNotificationAlertStore alerts =
         InMemoryNotificationAlertStore(<NotificationAlert>[
@@ -1052,6 +1062,41 @@ void main() {
       find.text(
         'Choose an account before enabling automatic transaction creation.',
       ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('discloses automatic use of the first notification sample', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      notificationPage(
+        PageDefinitionStore(
+          definitions: const <NotificationDefinition>[
+            NotificationDefinition(
+              id: 'bank',
+              applicationId: 'com.example.bank',
+              name: 'Example Bank',
+              extractors: <RegExpDefinition>[],
+              rules: <NotificationRule>[],
+              requiresMigrationReview: true,
+              migrationReviewIssues: <NotificationMigrationIssue>{
+                NotificationMigrationIssue.sampleMissing,
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Waiting for a notification'), findsOneWidget);
+    expect(
+      find.textContaining('Waterfly will use its title and text as a sample'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('The sample will be stored on this device'),
       findsOneWidget,
     );
   });

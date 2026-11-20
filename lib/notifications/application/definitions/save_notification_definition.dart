@@ -45,11 +45,40 @@ class SaveNotificationDefinition {
     required String applicationId,
     required String applicationName,
   }) async {
-    final List<NotificationDefinition> definitions;
     try {
-      definitions = List<NotificationDefinition>.of(
-        await _definitionStore.load(),
-      );
+      return await mutateNotificationDefinitions(_definitionStore, (
+        List<NotificationDefinition> definitions,
+      ) {
+        if (definitions.any(
+          (NotificationDefinition definition) =>
+              definition.applicationId == applicationId,
+        )) {
+          return const NotificationDefinitionMutation<
+            SaveNotificationDefinitionResult
+          >.unchanged(
+            SaveNotificationDefinitionResult(
+              SaveNotificationDefinitionStatus.duplicate,
+            ),
+          );
+        }
+        final NotificationDefinition definition = NotificationDefinition(
+          id: newNotificationId(),
+          applicationId: applicationId,
+          name: applicationName,
+          extractors: const <RegExpDefinition>[],
+          rules: const <NotificationRule>[],
+          createdAt: DateTime.now(),
+        );
+        definitions.add(definition);
+        return NotificationDefinitionMutation<
+          SaveNotificationDefinitionResult
+        >.changed(
+          SaveNotificationDefinitionResult(
+            SaveNotificationDefinitionStatus.saved,
+            definition: definition,
+          ),
+        );
+      });
     } catch (error, stackTrace) {
       return SaveNotificationDefinitionResult(
         SaveNotificationDefinitionStatus.failed,
@@ -57,36 +86,71 @@ class SaveNotificationDefinition {
         stackTrace: stackTrace,
       );
     }
-    if (definitions.any(
-      (NotificationDefinition definition) =>
-          definition.applicationId == applicationId,
-    )) {
-      return const SaveNotificationDefinitionResult(
-        SaveNotificationDefinitionStatus.duplicate,
-      );
-    }
-    final NotificationDefinition definition = NotificationDefinition(
-      id: newNotificationId(),
-      applicationId: applicationId,
-      name: applicationName,
-      extractors: const <RegExpDefinition>[],
-      rules: const <NotificationRule>[],
-      createdAt: DateTime.now(),
-    );
-    return _save(<NotificationDefinition>[
-      ...definitions,
-      definition,
-    ], definition);
   }
 
   Future<SaveNotificationDefinitionResult> update(
     NotificationDefinition definition,
+  ) => updateLatest(
+    definition.id,
+    (NotificationDefinition current) => definition,
+  );
+
+  Future<SaveNotificationDefinitionResult> updateLatest(
+    String definitionId,
+    NotificationDefinition Function(NotificationDefinition current) update,
   ) async {
-    final List<NotificationDefinition> definitions;
+    NotificationDefinition? previous;
     try {
-      definitions = List<NotificationDefinition>.of(
-        await _definitionStore.load(),
-      );
+      final SaveNotificationDefinitionResult result =
+          await mutateNotificationDefinitions(_definitionStore, (
+            List<NotificationDefinition> definitions,
+          ) {
+            final int index = definitions.indexWhere(
+              (NotificationDefinition candidate) =>
+                  candidate.id == definitionId,
+            );
+            if (index < 0) {
+              return const NotificationDefinitionMutation<
+                SaveNotificationDefinitionResult
+              >.unchanged(
+                SaveNotificationDefinitionResult(
+                  SaveNotificationDefinitionStatus.notFound,
+                ),
+              );
+            }
+            previous = definitions[index];
+            final NotificationDefinition updated = update(previous!);
+            if (definitions.any(
+              (NotificationDefinition candidate) =>
+                  candidate.id != updated.id &&
+                  candidate.applicationId == updated.applicationId,
+            )) {
+              return const NotificationDefinitionMutation<
+                SaveNotificationDefinitionResult
+              >.unchanged(
+                SaveNotificationDefinitionResult(
+                  SaveNotificationDefinitionStatus.duplicate,
+                ),
+              );
+            }
+            definitions[index] = updated;
+            return NotificationDefinitionMutation<
+              SaveNotificationDefinitionResult
+            >.changed(
+              SaveNotificationDefinitionResult(
+                SaveNotificationDefinitionStatus.saved,
+                definition: updated,
+              ),
+            );
+          });
+      if (result.succeeded) {
+        final NotificationDefinition updated = result.definition!;
+        await _resolveCurrencyMigrationAlerts(previous!, updated);
+        await _resolveApplicationNameMigrationAlerts(previous!, updated);
+        await _resolveInvalidRegexMigrationAlerts(previous!, updated);
+        await _dismissReviewedMigrationAlerts(previous!, updated);
+      }
+      return result;
     } catch (error, stackTrace) {
       return SaveNotificationDefinitionResult(
         SaveNotificationDefinitionStatus.failed,
@@ -94,36 +158,40 @@ class SaveNotificationDefinition {
         stackTrace: stackTrace,
       );
     }
-    final int index = definitions.indexWhere(
-      (NotificationDefinition candidate) => candidate.id == definition.id,
-    );
-    if (index < 0) {
-      return const SaveNotificationDefinitionResult(
-        SaveNotificationDefinitionStatus.notFound,
-      );
-    }
-    if (definitions.any(
-      (NotificationDefinition candidate) =>
-          candidate.id != definition.id &&
-          candidate.applicationId == definition.applicationId,
-    )) {
-      return const SaveNotificationDefinitionResult(
-        SaveNotificationDefinitionStatus.duplicate,
-      );
-    }
-    final NotificationDefinition previous = definitions[index];
-    definitions[index] = definition;
-    final SaveNotificationDefinitionResult result = await _save(
-      definitions,
-      definition,
-    );
-    if (result.succeeded) {
-      await _resolveCurrencyMigrationAlerts(previous, definition);
-      await _resolveApplicationNameMigrationAlerts(previous, definition);
-      await _resolveInvalidRegexMigrationAlerts(previous, definition);
-    }
+  }
 
-    return result;
+  Future<void> _dismissReviewedMigrationAlerts(
+    NotificationDefinition previous,
+    NotificationDefinition updated,
+  ) async {
+    final NotificationAlertStore? store = alertStore;
+    final bool hadMigrationReview =
+        previous.requiresMigrationReview ||
+        previous.migrationReviewIssues.isNotEmpty;
+    final bool hasMigrationReview =
+        updated.requiresMigrationReview ||
+        updated.migrationReviewIssues.isNotEmpty;
+    if (store == null || !hadMigrationReview || hasMigrationReview) {
+      return;
+    }
+    try {
+      final List<NotificationAlert> alerts = await store.load();
+      for (final NotificationAlert alert in alerts.where(
+        (NotificationAlert alert) =>
+            alert.kind == NotificationAlertKind.migrationNeedsReview &&
+            (alert.definitionId == updated.id ||
+                alert.applicationId == previous.applicationId ||
+                alert.applicationId == updated.applicationId),
+      )) {
+        await store.dismiss(alert.fingerprint);
+      }
+    } catch (error, stackTrace) {
+      _log.warning(
+        'Could not dismiss reviewed notification migration alerts.',
+        error,
+        stackTrace,
+      );
+    }
   }
 
   Future<void> _resolveApplicationNameMigrationAlerts(
@@ -181,11 +249,36 @@ class SaveNotificationDefinition {
   }
 
   Future<SaveNotificationDefinitionResult> delete(String definitionId) async {
-    final List<NotificationDefinition> definitions;
+    NotificationDefinition? definition;
     try {
-      definitions = List<NotificationDefinition>.of(
-        await _definitionStore.load(),
-      );
+      final SaveNotificationDefinitionResult result =
+          await mutateNotificationDefinitions(_definitionStore, (
+            List<NotificationDefinition> definitions,
+          ) {
+            final int index = definitions.indexWhere(
+              (NotificationDefinition candidate) =>
+                  candidate.id == definitionId,
+            );
+            if (index < 0) {
+              return const NotificationDefinitionMutation<
+                SaveNotificationDefinitionResult
+              >.unchanged(
+                SaveNotificationDefinitionResult(
+                  SaveNotificationDefinitionStatus.notFound,
+                ),
+              );
+            }
+            definition = definitions.removeAt(index);
+            return NotificationDefinitionMutation<
+              SaveNotificationDefinitionResult
+            >.changed(
+              SaveNotificationDefinitionResult(
+                SaveNotificationDefinitionStatus.saved,
+                definition: definition,
+              ),
+            );
+          });
+      if (!result.succeeded) return result;
     } catch (error, stackTrace) {
       return SaveNotificationDefinitionResult(
         SaveNotificationDefinitionStatus.failed,
@@ -193,23 +286,9 @@ class SaveNotificationDefinition {
         stackTrace: stackTrace,
       );
     }
-    final int index = definitions.indexWhere(
-      (NotificationDefinition definition) => definition.id == definitionId,
-    );
-    if (index < 0) {
-      return const SaveNotificationDefinitionResult(
-        SaveNotificationDefinitionStatus.notFound,
-      );
-    }
-    final NotificationDefinition definition = definitions.removeAt(index);
-    final SaveNotificationDefinitionResult result = await _save(
-      definitions,
-      definition,
-    );
-    if (!result.succeeded) return result;
     try {
-      await alertStore?.clearForApplication(definition.applicationId);
-      await historyStore?.clearForApplication(definition.applicationId);
+      await alertStore?.clearForApplication(definition!.applicationId);
+      await historyStore?.clearForApplication(definition!.applicationId);
     } catch (error, stackTrace) {
       // Cleanup failures must not restore a deleted registration.
       _log.warning(
@@ -218,26 +297,10 @@ class SaveNotificationDefinition {
         stackTrace,
       );
     }
-    return result;
-  }
-
-  Future<SaveNotificationDefinitionResult> _save(
-    List<NotificationDefinition> definitions,
-    NotificationDefinition definition,
-  ) async {
-    try {
-      await _definitionStore.save(definitions);
-      return SaveNotificationDefinitionResult(
-        SaveNotificationDefinitionStatus.saved,
-        definition: definition,
-      );
-    } catch (error, stackTrace) {
-      return SaveNotificationDefinitionResult(
-        SaveNotificationDefinitionStatus.failed,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
+    return SaveNotificationDefinitionResult(
+      SaveNotificationDefinitionStatus.saved,
+      definition: definition,
+    );
   }
 
   Future<void> _resolveCurrencyMigrationAlerts(

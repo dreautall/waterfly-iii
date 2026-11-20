@@ -18,6 +18,7 @@ import 'package:waterflyiii/notifications/data/listeners/platform_notification_p
 import 'package:waterflyiii/notifications/data/notification_store_bundle.dart';
 import 'package:waterflyiii/notifications/data/platform/file_picker_notification_backup_file_gateway.dart';
 import 'package:waterflyiii/notifications/data/platform/platform_notification_formatting_preferences.dart';
+import 'package:waterflyiii/notifications/data/resources/installed_application_name_resolver.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/controllers/notification_definitions_view_model.dart';
 import 'package:waterflyiii/notifications/presentation/alerts/controllers/notification_alerts_view_model.dart';
 import 'package:waterflyiii/notifications/presentation/history/controllers/recent_notifications_view_model.dart';
@@ -68,6 +69,7 @@ class NotificationFeatureScope {
           historyStore: stores.historyStore,
         ),
         alertStore: stores.alertStore,
+        applicationNameResolver: const InstalledApplicationNameResolver(),
       ),
       recentNotificationsViewModel: RecentNotificationsViewModel(
         RecentNotificationHistory(

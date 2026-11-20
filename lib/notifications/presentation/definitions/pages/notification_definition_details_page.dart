@@ -88,6 +88,7 @@ class _NotificationDefinitionDetailsPageState
   bool _preservingAutomaticAnchor = false;
   bool _scrollToAutomaticWarningAfterAnchor = false;
   List<NotificationSample> _recentSamples = <NotificationSample>[];
+  late List<NotificationAlert> _migrationAlerts;
   int _automaticAnchorGeneration = 0;
 
   List<RegExpDefinition> get _extractors => _viewModel.extractors;
@@ -126,6 +127,7 @@ class _NotificationDefinitionDetailsPageState
     _sampleBodyController = TextEditingController(
       text: widget.definition.sampleBody ?? '',
     );
+    _migrationAlerts = List<NotificationAlert>.of(widget.migrationAlerts);
     _scrollController = ScrollController();
     _viewModel = NotificationDefinitionEditorViewModel(widget.definition)
       ..addListener(_refresh);
@@ -541,10 +543,10 @@ class _NotificationDefinitionDetailsPageState
     final List<Widget> cards = <Widget>[];
     final NotificationDefinition definition = _currentDefinition();
     final NotificationDefinitionStatus status = definition.status;
-    if (widget.migrationAlerts.isNotEmpty ||
+    if (_migrationAlerts.isNotEmpty ||
         definition.migrationReviewIssues.isNotEmpty) {
-      final List<String> messages = widget.migrationAlerts.isNotEmpty
-          ? widget.migrationAlerts
+      final List<String> messages = _migrationAlerts.isNotEmpty
+          ? _migrationAlerts
                 .map((NotificationAlert alert) {
                   final NotificationMigrationIssue? issue =
                       alert.migrationIssue;
@@ -569,8 +571,8 @@ class _NotificationDefinitionDetailsPageState
           title: S
               .of(context)
               .notificationsDefinitionMigrationNeedsAttention(
-                widget.migrationAlerts.isNotEmpty
-                    ? widget.migrationAlerts.length
+                _migrationAlerts.isNotEmpty
+                    ? _migrationAlerts.length
                     : definition.migrationReviewIssues.length,
               ),
           message: messages.join(' '),
@@ -578,7 +580,7 @@ class _NotificationDefinitionDetailsPageState
       );
     }
     if (status != NotificationDefinitionStatus.ready &&
-        widget.migrationAlerts.isEmpty &&
+        _migrationAlerts.isEmpty &&
         !definition.requiresMigrationReview) {
       cards.add(
         MessageStatusCard(
@@ -827,6 +829,16 @@ class _NotificationDefinitionDetailsPageState
           content: Text(S.of(context).notificationsDefinitionSaveFailure),
         ),
       );
+    }
+    if (result.succeeded) {
+      setState(() {
+        _migrationAlerts = _migrationAlerts
+            .where(
+              (NotificationAlert alert) =>
+                  alert.kind != NotificationAlertKind.migrationNeedsReview,
+            )
+            .toList(growable: false);
+      });
     }
     return result.succeeded;
   }

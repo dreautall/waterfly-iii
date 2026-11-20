@@ -8,8 +8,13 @@ import 'package:logging/logging.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:waterflyiii/app.dart';
+import 'package:waterflyiii/notifications/debug/notification_debug_tools.dart';
 
-void main() async {
+void main() => runWaterflyApp();
+
+Future<void> runWaterflyApp({
+  NotificationDebugToolsFactory? notificationDebugToolsFactory,
+}) async {
   Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
   Logger.root.onRecord.listen((LogRecord record) {
     developer.log(
@@ -26,5 +31,7 @@ void main() async {
   tz.initializeTimeZones();
   Intl.defaultLocale = await findSystemLocale();
   await initializeDateFormatting();
-  return runApp(const WaterflyApp());
+  return runApp(
+    WaterflyApp(notificationDebugToolsFactory: notificationDebugToolsFactory),
+  );
 }

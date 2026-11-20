@@ -54,8 +54,7 @@ class _NotificationApplicationSelectorDialogState
   @override
   void initState() {
     super.initState();
-    _showAllInstalledApps =
-        widget.mode == NotificationApplicationSelectionMode.recover;
+    _showAllInstalledApps = false;
     _applications = _loadApplications();
     _searchController.addListener(() {
       setState(() {

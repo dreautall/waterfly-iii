@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:waterflyiii/notifications/application/migrations/legacy_notification_currency_mapper.dart';
 import 'package:waterflyiii/notifications/data/migrations/legacy_notification_definition_migrator.dart';
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
@@ -16,7 +17,7 @@ import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_v
 
 void main() {
   final LegacyNotificationDefinitionMigrator migrator =
-      LegacyNotificationDefinitionMigrator();
+      const LegacyNotificationDefinitionMigrator();
   final NotificationSample sample = NotificationSample(
     title: 'Card payment',
     body: 'Paid USD 1 234,56',

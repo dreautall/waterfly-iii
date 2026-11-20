@@ -2895,6 +2895,11 @@ void main() {
               TransactionField.title,
             },
             extractorMode: NotificationExtractorMode.basic,
+            requiresMigrationReview: true,
+            migrationReviewIssues: const <NotificationMigrationIssue>{
+              NotificationMigrationIssue.automaticCreationPaused,
+              NotificationMigrationIssue.missingAutomaticAccount,
+            },
           ),
           migrationAlerts: <NotificationAlert>[
             NotificationAlert.failure(
@@ -2933,6 +2938,14 @@ void main() {
       ),
       findsOneWidget,
     );
+
+    await selectDefinitionOption(tester, 'Convert to advanced');
+    await tester.tap(find.widgetWithText(FilledButton, 'Convert'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Save definition'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Imported setup needs attention'), findsNothing);
   });
 
   testWidgets('adds optional title mappings and disables configured choices', (

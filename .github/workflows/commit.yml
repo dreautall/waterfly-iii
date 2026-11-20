@@ -27,7 +27,7 @@ jobs:
       - name: Setup Flutter environment
         uses: ./.github/actions/setup_env
         with:
-          java-version: ${{vars.JAVA_VERSION}}
+          java-version: ${{ vars.JAVA_VERSION || '17.x' }}
 
       # Check for any formatting issues in the code.
       - name: Check for any formatting issues

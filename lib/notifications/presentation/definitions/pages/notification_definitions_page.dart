@@ -10,6 +10,7 @@ import 'package:waterflyiii/notifications/application/stores/notification_defini
 import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_listener_status.dart';
 import 'package:waterflyiii/notifications/application/listeners/notification_post_permission_requester.dart';
+import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 import 'package:waterflyiii/notifications/domain/listeners/notification_listener_health_issue.dart';
 import 'package:waterflyiii/notifications/notification_feature_scope.dart';
@@ -125,6 +126,8 @@ class _NotificationDefinitionsPageState
 
   Future<void> _load() async {
     await _viewModel.load();
+    if (!mounted) return;
+    await context.read<NotificationFeatureScope?>()?.alertsViewModel.refresh();
   }
 
   void _onViewModelChanged() {
@@ -243,6 +246,18 @@ class _NotificationDefinitionsPageState
                       message: S
                           .of(context)
                           .notificationsDefinitionsMigrationAlertsLoadFailure,
+                    ),
+                  ],
+                  if (_viewModel.hasPendingAutomaticMigration) ...<Widget>[
+                    const SizedBox(height: 12),
+                    MessageStatusCard(
+                      status: MessageStatus.informational,
+                      title: S
+                          .of(context)
+                          .notificationsDefinitionsAutomaticMigrationTitle,
+                      message: S
+                          .of(context)
+                          .notificationsDefinitionsAutomaticMigrationMessage,
                     ),
                   ],
                   const SizedBox(height: 24),
@@ -438,10 +453,15 @@ class _NotificationDefinitionsPageState
         NotificationApplicationSelectionMode.recover,
       );
       if (application == null || !mounted) return;
+      final Set<NotificationMigrationIssue> migrationReviewIssues =
+          Set<NotificationMigrationIssue>.of(definition.migrationReviewIssues)
+            ..remove(NotificationMigrationIssue.missingApplicationName);
       final SaveNotificationDefinitionResult result = await _viewModel.update(
         definition.copyWith(
           applicationId: application.packageName,
           name: application.appName ?? application.packageName,
+          requiresMigrationReview: migrationReviewIssues.isNotEmpty,
+          migrationReviewIssues: migrationReviewIssues,
         ),
       );
       if (!mounted) return;
@@ -564,9 +584,9 @@ class _NotificationDefinitionsPageState
         ),
       ),
     );
-    if (mounted) {
-      setState(() {});
-    }
+    if (!mounted) return;
+    await context.read<NotificationFeatureScope?>()?.alertsViewModel.refresh();
+    if (mounted) setState(() {});
   }
 
   Future<void> _openNotificationAccessSettings() async {

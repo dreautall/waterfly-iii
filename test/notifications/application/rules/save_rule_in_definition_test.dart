@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:waterflyiii/notifications/application/rules/save_rule_in_definition.dart';
+import 'package:waterflyiii/notifications/application/stores/notification_definition_store.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
 import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
@@ -101,8 +102,10 @@ void main() {
 
 class _FailingDefinitionStore extends InMemoryNotificationDefinitionStore {
   @override
-  Future<List<NotificationDefinition>> load() =>
-      Future<List<NotificationDefinition>>.error(
-        StateError('Could not load definitions'),
-      );
+  Future<T> mutate<T>(
+    NotificationDefinitionMutation<T> Function(
+      List<NotificationDefinition> definitions,
+    )
+    mutation,
+  ) => Future<T>.error(StateError('Could not update definitions'));
 }

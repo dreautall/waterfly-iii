@@ -29,6 +29,7 @@ import 'package:waterflyiii/notifications/domain/notification_id.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_intent.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/notification_feature_scope.dart';
+import 'package:waterflyiii/notifications/debug/notification_debug_tools.dart';
 import 'package:waterflyiii/notifications/presentation/alerts/pages/notification_alerts_page.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/pages/notification_definition_details_page.dart';
 import 'package:waterflyiii/notifications/presentation/dialogs/applications/notification_application_selector_dialog.dart';
@@ -133,6 +134,7 @@ class NotificationNavigationCoordinator {
           settingsStore: scope.settingsStore,
           accessSettingsLauncher: scope.accessSettingsLauncher,
           backupFileGateway: scope.backupFileGateway,
+          debugTools: context.read<NotificationDebugTools?>(),
         ),
       ),
     );

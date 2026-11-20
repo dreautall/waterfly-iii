@@ -23,6 +23,7 @@ import 'package:waterflyiii/notifications/data/listeners/platform_notification_l
 import 'package:waterflyiii/notifications/data/migrations/platform_notification_migration_review_notifier.dart';
 import 'package:waterflyiii/notifications/data/resources/api_firefly_currency_gateway.dart';
 import 'package:waterflyiii/notifications/data/resources/api_firefly_resource_label_gateway.dart';
+import 'package:waterflyiii/notifications/debug/notification_debug_tools.dart';
 import 'package:waterflyiii/notifications/notification_feature_scope.dart';
 import 'package:waterflyiii/notifications/data/listeners/platform_notification_listener_health_notifier.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/pages/notification_definitions_page.dart';
@@ -46,7 +47,9 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>(
 );
 
 class WaterflyApp extends StatefulWidget {
-  const WaterflyApp({super.key});
+  const WaterflyApp({super.key, this.notificationDebugToolsFactory});
+
+  final NotificationDebugToolsFactory? notificationDebugToolsFactory;
 
   @override
   State<WaterflyApp> createState() => _WaterflyAppState();
@@ -74,6 +77,9 @@ class _WaterflyAppState extends State<WaterflyApp> {
   final LayoutProvider _layoutProvider = LayoutProvider();
   late final NotificationFeatureScope _notificationFeatureScope =
       NotificationFeatureScope.encrypted(currencyResolver: _currencyResolver);
+  late final NotificationDebugTools? _notificationDebugTools = widget
+      .notificationDebugToolsFactory
+      ?.call(_notificationFeatureScope);
   final NotificationListenerRegistrationService
   _notificationListenerRegistration = NotificationListenerRegistrationService(
     gateway: const PlatformNotificationListenerRegistrationGateway(),
@@ -364,6 +370,8 @@ class _WaterflyAppState extends State<WaterflyApp> {
             Provider<NotificationFeatureScope>.value(
               value: _notificationFeatureScope,
             ),
+            if (_notificationDebugTools case final NotificationDebugTools tools)
+              Provider<NotificationDebugTools>.value(value: tools),
             ChangeNotifierProvider<NotificationDefinitionsViewModel>.value(
               value: _notificationFeatureScope.definitionsViewModel,
             ),

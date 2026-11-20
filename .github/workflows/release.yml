@@ -38,7 +38,7 @@ jobs:
       - name: Setup Flutter environment
         uses: ./.github/actions/setup_env
         with:
-          java-version: ${{vars.JAVA_VERSION}}
+          java-version: ${{ vars.JAVA_VERSION || '17.x' }}
 
       # Generate keystore from base64 secret
       - name: Generate keystore

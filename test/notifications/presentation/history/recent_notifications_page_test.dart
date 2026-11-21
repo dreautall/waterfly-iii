@@ -213,6 +213,49 @@ Widget _page(
 );
 
 void main() {
+  testWidgets('reserves paint space for card shadows on every side', (
+    WidgetTester tester,
+  ) async {
+    final DateTime receivedAt = DateTime(2026, 11, 20);
+    final List<RecentNotificationHistoryEntry> entries =
+        <RecentNotificationHistoryEntry>[
+          RecentNotificationHistoryEntry(
+            notification: NotificationHistoryEntry(
+              id: 'first',
+              applicationId: 'com.example.bank',
+              title: 'First payment',
+              body: 'Paid 10 EUR',
+              receivedAt: receivedAt,
+            ),
+            canCreateTransaction: false,
+          ),
+          RecentNotificationHistoryEntry(
+            notification: NotificationHistoryEntry(
+              id: 'last',
+              applicationId: 'com.example.bank',
+              title: 'Second payment',
+              body: 'Paid 20 EUR',
+              receivedAt: receivedAt,
+            ),
+            canCreateTransaction: false,
+          ),
+        ];
+
+    await tester.pumpWidget(
+      _page(Future<List<RecentNotificationHistoryEntry>>.value(entries)),
+    );
+    await tester.pumpAndSettle();
+
+    final Padding first = tester.widget(
+      find.byKey(const Key('history-entry-shadow-first')),
+    );
+    final Padding last = tester.widget(
+      find.byKey(const Key('history-entry-shadow-last')),
+    );
+    expect(first.padding, const EdgeInsets.fromLTRB(8, 4, 8, 4));
+    expect(last.padding, const EdgeInsets.fromLTRB(8, 4, 8, 4));
+  });
+
   testWidgets('shows ignored outcomes without transaction creation', (
     WidgetTester tester,
   ) async {

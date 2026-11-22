@@ -698,17 +698,14 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage>
               ),
             ),
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
               sliver: SliverList.builder(
                 itemCount: group.entries.length,
                 findChildIndexCallback: (Key key) => entryIndices[key],
                 itemBuilder: (BuildContext context, int index) {
                   final RecentNotificationHistoryEntry entry =
                       group.entries[index];
-                  return _animatedHistoryCard(
-                    entry,
-                    bottomSpacing: index == group.entries.length - 1 ? 0 : 8,
-                  );
+                  return _animatedHistoryCard(entry);
                 },
               ),
             ),
@@ -819,10 +816,7 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage>
     ],
   );
 
-  Widget _animatedHistoryCard(
-    RecentNotificationHistoryEntry entry, {
-    required double bottomSpacing,
-  }) {
+  Widget _animatedHistoryCard(RecentNotificationHistoryEntry entry) {
     final String entryId = entry.notification.id;
     final bool isRemoving = _removingEntryIds.contains(entryId);
     final bool isRestoring = _restoringEntryIds.contains(entryId);
@@ -835,7 +829,8 @@ class _RecentNotificationsPageState extends State<RecentNotificationsPage>
       actions: _actions,
     );
     card = Padding(
-      padding: EdgeInsets.only(bottom: bottomSpacing),
+      key: Key('history-entry-shadow-$entryId'),
+      padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
       child: card,
     );
     final bool isHidden = isRemoving || isRestoring;

@@ -38,11 +38,15 @@ import 'package:waterflyiii/notifications/data/repositories/sqlcipher_notificati
 import 'package:waterflyiii/notifications/data/repositories/shared_preferences_notification_listener_health_store.dart';
 import 'package:waterflyiii/notifications/data/resources/api_firefly_account_currency_gateway.dart';
 import 'package:waterflyiii/notifications/data/resources/api_firefly_currency_gateway.dart';
+import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
+import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/domain/evaluation/notification_formatting_preferences.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 import 'package:waterflyiii/notifications/domain/evaluation/notification_rule_evaluation_result.dart';
+import 'package:waterflyiii/notifications/domain/evaluation/notification_rule_requirement.dart';
+import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/history/notification_processing_outcome.dart';
 import 'package:waterflyiii/notifications/domain/notification_id.dart';
 import 'package:waterflyiii/notifications/domain/planning/transaction_creation_mode.dart';
@@ -51,6 +55,9 @@ import 'package:waterflyiii/notifications/domain/rules/notification_action_group
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_patch.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/composed_value_source.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/value_source.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/pages/notification_definitions_page.dart';
 import 'package:waterflyiii/pages/transaction.dart';
 import 'package:waterflyiii/settings.dart';
@@ -135,18 +142,8 @@ Future<void> processDebugNotification(NotificationContext notification) {
   if (!kDebugMode) {
     throw StateError('Synthetic notifications require a debug build.');
   }
-  if (_isIncompleteNotification(notification)) {
-    log.finer(
-      () =>
-          'processDebugNotification(${notification.applicationId}): ignored incomplete notification',
-    );
-    return Future<void>.value();
-  }
   return _notificationListenerOrchestrator().process(notification);
 }
-
-bool _isIncompleteNotification(NotificationContext notification) =>
-    notification.title.trim().isEmpty || notification.body.trim().isEmpty;
 
 @pragma('vm:entry-point')
 void nlCallback() {
@@ -180,13 +177,6 @@ void nlCallback() {
       body: evt.text ?? '',
       receivedAt: DateTime.tryParse(evt.postTime ?? '') ?? DateTime.now(),
     );
-    if (_isIncompleteNotification(notification)) {
-      log.finer(
-        () =>
-            'nlCallback(${notification.applicationId}): ignored incomplete notification',
-      );
-      return;
-    }
     log.finer(
       () =>
           'nlCallback(${notification.applicationId}): processing notification',
@@ -315,6 +305,9 @@ Future<void> _showCreateTransactionPrompt(
   final FlutterLocalNotificationsPlugin notifications =
       FlutterLocalNotificationsPlugin();
   final int notificationId = _localNotificationIds.next();
+  final String displayText = notification.title.trim().isNotEmpty
+      ? notification.title
+      : notification.body;
   log.finer(
     () =>
         'nlCallback(${notification.applicationId}): posting manual transaction prompt '
@@ -332,7 +325,7 @@ Future<void> _showCreateTransactionPrompt(
       id: notificationId,
       title: 'Create Transaction?',
       body:
-          'Click to create a transaction based on the notification ${notification.title}',
+          'Click to create a transaction based on the notification $displayText',
       notificationDetails: const NotificationDetails(
         android: AndroidNotificationDetails(
           'extract_transaction',
@@ -491,10 +484,34 @@ Future<NotificationDefinitionProcessingResult> _processNotificationDefinitions(
         )
         .firstOrNull;
     final NotificationProcessingOutcome outcome = _recordedProcessingOutcome(
+      notification: notification,
       registeredDefinitions: registeredDefinitions,
       processedDefinitions: definitions,
       failure: failure,
     );
+    if (outcome.status ==
+        NotificationProcessingOutcomeStatus.requiresAttention) {
+      final NotificationDefinition? definition = registeredDefinitions
+          .where(
+            (NotificationDefinition candidate) =>
+                candidate.id == outcome.definition?.id,
+          )
+          .firstOrNull;
+      if (definition != null && failure == null) {
+        await alertStore.record(
+          NotificationAlert.failure(
+            kind: NotificationAlertKind.missingInput,
+            operation: 'Missing notification data',
+            message:
+                outcome.failureMessage ??
+                'The notification is missing data required by its definition.',
+            applicationId: notification.applicationId,
+            definitionId: definition.id,
+            notification: notification,
+          ),
+        );
+      }
+    }
     log.fine(
       () =>
           'nlCallback(${notification.applicationId}): processing completed with ${outcome.status.name}; '
@@ -503,7 +520,12 @@ Future<NotificationDefinitionProcessingResult> _processNotificationDefinitions(
     return NotificationDefinitionProcessingResult(
       isRegistered: true,
       intent: failure == null
-          ? definitions.firstOrNull?.evaluation.effectiveTransactionIntent
+          ? switch (outcome.status) {
+              NotificationProcessingOutcomeStatus.requiresAttention ||
+              NotificationProcessingOutcomeStatus.ignored => null,
+              _ =>
+                definitions.firstOrNull?.evaluation.effectiveTransactionIntent,
+            }
           : null,
       outcome: outcome,
     );
@@ -553,6 +575,7 @@ Future<void> _recordSuccessfulDefinitionLoad() async {
 }
 
 NotificationProcessingOutcome _recordedProcessingOutcome({
+  required NotificationContext notification,
   required List<NotificationDefinition> registeredDefinitions,
   required List<ProcessedNotificationDefinition> processedDefinitions,
   required NotificationAlert? failure,
@@ -565,6 +588,21 @@ NotificationProcessingOutcome _recordedProcessingOutcome({
                   definition.id == failure!.definitionId,
             )
             .firstOrNull;
+  if (failure?.kind == NotificationAlertKind.missingInput &&
+      failedDefinition != null) {
+    return NotificationProcessingOutcome(
+      status:
+          failedDefinition.missingNotificationDataPolicy ==
+              MissingNotificationDataPolicy.ignore
+          ? NotificationProcessingOutcomeStatus.ignored
+          : NotificationProcessingOutcomeStatus.requiresAttention,
+      definition: NotificationHistoryReference(
+        id: failedDefinition.id,
+        name: failedDefinition.name,
+      ),
+      failureMessage: failure!.message,
+    );
+  }
   if (failure != null) {
     return NotificationProcessingOutcome(
       status: NotificationProcessingOutcomeStatus.failed,
@@ -587,6 +625,39 @@ NotificationProcessingOutcome _recordedProcessingOutcome({
       processedDefinitions.firstOrNull;
   final NotificationDefinition? definition =
       processed?.definition ?? registeredDefinitions.firstOrNull;
+  final String? missingInputMessage = _missingInputMessage(
+    notification,
+    registeredDefinitions,
+    processedDefinitions,
+  );
+  final bool metadataOnlyBlocked =
+      notification.title.trim().isEmpty &&
+      notification.body.trim().isEmpty &&
+      registeredDefinitions.any(
+        (NotificationDefinition definition) =>
+            !definition.canProcessMetadataOnlyNotifications,
+      );
+  final bool missingInputRequiresAttention =
+      missingInputMessage != null &&
+      (metadataOnlyBlocked ||
+          processedDefinitions.every(
+            (ProcessedNotificationDefinition processed) =>
+                processed.evaluation.effectiveTransactionIntent == null,
+          ));
+  if (missingInputRequiresAttention && definition != null) {
+    return NotificationProcessingOutcome(
+      status:
+          definition.missingNotificationDataPolicy ==
+              MissingNotificationDataPolicy.ignore
+          ? NotificationProcessingOutcomeStatus.ignored
+          : NotificationProcessingOutcomeStatus.requiresAttention,
+      definition: NotificationHistoryReference(
+        id: definition.id,
+        name: definition.name,
+      ),
+      failureMessage: missingInputMessage,
+    );
+  }
   if (processed == null || definition == null) {
     return NotificationProcessingOutcome(
       status: NotificationProcessingOutcomeStatus.noMatch,
@@ -598,6 +669,7 @@ NotificationProcessingOutcome _recordedProcessingOutcome({
             ),
     );
   }
+
   final String? selectedRuleId = processed.evaluation.selectedRuleId;
   final NotificationRule? rule = selectedRuleId == null
       ? null
@@ -641,6 +713,147 @@ NotificationProcessingOutcome _recordedProcessingOutcome({
     hasTransactionIntent: intent != null,
     transactionPatch: intent?.patch,
   );
+}
+
+String? _missingInputMessage(
+  NotificationContext notification,
+  List<NotificationDefinition> definitions,
+  List<ProcessedNotificationDefinition> processedDefinitions,
+) {
+  final Set<String> missingLabels = <String>{};
+  for (final NotificationDefinition definition in definitions) {
+    if (!definition.canProcessMetadataOnlyNotifications &&
+        notification.title.trim().isEmpty &&
+        notification.body.trim().isEmpty) {
+      missingLabels.add('title or body');
+    }
+    final ProcessedNotificationDefinition? processed = processedDefinitions
+        .where(
+          (ProcessedNotificationDefinition value) =>
+              value.definition.id == definition.id,
+        )
+        .firstOrNull;
+    for (final RegExpDefinition extractor in definition.extractors.where(
+      (RegExpDefinition value) =>
+          value.isRequiredForMatch &&
+          switch (value.input) {
+            NotificationExtractorInput.title =>
+              notification.title.trim().isEmpty,
+            NotificationExtractorInput.body => notification.body.trim().isEmpty,
+            NotificationExtractorInput.receivedAt => false,
+          },
+    )) {
+      switch (extractor.input) {
+        case NotificationExtractorInput.title:
+          missingLabels.add('title');
+        case NotificationExtractorInput.body:
+          missingLabels.add('body');
+        case NotificationExtractorInput.receivedAt:
+          break;
+      }
+    }
+    if (processed == null) continue;
+    final String? selectedRuleId = processed.evaluation.selectedRuleId;
+    final Iterable<NotificationRuleRequirement> requirements =
+        <NotificationRuleRequirement>[
+          ...processed.evaluation.unmetSharedRequirements,
+          if (selectedRuleId == null)
+            for (final NotificationRuleEvaluationResult result
+                in processed.evaluation.ruleResults.values)
+              ...result.unmetRequirements
+          else
+            ...processed
+                    .evaluation
+                    .ruleResults[selectedRuleId]
+                    ?.unmetRequirements ??
+                const <NotificationRuleRequirement>[],
+          if (selectedRuleId != null)
+            ...definition.rules
+                .where((NotificationRule rule) => rule.id == selectedRuleId)
+                .expand(
+                  (NotificationRule rule) =>
+                      rule.conditionalActionGroupRequirements,
+                ),
+        ];
+    final List<NotificationAction> actions = <NotificationAction>[
+      ...definition.sharedActions,
+      if (selectedRuleId != null)
+        for (final NotificationRule rule in definition.rules.where(
+          (NotificationRule rule) => rule.id == selectedRuleId,
+        )) ...<NotificationAction>[
+          ...rule.actions,
+          for (final NotificationActionGroup group
+              in rule.conditionalActionGroups)
+            if (processed
+                    .evaluation
+                    .ruleResults[selectedRuleId]
+                    ?.conditionalGroups[group.id]
+                    ?.matches ??
+                false)
+              ...group.actions,
+        ],
+    ];
+    for (final NotificationAction action in actions) {
+      if (action is! SetTransactionFieldAction) continue;
+      if (_usesMissingNotificationProperty(action.valueSource, notification)) {
+        missingLabels.add(
+          _missingPropertyLabel(action.valueSource, notification)!,
+        );
+      }
+    }
+    for (final NotificationRuleRequirement requirement in requirements) {
+      final RegExpDefinition? extractor = definition.extractors
+          .where(
+            (RegExpDefinition value) =>
+                value.id == requirement.capture.extractorId,
+          )
+          .firstOrNull;
+      if (extractor == null) continue;
+      switch (extractor.input) {
+        case NotificationExtractorInput.title
+            when notification.title.trim().isEmpty:
+          missingLabels.add('title');
+        case NotificationExtractorInput.body
+            when notification.body.trim().isEmpty:
+          missingLabels.add('body');
+        case NotificationExtractorInput.receivedAt:
+        case NotificationExtractorInput.title:
+        case NotificationExtractorInput.body:
+          break;
+      }
+    }
+  }
+  if (missingLabels.isEmpty) return null;
+  final String missing = missingLabels.toList().join(', ');
+  return 'The notification is missing required $missing data.';
+}
+
+bool _usesMissingNotificationProperty(
+  ValueSource source,
+  NotificationContext notification,
+) => _missingPropertyLabel(source, notification) != null;
+
+String? _missingPropertyLabel(
+  ValueSource source,
+  NotificationContext notification,
+) {
+  if (source is ComposedValueSource) {
+    return source.parts
+        .map((ValueSource part) => _missingPropertyLabel(part, notification))
+        .whereType<String>()
+        .firstOrNull;
+  }
+  if (source is! NotificationPropertyValueSource) return null;
+  return switch (source.property) {
+    NotificationProperty.title when notification.title.trim().isEmpty =>
+      'title',
+    NotificationProperty.body when notification.body.trim().isEmpty => 'body',
+    NotificationProperty.titleOrBody
+        when notification.title.trim().isEmpty &&
+            notification.body.trim().isEmpty =>
+      'title or body',
+    _ => null,
+  };
 }
 
 class _ListenerDefinitionProcessing

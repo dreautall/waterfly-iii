@@ -600,6 +600,8 @@ void main() {
       300,
       scrollable: find.byType(Scrollable).first,
     );
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, -100));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Create transaction automatically'));
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Save definition'));

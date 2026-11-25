@@ -256,6 +256,55 @@ void main() {
     expect(last.padding, const EdgeInsets.fromLTRB(8, 4, 8, 4));
   });
 
+  testWidgets('shows a requires-attention outcome for missing data', (
+    WidgetTester tester,
+  ) async {
+    final NotificationHistoryEntry notification = NotificationHistoryEntry(
+      id: 'missing-title',
+      applicationId: 'com.example.bank',
+      title: '',
+      body: 'Paid 12 CAD',
+      receivedAt: DateTime(2026, 11, 24),
+      processingOutcome: const NotificationProcessingOutcome(
+        status: NotificationProcessingOutcomeStatus.requiresAttention,
+        definition: NotificationHistoryReference(
+          id: 'bank',
+          name: 'Example Bank',
+        ),
+        failureMessage: 'The notification is missing required title data.',
+      ),
+    );
+    await tester.pumpWidget(
+      _page(
+        Future<List<RecentNotificationHistoryEntry>>.value(
+          <RecentNotificationHistoryEntry>[
+            RecentNotificationHistoryEntry(
+              notification: notification,
+              processingOutcome: notification.processingOutcome,
+              definition: const NotificationDefinition(
+                id: 'bank',
+                applicationId: 'com.example.bank',
+                name: 'Example Bank',
+                extractors: <RegExpDefinition>[],
+                rules: <NotificationRule>[],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Example Bank'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Require attention'), findsOneWidget);
+    expect(
+      find.text('The notification is missing required title data.'),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('shows ignored outcomes without transaction creation', (
     WidgetTester tester,
   ) async {

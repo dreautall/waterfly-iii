@@ -558,6 +558,19 @@ void main() {
     expect(find.text('Automatic creation paused'), findsWidgets);
     expect(find.text('Account required for automatic creation'), findsWidgets);
     expect(find.textContaining('FormatException'), findsNothing);
+    final Finder collapsedIssueTitle = find
+        .text('Automatic creation paused')
+        .first;
+    final Finder collapsedIssueIcon = find.descendant(
+      of: find
+          .ancestor(of: collapsedIssueTitle, matching: find.byType(Row))
+          .first,
+      matching: find.byIcon(Icons.rate_review_outlined),
+    );
+    expect(
+      tester.getCenter(collapsedIssueIcon).dy,
+      closeTo(tester.getCenter(collapsedIssueTitle).dy, 1),
+    );
 
     await tester.tap(find.text('Example Bank'));
     await tester.pumpAndSettle();

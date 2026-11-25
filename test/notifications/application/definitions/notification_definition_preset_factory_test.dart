@@ -3,11 +3,15 @@ import 'package:waterflyiii/notifications/application/definitions/notification_d
 import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/domain/evaluation/evaluation_context.dart';
+import 'package:waterflyiii/notifications/domain/evaluation/notification_definition_evaluation_result.dart';
+import 'package:waterflyiii/notifications/domain/evaluation/notification_definition_evaluator.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_evaluation_result.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
+import 'package:waterflyiii/notifications/domain/planning/transaction_creation_mode.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/normalized_amount_capture_value_source.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 
 void main() {
@@ -41,11 +45,6 @@ void main() {
     final List<SetTransactionFieldAction> actions = rule.actions
         .whereType<SetTransactionFieldAction>()
         .toList();
-    final RegExpDefinition titleExtractor = extractors.firstWhere(
-      (RegExpDefinition extractor) =>
-          extractor.predefinedType ==
-          PredefinedRegExpDefinition.notificationTitle,
-    );
     final RegExpDefinition messageExtractor = extractors.firstWhere(
       (RegExpDefinition extractor) =>
           extractor.predefinedType ==
@@ -53,17 +52,7 @@ void main() {
     );
     expect(
       actions.first.valueSource,
-      isA<RegExpCaptureValueSource>()
-          .having(
-            (RegExpCaptureValueSource source) => source.extractorId,
-            'extractorId',
-            titleExtractor.id,
-          )
-          .having(
-            (RegExpCaptureValueSource source) => source.captureName,
-            'captureName',
-            'title',
-          ),
+      const NotificationPropertyValueSource(NotificationProperty.titleOrBody),
     );
     expect(
       actions[1].valueSource,
@@ -115,6 +104,31 @@ void main() {
     expect(
       amountAction.evaluate(context).patch?.values[TransactionField.amount],
       '1234.56',
+    );
+  });
+
+  test('uses the body as the Basic title fallback', () {
+    final List<RegExpDefinition> extractors = factory.basicExtractors();
+    final NotificationRule rule = factory.standardTransactionRule(
+      extractors,
+      includeNotificationText: true,
+    );
+    final NotificationDefinitionEvaluationResult result =
+        NotificationDefinitionEvaluator(
+          extractors: extractors,
+          rules: <NotificationRule>[rule],
+          transactionCreationMode: TransactionCreationMode.prompt,
+        ).evaluate(
+          NotificationContext(
+            title: '',
+            body: 'Card payment 12.50 EUR',
+            receivedAt: DateTime(2026, 11, 24),
+          ),
+        );
+
+    expect(
+      result.effectiveTransactionIntent?.patch.values[TransactionField.title],
+      'Card payment 12.50 EUR',
     );
   });
 }

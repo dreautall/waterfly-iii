@@ -6,6 +6,7 @@ enum NotificationAlertKind {
   definitionInvalid,
   evaluationFailed,
   actionFailed,
+  missingInput,
 }
 
 enum NotificationMigrationIssue {
@@ -29,6 +30,7 @@ extension NotificationAlertKindLabel on NotificationAlertKind {
     NotificationAlertKind.definitionInvalid => 'Definition invalid',
     NotificationAlertKind.evaluationFailed => 'Rule evaluation failed',
     NotificationAlertKind.actionFailed => 'Action failed',
+    NotificationAlertKind.missingInput => 'Notification data missing',
   };
 }
 

@@ -61,14 +61,33 @@ class NotificationDefinitionEditorViewModel extends ChangeNotifier {
           action.valueSource is NotificationPropertyValueSource
           ? action.valueSource as NotificationPropertyValueSource
           : null;
+      if (action.target == TransactionField.title &&
+          property?.property == NotificationProperty.title) {
+        return SetTransactionFieldAction(
+          target: action.target,
+          valueSource: const NotificationPropertyValueSource(
+            NotificationProperty.titleOrBody,
+          ),
+        );
+      }
+      final RegExpCaptureValueSource? capture =
+          action.valueSource is RegExpCaptureValueSource
+          ? action.valueSource as RegExpCaptureValueSource
+          : null;
+      if (action.target == TransactionField.title &&
+          titleExtractor != null &&
+          capture?.extractorId == titleExtractor.id) {
+        return SetTransactionFieldAction(
+          target: action.target,
+          valueSource: const NotificationPropertyValueSource(
+            NotificationProperty.titleOrBody,
+          ),
+        );
+      }
       final (RegExpDefinition?, String)? replacement = switch ((
         action.target,
         property?.property,
       )) {
-        (TransactionField.title, NotificationProperty.title) => (
-          titleExtractor,
-          'title',
-        ),
         (TransactionField.notes, NotificationProperty.body) => (
           messageExtractor,
           'message',
@@ -128,6 +147,10 @@ class NotificationDefinitionEditorViewModel extends ChangeNotifier {
 
   TransactionCreationMode get transactionCreationMode =>
       _draft.transactionCreationMode;
+  MissingNotificationDataPolicy get missingNotificationDataPolicy =>
+      _draft.missingNotificationDataPolicy;
+  bool get allowMetadataOnlyNotifications =>
+      _draft.allowMetadataOnlyNotifications;
 
   bool get isDirty => _draft.isDirty;
   bool get hasUnsavedOptions => _draft.hasUnsavedOptions;
@@ -303,6 +326,15 @@ class NotificationDefinitionEditorViewModel extends ChangeNotifier {
     _draft.transactionCreationMode = automatically
         ? TransactionCreationMode.automatic
         : TransactionCreationMode.prompt;
+    notifyListeners();
+  }
+
+  void setMissingNotificationDataOptions({
+    required MissingNotificationDataPolicy policy,
+    required bool allowMetadataOnly,
+  }) {
+    _draft.missingNotificationDataPolicy = policy;
+    _draft.allowMetadataOnlyNotifications = allowMetadataOnly;
     notifyListeners();
   }
 

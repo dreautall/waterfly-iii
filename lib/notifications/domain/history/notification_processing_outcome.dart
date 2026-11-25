@@ -1,7 +1,13 @@
 import 'package:waterflyiii/notifications/domain/planning/transaction_creation_mode.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_patch.dart';
 
-enum NotificationProcessingOutcomeStatus { noMatch, matched, ignored, failed }
+enum NotificationProcessingOutcomeStatus {
+  noMatch,
+  matched,
+  ignored,
+  requiresAttention,
+  failed,
+}
 
 enum NotificationTransactionCreationOrigin { automatic, user }
 

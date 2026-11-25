@@ -7,6 +7,7 @@ import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/date_time_capture_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/normalized_amount_capture_value_source.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 
 class NotificationDefinitionPresetFactory {
@@ -52,11 +53,10 @@ class NotificationDefinitionPresetFactory {
       isPredefined: true,
       actions: <NotificationAction>[
         if (includeNotificationText)
-          SetTransactionFieldAction(
+          const SetTransactionFieldAction(
             target: TransactionField.title,
-            valueSource: capture(
-              PredefinedRegExpDefinition.notificationTitle,
-              'title',
+            valueSource: NotificationPropertyValueSource(
+              NotificationProperty.titleOrBody,
             ),
           ),
         SetTransactionFieldAction(

@@ -100,8 +100,10 @@ class _NotificationDefinitionDetailsPageState
       _viewModel.transactionCreationMode;
   bool get _isSaving => _viewModel.isSaving;
   bool get _hasSample =>
-      _sampleTitleController.text.trim().isNotEmpty &&
-      _sampleBodyController.text.trim().isNotEmpty;
+      _sampleTitleController.text.trim().isNotEmpty ||
+      _sampleBodyController.text.trim().isNotEmpty ||
+      (_extractorMode == NotificationExtractorMode.advanced &&
+          _viewModel.allowMetadataOnlyNotifications);
   AutomaticTransactionReadiness get _automaticReadiness =>
       _currentDefinition().automaticTransactionReadiness;
   NotificationDefinitionEditorWorkflows get _workflows =>
@@ -434,6 +436,20 @@ class _NotificationDefinitionDetailsPageState
                     automaticReadiness: _automaticReadiness,
                     warningKey: _automaticWarningKey,
                     onWarningRevealed: _keepAutomaticWarningVisible,
+                    missingNotificationDataPolicy:
+                        _viewModel.missingNotificationDataPolicy,
+                    allowMetadataOnlyNotifications:
+                        _viewModel.allowMetadataOnlyNotifications,
+                    onMissingNotificationDataChanged:
+                        (
+                          MissingNotificationDataPolicy policy,
+                          bool allowMetadataOnly,
+                        ) => _viewModel.setMissingNotificationDataOptions(
+                          policy: policy,
+                          allowMetadataOnly: allowMetadataOnly,
+                        ),
+                    isAdvancedMode:
+                        _extractorMode == NotificationExtractorMode.advanced,
                   ),
                 ),
                 if (_extractorMode ==

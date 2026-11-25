@@ -364,9 +364,9 @@ class _NotificationAlertsPageState extends State<NotificationAlertsPage> {
     return <Widget>[
       SliverPadding(
         padding: EdgeInsets.fromLTRB(
-          16,
+          8,
           0,
-          16,
+          8,
           NotificationPageHeader.bodyBottomInset(context),
         ),
         sliver: SliverList.builder(
@@ -386,9 +386,8 @@ class _NotificationAlertsPageState extends State<NotificationAlertsPage> {
                     !_removingGroupKeys.contains(group.key) &&
                     !_enteringGroupKeys.contains(group.key),
                 child: Padding(
-                  padding: EdgeInsets.only(
-                    bottom: index == visibleGroups.length - 1 ? 0 : 8,
-                  ),
+                  key: Key('alert-group-shadow-${group.key}'),
+                  padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
                   child: NotificationAlertCard(
                     alerts: group.alerts,
                     applicationName:

@@ -36,7 +36,18 @@ enum _NotificationPreset {
     'Card purchase for 12.50 CAD',
   ),
   emptyTitle('Empty title', '', 'Paid 12.50 CAD'),
-  emptyBody('Empty body', 'Card payment', '');
+  emptyBody('Empty body', 'Card payment', ''),
+  dbsBodyOnly(
+    'DBS body-only transaction',
+    '',
+    'A card txn of 12.50 SGD from DBS/POSB card ending 1234 to Market on 24 Nov 14:30 (SGT) was completed.',
+  ),
+  groupingTitleOnly(
+    'Grouping title-only notification',
+    'DBS transaction notifications',
+    '',
+  ),
+  metadataOnly('Metadata-only notification', '', '');
 
   const _NotificationPreset(this.label, this.title, this.body);
 
@@ -315,13 +326,8 @@ class _NotificationDebugTestLabPageState
   );
 
   Future<void> _deliver() {
-    final bool isIncomplete =
-        _titleController.text.trim().isEmpty ||
-        _bodyController.text.trim().isEmpty;
     return _run(
-      successMessage: isIncomplete
-          ? 'Synthetic notification ignored, matching the Android listener.'
-          : 'Synthetic notification delivered.',
+      successMessage: 'Synthetic notification delivered.',
       action: () async {
         final AppInfo application = _application!;
         await processDebugNotification(

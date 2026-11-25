@@ -106,7 +106,7 @@ class SqlcipherNotificationHistoryStore
     final Database database = await _databaseProvider.database;
     final List<Map<String, Object?>> rows = await database.query(
       'notification_history',
-      where: 'application_id = ? AND TRIM(title) <> ? AND TRIM(body) <> ?',
+      where: 'application_id = ? AND (TRIM(title) <> ? OR TRIM(body) <> ?)',
       whereArgs: <Object?>[applicationId, '', ''],
       orderBy: 'received_at DESC, id DESC',
       limit: limit,

@@ -2081,6 +2081,9 @@ class STr extends S {
   String get notificationsAlertsKindActionFailed => 'Action failed';
 
   @override
+  String get notificationsAlertsKindMissingInput => 'Missing notification data';
+
+  @override
   String get notificationsMigrationAutomaticPausedTitle =>
       'Automatic creation paused';
 
@@ -2222,6 +2225,20 @@ class STr extends S {
 
   @override
   String get notificationsHistoryNoMatchingRuleTitle => 'No matching rule';
+
+  @override
+  String get notificationsHistoryRequiresAttentionTitle => 'Require attention';
+
+  @override
+  String get notificationsHistoryRequiresAttentionMessage =>
+      'The notification is missing data required by its definition.';
+
+  @override
+  String get notificationsHistoryUntitledNotification =>
+      'Untitled notification';
+
+  @override
+  String get notificationsHistoryReviewDefinition => 'Review definition';
 
   @override
   String get notificationsHistoryNoMatchingRuleMessage =>
@@ -2812,6 +2829,46 @@ class STr extends S {
       'Choose whether matching notifications create transactions automatically or wait for review.';
 
   @override
+  String get notificationsDefinitionMissingData => 'Missing notification data';
+
+  @override
+  String get notificationsDefinitionMissingDataDescription =>
+      'Choose what happens when a notification is missing a title or body.';
+
+  @override
+  String get notificationsDefinitionMissingDataDialogTitle =>
+      'When a notification is missing a title or body';
+
+  @override
+  String get notificationsDefinitionMissingDataDialogDescription =>
+      'Choose the outcome when a rule cannot evaluate the notification with the available text.';
+
+  @override
+  String get notificationsDefinitionMissingDataAttention => 'Require attention';
+
+  @override
+  String get notificationsDefinitionMissingDataAttentionDescription =>
+      'Record the notification and show which required title, body, or capture was unavailable.';
+
+  @override
+  String get notificationsDefinitionMissingDataIgnore => 'Ignore notification';
+
+  @override
+  String get notificationsDefinitionMissingDataIgnoreDescription =>
+      'Skip processing without creating a prompt or transaction. The event is still recorded in Recent notifications.';
+
+  @override
+  String get notificationsDefinitionAdvanced => 'Advanced';
+
+  @override
+  String get notificationsDefinitionAllowMetadataOnly =>
+      'Allow metadata-only notifications';
+
+  @override
+  String get notificationsDefinitionAllowMetadataOnlyDescription =>
+      'Allow eligible rules to process notifications where both title and body are empty.';
+
+  @override
   String get notificationsDefinitionCreateAutomatically =>
       'Create transaction automatically';
 
@@ -3068,9 +3125,6 @@ class STr extends S {
   @override
   String get notificationsDefinitionSimpleDescription =>
       'Show the transaction produced from the sample and hide the extraction details.';
-
-  @override
-  String get notificationsDefinitionAdvanced => 'Advanced';
 
   @override
   String get notificationsDefinitionAdvancedDescription =>

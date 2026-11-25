@@ -6,6 +6,7 @@ import 'package:waterflyiii/notifications/presentation/shared/notification_text_
 import 'package:waterflyiii/notifications/domain/planning/automatic_transaction_readiness.dart';
 import 'package:waterflyiii/notifications/presentation/definitions/widgets/automatic_transaction_readiness_display.dart';
 import 'package:waterflyiii/notifications/presentation/shared/message_status_card.dart';
+import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
 
 class DefinitionOptionsSection extends StatelessWidget {
   const DefinitionOptionsSection({
@@ -13,6 +14,10 @@ class DefinitionOptionsSection extends StatelessWidget {
     required this.createAutomatically,
     required this.onCreateAutomaticallyChanged,
     required this.automaticReadiness,
+    required this.missingNotificationDataPolicy,
+    required this.allowMetadataOnlyNotifications,
+    required this.onMissingNotificationDataChanged,
+    required this.isAdvancedMode,
     this.warningKey,
     this.onWarningRevealed,
   });
@@ -20,6 +25,14 @@ class DefinitionOptionsSection extends StatelessWidget {
   final bool createAutomatically;
   final ValueChanged<bool> onCreateAutomaticallyChanged;
   final AutomaticTransactionReadiness automaticReadiness;
+  final MissingNotificationDataPolicy missingNotificationDataPolicy;
+  final bool allowMetadataOnlyNotifications;
+  final bool isAdvancedMode;
+  final void Function(
+    MissingNotificationDataPolicy policy,
+    bool allowMetadataOnly,
+  )
+  onMissingNotificationDataChanged;
   final Key? warningKey;
   final VoidCallback? onWarningRevealed;
 
@@ -37,6 +50,13 @@ class DefinitionOptionsSection extends StatelessWidget {
         style: context.notificationSectionDescription,
       ),
       const SizedBox(height: 12),
+      MissingNotificationDataOptionCard(
+        policy: missingNotificationDataPolicy,
+        allowMetadataOnly: allowMetadataOnlyNotifications,
+        onChanged: onMissingNotificationDataChanged,
+        showAdvanced: isAdvancedMode,
+      ),
+      const SizedBox(height: 12),
       AutomaticTransactionOptionCard(
         createAutomatically: createAutomatically,
         onCreateAutomaticallyChanged: onCreateAutomaticallyChanged,
@@ -46,6 +66,230 @@ class DefinitionOptionsSection extends StatelessWidget {
       ),
     ],
   );
+}
+
+class MissingNotificationDataOptionCard extends StatelessWidget {
+  const MissingNotificationDataOptionCard({
+    super.key,
+    required this.policy,
+    required this.allowMetadataOnly,
+    required this.onChanged,
+    required this.showAdvanced,
+  });
+
+  final MissingNotificationDataPolicy policy;
+  final bool allowMetadataOnly;
+  final bool showAdvanced;
+  final void Function(
+    MissingNotificationDataPolicy policy,
+    bool allowMetadataOnly,
+  )
+  onChanged;
+
+  @override
+  Widget build(BuildContext context) => DefinitionDetailCard(
+    leading: const Icon(Icons.article_outlined),
+    title: Text(S.of(context).notificationsDefinitionMissingData),
+    subtitle: Text(
+      S.of(context).notificationsDefinitionMissingDataDescription,
+      style: context.notificationSupportingText,
+    ),
+    trailing: Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+            policy == MissingNotificationDataPolicy.requiresAttention
+                ? S.of(context).notificationsDefinitionMissingDataAttention
+                : S.of(context).notificationsDefinitionMissingDataIgnore,
+          ),
+          const SizedBox(width: 4),
+          const Icon(Icons.chevron_right),
+        ],
+      ),
+    ),
+    onTap: () => _select(context),
+  );
+
+  Future<void> _select(BuildContext context) async {
+    MissingNotificationDataPolicy selectedPolicy = policy;
+    bool selectedMetadataOnly = allowMetadataOnly;
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      showDragHandle: true,
+      constraints: BoxConstraints(
+        maxHeight:
+            MediaQuery.sizeOf(context).height -
+            MediaQuery.viewPaddingOf(context).top,
+      ),
+      builder: (BuildContext sheetContext) => StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) =>
+            SingleChildScrollView(
+              padding: EdgeInsets.fromLTRB(
+                16,
+                8,
+                16,
+                24 + MediaQuery.viewPaddingOf(context).bottom,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    S.of(context).notificationsDefinitionMissingDataDialogTitle,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    S
+                        .of(context)
+                        .notificationsDefinitionMissingDataDialogDescription,
+                    style: context.notificationSupportingText,
+                  ),
+                  const SizedBox(height: 16),
+                  _policyOption(
+                    context,
+                    value: MissingNotificationDataPolicy.requiresAttention,
+                    selected: selectedPolicy,
+                    onSelected: (MissingNotificationDataPolicy value) =>
+                        setState(() => selectedPolicy = value),
+                    title: S
+                        .of(context)
+                        .notificationsDefinitionMissingDataAttention,
+                    description: S
+                        .of(context)
+                        .notificationsDefinitionMissingDataAttentionDescription,
+                  ),
+                  const SizedBox(height: 8),
+                  _policyOption(
+                    context,
+                    value: MissingNotificationDataPolicy.ignore,
+                    selected: selectedPolicy,
+                    onSelected: (MissingNotificationDataPolicy value) =>
+                        setState(() => selectedPolicy = value),
+                    title: S
+                        .of(context)
+                        .notificationsDefinitionMissingDataIgnore,
+                    description: S
+                        .of(context)
+                        .notificationsDefinitionMissingDataIgnoreDescription,
+                  ),
+                  if (showAdvanced) ...<Widget>[
+                    const SizedBox(height: 16),
+                    Row(
+                      children: <Widget>[
+                        const Expanded(child: Divider()),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: Text(
+                            S.of(context).notificationsDefinitionAdvanced,
+                            style: Theme.of(context).textTheme.labelLarge,
+                          ),
+                        ),
+                        const Expanded(child: Divider()),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Material(
+                      color: Theme.of(context).colorScheme.surfaceContainerLow,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: ListTile(
+                        leading: const Icon(Icons.data_object_outlined),
+                        title: Text(
+                          S
+                              .of(context)
+                              .notificationsDefinitionAllowMetadataOnly,
+                        ),
+                        subtitle: Text(
+                          S
+                              .of(context)
+                              .notificationsDefinitionAllowMetadataOnlyDescription,
+                          style: context.notificationSupportingText,
+                        ),
+                        trailing: Switch(
+                          value: selectedMetadataOnly,
+                          onChanged: (bool value) =>
+                              setState(() => selectedMetadataOnly = value),
+                        ),
+                        onTap: () => setState(
+                          () => selectedMetadataOnly = !selectedMetadataOnly,
+                        ),
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: 20),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: Text(
+                            MaterialLocalizations.of(context).cancelButtonLabel,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: FilledButton(
+                          onPressed: () {
+                            onChanged(selectedPolicy, selectedMetadataOnly);
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            MaterialLocalizations.of(context).saveButtonLabel,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+      ),
+    );
+  }
+
+  Widget _policyOption(
+    BuildContext context, {
+    required MissingNotificationDataPolicy value,
+    required MissingNotificationDataPolicy selected,
+    required ValueChanged<MissingNotificationDataPolicy> onSelected,
+    required String title,
+    required String description,
+  }) {
+    final bool isSelected = value == selected;
+    return Card(
+      margin: EdgeInsets.zero,
+      color: isSelected
+          ? Theme.of(context).colorScheme.primary.withAlpha(20)
+          : null,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+        side: isSelected
+            ? BorderSide(color: Theme.of(context).colorScheme.primary)
+            : BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
+      ),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        minLeadingWidth: 0,
+        leading: RadioGroup<MissingNotificationDataPolicy>(
+          groupValue: selected,
+          onChanged: (MissingNotificationDataPolicy? value) {
+            if (value != null) onSelected(value);
+          },
+          child: Radio<MissingNotificationDataPolicy>(value: value),
+        ),
+        title: Text(title),
+        subtitle: Text(description, style: context.notificationSupportingText),
+        onTap: () => onSelected(value),
+      ),
+    );
+  }
 }
 
 class AutomaticTransactionOptionCard extends StatefulWidget {

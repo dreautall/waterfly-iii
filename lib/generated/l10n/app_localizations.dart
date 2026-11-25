@@ -3228,6 +3228,12 @@ abstract class S {
   /// **'Action failed'**
   String get notificationsAlertsKindActionFailed;
 
+  /// Label for an alert requiring missing notification title or body data.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing notification data'**
+  String get notificationsAlertsKindMissingInput;
+
   /// Title for a migrated automatic configuration that was changed to Prompt mode.
   ///
   /// In en, this message translates to:
@@ -3443,6 +3449,30 @@ abstract class S {
   /// In en, this message translates to:
   /// **'No matching rule'**
   String get notificationsHistoryNoMatchingRuleTitle;
+
+  /// Title for a notification missing input required by its definition.
+  ///
+  /// In en, this message translates to:
+  /// **'Require attention'**
+  String get notificationsHistoryRequiresAttentionTitle;
+
+  /// Fallback explanation for a notification with missing required input.
+  ///
+  /// In en, this message translates to:
+  /// **'The notification is missing data required by its definition.'**
+  String get notificationsHistoryRequiresAttentionMessage;
+
+  /// Fallback heading for a notification without a title.
+  ///
+  /// In en, this message translates to:
+  /// **'Untitled notification'**
+  String get notificationsHistoryUntitledNotification;
+
+  /// Action for reviewing the definition associated with missing notification data.
+  ///
+  /// In en, this message translates to:
+  /// **'Review definition'**
+  String get notificationsHistoryReviewDefinition;
 
   /// Explanation shown when a recent notification does not match any rule.
   ///
@@ -4362,6 +4392,72 @@ abstract class S {
   /// **'Choose whether matching notifications create transactions automatically or wait for review.'**
   String get notificationsDefinitionOptionsDescription;
 
+  /// Definition option title for handling notifications with missing required text.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing notification data'**
+  String get notificationsDefinitionMissingData;
+
+  /// Definition option subtitle for handling missing notification fields.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose what happens when a notification is missing a title or body.'**
+  String get notificationsDefinitionMissingDataDescription;
+
+  /// Bottom sheet title for missing notification input behavior.
+  ///
+  /// In en, this message translates to:
+  /// **'When a notification is missing a title or body'**
+  String get notificationsDefinitionMissingDataDialogTitle;
+
+  /// Bottom sheet description for missing notification input behavior.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the outcome when a rule cannot evaluate the notification with the available text.'**
+  String get notificationsDefinitionMissingDataDialogDescription;
+
+  /// Option for recording a notification that needs missing input repaired.
+  ///
+  /// In en, this message translates to:
+  /// **'Require attention'**
+  String get notificationsDefinitionMissingDataAttention;
+
+  /// Description for the requires-attention missing-data option.
+  ///
+  /// In en, this message translates to:
+  /// **'Record the notification and show which required title, body, or capture was unavailable.'**
+  String get notificationsDefinitionMissingDataAttentionDescription;
+
+  /// Option for ignoring a notification with missing required input.
+  ///
+  /// In en, this message translates to:
+  /// **'Ignore notification'**
+  String get notificationsDefinitionMissingDataIgnore;
+
+  /// Description for the ignore missing-data option.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip processing without creating a prompt or transaction. The event is still recorded in Recent notifications.'**
+  String get notificationsDefinitionMissingDataIgnoreDescription;
+
+  /// Advanced notification processing mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get notificationsDefinitionAdvanced;
+
+  /// Advanced option title for processing notifications without title or body text.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow metadata-only notifications'**
+  String get notificationsDefinitionAllowMetadataOnly;
+
+  /// Advanced option description for metadata-only notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow eligible rules to process notifications where both title and body are empty.'**
+  String get notificationsDefinitionAllowMetadataOnlyDescription;
+
   /// Option to automatically create matching transactions.
   ///
   /// In en, this message translates to:
@@ -4698,12 +4794,6 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Show the transaction produced from the sample and hide the extraction details.'**
   String get notificationsDefinitionSimpleDescription;
-
-  /// Advanced notification processing mode.
-  ///
-  /// In en, this message translates to:
-  /// **'Advanced'**
-  String get notificationsDefinitionAdvanced;
 
   /// Description for advanced notification processing mode.
   ///

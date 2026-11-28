@@ -91,6 +91,10 @@ class _RecentNotificationCardState extends State<RecentNotificationCard> {
     final double headerBaseline = _textBaseline(context, titleStyle);
     final bool isRedacted =
         notification.title.trim().isEmpty && notification.body.trim().isEmpty;
+    final String notificationTitle = notification.title.trim().isNotEmpty
+        ? notification.title
+        : entry.definition?.name ??
+              S.of(context).notificationsHistoryUntitledNotification;
     return Card(
       margin: EdgeInsets.zero,
       color: Theme.of(context).extension<NotificationCardTheme>()?.surfaceColor,
@@ -127,7 +131,7 @@ class _RecentNotificationCardState extends State<RecentNotificationCard> {
                                     ? S
                                           .of(context)
                                           .notificationsHistoryRedactedTitle
-                                    : notification.title,
+                                    : notificationTitle,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: titleStyle,
@@ -241,6 +245,26 @@ class _RecentNotificationCardState extends State<RecentNotificationCard> {
                 onOpenDefinition: _definitionAction(entry),
                 onRemoveFromHistory: _removeAction(entry),
               ),
+      );
+    }
+    if (entry.processingOutcome?.status ==
+        NotificationProcessingOutcomeStatus.requiresAttention) {
+      return _promptControls(
+        RecentNotificationOutcome(
+          status: MessageStatus.review,
+          icon: Icons.report_problem_outlined,
+          title: S.of(context).notificationsHistoryRequiresAttentionTitle,
+          message:
+              entry.processingOutcome?.failureMessage ??
+              S.of(context).notificationsHistoryRequiresAttentionMessage,
+        ),
+        RecentNotificationActionsButton(
+          label: S.of(context).notificationsHistoryReviewDefinition,
+          primaryIcon: Icons.rule_folder_outlined,
+          onPrimaryAction: _definitionAction(entry),
+          onOpenDefinition: _definitionAction(entry),
+          onRemoveFromHistory: _removeAction(entry),
+        ),
       );
     }
     final String? transactionId = entry.processingOutcome?.transactionId;

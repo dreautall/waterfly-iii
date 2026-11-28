@@ -176,6 +176,9 @@ class RuleConditionsSectionState extends State<RuleConditionsSection>
           S.of(context).notificationsExtractorNotificationTitle,
         NotificationProperty.body =>
           S.of(context).notificationsExtractorNotificationMessage,
+        NotificationProperty.titleOrBody =>
+          '${S.of(context).notificationsExtractorNotificationTitle} / '
+              '${S.of(context).notificationsExtractorNotificationMessage}',
       };
     }
     if (source is RegExpCaptureValueSource) return source.captureName;

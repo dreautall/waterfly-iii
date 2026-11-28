@@ -181,7 +181,17 @@ class RuleActionsSectionState extends State<RuleActionsSection> {
 
   String sourceText(ValueSource source) {
     if (source is LiteralValueSource) return '"${source.value}"';
-    if (source is NotificationPropertyValueSource) return source.property.name;
+    if (source is NotificationPropertyValueSource) {
+      return switch (source.property) {
+        NotificationProperty.title =>
+          S.of(context).notificationsExtractorNotificationTitle,
+        NotificationProperty.body =>
+          S.of(context).notificationsExtractorNotificationMessage,
+        NotificationProperty.titleOrBody =>
+          '${S.of(context).notificationsExtractorNotificationTitle} / '
+              '${S.of(context).notificationsExtractorNotificationMessage}',
+      };
+    }
     if (source is RegExpCaptureValueSource) return source.captureName;
     if (source is DateTimeCaptureValueSource) return source.capture.captureName;
     if (source is NormalizedAmountCaptureValueSource) {

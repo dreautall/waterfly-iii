@@ -69,9 +69,7 @@ class PendingNotificationMigrationCompletionService {
     NotificationContext notification,
   ) async {
     final String? applicationId = notification.applicationId;
-    if (applicationId == null ||
-        notification.title.trim().isEmpty ||
-        notification.body.trim().isEmpty) {
+    if (applicationId == null) {
       return const PendingNotificationMigrationCompletionResult();
     }
 

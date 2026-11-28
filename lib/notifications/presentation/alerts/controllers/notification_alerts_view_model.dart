@@ -47,6 +47,7 @@ class NotificationAlertGroup {
     NotificationAlertKind.evaluationFailed => 3,
     NotificationAlertKind.actionFailed => 2,
     NotificationAlertKind.migrationNeedsReview => 1,
+    NotificationAlertKind.missingInput => 1,
   };
 }
 

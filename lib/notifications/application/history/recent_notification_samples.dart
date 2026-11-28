@@ -22,8 +22,7 @@ Future<List<NotificationSample>> loadRecentNotificationSamples({
           .where(
             (NotificationHistoryEntry entry) =>
                 entry.applicationId == applicationId &&
-                entry.title.trim().isNotEmpty &&
-                entry.body.trim().isNotEmpty,
+                (entry.title.trim().isNotEmpty || entry.body.trim().isNotEmpty),
           )
           .toList()
         ..sort((NotificationHistoryEntry left, NotificationHistoryEntry right) {

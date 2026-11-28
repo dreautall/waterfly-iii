@@ -251,7 +251,7 @@ void main() {
     );
     expect(
       definition.copyWith(sampleBody: '').status,
-      NotificationDefinitionStatus.needsSetup,
+      NotificationDefinitionStatus.needsReview,
     );
     expect(
       definition
@@ -308,6 +308,96 @@ void main() {
     expect(copied.extractorMode, definition.extractorMode);
     expect(copied.basicView, definition.basicView);
     expect(copied.transactionCreationMode, definition.transactionCreationMode);
+  });
+
+  test('round-trips missing notification data options', () {
+    const NotificationDefinition definition = NotificationDefinition(
+      id: 'bank',
+      applicationId: 'com.example.bank',
+      name: 'Bank',
+      extractors: <RegExpDefinition>[],
+      rules: <NotificationRule>[],
+      missingNotificationDataPolicy: MissingNotificationDataPolicy.ignore,
+      allowMetadataOnlyNotifications: true,
+    );
+
+    final NotificationDefinition restored = NotificationDefinition.fromJson(
+      definition.toJson(),
+    );
+
+    expect(
+      restored.missingNotificationDataPolicy,
+      MissingNotificationDataPolicy.ignore,
+    );
+    expect(restored.allowMetadataOnlyNotifications, isTrue);
+    expect(restored.canProcessMetadataOnlyNotifications, isFalse);
+    expect(
+      restored
+          .copyWith(extractorMode: NotificationExtractorMode.advanced)
+          .canProcessMetadataOnlyNotifications,
+      isTrue,
+    );
+  });
+
+  test(
+    'metadata-only Advanced definitions can be ready without extractors',
+    () {
+      const NotificationDefinition definition = NotificationDefinition(
+        id: 'metadata-only',
+        applicationId: 'com.example.bank',
+        name: 'Bank',
+        extractors: <RegExpDefinition>[],
+        rules: <NotificationRule>[],
+        sharedActions: <NotificationAction>[
+          SetTransactionFieldAction(
+            target: TransactionField.amount,
+            valueSource: LiteralValueSource('12.50'),
+          ),
+        ],
+        extractorMode: NotificationExtractorMode.advanced,
+        allowMetadataOnlyNotifications: true,
+      );
+
+      expect(definition.status, NotificationDefinitionStatus.ready);
+    },
+  );
+
+  test('Basic legacy title captures fall back to the body at runtime', () {
+    final RegExpDefinition title =
+        RegExpDefinition.createPredefinedRegExpDefinition(
+          PredefinedRegExpDefinition.notificationTitle,
+        );
+    final NotificationDefinition definition = NotificationDefinition(
+      id: 'legacy-basic',
+      applicationId: 'com.example.bank',
+      name: 'Bank',
+      extractors: <RegExpDefinition>[title],
+      rules: const <NotificationRule>[],
+      sharedActions: <NotificationAction>[
+        SetTransactionFieldAction(
+          target: TransactionField.title,
+          valueSource: RegExpCaptureValueSource(
+            extractorId: title.id,
+            captureName: 'title',
+          ),
+        ),
+      ],
+      extractorMode: NotificationExtractorMode.basic,
+    );
+
+    final NotificationDefinitionEvaluationResult? result = definition.evaluate(
+      NotificationContext(
+        applicationId: 'com.example.bank',
+        title: '',
+        body: 'Card txn from DBS',
+        receivedAt: DateTime(2026, 11, 24),
+      ),
+    );
+
+    expect(
+      result?.effectiveTransactionIntent?.patch.values[TransactionField.title],
+      'Card txn from DBS',
+    );
   });
 
   // Keeps a registration unconfigured when its guided sample input is
@@ -624,6 +714,27 @@ void main() {
           applicationId: 'com.example.bank',
           title: 'Statement',
           body: 'Your statement is ready',
+          receivedAt: DateTime(2026, 8, 30),
+        ),
+      ),
+      isNull,
+    );
+
+    final RegExpDefinition requiredTitle =
+        RegExpDefinition.createPredefinedRegExpDefinition(
+          PredefinedRegExpDefinition.notificationTitle,
+          isRequiredForMatch: true,
+        );
+    final NotificationDefinition titleRequiredDefinition =
+        requiredExtractorDefinition.copyWith(
+          extractors: <RegExpDefinition>[requiredTitle],
+        );
+    expect(
+      titleRequiredDefinition.evaluate(
+        NotificationContext(
+          applicationId: 'com.example.bank',
+          title: '',
+          body: 'Paid 12.50 CAD',
           receivedAt: DateTime(2026, 8, 30),
         ),
       ),

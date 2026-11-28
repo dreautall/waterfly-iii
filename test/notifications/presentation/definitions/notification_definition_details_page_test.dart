@@ -1540,7 +1540,9 @@ void main() {
     );
 
     expect(
-      richText('Set field "title" from extractor "Notification title"'),
+      richText(
+        'Set field "title" to "Notification title / Notification message"',
+      ),
       findsOneWidget,
     );
     expect(
@@ -2799,6 +2801,8 @@ void main() {
       300,
       scrollable: find.byType(Scrollable).first,
     );
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, -100));
+    await tester.pumpAndSettle();
     final Finder automaticOption = find.ancestor(
       of: find.text('Create transaction automatically'),
       matching: find.byType(DefinitionDetailCard),
@@ -2807,7 +2811,14 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Save definition'));
     await tester.pump();
-    await tester.tap(automaticOption);
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, -100));
+    await tester.pump();
+    await tester.tap(
+      find.ancestor(
+        of: find.text('Create transaction automatically'),
+        matching: find.byType(DefinitionDetailCard),
+      ),
+    );
     await tester.pump();
 
     expect(tester.takeException(), isNull);

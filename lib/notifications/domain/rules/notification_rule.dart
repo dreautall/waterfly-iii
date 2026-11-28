@@ -227,6 +227,17 @@ class NotificationRule {
             if (group.isConfigured) ...group.actions,
         ];
 
+  Set<NotificationRuleRequirement> get conditionalActionGroupRequirements =>
+      <NotificationRuleRequirement>{
+        for (final NotificationActionGroup group in conditionalActionGroups)
+          if (group.isConfigured) ...<NotificationRuleRequirement>{
+            for (final NotificationCondition condition in group.conditions)
+              ..._requirementsForCondition(condition),
+            for (final NotificationAction action in group.actions)
+              ..._requirementsForAction(action),
+          },
+      };
+
   Set<NotificationRuleRequirement> get _selectionRequirements =>
       <NotificationRuleRequirement>{
         for (final NotificationCondition condition in conditions)

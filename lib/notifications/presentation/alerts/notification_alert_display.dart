@@ -14,6 +14,8 @@ extension NotificationAlertKindDisplay on NotificationAlertKind {
       S.of(context).notificationsAlertsKindEvaluationFailed,
     NotificationAlertKind.actionFailed =>
       S.of(context).notificationsAlertsKindActionFailed,
+    NotificationAlertKind.missingInput =>
+      S.of(context).notificationsAlertsKindMissingInput,
   };
 }
 

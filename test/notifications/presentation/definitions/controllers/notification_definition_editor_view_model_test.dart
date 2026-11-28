@@ -249,17 +249,7 @@ void main() {
         .toList();
     expect(
       actions.first.valueSource,
-      isA<RegExpCaptureValueSource>()
-          .having(
-            (RegExpCaptureValueSource source) => source.extractorId,
-            'extractorId',
-            titleExtractor.id,
-          )
-          .having(
-            (RegExpCaptureValueSource source) => source.captureName,
-            'captureName',
-            'title',
-          ),
+      const NotificationPropertyValueSource(NotificationProperty.titleOrBody),
     );
     expect(
       actions.last.valueSource,

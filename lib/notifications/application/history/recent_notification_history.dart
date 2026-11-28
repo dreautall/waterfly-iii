@@ -137,7 +137,7 @@ class RecentNotificationHistory
     final List<NotificationHistoryEntry> eligibleNotifications = notifications
         .where((NotificationHistoryEntry notification) {
           final bool hasContents =
-              notification.title.trim().isNotEmpty &&
+              notification.title.trim().isNotEmpty ||
               notification.body.trim().isNotEmpty;
           final bool isMetadataOnly =
               notification.title.trim().isEmpty &&
@@ -184,7 +184,7 @@ class RecentNotificationHistory
             orElse: () => null,
           );
       final bool hasContents =
-          notification.title.trim().isNotEmpty &&
+          notification.title.trim().isNotEmpty ||
           notification.body.trim().isNotEmpty;
       final _RecentNotificationMatch? match =
           notification.processingOutcome == null

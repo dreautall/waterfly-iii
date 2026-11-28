@@ -6,6 +6,8 @@ import 'package:waterflyiii/notifications/application/stores/notification_defini
 import 'package:waterflyiii/notifications/application/stores/notification_history_store.dart';
 import 'package:waterflyiii/notifications/data/migrations/legacy_notification_definition_migrator.dart';
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
+import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
+import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_definition.dart';
@@ -14,6 +16,8 @@ import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.d
 import 'package:waterflyiii/notifications/domain/planning/transaction_creation_mode.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/literal_value_source.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
 
 enum NotificationDebugSeedScenario {
   sampleMissing(
@@ -55,6 +59,22 @@ enum NotificationDebugSeedScenario {
   staleMigrationAlert(
     'Stale migration alert',
     'Ready definition with an obsolete sample-missing alert.',
+  ),
+  basicBodyOnly(
+    'Basic body-only processing',
+    'Ready Basic setup that should use the body when the title is absent.',
+  ),
+  missingTitleAttention(
+    'Missing title requires attention',
+    'Advanced setup requiring a title capture with the Requires attention policy.',
+  ),
+  missingTitleIgnored(
+    'Missing title ignored',
+    'Advanced setup requiring a title capture with the Ignore notification policy.',
+  ),
+  metadataOnlyAllowed(
+    'Metadata-only allowed',
+    'Advanced setup allowing a literal transaction without title or body.',
   );
 
   const NotificationDebugSeedScenario(this.label, this.description);
@@ -307,6 +327,34 @@ class NotificationDebugSeedService {
         applicationName: applicationName,
         createdAt: createdAt,
       ),
+      NotificationDebugSeedScenario.basicBodyOnly => _readyBasic(
+        id: id,
+        applicationId: applicationId,
+        applicationName: applicationName,
+        createdAt: createdAt,
+      ),
+      NotificationDebugSeedScenario.missingTitleAttention =>
+        _titleDependentAdvanced(
+          id: id,
+          applicationId: applicationId,
+          applicationName: applicationName,
+          createdAt: createdAt,
+          policy: MissingNotificationDataPolicy.requiresAttention,
+        ),
+      NotificationDebugSeedScenario.missingTitleIgnored =>
+        _titleDependentAdvanced(
+          id: id,
+          applicationId: applicationId,
+          applicationName: applicationName,
+          createdAt: createdAt,
+          policy: MissingNotificationDataPolicy.ignore,
+        ),
+      NotificationDebugSeedScenario.metadataOnlyAllowed => _metadataOnly(
+        id: id,
+        applicationId: applicationId,
+        applicationName: applicationName,
+        createdAt: createdAt,
+      ),
     };
   }
 
@@ -400,6 +448,79 @@ class NotificationDebugSeedService {
       transactionCreationMode: TransactionCreationMode.prompt,
     );
   }
+
+  NotificationDefinition _titleDependentAdvanced({
+    required String id,
+    required String applicationId,
+    required String applicationName,
+    required DateTime createdAt,
+    required MissingNotificationDataPolicy policy,
+  }) {
+    final RegExpDefinition title =
+        RegExpDefinition.createPredefinedRegExpDefinition(
+          PredefinedRegExpDefinition.notificationTitle,
+        );
+    return NotificationDefinition(
+      id: id,
+      applicationId: applicationId,
+      name: applicationName,
+      extractors: <RegExpDefinition>[title],
+      rules: <NotificationRule>[
+        const NotificationRule(
+          id: 'debug:title-required',
+          name: 'Title required',
+          conditions: <NotificationCondition>[],
+          actions: <NotificationAction>[
+            SetTransactionFieldAction(
+              target: TransactionField.title,
+              valueSource: NotificationPropertyValueSource(
+                NotificationProperty.title,
+              ),
+            ),
+          ],
+        ),
+      ],
+      sharedActions: const <NotificationAction>[
+        SetTransactionFieldAction(
+          target: TransactionField.amount,
+          valueSource: LiteralValueSource('12.50'),
+        ),
+      ],
+      sampleTitle: 'Card payment',
+      sampleBody: 'Paid 12.50 CAD',
+      createdAt: createdAt,
+      extractorMode: NotificationExtractorMode.advanced,
+      transactionCreationMode: TransactionCreationMode.prompt,
+      missingNotificationDataPolicy: policy,
+    );
+  }
+
+  NotificationDefinition _metadataOnly({
+    required String id,
+    required String applicationId,
+    required String applicationName,
+    required DateTime createdAt,
+  }) => NotificationDefinition(
+    id: id,
+    applicationId: applicationId,
+    name: applicationName,
+    extractors: <RegExpDefinition>[],
+    rules: const <NotificationRule>[],
+    sharedActions: const <NotificationAction>[
+      SetTransactionFieldAction(
+        target: TransactionField.title,
+        valueSource: LiteralValueSource('Metadata-only notification'),
+      ),
+      SetTransactionFieldAction(
+        target: TransactionField.amount,
+        valueSource: LiteralValueSource('12.50'),
+      ),
+    ],
+    createdAt: createdAt,
+    extractorMode: NotificationExtractorMode.advanced,
+    transactionCreationMode: TransactionCreationMode.prompt,
+    allowMetadataOnlyNotifications: true,
+  );
 
   NotificationDefinition _unresolvedCurrency({
     required String id,

@@ -19,6 +19,9 @@ import 'package:waterflyiii/notifications/domain/extractors/reg_exp_evaluation_r
 import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_action_group.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/composed_value_source.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/value_source.dart';
 
 class NotificationDefinitionProcessor {
   const NotificationDefinitionProcessor(
@@ -35,9 +38,6 @@ class NotificationDefinitionProcessor {
     NotificationContext notification, {
     List<NotificationDefinition>? definitions,
   }) async {
-    if (notification.title.trim().isEmpty || notification.body.trim().isEmpty) {
-      return <ProcessedNotificationDefinition>[];
-    }
     final List<NotificationDefinition> configuredDefinitions =
         definitions ?? await _store.load();
     final List<ProcessedNotificationDefinition> results =
@@ -102,6 +102,7 @@ class NotificationDefinitionProcessor {
         operationOwner: 'shared notification actions',
         notification: notification,
         definitionId: definition.id,
+        missingDataPolicy: definition.missingNotificationDataPolicy,
       );
       for (final MapEntry<String, NotificationRuleEvaluationResult> entry
           in result.ruleResults.entries) {
@@ -134,6 +135,7 @@ class NotificationDefinitionProcessor {
           operationOwner: '"$ruleName"',
           notification: notification,
           definitionId: definition.id,
+          missingDataPolicy: definition.missingNotificationDataPolicy,
           ruleId: entry.key,
           ruleName: ruleName,
         );
@@ -168,6 +170,7 @@ class NotificationDefinitionProcessor {
             operationOwner: 'action group "$groupName" for "$ruleName"',
             notification: notification,
             definitionId: definition.id,
+            missingDataPolicy: definition.missingNotificationDataPolicy,
             ruleId: entry.key,
             ruleName: ruleName,
           );
@@ -190,6 +193,7 @@ class NotificationDefinitionProcessor {
     required String operationOwner,
     required NotificationContext notification,
     required String definitionId,
+    required MissingNotificationDataPolicy missingDataPolicy,
     String? ruleId,
     String? ruleName,
   }) async {
@@ -202,10 +206,19 @@ class NotificationDefinitionProcessor {
           ? configuredActions[actionEntry.key]
           : null;
       final String actionId = await _actionId(action);
+      final String? missingInput = _missingActionInput(action, notification);
+      if (missingInput != null &&
+          missingDataPolicy == MissingNotificationDataPolicy.ignore) {
+        continue;
+      }
       await _recordFailure(
-        NotificationAlertKind.actionFailed,
-        'Applying ${_actionName(action)} for $operationOwner',
-        actionResult.failureReason ?? 'Action failed.',
+        missingInput == null
+            ? NotificationAlertKind.actionFailed
+            : NotificationAlertKind.missingInput,
+        missingInput == null
+            ? 'Applying ${_actionName(action)} for $operationOwner'
+            : 'Missing notification data',
+        missingInput ?? actionResult.failureReason ?? 'Action failed.',
         notification,
         definitionId: definitionId,
         ruleId: ruleId,
@@ -214,6 +227,38 @@ class NotificationDefinitionProcessor {
         actionName: _actionName(action),
       );
     }
+  }
+
+  String? _missingActionInput(
+    NotificationAction? action,
+    NotificationContext notification,
+  ) {
+    if (action is! SetTransactionFieldAction) return null;
+    return _missingPropertyLabel(action.valueSource, notification);
+  }
+
+  String? _missingPropertyLabel(
+    ValueSource source,
+    NotificationContext notification,
+  ) {
+    if (source is ComposedValueSource) {
+      return source.parts
+          .map((ValueSource part) => _missingPropertyLabel(part, notification))
+          .whereType<String>()
+          .firstOrNull;
+    }
+    if (source is! NotificationPropertyValueSource) return null;
+    return switch (source.property) {
+      NotificationProperty.title when notification.title.trim().isEmpty =>
+        'The notification is missing required title data.',
+      NotificationProperty.body when notification.body.trim().isEmpty =>
+        'The notification is missing required body data.',
+      NotificationProperty.titleOrBody
+          when notification.title.trim().isEmpty &&
+              notification.body.trim().isEmpty =>
+        'The notification is missing required title or body data.',
+      _ => null,
+    };
   }
 
   Future<void> _recordFailure(

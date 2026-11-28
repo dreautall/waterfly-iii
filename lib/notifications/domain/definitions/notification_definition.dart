@@ -1,4 +1,5 @@
 import 'package:waterflyiii/notifications/domain/actions/notification_action.dart';
+import 'package:waterflyiii/notifications/domain/actions/set_transaction_field_action.dart';
 import 'package:waterflyiii/notifications/domain/alerts/notification_alert.dart';
 import 'package:waterflyiii/notifications/domain/conditions/notification_condition.dart';
 import 'package:waterflyiii/notifications/domain/definitions/notification_context.dart';
@@ -14,10 +15,14 @@ import 'package:waterflyiii/notifications/domain/rules/notification_rule.dart';
 import 'package:waterflyiii/notifications/domain/rules/notification_rule_diagnostics.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 
 enum NotificationExtractorMode { notConfigured, basic, advanced }
 
 enum NotificationBasicView { simple, detailed }
+
+enum MissingNotificationDataPolicy { requiresAttention, ignore }
 
 enum NotificationDefinitionStatus {
   notConfigured,
@@ -41,6 +46,9 @@ class NotificationDefinition {
     this.extractorMode = NotificationExtractorMode.notConfigured,
     this.basicView = NotificationBasicView.detailed,
     this.transactionCreationMode = TransactionCreationMode.prompt,
+    this.missingNotificationDataPolicy =
+        MissingNotificationDataPolicy.requiresAttention,
+    this.allowMetadataOnlyNotifications = false,
     this.requiresMigrationReview = false,
     this.migrationReviewIssues = const <NotificationMigrationIssue>{},
   });
@@ -58,11 +66,16 @@ class NotificationDefinition {
   final NotificationExtractorMode extractorMode;
   final NotificationBasicView basicView;
   final TransactionCreationMode transactionCreationMode;
+  final MissingNotificationDataPolicy missingNotificationDataPolicy;
+  final bool allowMetadataOnlyNotifications;
   final bool requiresMigrationReview;
   final Set<NotificationMigrationIssue> migrationReviewIssues;
 
   DateTime get sampleReceivedAt =>
       createdAt ?? DateTime.fromMillisecondsSinceEpoch(0);
+  bool get canProcessMetadataOnlyNotifications =>
+      extractorMode == NotificationExtractorMode.advanced &&
+      allowMetadataOnlyNotifications;
 
   NotificationDefinition copyWith({
     String? id,
@@ -78,6 +91,8 @@ class NotificationDefinition {
     NotificationExtractorMode? extractorMode,
     NotificationBasicView? basicView,
     TransactionCreationMode? transactionCreationMode,
+    MissingNotificationDataPolicy? missingNotificationDataPolicy,
+    bool? allowMetadataOnlyNotifications,
     bool? requiresMigrationReview,
     Set<NotificationMigrationIssue>? migrationReviewIssues,
   }) => NotificationDefinition(
@@ -96,6 +111,10 @@ class NotificationDefinition {
     basicView: basicView ?? this.basicView,
     transactionCreationMode:
         transactionCreationMode ?? this.transactionCreationMode,
+    missingNotificationDataPolicy:
+        missingNotificationDataPolicy ?? this.missingNotificationDataPolicy,
+    allowMetadataOnlyNotifications:
+        allowMetadataOnlyNotifications ?? this.allowMetadataOnlyNotifications,
     requiresMigrationReview:
         requiresMigrationReview ?? this.requiresMigrationReview,
     migrationReviewIssues: migrationReviewIssues ?? this.migrationReviewIssues,
@@ -173,9 +192,10 @@ class NotificationDefinition {
       return NotificationDefinitionStatus.notConfigured;
     }
     final bool hasRequiredSetup =
-        (sampleTitle?.trim().isNotEmpty ?? false) &&
-        (sampleBody?.trim().isNotEmpty ?? false) &&
-        extractors.isNotEmpty &&
+        ((sampleTitle?.trim().isNotEmpty ?? false) ||
+            (sampleBody?.trim().isNotEmpty ?? false) ||
+            canProcessMetadataOnlyNotifications) &&
+        (extractors.isNotEmpty || canProcessMetadataOnlyNotifications) &&
         (rules.isNotEmpty || sharedActions.isNotEmpty);
     if (!hasRequiredSetup) return NotificationDefinitionStatus.needsSetup;
     final int catchAllRuleIndex = rules.indexWhere(
@@ -245,8 +265,8 @@ class NotificationDefinition {
     final NotificationDefinitionEvaluationResult result =
         NotificationDefinitionEvaluator(
           extractors: extractors,
-          rules: rules,
-          sharedActions: sharedActions,
+          rules: _rulesWithBasicTitleFallback(),
+          sharedActions: _sharedActionsWithBasicTitleFallback(),
           transactionCreationMode: transactionCreationMode,
           formattingPreferences: formattingPreferences,
         ).evaluate(notification);
@@ -259,7 +279,11 @@ class NotificationDefinition {
                 extraction.hasEvaluationFailure ||
                 !extraction.isPatternValid;
           });
-      if (!requirementEvaluationFailed) return null;
+      final bool hasMissingInput = result.unmetSharedRequirements.any(
+        (NotificationRuleRequirement requirement) =>
+            _requirementInputIsMissing(requirement, notification),
+      );
+      if (!requirementEvaluationFailed && !hasMissingInput) return null;
     }
     final bool requiredExtractorMissing = extractors.any(
       (RegExpDefinition extractor) =>
@@ -269,8 +293,84 @@ class NotificationDefinition {
               true &&
           (result.extractionResults[extractor.id]?.isPatternValid ?? false),
     );
-    return requiredExtractorMissing ? null : result;
+    if (requiredExtractorMissing) {
+      return null;
+    }
+    return result;
   }
+
+  List<NotificationAction> _sharedActionsWithBasicTitleFallback() =>
+      extractorMode == NotificationExtractorMode.basic
+      ? sharedActions.map(_withBasicTitleFallback).toList()
+      : sharedActions;
+
+  List<NotificationRule> _rulesWithBasicTitleFallback() =>
+      extractorMode == NotificationExtractorMode.basic
+      ? rules
+            .map(
+              (NotificationRule rule) => rule.copyWith(
+                actions: rule.actions.map(_withBasicTitleFallback).toList(),
+              ),
+            )
+            .toList()
+      : rules;
+
+  NotificationAction _withBasicTitleFallback(NotificationAction action) {
+    if (action is! SetTransactionFieldAction ||
+        action.target != TransactionField.title) {
+      return action;
+    }
+    final NotificationPropertyValueSource? property =
+        action.valueSource is NotificationPropertyValueSource
+        ? action.valueSource as NotificationPropertyValueSource
+        : null;
+    final RegExpCaptureValueSource? capture =
+        action.valueSource is RegExpCaptureValueSource
+        ? action.valueSource as RegExpCaptureValueSource
+        : null;
+    final String? titleExtractorId = extractors
+        .where(
+          (RegExpDefinition extractor) =>
+              extractor.predefinedType ==
+              PredefinedRegExpDefinition.notificationTitle,
+        )
+        .firstOrNull
+        ?.id;
+    if (property?.property == NotificationProperty.title ||
+        (titleExtractorId != null &&
+            capture?.extractorId == titleExtractorId)) {
+      return const SetTransactionFieldAction(
+        target: TransactionField.title,
+        valueSource: NotificationPropertyValueSource(
+          NotificationProperty.titleOrBody,
+        ),
+      );
+    }
+    return action;
+  }
+
+  bool _requirementInputIsMissing(
+    NotificationRuleRequirement requirement,
+    NotificationContext notification,
+  ) {
+    final RegExpDefinition? extractor = extractors
+        .where(
+          (RegExpDefinition extractor) =>
+              extractor.id == requirement.capture.extractorId,
+        )
+        .firstOrNull;
+    return extractor != null &&
+        _extractorInputIsMissing(extractor, notification);
+  }
+
+  bool _extractorInputIsMissing(
+    RegExpDefinition extractor,
+    NotificationContext notification,
+  ) => switch (extractor.input) {
+    NotificationExtractorInput.title => notification.title.trim().isEmpty,
+    NotificationExtractorInput.body => notification.body.trim().isEmpty,
+    NotificationExtractorInput.receivedAt => false,
+  };
 
   Map<String, dynamic> toJson() => <String, dynamic>{
     'id': id,
@@ -293,6 +393,8 @@ class NotificationDefinition {
     'extractorMode': extractorMode.name,
     'basicView': basicView.name,
     'transactionCreationMode': transactionCreationMode.name,
+    'missingNotificationDataPolicy': missingNotificationDataPolicy.name,
+    if (allowMetadataOnlyNotifications) 'allowMetadataOnlyNotifications': true,
     if (requiresMigrationReview) 'requiresMigrationReview': true,
     if (migrationReviewIssues.isNotEmpty)
       'migrationReviewIssues': migrationReviewIssues
@@ -358,6 +460,16 @@ class NotificationDefinition {
               )
               .toSet(),
       transactionCreationMode: transactionCreationMode,
+      missingNotificationDataPolicy:
+          MissingNotificationDataPolicy.values
+              .where(
+                (MissingNotificationDataPolicy policy) =>
+                    policy.name == json['missingNotificationDataPolicy'],
+              )
+              .firstOrNull ??
+          MissingNotificationDataPolicy.requiresAttention,
+      allowMetadataOnlyNotifications:
+          json['allowMetadataOnlyNotifications'] == true,
       requiresMigrationReview: json['requiresMigrationReview'] == true,
       migrationReviewIssues:
           (json['migrationReviewIssues'] as List<dynamic>? ?? <dynamic>[])

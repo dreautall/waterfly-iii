@@ -170,6 +170,42 @@ void main() {
     });
   });
 
+  test('seeds missing-title policy scenarios and metadata-only mode', () async {
+    final NotificationDebugSeedService service = NotificationDebugSeedService(
+      definitionStore: InMemoryNotificationDefinitionStore(),
+      alertStore: InMemoryNotificationAlertStore(),
+      historyStore: _HistoryStore(),
+    );
+
+    final NotificationDefinition attention = await service.seed(
+      scenario: NotificationDebugSeedScenario.missingTitleAttention,
+      applicationId: applicationId,
+      applicationName: 'Example Bank',
+    );
+    expect(
+      attention.missingNotificationDataPolicy,
+      MissingNotificationDataPolicy.requiresAttention,
+    );
+    expect(attention.extractorMode, NotificationExtractorMode.advanced);
+
+    final NotificationDefinition ignored = await service.seed(
+      scenario: NotificationDebugSeedScenario.missingTitleIgnored,
+      applicationId: applicationId,
+      applicationName: 'Example Bank',
+    );
+    expect(
+      ignored.missingNotificationDataPolicy,
+      MissingNotificationDataPolicy.ignore,
+    );
+
+    final NotificationDefinition metadataOnly = await service.seed(
+      scenario: NotificationDebugSeedScenario.metadataOnlyAllowed,
+      applicationId: applicationId,
+      applicationName: 'Example Bank',
+    );
+    expect(metadataOnly.canProcessMetadataOnlyNotifications, isTrue);
+  });
+
   test('seeds automatic creation paused without an account mapping', () async {
     final NotificationDefinition seeded =
         await NotificationDebugSeedService(

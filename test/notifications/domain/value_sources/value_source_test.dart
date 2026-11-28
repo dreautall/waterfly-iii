@@ -52,6 +52,36 @@ void main() {
       );
     });
 
+    test('treats blank notification properties as unavailable', () {
+      final EvaluationContext blankContext = EvaluationContext(
+        notification: NotificationContext(
+          title: '  ',
+          body: '\n\t',
+          receivedAt: DateTime(2026, 11, 25),
+        ),
+        extractionResults: const <String, RegExpEvaluationResult>{},
+      );
+
+      expect(
+        const NotificationPropertyValueSource(
+          NotificationProperty.title,
+        ).resolve(blankContext),
+        isNull,
+      );
+      expect(
+        const NotificationPropertyValueSource(
+          NotificationProperty.body,
+        ).resolve(blankContext),
+        isNull,
+      );
+      expect(
+        const NotificationPropertyValueSource(
+          NotificationProperty.titleOrBody,
+        ).resolve(blankContext),
+        isNull,
+      );
+    });
+
     test('normalizes legacy amount capture formats', () {
       for (final MapEntry<String, String> example in <String, String>{
         '1 234,56': '1234.56',

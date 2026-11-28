@@ -18,7 +18,9 @@ class NotificationDefinitionDraft {
       sampleBody = _original.sampleBody ?? '',
       extractorMode = _original.extractorMode,
       basicView = _original.basicView,
-      transactionCreationMode = _original.transactionCreationMode;
+      transactionCreationMode = _original.transactionCreationMode,
+      missingNotificationDataPolicy = _original.missingNotificationDataPolicy,
+      allowMetadataOnlyNotifications = _original.allowMetadataOnlyNotifications;
 
   NotificationDefinition _original;
   List<RegExpDefinition> extractors;
@@ -30,6 +32,8 @@ class NotificationDefinitionDraft {
   NotificationExtractorMode extractorMode;
   NotificationBasicView basicView;
   TransactionCreationMode transactionCreationMode;
+  MissingNotificationDataPolicy missingNotificationDataPolicy;
+  bool allowMetadataOnlyNotifications;
 
   NotificationDefinition build() => _original.copyWith(
     extractors: List<RegExpDefinition>.from(extractors),
@@ -43,13 +47,19 @@ class NotificationDefinitionDraft {
     extractorMode: extractorMode,
     basicView: basicView,
     transactionCreationMode: transactionCreationMode,
+    missingNotificationDataPolicy: missingNotificationDataPolicy,
+    allowMetadataOnlyNotifications: allowMetadataOnlyNotifications,
   );
 
   bool get isDirty =>
       !jsonStructuresEqual(build().toJson(), _original.toJson());
 
   bool get hasUnsavedOptions =>
-      transactionCreationMode != _original.transactionCreationMode;
+      transactionCreationMode != _original.transactionCreationMode ||
+      missingNotificationDataPolicy !=
+          _original.missingNotificationDataPolicy ||
+      allowMetadataOnlyNotifications !=
+          _original.allowMetadataOnlyNotifications;
 
   void markSaved(NotificationDefinition definition) {
     _original = definition;

@@ -451,7 +451,7 @@ void main() {
     },
   );
 
-  test('excludes notifications with a blank title or message', () async {
+  test('keeps notifications with either a title or body', () async {
     final DateTime receivedAt = DateTime(2026, 8, 31);
     final RecentNotificationHistory history = RecentNotificationHistory(
       FixedDefinitionStore(<NotificationDefinition>[
@@ -491,8 +491,13 @@ void main() {
 
     final List<RecentNotificationHistoryEntry> entries = await history.load();
 
-    expect(entries, hasLength(1));
-    expect(entries.single.notification.title, 'Card payment');
+    expect(entries, hasLength(3));
+    expect(
+      entries.map(
+        (RecentNotificationHistoryEntry entry) => entry.notification.id,
+      ),
+      <String>['blank-title', 'blank-body', 'payment'],
+    );
   });
 
   test('keeps fully redacted metadata-only notifications', () async {

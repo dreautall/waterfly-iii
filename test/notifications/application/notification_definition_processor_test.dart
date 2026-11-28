@@ -15,6 +15,7 @@ import 'package:waterflyiii/notifications/domain/conditions/values_greater_than_
 import 'package:waterflyiii/notifications/domain/extractors/reg_exp_definition.dart';
 import 'package:waterflyiii/notifications/domain/transactions/transaction_field.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/literal_value_source.dart';
+import 'package:waterflyiii/notifications/domain/value_sources/notification_property_value_source.dart';
 import 'package:waterflyiii/notifications/domain/value_sources/reg_exp_capture_value_source.dart';
 
 class InMemoryStorage implements NotificationDefinitionStorage {
@@ -110,10 +111,10 @@ void main() {
             ),
           ],
           rules: <NotificationRule>[
-            const NotificationRule(
+            NotificationRule(
               id: 'rule',
               name: 'Rule',
-              conditions: <NotificationCondition>[],
+              conditions: const <NotificationCondition>[],
               actions: <NotificationAction>[],
             ),
           ],
@@ -162,34 +163,33 @@ void main() {
       final InMemoryStorage storage = InMemoryStorage(null);
       final NotificationDefinitionRepository repository =
           NotificationDefinitionRepository(storage);
-      await repository.save(<NotificationDefinition>[
-        NotificationDefinition(
-          id: 'needs-review',
-          applicationId: 'com.example.bank',
-          name: 'Example Bank',
-          sampleTitle: 'Card payment',
-          sampleBody: 'Paid 12 and 15 CAD',
-          extractors: <RegExpDefinition>[amount],
-          rules: <NotificationRule>[
-            NotificationRule(
-              id: 'transaction',
-              name: 'Transaction details',
-              isPredefined: true,
-              conditions: const <NotificationCondition>[],
-              actions: <NotificationAction>[
-                SetTransactionFieldAction(
-                  target: TransactionField.amount,
-                  valueSource: RegExpCaptureValueSource(
-                    extractorId: amount.id,
-                    captureName: 'amount',
-                  ),
+      final NotificationDefinition definition = NotificationDefinition(
+        id: 'needs-review',
+        applicationId: 'com.example.bank',
+        name: 'Example Bank',
+        sampleTitle: 'Card payment',
+        sampleBody: 'Paid 12 and 15 CAD',
+        extractors: <RegExpDefinition>[amount],
+        rules: <NotificationRule>[
+          NotificationRule(
+            id: 'transaction',
+            name: 'Transaction details',
+            isPredefined: true,
+            conditions: <NotificationCondition>[],
+            actions: <NotificationAction>[
+              SetTransactionFieldAction(
+                target: TransactionField.amount,
+                valueSource: RegExpCaptureValueSource(
+                  extractorId: amount.id,
+                  captureName: 'amount',
                 ),
-              ],
-            ),
-          ],
-          extractorMode: NotificationExtractorMode.basic,
-        ),
-      ]);
+              ),
+            ],
+          ),
+        ],
+        extractorMode: NotificationExtractorMode.basic,
+      );
+      await repository.save(<NotificationDefinition>[definition]);
 
       final List<ProcessedNotificationDefinition> results =
           await NotificationDefinitionProcessor(repository).process(
@@ -228,7 +228,7 @@ void main() {
             NotificationRule(
               id: 'transaction',
               name: 'Transaction details',
-              conditions: const <NotificationCondition>[],
+              conditions: <NotificationCondition>[],
               actions: <NotificationAction>[
                 SetTransactionFieldAction(
                   target: TransactionField.currency,
@@ -280,56 +280,58 @@ void main() {
     },
   );
 
-  test(
-    'does not process or alert for a notification without a title',
-    () async {
-      final InMemoryStorage storage = InMemoryStorage(null);
-      final NotificationDefinitionRepository repository =
-          NotificationDefinitionRepository(storage);
-      final InMemoryAlertStore alertStore = InMemoryAlertStore();
-      await repository.save(<NotificationDefinition>[
-        NotificationDefinition(
-          id: 'broken-pattern',
-          applicationId: 'com.example.bank',
-          name: 'Broken pattern',
-          sampleTitle: 'Card payment',
-          sampleBody: 'Paid 12.50 CAD',
-          extractors: <RegExpDefinition>[
-            RegExpDefinition.createCustomRegExpDefinition(
-              'Broken extractor',
-              '[',
-              isRequiredForMatch: true,
-            ),
-          ],
-          rules: const <NotificationRule>[
-            NotificationRule(
-              id: 'rule',
-              name: 'Rule',
-              conditions: <NotificationCondition>[],
-              actions: <NotificationAction>[],
-            ),
-          ],
-          extractorMode: NotificationExtractorMode.advanced,
-        ),
-      ]);
+  test('processes a body-dependent definition without a title', () async {
+    final InMemoryStorage storage = InMemoryStorage(null);
+    final NotificationDefinitionRepository repository =
+        NotificationDefinitionRepository(storage);
+    final InMemoryAlertStore alertStore = InMemoryAlertStore();
+    await repository.save(<NotificationDefinition>[
+      NotificationDefinition(
+        id: 'body-pattern',
+        applicationId: 'com.example.bank',
+        name: 'Body pattern',
+        sampleTitle: 'Card payment',
+        sampleBody: 'Paid 12.50 CAD',
+        extractors: <RegExpDefinition>[
+          RegExpDefinition.createCustomRegExpDefinition(
+            'Amount',
+            r'Paid (?<amount>\d+\.\d{2})',
+          ),
+        ],
+        rules: const <NotificationRule>[
+          NotificationRule(
+            id: 'rule',
+            name: 'Rule',
+            conditions: <NotificationCondition>[],
+            actions: <NotificationAction>[],
+          ),
+        ],
+        extractorMode: NotificationExtractorMode.advanced,
+      ),
+    ]);
 
-      final List<ProcessedNotificationDefinition> results =
-          await NotificationDefinitionProcessor(
-            repository,
-            alertStore: alertStore,
-          ).process(
-            NotificationContext(
-              applicationId: 'com.example.bank',
-              title: ' ',
-              body: 'Paid 12.50 CAD',
-              receivedAt: DateTime(2026, 8, 30),
-            ),
-          );
+    final List<ProcessedNotificationDefinition> results =
+        await NotificationDefinitionProcessor(
+          repository,
+          alertStore: alertStore,
+        ).process(
+          NotificationContext(
+            applicationId: 'com.example.bank',
+            title: ' ',
+            body: 'Paid 12.50 CAD',
+            receivedAt: DateTime(2026, 8, 30),
+          ),
+        );
 
-      expect(results, isEmpty);
-      expect(alertStore.alerts, isEmpty);
-    },
-  );
+    expect(results, hasLength(1));
+    expect(
+      results.single.evaluation.extractionResults.values.single.capturesFor(
+        'amount',
+      ),
+      <String>['12.50'],
+    );
+    expect(alertStore.alerts, isEmpty);
+  });
 
   test(
     'does not alert when a shared action requirement is unavailable',
@@ -441,6 +443,59 @@ void main() {
     );
   });
 
+  test(
+    'invalid patterns still alert when their input field is empty',
+    () async {
+      final InMemoryStorage storage = InMemoryStorage(null);
+      final NotificationDefinitionRepository repository =
+          NotificationDefinitionRepository(storage);
+      final InMemoryAlertStore alertStore = InMemoryAlertStore();
+      await repository.save(<NotificationDefinition>[
+        NotificationDefinition(
+          id: 'broken-title',
+          applicationId: 'com.example.bank',
+          name: 'Broken title',
+          sampleTitle: 'Card payment',
+          sampleBody: 'Paid 12.50 CAD',
+          extractors: <RegExpDefinition>[
+            RegExpDefinition.createCustomRegExpDefinition(
+              'Broken title extractor',
+              '[',
+              input: NotificationExtractorInput.title,
+              isRequiredForMatch: true,
+            ),
+          ],
+          rules: const <NotificationRule>[
+            NotificationRule(
+              id: 'rule',
+              name: 'Rule',
+              conditions: <NotificationCondition>[],
+              actions: <NotificationAction>[],
+            ),
+          ],
+          extractorMode: NotificationExtractorMode.advanced,
+        ),
+      ]);
+
+      await NotificationDefinitionProcessor(
+        repository,
+        alertStore: alertStore,
+      ).process(
+        NotificationContext(
+          applicationId: 'com.example.bank',
+          title: '',
+          body: 'Paid 12.50 CAD',
+          receivedAt: DateTime(2026, 8, 30),
+        ),
+      );
+
+      expect(
+        alertStore.alerts.single.kind,
+        NotificationAlertKind.definitionInvalid,
+      );
+    },
+  );
+
   test('records an alert when custom extractor input is too long', () async {
     final InMemoryStorage storage = InMemoryStorage(null);
     final NotificationDefinitionRepository repository =
@@ -498,6 +553,121 @@ void main() {
       alertStore.alerts.single.message,
       'The notification text is too long to evaluate safely.',
     );
+  });
+
+  test(
+    'records missing input when a title property action is unavailable',
+    () async {
+      final InMemoryStorage storage = InMemoryStorage(null);
+      final NotificationDefinitionRepository repository =
+          NotificationDefinitionRepository(storage);
+      final InMemoryAlertStore alertStore = InMemoryAlertStore();
+      await repository.save(<NotificationDefinition>[
+        NotificationDefinition(
+          id: 'title-required',
+          applicationId: 'com.example.bank',
+          name: 'Title required',
+          sampleTitle: 'Card payment',
+          sampleBody: 'Paid 12.50 CAD',
+          extractors: <RegExpDefinition>[],
+          rules: <NotificationRule>[
+            NotificationRule(
+              id: 'rule',
+              name: 'Rule',
+              conditions: <NotificationCondition>[],
+              actions: <NotificationAction>[
+                const SetTransactionFieldAction(
+                  target: TransactionField.title,
+                  valueSource: NotificationPropertyValueSource(
+                    NotificationProperty.title,
+                  ),
+                ),
+              ],
+            ),
+          ],
+          sharedActions: const <NotificationAction>[
+            SetTransactionFieldAction(
+              target: TransactionField.amount,
+              valueSource: LiteralValueSource('12.50'),
+            ),
+          ],
+          extractorMode: NotificationExtractorMode.advanced,
+          allowMetadataOnlyNotifications: true,
+        ),
+      ]);
+
+      final List<ProcessedNotificationDefinition> results =
+          await NotificationDefinitionProcessor(
+            repository,
+            alertStore: alertStore,
+          ).process(
+            NotificationContext(
+              applicationId: 'com.example.bank',
+              title: '',
+              body: 'Paid 12.50 CAD',
+              receivedAt: DateTime(2026, 11, 25),
+            ),
+          );
+
+      expect(results.single.evaluation.effectiveTransactionIntent, isNull);
+      expect(alertStore.alerts.single.kind, NotificationAlertKind.missingInput);
+      expect(alertStore.alerts.single.message, contains('title'));
+    },
+  );
+
+  test('does not alert for missing input when the policy ignores it', () async {
+    final InMemoryStorage storage = InMemoryStorage(null);
+    final NotificationDefinitionRepository repository =
+        NotificationDefinitionRepository(storage);
+    final InMemoryAlertStore alertStore = InMemoryAlertStore();
+    await repository.save(<NotificationDefinition>[
+      const NotificationDefinition(
+        id: 'ignored-title',
+        applicationId: 'com.example.bank',
+        name: 'Ignored missing title',
+        extractors: <RegExpDefinition>[],
+        rules: <NotificationRule>[
+          NotificationRule(
+            id: 'rule',
+            name: 'Rule',
+            conditions: <NotificationCondition>[],
+            actions: <NotificationAction>[
+              SetTransactionFieldAction(
+                target: TransactionField.title,
+                valueSource: NotificationPropertyValueSource(
+                  NotificationProperty.title,
+                ),
+              ),
+            ],
+          ),
+        ],
+        sharedActions: <NotificationAction>[
+          SetTransactionFieldAction(
+            target: TransactionField.amount,
+            valueSource: LiteralValueSource('12.50'),
+          ),
+        ],
+        extractorMode: NotificationExtractorMode.advanced,
+        missingNotificationDataPolicy: MissingNotificationDataPolicy.ignore,
+        allowMetadataOnlyNotifications: true,
+      ),
+    ]);
+
+    final List<ProcessedNotificationDefinition> results =
+        await NotificationDefinitionProcessor(
+          repository,
+          alertStore: alertStore,
+        ).process(
+          NotificationContext(
+            applicationId: 'com.example.bank',
+            title: '',
+            body: 'Paid 12.50 CAD',
+            receivedAt: DateTime(2026, 11, 25),
+          ),
+        );
+
+    expect(results.single.evaluation.effectiveTransactionIntent, isNull);
+    expect(alertStore.alerts, isEmpty);
   });
 
   test('does not alert for an incomplete registration action', () async {

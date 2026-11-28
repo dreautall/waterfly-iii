@@ -265,7 +265,7 @@ class _NotificationAlertCardState extends State<NotificationAlertCard> {
         Padding(
           padding: const EdgeInsets.only(bottom: 4),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Icon(
                 _iconForKind(alert.kind),
@@ -581,7 +581,8 @@ class _AlertIcon extends StatelessWidget {
 ) {
   final ColorScheme colors = Theme.of(context).colorScheme;
   return switch (kind) {
-    NotificationAlertKind.migrationNeedsReview => (
+    NotificationAlertKind.migrationNeedsReview ||
+    NotificationAlertKind.missingInput => (
       colors.tertiaryContainer,
       colors.onTertiaryContainer,
     ),
@@ -595,6 +596,7 @@ IconData _iconForKind(NotificationAlertKind kind) => switch (kind) {
   NotificationAlertKind.definitionInvalid => Icons.rule_folder_outlined,
   NotificationAlertKind.evaluationFailed => Icons.rule_outlined,
   NotificationAlertKind.actionFailed => Icons.tune_outlined,
+  NotificationAlertKind.missingInput => Icons.report_problem_outlined,
 };
 
 int _alertPriority(NotificationAlertKind kind) => switch (kind) {
@@ -603,4 +605,5 @@ int _alertPriority(NotificationAlertKind kind) => switch (kind) {
   NotificationAlertKind.evaluationFailed => 3,
   NotificationAlertKind.actionFailed => 2,
   NotificationAlertKind.migrationNeedsReview => 1,
+  NotificationAlertKind.missingInput => 1,
 };
